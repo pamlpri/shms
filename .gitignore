@@ -12,5 +12,3 @@ TARGET
 */.recommenders/*
 */RemoteSystemsTempFiles/*
 */.settings/*
-*/.springBeans
-*/.project
