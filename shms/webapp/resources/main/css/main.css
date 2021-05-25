@@ -1,0 +1,59 @@
+.facility {
+    color :#1e1e4b;
+}
+
+/* 게시판 영역 */
+#boardArea {
+    padding: 8% 7% 1% 7%
+}
+
+.board {
+    border: 0;
+}
+.board h4 {
+    padding-left: 30px;
+}
+.board-body {
+    padding: 0 1.25rem;
+}
+.board-body tr a {
+    color : #5c5c77;
+}
+
+/* 자주가는 서비스 바로가기 */
+#bookmark {
+    background-color: #e3eef9;
+    padding : 2%;
+    margin-bottom: -4%;
+}
+#bookmark p {
+    color: #1e1e4b;
+    display: inline-block;
+}
+#bookmark > div {
+    display: inline-block;
+    font-size: 1.4em;
+    display: flex;
+}
+#bookmark > div a {
+    display: inline-block;
+    text-align: center;
+    width: calc(100% / 6);
+    padding: 2% 0;
+}
+#bookmark > div a i {
+    font-size: 2em;
+    opacity: 0.9;
+    display: inline-block;
+    margin-bottom: 4%;
+}
+#bookmark > div a p {
+    margin-bottom: 0px;
+    font-weight: 800;
+}
+
+@media(max-width:991px){
+    .board:last-of-type {
+        margin-top: 10%;
+    }
+}

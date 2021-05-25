@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.main.commuity.dao.BoardDAO">
+
+	<select id="selectBoKind" parameterType="string" resultType="string">
+		SELECT COM_CODE
+		  FROM TB_COM_CODE
+		WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'BO_KIND') 
+		  AND COM_CODE_NM = #{bo_name, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectForMain" parameterType="string" resultType="BoardVO">
+		SELECT * 
+		  FROM(
+		SELECT
+		    (SELECT COUNT(*)
+		      FROM BOARD
+		      WHERE BO_KIND = (SELECT COM_CODE
+		                  FROM TB_COM_CODE
+		                WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'BO_KIND') 
+		                  AND COM_CODE_NM = #{bo_name, jdbcType=VARCHAR}))
+		      - (ROW_NUMBER () OVER (ORDER BY BO_WRITE_DE DESC)) + 1 P_BO_NO,
+		    ROW_NUMBER () OVER (ORDER BY BO_WRITE_DE DESC) RN,
+		    BO_NO,
+		    BO_KIND,
+		    BO_TITLE,
+		    TO_CHAR(BO_WRITE_DE, 'YYYY.MM.DD') BO_WRITE_DE,
+		    BO_HIT
+		FROM
+		    BOARD
+		WHERE BO_KIND = (SELECT COM_CODE
+		                  FROM TB_COM_CODE
+		                WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'BO_KIND') 
+		                  AND COM_CODE_NM = #{bo_name, jdbcType=VARCHAR})
+		)
+		<![CDATA[
+		WHERE RN <= 5		
+		]]>
+	</select>
+	
+	<sql id="searchFrag">
+		<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+			<choose>
+				<when test="searchMap.searchType eq 'title'">
+					INSTR(BO_TITLE, #{searchMap.searchWord}) > 0
+				</when>
+				<when test="searchMap.searchType eq 'content'">
+					INSTR(BO_CONT, #{searchMap.searchWord}) > 0
+				</when>
+				<otherwise>
+					INSTR(BO_TITLE, #{searchMap.searchWord}) > 0
+					OR 
+					INSTR(BO_CONT, #{searchMap.searchWord}) > 0
+				</otherwise>
+			</choose>
+		</if>
+	</sql>
+	
+	<select id="selectBoardCount" parameterType="PagingVO" resultType="int">
+		SELECT COUNT(*)
+		  FROM BOARD
+		 WHERE BO_KIND = #{searchMap.bo_kind}
+		<trim prefix="AND">
+			<include refid="searchFrag"/>
+		</trim>
+	</select>
+	
+	<select id="selectBoardList" parameterType="PagingVO" resultType="BoardVO">
+		SELECT *
+			FROM (
+			SELECT A.*, ROW_NUMBER () OVER (ORDER BY BO_WRITE_DE DESC) RN
+				FROM (
+					SELECT 
+						(SELECT COUNT(*) FROM BOARD WHERE BO_KIND = #{searchMap.bo_kind})
+						 - (ROW_NUMBER () OVER 
+						(ORDER BY BO_WRITE_DE DESC)) + 1 P_BO_NO,
+						BO_NO,
+						BO_KIND,
+						DECODE(BO_SECRET_AT, 'Y', '비밀글', BO_TITLE) BO_TITLE,
+						BO_CONT,
+						TO_CHAR(BO_WRITE_DE, 'YYYY.MM.DD') BO_WRITE_DE, 
+						BO_HIT,
+						BO_PASSWORD, 
+						BO_SECRET_AT 
+					FROM BOARD 
+					WHERE BO_KIND = #{searchMap.bo_kind}
+				) A
+		  	<trim prefix="WHERE">
+		  		<include refid="searchFrag"/>
+			</trim>
+			)
+			WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+
+</mapper>
