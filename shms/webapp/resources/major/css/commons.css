@@ -1,0 +1,23 @@
+/* 게시판 영역 */
+#boardArea {
+    padding: 8% 7% 1% 7%
+}
+
+.board {
+    border: 0;
+}
+.board h4 {
+    padding-left: 30px;
+}
+.board-body {
+    padding: 0 1.25rem;
+}
+.board-body tr a {
+    color : #5c5c77;
+}
+
+@media(max-width:991px){
+    .board:last-of-type {
+        margin-top: 10%;
+    }
+}

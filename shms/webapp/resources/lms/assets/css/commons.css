@@ -1,0 +1,17 @@
+/* 색상 클래스 */
+.text-light-black {
+    color : #607080;
+}
+
+/* 상단 이름, 로그아웃 버튼 부분 */
+#UserName {
+    font-size: 1.2em;
+    font-weight: 800;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+/* 강의개설 버튼 */
+#newLecture {
+    margin: 2% 0.6rem;
+}
