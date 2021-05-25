@@ -1,0 +1,36 @@
+package kr.ac.shms.lecture.controller;
+
+import java.awt.Dialog.ModalExclusionType;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lecture.service.LectureStudentService;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.controller.LmsStudentIndexController;
+import kr.ac.shms.lms.student.vo.StudentVO;
+
+@Controller
+public class LectureStudentIndexController {
+	private static final Logger logger = LoggerFactory.getLogger(LectureStudentIndexController.class);
+	@Inject
+	private LectureStudentService service;
+	
+	@RequestMapping("/lecture/index.do")
+	public String index(
+		HttpSession session
+		,Model model
+	) {
+		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
+		StudentVO studentVO = service.student(user.getUser_id());
+		model.addAttribute("student", studentVO);
+		return "lecture/main";
+	}
+}
