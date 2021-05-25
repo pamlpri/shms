@@ -6,7 +6,7 @@ shms/.classpath
 *.class
 */target/*
 TARGET
-/bin/
+*/bin/
 */.svn/*
 */.recommenders/*
 */RemoteSystemsTempFiles/*
