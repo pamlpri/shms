@@ -2,7 +2,6 @@
 /.metadata/
 /Servers/
 shms/res/config/dbinfo.properties
-shms/.classpath
 *.class
 */target/*
 TARGET
