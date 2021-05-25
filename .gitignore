@@ -1,0 +1,12 @@
+/.metadata/
+/.Servers/
+shms/res/config/dbinfo.properties
+shms/.classpath
+*.class
+*/target/*
+TARGET
+/bin/
+*/.svn/*
+*/.recommenders/*
+*/RemoteSystemsTempFiles/*
+*/.settings/*
