@@ -16,6 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.ac.shms.main.commuity.service.BoardService;
 import kr.ac.shms.main.commuity.vo.BoardVO;
 
+/**
+ * @author 박초원
+ * @since 2021. 5. 20.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                       수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 20.      박초원      	 최초작성
+ * 2021. 5. 22.      박초원		리다이렉트 수정
+ * 2021. 5. 25       송수미            게시판 조회 구현
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
+
 @Controller
 public class IndexController {
 	
