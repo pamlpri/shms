@@ -1,6 +1,20 @@
 package kr.ac.shms.lms.staff.controller;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.staff.service.LmsStaffService;
 /**
  * @author 최희수
  * @since 2021. 05. 22.
@@ -15,23 +29,11 @@ import javax.servlet.http.HttpSession;
  * Copyright (c) ${year} by DDIT All right reserved
  * </pre>
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import kr.ac.shms.common.vo.StaffVO;
-import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.lms.staff.service.LmsStaffService;
-
 @Controller
 public class LmsIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LmsIndexController.class);
 	@Inject
-	private LmsStaffService lmsStaffSservice;
+	private LmsStaffService lmsStaffService;
 	
 	@RequestMapping("/lms/main.do")
 	public String index(
@@ -39,8 +41,8 @@ public class LmsIndexController {
 		, HttpSession session
 		, Model model
 	){
-		StaffVO staffVO = lmsStaffSservice.staff(user.getUser_id());
-		session.setAttribute("user", staffVO.getName());
+		StaffVO staffVO = lmsStaffService.staff(user.getUser_id());
+		session.setAttribute("userName", staffVO.getName());
 		if(staffVO != null) {
 			model.addAttribute("staff", staffVO);
 		}

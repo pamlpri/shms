@@ -1,4 +1,7 @@
 package kr.ac.shms.lms.student.controller;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author 최희수
  * @since 2021. 05. 22.
@@ -40,7 +43,7 @@ public class LmsStudentIndexController {
 			, Model model
 	) {
 		StudentVO studentVO = studentService.student(user.getUser_id());
-		session.setAttribute("user", studentVO.getName());
+		session.setAttribute("userName", studentVO.getName());
 		if(studentVO != null) {
 			model.addAttribute("student", studentVO);
 		}
