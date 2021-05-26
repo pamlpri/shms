@@ -59,12 +59,26 @@
 	                    		<c:forEach items="${pagingVO.dataList }" var="board">
 	                         <tr>
 	                           <th scope="row" class="text-center">${board.p_bo_no }</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do">
-								<span class="dept">[입시지원팀]</span>${board.bo_title }<i class="fas fa-key"></i></a></td>
-	                           <td class="text-center"><a class="text-color" href="${cPath }/main/community/collegeQnaView.do?${board.bo_no}"></a></td>
-	                           <td class="text-center">${board.bo_writer }</td>
-	                           <td class="text-center">${board.bo_write_de }</td>
-	                           <td class="text-center"><span class="wait">대기</span></td>
+								<td>
+									<a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do">
+										<span class="dept">[입시지원팀]</span>${board.bo_title }
+										<c:if test="${board.bo_secret_at eq 'Y' }">
+											<i class="fas fa-key"></i>
+										</c:if>
+									</a>
+								</td>
+								<td class="text-center">${board.bo_writer }</td>
+								<td class="text-center">${board.bo_write_de }</td>
+								<td class="text-center">
+									<c:choose>
+										<c:when test="${not empty board.bo_ans }">
+											<span class="success">완료</span>
+										</c:when>
+										<c:otherwise>
+											<span class="wait">대기</span>
+										</c:otherwise>
+									</c:choose>
+								</td>
 	                         </tr>
 	                    		</c:forEach>
 	                    	</c:when>
@@ -82,99 +96,30 @@
 							<td class="text-center">2020.05.05</td>
 							<td class="text-center"><span class="wait">대기</span></td>
 						</tr>
-						<tr>
-							<th scope="row" class="text-center">9</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[행정학과]</span>수시모집 인원수 문의요!</a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">8</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[경영학과]</span>수시모집 인원수 문의요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">7</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[경영학과]</span>수시모집 인원수 문의요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">6</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[입시지원팀]</span>입시문의드려요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="wait">대기</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">5</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[행정학과]</span>수시모집 인원수 문의요!</a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">4</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[경영학과]</span>수시모집 인원수 문의요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">3</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[행정학과]</span>수시모집 인원수 문의요!</a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">2</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[경영학과]</span>수시모집 인원수 문의요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
-						<tr>
-							<th scope="row" class="text-center">1</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[경영학과]</span>수시모집 인원수 문의요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="success">완료</span></td>
-						</tr>
 					</tbody>
 				</table>
-				<nav aria-label="Page navigation example" class="pagination">
-					<ul class="pagination  justify-content-center">
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&lt;&lt;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link page" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&gt;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&gt;&gt;</span>
-						</a></li>
-					</ul>
-				</nav>
+<!-- 				<nav aria-label="Page navigation example" class="pagination"> -->
+<!-- 					<ul class="pagination  justify-content-center"> -->
+<!-- 						<li class="page-item"><a class="page-link" href="#" -->
+<!-- 							aria-label="Previous"> <span aria-hidden="true">&lt;&lt;</span> -->
+<!-- 						</a></li> -->
+<!-- 						<li class="page-item"><a class="page-link" href="#" -->
+<!-- 							aria-label="Previous"> <span aria-hidden="true">&lt;</span> -->
+<!-- 						</a></li> -->
+<!-- 						<li class="page-item"><a class="page-link page" href="#">1</a></li> -->
+<!-- 						<li class="page-item"><a class="page-link" href="#">2</a></li> -->
+<!-- 						<li class="page-item"><a class="page-link" href="#">3</a></li> -->
+<!-- 						<li class="page-item"><a class="page-link" href="#" -->
+<!-- 							aria-label="Next"> <span aria-hidden="true">&gt;</span> -->
+<!-- 						</a></li> -->
+<!-- 						<li class="page-item"><a class="page-link" href="#" -->
+<!-- 							aria-label="Next"> <span aria-hidden="true">&gt;&gt;</span> -->
+<!-- 						</a></li> -->
+<!-- 					</ul> -->
+<!-- 				</nav> -->
+				<div id="pagingArea" class="d-flex justify-content-center">
+					${pagingVO.pagingHTMLBS }
+				</div>
 				<a href="${cPath }/main/community/collegeQnaForm.do" id="writeBtn">글쓰기</a>
 			</div>
 		</div>
@@ -184,5 +129,28 @@
 	$(function(){
 		$(".sideMain").eq(3).children("a").addClass("navy");
 		$(".sideMain").eq(3).children(".sideSub").addClass("cur");
+	});
+	
+	searchForm = $('#searchForm');
+	let pagingArea = $("#pagingArea").on("click", "a", function(event){
+		event.preventDefault();
+		let page = $(this).data("page");
+		if(page){
+			searchForm.find("[name='page']").val(page);
+			searchForm.submit();
+		}
+		return false;
+	});
+	
+	let searchUI = $("#searchUI");
+	searchUI.find("[name='searchType']").val("${pagingVO.searchMap.searchType }");
+	$("#searchBtn").on("click", function(){
+		let inputs = searchUI.find(":input[name]");
+		$(inputs).each(function(idx, input){
+			let name = $(this).attr("name");
+			let sameInput = searchForm.find("[name='"+name+"']");
+			$(sameInput).val($(this).val());
+		});
+		searchForm.submit();
 	});
 </script>
