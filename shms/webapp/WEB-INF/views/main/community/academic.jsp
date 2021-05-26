@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 25.      송수미        학사공지 리스트 페이지 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -54,8 +55,8 @@
 					</thead>
 					<tbody>
 	                    <c:choose>
-	                    	<c:when test="${not empty boardList }">
-	                    		<c:forEach items="${boardList }" var="board">
+	                    	<c:when test="${not empty pagingVO.dataList }">
+	                    		<c:forEach items="${pagingVO.dataList }" var="board">
 	                         <tr>
 	                           <th scope="row" class="text-center">${board.p_bo_no }</th>
 	                           <td class="text-center"><a class="text-color" href="${cPath }/main/community/academicView.do?${board.bo_no}">${board.bo_title }</a></td>

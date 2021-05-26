@@ -29,6 +29,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 20.      박초원      	       최초작성
+ * 2021. 5. 25.      송수미      	       학사공지 리스트 페이지 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -41,7 +42,7 @@ public class NoticeViewController {
 	@Inject
 	private BoardService service;
 	
-	private String bo_name = null;
+	private String bo_name = "학사공지";
 	
 	@RequestMapping("/main/community/academicList.do")
 	public String academicList(
@@ -50,7 +51,7 @@ public class NoticeViewController {
 			, @RequestParam(value="searchWord", required=false) String searchWord
 			, Model model
 			) {
-		bo_name = "학사공지";
+		
 		String bo_kind = service.selectBoKind(bo_name);
 		
 		PagingVO<BoardVO> pagingVO = new PagingVO<>(10, 5);
@@ -69,7 +70,7 @@ public class NoticeViewController {
 		pagingVO.setDataList(boardList);
 //		logger.info("boardList : {}" , boardList.toString());
 		model.addAttribute(pagingVO);
-		model.addAttribute("boardList", boardList);
+//		model.addAttribute("boardList", boardList);
 		
 		return "main/community/academic";
 	}
@@ -85,7 +86,15 @@ public class NoticeViewController {
 	}
 	
 	@RequestMapping("/main/community/scholarshipList.do")
-	public String scholarshipList() {
+	public String scholarshipList(
+			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
+			, @RequestParam(value="searchType", required=false) String searchType
+			, @RequestParam(value="searchWord", required=false) String searchWord
+			, Model model
+			) {
+		
+		bo_name = "장학공지";
+		academicList(currentPage, searchType, searchWord, model);
 		return "main/community/scholarship";
 	}
 	
