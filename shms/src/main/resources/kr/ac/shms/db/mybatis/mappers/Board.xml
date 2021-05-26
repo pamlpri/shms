@@ -81,7 +81,9 @@
 						TO_CHAR(BO_WRITE_DE, 'YYYY.MM.DD') BO_WRITE_DE, 
 						BO_HIT,
 						BO_PASSWORD, 
-						BO_SECRET_AT 
+						BO_SECRET_AT,
+						BO_WRITER,
+						UNIV_INQRY_KIND 
 					FROM BOARD 
 					WHERE BO_KIND = #{searchMap.bo_kind}
 				) A
