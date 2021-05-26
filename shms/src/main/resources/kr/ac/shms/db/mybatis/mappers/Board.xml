@@ -47,10 +47,16 @@
 				<when test="searchMap.searchType eq 'content'">
 					INSTR(BO_CONT, #{searchMap.searchWord}) > 0
 				</when>
+				<when test="searchMap.searchType eq 'writer'">
+					INSTR(BO_WRITER, #{searchMap.searchWord}) > 0
+				</when>
 				<otherwise>
 					INSTR(BO_TITLE, #{searchMap.searchWord}) > 0
 					OR 
 					INSTR(BO_CONT, #{searchMap.searchWord}) > 0
+					<if test="searchMap.bo_kind eq 'DM'">
+						OR INSTR(BO_WRITER, #{searchMap.searchWord}) > 0 
+					</if>
 				</otherwise>
 			</choose>
 		</if>
@@ -84,9 +90,17 @@
 						BO_PASSWORD, 
 						BO_SECRET_AT,
 						BO_ANS,
-						UNIV_INQRY_KIND 
-					FROM BOARD 
+						A.UNIV_INQRY_KIND,
+						B.COM_CODE_NM INQRY_KIND_NAME 
+					FROM BOARD A
+		            LEFT OUTER JOIN TB_COM_CODE B
+		            ON (A.UNIV_INQRY_KIND = B.COM_CODE)
 					WHERE BO_KIND = #{searchMap.bo_kind}
+					<if test="searchMap.bo_kind eq 'DM'">
+		              AND B.CODE_GRP =  (SELECT CODE_GRP 
+		                                  FROM TB_CODE_GRP
+		                                 WHERE CODE_GRP_NM = 'UNIV_INQRY_KIND')
+					</if>
 				) A
 		  	<trim prefix="WHERE">
 		  		<include refid="searchFrag"/>

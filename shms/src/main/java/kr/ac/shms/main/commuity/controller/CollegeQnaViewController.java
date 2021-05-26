@@ -36,7 +36,7 @@ public class CollegeQnaViewController {
 	@Inject
 	private BoardService service;
 	
-//	@RequestMapping("/main/community/collegeQnaList.do")
+	@RequestMapping("/main/community/collegeQnaList.do")
 	public String collegeQnaList(
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchType", required=false) String searchType
@@ -67,7 +67,7 @@ public class CollegeQnaViewController {
 		return "main/community/collegeQna";
 	}
 	
-//	@RequestMapping("/main/community/collegeQnaView.do")
+	@RequestMapping("/main/community/collegeQnaView.do")
 	public String collegeQnaView() {
 		return "main/community/collegeQnaView";
 	}

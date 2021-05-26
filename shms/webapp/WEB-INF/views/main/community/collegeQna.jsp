@@ -33,6 +33,7 @@
 						<option value>전체</option>
 						<option value="title">제목</option>
 						<option value="content">내용</option>
+						<option value="writer">작성자</option>
 					</select>
 				</div>
 				<div class="col-md-7">
@@ -61,7 +62,7 @@
 	                           <th scope="row" class="text-center">${board.p_bo_no }</th>
 								<td>
 									<a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do">
-										<span class="dept">[입시지원팀]</span>${board.bo_title }
+										<span class="dept">[${board.inqry_kind_name }]</span>${board.bo_title }
 										<c:if test="${board.bo_secret_at eq 'Y' }">
 											<i class="fas fa-key"></i>
 										</c:if>
@@ -88,35 +89,8 @@
 	                    		</tr>
 	                    	</c:otherwise>
 	                    </c:choose>						
-						<tr>
-							<th scope="row" class="text-center">10</th>
-							<td><a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do"><span
-									class="dept">[입시지원팀]</span>입시문의드려요!<i class="fas fa-key"></i></a></td>
-							<td class="text-center">박*원</td>
-							<td class="text-center">2020.05.05</td>
-							<td class="text-center"><span class="wait">대기</span></td>
-						</tr>
 					</tbody>
 				</table>
-<!-- 				<nav aria-label="Page navigation example" class="pagination"> -->
-<!-- 					<ul class="pagination  justify-content-center"> -->
-<!-- 						<li class="page-item"><a class="page-link" href="#" -->
-<!-- 							aria-label="Previous"> <span aria-hidden="true">&lt;&lt;</span> -->
-<!-- 						</a></li> -->
-<!-- 						<li class="page-item"><a class="page-link" href="#" -->
-<!-- 							aria-label="Previous"> <span aria-hidden="true">&lt;</span> -->
-<!-- 						</a></li> -->
-<!-- 						<li class="page-item"><a class="page-link page" href="#">1</a></li> -->
-<!-- 						<li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 						<li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!-- 						<li class="page-item"><a class="page-link" href="#" -->
-<!-- 							aria-label="Next"> <span aria-hidden="true">&gt;</span> -->
-<!-- 						</a></li> -->
-<!-- 						<li class="page-item"><a class="page-link" href="#" -->
-<!-- 							aria-label="Next"> <span aria-hidden="true">&gt;&gt;</span> -->
-<!-- 						</a></li> -->
-<!-- 					</ul> -->
-<!-- 				</nav> -->
 				<div id="pagingArea" class="d-flex justify-content-center">
 					${pagingVO.pagingHTMLBS }
 				</div>

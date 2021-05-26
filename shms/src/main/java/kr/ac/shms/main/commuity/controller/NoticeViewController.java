@@ -49,7 +49,6 @@ public class NoticeViewController {
 			, String searchWord
 			, Model model
 			, String bo_name
-			, String inqry_kind
 			) {
 		
 		String bo_kind = service.selectBoKind(bo_name);
@@ -61,7 +60,6 @@ public class NoticeViewController {
 		searchMap.put("searchType", searchType);
 		searchMap.put("searchWord", searchWord);
 		searchMap.put("bo_kind", bo_kind);
-		searchMap.put("inqry_kind", inqry_kind);
 		pagingVO.setSearchMap(searchMap);
 		
 		int totalRecord = service.selectBoardCount(pagingVO);
@@ -81,7 +79,7 @@ public class NoticeViewController {
 			, Model model
 			) {
 		String bo_name = "학사공지";
-		setting(currentPage, searchType, searchWord, model, bo_name, null);
+		setting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/academic";
 	}
 	
@@ -103,7 +101,7 @@ public class NoticeViewController {
 			, Model model
 			) {
 		String bo_name = "장학공지";
-		setting(currentPage, searchType, searchWord, model, bo_name, null);
+		setting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/scholarship";
 	}
 	
@@ -125,31 +123,8 @@ public class NoticeViewController {
 			, Model model
 			) {
 		String bo_name = "자료실";
-		setting(currentPage, searchType, searchWord, model, bo_name, null);
+		setting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/reference";
 	}
 	
-	@RequestMapping("/main/community/referenceView.do")
-	public String referenceView() {
-		return "main/community/referenceView";
-	}
-	
-	@RequestMapping("/main/community/collegeQnaList.do")
-	public String collegeQnaList(
-			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
-			, @RequestParam(value="searchType", required=false) String searchType
-			, @RequestParam(value="searchWord", required=false) String searchWord
-			, @RequestParam(value="inqry_kind", required=false) String inqry_kind
-			, Model model
-			) {
-		String bo_name = "대학문의";
-		setting(currentPage, searchType, searchWord, model, bo_name, inqry_kind);
-		
-		return "main/community/collegeQna";
-	}
-	
-	@RequestMapping("/main/community/collegeQnaView.do")
-	public String collegeQnaView() {
-		return "main/community/collegeQnaView";
-	}
 }
