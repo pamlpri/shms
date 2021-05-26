@@ -18,7 +18,7 @@
 <div class="page-heading">
 	<nav aria-label="breadcrumb" id="headerTopWrap">
 		<ol class="breadcrumb breadcrumb-right">
-			<li id="UserName">${user }</li>
+			<li id="UserName">${userName }</li>
 			<li><a href="${cPath}/lms/logout.do" class="btn btn-primary">로그아웃</a></li>
 		</ol>
 	</nav>

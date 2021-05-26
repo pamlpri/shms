@@ -14,6 +14,8 @@ package kr.ac.shms.common.login;
  * </pre>
  */
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -42,9 +44,14 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {		
 		HttpSession session = request.getSession();
 		UserLoginVO vo = loginDAO.selectMemberForAuth(authentication.getName());
-		session.setAttribute("user", vo.getUser_id());
+		String userInfo[] = new String[2];
+		userInfo[0] = vo.getUser_id();
+		userInfo[1] = vo.getAuth_grp_code();
+		Map<String, String[]> userMap = new HashMap<>();
+		userMap.put("user", userInfo);
+		session.setAttribute("user", userMap);
 		String view="";
-		if("HS".equals(vo.getUser_section())) {
+		if("ST".equals(vo.getUser_section())) {
 			view = request.getContextPath()+"/lms/index.do";
 		} else {
 			view = request.getContextPath()+"/lms/main.do";

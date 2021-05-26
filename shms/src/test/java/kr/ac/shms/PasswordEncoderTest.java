@@ -22,8 +22,13 @@ public class PasswordEncoderTest {
 
 	@Test
 	public void test() {
-		String plain = "710302";
-		System.out.println(encoder.encode(plain));
+		String plain1 = "710210";
+		System.out.println("plain1" + encoder.encode(plain1));
+		String plain2 = "800505";
+		System.out.println("plain2" + encoder.encode(plain2));
+		String plain3 = "850111";
+		System.out.println("plain3" + encoder.encode(plain3));
+		
 		
 //		String encoded = "{bcrypt}$2a$10$5Dwy8ZLe4s1iISXRiM374uY7ZLhIN7uGX6ecInYXY4UDrd9alb1va";
 //		System.out.println(encoder.matches(plain, encoded));

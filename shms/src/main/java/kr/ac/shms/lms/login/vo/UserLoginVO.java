@@ -24,9 +24,11 @@ import lombok.NoArgsConstructor;
 public class UserLoginVO {
 	private String user_id;
 	private String user_password;
-	private String user_section;
-	private String dept_code;
 	private String user_name;
+	private String user_section;
+	private String auth_grp_code;
+	private String dept_code;
+	private String sub_code;
 	
 	public UserLoginVO(String user_id, String user_password) {
 		super();

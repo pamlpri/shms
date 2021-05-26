@@ -12,3 +12,5 @@ TARGET
 */RemoteSystemsTempFiles/*
 */.settings/*
 */.classpath
+/.recommenders/
+exerd/.project
