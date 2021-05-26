@@ -30,6 +30,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * --------     --------    ----------------------
  * 2021. 5. 20.      박초원      	       최초작성
  * 2021. 5. 25.      송수미      	       학사공지 리스트 페이지 구현
+ * 2021. 5. 26.      송수미      	       장학공지, 자료실, 대학문의 리스트 페이지 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -42,14 +43,12 @@ public class NoticeViewController {
 	@Inject
 	private BoardService service;
 	
-	private String bo_name = "학사공지";
-	
-	@RequestMapping("/main/community/academicList.do")
-	public String academicList(
-			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
-			, @RequestParam(value="searchType", required=false) String searchType
-			, @RequestParam(value="searchWord", required=false) String searchWord
+	private void setting(
+			int currentPage
+			, String searchType
+			, String searchWord
 			, Model model
+			, String bo_name
 			) {
 		
 		String bo_kind = service.selectBoKind(bo_name);
@@ -68,10 +67,19 @@ public class NoticeViewController {
 		
 		List<BoardVO> boardList = service.selectBoardList(pagingVO);
 		pagingVO.setDataList(boardList);
-//		logger.info("boardList : {}" , boardList.toString());
 		model.addAttribute(pagingVO);
-//		model.addAttribute("boardList", boardList);
 		
+	}
+	
+	@RequestMapping("/main/community/academicList.do")
+	public String academicList(
+			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
+			, @RequestParam(value="searchType", required=false) String searchType
+			, @RequestParam(value="searchWord", required=false) String searchWord
+			, Model model
+			) {
+		String bo_name = "학사공지";
+		setting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/academic";
 	}
 	
@@ -92,9 +100,8 @@ public class NoticeViewController {
 			, @RequestParam(value="searchWord", required=false) String searchWord
 			, Model model
 			) {
-		
-		bo_name = "장학공지";
-		academicList(currentPage, searchType, searchWord, model);
+		String bo_name = "장학공지";
+		setting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/scholarship";
 	}
 	
@@ -109,12 +116,15 @@ public class NoticeViewController {
 	}
 	
 	@RequestMapping("/main/community/referenceList.do")
-	public String referenceList() {
+	public String referenceList(
+			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
+			, @RequestParam(value="searchType", required=false) String searchType
+			, @RequestParam(value="searchWord", required=false) String searchWord
+			, Model model
+			) {
+		String bo_name = "자료실";
+		setting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/reference";
 	}
 	
-	@RequestMapping("/main/community/referenceView.do")
-	public String referenceView() {
-		return "main/community/referenceView";
-	}
 }

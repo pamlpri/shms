@@ -34,5 +34,6 @@ public class BoardVO implements Serializable{
 	private String ans_writer;
 	private String ans_de;
 	private String bo_name;		// 학사공지, 장학공지
+	private String inqry_kind_name;	// 편의시설문의, 학사일정문의, 장학금문의
 	
 }

@@ -59,7 +59,7 @@
 	                    		<c:forEach items="${pagingVO.dataList }" var="board">
 	                         <tr>
 	                           <th scope="row" class="text-center">${board.p_bo_no }</th>
-	                           <td class="text-center"><a class="text-color" href="${cPath }/main/community/academicView.do?${board.bo_no}">${board.bo_title }</a></td>
+	                           <td class="text-center"><a class="text-color" href="${cPath }/main/community/scholarshipView.do?${board.bo_no}">${board.bo_title }</a></td>
 	                           <td class="text-center">${board.bo_write_de }</td>
 	                           <td class="text-center">${board.bo_hit }</td>
 	                         </tr>
@@ -82,8 +82,8 @@
 </div>
 <script type="text/javascript">
 	$(function(){
-		$(".sideMain").eq(0).children("a").addClass("navy");
-		$(".sideMain").eq(0).children(".sideSub").addClass("cur");
+		$(".sideMain").eq(1).children("a").addClass("navy");
+		$(".sideMain").eq(1).children(".sideSub").addClass("cur");
 	});
 	
 	searchForm = $('#searchForm');
