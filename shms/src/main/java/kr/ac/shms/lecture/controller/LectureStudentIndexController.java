@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,12 +40,12 @@ public class LectureStudentIndexController {
 	
 	@RequestMapping("/lecture/index.do")
 	public String index(
-		HttpSession session
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, HttpSession session
 		,Model model
 	) {
-		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
 		StudentVO studentVO = lectureStudentService.student(user.getUser_id());
-		model.addAttribute("student", studentVO);
+		session.setAttribute("user", studentVO.getName());
 		return "lecture/main";
 	}
 }
