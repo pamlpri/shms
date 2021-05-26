@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd" >
+
+<!--  [[개정이력(Modification Information)]]       -->
+<!--  수정일        		수정자     수정내용               -->
+<!--  ==========   ======    ==============        -->
+<!--  2021. 5. 20.     박초원           최초작성               -->
+<!--  2021. 5. 24.     박초원            lms 사이트 tiles 수정   -->
+<!--  Copyright (c) ${year} by DDIT All right reserved -->
+
 <tiles-definitions>
    <!-- 메인사이트 index -->
   <definition name="main" template="/WEB-INF/views/mainTemplate.jsp">
