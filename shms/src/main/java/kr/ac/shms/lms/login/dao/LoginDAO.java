@@ -4,15 +4,21 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-
+/**
+ * @author 최희수
+ * @since 2021-05-22
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021-05-22      최희수          최초작성
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 @Repository
 public interface LoginDAO {
-	/**
-	 * login 체크
-	 * @param user
-	 * @return "OK" 이면 성공, "FAIL" 이면 실패, "INVALIDPASSWORD" 이면 비밀번호 불일치, 
-	 */
-	public UserLoginVO checkLogin(UserLoginVO user);
 	/**
 	 * PK 를 기준으로 한명의 회원 조회(인증용)
 	 * @param mem_id

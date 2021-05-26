@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 26.      최희수	userName을 session 에 불러와서 적용
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,7 +18,7 @@
 <div class="page-heading">
 	<nav aria-label="breadcrumb" id="headerTopWrap">
 		<ol class="breadcrumb breadcrumb-right">
-			<li id="UserName">${user.user_name }</li>
+			<li id="UserName">${user }</li>
 			<li><a href="${cPath}/lms/logout.do" class="btn btn-primary">로그아웃</a></li>
 		</ol>
 	</nav>

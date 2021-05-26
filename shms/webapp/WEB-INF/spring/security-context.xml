@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--  [[개정이력(Modification Information)]]       -->
+<!--  수정일        수정자     수정내용               -->
+<!--  ==========   ======    ==============        -->
+<!--  2021. 05. 25.     최희수	최초작성               -->
+<!--  Copyright (c) ${year} by DDIT All right reserved -->
 <beans:beans
 	xmlns="http://www.springframework.org/schema/security" 
 	xmlns:beans="http://www.springframework.org/schema/beans"
@@ -25,22 +30,22 @@
 		<form-login login-page="/lms/login.do" 
 			login-processing-url="/lms/loginProcess.do"
 			username-parameter="user_id"
-			password-parameter="user_password"		
+			password-parameter="user_password"
+			authentication-success-handler-ref="userLoginSuccessHandler"
+			authentication-failure-handler-ref="userLoginFailHandler"
 		/>
 		
-		<logout logout-url="/lms/logout.do" logout-success-url="/" 
-		        invalidate-session="true"/>
+		<logout logout-url="/lms/logout.do" logout-success-url="/lms/login.do" invalidate-session="true"/>
 	
-<!-- 		<intercept-url pattern="/mypage.do" access="isAuthenticated()"/> -->
-<!-- 		<intercept-url pattern="/member/memberList.do" access="hasRole('ROLE_ADMIN')"/> -->
+		<intercept-url pattern="/main**" access="permitAll"/>
 		<intercept-url pattern="/lms/login*" access="permitAll"/>
 		<intercept-url pattern="/lms/**" access="isAuthenticated()"/>		
-<!-- 		<intercept-url pattern="/lms/**" access="hasAnyRole('HS', 'GS', 'HJ')"/> -->
-<!-- 		<intercept-url pattern="/**" access="permitAll"/> -->
 		
 		<csrf disabled="true"/>
 	</http>
-
+	
+	<beans:bean id="userLoginSuccessHandler" class="kr.ac.shms.common.login.UserLoginSuccessHandler" />
+	<beans:bean id="userLoginFailHandler" class="kr.ac.shms.common.login.UserLoginFailHandler" />
 </beans:beans>
 
 

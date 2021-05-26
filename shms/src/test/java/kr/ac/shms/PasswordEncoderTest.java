@@ -22,11 +22,11 @@ public class PasswordEncoderTest {
 
 	@Test
 	public void test() {
-		String plain = "java";
+		String plain = "710302";
 		System.out.println(encoder.encode(plain));
 		
-		String encoded = "{bcrypt}$2a$10$5Dwy8ZLe4s1iISXRiM374uY7ZLhIN7uGX6ecInYXY4UDrd9alb1va";
-		System.out.println(encoder.matches(plain, encoded));
+//		String encoded = "{bcrypt}$2a$10$5Dwy8ZLe4s1iISXRiM374uY7ZLhIN7uGX6ecInYXY4UDrd9alb1va";
+//		System.out.println(encoder.matches(plain, encoded));
 	}
 
 }

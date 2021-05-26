@@ -3,7 +3,8 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
-* Copyright (c) ${year} by DDIT All right reserved
+* 2021. 5. 22.      최희수       로그인 form action 추가
+* Copyright (c) 2021 by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -62,6 +63,8 @@
 							<h2 class="text-center text-primary">Login To LMS</h2>
 						</div>
 						<form action="${cPath }/lms/loginProcess.do" method="post">
+							<label>${errorMsg }</label>
+							<c:remove var="errorMsg" scope="session"/>
 							<div class="input-group custom">
 								<input type="text" name="user_id" class="form-control form-control-lg" placeholder="id" value="${cookie.checkID.value }">
 								<div class="input-group-append custom">

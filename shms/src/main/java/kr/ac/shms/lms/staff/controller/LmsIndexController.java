@@ -1,7 +1,20 @@
 package kr.ac.shms.lms.staff.controller;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+/**
+ * @author 최희수
+ * @since 2021. 05. 22.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 05. 22.  사용자명          최초작성
+ * 2021. 05. 26.  최희수             사용자명을 session 에 저장
+ * Copyright (c) ${year} by DDIT All right reserved
+ * </pre>
+ */
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +31,16 @@ import kr.ac.shms.lms.staff.service.LmsStaffService;
 public class LmsIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LmsIndexController.class);
 	@Inject
-	private LmsStaffService service;
+	private LmsStaffService lmsStaffSservice;
 	
 	@RequestMapping("/lms/main.do")
 	public String index(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, HttpSession session
 		, Model model
 	){
-//		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
-		StaffVO staffVO = service.staff(user.getUser_id());
+		StaffVO staffVO = lmsStaffSservice.staff(user.getUser_id());
+		session.setAttribute("user", staffVO.getName());
 		if(staffVO != null) {
 			model.addAttribute("staff", staffVO);
 		}
