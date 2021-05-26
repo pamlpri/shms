@@ -5,13 +5,14 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.ac.shms.common.vo.StaffVO;
-import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
  * @author 박초원
@@ -20,9 +21,10 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일                          수정자               수정내용
+ * 수정일         수정자               수정내용
  * --------     --------    ----------------------
- * 2021. 5. 21.      박초원      	 최초작성
+ * 2021. 5. 21.  박초원      	 최초작성
+ * 2021. 5. 26.  김보미          수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -31,16 +33,17 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 public class LectureProfessorIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorIndexController.class);
 	@Inject
-	private LectureProfessorService lectureProfessorService;
+	private StudentService studentService;
 	
 	@RequestMapping("/lecture/main.do")
 	public String index(
-		HttpSession session
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, HttpSession session
 		,Model model
 	) {
-		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
-		StaffVO staffVO = lectureProfessorService.staff(user.getUser_id());
-		model.addAttribute("staff", staffVO);
+		StudentVO staffVO = studentService.student(user.getUser_id());
+		session.setAttribute("user", staffVO.getName());
+	
 		return "lecture/main";
 	}
 }
