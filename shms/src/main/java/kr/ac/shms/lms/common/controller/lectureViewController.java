@@ -29,10 +29,7 @@ public class lectureViewController {
 	@RequestMapping("/lms/lectureList.do")
 	public String lectureList(
 		HttpSession session
-		,Model model
 	) {
-		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
-		model.addAttribute("user", user);
 		return "lms/lecture";
 	}
 }
