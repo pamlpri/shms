@@ -31,7 +31,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 public class LectureProfessorIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorIndexController.class);
 	@Inject
-	private LectureProfessorService service;
+	private LectureProfessorService lectureProfessorService;
 	
 	@RequestMapping("/lecture/main.do")
 	public String index(
@@ -39,7 +39,7 @@ public class LectureProfessorIndexController {
 		,Model model
 	) {
 		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
-		StaffVO staffVO = service.staff(user.getUser_id());
+		StaffVO staffVO = lectureProfessorService.staff(user.getUser_id());
 		model.addAttribute("staff", staffVO);
 		return "lecture/main";
 	}

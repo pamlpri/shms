@@ -35,7 +35,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
 public class LectureStudentIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureStudentIndexController.class);
 	@Inject
-	private LectureStudentService service;
+	private LectureStudentService lectureStudentService;
 	
 	@RequestMapping("/lecture/index.do")
 	public String index(
@@ -43,7 +43,7 @@ public class LectureStudentIndexController {
 		,Model model
 	) {
 		UserLoginVO user = (UserLoginVO) session.getAttribute("user");
-		StudentVO studentVO = service.student(user.getUser_id());
+		StudentVO studentVO = lectureStudentService.student(user.getUser_id());
 		model.addAttribute("student", studentVO);
 		return "lecture/main";
 	}
