@@ -26,6 +26,27 @@
       <div class="sidebar-menu">
           <ul class="menu">
               <li class="sidebar-title">Menu</li>
+              <!-- 권한 : 학생, 교수, 모든 관리자 -->
+	            <li class="sidebar-item  has-sub">
+	                <a href="#" class="sidebar-link">
+	                    <i class="bi bi-envelope-fill"></i>
+	                    <span>웹메일</span>
+	                </a>
+	                <ul class="submenu">
+	                    <li class="submenu-item ">
+	                        <a href="compose.html">메일보내기</a>
+	                    </li>
+	                    <li class="submenu-item ">
+	                        <a href="inbox.html">받은메일</a>
+	                    </li>
+	                    <li class="submenu-item ">
+	                        <a href="send.html">보낸메일</a>
+	                    </li>
+	                    <li class="submenu-item ">
+	                        <a href="addressBook.html">주소록</a>
+	                    </li>
+	                </ul>
+	            </li>
               <!-- 권한 : 학생 -->
               <c:if test="${'ST' eq user.user[1] }">
 	              <li class="sidebar-item  has-sub">
@@ -666,27 +687,7 @@
 	                    </ul>
 	                </li>
                 </c:if>
-                <!-- 권한 : 학생, 교수, 모든 관리자 -->
-	            <li class="sidebar-item  has-sub">
-	                <a href="#" class="sidebar-link">
-	                    <i class="bi bi-envelope-fill"></i>
-	                    <span>웹메일</span>
-	                </a>
-	                <ul class="submenu">
-	                    <li class="submenu-item ">
-	                        <a href="compose.html">메일보내기</a>
-	                    </li>
-	                    <li class="submenu-item ">
-	                        <a href="inbox.html">받은메일</a>
-	                    </li>
-	                    <li class="submenu-item ">
-	                        <a href="send.html">보낸메일</a>
-	                    </li>
-	                    <li class="submenu-item ">
-	                        <a href="addressBook.html">주소록</a>
-	                    </li>
-	                </ul>
-	            </li>
+                
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
