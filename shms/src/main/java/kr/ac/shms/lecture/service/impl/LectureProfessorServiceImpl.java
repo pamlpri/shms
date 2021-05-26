@@ -25,11 +25,11 @@ import kr.ac.shms.lecture.service.LectureProfessorService;
 @Service
 public class LectureProfessorServiceImpl implements LectureProfessorService {
 	@Inject
-	private LectureProfessorDAO dao;
+	private LectureProfessorDAO lectureProfessorDAO;
 	
 	@Override
 	public StaffVO staff(String id) {
 		// TODO Auto-generated method stub
-		return dao.staff(id);
+		return lectureProfessorDAO.staff(id);
 	}
 }
