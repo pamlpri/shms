@@ -1,9 +1,10 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
-* ----------  ---------  -----------------
+* 수정일            수정자      수정내용
+* ----------      ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
 * 2021. 5. 22.      최희수       로그인 form action 추가
+* 2021. 5. 22.      박초원		로그인 validate 에러 효과 추가
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -62,21 +63,34 @@
 						<div class="login-title">
 							<h2 class="text-center text-primary">Login To LMS</h2>
 						</div>
-						<form action="${cPath }/lms/loginProcess.do" method="post">
-							<label>${errorMsg }</label>
-							<c:remove var="errorMsg" scope="session"/>
-							<div class="input-group custom">
-								<input type="text" name="user_id" class="form-control form-control-lg" placeholder="id" value="${cookie.checkID.value }">
-								<div class="input-group-append custom">
-									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+						<form action="${cPath }/lms/loginProcess.do" method="post" id="loginForm">
+							<c:choose>
+								<c:when test="${not empty errorMsg }">
+								<div class="input-group custom">
+		                            <input type="text" name="user_id" class="form-control form-control-lg is-invalid" placeholder="id" value="${cookie.checkID.value }">
 								</div>
-							</div>
-							<div class="input-group custom">
-								<input type="password" name="user_password" class="form-control form-control-lg" placeholder="**********">
-								<div class="input-group-append custom">
-									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+								<div class="input-group custom">
+									<input type="password" name="user_password" class="form-control form-control-lg is-invalid" placeholder="**********">
+									<div class="invalid-feedback">
+		                                <i class="bx bx-radio-circle"></i>
+		                                ${errorMsg }
+										<c:remove var="errorMsg" scope="session"/>
+		                            </div>
 								</div>
-							</div>
+								</c:when>
+								<c:otherwise>
+									<div class="input-group custom">	
+										<input type="text" name="user_id" class="form-control form-control-lg" placeholder="id" value="${cookie.checkID.value }">
+										<div class="input-group-append custom">
+											<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+										</div>
+									</div>
+									<div class="input-group custom">
+										<input type="password" name="user_password" class="form-control form-control-lg" placeholder="**********">
+									</div>
+								</c:otherwise>
+							</c:choose>
+						
 							<div class="row pb-30">
 								<div class="col-6">
 									<div class="custom-control custom-checkbox">
@@ -117,5 +131,6 @@
 	<script src="${cPath }/resources/lms/vendors/scripts/script.min.js"></script>
 	<script src="${cPath }/resources/lms/vendors/scripts/process.js"></script>
 	<script src="${cPath }/resources/lms/vendors/scripts/layout-settings.js"></script>
+	
 </body>
 </html>
