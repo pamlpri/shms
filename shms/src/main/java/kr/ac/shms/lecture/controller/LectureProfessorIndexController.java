@@ -25,7 +25,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
  * --------     --------    ----------------------
  * 2021. 5. 21.  박초원      	 최초작성
  * 2021. 5. 26.  김보미          수정
- * 2021. 5. 27   김보미       service, vo 수정
+ * 2021. 5. 27   김보미          교수전용페이지로 이동하기 위한 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -43,8 +43,10 @@ public class LectureProfessorIndexController {
 		,Model model
 	) {
 		StaffVO staffVO = lectureProfessorService.staff(user.getUser_id());
-		session.setAttribute("user", staffVO.getName());
-	
+		
+		if("PR".equals(user.getUser_section())) {
+			session.setAttribute("staff", staffVO.getName());
+		}
 		return "lecture/main";
 	}
 }
