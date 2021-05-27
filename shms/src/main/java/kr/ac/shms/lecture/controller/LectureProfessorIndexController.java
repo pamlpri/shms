@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.lms.student.service.StudentService;
-import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
  * @author 박초원
@@ -21,10 +21,11 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일         수정자               수정내용
+ * 수정일         수정자          수정내용
  * --------     --------    ----------------------
  * 2021. 5. 21.  박초원      	 최초작성
  * 2021. 5. 26.  김보미          수정
+ * 2021. 5. 27   김보미       service, vo 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -33,7 +34,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
 public class LectureProfessorIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorIndexController.class);
 	@Inject
-	private StudentService studentService;
+	private LectureProfessorService lectureProfessorService;
 	
 	@RequestMapping("/lecture/main.do")
 	public String index(
@@ -41,7 +42,7 @@ public class LectureProfessorIndexController {
 		, HttpSession session
 		,Model model
 	) {
-		StudentVO staffVO = studentService.student(user.getUser_id());
+		StaffVO staffVO = lectureProfessorService.staff(user.getUser_id());
 		session.setAttribute("user", staffVO.getName());
 	
 		return "lecture/main";
