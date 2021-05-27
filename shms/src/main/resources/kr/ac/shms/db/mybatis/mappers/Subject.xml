@@ -20,7 +20,10 @@
 	</select>
 	
 	<select id="selectProf" parameterType="String" resultType="StaffVO">
+ 		SELECT A.*
+	       FROM (
 	     SELECT
+	        row_number () over (order by (DECODE(B.SUB_CODE, null, 'N', 'Y')) desc, encpn_de, name) rn,
 	        A.staff_no,
 	        dept_code,
 	        A.sub_code,
@@ -31,7 +34,7 @@
 	        staff_rspofc,
 	        prof_at,
 	        name,
-	        A.tel_no,
+	        a.tel_no,
 	        regno1,
 	        regno2,
 	        gen,
@@ -43,12 +46,16 @@
 	        account,
 	        bank_name,
 	        photo_path,
-	        DECODE(B.sub_code, null, 'N', 'Y') dean_at 
+	        DECODE(B.SUB_CODE, null, 'N', 'Y') DEAN_AT 
 	    FROM
 	        staff A
-	        LEFT OUTER JOIN subject B
-	        ON(A.staff_no = B.staff_no)
-	    WHERE A.sub_code = #{sub_code, jdbcType=VARCHAR}
-	      AND prof_at = 'Y';
+	        LEFT OUTER JOIN SUBJECT B
+	        ON(A.STAFF_NO = B.STAFF_NO)
+	    WHERE A.SUB_CODE = '101'
+	      AND PROF_AT = 'Y'
+	    ) A
+	     <![CDATA[
+	    WHERE RN <= 4
+	    ]]>
 	</select>
 </mapper>

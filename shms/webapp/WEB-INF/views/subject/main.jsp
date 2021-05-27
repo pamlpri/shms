@@ -193,117 +193,27 @@
 			</div>
 		</div>
 		<div class="row justify-content-center d-flex align-items-center">
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t1.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>박진환</h4>
-					<p class="designation">데이터구조</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t2.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>이현이</h4>
-					<p class="designation">파이썬프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t3.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>장미옥</h4>
-					<p class="designation">마이크로프로세서</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>김명민</h4>
-					<p class="designation">자바 프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>김명민</h4>
-					<p class="designation">자바 프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>김명민</h4>
-					<p class="designation">자바 프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>김명민</h4>
-					<p class="designation">자바 프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>김명민</h4>
-					<p class="designation">자바 프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
-				<div class="thumb d-flex justify-content-sm-center">
-					<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
-				</div>
-				<div class="meta-text text-sm-center">
-					<h4>김명민</h4>
-					<p class="designation">자바 프로그래밍</p>
-					<div class="align-items-center justify-content-center d-flex">
-						<p>adfd@shms.co.kr</p>
-					</div>
-				</div>
-			</div>
+			<c:choose>
+				<c:when test="${not empty profList }">
+					<c:forEach items="${profList }" var="prof">
+						<div class="col-lg-3 col-md-6 col-sm-12 single-trainer">
+							<div class="thumb d-flex justify-content-sm-center">
+								<img class="img-fluid" src="${cPath }/resources/subject/img/trainer/t4.jpg" alt="" />
+							</div>
+							<div class="meta-text text-sm-center">
+								<h4>${prof.name }</h4>
+								<p class="designation">${prof.tel_no }</p>
+								<div class="align-items-center justify-content-center d-flex">
+									<p>${prof.webmail }</p>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					등록된 교수 정보가 없습니다.
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </section>
