@@ -12,7 +12,7 @@
 		FROM TB_COM_CODE
 		WHERE code_grp = 'G03'
 	</select>
-	<select id="subjectList" resultType="kr.ac.shms.main.commuity.vo.SubjectVO">
+	<select id="subjectList" resultType="SubjectVO">
 		SELECT *
 		FROM SUBJECT
 	</select>

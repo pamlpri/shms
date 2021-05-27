@@ -94,16 +94,16 @@
   </definition>
   
    <!-- 학과사이트 -->
-  <definition name="major" template="/WEB-INF/views/majorTemplate.jsp">
-  	<put-attribute name="majorTitle" value="인재대학교 학과안내"/>
-  	<put-attribute name="majorPreScript" value="/resources/includee/major_preScript.jsp"/>
-  	<put-attribute name="majorHeader" value="/resources/includee/major_header.jsp" />
-  	<put-attribute name="majorFooter" value="/resources/includee/major_footer.jsp" />
-  	<put-attribute name="majorPostScript" value="/resources/includee/major_postScript.jsp"/>
+  <definition name="subject" template="/WEB-INF/views/subjectTemplate.jsp">
+  	<put-attribute name="subjectTitle" value="인재대학교 학과안내"/>
+  	<put-attribute name="subjectPreScript" value="/resources/includee/subject_preScript.jsp"/>
+  	<put-attribute name="subjectHeader" value="/resources/includee/subject_header.jsp" />
+  	<put-attribute name="subjectFooter" value="/resources/includee/subject_footer.jsp" />
+  	<put-attribute name="subjectPostScript" value="/resources/includee/subject_postScript.jsp"/>
   </definition>
   
-  <definition name="major/main" extends="major">
-  	<put-attribute name="majorContent" value="/WEB-INF/views/major/main.jsp" />
+  <definition name="subject/main" extends="subject">
+  	<put-attribute name="subjectContent" value="/WEB-INF/views/subject/main.jsp" />
   </definition>
 </tiles-definitions>
 

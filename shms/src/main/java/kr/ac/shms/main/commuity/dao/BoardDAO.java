@@ -1,6 +1,7 @@
 package kr.ac.shms.main.commuity.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -8,12 +9,17 @@ import kr.ac.shms.main.commuity.vo.BoardVO;
 import kr.ac.shms.main.commuity.vo.PagingVO;
 
 /**
- * 메인 페이지 게시글 관리를 위한 persistence layer
- *
- */
-/**
- * @author PC-14
- *
+ * @author 송수미
+ * @since 2021. 5. 25.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 25.      송수미       최초작성
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
  */
 @Repository
 public interface BoardDAO {
@@ -25,10 +31,10 @@ public interface BoardDAO {
 	public String selectBoKind(String bo_name);
 	/**
 	 * Main page 띄우기 위한 게시글 조회
-	 * @param bo_name 게시글 분류 명
+	 * @param search 게시글 분류 명
 	 * @return bo_kind에 해당하는 게시글의 최근 5개 글
 	 */
-	public List<BoardVO> selectForMain(String bo_name);
+	public List<BoardVO> selectForMain(Map<String, String> search);
 	/**
 	 * 게시글 개수 조회
 	 * @param pagingVO bo_kind, searchMap

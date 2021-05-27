@@ -23,7 +23,7 @@ public class StaffVO {
 	private String staff_rspofc;
 	private String prof_at;
 	private String name;
-	private String telno;
+	private String tel_no;
 	private String regno1;
 	private String regno2;
 	private String gen;
@@ -35,4 +35,5 @@ public class StaffVO {
 	private String account;
 	private String bank_name;
 	private String photo_path;
+	private String dean_at;	// 학과장 여부
 }

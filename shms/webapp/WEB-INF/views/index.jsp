@@ -3,6 +3,8 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 25.      송수미        메인페이지 최신 글 조회
+* 2021. 5. 27.      송수미        url mapping 정보 오류 수정
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -120,7 +122,7 @@
                           		<c:forEach items="${dgList }" var="dgBoard">
 	                              <tr>
 	                                <th scope="row" class="text-center">${dgBoard.p_bo_no }</th>
-	                                <td class="text-center"><a href="${cPath }/main/community/academicView.do?${dgBoard.bo_no}">${dgBoard.bo_title }</a></td>
+	                                <td class="text-center"><a href="${cPath }/main/community/academicView.do?bo_no=${dgBoard.bo_no}">${dgBoard.bo_title }</a></td>
 	                                <td class="text-center">${dgBoard.bo_write_de }</td>
 	                                <td class="text-center">${dgBoard.bo_hit }</td>
 	                              </tr>
@@ -161,7 +163,7 @@
                           		<c:forEach items="${jgList }" var="jgBoard">
 	                              <tr>
 	                                <th scope="row" class="text-center">${jgBoard.p_bo_no }</th>
-	                                <td class="text-center"><a href="${cPath }/main/community/academicView.do?${jgBoard.bo_no}">${jgBoard.bo_title }</a></td>
+	                                <td class="text-center"><a href="${cPath }/main/community/academicView.do?bo_no=${jgBoard.bo_no}">${jgBoard.bo_title }</a></td>
 	                                <td class="text-center">${jgBoard.bo_write_de }</td>
 	                                <td class="text-center">${jgBoard.bo_hit }</td>
 	                              </tr>

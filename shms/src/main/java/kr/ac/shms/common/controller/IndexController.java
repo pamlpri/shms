@@ -1,7 +1,9 @@
 package kr.ac.shms.common.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -46,17 +48,15 @@ public class IndexController {
 			HttpServletRequest request
 			, HttpServletResponse response
 			, Model model ) throws IOException {
-		
-		List<BoardVO> dgList = service.selectForMain("학사공지");
-		List<BoardVO> jgList = service.selectForMain("장학공지");
-		
-		logger.info("dgList : {}", dgList.toString());
-		logger.info("jgList : {}", jgList.toString());
+		Map<String, String> search = new HashMap<>();
+		search.put("bo_name", "학사공지");
+		List<BoardVO> dgList = service.selectForMain(search);
+		search.put("bo_name", "장학공지");
+		List<BoardVO> jgList = service.selectForMain(search);
 		
 		model.addAttribute("jgList", jgList);
 		model.addAttribute("dgList", dgList);
 		
-//		System.out.println(request.isSecure());
 		if(!request.isSecure()) {
 			response.sendRedirect("https://localhost/shms");
 			return null;

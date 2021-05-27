@@ -12,22 +12,22 @@
 		<div class="col-lg-2 col-md-6 single-footer-widget">
 			<h4>학과소개</h4>
 			<ul>
-				<li><a href="aboutMajor.html">학과소개</a></li>
-				<li><a href="mapMajor.html">오시는길</a></li>
+				<li><a href="aboutSubject.html">학과소개</a></li>
+				<li><a href="mapSubject.html">오시는길</a></li>
 			</ul>
 		</div>
 		<div class="col-lg-2 col-md-6 single-footer-widget">
 			<h4>학과정보</h4>
 			<ul>
 				<li><a href="curriculum.html">교육과정</a></li>
-				<li><a href="scheduleMajor.html">학과일정</a></li>
+				<li><a href="scheduleSubject.html">학과일정</a></li>
 			</ul>
 		</div>
 		<div class="col-lg-2 col-md-6 single-footer-widget">
 			<h4>정보마당</h4>
 			<ul>
-				<li><a href="noticeMajor.html">학과공지</a></li>
-				<li><a href="qnaMajor.html">학과문의</a></li>
+				<li><a href="noticeSubject.html">학과공지</a></li>
+				<li><a href="qnaSubject.html">학과문의</a></li>
 			</ul>
 		</div>
 		<div class="col-lg-2 col-md-6 single-footer-widget">
@@ -39,10 +39,10 @@
 			</ul>
 		</div>
 		<div class="col-lg-4 col-md-6 single-footer-widget">
-			<h4>정보통신학과</h4>
+			<h4>${subject.sub_name }</h4>
 			<div class="form-wrap" id="mc_embed_signup">
 				<a class="navbar-brand logo_h" href="../main/index.html"><img
-					src="${cPath }/resources/major/img/logo2.png" alt="" /></a>
+					src="${cPath }/resources/subject/img/logo2.png" alt="" /></a>
 			</div>
 		</div>
 	</div>

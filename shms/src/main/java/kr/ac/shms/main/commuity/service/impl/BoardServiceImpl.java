@@ -1,6 +1,7 @@
 package kr.ac.shms.main.commuity.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -14,6 +15,19 @@ import kr.ac.shms.main.commuity.service.BoardService;
 import kr.ac.shms.main.commuity.vo.BoardVO;
 import kr.ac.shms.main.commuity.vo.PagingVO;
 
+/**
+ * @author 송수미
+ * @since 2021. 5. 25.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 25.      송수미       최초작성
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 @Service
 public class BoardServiceImpl implements BoardService{
 	private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
@@ -32,8 +46,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> selectForMain(String bo_name) {
-		return boardDAO.selectForMain(bo_name);
+	public List<BoardVO> selectForMain(Map<String, String> search) {
+		return boardDAO.selectForMain(search);
 	}
 
 	@Override
@@ -48,8 +62,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO selectBoard(int bo_no) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDAO.selectBoard(bo_no);
 	}
 
 	@Override
@@ -72,8 +85,13 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public ServiceResult incrementHit(int bo_no) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = boardDAO.incrementHit(bo_no);
+		if(cnt > 0) result = ServiceResult.OK;
+		
+		return result;
 	}
+
 	
 }

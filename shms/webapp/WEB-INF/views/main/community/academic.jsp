@@ -59,7 +59,7 @@
 	                    		<c:forEach items="${pagingVO.dataList }" var="board">
 	                         <tr>
 	                           <th scope="row" class="text-center">${board.p_bo_no }</th>
-	                           <td class="text-center"><a class="text-color" href="${cPath }/main/community/academicView.do?${board.bo_no}">${board.bo_title }</a></td>
+	                           <td class="text-center"><a class="text-color" href="${cPath }/main/community/academicView.do?bo_no=${board.bo_no}">${board.bo_title }</a></td>
 	                           <td class="text-center">${board.bo_write_de }</td>
 	                           <td class="text-center">${board.bo_hit }</td>
 	                         </tr>

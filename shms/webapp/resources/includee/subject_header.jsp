@@ -12,7 +12,7 @@
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<a class="navbar-brand logo_h" href="index.html">
-			<img src="${cPath }/resources/major/img/logo.png" alt="" /></a>
+			<img src="${cPath }/resources/subject/img/logo.png" alt="" /></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -29,9 +29,9 @@
 						role="button" aria-haspopup="true" aria-expanded="false">학과소개</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
-								href="aboutMajor.html">학과소개</a></li>
+								href="aboutSubject.html">학과소개</a></li>
 							<li class="nav-item"><a class="nav-link"
-								href="mapMajor.html">오시는길</a></li>
+								href="mapSubject.html">오시는길</a></li>
 						</ul>
 					</li>
 					<li class="nav-item submenu dropdown">
@@ -51,7 +51,7 @@
 							<li class="nav-item"><a class="nav-link"
 								href="curriculum.html">교육과정</a></li>
 							<li class="nav-item"><a class="nav-link"
-								href="scheduleMajor.html">학과일정</a></li>
+								href="scheduleSubject.html">학과일정</a></li>
 						</ul>
 					</li>
 					<li class="nav-item submenu dropdown">
@@ -60,9 +60,9 @@
 						role="button" aria-haspopup="true" aria-expanded="false">정보마당</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
-								href="noticeMajor.html">학과공지</a></li>
+								href="noticeSubject.html">학과공지</a></li>
 							<li class="nav-item"><a class="nav-link"
-								href="qnaMajor.html">학과문의</a></li>
+								href="qnaSubject.html">학과문의</a></li>
 						</ul>
 					</li>
 				</ul>

@@ -17,25 +17,25 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-	<title><tiles:getAsString name="majorTitle" /></title>
-	<tiles:insertAttribute name="majorPreScript" />
+	<title><tiles:getAsString name="subjectTitle" /></title>
+	<tiles:insertAttribute name="subjectPreScript" />
   </head>
 
   <body>
     <!--================ Start Header Menu Area =================-->
     <header class="header_area">
-      <tiles:insertAttribute name="majorHeader" />
+      <tiles:insertAttribute name="subjectHeader" />
     </header>
     <!--================ End Header Menu Area =================-->
 	
-	<tiles:insertAttribute name="majorContent"/>
+	<tiles:insertAttribute name="subjectContent"/>
     
     <!--================ Start footer Area  =================-->
     <footer class="footer-area section_gap">
-      <tiles:insertAttribute name="majorFooter"/>
+      <tiles:insertAttribute name="subjectFooter"/>
     </footer>
     <!--================ End footer Area  =================-->
     
-    <tiles:insertAttribute name="majorPostScript" />
+    <tiles:insertAttribute name="subjectPostScript" />
   </body>
 </html>

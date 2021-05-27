@@ -30,7 +30,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * --------     --------    ----------------------
  * 2021. 5. 20.      박초원      	       최초작성
  * 2021. 5. 25.      송수미      	       학사공지 리스트 페이지 구현
- * 2021. 5. 26.      송수미      	       장학공지, 자료실, 대학문의 리스트 페이지 구현
+ * 2021. 5. 26.      송수미      	       장학공지, 자료실 리스트 페이지 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -41,9 +41,9 @@ public class NoticeViewController {
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 	
 	@Inject
-	private BoardService service;
+	private BoardService boardService;
 	
-	private void setting(
+	private void listSetting(
 			int currentPage
 			, String searchType
 			, String searchWord
@@ -51,7 +51,7 @@ public class NoticeViewController {
 			, String bo_name
 			) {
 		
-		String bo_kind = service.selectBoKind(bo_name);
+		String bo_kind = boardService.selectBoKind(bo_name);
 		
 		PagingVO<BoardVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
@@ -62,12 +62,24 @@ public class NoticeViewController {
 		searchMap.put("bo_kind", bo_kind);
 		pagingVO.setSearchMap(searchMap);
 		
-		int totalRecord = service.selectBoardCount(pagingVO);
+		int totalRecord = boardService.selectBoardCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
-		List<BoardVO> boardList = service.selectBoardList(pagingVO);
+		List<BoardVO> boardList = boardService.selectBoardList(pagingVO);
 		pagingVO.setDataList(boardList);
 		model.addAttribute(pagingVO);
+		
+	}
+	
+	public void boardSetting(
+			int bo_no
+			, Model model
+			) {
+		BoardVO board = boardService.selectBoard(bo_no);
+		boardService.incrementHit(bo_no);
+		logger.info("board : {}", board.toString());
+		
+		model.addAttribute("board", board);
 		
 	}
 	
@@ -79,12 +91,16 @@ public class NoticeViewController {
 			, Model model
 			) {
 		String bo_name = "학사공지";
-		setting(currentPage, searchType, searchWord, model, bo_name);
+		listSetting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/academic";
 	}
 	
 	@RequestMapping("/main/community/academicView.do")
-	public String academicView() {
+	public String academicView(
+			@RequestParam("bo_no") int bo_no
+			, Model model
+			) {
+		boardSetting(bo_no, model);
 		return "main/community/academicView";
 	}
 	
@@ -101,12 +117,16 @@ public class NoticeViewController {
 			, Model model
 			) {
 		String bo_name = "장학공지";
-		setting(currentPage, searchType, searchWord, model, bo_name);
+		listSetting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/scholarship";
 	}
 	
 	@RequestMapping("/main/community/scholarshipView.do")
-	public String scholarshipView() {
+	public String scholarshipView(
+			@RequestParam("bo_no") int bo_no
+			, Model model
+			) {
+		boardSetting(bo_no, model);
 		return "main/community/scholarshipView";
 	}
 	
@@ -123,8 +143,16 @@ public class NoticeViewController {
 			, Model model
 			) {
 		String bo_name = "자료실";
-		setting(currentPage, searchType, searchWord, model, bo_name);
+		listSetting(currentPage, searchType, searchWord, model, bo_name);
 		return "main/community/reference";
 	}
 	
+	@RequestMapping("/main/community/referenceView.do")
+	public String referenceView(
+			@RequestParam("bo_no") int bo_no
+			, Model model
+			) {
+		boardSetting(bo_no, model);
+		return "main/community/referenceView";
+	}
 }

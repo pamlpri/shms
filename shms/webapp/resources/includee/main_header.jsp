@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 27.      송수미        입학안내, 학과 홈페이지 mapping 정보 수정
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -80,7 +81,7 @@
               입학안내
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="../admission/index.html">입학홈페이지</a>
+              <a class="dropdown-item" href="${cPath }/admission/main.do">입학홈페이지</a>
             </div>
           </li>
           <li class="nav-item dropdown view">
@@ -92,51 +93,51 @@
               <li>
                 <a class="dropdown-item subWrap" href="economics.html">경상대학</a>
                 <ul class="sub">
-                  <li><a class="text-navy-color" href="../major/index.html">경제학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">경영학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">무역학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">국제무역물류학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">금융보험학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=101">경제학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=102">경영학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=103">무역학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=104">국제무역물류학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=105">금융보험학과</a></li>
                 </ul>
               </li>
               <li>
                 <a class="dropdown-item subWrap" href="liberal.html">인문대학</a>
                 <ul class="sub">
-                  <li><a class="text-navy-color" href="../major/index.html">국어국문학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">독일어문학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">프랑스어문학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">심리학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">철학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=201">국어국문학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=202">독일어문학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=203">프랑스어문학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=204">심리학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=205">철학과</a></li>
                 </ul>
               </li>
               <li>
                 <a class="dropdown-item subWrap" href="social.html">사회과학대학</a>
                 <ul class="sub">
-                  <li><a class="text-navy-color" href="../major/index.html">사회복지학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">국제학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">사회학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">언론방송학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">행정학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=301">사회복지학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=302">국제학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=303">사회학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=304">언론방송학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=305">행정학과</a></li>
                 </ul>
               </li>
               <li>
                 <a class="dropdown-item subWrap" href="engineering.html">공학대학</a>
                 <ul class="sub">
-                  <li><a class="text-navy-color" href="../major/index.html">화학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">항공학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">기계공학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">자동차공학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">정보통신학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=401">화학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=402">항공학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=403">기계공학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=404">자동차공학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=405">정보통신학과</a></li>
                 </ul>
               </li>
               <li>
                 <a class="dropdown-item subWrap" href="health.html">보건대학</a>
                 <ul class="sub">
-                  <li><a class="text-navy-color" href="../major/index.html">간호학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">치위생과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">치기공과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">안경광학과</a></li>
-                  <li><a class="text-navy-color" href="../major/index.html">재활학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=501">간호학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=502">치위생과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=503">치기공과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=504">안경광학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=505">재활학과</a></li>
                 </ul>
               </li>
             </ul>
@@ -151,7 +152,7 @@
                 <a class="dropdown-item subWrap" href="${cPath }/main/community/academicList.do">학사공지</a>
                 <ul class="sub">
                   <li><a class="text-navy-color" href="${cPath }/main/community/academicList.do">학사공지</a></li>
-                  <li><a class="text-navy-color" href="${cPath }/main/community/regulations.do"">학칙열람</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/main/community/regulations.do">학칙열람</a></li>
                 </ul>
               </li>
               <li>
@@ -164,7 +165,7 @@
               <li style="margin-bottom: 10px;">
                 <a class="dropdown-item" href="${cPath }/main/community/collegeSchedule.do">대학일정</a>
               </li>
-              <li style="margin-bottom: 10px;"></li>
+              <li style="margin-bottom: 10px;">
                 <a class="dropdown-item" href="${cPath }/main/community/collegeQnaList.do">대학문의</a>
               </li>
               <li style="margin-bottom: 10px;">

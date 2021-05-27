@@ -20,10 +20,10 @@ public class LoginServiceImplTest {
 	
 	@Test
 	public void testAuthenticate() {
-		String plain = "001010";
+		String plain = "java";
 		String encoded = encoder.encode(plain);
 		System.out.println(encoded);
-		
+		//{bcrypt}$2a$10$SsBdI5OVCBes1uY/lO3bFugMqqlZO/MJxHqO0i01FzGA/wpeT5Tcy
 		boolean match = encoder.matches(plain, encoded);
 		System.out.println(match);
 	}

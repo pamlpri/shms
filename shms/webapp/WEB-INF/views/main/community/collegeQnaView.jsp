@@ -21,29 +21,28 @@
 	<table class="noticeView">
 		<thead>
 			<tr>
-				<td colspan="3" class="noticeTitle">[입시지원팀] 2021학년도 수시모집 일정
-					문의드려요!</td>
+				<td colspan="3" class="noticeTitle">
+					${board.bo_title }
+				</td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><span>작성자</span>박초원</td>
-				<td><span>작성일</span>2021.05.04</td>
-				<td><span>답변</span>완료</td>
+				<td><span>작성자</span>${board.bo_writer }</td>
+				<td><span>작성일</span>${board.bo_write_de }</td>
+				<td><span>답변</span>${not empty board.bo_ans? '완료' : '대기' }</td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="noticeContent">
-		안녕하세요!<br /> 2021학년도 수시일정이 어떻게 되나요?<br />
+		${board.bo_cont }
 	</div>
 	<div class="noticeAns">
 		<p class="userAns">
-			입시지원팀<span>2020.05.03</span>
+			${board.ans_writer }<span>${board.ans_de }</span>
 		</p>
 		<p class="contAns">
-			안녕하세요. 입시지원팀 입니다.<br /> 본교에 대한 관심에 진심으로 감사드리며, 질의하신 사항에 답변 드리겠습니다.<br />
-			수시 일정은 2021.02.14에 마감됩니다.<br /> 마감일을 확인해주시고 제출서류를 작성하여 우편으로 보내주시기
-			바랍니다.<br /> 감사합니다.
+			${board.bo_ans }
 		</p>
 	</div>
 	<div id="noticeBtnBox">

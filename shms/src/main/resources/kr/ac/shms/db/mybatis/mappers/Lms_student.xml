@@ -9,7 +9,7 @@
 		       empmnt_at,
 		       grade, 
 		       name,
-		       telno,
+		       tel_no,
 		       regno1,
 		       regno2,
 		       gen, 
