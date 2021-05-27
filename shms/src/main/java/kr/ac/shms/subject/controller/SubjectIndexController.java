@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.main.commuity.service.BoardService;
 import kr.ac.shms.main.commuity.vo.BoardVO;
 import kr.ac.shms.subject.service.SubjectService;
@@ -57,9 +58,13 @@ public class SubjectIndexController {
 		
 		SubjectVO subject = subjectService.selectSub(sub);
 		
+		List<StaffVO> profList = subjectService.selectProf(sub);
+		
 		model.addAttribute("hgList", hgList);
 		model.addAttribute("hmList", hmList);
 		model.addAttribute("subject", subject);
+		model.addAttribute("profList", profList);
+		
 		session.addAttribute("sub", sub);
 		
 		return "subject/main";
