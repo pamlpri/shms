@@ -7,6 +7,15 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+.fc-scrollgrid a { color:black; }
+.fc-day-sat a { color:blue;  }
+.fc-day-sun a { color:red;  }
+.fc-daygrid-event-dot { 
+   border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid #ff2020;
+}
+</style>
 <div id="location">
   <ul>
     <li class="first"><a class="text-color" href="${cPath }/main/community/academicList.do">대학광장</a></li>
@@ -70,68 +79,25 @@
         left: 'prevYear,prev',
         center: 'title',
         right: 'next,nextYear'
-      },
-      editable: false,
-      dayMaxEvents: true, // allow "more" link when too many events
-      events: [
-        {
-          title: '생일',
-          start: '2021-05-01'
-        },
-        {
-          title: '이벤트',
-          start: '2021-05-08',
-          end: '2021-05-10'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2021-05-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: '생일임',
-          start: '2021-05-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2020-09-11',
-          end: '2020-09-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T10:30:00',
-          end: '2020-09-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2020-09-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2020-09-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2020-09-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2020-09-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2020-09-28'
-        }
-      ]
+      }
+      , initialDate : new Date()
+      , navLinks : true // can click day/week names to navigate views
+	  , selectable : true
+	  , selectMirror : true
+      , editable: false
+      , dayMaxEvents: true
+      , events: "<c:url value='/main/community/scheduleprocess.do'/>"
+   	  , eventDidMount :function(event){
+            let el = event.el;
+            console.log(arguments);
+            console.log(el);
+            console.log(event);
+            let parentDIV = $(el).parents(".fc-daygrid-day-events");
+            let numDIV = $(parentDIV).siblings(".fc-daygrid-day-top:first");
+            $(numDIV).find("a").css("color", "red");
+         }
+   	  
     });
-
-    calendar.render();
 
     var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
       keyboard: false
@@ -144,6 +110,7 @@
     $(".modalClose").on("click", function(){
       myModal.hide();
     });
+    calendar.render();
   });
 </script>
 <script type="text/javascript">
