@@ -1,17 +1,24 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
+* 수정일        수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 20.  박초원        최초작성
+* 2021. 5. 27.  김보미      강의 개설 버튼 수정
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <div class="page-content">
 	<section class="section">
 		<div class="card">
 			<div class="card-body">
+			<c:choose>
+			<c:when test="${not empty staff}">
 				<a id="newLecture" href="" class="btn btn-primary">강의개설</a>
+			</c:when>
+			</c:choose>
 				<table class="table table-striped" id="table1">
 					<thead>
 						<tr>
