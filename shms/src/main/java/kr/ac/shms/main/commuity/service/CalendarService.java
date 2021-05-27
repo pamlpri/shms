@@ -5,7 +5,7 @@ import java.util.List;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.EventWrapper;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
-import kr.ac.shms.main.commuity.vo.SubjectVO;
+import kr.ac.shms.subject.vo.SubjectVO;
 
 public interface CalendarService {
 	/**

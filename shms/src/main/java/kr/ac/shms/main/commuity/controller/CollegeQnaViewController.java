@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +36,9 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
 public class CollegeQnaViewController {
 	
 	@Inject
-	private BoardService service;
+	private BoardService boardService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(CollegeQnaViewController.class);
 	
 	@RequestMapping("/main/community/collegeQnaList.do")
 	public String collegeQnaList(
@@ -45,7 +49,7 @@ public class CollegeQnaViewController {
 			, Model model
 			) {
 		String bo_name = "대학문의";
-		String bo_kind = service.selectBoKind(bo_name);
+		String bo_kind = boardService.selectBoKind(bo_name);
 		
 		PagingVO<BoardVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
@@ -57,10 +61,10 @@ public class CollegeQnaViewController {
 		searchMap.put("inqry_kind", inqry_kind);
 		pagingVO.setSearchMap(searchMap);
 		
-		int totalRecord = service.selectBoardCount(pagingVO);
+		int totalRecord = boardService.selectBoardCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
-		List<BoardVO> boardList = service.selectBoardList(pagingVO);
+		List<BoardVO> boardList = boardService.selectBoardList(pagingVO);
 		pagingVO.setDataList(boardList);
 		model.addAttribute(pagingVO);
 		
@@ -68,7 +72,14 @@ public class CollegeQnaViewController {
 	}
 	
 	@RequestMapping("/main/community/collegeQnaView.do")
-	public String collegeQnaView() {
+	public String collegeQnaView(
+			@RequestParam("bo_no") int bo_no
+			, Model model
+			) {
+		BoardVO board = boardService.selectBoard(bo_no);
+		boardService.incrementHit(bo_no);
+		
+		model.addAttribute("board", board);
 		return "main/community/collegeQnaView";
 	}
 }

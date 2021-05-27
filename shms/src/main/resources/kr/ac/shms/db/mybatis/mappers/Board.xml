@@ -3,35 +3,38 @@
 <mapper namespace="kr.ac.shms.main.commuity.dao.BoardDAO">
 
 	<select id="selectBoKind" parameterType="string" resultType="string">
-		SELECT COM_CODE
-		  FROM TB_COM_CODE
-		WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'BO_KIND') 
-		  AND COM_CODE_NM = #{bo_name, jdbcType=VARCHAR}
+		SELECT com_code
+		  FROM tb_com_code
+		WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND') 
+		  AND com_code_nm = #{bo_name, jdbcType=VARCHAR}
 	</select>
 	
-	<select id="selectForMain" parameterType="string" resultType="BoardVO">
+	<select id="selectForMain" parameterType="hashMap" resultType="BoardVO">
 		SELECT * 
 		  FROM(
 		SELECT
 		    (SELECT COUNT(*)
-		      FROM BOARD
-		      WHERE BO_KIND = (SELECT COM_CODE
-		                  FROM TB_COM_CODE
-		                WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'BO_KIND') 
-		                  AND COM_CODE_NM = #{bo_name, jdbcType=VARCHAR}))
-		      - (ROW_NUMBER () OVER (ORDER BY BO_WRITE_DE DESC)) + 1 P_BO_NO,
-		    ROW_NUMBER () OVER (ORDER BY BO_WRITE_DE DESC) RN,
-		    BO_NO,
-		    BO_KIND,
-		    BO_TITLE,
-		    TO_CHAR(BO_WRITE_DE, 'YYYY.MM.DD') BO_WRITE_DE,
-		    BO_HIT
+		      FROM board
+		      WHERE bo_kind = (SELECT com_code
+		                  FROM tb_com_code
+		                WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND') 
+		                  AND com_code_nm = #{bo_name, jdbcType=VARCHAR}))
+		      - (ROW_NUMBER () OVER (ORDER BY bo_write_de DESC)) + 1 p_bo_no,
+		    ROW_NUMBER () OVER (ORDER BY bo_write_de DESC) rn,
+		    bo_no,
+		    bo_kind,
+		    bo_title,
+		    TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de,
+		    bo_hit
 		FROM
-		    BOARD
-		WHERE BO_KIND = (SELECT COM_CODE
-		                  FROM TB_COM_CODE
-		                WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'BO_KIND') 
-		                  AND COM_CODE_NM = #{bo_name, jdbcType=VARCHAR})
+		    board
+		WHERE bo_kind = (SELECT com_code
+		                  FROM tb_com_code
+		                WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND') 
+		                  AND com_code_nm = #{bo_name, jdbcType=VARCHAR})
+		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub)">
+		 	AND SUB_CODE = #{sub, jdbcType=VARCHAR}
+		 </if>
 		)
 		<![CDATA[
 		WHERE RN <= 5		
@@ -42,20 +45,20 @@
 		<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
 			<choose>
 				<when test="searchMap.searchType eq 'title'">
-					INSTR(BO_TITLE, #{searchMap.searchWord}) > 0
+					INSTR(bo_title, #{searchMap.searchWord}) > 0
 				</when>
 				<when test="searchMap.searchType eq 'content'">
-					INSTR(BO_CONT, #{searchMap.searchWord}) > 0
+					INSTR(bo_cont, #{searchMap.searchWord}) > 0
 				</when>
 				<when test="searchMap.searchType eq 'writer'">
-					INSTR(BO_WRITER, #{searchMap.searchWord}) > 0
+					INSTR(bo_writer, #{searchMap.searchWord}) > 0
 				</when>
 				<otherwise>
-					INSTR(BO_TITLE, #{searchMap.searchWord}) > 0
+					INSTR(bo_title, #{searchMap.searchWord}) > 0
 					OR 
-					INSTR(BO_CONT, #{searchMap.searchWord}) > 0
+					INSTR(bo_cont, #{searchMap.searchWord}) > 0
 					<if test="searchMap.bo_kind eq 'DM'">
-						OR INSTR(BO_WRITER, #{searchMap.searchWord}) > 0 
+						OR INSTR(bo_writer, #{searchMap.searchWord}) > 0 
 					</if>
 				</otherwise>
 			</choose>
@@ -64,8 +67,8 @@
 	
 	<select id="selectBoardCount" parameterType="PagingVO" resultType="int">
 		SELECT COUNT(*)
-		  FROM BOARD
-		 WHERE BO_KIND = #{searchMap.bo_kind}
+		  FROM board
+		 WHERE bo_kind = #{searchMap.bo_kind}
 		<trim prefix="AND">
 			<include refid="searchFrag"/>
 		</trim>
@@ -74,40 +77,78 @@
 	<select id="selectBoardList" parameterType="PagingVO" resultType="BoardVO">
 		SELECT *
 			FROM (
-			SELECT A.*, ROW_NUMBER () OVER (ORDER BY BO_WRITE_DE DESC) RN
+			SELECT A.*, ROW_NUMBER () OVER (ORDER BY bo_write_de DESC) rn
 				FROM (
 					SELECT 
-						(SELECT COUNT(*) FROM BOARD WHERE BO_KIND = #{searchMap.bo_kind})
+						(SELECT COUNT(*) FROM board WHERE bo_kind = #{searchMap.bo_kind})
 						 - (ROW_NUMBER () OVER 
-						(ORDER BY BO_WRITE_DE DESC)) + 1 P_BO_NO,
-						BO_NO,
-						BO_KIND,
-						DECODE(BO_SECRET_AT, 'Y', '비밀글', BO_TITLE) BO_TITLE,
-						BO_CONT,
-						BO_WRITER,
-						TO_CHAR(BO_WRITE_DE, 'YYYY.MM.DD') BO_WRITE_DE, 
-						BO_HIT,
-						BO_PASSWORD, 
-						BO_SECRET_AT,
-						BO_ANS,
-						A.UNIV_INQRY_KIND,
-						B.COM_CODE_NM INQRY_KIND_NAME 
-					FROM BOARD A
-		            LEFT OUTER JOIN TB_COM_CODE B
-		            ON (A.UNIV_INQRY_KIND = B.COM_CODE)
-					WHERE BO_KIND = #{searchMap.bo_kind}
+						(ORDER BY bo_write_de DESC)) + 1 p_bo_no,
+						bo_no,
+						bo_kind,
+						DECODE(bo_secret_at, 'Y', '비밀글', bo_title) bo_title,
+						bo_cont,
+						bo_writer,
+						TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de, 
+						bo_hit,
+						bo_password, 
+						bo_secret_at,
+						bo_ans,
+						a.univ_inqry_kind,
+						b.com_code_nm inqry_kind_name 
+					FROM board a
+		            LEFT OUTER JOIN tb_com_code b
+		            ON (a.univ_inqry_kind = b.com_code)
+					WHERE bo_kind = #{searchMap.bo_kind}
 					<if test="searchMap.bo_kind eq 'DM'">
-		              AND B.CODE_GRP =  (SELECT CODE_GRP 
-		                                  FROM TB_CODE_GRP
-		                                 WHERE CODE_GRP_NM = 'UNIV_INQRY_KIND')
+		              AND b.code_grp =  (SELECT code_grp 
+		                                  FROM tb_code_grp
+		                                 WHERE code_grp_nm = 'UNIV_INQRY_KIND')
 					</if>
 				) A
 		  	<trim prefix="WHERE">
 		  		<include refid="searchFrag"/>
 			</trim>
 			)
-			WHERE RN BETWEEN #{startRow} AND #{endRow}
+			WHERE rn BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
-
+	<resultMap type="BoardVO" id="boardMap" autoMapping="true">
+		<id property="bo_no" column="bo_no"/>
+		<collection property="attachList" ofType="kr.ac.shms.main.commuity.vo.AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectBoard" parameterType="int" resultMap="boardMap">
+		SELECT
+		    bo_no,
+		    bo_kind,
+		    bo_title,
+		    bo_cont,
+		    bo_writer,
+		    TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de,
+		    bo_password,
+		    bo_secret_at,
+		    bo_ans,
+		    bo_hit,
+		    sub_code,
+		    univ_inqry_kind,
+		    lec_code,
+		    ans_writer,
+		    ans_de,
+		    a.atch_file_no,
+		    b.atch_file_seq,
+		    b.file_nm
+		FROM
+		    board a
+		    LEFT OUTER JOIN attach b
+		    ON(a.atch_file_no = b.atch_file_no)
+		WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
+	</select>
+	
+	<update id="incrementHit" parameterType="int">
+		UPDATE board 
+		   SET bo_hit = bo_hit + 1 
+		 WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

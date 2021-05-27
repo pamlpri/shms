@@ -1,6 +1,7 @@
 package kr.ac.shms.main.commuity.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,20 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * @author 송수미
+ * @since 2021. 5. 25.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 25.      송수미       최초작성
+ * 2021. 5. 27.      송수미       첨부파일 관련 객체 추가
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,5 +50,5 @@ public class BoardVO implements Serializable{
 	private String ans_de;
 	private String bo_name;		// 학사공지, 장학공지
 	private String inqry_kind_name;	// 편의시설문의, 학사일정문의, 장학금문의
-	
+	private List<AttachVO> attachList;
 }

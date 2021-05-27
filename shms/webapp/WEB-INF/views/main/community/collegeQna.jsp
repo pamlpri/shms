@@ -61,12 +61,19 @@
 	                         <tr>
 	                           <th scope="row" class="text-center">${board.p_bo_no }</th>
 								<td>
-									<a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do">
-										<span class="dept">[${board.inqry_kind_name }]</span>${board.bo_title }
-										<c:if test="${board.bo_secret_at eq 'Y' }">
-											<i class="fas fa-key"></i>
-										</c:if>
-									</a>
+									<c:choose>
+										<c:when test="${board.bo_secret_at eq 'Y' }">
+											<a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do?bo_no=${board.bo_no}">
+												<span class="dept">[${board.inqry_kind_name }]</span>${board.bo_title }
+													<i class="fas fa-key"></i>
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a class="text-black-color" href="${cPath }/main/community/collegeQnaView.do?bo_no=${board.bo_no}">
+												<span class="dept">[${board.inqry_kind_name }]</span>${board.bo_title }
+											</a>
+										</c:otherwise>
+									</c:choose>
 								</td>
 								<td class="text-center">${board.bo_writer }</td>
 								<td class="text-center">${board.bo_write_de }</td>
