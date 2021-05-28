@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
+
+	<select id="selectSugangList" parameterType="String" resultType="SugangLecVO">
+		SELECT Distinct d.grade, 
+		        d.name st_name,
+		        c.lec_name,  
+		        h.name pr_name,
+		        CASE WHEN c.lec_cl = '01' THEN '전공필수' 
+		             WHEN c.lec_cl = '02' THEN '전공선택'
+		             WHEN c.lec_cl = '03' THEN '교양필수'
+		             WHEN c.lec_cl = '04' THEN '교양선택'
+		        END AS lec_cl,
+		        g.building_nm ||' '|| f.lecrum_nm||'호' lec_room 
+		  FROM sugang_req a
+		 INNER JOIN lecture b ON (a.lec_code = b.lec_code)
+		 INNER JOIN curriculum c ON (b.cur_code = c.cur_code)
+		 INNER JOIN student d ON (d.stdnt_no = a.stdnt_no)
+		 RIGHT OUTER JOIN lecrum_ttable e ON (b.lec_code = e.lec_code)
+		 RIGHT OUTER JOIN lecrum f ON (e.lecrum_no = f.lecrum_no)
+		 RIGHT OUTER JOIN building g ON (f.building_no = g.building_no)
+		 INNER JOIN staff h ON (c.staff_no = h.staff_no)
+		 WHERE d.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND req_year=b.estbl_year
+	</select>
+</mapper>

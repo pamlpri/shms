@@ -1,5 +1,7 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.lms.student.vo.SugangLecVO;
 
 /**
  * @author 박초원
@@ -34,6 +38,7 @@ public class LectureStudentIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureStudentIndexController.class);
 	@Inject
 	private LectureStudentService lectureStudentService;
+
 	
 	@RequestMapping("/lecture/index.do")
 	public String index(
@@ -42,8 +47,10 @@ public class LectureStudentIndexController {
 		,Model model
 	) {
 		StudentVO studentVO = lectureStudentService.student(user.getUser_id());
+		
 		if("ST".equals(user.getUser_section())) {
 			session.setAttribute("user", studentVO.getName());
+			
 		}
 		return "lecture/main";
 	}
