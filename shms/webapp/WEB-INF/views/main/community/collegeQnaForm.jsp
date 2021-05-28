@@ -31,7 +31,7 @@
 			<tr>
 				<th>문의유형</th>
 				<td>
-					<select name="univ_inqry_kind" id="kindList">
+					<select name="univ_inqry_kind" id="kindList" ${mode eq "update"? "disabled" : "" }>
 						<option value="" style="color: #aaa">--문의유형--</option>
 						<option value="PM" ${board.univ_inqry_kind eq 'PM'? 'selected' : '' }>편의시설문의</option>
 						<option value="HM" ${board.univ_inqry_kind eq 'HM'? 'selected' : '' }>학사일정문의</option>
@@ -43,7 +43,7 @@
 			<tr>
 				<th>작성자</th>
 				<td>
-					<input name="bo_writer" type="text" value="${board.bo_writer }"/>
+					<input name="bo_writer" type="text" value="${board.bo_writer }"  ${mode eq "update"? "disabled" : "" }/>
 					<form:errors path="bo_writer" element="span" cssClass="error" />
 				</td>
 			</tr>

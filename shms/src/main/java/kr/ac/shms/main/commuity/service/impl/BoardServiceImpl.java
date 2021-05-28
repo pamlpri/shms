@@ -41,8 +41,8 @@ public class BoardServiceImpl implements BoardService{
 	@Inject
 	private BoardDAO boardDAO;
 	
+	@Override
 	public boolean boardAuth(BoardVO search) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

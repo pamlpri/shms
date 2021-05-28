@@ -54,7 +54,7 @@ public class BoardVO implements Serializable{
 	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class}, message="필수 항목")
 	private String bo_cont;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class}, message="필수 항목")
+	@NotBlank(groups= {DMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_writer;
 	private String bo_write_de;
 	
@@ -66,7 +66,7 @@ public class BoardVO implements Serializable{
 	private Integer bo_hit;
 	private String sub_code;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class}, message="필수 항목")
+	@NotBlank(groups= {DMBoardInsertGroup.class}, message="필수 항목")
 	private String univ_inqry_kind;	// PM, HM, JM
 	private String lec_code;
 	private String ans_writer;

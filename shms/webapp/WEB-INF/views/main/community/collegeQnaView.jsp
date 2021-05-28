@@ -47,10 +47,9 @@
 		</p>
 	</div>
 	<div id="noticeBtnBox">
-		<a id="deleteBtn" class="text-uppercase text-color d-inline-block"
-			href="#" data-toggle="modal" data-target="#deleteModal">삭제</a> <a
-			id="updateBtn" href="${cPath }/main/community/collegeQnaUpdate.do">수정</a> <a id="listBtn"
-			href="${cPath }/main/community/collegeQnaList.do">목록으로</a>
+		<a id="deleteBtn" class="text-uppercase text-color d-inline-block"href="#" data-toggle="modal" data-target="#deleteModal">삭제</a>
+		<a id="updateBtn" href="${cPath }/main/community/collegeQnaUpdate.do?bo_no=${board.bo_no}">수정</a>
+		<a id="listBtn" href="${cPath }/main/community/collegeQnaList.do">목록으로</a>
 	</div>
 </div>
 
@@ -62,20 +61,18 @@
 			<div class="modal-header border-0">
 				<h3>Password</h3>
 				<p>작성자 이름과 비밀번호를 입력하세요.</p>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="#" class="row">
+				<form action="#" class="row" method="post">
+					<input type="hidden" name="bo_no" value="${board.bo_no }" />
 					<div class="col-12">
-						<input type="text" class="form-control mb-3" id="deleteName"
-							placeholder="Name">
+						<input type="text" class="form-control mb-3" id="deleteName" placeholder="Name" name="bo_writer">
 					</div>
 					<div class="col-12">
-						<input type="password" class="form-control mb-3" id="deletePass"
-							placeholder="Password">
+						<input type="password" class="form-control mb-3" id="deletePass" placeholder="Password" name="bo_password">
 					</div>
 					<div class="col-12">
 						<button type="button" class="btn btn-primary"

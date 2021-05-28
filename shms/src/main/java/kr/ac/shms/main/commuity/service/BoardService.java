@@ -22,6 +22,12 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  */
 public interface BoardService {
 	/**
+	 * board에 대한 인증 작업을 진행
+	 * @param search bo_writer, bo_pass, bo_no
+	 * @return bo_no에 해당하는 게시글의 저장되어 있는 정보와 파라미터로 들어온 정보를 비교한 결과값
+	 */
+	public boolean boardAuth(BoardVO search);
+	/**
 	 * bo_name을 가공해서 bo_kind 조회
 	 * @param bo_name
 	 * @return bo_kind 가공해서 출력된 공통코드값

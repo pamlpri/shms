@@ -195,10 +195,8 @@
 	<update id="updateBoard" parameterType="BoardVO">
 		UPDATE board
 		   SET
-		    bo_kind = #{bo_kind, jdbcType=VARCHAR},
 		    bo_title = #{bo_title, jdbcType=VARCHAR},
 		    bo_cont = #{bo_cont, jdbcType=VARCHAR},
-		    bo_writer = #{bo_writer, jdbcType=VARCHAR},
 		    bo_secret_at = #{bo_secret_at, jdbcType=VARCHAR}
 		WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
 

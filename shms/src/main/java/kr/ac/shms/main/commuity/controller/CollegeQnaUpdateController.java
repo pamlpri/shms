@@ -2,6 +2,8 @@ package kr.ac.shms.main.commuity.controller;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -9,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.main.commuity.service.BoardService;
@@ -32,11 +35,19 @@ import kr.ac.shms.validator.DMBoardUpdateGroup;
 @Controller
 public class CollegeQnaUpdateController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(CollegeQnaUpdateController.class);
+	
 	@Inject
 	private BoardService boardService;
 	
 	@RequestMapping(value="/main/community/collegeQnaUpdate.do")
-	public String collegeQnaForm() {
+	public String collegeQnaForm(
+			@RequestParam("bo_no") int bo_no
+			, Model model
+			) {
+		BoardVO board = boardService.selectBoard(bo_no);
+		model.addAttribute("board", board);
+		model.addAttribute("mode", "update");
 		return "main/community/collegeQnaForm";
 	}
 	
@@ -48,6 +59,7 @@ public class CollegeQnaUpdateController {
 			, Model model
 			) {
 		
+		logger.info("board : {}", board.toString());
 		boolean valid = !errors.hasErrors();
 		
 		String view = null;
@@ -59,6 +71,9 @@ public class CollegeQnaUpdateController {
 			ServiceResult result = boardService.updateBoard(board);
 			if(ServiceResult.OK.equals(result)) {
 				view = "redirect:/main/community/collegeQnaList.do";
+			}else if(ServiceResult.INVALIDPASSWORD.equals(result)) {
+				message = "비밀번호가 올바르지 않습니다.";
+				view = "main/community/collegeQnaForm";
 			}else {
 				message = "게시글 등록 실패! 잠시 후에 다시 시도해주세요.";
 				view = "main/community/collegeQnaForm";
@@ -69,7 +84,8 @@ public class CollegeQnaUpdateController {
 			view = "main/community/collegeQnaForm";
 		}
 		model.addAttribute("message", message);
-		
+		model.addAttribute("mode", "update");
+		model.addAttribute("board", board);
 		return view;
 	}
 }
