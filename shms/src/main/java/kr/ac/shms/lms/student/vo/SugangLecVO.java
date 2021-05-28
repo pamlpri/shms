@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
