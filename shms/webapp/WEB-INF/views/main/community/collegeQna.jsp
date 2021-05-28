@@ -101,7 +101,7 @@
 				<div id="pagingArea" class="d-flex justify-content-center">
 					${pagingVO.pagingHTMLBS }
 				</div>
-				<a href="${cPath }/main/community/collegeQnaForm.do" id="writeBtn">글쓰기</a>
+				<a href="${cPath }/main/community/collegeQnaInsert.do" id="writeBtn">글쓰기</a>
 			</div>
 		</div>
 	</div>

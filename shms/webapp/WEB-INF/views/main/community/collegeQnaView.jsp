@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 26.      송수미        학사문의 게시글 목록 조회 페이지 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -48,7 +49,7 @@
 	<div id="noticeBtnBox">
 		<a id="deleteBtn" class="text-uppercase text-color d-inline-block"
 			href="#" data-toggle="modal" data-target="#deleteModal">삭제</a> <a
-			id="updateBtn" href="${cPath }/main/community/collegeQnaForm.do">수정</a> <a id="listBtn"
+			id="updateBtn" href="${cPath }/main/community/collegeQnaUpdate.do">수정</a> <a id="listBtn"
 			href="${cPath }/main/community/collegeQnaList.do">목록으로</a>
 	</div>
 </div>

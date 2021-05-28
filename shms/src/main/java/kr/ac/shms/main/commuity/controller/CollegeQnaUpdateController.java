@@ -1,7 +1,19 @@
 package kr.ac.shms.main.commuity.controller;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.main.commuity.service.BoardService;
+import kr.ac.shms.main.commuity.vo.BoardVO;
+import kr.ac.shms.validator.DMBoardUpdateGroup;
 
 /**
  * @author 박초원
@@ -19,8 +31,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CollegeQnaUpdateController {
-	@RequestMapping("/main/community/collegeQnaForm.do")
-	public String collegeQnaUpdate() {
+	
+	@Inject
+	private BoardService boardService;
+	
+	@RequestMapping(value="/main/community/collegeQnaUpdate.do")
+	public String collegeQnaForm() {
 		return "main/community/collegeQnaForm";
+	}
+	
+	@RequestMapping(value="/main/community/collegeQnaUpdate.do", method=RequestMethod.POST)
+	public String collegeQnaUpdate(
+			@Validated(DMBoardUpdateGroup.class)
+			@ModelAttribute("board") BoardVO board
+			, Errors errors
+			, Model model
+			) {
+		
+		boolean valid = !errors.hasErrors();
+		
+		String view = null;
+		String message = null;
+		String bo_kind = boardService.selectBoKind("대학문의");
+		
+		if(valid) {
+			board.setBo_kind(bo_kind);
+			ServiceResult result = boardService.updateBoard(board);
+			if(ServiceResult.OK.equals(result)) {
+				view = "redirect:/main/community/collegeQnaList.do";
+			}else {
+				message = "게시글 등록 실패! 잠시 후에 다시 시도해주세요.";
+				view = "main/community/collegeQnaForm";
+			}
+			
+		}else {
+			message = "필수항목 누락";
+			view = "main/community/collegeQnaForm";
+		}
+		model.addAttribute("message", message);
+		
+		return view;
 	}
 }

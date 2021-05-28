@@ -151,4 +151,56 @@
 		   SET bo_hit = bo_hit + 1 
 		 WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
 	</update>
+	
+	<insert id="insertBoard" parameterType="BoardVO">
+		<selectKey resultType="int" keyProperty="bo_no" order="BEFORE">			
+			SELECT bo_no_seq.nextval
+			FROM dual
+		</selectKey>
+			INSERT INTO board (
+			    bo_no,
+			    bo_kind,
+			    bo_title,
+			    bo_cont,
+			    bo_writer,
+			    bo_write_de,
+			    bo_password,
+			    bo_secret_at,
+			    bo_hit,
+			    sub_code,
+			    univ_inqry_kind,
+			    lec_code
+			  	<if test="atch_file_no != null">
+				    ,atch_file_no
+			  	</if>
+			) VALUES (
+			    #{bo_no},
+			    #{bo_kind, jdbcType=VARCHAR},
+			    #{bo_title, jdbcType=VARCHAR},
+			    #{bo_cont, jdbcType=VARCHAR},
+			    #{bo_writer, jdbcType=VARCHAR},
+			    SYSDATE,
+			    #{bo_password, jdbcType=VARCHAR},
+			    #{bo_secret_at, jdbcType=VARCHAR},
+			    0,
+			    #{sub_code, jdbcType=VARCHAR},
+			    #{univ_inqry_kind, jdbcType=VARCHAR},
+			    #{lec_code, jdbcType=VARCHAR}
+			    <if test="atch_file_no != null">
+			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
+			    </if>
+			)
+	</insert>
+	
+	<update id="updateBoard" parameterType="BoardVO">
+		UPDATE board
+		   SET
+		    bo_kind = #{bo_kind, jdbcType=VARCHAR},
+		    bo_title = #{bo_title, jdbcType=VARCHAR},
+		    bo_cont = #{bo_cont, jdbcType=VARCHAR},
+		    bo_writer = #{bo_writer, jdbcType=VARCHAR},
+		    bo_secret_at = #{bo_secret_at, jdbcType=VARCHAR}
+		WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
+
+	</update>
 </mapper>

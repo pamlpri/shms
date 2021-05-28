@@ -60,13 +60,13 @@ public interface BoardService {
 	/**
 	 * 게시글 수정
 	 * @param board
-	 * @return OK, FAIL, NOTEXIST
+	 * @return OK, FAIL, NOTEXIST, INVALIDPASSWORD
 	 */
 	public ServiceResult updateBoard(BoardVO board);
 	/**
 	 * 게시글 삭제
 	 * @param bo_no
-	 * @return OK, FAIL, NOTEXIST
+	 * @return OK, FAIL, NOTEXIST, INVALIDPASSWORD
 	 */
 	public ServiceResult deleteBoard(int bo_no);
 	/**
