@@ -23,12 +23,15 @@ import lombok.NoArgsConstructor;
 public class SugangLecVO {
 	private String lec_code;
 	private String stdnt_no;
-	private Integer sugang_year;
 	private Integer grade;
-	private String st_name;
-	private String pr_name;
-	private String lec_name;
-	private String lec_room;
+	private String stdnt_name;
+	private String prof_name;
+	private String lec_name; 
 	private String lec_cl;
+	private Integer semstr;
+	private Integer estbl_semstr;
+	private String lecrum;
+	private String com_code_nm;
+	private Integer lec_pnt;
 	
 }

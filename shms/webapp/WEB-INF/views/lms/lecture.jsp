@@ -22,11 +22,12 @@
 				<table class="table table-striped" id="table1">
 					<thead>
 						<tr>
-							<th>학년</th>
-							<th>강의명</th>
-							<th>교수</th>
-							<th>분류</th>
-							<th>강의실</th>
+							<th class="text-center">학년</th>
+							<th class="text-center">강의명</th>
+							<th class="text-center">교수</th>
+							<th class="text-center">학점</th>
+							<th class="text-center">분류</th>
+							<th class="text-center">강의실</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,11 +35,12 @@
 							<c:when test="${not empty lecList}">
 								<c:forEach items="${lecList }" var="lecList">
 									<tr>
-										<td>${lecList.grade }</td>
-										<td><a class="text-color" href="${cPath }/lecture/main.do">${lecList.lec_name }</a></td>
-										<td>${lecList.pr_name }</td>
-										<td>${lecList.lec_cl}</td>
-										<td>${lecList.lec_room }</td>
+										<td class="text-center">${lecList.grade }</td>
+										<td class="text-center"><a class="text-color" href="${cPath }/lecture/main.do">${lecList.lec_name }</a></td>
+										<td class="text-center">${lecList.prof_name }</td>
+										<td class="text-center">${lecList.lec_pnt }</td>
+										<td class="text-center">${lecList.lec_cl}</td>
+										<td class="text-center">${lecList.lecrum }</td>
 									</tr>
 									
 								</c:forEach>

@@ -3,25 +3,61 @@
 <mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
 
 	<select id="selectSugangList" parameterType="String" resultType="SugangLecVO">
-		SELECT Distinct d.grade, 
-		        d.name st_name,
-		        c.lec_name,  
-		        h.name pr_name,
-		        CASE WHEN c.lec_cl = '01' THEN '전공필수' 
-		             WHEN c.lec_cl = '02' THEN '전공선택'
-		             WHEN c.lec_cl = '03' THEN '교양필수'
-		             WHEN c.lec_cl = '04' THEN '교양선택'
-		        END AS lec_cl,
-		        g.building_nm ||' '|| f.lecrum_nm||'호' lec_room 
-		  FROM sugang_req a
-		 INNER JOIN lecture b ON (a.lec_code = b.lec_code)
-		 INNER JOIN curriculum c ON (b.cur_code = c.cur_code)
-		 INNER JOIN student d ON (d.stdnt_no = a.stdnt_no)
-		 RIGHT OUTER JOIN lecrum_ttable e ON (b.lec_code = e.lec_code)
-		 RIGHT OUTER JOIN lecrum f ON (e.lecrum_no = f.lecrum_no)
-		 RIGHT OUTER JOIN building g ON (f.building_no = g.building_no)
-		 INNER JOIN staff h ON (c.staff_no = h.staff_no)
-		 WHERE d.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
-		   AND req_year=b.estbl_year
+		SELECT
+		    stdnt_no,
+		    stdnt_name,
+		    grade,
+		    semstr,
+		    lec_name,
+		    prof_name,
+		    CASE WHEN lec_cl = '01' THEN '전공필수' 
+             WHEN lec_cl = '02' THEN '전공선택'
+             WHEN lec_cl = '03' THEN '교양필수'
+             WHEN lec_cl = '04' THEN '교양선택'
+             END AS lec_cl,
+		  	estbl_year,
+		    estbl_semstr,
+		    lecrum,
+		    lec_code,
+		    lec_pnt
+	  FROM
+			(
+			SELECT DISTINCT
+			       a.stdnt_no,
+			       a.name stdnt_name,
+			       a.grade,
+			       a.semstr,
+			       d.lec_name,
+			       e.name prof_name,
+			       d.lec_cl,
+			       c.estbl_year,
+			       c.estbl_semstr,
+			       h.building_nm||' '||g.lecrum_nm||'호' lecrum,
+			       c.lec_code,
+			       d.lec_pnt
+			  FROM student A
+			  INNER JOIN sugang_lec b
+			  ON (a.stdnt_no = b.stdnt_no)
+			  INNER JOIN lecture c
+			  ON (b.lec_code = c.lec_code)
+			  INNER JOIN curriculum d
+			  ON (c.cur_code = d.cur_code)
+			  INNER JOIN staff e
+			  ON (d.staff_no = e.staff_no)
+			  INNER JOIN lecrum_ttable f
+			  ON (c.lec_code = f.lec_code)
+			  INNER JOIN lecrum g
+			  ON (f.lecrum_no = g.lecrum_no)
+			  INNER JOIN building h
+			  ON(g.building_no = h.building_no)
+			)
+		WHERE ESTBL_YEAR = '2019'
+<!-- 		WHERE ESTBL_YEAR = EXTRACT(YEAR FROM SYSDATE) -->
+	      AND ESTBL_SEMSTR = (SELECT  CASE WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 2 AND 7 THEN  1
+	                                  ELSE 2
+	                                  END AS SEMSTR
+	                            FROM DUAL)
+	      AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}           
+ 
 	</select>
 </mapper>

@@ -25,8 +25,8 @@ import kr.ac.shms.lms.student.vo.SugangLecVO;
  * --------     --------    ----------------------
  * 2021. 5. 21.  박초원      	최초작성
  * 2021. 5. 27.  김보미			강의개설버튼 조작을 위한 수정
- * 2021. 5. 27.  김보미			파일명 변경(lectureViewController->LectureViewController)
- * 2021. 5. 27.  김보미			수강중인 강의 목록 출력
+ * 2021. 5. 28.  김보미			파일명 변경(lectureViewController->LectureViewController)
+ * 2021. 5. 28.  김보미			수강중인 강의 목록 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -43,12 +43,10 @@ public class LectureViewController {
 		, HttpSession session
 		, Model model
 	) {
-		
 		List<SugangLecVO> lecList = studentService.selectSugangList(user.getUser_id());
-		System.out.println(lecList);
-		
 		
 		if("PR".equals(user.getUser_section())) {
+			
 			session.setAttribute("staff", user.getUser_section());
 		}else if("ST".equals(user.getUser_section())) {
 			session.setAttribute("student", user.getUser_id());
