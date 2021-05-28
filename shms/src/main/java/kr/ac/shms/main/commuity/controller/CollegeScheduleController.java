@@ -77,7 +77,7 @@ public class CollegeScheduleController {
 			@ModelAttribute("svo") ScheduleVO svo
 		) {
 		calendarService.scheduleInsert(svo);
-		return "redirect:/cal.do";
+		return "redirect:/main/community/collegeSchedule.do";
 	}
 	
 }

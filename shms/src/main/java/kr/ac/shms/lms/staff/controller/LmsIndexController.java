@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
+import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.StudentVO;
 /**
  * @author 최희수
  * @since 2021. 05. 22.
@@ -34,6 +36,8 @@ public class LmsIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LmsIndexController.class);
 	@Inject
 	private LmsStaffService lmsStaffService;
+	@Inject
+	private StudentService studentService;
 	
 	@RequestMapping("/lms/main.do")
 	public String index(

@@ -79,10 +79,19 @@
         </ul>
 
 		<div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-			<a href="${cPath }/lms/main.do"
-				class="btn btn-primary btn-lg btn-block btn-icon-split"> <i
-				class="fas fa-graduation-cap"></i> 통합정보시스템
-			</a>
+			<c:if test="${'ST' eq user.user[1] }">
+				<a href="${cPath }/lms/index.do"
+					class="btn btn-primary btn-lg btn-block btn-icon-split"> <i
+					class="fas fa-graduation-cap"></i> 통합정보시스템
+				</a>
+			</c:if>
+			<c:if test="${'PR' eq user.user[1] }">
+				<a href="${cPath }/lms/main.do"
+					class="btn btn-primary btn-lg btn-block btn-icon-split"> <i
+					class="fas fa-graduation-cap"></i> 통합정보시스템
+				</a>
+			</c:if>
+			
 		</div>
 	</aside>
 </div>
