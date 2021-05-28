@@ -7,6 +7,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="navbar-bg"></div>
 <nav class="navbar navbar-expand-lg main-navbar">
 	<form class="form-inline mr-auto">
@@ -23,9 +24,16 @@
 			</a>
 			<div class="dropdown-menu dropdown-menu-right">
 			<div class="dropdown-title">인재대학교 강의실</div>
-			<a href="${cPath }/resources/lms/student/main.do" class="dropdown-item has-icon">
-				<i class="fas fa-graduation-cap"></i> 통합정보시스템
-			</a>
+			<c:if test="${'ST' eq user.user[1] }">
+				<a href="${cPath }/lms/index.do" class="dropdown-item has-icon">
+					<i class="fas fa-graduation-cap"></i> 통합정보시스템
+				</a>
+			</c:if>
+			<c:if test="${'PR' eq user.user[1]  }">
+				<a href="${cPath }/lms/main.do" class="dropdown-item has-icon">
+					<i class="fas fa-graduation-cap"></i> 통합정보시스템
+				</a>
+			</c:if>
 			<a href="${cPath }/" class="dropdown-item has-icon">
 				<i class="fas fa-school"></i> 인재대학교
 			</a>

@@ -30,150 +30,21 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">대학생활의
-									이해</a></td>
-							<td>홍길동</td>
-							<td>교양필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">대학생활의
-									이해</a></td>
-							<td>홍길동</td>
-							<td>교양필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">대학생활의
-									이해</a></td>
-							<td>홍길동</td>
-							<td>교양필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">대학생활의
-									이해</a></td>
-							<td>홍길동</td>
-							<td>교양필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
-						<tr>
-							<td>1학년</td>
-							<td><a class="text-color" href="${cPath }/lecture/main.do">시광학이론</a></td>
-							<td>이현수</td>
-							<td>전공필수</td>
-							<td>S동 301호</td>
-						</tr>
+						<c:choose>
+							<c:when test="${not empty lecList}">
+								<c:forEach items="${lecList }" var="lecList">
+									<tr>
+										<td>${lecList.grade }</td>
+										<td><a class="text-color" href="${cPath }/lecture/main.do">${lecList.lec_name }</a></td>
+										<td>${lecList.pr_name }</td>
+										<td>${lecList.lec_cl}</td>
+										<td>${lecList.lec_room }</td>
+									</tr>
+									
+								</c:forEach>
+							</c:when>
+						</c:choose>
+						
 					</tbody>
 				</table>
 			</div>
