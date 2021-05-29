@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SugangLecVO {
+public class SugangLecSTVO {
 	private String lec_code;
 	private String stdnt_no;
 	private Integer grade;
@@ -34,5 +34,4 @@ public class SugangLecVO {
 	private String lecrum;
 	private String com_code_nm;
 	private Integer lec_pnt;
-	
 }

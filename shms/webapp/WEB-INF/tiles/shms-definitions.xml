@@ -65,14 +65,8 @@
   	<put-attribute name="lecturePostScript" value="/resources/includee/lecture_postScript.jsp"/>
   </definition>
   
-  <!-- 학생 강의사이트 --> 	
-  <definition name="lecture/student/*" extends="lecture">
-  	<put-attribute name="lectureContent" value="/WEB-INF/views/lecture/student/{1}.jsp" />
-  </definition>
-  
-  <!-- 교수 강의사이트 --> 	
-  <definition name="lecture/professor/*" extends="lecture">
-  	<put-attribute name="lectureContent" value="/WEB-INF/views/lecture/professor/{1}.jsp" />
+  <definition name="lecture/*" extends="lecture">
+  	<put-attribute name="lectureContent" value="/WEB-INF/views/lecture/{1}.jsp" />
   </definition>
   
   <!-- 공통 강의사이트 --> 	

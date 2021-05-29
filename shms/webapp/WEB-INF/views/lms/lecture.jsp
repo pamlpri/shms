@@ -20,29 +20,48 @@
 			</c:when>
 			</c:choose>
 				<table class="table table-striped" id="table1">
-					<thead>
-						<tr>
-							<th class="text-center">학년</th>
-							<th class="text-center">강의명</th>
-							<th class="text-center">교수</th>
-							<th class="text-center">학점</th>
-							<th class="text-center">분류</th>
-							<th class="text-center">강의실</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:choose>
-							<c:when test="${not empty lecList}">
-								<c:forEach items="${lecList }" var="lecList">
+					<c:choose>
+							<c:when test="${not empty lecListST}">
+								<thead>
 									<tr>
-										<td class="text-center">${lecList.grade }</td>
-										<td class="text-center"><a class="text-color" href="${cPath }/lecture/main.do">${lecList.lec_name }</a></td>
-										<td class="text-center">${lecList.prof_name }</td>
-										<td class="text-center">${lecList.lec_pnt }</td>
-										<td class="text-center">${lecList.lec_cl}</td>
-										<td class="text-center">${lecList.lecrum }</td>
+										<th class="text-center">학년</th>
+										<th class="text-center">강의명</th>
+										<th class="text-center">교수</th>
+										<th class="text-center">학점</th>
+										<th class="text-center">분류</th>
+										<th class="text-center">강의실</th>
 									</tr>
-									
+								</thead>
+								<tbody>
+								<c:forEach items="${lecListST }" var="lecListST">
+									<tr>
+										<td class="text-center">${lecListST.grade }</td>
+										<td class="text-center"><a class="text-color" href="${cPath }/lecture/index.do?lec_code=${lecListST.lec_code}">${lecListST.lec_name }</a></td>
+										<td class="text-center">${lecListST.prof_name }</td>
+										<td class="text-center">${lecListST.lec_pnt }</td>
+										<td class="text-center">${lecListST.lec_cl}</td>
+										<td class="text-center">${lecListST.lecrum }</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:when test="${not empty lecListPR }">
+								<thead>
+									<tr>
+										<th class="text-center">대상학년</th>
+										<th class="text-center">강의명</th>
+										<th class="text-center">학점</th>
+										<th class="text-center">분류</th>
+										<th class="text-center">강의실</th>
+									</tr>
+								</thead>
+								<c:forEach items="${lecListPR }" var="lecListPR">
+									<tr>
+										<td class="text-center">${lecListPR.lec_atnlc }</td>
+										<td class="text-center"><a class="text-color" href="${cPath }/lecture/main.do?lec_code=${lecListPR.lec_code}">${lecListPR.lec_name }</a></td>
+										<td class="text-center">${lecListPR.lec_pnt }</td>
+										<td class="text-center">${lecListPR.lec_cl}</td>
+										<td class="text-center">${lecListPR.lecrum }</td>
+									</tr>
 								</c:forEach>
 							</c:when>
 						</c:choose>

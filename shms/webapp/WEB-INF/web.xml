@@ -59,6 +59,10 @@
 		<error-code>404</error-code>
 		<location>/resources/errors/404.html</location>
 	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/resources/errors/500.html</location>
+	</error-page>
 
 
 	<!-- 하위 컨테이너용 -->

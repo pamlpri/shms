@@ -1,7 +1,5 @@
 package kr.ac.shms.lms.student.service.impl;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.lms.student.vo.SugangLecVO;
 /**
  * @author 박초원
  * @since 2021. 5. 22.
@@ -27,16 +24,10 @@ import kr.ac.shms.lms.student.vo.SugangLecVO;
 @Service
 public class StudentServiceImpl implements StudentService{
 	@Inject
-	private StudentDAO studentDAO;
+	private StudentDAO studentDAO;	
 	
 	@Override
 	public StudentVO student(String id) {
 		return studentDAO.student(id);
 	}
-	
-	@Override
-	public List<SugangLecVO> selectSugangList(String stdnt_no) {
-		return (List) studentDAO.selectSugangList(stdnt_no);
-	}
-
 }

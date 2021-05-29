@@ -23,6 +23,7 @@
 		       photo_path,
 		       semstr
 		FROM student
-		WHERE stdnt_no = #{stdnt_no}
+		WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 	</select>
 </mapper>
+

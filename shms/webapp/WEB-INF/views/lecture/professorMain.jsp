@@ -7,12 +7,13 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
-			<!-- 강의명 -->
-			<h1>대학생활의 이해</h1>
+			<c:forEach var="lecture" items="${lecture }" begin="0" end="0">
+			<h1>${lecture.lec_name}</h1>
 		</div>
 
 		<div class="row" id="lectureIcon">
@@ -55,7 +56,7 @@
 					</h4>
 				</div>
 				<div class="card-body">
-					<p>학습 데이터를 활용하기 위한 수집, 분석, 처리 과정을 설계하고 실행할 수 있다.</p>
+					<p>${lecture.summary}<p>
 				</div>
 			</div>
 			<div class="card" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
@@ -65,7 +66,8 @@
 					</h4>
 				</div>
 				<div class="card-body">
-					<p>성적(60%), 과제(30%), 출석(20%)</p>
+					<p>중간고사(${lecture.midterm }), 기말고사(${lecture.finals }), 출석(${lecture.attend })</p>
+				</c:forEach>
 				</div>
 			</div>
 		</div>
