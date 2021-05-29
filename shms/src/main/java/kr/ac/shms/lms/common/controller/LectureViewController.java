@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.lms.student.service.StudentService;
-import kr.ac.shms.lms.student.vo.SugangLecVO;
+import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 
 /**
  * @author 박초원
@@ -27,6 +27,7 @@ import kr.ac.shms.lms.student.vo.SugangLecVO;
  * 2021. 5. 27.  김보미			강의개설버튼 조작을 위한 수정
  * 2021. 5. 28.  김보미			파일명 변경(lectureViewController->LectureViewController)
  * 2021. 5. 28.  김보미			수강중인 강의 목록 출력
+ * 2021. 5. 29.  김보미         교수, 학생 구분 코드
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -35,7 +36,7 @@ import kr.ac.shms.lms.student.vo.SugangLecVO;
 public class LectureViewController {
 	
 	@Inject
-	private StudentService studentService;
+	private LectureService lectureService;
 	
 	@RequestMapping("/lms/lectureList.do")
 	public String lectureList(
@@ -43,14 +44,16 @@ public class LectureViewController {
 		, HttpSession session
 		, Model model
 	) {
-		List<SugangLecVO> lecList = studentService.selectSugangList(user.getUser_id());
+		List<SugangLecSTVO> lecListST = lectureService.selectStudentSugangList(user.getUser_id());
+		List<SugangLecSTVO> lecListPR = lectureService.selectProfessorSugangList(user.getUser_id());
 		
 		if("PR".equals(user.getUser_section())) {
-			
 			session.setAttribute("staff", user.getUser_section());
+			model.addAttribute("lecListPR", lecListPR);
 		}else if("ST".equals(user.getUser_section())) {
-			session.setAttribute("student", user.getUser_id());
-			model.addAttribute("lecList", lecList);
+			session.setAttribute("student", user.getUser_section());
+			model.addAttribute("lecListST", lecListST);
+			
 		}
 		return "lms/lecture";
 	}

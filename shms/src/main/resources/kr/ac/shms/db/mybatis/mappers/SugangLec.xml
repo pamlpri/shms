@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
+<mapper namespace="kr.ac.shms.lecture.dao.LectureDAO">
 
-	<select id="selectSugangList" parameterType="String" resultType="SugangLecVO">
+	<select id="selectStudentSugangList" parameterType="String" resultType="SugangLecSTVO">
 		SELECT
 		    stdnt_no,
-		    stdnt_name,
-		    grade,
+         	stdnt_name,
+    		grade,
 		    semstr,
 		    lec_name,
 		    prof_name,
-		    CASE WHEN lec_cl = '01' THEN '전공필수' 
-             WHEN lec_cl = '02' THEN '전공선택'
-             WHEN lec_cl = '03' THEN '교양필수'
-             WHEN lec_cl = '04' THEN '교양선택'
-             END AS lec_cl,
-		  	estbl_year,
+		    (SELECT com_code_nm
+		       FROM tb_com_code
+		      WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'LEC_CL')
+		       AND 	com_code = lec_cl) lec_cl,
+		  	     estbl_year,
 		    estbl_semstr,
 		    lecrum,
 		    lec_code,
 		    lec_pnt
-	  FROM
+			  FROM
 			(
 			SELECT DISTINCT
 			       a.stdnt_no,
@@ -51,13 +50,66 @@
 			  INNER JOIN building h
 			  ON(g.building_no = h.building_no)
 			)
-		WHERE ESTBL_YEAR = '2019'
+<!-- 		WHERE ESTBL_YEAR = '2019' -->
 <!-- 		WHERE ESTBL_YEAR = EXTRACT(YEAR FROM SYSDATE) -->
-	      AND ESTBL_SEMSTR = (SELECT  CASE WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 2 AND 7 THEN  1
-	                                  ELSE 2
-	                                  END AS SEMSTR
-	                            FROM DUAL)
-	      AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}           
- 
+<!-- 	      AND ESTBL_SEMSTR = (SELECT  CASE WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 2 AND 7 THEN  1 -->
+<!-- 	                                  ELSE 2 -->
+<!-- 	                                  END AS SEMSTR -->
+<!-- 	                            FROM DUAL) -->
+	     WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}           
+	</select>
+	<select id="selectLectureDetails" parameterType="String" resultType="LectureDetailsVO">
+		SELECT a.lec_code, 
+		       d.lec_name, 
+		       a.summary, 
+		       b.midterm * 100 midterm, 
+               b.finals * 100 finals, 
+               b.attend * 100 attend, 
+               b.task * 100 task, 
+		       b.etc,
+		       c.lec_week, 
+		       c.week_bgnde, 
+		       c.week_endde, 
+		       c.diary_title,
+		       c.diary_cont
+	      FROM lecture a
+	     INNER JOIN lec_score_st b ON (a.lec_code=b.lec_code)
+	     INNER JOIN lec_week_diary c ON (b.lec_code=c.lec_code)
+	     INNER JOIN curriculum d ON (a.cur_code=d.cur_code)
+	     WHERE a.lec_code= #{lec_code, jdbcType=VARCHAR}
+	</select>
+	<select id="selectProfessorSugangList" parameterType="String" resultType="SugangLecPRVO">
+	SELECT name,
+	       staff_no,
+	       lec_name,
+	       lec_pnt,
+	       lec_atnlc,
+	       (SELECT com_code_nm
+	          FROM tb_com_code
+	         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'LEC_CL')
+	           AND com_code = lec_cl) lec_cl,
+	       lec_code,
+	       lecrum,
+	       estbl_year
+	  FROM (
+	        SELECT DISTINCT a.name, 
+	               a.staff_no, 
+	               b.lec_name, 
+	               b.lec_pnt,
+	               b.lec_atnlc,
+	               c.lec_code,
+	               c.lec_cl,
+	               f.building_nm||' '||e.lecrum_nm||'호' lecrum,
+	               b.estbl_year
+	          FROM staff a
+	         INNER JOIN curriculum b ON (a.staff_no=b.staff_no)
+	         INNER JOIN lecture c ON (b.cur_code=c.cur_code)
+	         RIGHT OUTER JOIN lecrum_ttable d ON (c.lec_code = d.lec_code)
+	         RIGHT OUTER JOIN lecrum e ON (d.lecrum_no = e.lecrum_no)
+	        RIGHT OUTER JOIN building f ON (f.building_no = e.building_no)
+	       )
+	 WHERE staff_no=#{staff_no, jdbcType=VARCHAR}
+<!-- 	  AND b.estbl_year = EXTRACT(YEAR FROM SYSDATE) -->
+	   AND estbl_year='2013'
 	</select>
 </mapper>
