@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
 * 2021. 5. 26.      송수미        대학문의 리스트 페이지 구현
+* 2021. 5. 29.      송수미        삭제 후 결과 창 모달로 출력하도록 수정 - 안됨
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -101,10 +102,34 @@
 				<div id="pagingArea" class="d-flex justify-content-center">
 					${pagingVO.pagingHTMLBS }
 				</div>
-				<a href="${cPath }/main/community/collegeQnaForm.do" id="writeBtn">글쓰기</a>
+				<a href="${cPath }/main/community/collegeQnaInsert.do" id="writeBtn">글쓰기</a>
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="delChkModal" tabindex="-1" aria-labelledby="delChkModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="delChkModalBody">
+        <c:if test="${not empty message }">
+        	${message }
+        	<script type="text/javascript">
+        		$("#delChkModal").modal();
+        	</script>
+		</c:if>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript">
 	$(function(){
