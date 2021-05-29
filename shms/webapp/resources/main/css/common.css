@@ -438,6 +438,14 @@
     font-weight: 800;
 }
 
+/* 비밀번호 검사 결과 */
+#passChkRes{
+	color : red;
+	size : 0.5em;
+	text-align: center;
+	margin-bottom : 5px;
+}
+
 /* 뷰어 */
 .pdfobject-container { 
     margin-top: 4%;

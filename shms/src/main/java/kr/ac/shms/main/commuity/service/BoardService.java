@@ -17,6 +17,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 25.      송수미       최초작성
+ * 2021. 5. 28.      송수미       인증하는 메서드 작성
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */

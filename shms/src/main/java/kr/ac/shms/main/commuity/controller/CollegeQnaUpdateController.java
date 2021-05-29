@@ -28,6 +28,7 @@ import kr.ac.shms.validator.DMBoardUpdateGroup;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 20.      박초원      	       최초작성
+ * 2021. 5. 28.      송수미      	       학사문의 수정 기능 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -45,8 +46,8 @@ public class CollegeQnaUpdateController {
 			@RequestParam("bo_no") int bo_no
 			, Model model
 			) {
-		BoardVO board = boardService.selectBoard(bo_no);
-		model.addAttribute("board", board);
+		BoardVO saveBoard = boardService.selectBoard(bo_no);
+		model.addAttribute("saveBoard", saveBoard);
 		model.addAttribute("mode", "update");
 		return "main/community/collegeQnaForm";
 	}
@@ -61,6 +62,9 @@ public class CollegeQnaUpdateController {
 		
 		logger.info("board : {}", board.toString());
 		boolean valid = !errors.hasErrors();
+		
+		BoardVO saveBoard = boardService.selectBoard(board.getBo_no());
+		model.addAttribute("saveBoard", saveBoard);
 		
 		String view = null;
 		String message = null;
@@ -85,7 +89,7 @@ public class CollegeQnaUpdateController {
 		}
 		model.addAttribute("message", message);
 		model.addAttribute("mode", "update");
-		model.addAttribute("board", board);
+		
 		return view;
 	}
 }

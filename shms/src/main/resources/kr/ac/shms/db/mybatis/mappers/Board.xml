@@ -199,6 +199,11 @@
 		    bo_cont = #{bo_cont, jdbcType=VARCHAR},
 		    bo_secret_at = #{bo_secret_at, jdbcType=VARCHAR}
 		WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
-
 	</update>
+
+	<delete id="deleteBoard" parameterType="int">
+		DELETE FROM board
+			WHERE
+			    bo_no = #{bo_no, jdbcType=NUMERIC}
+	</delete>	
 </mapper>

@@ -29,7 +29,6 @@ import kr.ac.shms.validator.DMBoardInsertGroup;
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
-
 @Controller
 public class CollegeQnaInsertController {
 	

@@ -5,13 +5,26 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.main.commuity.service.BoardService;
-import kr.ac.shms.main.commuity.vo.BoardVO;
 
+/**
+ * @author 송수미
+ * @since 2021. 5. 28.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 28.      송수미       최초개정
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 @Controller
 public class CollegeQnaDeleteController {
 	
@@ -20,20 +33,27 @@ public class CollegeQnaDeleteController {
 	@Inject
 	private BoardService boardService;
 	
-	@RequestMapping(value="/main/community/collegeQnaDelete.do", method=RequestMethod.POST)
+	@RequestMapping("/main/community/collegeQnaDelete.do")
 	public String collegeQnaForm(
-			@ModelAttribute("board") BoardVO board // validate해야하나?
+			@RequestParam("bo_no") String bo_no
+			, RedirectAttributes session
 			) {
-		boolean authResult = boardService.boardAuth(board);
+		logger.info("bo_no : {}", bo_no);
+		ServiceResult result = boardService.deleteBoard(Integer.parseInt(bo_no));
+		
 		String message = null;
 		String view = null;
 		
-		if(authResult) {
-			
+		if(ServiceResult.OK.equals(result)) {
+			message = "게시글이 정상적으로 삭제되었습니다.";
+			view = "redirect:/main/community/collegeQnaList.do";
 		}else {
-			message = "작성자명 또는 비밀번호가 틀렸습니다. 다시 입력해주세요";
-			
+			message = "게시글 삭제 실패! 잠시 후에 다시 시도해주세요.";
+			view = "redirect:/main/community/collegeQnaList.do?bo_no=" + bo_no;
 		}
-		return "main/community/collegeQnaForm";
+		session.addAttribute("message", message);
+		
+		logger.info("message : {}", message);
+		return view;
 	}
 }

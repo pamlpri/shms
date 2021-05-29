@@ -16,6 +16,18 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class CryptoUtil {
 	
+	public static void main(String[] args) throws Exception {
+		
+		String md5 = md5("test");
+		System.out.println(md5.length());
+		
+		String sha256 = sha256("test");
+		System.out.println(sha256.length() + " : " + sha256);
+		
+	}
+	
+	
+	
 	/**
 	 * 문자열을 MD5 방식으로 암호화(해시) 한다.
 	 * @param str 암호화 할 문자열

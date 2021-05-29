@@ -28,6 +28,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * --------     --------    ----------------------
  * 2021. 5. 25.      송수미       최초작성
  * 2021. 5. 28.      송수미       학사문의 게시글 등록 구현
+ * 2021. 5. 29.      송수미       학사문의 게시글 비밀번호 인증, 삭제 기능 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -43,7 +44,24 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public boolean boardAuth(BoardVO search) {
-		return false;
+		int bo_no = search.getBo_no();
+		boolean authChk = true;
+		
+		String inputWriter = search.getBo_writer();
+		String inputPass = search.getBo_password();
+		
+		BoardVO saveBoard = boardDAO.selectBoard(bo_no);
+		String saveWriter = saveBoard.getBo_writer(); 
+		String savePass = saveBoard.getBo_password();
+		
+		if(StringUtils.isNotBlank(inputWriter)) {
+			
+			if(!(saveWriter.equals(inputWriter))) authChk = false; 
+		}
+		
+		if(!(encoder.matches(inputPass, savePass))) authChk = false;
+		
+		return authChk;
 	}
 
 	@Override
@@ -91,15 +109,14 @@ public class BoardServiceImpl implements BoardService{
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = 0;
 		
-		String bo_pass = board.getBo_password();
 		BoardVO savedBoard = boardDAO.selectBoard(board.getBo_no());
+		
 		if(savedBoard == null) {
 			result = ServiceResult.NOTEXIST;
 		}else {
-			String saved_pass = savedBoard.getBo_password(); 
-			boolean passChk = encoder.matches(bo_pass, saved_pass);
+			boolean authChk = boardAuth(board);
 			
-			if(!passChk) {
+			if(!authChk) {
 				result = ServiceResult.INVALIDPASSWORD;
 			}else {
 				cnt = boardDAO.updateBoard(board);
@@ -116,8 +133,12 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public ServiceResult deleteBoard(int bo_no) {
-		// TODO Auto-generated method stub
-		return null;
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = boardDAO.deleteBoard(bo_no);
+		
+		if(cnt > 0) result = ServiceResult.OK;
+		
+		return result;
 	}
 
 	@Override

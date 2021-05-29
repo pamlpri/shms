@@ -4,10 +4,12 @@
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
 * 2021. 5. 26.      송수미        학사문의 게시글 목록 조회 페이지 구현
+* 2021. 5. 28.      송수미        학사문의 게시글 삭제 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="location">
 	<ul>
 		<li class="first"><a class="text-color" href="${cPath }/main/community/academicList.do">대학광장</a></li>
@@ -65,9 +67,10 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+			<span id="passChkRes"></span>
 			<div class="modal-body">
-				<form action="#" class="row" method="post">
-					<input type="hidden" name="bo_no" value="${board.bo_no }" />
+				<form class="row" method="post">
+					<input type="hidden" id="board_no" name="bo_no" value="${board.bo_no }" />
 					<div class="col-12">
 						<input type="text" class="form-control mb-3" id="deleteName" placeholder="Name" name="bo_writer">
 					</div>
@@ -75,17 +78,49 @@
 						<input type="password" class="form-control mb-3" id="deletePass" placeholder="Password" name="bo_password">
 					</div>
 					<div class="col-12">
-						<button type="button" class="btn btn-primary"
-							onclick="location.href='collegeQna.html'">확인</button>
+						<button id="passChkBtn" type="button" class="btn btn-primary">확인</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 <script type="text/javascript">
 	$(function(){
 		$(".sideMain").eq(3).children("a").addClass("navy");
 		$(".sideMain").eq(3).children(".sideSub").addClass("cur");
 	});
+	
+	$("#passChkBtn").on("click", function(event){
+		event.preventDefault();
+		var board = {
+				bo_no : $("#board_no").val()
+				, bo_writer : $("#deleteName").val()
+				, bo_password : $("#deletePass").val()
+			}
+		
+		$.ajax({
+			url : "${cPath}/main/community/collegeQnaPass.do"
+			, method : "post"
+			, contentType : "application/json; charset='utf-8'"
+			, data : JSON.stringify(board)
+			, dataType : "json"
+			, success : function(resp){
+				if(resp == true){
+					location.href = "${cPath}/main/community/collegeQnaDelete.do?bo_no=${board.bo_no}";
+				}else{
+					$('#passChkRes').text("작성자명 또는 비밀번호가 올바르지 않습니다.");
+				}
+			}
+			, error : function(xhr, error, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
+	});
+	
+	
 </script>

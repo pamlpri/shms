@@ -1,16 +1,21 @@
 package kr.ac.shms.main.commuity.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.main.commuity.service.BoardService;
 import kr.ac.shms.main.commuity.vo.BoardVO;
@@ -26,6 +31,7 @@ import kr.ac.shms.main.commuity.vo.BoardVO;
  * --------     --------    ----------------------
  * 2021. 5. 20.      박초원      	       최초작성
  * 2021. 5. 27.      송수미      	       비밀번호 체크 기능 구현
+ * 2021. 5. 29.      송수미      	       비밀번호 체크 기능 비동기 방식으로 개정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -51,30 +57,23 @@ public class CollegeQnaPassCheckController {
 		return "main/community/collegeQnaPass";
 	}
 	
-	@RequestMapping(value="/main/community/collegeQnaPass.do", method=RequestMethod.POST)
-	public String collegeQnaPassCheck(
-			@RequestParam("bo_no") int bo_no
-			, @RequestParam("writer_name") String writer_name
-			, @RequestParam("writer_pass") String writer_pass
-			, Model model
-			, RedirectAttributes session
+	@RequestMapping(value="/main/community/collegeQnaPass.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public boolean collegeQnaPassCheck(
+			@RequestBody Map<String, String> boardMap
 			) {
 		
-		BoardVO board = boardService.selectBoard(bo_no);
-		String saved_pass = board.getBo_password();
-		String saved_name = board.getBo_writer();
+		logger.info("board : {}", boardMap);
 		
-		String view = null;
-		boolean match = encoder.matches(writer_pass, saved_pass) && (writer_name.equals(saved_name));
-		session.addAttribute("bo_no", bo_no);
+		BoardVO board = new BoardVO();
 		
-		if(match) {
-			view = "redirect:collegeQnaView.do?bo_no" + bo_no;
-		}else {
-			session.addFlashAttribute("message", "작성자명 또는 비밀번호가 올바르지 않습니다.");
-			view = "redirect:collegeQnaPass.do?bo_no" + bo_no; 
-		}
-		return view;
+		board.setBo_no(Integer.parseInt(boardMap.get("bo_no")));
+		board.setBo_writer(boardMap.get("bo_writer"));
+		board.setBo_password(boardMap.get("bo_password"));
+		
+		boolean result = boardService.boardAuth(board);
+		
+		return result;
 	}
 	
 }

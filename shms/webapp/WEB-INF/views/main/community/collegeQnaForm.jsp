@@ -3,7 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
-* 2021. 5. 28.      송수미        학사문의 등록 폼 기능 구현
+* 2021. 5. 28.      송수미        학사문의 등록 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -22,6 +22,10 @@
 		<li class="last"><a class="text-color" href="${cPath }/main/community/collegeQnaList.do">대학문의</a></li>
 	</ul>
 </div>
+
+<c:if test="${not empty saveBoard }">
+	<c:set var="board" value="${saveBoard }"></c:set>
+</c:if>
 
 <div style="clear: both;"></div>
 <!-- 컨텐츠 -->
