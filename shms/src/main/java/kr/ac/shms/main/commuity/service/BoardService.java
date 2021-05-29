@@ -17,10 +17,17 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 25.      송수미       최초작성
+ * 2021. 5. 28.      송수미       인증하는 메서드 작성
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 public interface BoardService {
+	/**
+	 * board에 대한 인증 작업을 진행
+	 * @param search bo_writer, bo_pass, bo_no
+	 * @return bo_no에 해당하는 게시글의 저장되어 있는 정보와 파라미터로 들어온 정보를 비교한 결과값
+	 */
+	public boolean boardAuth(BoardVO search);
 	/**
 	 * bo_name을 가공해서 bo_kind 조회
 	 * @param bo_name
@@ -60,13 +67,13 @@ public interface BoardService {
 	/**
 	 * 게시글 수정
 	 * @param board
-	 * @return OK, FAIL, NOTEXIST
+	 * @return OK, FAIL, NOTEXIST, INVALIDPASSWORD
 	 */
 	public ServiceResult updateBoard(BoardVO board);
 	/**
 	 * 게시글 삭제
 	 * @param bo_no
-	 * @return OK, FAIL, NOTEXIST
+	 * @return OK, FAIL, NOTEXIST, INVALIDPASSWORD
 	 */
 	public ServiceResult deleteBoard(int bo_no);
 	/**
