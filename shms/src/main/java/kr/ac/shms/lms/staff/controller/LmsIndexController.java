@@ -1,7 +1,4 @@
 package kr.ac.shms.lms.staff.controller;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +13,6 @@ import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.StudentService;
-import kr.ac.shms.lms.student.vo.StudentVO;
 /**
  * @author 최희수
  * @since 2021. 05. 22.

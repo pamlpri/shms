@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.student.controller;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,15 +27,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.ac.shms.lecture.service.LectureService;
+import kr.ac.shms.lecture.vo.LectureDetailsVO;
+import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.main.commuity.service.BoardService;
+import kr.ac.shms.main.commuity.vo.BoardVO;
+import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 @Controller
 public class LmsStudentIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LmsStudentIndexController.class);
 	@Inject
 	private StudentService studentService;
+	@Inject
+	private BoardService boardService;
+	@Inject
+	private LectureService lectureService;
+	@Inject
+	private LmsCommonService lmsCommonService;
 	
 	@RequestMapping("/lms/index.do")
 	public String index(
@@ -42,11 +57,47 @@ public class LmsStudentIndexController {
 			, HttpSession session
 			, Model model
 	) {
-		StudentVO studentVO = studentService.student(user.getUser_id());
+		String user_id = user.getUser_id();
+		StudentVO studentVO = studentService.student(user_id);
 		session.setAttribute("userName", studentVO.getName());
+		
+		// 웹메일 정보 출력
+		Map<String, String> webmailCntMap = lmsCommonService.selectWebmailCnt(user_id);
+		model.addAttribute("webmailCntMap", webmailCntMap);
+		
+		// 도서 정보 출력
+		Map<String, String> bookLoanCnt = studentService.bookLoanCnt(user_id);
+		model.addAttribute("bookLoanCnt", bookLoanCnt);
+		
+		// 강의공지 출력
+		Map<String, String> search = new HashMap<>();
+		search.put("bo_name", "강의공지");
+		search.put("stdnt_no", user_id);
+		List<BoardVO> ggList = boardService.selectForMain(search);
+		model.addAttribute("ggList", ggList);
+		
+		// 강의 과제 출력
+		List<SetTaskVO> taskList = lectureService.selectTask(user_id);
+		model.addAttribute("taskList", taskList);
+		
+		// 오늘 강의 출력
+		List<LectureDetailsVO> todayLecList	= lectureService.selectTodayLecList(user_id);
+		model.addAttribute("todayLecList", todayLecList);
+		
+		// 오늘 학사일정 출력
+		List<ScheduleVO> todaySchdulList = lmsCommonService.selectTodaySchdul();
+		model.addAttribute("todaySchdulList", todaySchdulList);
+		logger.info("todaySchdul : {}", todaySchdulList.toString());
+		
+		// 식단 정보 출력
+		DietVO diet = lmsCommonService.selectDiet();
+		model.addAttribute("diet", diet);
+		
+		
 		if(studentVO != null) {
 			model.addAttribute("student", studentVO);
 		}
 		return "lms/index";
 	}
 }
+

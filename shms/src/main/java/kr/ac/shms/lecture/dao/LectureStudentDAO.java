@@ -1,7 +1,10 @@
 package kr.ac.shms.lecture.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**

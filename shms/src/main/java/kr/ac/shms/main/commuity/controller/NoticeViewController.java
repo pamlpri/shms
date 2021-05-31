@@ -77,7 +77,7 @@ public class NoticeViewController {
 			) {
 		BoardVO board = boardService.selectBoard(bo_no);
 		boardService.incrementHit(bo_no);
-		logger.info("board : {}", board.toString());
+//		logger.info("board : {}", board.toString());
 		
 		model.addAttribute("board", board);
 		
