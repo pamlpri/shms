@@ -15,4 +15,6 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
+	
+	<util:properties id="appInfo" location="classpath:kr/ac/shms/appInfo.properties" />
 </beans>

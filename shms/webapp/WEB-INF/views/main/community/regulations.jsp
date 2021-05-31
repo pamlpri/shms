@@ -24,7 +24,7 @@
 
 <!-- pdf 뷰어 -->
 <script src="${cPath }/resources/main/js/pdfobject.js"></script>
-<script>PDFObject.embed("https://shms302.dothome.co.kr/community/학칙.pdf", "#example1");</script>
+<script>PDFObject.embed("https://storage.cloud.google.com/shms/community/%ED%95%99%EC%B9%99.pdf", "#example1");</script>
 
 <script type="text/javascript">
 	$(function(){
