@@ -3,12 +3,9 @@ package kr.ac.shms.lecture.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.LectureDetailsVO;
-import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.lms.student.service.StudentService;
-import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 
 /**
  * @author 박초원

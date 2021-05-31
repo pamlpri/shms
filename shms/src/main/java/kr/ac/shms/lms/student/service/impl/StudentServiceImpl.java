@@ -1,12 +1,17 @@
 package kr.ac.shms.lms.student.service.impl;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 /**
  * @author 박초원
  * @since 2021. 5. 22.
@@ -17,7 +22,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 수정일          수정자         수정내용
  * --------     --------    ----------------------
  * 2021. 5. 22.   박초원        최초작성
- * 2021. 5. 28.   김보미        수강중인 강의 목록, dao 이름 변경
+ * 2021. 5. 31.   김보미		출석
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -30,4 +35,20 @@ public class StudentServiceImpl implements StudentService{
 	public StudentVO student(String id) {
 		return studentDAO.student(id);
 	}
+	
+	@Override
+	public SugangLecSTVO selectQRInfo(SugangLecSTVO attendInfo) {
+		return studentDAO.selectQRInfo(attendInfo);
+	}
+
+	@Override
+	public ServiceResult attend(Map<String, String> attendInfo) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.attend(attendInfo);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		return result;
+	}
+
 }
