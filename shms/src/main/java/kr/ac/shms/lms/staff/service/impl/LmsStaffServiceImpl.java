@@ -11,11 +11,15 @@ import kr.ac.shms.lms.staff.service.LmsStaffService;
 @Service
 public class LmsStaffServiceImpl implements LmsStaffService {
 	@Inject
-	private LmsStaffDAO dao;
+	private LmsStaffDAO lmsStaffDAO;
 	
 	@Override
 	public StaffVO staff(String id) {
-		// TODO Auto-generated method stub
-		return dao.staff(id);
+		return lmsStaffDAO.staff(id);
+	}
+
+	@Override
+	public int selectConsltCnt(String id) {
+		return lmsStaffDAO.selectConsltCnt(id);
 	}
 }

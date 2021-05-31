@@ -45,7 +45,18 @@
 				     AND req_year = EXTRACT(YEAR FROM SYSDATE)
 				     AND req_semstr = (SELECT semstr FROM student WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}))
 		 </if>
-		)
+ 		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(staff_no)">
+	 	     AND lec_code IN (
+		         SELECT lec_code 
+		          FROM lecture A
+		         INNER JOIN curriculum B 
+		            ON(A.cur_code = B.cur_code)
+		         WHERE staff_no= #{staff_no, jdbcType=VARCHAR}
+		           AND A.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		           AND estbl_semstr = (SELECT semstr FROM v_semstr)
+				)
+		 </if>
+		 )
 		<![CDATA[
 		WHERE RN <= 5		
 		]]>

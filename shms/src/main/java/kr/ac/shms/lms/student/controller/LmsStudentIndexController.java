@@ -87,7 +87,6 @@ public class LmsStudentIndexController {
 		// 오늘 학사일정 출력
 		List<ScheduleVO> todaySchdulList = lmsCommonService.selectTodaySchdul();
 		model.addAttribute("todaySchdulList", todaySchdulList);
-		logger.info("todaySchdul : {}", todaySchdulList.toString());
 		
 		// 식단 정보 출력
 		DietVO diet = lmsCommonService.selectDiet();
