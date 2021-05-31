@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.common.dao.LmsCommonDAO">
+	<select id="selectDiet" resultType="DietVO">
+		SELECT
+		    diet_no,
+		    TO_CHAR(diet_date, 'YYYY.MM.DD') diet_date,
+		    diet_menu1,
+		    diet_menu2,
+		    diet_menu3,
+		    diet_menu4,
+		    diet_menu5,
+		    diet_menu6,
+		    diet_menu7
+		FROM
+		    diet
+		WHERE diet_date = TO_CHAR(SYSDATE)
+	</select>
+	
+	<select id="selectWebmailCnt" parameterType="String" resultType="hashMap">
+		SELECT recvCnt, todayRecvCnt
+		  FROM (
+		SELECT COUNT(*) recvCnt
+		  FROM tb_receiver A
+		  INNER JOIN webmail B
+		  ON(a.send_no = b.send_no)
+		 WHERE receiver = #{stdnt_no, jdbcType=VARCHAR}
+		   AND read_at = 'N'
+		), 
+		(
+		SELECT COUNT(*) todayRecvCnt
+		  FROM tb_receiver A
+		  INNER JOIN webmail B
+		  ON(a.send_no = b.send_no)
+		 WHERE receiver = #{stdnt_no, jdbcType=VARCHAR}
+		   AND read_at = 'N'
+		   AND b.send_date = TO_CHAR(SYSDATE)
+		)
+	</select>
+	
+	<select id="selectTodaySchdul" resultType="ScheduleVO">
+		 SELECT
+		    schdul_no,
+		    schdul_kind,
+		    title,
+		    cont,
+		    TO_CHAR(begin_dt, 'HH24:MI') begin_dt,
+		    TO_CHAR(end_dt, 'HH24:MI') end_dt
+		FROM
+		    schedule
+		WHERE schdul_kind = (SELECT com_code FROM tb_com_code
+		                      WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'SCHDUL_KIND')
+		                        AND com_code_nm = '학사일정')
+		AND TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS')
+			 BETWEEN TO_CHAR(begin_dt, 'YYYY/MM/DD HH24:MI:SS') AND TO_CHAR(end_dt, 'YYYY/MM/DD HH24:MI:SS')
+	</select>
+</mapper>

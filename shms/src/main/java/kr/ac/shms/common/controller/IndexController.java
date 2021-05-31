@@ -40,7 +40,7 @@ public class IndexController {
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 	
 	@Inject
-	private BoardService service;
+	private BoardService boardService;
 	
 	
 	@RequestMapping({"/", "/index.do"})
@@ -50,9 +50,9 @@ public class IndexController {
 			, Model model ) throws IOException {
 		Map<String, String> search = new HashMap<>();
 		search.put("bo_name", "학사공지");
-		List<BoardVO> dgList = service.selectForMain(search);
+		List<BoardVO> dgList = boardService.selectForMain(search);
 		search.put("bo_name", "장학공지");
-		List<BoardVO> jgList = service.selectForMain(search);
+		List<BoardVO> jgList = boardService.selectForMain(search);
 		
 		model.addAttribute("jgList", jgList);
 		model.addAttribute("dgList", dgList);

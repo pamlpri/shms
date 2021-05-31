@@ -25,7 +25,8 @@
 		    bo_kind,
 		    bo_title,
 		    TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de,
-		    bo_hit
+		    bo_hit,
+		    bo_writer
 		FROM
 		    board
 		WHERE bo_kind = (SELECT com_code
@@ -33,7 +34,16 @@
 		                WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND') 
 		                  AND com_code_nm = #{bo_name, jdbcType=VARCHAR})
 		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub)">
-		 	AND SUB_CODE = #{sub, jdbcType=VARCHAR}
+		 	AND sub_code = #{sub, jdbcType=VARCHAR}
+		 </if>
+		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(stdnt_no)">
+			 AND lec_code IN (
+				  SELECT lec_code
+				    FROM sugang_req
+				   WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+				     AND sugang_at = 'Y'
+				     AND req_year = EXTRACT(YEAR FROM SYSDATE)
+				     AND req_semstr = (SELECT semstr FROM student WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}))
 		 </if>
 		)
 		<![CDATA[

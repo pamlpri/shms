@@ -112,4 +112,67 @@
 <!-- 	  AND b.estbl_year = EXTRACT(YEAR FROM SYSDATE) -->
 	   AND estbl_year='2013'
 	</select>
+	
+	<sql id="myLecFrag">
+	    FROM sugang_req
+	   WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	     AND sugang_at = 'Y'
+	     AND req_year = EXTRACT(MONTH FROM SYSDATE)
+	     AND req_semstr = (SELECT SEMSTR FROM STUDENT WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
+	</sql>
+	
+	<select id="selectTask" parameterType="String" resultType="kr.ac.shms.lecture.vo.SetTaskVO">
+		SELECT 
+		    a.p_bo_no,
+		    a.set_task_no,
+		    lec_code,
+		    task_reg_de,
+		    submit_bgnde,
+		    submit_endde,
+		    task_title,
+		    task_cont,
+		    task_allot,
+		    atch_file_no,
+		    DECODE(b.writer, null, 'N', 'Y') submit_at
+		  FROM (
+		SELECT
+		    ROW_NUMBER () OVER (ORDER BY task_reg_de) p_bo_no,
+		    set_task_no,
+		    lec_code,
+		    TO_CHAR(task_reg_de, 'YYYY.MM.DD') task_reg_de,
+		    TO_CHAR(submit_bgnde, 'YYYY.MM.DD') submit_bgnde,
+		    TO_CHAR(submit_endde, 'YYYY.MM.DD') submit_endde,
+		    task_title,
+		    task_cont,
+		    task_allot,
+		    atch_file_no
+		FROM
+		    set_task 
+		   WHERE lec_code IN (
+		  SELECT lec_code
+		  	<include refid="myLecFrag"/>
+		    )) a
+		    LEFT OUTER JOIN(
+		     SELECT writer, set_task_no
+		       FROM task_submit
+		      WHERE writer = (SELECT NAME FROM STUDENT WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
+		    ) b
+		    ON(a.set_task_no = b.set_task_no)
+		ORDER BY p_bo_no desc
+	</select>
+	
+	<select id="selectTodayLecList" parameterType="String" resultType="LectureDetailsVO">
+ 		SELECT lec_code,
+	         LPAD(lec_time, 2, '0')||':00 - '||
+	         LPAD(lec_time + lec_pnt, 2, '0')||':00' lec_time,
+	         lec_name
+	    FROM lecture a
+	   INNER JOIN curriculum b
+	      ON (a.cur_code = b.cur_code)
+	   WHERE lec_code IN (
+	  SELECT lec_code
+		<include refid="myLecFrag"/>
+	     AND TO_NUMBER(dayotw) = (SELECT TO_CHAR(SYSDATE, 'D') FROM DUAL))
+	</select>
+	
 </mapper>

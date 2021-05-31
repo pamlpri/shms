@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
-import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 /**
@@ -23,6 +22,7 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * --------     --------    ----------------------
  * 2021. 5. 22.   박초원        최초작성
  * 2021. 5. 31.   김보미		출석
+ * 2021. 5. 31.   송수미	     학생 통합정보시스템 메인 페이지 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -50,5 +50,9 @@ public class StudentServiceImpl implements StudentService{
 		}
 		return result;
 	}
-
+	
+	@Override
+	public Map<String, String> bookLoanCnt(String stdnt_no) {
+		return studentDAO.bookLoanCnt(stdnt_no);
+	}
 }

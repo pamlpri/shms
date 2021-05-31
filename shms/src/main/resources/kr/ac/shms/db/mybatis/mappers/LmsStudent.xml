@@ -25,5 +25,28 @@
 		FROM student
 		WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 	</select>
+	
+	<sql id="loanCntFrag">
+		FROM
+		    book_loan
+		where stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		  AND return_dt IS NULL
+	</sql>
+	
+	<select id="bookLoanCnt" parameterType="String" resultType="hashMap">
+		SELECT bookLoancnt, expiredcnt
+		  FROM (
+		SELECT
+		    COUNT(*) bookLoancnt
+		<include refid="loanCntFrag"></include>
+		),
+		(SELECT 
+		    COUNT(*) expiredcnt
+		<include refid="loanCntFrag"></include>
+		<![CDATA[
+		  AND return_exp_dt < SYSDATE)
+		]]>
+	</select>
+	
 </mapper>
 

@@ -34,4 +34,5 @@ public class LectureDetailsVO {
 	public String diary_cont;
 	public String week_bgnde;
 	public String week_dndde;
+	public String lec_time;
 }
