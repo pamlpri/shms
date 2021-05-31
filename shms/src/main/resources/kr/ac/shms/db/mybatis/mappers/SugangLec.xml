@@ -35,7 +35,7 @@
 			       c.lec_code,
 			       d.lec_pnt
 			  FROM student A
-			  INNER JOIN sugang_lec b
+			  INNER JOIN sugang_req b
 			  ON (a.stdnt_no = b.stdnt_no)
 			  INNER JOIN lecture c
 			  ON (b.lec_code = c.lec_code)
