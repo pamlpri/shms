@@ -5,10 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+#qrcode{
+	margin-top: 500px;
+}
+</style>
 </HEAD>
 <BODY>
 	<input type="hidden" name="text" value="${text}">
-	<div style="border: 2px solid #000;width:500px"> 
+	<div style="border: 2px solid #000;width:500px" > 
 		<div id="qrcode"></div>
 	</div>
 

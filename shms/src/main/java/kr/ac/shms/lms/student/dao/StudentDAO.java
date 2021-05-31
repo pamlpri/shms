@@ -43,5 +43,5 @@ public interface StudentDAO {
 	 * @param attendInfo 학번, 강의코드
 	 * @return ServiceResult 
 	 */
-	public int attend(Map<String, String> attendInfo);
+	public int attend(SugangLecSTVO attendInfo);
 }

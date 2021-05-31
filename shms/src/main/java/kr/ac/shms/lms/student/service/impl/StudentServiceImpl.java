@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public ServiceResult attend(Map<String, String> attendInfo) {
+	public ServiceResult attend(SugangLecSTVO attendInfo) {
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = studentDAO.attend(attendInfo);
 		if(cnt > 0) {

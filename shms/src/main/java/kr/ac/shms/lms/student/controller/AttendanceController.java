@@ -17,6 +17,19 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 
+/**
+ * @author PC-24
+ * @since 2021. 5. 31.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일        수정자      수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 31.  김보미      최초작성
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 @Controller
 public class AttendanceController {
 	@Inject
@@ -40,27 +53,31 @@ public class AttendanceController {
 		return "lecture/qrgenerator";
 	}
 	
-	
-	
-//	@RequestMapping("/lecture/qrGen.do")
-//	public String insertAttendance(
-//			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-//			, @RequestParam("lec_code") String lec_code
-//			, HttpSession session
-//			, Model model
-//			) {
-//		Map<String, String> attendInfomap =  new HashMap<>();
-//		attendInfomap.put("lec_code", lec_code);
-//		attendInfomap.put("stdnt_no", user.getUser_id());
-//		
-//		String view = null;
-//		ServiceResult result = studentService.attend(attendInfomap);
-//		if(ServiceResult.OK.equals(result)) {
-//			model.addAttribute("attendInfo", attendInfomap);
-//			view = "qrgenerator";
-//		}else {
-//			view = "lecture/main";
-//		}
-//		return view;
-//	}
+	@RequestMapping("/lecture/qrScanner.do")
+	public String insertAttendance(
+			@RequestParam("qrcodedata") String qrcodeData
+			, HttpSession session
+			, Model model
+			) {
+		String[] arr = qrcodeData.split(",");
+		System.out.println(arr.toString());
+		String stdnt_no = arr[0];
+		String lec_code = arr[1];
+		System.out.println("stdnt_no : " + stdnt_no);
+		System.out.println("lec_code :" + lec_code);
+		
+		SugangLecSTVO attendInfo = new SugangLecSTVO();
+		attendInfo.setStdnt_no(stdnt_no);
+		attendInfo.setLec_code(lec_code);
+		
+		String view = null;
+		ServiceResult result = studentService.attend(attendInfo);
+		if(ServiceResult.OK.equals(result)) {
+			model.addAttribute("attendInfo", attendInfo);
+			view = "lecture/qrResult";
+		}else {
+			view = "lecture/main";
+		}
+		return view;
+	}
 }
