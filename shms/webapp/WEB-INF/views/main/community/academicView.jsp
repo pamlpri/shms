@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
 * 2021. 5. 27.      송수미        게시글 상세조회 기능 구현
+* 2021. 5. 31.      최희수        첨부파일 다운로드 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

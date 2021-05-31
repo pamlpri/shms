@@ -134,12 +134,12 @@ public class NoticeViewController {
 		return "main/community/scholarshipView";
 	}
 	
-	@RequestMapping("/main/community/scholarshipSystem.do")
+	@RequestMapping("/scholarshipSystem.do")
 	public String scholarshipSystem() {
 		return "main/community/scholarshipSystem";
 	}
 	
-	@RequestMapping("/main/community/referenceList.do")
+	@RequestMapping("/referenceList.do")
 	public String referenceList(
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchType", required=false) String searchType
@@ -151,7 +151,7 @@ public class NoticeViewController {
 		return "main/community/reference";
 	}
 	
-	@RequestMapping("/main/community/referenceView.do")
+	@RequestMapping("/referenceView.do")
 	public String referenceView(
 			@RequestParam("bo_no") int bo_no
 			, Model model
@@ -165,7 +165,6 @@ public class NoticeViewController {
 		@ModelAttribute("board") AttachVO attachVO
 		, Model model
 	) {
-		logger.info("download??");
 		AttachVO attvo = boardService.download(attachVO);
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";

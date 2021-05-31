@@ -33,6 +33,7 @@ import lombok.ToString;
  * 2021. 5. 25.      송수미       최초작성
  * 2021. 5. 27.      송수미       첨부파일 관련 객체 추가
  * 2021. 5. 28.      송수미       검증 관련 내용 추가
+ * 2021. 5. 31.      최희수       첨부파일 관련 내용 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
