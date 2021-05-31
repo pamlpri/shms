@@ -39,5 +39,5 @@ public interface StudentService {
 	 * @param attendInfo 학번, 강의코드
 	 * @return ServiceResult 
 	 */
-	public ServiceResult attend(Map<String, String> attendInfo);
+	public ServiceResult attend(SugangLecSTVO attendInfo);
 }

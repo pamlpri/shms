@@ -10,7 +10,7 @@
 		   AND lec_code=#{lec_code, jdbcType=VARCHAR}
 	</select>
 	
-	<insert id="attend" parameterType="hashMap">
+	<insert id="attend" parameterType="SugangLecSTVO">
 		INSERT INTO attendance (
 			    atndan_no,
 			    attend_date,
@@ -23,10 +23,10 @@
 			    ATTEND_SEQ.NEXTVAL, 
 			    SYSDATE, 
 			    SYSDATE,
-			    '',
-			    '',
-			    lec_code=#{lec_code, jdbcType=VARCHAR},
-			    stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+			    null,
+			    null,
+			    #{lec_code, jdbcType=VARCHAR},
+			    #{stdnt_no, jdbcType=VARCHAR}
 			)
 	</insert>
 </mapper>
