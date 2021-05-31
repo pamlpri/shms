@@ -40,12 +40,17 @@
 	<div class="noticeContent">
 		${board.bo_cont }
 	</div>
-	<c:if test="${not empty board.attachList }">
+	<c:if test="${not empty board.attachList}">
 		<div class="board_downloader">
 			<ul class="downloader">
 			<c:forEach items="${board.attachList }" var="attach">
+				<c:url value="/main/community/download.do" var="downloadURL">
+					<c:param name="bo_no" value="${board.bo_no }" />
+					<c:param name="atch_file_no" value="${attach.atch_file_no }" />
+					<c:param name="atch_file_seq" value="${attach.atch_file_seq }" />
+				</c:url>
 				<li>
-					<a href="#" class="text-color">
+					<a href="${downloadURL }" class="text-color">
 						<i class="fas fa-arrow-alt-circle-down"></i>${attach.file_nm }
 					</a>
 				</li>

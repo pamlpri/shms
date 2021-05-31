@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.shms.common.controller.IndexController;
 import kr.ac.shms.main.commuity.service.BoardService;
+import kr.ac.shms.main.commuity.vo.AttachVO;
 import kr.ac.shms.main.commuity.vo.BoardVO;
 import kr.ac.shms.main.commuity.vo.PagingVO;
 
@@ -31,11 +32,13 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * 2021. 5. 20.      박초원      	       최초작성
  * 2021. 5. 25.      송수미      	       학사공지 리스트 페이지 구현
  * 2021. 5. 26.      송수미      	       장학공지, 자료실 리스트 페이지 구현
+ * 2021. 5. 31.      최희수              첨부파일 등록 수정 삭제 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 
 @Controller
+@RequestMapping("/main/community")
 public class NoticeViewController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
@@ -76,6 +79,7 @@ public class NoticeViewController {
 			, Model model
 			) {
 		BoardVO board = boardService.selectBoard(bo_no);
+		board.setAttachList(boardService.attachList(bo_no));
 		boardService.incrementHit(bo_no);
 		logger.info("board : {}", board.toString());
 		
@@ -83,7 +87,7 @@ public class NoticeViewController {
 		
 	}
 	
-	@RequestMapping("/main/community/academicList.do")
+	@RequestMapping("/academicList.do")
 	public String academicList(
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchType", required=false) String searchType
@@ -95,7 +99,7 @@ public class NoticeViewController {
 		return "main/community/academic";
 	}
 	
-	@RequestMapping("/main/community/academicView.do")
+	@RequestMapping("/academicView.do")
 	public String academicView(
 			@RequestParam("bo_no") int bo_no
 			, Model model
@@ -104,12 +108,12 @@ public class NoticeViewController {
 		return "main/community/academicView";
 	}
 	
-	@RequestMapping("/main/community/regulations.do")
+	@RequestMapping("/regulations.do")
 	public String regulations() {
 		return "main/community/regulations";
 	}
 	
-	@RequestMapping("/main/community/scholarshipList.do")
+	@RequestMapping("/scholarshipList.do")
 	public String scholarshipList(
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchType", required=false) String searchType
@@ -121,7 +125,7 @@ public class NoticeViewController {
 		return "main/community/scholarship";
 	}
 	
-	@RequestMapping("/main/community/scholarshipView.do")
+	@RequestMapping("/scholarshipView.do")
 	public String scholarshipView(
 			@RequestParam("bo_no") int bo_no
 			, Model model
@@ -154,5 +158,16 @@ public class NoticeViewController {
 			) {
 		boardSetting(bo_no, model);
 		return "main/community/referenceView";
+	}
+	
+	@RequestMapping(value="/download.do")
+	public String downloader(
+		@ModelAttribute("board") AttachVO attachVO
+		, Model model
+	) {
+		logger.info("download??");
+		AttachVO attvo = boardService.download(attachVO);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
 	}
 }

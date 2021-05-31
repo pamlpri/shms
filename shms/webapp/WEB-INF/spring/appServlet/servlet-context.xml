@@ -36,7 +36,8 @@
 	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" id="TVR"
 		p:order="2"
 	/>
-		
+	<beans:bean id="downloadView" class="kr.ac.shms.main.commuity.view.DownloadView" />
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 	<!-- 하위 컨테이너용 -->
 	<context:component-scan base-package="kr.ac.shms" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

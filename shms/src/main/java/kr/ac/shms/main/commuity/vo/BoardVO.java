@@ -1,11 +1,14 @@
 package kr.ac.shms.main.commuity.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.validator.BoardDeleteGroup;
 import kr.ac.shms.validator.BoardInsertGroup;
@@ -74,5 +77,22 @@ public class BoardVO implements Serializable{
 	private Integer atch_file_no;
 	private String bo_name;		// 학사공지, 장학공지
 	private String inqry_kind_name;	// 편의시설문의, 학사일정문의, 장학금문의
+	
+	private int startAttNo;
 	private List<AttachVO> attachList;
+	private MultipartFile[] bo_files;
+	public void setBo_files(MultipartFile[] bo_files) {
+		System.out.println("bo_files : "+ bo_files.length);
+		this.bo_files = bo_files;
+		if(bo_files!=null) {
+			List<AttachVO> attatchList = new ArrayList<>();
+			for(MultipartFile file : bo_files) {
+				if(file.isEmpty()) continue;
+				attatchList.add(new AttachVO(file));
+			}
+			if(attatchList.size()>0)
+				this.attachList = attatchList;
+		}
+	}
+	private int[] delAttNos;
 }

@@ -33,6 +33,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  */
 
 @Controller
+@RequestMapping("/main/community")
 public class CollegeQnaViewController {
 	
 	@Inject
@@ -40,7 +41,7 @@ public class CollegeQnaViewController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CollegeQnaViewController.class);
 	
-	@RequestMapping("/main/community/collegeQnaList.do")
+	@RequestMapping("/collegeQnaList.do")
 	public String collegeQnaList(
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchType", required=false) String searchType
@@ -71,7 +72,7 @@ public class CollegeQnaViewController {
 		return "main/community/collegeQna";
 	}
 	
-	@RequestMapping("/main/community/collegeQnaView.do")
+	@RequestMapping("/collegeQnaView.do")
 	public String collegeQnaView(
 			@RequestParam("bo_no") int bo_no
 			, Model model

@@ -206,4 +206,101 @@
 			WHERE
 			    bo_no = #{bo_no, jdbcType=NUMERIC}
 	</delete>	
+	
+	<select id="attachList" parameterType="int" resultType="AttachVO">
+		SELECT
+		    A.atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+		FROM
+		    attach A
+		RIGHT OUTER JOIN BOARD B
+		ON (A.ATCH_FILE_NO = B.ATCH_FILE_NO)
+		WHERE B.BO_NO = #{bo_no}
+	</select>
+	
+	<insert id="insertAttatches" parameterType="BoardVO">
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+			SELECT COUNT(*)+1 startAttNo
+			FROM ATTACH
+			WHERE atch_file_no = #{atch_file_no}
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attachList" item="attatch" index="idx">
+		INTO ATTACH(
+			atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+	    )
+		VALUES (
+			#{atch_file_no}
+			, #{startAttNo} + #{idx}
+			, #{attatch.file_path,jdbcType=VARCHAR}
+			, #{attatch.file_nm,jdbcType=VARCHAR}
+			, #{attatch.file_cont_type,jdbcType=VARCHAR}
+			, #{attatch.file_size,jdbcType=NUMERIC}
+			, sysdate
+			, #{attatch.reg_user_id,jdbcType=VARCHAR}
+			, #{attatch.biz_type,jdbcType=VARCHAR}
+			, #{attatch.save_file_nm,jdbcType=VARCHAR}
+		)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<select id="atch_file_seqCount" resultType="int">
+		SELECT COUNT(*)+1
+		FROM ATTACH
+		WHERE atch_file_no = #{atch_file_no}	
+	</select>
+	
+	<select id="selectSaveNamesForDelete" parameterType="BoardVO" resultType="string">
+		SELECT SAVE_FILE_NM
+		FROM ATTACH
+		WHERE ATCH_FILE_NO = ${atch_file_no}
+		AND ATCH_FILE_SEQ IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</select>
+	
+	<delete id="deleteAttathes" parameterType="BoardVO">
+		DELETE FROM ATTACH
+		WHERE ATCH_FILE_NO = ${atch_file_no}
+		AND ATCH_FILE_SEQ IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</delete>
+	
+	<select id="selectAttatch" parameterType="AttachVO" resultType="AttachVO">
+		SELECT
+			atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+		FROM attach
+		WHERE atch_file_no = #{atch_file_no}
+		AND atch_file_seq = #{atch_file_seq}
+	</select>
 </mapper>
