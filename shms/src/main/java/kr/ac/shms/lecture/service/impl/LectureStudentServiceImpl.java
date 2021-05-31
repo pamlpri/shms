@@ -1,11 +1,14 @@
 package kr.ac.shms.lecture.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureStudentService;
+import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
@@ -29,7 +32,6 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 	
 	@Override
 	public StudentVO student(String id) {
-		// TODO Auto-generated method stub
 		return lectureStudentDAO.student(id);
 	}
 }
