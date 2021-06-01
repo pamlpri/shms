@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 /**
@@ -37,17 +38,29 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public SugangLecSTVO selectQRInfo(SugangLecSTVO attendInfo) {
+	public AttendVO selectQRInfo(AttendVO attendInfo) {
 		return studentDAO.selectQRInfo(attendInfo);
 	}
 
 	@Override
-	public ServiceResult attend(SugangLecSTVO attendInfo) {
+	public ServiceResult attend(AttendVO attendInfo) {
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = studentDAO.attend(attendInfo);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+	
+	@Override
+	public ServiceResult exit(AttendVO exitInfo) {
+//		AttendVO attendVO = studentDAO.selectAttendInfo(exitInfo);
+//		int lec_pnt = attendVO.getLec_pnt();
+//		int tm = attendVO.getTm();
+//		int lec_fin = lec_pnt + tm;  // 강의 끝나는 시간
+//		String exit_time = attendVO.getExit_time();
+		
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.exit(exitInfo);
+		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}
 	
@@ -55,4 +68,10 @@ public class StudentServiceImpl implements StudentService{
 	public Map<String, String> bookLoanCnt(String stdnt_no) {
 		return studentDAO.bookLoanCnt(stdnt_no);
 	}
+
+	@Override
+	public String selectAttendTime(AttendVO attendVO) {
+		return studentDAO.selectAttendTime(attendVO);
+	}
+	
 }

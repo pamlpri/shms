@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
+	<select id="selectAttendTime" resultType="String" parameterType="AttendVO">
+	SELECT attend_time
+	  FROM attendance
+	 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+       AND TO_CHAR(attend_time, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		
+	</select>
+	<select id="selectAttendInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
+		SELECT a.lec_pnt* 24 * 60 * 60 lec_pnt, d.tm* 24 * 60 * 60 tm, 
+		       ROUND((TO_DATE(f.exit_time, 'YYYY-MM-DD HH24:MI:SS') 
+		           - TO_DATE(f.attend_time, 'YYYY-MM-DD HH24:MI:SS'))* 24 * 60 * 60) stdnt_atndan_time,       
+		       (a.lec_pnt + d.tm)* 24 * 60 * 60 finish_lec, 
+		       a.lec_pnt * 24 * 60 * 60 total_lec_time,
+		       TO_NUMBER(TO_CHAR(f.exit_time, 'sssss')) stdnt_exit_time,
+		       TO_NUMBER(TO_CHAR(f.attend_time, 'sssss')) stdnt_attend_time
+		  FROM curriculum a
+		 INNER JOIN lecture b ON (a.cur_code=b.cur_code) 
+		 INNER JOIN sugang_req c ON (b.lec_code=c.lec_code)
+		 INNER JOIN lecrum_ttable d ON (c.lec_code=d.lec_code)
+		 INNER JOIN attendance f ON (c.lec_code=f.lec_code)
+		 WHERE b.lec_code=#{lec_code, jdbcType=VARCHAR}
+		   AND c.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND TO_CHAR(f.attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
 
-	<select id="selectQRInfo" parameterType="SugangLecSTVO" resultType="SugangLecSTVO">
-		SELECT lec_code
-		       , stdnt_no
-		  FROM sugang_req
+	<select id="selectQRInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
+		SELECT lec_code,
+		       stdnt_no,
+		       attend_time,
+		       exit_time
+		  FROM attendance
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND lec_code=#{lec_code, jdbcType=VARCHAR}
 	</select>
 	
-	<insert id="attend" parameterType="SugangLecSTVO">
+	<insert id="attend" parameterType="AttendVO">
 		INSERT INTO attendance (
 			    atndan_no,
 			    attend_date,
@@ -29,4 +56,14 @@
 			    #{stdnt_no, jdbcType=VARCHAR}
 			)
 	</insert>
+	
+	<update id="exit" parameterType="AttendVO">
+		UPDATE attendance
+	       SET
+	           exit_time=SYSDATE
+		 WHERE
+		       stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code =  #{lec_code, jdbcType=VARCHAR}
+		   AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</update>
 </mapper>
