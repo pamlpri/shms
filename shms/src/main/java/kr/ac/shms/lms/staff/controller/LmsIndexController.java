@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.databind.deser.std.NumberDeserializers.BooleanDeserializer;
+
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
@@ -21,7 +24,6 @@ import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
-import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.main.commuity.service.BoardService;
 import kr.ac.shms.main.commuity.vo.BoardVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -46,11 +48,11 @@ public class LmsIndexController {
 	@Inject
 	private LmsStaffService lmsStaffService;
 	@Inject
-	private StudentService studentService;
-	@Inject
 	private BoardService boardService;
 	@Inject
 	private LectureService lectureService;
+	@Inject
+	private LectureProfessorService lectureProfService;
 	@Inject
 	private LmsCommonService lmsCommonService;
 		
@@ -72,19 +74,24 @@ public class LmsIndexController {
 		int consltCnt = lmsStaffService.selectConsltCnt(user_id);
 		model.addAttribute("consltCnt", consltCnt);
 		
-		// 강의공지 출력
+		// Qna 건수 출력
 		Map<String, String> search = new HashMap<>();
-		search.put("bo_name", "강의공지");
+		search.put("bo_name", "강의문의");
 		search.put("staff_no", user_id);
+		int QnaCnt = boardService.selectGMCnt(search);
+		model.addAttribute("QnaCnt", QnaCnt);
+		
+		// 강의공지 출력
+		search.put("bo_name", "강의공지");
 		List<BoardVO> ggList = boardService.selectForMain(search);
 		model.addAttribute("ggList", ggList);
 		
 		// 강의 과제 출력
-		List<SetTaskVO> taskList = lectureService.selectTask(user_id);
+		List<SetTaskVO> taskList = lectureProfService.selectTask(user_id);
 		model.addAttribute("taskList", taskList);
 		
 		// 오늘 강의 출력
-		List<LectureDetailsVO> todayLecList	= lectureService.selectTodayLecList(user_id);
+		List<LectureDetailsVO> todayLecList	= lectureProfService.selectTodayLecList(user_id);
 		model.addAttribute("todayLecList", todayLecList);
 		
 		// 오늘 학사일정 출력

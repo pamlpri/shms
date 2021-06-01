@@ -36,6 +36,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * 2021. 5. 28.      송수미       학사문의 게시글 등록 구현
  * 2021. 5. 29.      송수미       학사문의 게시글 비밀번호 인증, 삭제 기능 구현
  * 2021. 5. 31.      최희수        첨부파일 다운로드 기능 구현
+ * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -278,6 +279,11 @@ public class BoardServiceImpl implements BoardService{
 			}
 		}
 		return cnt;
+	}
+
+	@Override
+	public int selectGMCnt(Map<String, String> search) {
+		return boardDAO.selectGMCnt(search);
 	}
 
 	

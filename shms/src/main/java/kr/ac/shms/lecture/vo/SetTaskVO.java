@@ -38,4 +38,7 @@ public class SetTaskVO {
 	private Integer atch_file_no;
 	private List<TaskSubmitVO> taskSubmitList;
 	private String submit_at;	// 학생이 과제 정보 출력할 때 제출 여부
+	
+	private Integer submit_cnt;	// 과제 제출한 학생 수
+	private Integer total_cnt;	// 내 강의 듣는 수강생 수
 }

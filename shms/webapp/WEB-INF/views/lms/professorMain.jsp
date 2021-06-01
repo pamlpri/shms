@@ -92,7 +92,7 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">Q&A</h6>
-									<h6 class="font-extrabold mb-0">3건</h6>
+									<h6 class="font-extrabold mb-0">${QnaCnt }건</h6>
 								</div>
 							</a>
 						</div>
@@ -155,20 +155,26 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="col-auto"><a class="text-light-black"
-												href="#">대학생활의 이해 ppt 제출</a></td>
-											<td class="col-5">
-												<p class=" mb-0">3 / 15</p>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-auto"><a class="text-light-black"
-												href="#">서블릿 컨테이너란?</a></td>
-											<td class="col-5">
-												<p class=" mb-0">12 / 15</p>
-											</td>
-										</tr>
+										<c:choose>
+											<c:when test="${not empty taskList}">
+												<c:forEach items="${taskList }" var="task">
+													<tr>
+														<td class="col-auto"><a class="text-light-black"
+															href="#">${task.task_title }</a></td>
+														<td class="col-5">
+															<p class=" mb-0">${task.submit_cnt } / ${task.total_cnt }</p>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td colspan="2" class="text-center">
+														현재 출제한 과제가 존재하지 않습니다.
+													</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
 								</table>
 							</div>
@@ -190,22 +196,25 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="col-4">14:00 - 16:00</td>
-											<td class="col-auto">
-												<p class=" mb-0">
-													<a class="text-light-black" href="#">대학생활의 이해</a>
-												</p>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-4">16:00 - 18:00</td>
-											<td class="col-auto">
-												<p class=" mb-0">
-													<a class="text-light-black" href="#">시광학이론</a>
-												</p>
-											</td>
-										</tr>
+										<c:choose>
+											<c:when test="${not empty todayLecList}">
+												<c:forEach items="${todayLecList }" var="lecture">
+													<tr>
+														<td class="col-4">${lecture.lec_time }</td>
+														<td class="col-auto">
+															<p class=" mb-0">
+																<a class="text-light-black" href="#">${lecture.lec_name }</a>
+															</p>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td colspan="2" class="text-center">오늘은 수업해야 하는 강의가 없습니다.</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
 								</table>
 							</div>
