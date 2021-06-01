@@ -7,6 +7,10 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 	
 <div class="page-content">
 	<section class="row">
 		<div class="col-12 col-lg-9">
@@ -23,7 +27,14 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">받은메일</h6>
-									<h6 class="font-extrabold mb-0">10건</h6>
+									<c:choose>
+										<c:when test="${webmailCntMap.RECVCNT gt 99}">
+											<h6 class="font-extrabold mb-0">+99건</h6>
+										</c:when>
+										<c:otherwise>
+											<h6 class="font-extrabold mb-0">${webmailCntMap.RECVCNT }건</h6>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</a>
 						</div>
@@ -41,7 +52,14 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">읽을메일</h6>
-									<h6 class="font-extrabold mb-0">+99건</h6>
+									<c:choose>
+										<c:when test="${webmailCntMap.TODAYRECVCNT gt 99}">
+											<h6 class="font-extrabold mb-0">+99건</h6>
+										</c:when>
+										<c:otherwise>
+											<h6 class="font-extrabold mb-0">${webmailCntMap.TODAYRECVCNT }건</h6>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</a>
 						</div>
@@ -215,32 +233,42 @@
 					<h4>학사일정</h4>
 				</div>
 				<div class="card-body">
-					<div id="datepicker"></div>
-					<p class="dateToday">2020년 05월 14일 금요일</p>
+					<jsp:useBean id="today" class="java.util.Date" />
+					<fmt:formatDate var="now" value="${today}" pattern="yyyy년 MM월 dd일" />
+					<p class="dateToday">
+						${now }
+					</p>
 					<div id="todaySchedule">
-						<p>
-							<strong>14:00 - 15:00</strong> 단과대학 소방훈련 실시
-						</p>
-						<p>
-							<strong>15:30 - 16:30</strong> 인재대학교 진로교육
-						</p>
+						<c:if test="${not empty todaySchdulList}">
+							<c:forEach items="${todaySchdulList}" var="todaySchdul">
+								<p>
+									<strong>${todaySchdul.begin_dt} - ${todaySchdul.end_dt}</strong> ${todaySchdul.title }
+								</p>
+							</c:forEach>
+						</c:if>
 					</div>
 				</div>
 			</div>
 			<div class="card">
 				<div class="card-header">
 					<h4>교내식당</h4>
-					<p class="dateToday">2020.05.05</p>
+					<p class="dateToday">${diet.diet_date }</p>
 				</div>
 				<div class="card-body">
 					<ul id="todayDiet">
-						<li>백미밥</li>
-						<li>돈육우거지국</li>
-						<li>영양부추너비아니</li>
-						<li>해물부추전</li>
-						<li>고추장갑자조림</li>
-						<li>간장고추지</li>
-						<li>바나나</li>
+						<li>${diet.diet_menu1 }</li>
+						<li>${diet.diet_menu2 }</li>
+						<li>${diet.diet_menu3 }</li>
+						<li>${diet.diet_menu4 }</li>
+						<c:if test="${not empty diet.diet_menu5 }">
+							<li>${diet.diet_menu5 }</li>
+						</c:if>
+						<c:if test="${not empty diet.diet_menu6 }">
+							<li>${diet.diet_menu6 }</li>
+						</c:if>
+						<c:if test="${not empty diet.diet_menu7 }">
+							<li>${diet.diet_menu7 }</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
