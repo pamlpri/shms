@@ -20,7 +20,6 @@
 </BODY>
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script type="text/javascript" >
-
 	var b = "${qrInfo.stdnt_no},${qrInfo.lec_code}";
 	
 	var qrcode = new QRCode(document.getElementById("qrcode"), {
