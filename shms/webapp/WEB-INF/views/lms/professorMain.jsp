@@ -3,10 +3,15 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 31.      송수미        학생 통합정보시스템 메인 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <div class="page-content">
 	<section class="row">
 		<div class="col-12 col-lg-9">
@@ -22,7 +27,14 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">받은메일</h6>
-									<h6 class="font-extrabold mb-0">10건</h6>
+									<c:choose>
+										<c:when test="${webmailCntMap.RECVCNT gt 99}">
+											<h6 class="font-extrabold mb-0">+99건</h6>
+										</c:when>
+										<c:otherwise>
+											<h6 class="font-extrabold mb-0">${webmailCntMap.RECVCNT }건</h6>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</a>
 						</div>
@@ -39,7 +51,14 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">읽을메일</h6>
-									<h6 class="font-extrabold mb-0">+99건</h6>
+									<c:choose>
+										<c:when test="${webmailCntMap.TODAYRECVCNT gt 99}">
+											<h6 class="font-extrabold mb-0">+99건</h6>
+										</c:when>
+										<c:otherwise>
+											<h6 class="font-extrabold mb-0">${webmailCntMap.TODAYRECVCNT }건</h6>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</a>
 						</div>
@@ -56,7 +75,7 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">상담신청</h6>
-									<h6 class="font-extrabold mb-0">2건</h6>
+									<h6 class="font-extrabold mb-0">${consltCnt }건</h6>
 								</div>
 							</a>
 						</div>
@@ -73,7 +92,7 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">Q&A</h6>
-									<h6 class="font-extrabold mb-0">3건</h6>
+									<h6 class="font-extrabold mb-0">${QnaCnt }건</h6>
 								</div>
 							</a>
 						</div>
@@ -97,41 +116,23 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td scope="row">1</td>
-										<td scope="row"><a class="text-light-black" href="#">대학생활의
-												이해 강의공지</a></td>
-										<td scope="row">하재관</td>
-										<td scope="row">2020.05.05</td>
-									</tr>
-									<tr>
-										<td scope="row">2</td>
-										<td scope="row"><a class="text-light-black" href="#">긴급
-												시험 예정</a></td>
-										<td scope="row">최희연</td>
-										<td scope="row">2020.05.05</td>
-									</tr>
-									<tr>
-										<td scope="row">3</td>
-										<td scope="row"><a class="text-light-black" href="#">이클립스
-												설치하는 법 공지</a></td>
-										<td scope="row">하재관</td>
-										<td scope="row">2020.05.05</td>
-									</tr>
-									<tr>
-										<td scope="row">4</td>
-										<td scope="row"><a class="text-light-black" href="#">대학생활의
-												이해 강의공지</a></td>
-										<td scope="row">하재관</td>
-										<td scope="row">2020.05.05</td>
-									</tr>
-									<tr>
-										<td scope="row">5</td>
-										<td scope="row"><a class="text-light-black" href="#">대학생활의
-												이해 강의공지</a></td>
-										<td scope="row">하재관</td>
-										<td scope="row">2020.05.05</td>
-									</tr>
+									<c:choose>
+										<c:when test="${not empty ggList }">
+											<c:forEach items="${ggList }" var="ggBoard">
+												<tr>
+													<td scope="row">${ggBoard.p_bo_no }</td>
+													<td scope="row"><a class="text-light-black" href="${cPath }/lecture/noticeLecture.do?bo_no=${ggBoard.bo_no}">${ggBoard.bo_title }</a></td>
+													<td scope="row">${ggBoard.bo_writer }</td>
+													<td scope="row">${ggBoard.bo_write_de }</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td colspan="4" class="text-center"> 현재 수업 중인 강의에 대한 공지사항이 없습니다.</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>
@@ -154,20 +155,26 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="col-auto"><a class="text-light-black"
-												href="#">대학생활의 이해 ppt 제출</a></td>
-											<td class="col-5">
-												<p class=" mb-0">3 / 15</p>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-auto"><a class="text-light-black"
-												href="#">서블릿 컨테이너란?</a></td>
-											<td class="col-5">
-												<p class=" mb-0">12 / 15</p>
-											</td>
-										</tr>
+										<c:choose>
+											<c:when test="${not empty taskList}">
+												<c:forEach items="${taskList }" var="task">
+													<tr>
+														<td class="col-auto"><a class="text-light-black"
+															href="#">${task.task_title }</a></td>
+														<td class="col-5">
+															<p class=" mb-0">${task.submit_cnt } / ${task.total_cnt }</p>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td colspan="2" class="text-center">
+														현재 출제한 과제가 존재하지 않습니다.
+													</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
 								</table>
 							</div>
@@ -189,22 +196,25 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="col-4">14:00 - 16:00</td>
-											<td class="col-auto">
-												<p class=" mb-0">
-													<a class="text-light-black" href="#">대학생활의 이해</a>
-												</p>
-											</td>
-										</tr>
-										<tr>
-											<td class="col-4">16:00 - 18:00</td>
-											<td class="col-auto">
-												<p class=" mb-0">
-													<a class="text-light-black" href="#">시광학이론</a>
-												</p>
-											</td>
-										</tr>
+										<c:choose>
+											<c:when test="${not empty todayLecList}">
+												<c:forEach items="${todayLecList }" var="lecture">
+													<tr>
+														<td class="col-4">${lecture.lec_time }</td>
+														<td class="col-auto">
+															<p class=" mb-0">
+																<a class="text-light-black" href="#">${lecture.lec_name }</a>
+															</p>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td colspan="2" class="text-center">오늘은 수업해야 하는 강의가 없습니다.</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
 									</tbody>
 								</table>
 							</div>
@@ -220,31 +230,42 @@
 				</div>
 				<div class="card-body">
 					<div id="datepicker"></div>
-					<p class="dateToday">2020년 05월 14일 금요일</p>
+					<jsp:useBean id="today" class="java.util.Date" />
+					<fmt:formatDate var="now" value="${today}" pattern="yyyy년 MM월 dd일" />
+					<p class="dateToday">
+						${now }
+					</p>
 					<div id="todaySchedule">
-						<p>
-							<strong>14:00 - 15:00</strong> 단과대학 소방훈련 실시
-						</p>
-						<p>
-							<strong>15:30 - 16:30</strong> 인재대학교 진로교육
-						</p>
+						<c:if test="${not empty todaySchdulList}">
+							<c:forEach items="${todaySchdulList}" var="todaySchdul">
+								<p>
+									<strong>${todaySchdul.begin_dt} - ${todaySchdul.end_dt}</strong> ${todaySchdul.title }
+								</p>
+							</c:forEach>
+						</c:if>
 					</div>
 				</div>
 			</div>
 			<div class="card">
 				<div class="card-header">
 					<h4>교내식당</h4>
-					<p class="dateToday">2020.05.05</p>
+					<p class="dateToday">${diet.diet_date }</p>
 				</div>
 				<div class="card-body">
 					<ul id="todayDiet">
-						<li>백미밥</li>
-						<li>돈육우거지국</li>
-						<li>영양부추너비아니</li>
-						<li>해물부추전</li>
-						<li>고추장갑자조림</li>
-						<li>간장고추지</li>
-						<li>바나나</li>
+						<li>${diet.diet_menu1 }</li>
+						<li>${diet.diet_menu2 }</li>
+						<li>${diet.diet_menu3 }</li>
+						<li>${diet.diet_menu4 }</li>
+						<c:if test="${not empty diet.diet_menu5 }">
+							<li>${diet.diet_menu5 }</li>
+						</c:if>
+						<c:if test="${not empty diet.diet_menu6 }">
+							<li>${diet.diet_menu6 }</li>
+						</c:if>
+						<c:if test="${not empty diet.diet_menu7 }">
+							<li>${diet.diet_menu7 }</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
@@ -267,11 +288,10 @@
             dayNames: ['일','월','화','수','목','금','토'],
             dayNamesShort: ['일','월','화','수','목','금','토'],
 
-
-
             dayNamesMin: ['일','월','화','수','목','금','토'],
             showMonthAfterYear: true,
             yearSuffix: '년'
         });
+        
     });
 </script>

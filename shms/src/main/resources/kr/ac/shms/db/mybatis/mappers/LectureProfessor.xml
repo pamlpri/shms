@@ -29,4 +29,73 @@
 		    staff
 		WHERE staff_no = #{staff_no, jdbcType=VARCHAR}
 	</select>
+	
+	<sql id="taskSearchFrag">
+		 WHERE lec_code IN(
+	        SELECT lec_code 
+	         FROM lecture a
+	        INNER JOIN curriculum b 
+	           ON(a.cur_code = b.cur_code)
+	        WHERE staff_no= #{staff_no, jdbcType=VARCHAR}
+	          AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+	          AND estbl_semstr = (SELECT semstr FROM v_semstr)
+	</sql>
+	
+	<select id="selectTask" parameterType="String" resultType="SetTaskVO">
+		SELECT set_task_no,
+		       a.lec_code,
+		       task_reg_de,
+		       submit_bgnde,
+		       submit_endde,
+		       task_title,
+		       task_cont,
+		       task_allot,
+		       atch_file_no,
+		       submit_cnt,
+		       total_cnt
+		  FROM (
+		SELECT a.set_task_no,
+		       lec_code,
+		       TO_CHAR(task_reg_de, 'YYYY.MM.DD') task_reg_de,
+		       TO_CHAR(submit_bgnde, 'YYYY.MM.DD') submit_bgnde,
+		       TO_CHAR(submit_endde, 'YYYY.MM.DD') submit_endde,
+		       task_title,
+		       task_cont,
+		       task_allot,
+		       a.atch_file_no,
+		       COUNT(b.submit_no) OVER (PARTITION BY a.set_task_no) submit_cnt
+		  FROM SET_TASK a
+		 LEFT OUTER JOIN task_submit b
+		 ON(a.set_task_no = b.set_task_no)
+			<include refid="taskSearchFrag"/>
+		           AND TO_CHAR(SYSDATE) BETWEEN submit_bgnde AND submit_endde
+		 )
+		 ) a INNER JOIN 
+		 (
+		    SELECT
+		        lec_code,
+		        COUNT(stdnt_no) total_cnt
+		      FROM sugang_req
+			<include refid="taskSearchFrag"/>
+		               AND sugang_at = 'Y' 
+		        )
+		     GROUP BY lec_code
+		 ) b
+		 ON (a.lec_code = b.lec_code)	
+	</select>
+	
+	<select id="selectTodayLecList" parameterType="String" resultType="LectureDetailsVO">
+		SELECT lec_code,
+		       LPAD(lec_time, 2, '0')||':00 - '||
+		       LPAD(lec_time + lec_pnt, 2, '0')||':00' lec_time,
+		       lec_name
+		  FROM lecture a
+		 INNER JOIN curriculum b
+		   ON(a.cur_code = b.cur_code)
+		 WHERE staff_no = #{staff_no, jdbcType=VARCHAR}
+		   AND abolec = 'N'
+		   AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		   AND estbl_semstr = (SELECT semstr FROM v_semstr)
+		   AND TO_NUMBER(dayotw) = (SELECT TO_CHAR(SYSDATE, 'D') FROM DUAL)
+	</select>
 </mapper>

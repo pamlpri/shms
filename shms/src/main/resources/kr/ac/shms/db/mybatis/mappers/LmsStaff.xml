@@ -29,4 +29,18 @@
 		    staff
 		WHERE staff_no = #{staff_no, jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectConsltCnt" parameterType="String" resultType="int">
+		SELECT
+		    COUNT(*) cnt
+		FROM
+		    conslt_req
+		WHERE staff_no = #{staff_no, jdbcType=VARCHAR}
+		  AND process_stat = (SELECT COM_CODE
+		                        FROM TB_COM_CODE 
+		                       WHERE CODE_GRP = (SELECT CODE_GRP 
+		                                           FROM TB_CODE_GRP
+		                                          WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		                         AND COM_CODE_NM = '대기')
+	</select>
 </mapper>

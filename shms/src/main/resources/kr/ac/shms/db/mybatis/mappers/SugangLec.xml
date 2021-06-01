@@ -175,4 +175,7 @@
 	     AND TO_NUMBER(dayotw) = (SELECT TO_CHAR(SYSDATE, 'D') FROM DUAL))
 	</select>
 	
+	<select id="">
+		
+	</select>
 </mapper>

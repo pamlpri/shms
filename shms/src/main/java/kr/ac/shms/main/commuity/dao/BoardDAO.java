@@ -20,59 +20,69 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  * --------     --------    ----------------------
  * 2021. 5. 25.      송수미       최초작성
  * 2021. 5. 31.      최희수       첨부파일 등록 수정 삭제 작성
+ * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Repository
 public interface BoardDAO {
+	
 	/**
 	 * bo_name을 가공해서 bo_kind 조회
 	 * @param bo_name
 	 * @return bo_kind 가공해서 출력된 공통코드값
 	 */
 	public String selectBoKind(String bo_name);
+	
 	/**
 	 * Main page 띄우기 위한 게시글 조회
 	 * @param search 게시글 분류 명
 	 * @return bo_kind에 해당하는 게시글의 최근 5개 글
 	 */
 	public List<BoardVO> selectForMain(Map<String, String> search);
+	
 	/**
 	 * 게시글 개수 조회
 	 * @param pagingVO bo_kind, searchMap
 	 * @return 해당 조건을 만족하는 게시글의 수
 	 */
 	public int selectBoardCount(PagingVO<BoardVO> pagingVO);
+	
 	/**
 	 * 게시글 목록 조회
 	 * @param pagingVO bo_kind, searchMap
 	 * @return 해당 조건을 만족하는 전체 게시글
 	 */
 	public List<BoardVO> selectBoardList(PagingVO<BoardVO> pagingVO);
+	
 	/**
 	 * 하나의 게시글 조회
 	 * @param bo_no
 	 * @return 게시글 하나에 대한 상세 조회
 	 */
 	public BoardVO selectBoard(int bo_no);
+	
 	/**
 	 * 게시글 등록
 	 * @param board
 	 * @return row count > 0 성공
 	 */
 	public int insertBoard(BoardVO board);
+	
 	/**
 	 * 게시글 수정
 	 * @param board
 	 * @return row count > 0 성공
 	 */
 	public int updateBoard(BoardVO board);
+	
 	/**
 	 * 게시글 삭제
 	 * @param bo_no
 	 * @return row count > 0 성공
 	 */
 	public int deleteBoard(int bo_no);
+	
 	/**
 	 * 조회수 증가
 	 * @param bo_no
@@ -121,4 +131,11 @@ public interface BoardDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<String> selectSaveNamesForDelete(BoardVO board);	
+	
+	/**
+	 * 한 교수에 대한 답변하지 않은 답변의 수 조회
+	 * @param id 교수 번호
+	 * @return 데이터가 없으면 0 반환
+	 */
+	public int selectGMCnt(Map<String, String> search);
 }

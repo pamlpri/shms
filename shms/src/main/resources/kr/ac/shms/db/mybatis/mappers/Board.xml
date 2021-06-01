@@ -45,7 +45,18 @@
 				     AND req_year = EXTRACT(YEAR FROM SYSDATE)
 				     AND req_semstr = (SELECT semstr FROM student WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}))
 		 </if>
-		)
+ 		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(staff_no)">
+	 	     AND lec_code IN (
+		         SELECT lec_code 
+		          FROM lecture A
+		         INNER JOIN curriculum B 
+		            ON(A.cur_code = B.cur_code)
+		         WHERE staff_no= #{staff_no, jdbcType=VARCHAR}
+		           AND A.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		           AND estbl_semstr = (SELECT semstr FROM v_semstr)
+				)
+		 </if>
+		 )
 		<![CDATA[
 		WHERE RN <= 5		
 		]]>
@@ -312,5 +323,24 @@
 		FROM attach
 		WHERE atch_file_no = #{atch_file_no}
 		AND atch_file_seq = #{atch_file_seq}
+	</select>
+	
+	<select id="selectGMCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(*) cnt
+		   FROM board
+		 WHERE lec_code IN(
+		         SELECT lec_code 
+		          FROM lecture a
+		         INNER JOIN curriculum b 
+		            ON(a.cur_code = b.cur_code)
+		         WHERE staff_no= #{staff_no, jdbcType=VARCHAR}
+		           AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		           AND estbl_semstr = (SELECT semstr FROM v_semstr)
+		 )
+		 AND bo_kind = ( SELECT com_code
+		                  FROM tb_com_code
+		                 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND')
+		                  AND com_code_nm =  #{bo_name, jdbcType=VARCHAR})
+		 AND bo_ans IS NULL
 	</select>
 </mapper>

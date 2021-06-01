@@ -24,7 +24,7 @@
 		  FROM tb_receiver A
 		  INNER JOIN webmail B
 		  ON(a.send_no = b.send_no)
-		 WHERE receiver = #{stdnt_no, jdbcType=VARCHAR}
+		 WHERE receiver = #{user_id, jdbcType=VARCHAR}
 		   AND read_at = 'N'
 		), 
 		(
@@ -32,7 +32,7 @@
 		  FROM tb_receiver A
 		  INNER JOIN webmail B
 		  ON(a.send_no = b.send_no)
-		 WHERE receiver = #{stdnt_no, jdbcType=VARCHAR}
+		 WHERE receiver = #{user_id, jdbcType=VARCHAR}
 		   AND read_at = 'N'
 		   AND b.send_date = TO_CHAR(SYSDATE)
 		)
