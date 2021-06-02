@@ -9,12 +9,11 @@
       <h1>대학생활의 이해</h1>
     </div>
   </section>
-  
   <div id="qrWrap" class="text-center">
 	  <div id="qrcode">
-	      <img src="${cPath }/resources/lecture/dist/img/qr.jpg" class="qr"/>
 	  </div>
       <div>
+	      <img src="${cPath }/resources/lms/assets/images/qr.jpg" class="qr"/>
           <p>강의실 입구에 비치된 카메라에<br/>QR코드를 보여주세요.</p>
           <span>※ 강의실에 일찍 도착하셨어도 QR코드 인증시간이<br/>강의 시작시간을 넘어버리면 지각으로 체크됩니다.</span>
       </div>
