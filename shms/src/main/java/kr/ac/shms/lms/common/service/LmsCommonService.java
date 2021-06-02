@@ -46,4 +46,5 @@ public interface LmsCommonService {
 	 * @return 데이터가 없으면 null
 	 */
 	public List<CourseEducVO> selectCourseEducList();
+	
 }
