@@ -184,38 +184,39 @@
 	<select id="selectFacilityRsvList" resultType="kr.ac.shms.lms.common.vo.FacilityRsvVO">
 		SELECT *
 		  FROM (
-			SELECT
-			    ROW_NUMBER () OVER(ORDER BY rsv_dt) rn,
-			    rsv_no,
-			    a.facility_no,
-			    b.facility_kind,
-			    c.com_code_nm facility_nm,
-			    c.com_code_nm||' - '||b.detail_no rsv_fac_info,
-			    rsv_dt,
-			    use_begin_dt,
-			    use_end_dt,
-			    real_bg_dt,
-			    real_end_dt,
-			    TO_CHAR(use_begin_dt, 'YYYY.MM.DD') use_begin_date,
-			    TO_CHAR(use_begin_dt, 'HH24:MI') use_begin_time,
-			    TO_CHAR(use_end_dt, 'HH24:MI') use_end_time,
-			    TO_CHAR(real_bg_dt, 'YYYY.MM.DD') real_bg_date,
-			    TO_CHAR(real_bg_dt, 'HH24:MI') real_bg_time,
-			    TO_CHAR(real_end_dt, 'HH24:MI') real_end_time,
-			    a.stdnt_no,
-			    name stdnt_name
-			FROM
-			    facility_rsv a
-			INNER JOIN facility b
-			ON(a.facility_no = b.facility_no)
-			INNER JOIN tb_com_code c
-			ON(b.facility_kind = c.com_code)
-			INNER JOIN student d
-			ON(a.stdnt_no = d.stdnt_no)
-			WHERE c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'FACILITY_KIND')
-			  AND TO_CHAR(SYSDATE, 'YYYY/MM/DD') = TO_CHAR(rsv_dt, 'YYYY/MM/DD') 
-		<![CDATA[
+				SELECT
+				    ROW_NUMBER () OVER(ORDER BY rsv_dt) rn,
+				    rsv_no,
+				    a.facility_no,
+				    b.facility_kind,
+				    DECODE(SIGN(a.facility_no - 100), -1, '제 1 ', 0, '제 1 ', 1, '제 2 ')||c.com_code_nm facility_nm,
+				    DECODE(SIGN(a.facility_no - 100), -1, '제 1 ', 0, '제 1 ', 1, '제 2 ')||c.com_code_nm||' - '
+				    ||DECODE(SIGN(a.facility_no - 100), -1, b.detail_no, 0, b.detail_no, 1, b.detail_no - 100) rsv_fac_info,
+				    rsv_dt,
+				    use_begin_dt,
+				    use_end_dt,
+				    real_bg_dt,
+				    real_end_dt,
+				    TO_CHAR(use_begin_dt, 'YYYY.MM.DD') use_begin_date,
+				    TO_CHAR(use_begin_dt, 'HH24:MI') use_begin_time,
+				    TO_CHAR(use_end_dt, 'HH24:MI') use_end_time,
+				    TO_CHAR(real_bg_dt, 'YYYY.MM.DD') real_bg_date,
+				    TO_CHAR(real_bg_dt, 'HH24:MI') real_bg_time,
+				    TO_CHAR(real_end_dt, 'HH24:MI') real_end_time,
+				    a.stdnt_no,
+				    name stdnt_name
+				FROM
+				    facility_rsv a
+				INNER JOIN facility b
+				ON(a.facility_no = b.facility_no)
+				INNER JOIN tb_com_code c
+				ON(b.facility_kind = c.com_code)
+				INNER JOIN student d
+				ON(a.stdnt_no = d.stdnt_no)
+				WHERE c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'FACILITY_KIND')
+				  AND TO_CHAR(SYSDATE, 'YYYY/MM/DD') = TO_CHAR(rsv_dt, 'YYYY/MM/DD')
 			)
+		<![CDATA[
 		WHERE rn <= 5
 		]]>
 	</select>

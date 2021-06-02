@@ -3,6 +3,7 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 2.      송수미        최초작성
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,10 +19,9 @@
 <div class="page-content">
 	<!-- contents start -->
 
-
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">HOME</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
 			<li class="breadcrumb-item"><a href="#">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">받은메일</li>
 		</ol>
