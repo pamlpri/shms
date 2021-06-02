@@ -8,6 +8,8 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.main.commuity.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -86,4 +88,18 @@ public interface LmsCommonService {
 	 * @return 데이터가 없으면 null
 	 */
 	public List<Map<String, Object>> selectGenCnt(String sub_code);
+
+	/**
+	 * 개인이 보낸/받은 웹메일 조회
+	 * @param search 페이지 정보, 검색 키워드, 계정 정보
+	 * @return 데이터가 없으면 null
+	 */
+	public int selectWebmailtotalCnt(PagingVO<WebmailVO> search);
+	
+	/**
+	 * 개인이 보낸/받은 웹메일 조회
+	 * @param search 페이지 정보, 검색 키워드, 계정 정보
+	 * @return 데이터가 없으면 null
+	 */
+	public List<WebmailVO> selectWebmailList(PagingVO<WebmailVO> search);
 }

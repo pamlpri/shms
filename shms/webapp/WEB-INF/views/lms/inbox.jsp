@@ -8,6 +8,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/pages/email.css"/>
 <style>
     body {
@@ -73,15 +74,17 @@
 
 												<div
 													class="form-group position-relative  mb-0 has-icon-left">
-													<input type="text" class="form-control"
-														placeholder="Search email..">
+													<input type="text" class="form-control" id="emailSearch" placeholder="Search email..">
 													<div class="form-control-icon">
 														<i class="fas fa-chevron-left"></i>
 													</div>
 												</div>
 											</div>
 											<!-- pagination and page count -->
-											<span class="d-none d-sm-block">1-10 of 653</span>
+											<span class="d-none d-sm-block">
+												${pagingVO.startRow} - ${pagingVO.endRow < pagingVO.totalRecord ? pagingVO.endRow : pagingVO.totalRecord}
+												 of ${pagingVO.totalRecord}
+											</span>
 											<button
 												class="btn btn-icon email-pagination-prev d-none d-sm-block">
 												<i class="fas fa-chevron-left"></i>
@@ -97,510 +100,52 @@
 									<!-- email user list start -->
 									<div class="email-user-list list-group">
 										<ul class="users-list-wrapper media-list">
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>크리스토퍼</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
+											<c:choose>
+												<c:when test="${not empty pagingVO.dataList }">
+													<c:forEach items="${pagingVO.dataList }" var="webmail">
+														<li class="media ${webmail.read_at eq 'Y'? 'mail-read' : '' }">
+															<div class="user-action">
+																<div class="checkbox-con me-3">
+																	<div class="checkbox checkbox-shadow checkbox-sm">
+																		<input type="checkbox" id="checkboxsmall1"
+																			class='form-check-input'> <label
+																			for="checkboxsmall1"></label>
+																	</div>
+																</div>
+																<span class="favorite"> 
+																	<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+			                                                    		<use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
+			                                                        </svg>
+																</span>
+															</div>
+																		
+															<div class="emailName">
+																<strong>${webmail.name }</strong>
+															</div> <a href="mailRead.html" class="media-body text-color">
+																<div class="user-details">
+																	<div class="mail-items">
+																		<span class="list-group-item-text text-truncate">${webmail.title }</span>
+																	</div>
+																	<div class="mail-meta-item">
+																		<span class="float-right"> <span class="mail-date">${webmail.send_date }</span>
+																		</span>
+																	</div>
+																</div>
+																<div class="mail-message">
+																	<p class="list-group-item-text truncate mb-0">${webmail.cont }</p>
+																	<div class="mail-meta-item">
+																		<span class="float-right"> <span
+																			class="bullet bullet-success bullet-sm"></span>
+																		</span>
+																	</div>
+																</div>
+														</a>
+														</li>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+												</c:otherwise>
+											</c:choose>
 										</ul>
 										<!-- email user list end -->
 									</div>
@@ -626,7 +171,18 @@
             $("#deleteBtn").on("click", function(){
                 $(".email-user-list").find("input:checked").parents(".media").remove();
             });
+            
+            var startRow = ${pagingVO.startRow};
+            var endRow = ${pagingVO.endRow};
+            
+            $('.email-action email-pagination-prev').on('click', function(event){
+            	if(startRow > 1){
+            		$.ajax({
+            			url : "${cPath}/"
+            			
+            		})
+            	}
+            });
         });
 
-        $(".")
     </script>

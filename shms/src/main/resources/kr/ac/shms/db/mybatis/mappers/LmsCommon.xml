@@ -251,4 +251,57 @@
 		WHERE sub_code = #{sub_code, jdbcType=VARCHAR}
 		GROUP BY gen, totalCnt
 	</select>
+	
+	<sql id="webmailSearchFrag">
+		FROM    
+		    webmail a
+		INNER JOIN tb_receiver b
+		ON(a.send_no = b.send_no)
+		INNER JOIN v_userview c
+		<choose>
+			<when test="searchMap.selectMenu eq 'inbox'">
+				ON(a.sender = c.user_no)
+				WHERE b.receiver = #{searchMap.user_id, jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				ON(b.receiver = c.user_no)
+				WHERE a.sender = #{searchMap.user_id, jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+		  AND send_stat = 'Y'
+		  <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+		  AND 
+		    (INSTR(name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+		        OR INSTR(title, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+		        OR INSTR(cont, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+		    )
+		  </if>
+	</sql>
+	
+	<select id="selectWebmailtotalCnt" resultType="int">
+		SELECT
+    		COUNT(a.send_no) total_cnt
+    	<include refid="webmailSearchFrag"/>
+	</select>
+	
+	<select id="selectWebmailList" parameterType="PagingVO" resultType="WebmailVO">
+		SELECT *
+		  FROM(
+			SELECT
+			    ROW_NUMBER () OVER (ORDER BY TO_CHAR(send_date, 'YYYY/MM/DD HH:MI:SS') DESC) rn,
+			    a.send_no,
+			    title,
+			    cont,
+			    read_at,
+			    a.sender,
+			    b.receiver,
+			    name,
+			    TO_CHAR(send_date, 'YYYY/MM/DD HH:MI AM', 'nls_date_language=american') send_date,
+			    send_stat,
+			    atch_file_no
+		<include refid="webmailSearchFrag"/>
+		)
+		WHERE rn BETWEEN #{startRow, jdbcType=NUMERIC} AND #{endRow, jdbcType=NUMERIC}
+	</select>
+	
 </mapper>

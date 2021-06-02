@@ -1,5 +1,9 @@
 package kr.ac.shms.lms.common.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -10,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.main.commuity.vo.PagingVO;
 /**
  * @author 박초원
  * @since 2021. 6. 2.
@@ -56,6 +62,21 @@ public class WebmailViewController {
 			session.setAttribute("userName", studentVO.getName());
 			model.addAttribute("student", studentVO);
 		}
+		
+		PagingVO<WebmailVO> pagingVO = new PagingVO<>();
+		pagingVO.setCurrentPage(1);
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("user_id", user_id);
+		searchMap.put("selectMenu", "inbox");
+		pagingVO.setSearchMap(searchMap);
+		
+		int totalRecord = lmsCommonService.selectWebmailtotalCnt(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<WebmailVO> webmailList = lmsCommonService.selectWebmailList(pagingVO);
+		pagingVO.setDataList(webmailList);
+		model.addAttribute("pagingVO", pagingVO);
 		
 		return  "lms/inbox";
 	}

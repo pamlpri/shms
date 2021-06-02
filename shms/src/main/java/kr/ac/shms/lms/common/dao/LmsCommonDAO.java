@@ -11,6 +11,7 @@ import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.main.commuity.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -86,10 +87,22 @@ public interface LmsCommonDAO {
 	
 	/**
 	 * 학과에 따른 성비
-	 * @param sub_code TODO
+	 * @param sub_code 
 	 * @return 데이터가 없으면 null
 	 */
 	public List<Map<String, Object>> selectGenCnt(String sub_code);
 	
-	public List<WebmailVO> selectReceiveWebmailList();
+	/**
+	 * 개인이 보낸/받은 웹메일 조회
+	 * @param search 페이지 정보, 검색 키워드, 계정 정보
+	 * @return 데이터가 없으면 null
+	 */
+	public int selectWebmailtotalCnt(PagingVO<WebmailVO> search);
+	
+	/**
+	 * 개인이 보낸/받은 웹메일 조회
+	 * @param search 페이지 정보, 검색 키워드, 계정 정보
+	 * @return 데이터가 없으면 null
+	 */
+	public List<WebmailVO> selectWebmailList(PagingVO<WebmailVO> search);
 }
