@@ -134,7 +134,11 @@
 											</c:forEach>
 										</c:when>
 										<c:otherwise>
-											현재 등록되어 있는 장학공지가 없습니다.
+											<tr>
+												<td colspan="4" class="text-center">
+													현재 등록되어 있는 장학공지가 없습니다.
+												</td>
+											</tr>
 										</c:otherwise>
 									</c:choose>
 								</tbody>
@@ -174,7 +178,11 @@
 											</c:forEach>
 										</c:when>
 										<c:otherwise>
-											현재 등록되어 있는 진로교육 내역이 없습니다.
+											<tr>
+												<td colspan="5" class="text-center">
+													현재 등록되어 있는 진로교육 내역이 없습니다.
+												</td>
+											</tr>
 										</c:otherwise>
 									</c:choose>
 								</tbody>

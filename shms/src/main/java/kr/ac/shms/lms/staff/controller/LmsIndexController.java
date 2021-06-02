@@ -1,5 +1,5 @@
 package kr.ac.shms.lms.staff.controller;
-import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,12 +7,15 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.digester.Substitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.service.CommonService;
 import kr.ac.shms.common.vo.RegInfoCngVO;
@@ -23,6 +26,8 @@ import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
+import kr.ac.shms.lms.common.vo.EntschtestDcVO;
+import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.main.commuity.service.BoardService;
@@ -40,6 +45,8 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 05. 22.  최희수          최초작성
  * 2021. 05. 26.  최희수          사용자명을 session 에 저장
  * 2021. 05. 31.  송수미          교수 통합정보시스템 메인페이지 구현
+ * 2021. 06. 01.  송수미          학생지원과, 학적과, 취업장학과 통합정보시스템 메인페이지 구현
+ * 2021. 06. 02.  송수미          입학과, 학과관리자 통합정보시스템 메인페이지 구현
  * Copyright (c) ${year} by DDIT All right reserved
  * </pre>
  */
@@ -63,9 +70,11 @@ public class LmsIndexController {
 		, HttpSession session
 		, Model model
 	){	
+		
 		String user_id = user.getUser_id();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		String authGrpCode = user.getAuth_grp_code();
+		String sub_code = user.getSub_code();
 		session.setAttribute("userName", staffVO.getName());
 		Map<String, String> search;
 		
@@ -133,6 +142,8 @@ public class LmsIndexController {
 			model.addAttribute("dgList", dgList);
 			
 			// 도서관 열람실 예약 (최근 5개)
+			List<FacilityRsvVO> facRsvList = lmsCommonService.selectFacilityRsvList();
+			model.addAttribute("facRsvList", facRsvList);
 			
 			// 자료실 (최근 5개)
 			search.put("bo_name", "자료실");
@@ -157,6 +168,9 @@ public class LmsIndexController {
 			model.addAttribute("regInfoCngList", regInfoCngList);
 			
 			// 고사 일정
+			List<ScheduleVO> testSchdulList = lmsCommonService.selectTestSchdulList();
+			model.addAttribute("testSchdulList", testSchdulList);
+			
 		}
 		
 		if("CJ".equals(authGrpCode)) {
@@ -183,10 +197,75 @@ public class LmsIndexController {
 			
 		}
 		
+		if("IH".equals(authGrpCode)) {
+			// 입학 공지 (최근 5개)
+			search = new HashMap<>();
+			search.put("bo_name", "입학공지");
+			List<BoardVO> igList = boardService.selectForMain(search);
+			model.addAttribute("igList", igList);
+
+			// 입시 상담 건수
+			search.put("bo_name", "입학문의");
+			int EntQnaCnt = lmsCommonService.selectLmsBoardCnt(search);
+			model.addAttribute("EntQnaCnt", EntQnaCnt);
+			
+			// 입시 설명회 (최근 5개)
+			List<EntschtestDcVO> entDcList = lmsCommonService.selectEntDcList();
+			model.addAttribute("entDcList", entDcList);
+			
+			// 입시 설명회 건수
+			int EntDcCnt = entDcList.get(0).getP_bo_no();
+			model.addAttribute("EntDcCnt", EntDcCnt);
+		}
+		
+		if("HG".equals(authGrpCode)) {
+			// 입시 상담 건수
+			search = new HashMap<>();
+			search.put("bo_name", "입학문의");
+			search.put("sub_code", sub_code);
+			int EntQnaCnt = lmsCommonService.selectLmsBoardCnt(search);
+			model.addAttribute("EntQnaCnt", EntQnaCnt);
+			
+			// 학과 문의 건수 
+			search.put("bo_name", "학과문의");
+			int hmCnt = lmsCommonService.selectLmsBoardCnt(search);
+			model.addAttribute("hmCnt", hmCnt);
+			
+			// 학과공지 (최근 5개)
+			search.put("bo_name", "학과공지");
+			List<BoardVO> hgList = boardService.selectForMain(search);
+			model.addAttribute("hgList", hgList);
+			
+			// 학과 현황
+			
+			// 교수 연락망
+			List<StaffVO> profsList = lmsCommonService.selectProfInfo(sub_code);
+			model.addAttribute("profsList", profsList);
+		}
+		
 		logger.info("user : {}", user.toString());
 		if(staffVO != null) {
 			model.addAttribute("staff", staffVO);
 		}
 		return "lms/main";
 	}
+	
+	@RequestMapping(value="/lms/gen.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public List<Map<String, Object>> selectGenRate(
+			HttpSession session
+			) {
+		Map<String, String[]> userMap = (Map) session.getAttribute("user");
+		String[] userInfo = new String[2];
+		userInfo = userMap.get("user");
+		
+		String userId = userInfo[0];
+		String sub_code = userId.substring(3, 6);
+		
+		List<Map<String, Object>> genCntList = lmsCommonService.selectGenCnt(sub_code);
+		logger.info("genCntList : {}", genCntList.toString());
+		
+		return genCntList;
+	}
+	
 }

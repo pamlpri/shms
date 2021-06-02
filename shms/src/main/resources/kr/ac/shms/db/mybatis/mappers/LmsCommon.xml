@@ -88,4 +88,166 @@
 			WHERE rn <= 5
 			]]>
 	</select>
+	
+	<select id="selectLmsBoardCnt" parameterType="hashMap" resultType="int">
+		SELECT COUNT(bo_no) cnt
+		  FROM board
+		 WHERE bo_kind = (SELECT com_code
+		                        FROM tb_com_code
+		                       WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND')
+		                         AND com_code_nm = #{bo_name, jdbcType=VARCHAR}
+		                    )
+		 AND bo_ans IS NULL
+		 <choose>
+		 	<when test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub_code)">
+		 		AND sub_code = #{sub_code, jdbcType=VARCHAR}
+		 	</when>
+		 	<otherwise>
+		 		AND sub_code IS NULL
+		 	</otherwise>
+		 </choose>
+	</select>
+	
+	<select id="selectEntDcList" resultType="kr.ac.shms.lms.common.vo.EntschtestDcVO">
+		SELECT 
+		    p_bo_no,
+		    rn,
+		    dc_no,
+		    indvinfo_colct_agre_at,
+		    dc_section,
+		    dc_section_nm,
+		    dc_target,
+		    b.com_code_nm dc_target_nm,
+		    hischul_code,
+		    hischul_nm,
+		    dc_rsv_date,
+		    dc_rsv_time,
+		    dc_end_time,
+		    dc_rsv_per,
+		    rsv_per_telno,
+		    rsv_per_email,
+		    rsv_per_password,
+		    lecrum_info
+		  FROM(
+			SELECT
+			    (SELECT COUNT(dc_no) FROM entschtest_dc)
+			      - (ROW_NUMBER () OVER(ORDER BY dc_rsv_dt)) + 1 p_bo_no,
+			    (ROW_NUMBER () OVER(ORDER BY dc_rsv_dt)) rn,
+			    dc_no,
+			    indvinfo_colct_agre_at,
+			    dc_section,
+			    b.com_code_nm dc_section_nm,
+			    dc_target,
+			    a.hischul_code,
+			    DECODE(a.hischul_code, null, '-', c.hischul_nm) hischul_nm,
+			    TO_CHAR(dc_rsv_dt, 'YYYY.MM.DD') dc_rsv_date,
+			    TO_CHAR(dc_rsv_dt, 'HH24:MI') dc_rsv_time,
+			    TO_CHAR(dc_end_dt, 'HH24:MI') dc_end_time,
+			    dc_rsv_per,
+			    rsv_per_telno,
+			    rsv_per_email,
+			    rsv_per_password,
+			    DECODE(a.lecrum_no, null, '-',  e.building_nm||' '||d.lecrum_nm||'호') lecrum_info
+			FROM
+			    entschtest_dc a
+			INNER JOIN tb_com_code b
+			ON(a.dc_section = b.com_code)
+			LEFT OUTER JOIN HIGHSCHOOL c
+			ON(a.hischul_code = c.hischul_code) 
+			LEFT OUTER JOIN lecrum d
+			ON(a.lecrum_no = d.lecrum_no)
+			LEFT OUTER JOIN building e
+			ON(d.building_no = e.building_no)
+			WHERE b.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'DC_SECTION')
+			<![CDATA[
+				  AND SYSDATE <= dc_rsv_dt
+				) a
+				INNER JOIN tb_com_code b
+				ON(a.dc_target = b.com_code)
+				WHERE b.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'DC_TARGET')
+				  AND rn <= 5
+			]]>
+	</select>
+	
+	<select id="selectProfInfo" parameterType="String" resultType="StaffVO">
+		SELECT
+		    staff_no,
+		    sub_code,
+		    name,
+		    webmail
+		FROM
+		    staff
+		WHERE sub_code = #{sub_code, jdbcType=VARCHAR}
+		  AND prof_at = 'Y'
+	</select>
+	
+	<select id="selectFacilityRsvList" resultType="kr.ac.shms.lms.common.vo.FacilityRsvVO">
+		SELECT *
+		  FROM (
+			SELECT
+			    ROW_NUMBER () OVER(ORDER BY rsv_dt) rn,
+			    rsv_no,
+			    a.facility_no,
+			    b.facility_kind,
+			    c.com_code_nm facility_nm,
+			    c.com_code_nm||' - '||b.detail_no rsv_fac_info,
+			    rsv_dt,
+			    use_begin_dt,
+			    use_end_dt,
+			    real_bg_dt,
+			    real_end_dt,
+			    TO_CHAR(use_begin_dt, 'YYYY.MM.DD') use_begin_date,
+			    TO_CHAR(use_begin_dt, 'HH24:MI') use_begin_time,
+			    TO_CHAR(use_end_dt, 'HH24:MI') use_end_time,
+			    TO_CHAR(real_bg_dt, 'YYYY.MM.DD') real_bg_date,
+			    TO_CHAR(real_bg_dt, 'HH24:MI') real_bg_time,
+			    TO_CHAR(real_end_dt, 'HH24:MI') real_end_time,
+			    a.stdnt_no,
+			    name stdnt_name
+			FROM
+			    facility_rsv a
+			INNER JOIN facility b
+			ON(a.facility_no = b.facility_no)
+			INNER JOIN tb_com_code c
+			ON(b.facility_kind = c.com_code)
+			INNER JOIN student d
+			ON(a.stdnt_no = d.stdnt_no)
+			WHERE c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'FACILITY_KIND')
+			  AND TO_CHAR(SYSDATE, 'YYYY/MM/DD') = TO_CHAR(rsv_dt, 'YYYY/MM/DD') 
+		<![CDATA[
+			)
+		WHERE rn <= 5
+		]]>
+	</select>
+	
+	<select id="selectTestSchdulList" resultType="ScheduleVO">
+		SELECT
+		    schdul_no,
+		    title,
+		    cont,
+		    TO_CHAR(begin_dt, 'YYYY.MM.DD')||' - '||TO_CHAR(end_dt, 'YYYY.MM.DD') schdul_period,
+		    EXTRACT(YEAR FROM SYSDATE) year,
+		    (SELECT semstr FROM v_semstr) semstr
+		FROM
+		    schedule
+		WHERE title in ('성적입력', '성적정정', '성적조회')
+		 AND SCHDUL_KIND = (SELECT com_code 
+		                     FROM tb_com_code 
+		                    WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'SCHDUL_KIND')
+		                      AND com_code_nm = '학사일정')
+	</select>
+	
+	<select id="selectGenCnt" parameterType="String" resultType="hashMap">
+		WITH totalCnt AS
+		(
+		    SELECT COUNT(stdnt_no) totalCnt
+		      FROM student
+		     WHERE sub_code = #{sub_code, jdbcType=VARCHAR}
+		)
+		SELECT gen, 
+		       COUNT(stdnt_no)/totalCnt * 100 rate 
+		  FROM student, totalCnt
+		WHERE sub_code = #{sub_code, jdbcType=VARCHAR}
+		GROUP BY gen, totalCnt
+	</select>
 </mapper>

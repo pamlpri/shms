@@ -159,30 +159,27 @@
 									<thead>
 										<tr>
 											<th>좌석</th>
-											<th>입실</th>
+											<th>이름</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td class="col-auto">A04</td>
-											<td class="col-5">14:00</td>
-										</tr>
-										<tr>
-											<td class="col-auto">C104</td>
-											<td class="col-5">12:00</td>
-										</tr>
-										<tr>
-											<td class="col-auto">C104</td>
-											<td class="col-5">12:00</td>
-										</tr>
-										<tr>
-											<td class="col-auto">C104</td>
-											<td class="col-5">12:00</td>
-										</tr>
-										<tr>
-											<td class="col-auto">C104</td>
-											<td class="col-5">12:00</td>
-										</tr>
+										<c:choose>
+											<c:when test="${not empty facRsvList }">
+												<c:forEach items="${facRsvList }" var="facRsv">
+													<tr>
+														<td class="col-auto">${facRsv.rsv_fac_info }</td>
+														<td class="col-5">${facRsv.stdnt_name }</td>
+													</tr>
+												</c:forEach>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td colspan="2" class="text-center">
+														현재 조회 가능한 편의시설 예약정보가 없습니다.
+													</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>									
 									</tbody>
 								</table>
 							</div>

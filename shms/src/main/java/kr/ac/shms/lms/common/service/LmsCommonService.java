@@ -3,8 +3,11 @@ package kr.ac.shms.lms.common.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
+import kr.ac.shms.lms.common.vo.EntschtestDcVO;
+import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -47,4 +50,40 @@ public interface LmsCommonService {
 	 */
 	public List<CourseEducVO> selectCourseEducList();
 	
+	/**
+	 * lms에서 관리하는 게시글 수 조회
+	 * @return 데이터가 없으면 0
+	 */
+	public int selectLmsBoardCnt(Map<String, String> search);
+	
+	/**
+	 * 현재 예약되어 있는 입시설명회 목록 조회
+	 * @return 데이터가 없으면 0
+	 */
+	public List<EntschtestDcVO> selectEntDcList();
+	
+	/**
+	 * 해당 학과에 소속되어 있는 교수 목록 조회
+	 * @return 데이터가 없으면 null
+	 */
+	public List<StaffVO> selectProfInfo(String sub_code);
+	
+	/**
+	 * 현재 예약되어 있는 편의시설 예약정보 목록을 조회
+	 * @return 데이터가 없으면 null
+	 */
+	public List<FacilityRsvVO> selectFacilityRsvList();
+	
+	/**
+	 * 고사 일정에 대한 목록을 조회
+	 * @return 데이터가 없으면 null
+	 */
+	public List<ScheduleVO> selectTestSchdulList();
+	
+	/**
+	 * 학과에 따른 성비
+	 * @param sub_code TODO
+	 * @return 데이터가 없으면 null
+	 */
+	public List<Map<String, Object>> selectGenCnt(String sub_code);
 }

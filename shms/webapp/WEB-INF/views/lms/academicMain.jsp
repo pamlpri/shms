@@ -167,27 +167,19 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td scope="row">1</td>
-										<td scope="row">성적입력</td>
-										<td scope="row">2020.05.03 - 2020.05.20</td>
-										<td scope="row">2020년도</td>
-										<td scope="row">2학기</td>
-									</tr>
-									<tr>
-										<td scope="row">2</td>
-										<td scope="row">성적조회</td>
-										<td scope="row">2020.05.03 - 2020.05.20</td>
-										<td scope="row">2020년도</td>
-										<td scope="row">2학기</td>
-									</tr>
-									<tr>
-										<td scope="row">3</td>
-										<td scope="row">정정기간</td>
-										<td scope="row">2020.05.03 - 2020.05.20</td>
-										<td scope="row">2020년도</td>
-										<td scope="row">2학기</td>
-									</tr>
+									<c:choose>
+										<c:when test="${not empty testSchdulList }">
+											<c:forEach items="${testSchdulList }" var="testSchdul" varStatus="idx">
+												<tr>
+													<td scope="row">${idx.count }</td>
+													<td scope="row">${testSchdul.title }</td>
+													<td scope="row">${testSchdul.schdul_period }</td>
+													<td scope="row">${testSchdul.year }년도</td>
+													<td scope="row">${testSchdul.semstr }학기</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>

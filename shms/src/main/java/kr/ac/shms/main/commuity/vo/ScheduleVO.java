@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 27.      최희수       최초작성
+ * 2021. 6. 02.      송수미       통합정보시스템 - 학사일정 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -30,8 +31,12 @@ public class ScheduleVO {
 	private String schdul_kind;
 	private String title;
 	private String cont;
+	
 	private String begin_dt;
 	private String end_dt;
+	private String schdul_period;
+	private Integer year;
+	private Integer semstr;
 	
 	private List<CalendarVO> calendarList;
 }
