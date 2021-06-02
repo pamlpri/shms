@@ -14,8 +14,11 @@
         overflow-x: hidden;
     }
     .content-right{width:100%!important;}
-</style>	
+</style>
+
 <div class="page-content">
+	<!-- contents start -->
+
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">HOME</a></li>
@@ -30,17 +33,12 @@
 				<div class="form-check float-left">
 					<input class="form-check-input" type="radio" name="classification"
 						id="flexRadioDefault1"> <label class="form-check-label"
-						for="flexRadioDefault1"> 장바구니 </label>
+						for="flexRadioDefault1"> 전공 </label>
 				</div>
 				<div class="form-check float-left">
 					<input class="form-check-input" type="radio" name="classification"
-						id="flexRadioDefault2"> <label class="form-check-label"
-						for="flexRadioDefault2"> 전공 </label>
-				</div>
-				<div class="form-check float-left">
-					<input class="form-check-input" type="radio" name="classification"
-						id="flexRadioDefault3"> <label class="form-check-label"
-						for="flexRadioDefault3"> 교양 </label>
+						id="flexRadioDefault1"> <label class="form-check-label"
+						for="flexRadioDefault1"> 교양 </label>
 				</div>
 			</div>
 		</div>
@@ -50,7 +48,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>단과대선택</h6>
 						<fieldset class="form-group">
-							<select class="form-select">
+							<select class="form-select" id="basicSelect">
 								<option>전체</option>
 								<option>인문대학</option>
 								<option>경상대학</option>
@@ -63,7 +61,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>학과선택</h6>
 						<fieldset class="form-group">
-							<select class="form-select">
+							<select class="form-select" id="basicSelect">
 								<option>전체</option>
 								<option>러시아학과</option>
 								<option>국어국문학과</option>
@@ -90,7 +88,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>학년</h6>
 						<fieldset class="form-group">
-							<select class="form-select">
+							<select class="form-select" id="basicSelect">
 								<option>전학년</option>
 								<option>1학년</option>
 								<option>2학년</option>
@@ -102,7 +100,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>강의검색</h6>
 						<fieldset class="form-group">
-							<select class="form-select">
+							<select class="form-select" id="basicSelect">
 								<option>전체</option>
 								<option>강의명</option>
 								<option>강의코드</option>
@@ -117,7 +115,7 @@
 	</form>
 	<div class="page-heading email-application lectureHeader">
 		<h5>
-			<i class="fas fa-bookmark"></i> 수강신청과목
+			<i class="fas fa-bookmark"></i> 수강신청 장바구니 과목
 		</h5>
 		<section class="section content-area-wrapper">
 			<div class="content-right">
@@ -184,9 +182,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -200,9 +196,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -216,9 +210,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -232,9 +224,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -248,9 +238,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -264,9 +252,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -280,9 +266,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -296,9 +280,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 												<tr>
@@ -312,9 +294,7 @@
 													<td class="text-center">50</td>
 													<td class="text-center">100</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm saveBtn"
-															data-bs-toggle="modal" data-bs-target="#success">신청</button>
+														<button class="btn btn-primary btn-sm saveBtn">담기</button>
 													</td>
 												</tr>
 											</tbody>
@@ -332,7 +312,7 @@
 
 	<div class="page-heading email-application lectureHeader">
 		<h5>
-			<i class="fas fa-bookmark"></i> 나의 수강신청현황
+			<i class="fas fa-bookmark"></i> 나의 수강신청 장바구니 현황
 		</h5>
 		<section class="section content-area-wrapper">
 			<div class="content-right">
@@ -487,7 +467,6 @@
 							</div>
 						</div>
 						<!--/ lecture list Area -->
-
 					</div>
 				</div>
 			</div>
