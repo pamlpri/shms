@@ -21,8 +21,9 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * 수정일         수정자         수정내용
  * --------     --------    ----------------------
  * 2021. 5. 28.   김보미         최초작성
- * 2021. 5. 29.   김보미       교수 강의 목록 
- * 2021. 5. 31.   송수미       학생 과제, 강의 목록 
+ * 2021. 5. 29.   김보미         교수 강의 목록 
+ * 2021. 5. 31.   송수미         학생 과제, 강의 목록 
+ * 2021. 6. 02.   김보미         수강 완료 강의 목록 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -54,5 +55,10 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public List<LectureDetailsVO> selectTodayLecList(String id) {
 		return lectureDAO.selectTodayLecList(id);
+	}
+
+	@Override
+	public List<SugangLecSTVO> selectCompleteSugangList(String stdnt_no) {
+		return lectureDAO.selectCompleteSugangList(stdnt_no);
 	}
 }

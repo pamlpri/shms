@@ -16,8 +16,9 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * 수정일         수정자         수정내용
  * --------     --------    ----------------------
  * 2021. 5. 28.   김보미         최초작성
- * 2021. 5. 29.   김보미       교수 강의 목록 
- * 2021. 5. 31.   송수미      	학생 과제, 강의 정보 출력 기능 구현
+ * 2021. 5. 29.   김보미         교수 강의 목록 
+ * 2021. 5. 31.   송수미      	 학생 과제, 강의 정보 출력 기능 구현
+ * 2021. 6. 02.   김보미         수강 완료 강의 목록 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -56,4 +57,11 @@ public interface LectureService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<LectureDetailsVO> selectTodayLecList(String id);
+	
+	/**
+	 * 수강 완료된 강의 목록 출력
+	 * @param stdnt_no 학생의 학번
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<SugangLecSTVO> selectCompleteSugangList(String stdnt_no);
 }

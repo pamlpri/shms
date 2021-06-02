@@ -70,7 +70,7 @@
 	                          <a href="${cPath }/lms/lectureList.do">수강중인 강의</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">수강완료</a>
+	                          <a href="${cPath }/lms/completeLecList.do">수강완료</a>
 	                      </li>
 	                  </ul>
 	              </li>
