@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.common.dao.CommonDAO">
+	<select id="selectCnt" parameterType="hashMap" resultType="int">
+		<choose>
+			<when test="tb_name eq 'lecrum_use_req'">
+				SELECT
+		    		COUNT(lecrum_use_no) cnt
+			</when>
+			<otherwise>
+				SELECT
+				    COUNT(req_no) cnt
+			</otherwise>
+		</choose>
+			FROM
+			    ${tb_name}
+			WHERE process_stat = (SELECT com_code
+			                        FROM tb_com_code
+			                       WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
+			                         AND com_code_nm = '대기'
+			                    )
+		<if test="tb_name eq 'lecrum_use_req'">
+			  AND use_tb_code = (SELECT com_code
+			                       FROM tb_com_code
+			                      WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'USE_TB_CODE')
+			                        AND com_code_nm = '대관신청'
+			                       )
+		</if>    
+		<if test="tb_name eq 'conslt_req' and @org.apache.commons.lang3.StringUtils@isNotBlank(staff_no)">
+			AND staff_no = #{staff_no, jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="SelectRegInfoCngList" resultType="RegInfoCngVO">
+		SELECT
+		    p_bo_no,
+		    rn,
+		    cng_req_no,
+		    stdnt_no,
+		    stdnt_name,
+		    sub_name,
+		    req_de,
+		    process_stat,
+		    proc_date,
+		    refuse_resn,
+		    atch_file_no,
+		    req_cl_code,
+		    com_code_nm req_cl_name,
+		    req_resn_code,
+		    cng_bgnde,
+		    cng_endde
+		  FROM (SELECT
+		            (SELECT COUNT(cng_req_no) FROM reginfo_cng)
+		              - (ROW_NUMBER () OVER(ORDER BY req_de DESC, PROC_DATE DESC)) + 1 p_bo_no,
+		            ROW_NUMBER () OVER(ORDER BY req_de DESC, PROC_DATE DESC) rn,
+		            cng_req_no,
+		            a.stdnt_no,
+		            b.name stdnt_name,
+		            c.sub_name,
+		            req_de,
+		            process_stat,
+		            proc_date,
+		            refuse_resn,
+		            atch_file_no,
+		            req_cl_code,
+		            req_resn_code,
+		            cng_bgnde,
+		            cng_endde
+		        FROM
+		            reginfo_cng a
+		            INNER JOIN student b
+		            ON(a.stdnt_no = b.stdnt_no)
+		            INNER JOIN subject c
+		            ON(b.sub_code = c.sub_code)
+		  ) a
+		  INNER JOIN tb_com_code b
+		  ON(a.req_cl_code = b.com_code)
+		<![CDATA[
+		WHERE rn <= 5
+		]]>
+		  AND b.code_grp = (SELECT code_grp
+		                      FROM tb_code_grp
+		                     WHERE code_grp_nm = 'REQ_CL_CODE')
+	</select>
+</mapper>

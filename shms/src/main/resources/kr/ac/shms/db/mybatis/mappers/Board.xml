@@ -325,9 +325,10 @@
 		AND atch_file_seq = #{atch_file_seq}
 	</select>
 	
-	<select id="selectGMCnt" parameterType="hashMap" resultType="int">
+	<select id="selectQnaCnt" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*) cnt
 		   FROM board
+		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(staff_no)">
 		 WHERE lec_code IN(
 		         SELECT lec_code 
 		          FROM lecture a
@@ -337,6 +338,14 @@
 		           AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
 		           AND estbl_semstr = (SELECT semstr FROM v_semstr)
 		 )
+		 </if>
+		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(inqry_kind01)">
+		 WHERE UNIV_INQRY_KIND IN (SELECT com_code
+				                     FROM tb_com_code
+				                    WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'UNIV_INQRY_KIND')
+				                      AND com_code_nm IN (#{inqry_kind01, jdbcType=VARCHAR}, #{inqry_kind01, jdbcType=VARCHAR})
+				                      )   
+		 </if>
 		 AND bo_kind = ( SELECT com_code
 		                  FROM tb_com_code
 		                 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND')

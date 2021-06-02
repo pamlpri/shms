@@ -133,9 +133,9 @@ public interface BoardDAO {
 	public List<String> selectSaveNamesForDelete(BoardVO board);	
 	
 	/**
-	 * 한 교수에 대한 답변하지 않은 답변의 수 조회
+	 * 특정 조건에 만족하는 답변하지 않은 질문의 수 조회
 	 * @param id 교수 번호
 	 * @return 데이터가 없으면 0 반환
 	 */
-	public int selectGMCnt(Map<String, String> search);
+	public int selectQnaCnt(Map<String, String> search);
 }

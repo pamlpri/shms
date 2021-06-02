@@ -282,8 +282,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int selectGMCnt(Map<String, String> search) {
-		return boardDAO.selectGMCnt(search);
+	public int selectQnaCnt(Map<String, String> search) {
+		return boardDAO.selectQnaCnt(search);
 	}
 
 	

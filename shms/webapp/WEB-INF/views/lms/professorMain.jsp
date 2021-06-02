@@ -2,8 +2,8 @@
 * [[개정이력(Modification Information)]]
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 5. 20.      박초원        최초작성
-* 2021. 5. 31.      송수미        학생 통합정보시스템 메인 구현
+* 2021. 05. 20.      박초원        최초작성
+* 2021. 06. 01.      송수미        교수 통합정보시스템 메인 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
