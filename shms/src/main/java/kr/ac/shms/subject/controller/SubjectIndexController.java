@@ -51,7 +51,7 @@ public class SubjectIndexController {
 //		session에 학과코드 넣어서 갖고 다니기
 		Map<String, String> search = new HashMap<>();
 		search.put("bo_name", "학과공지");
-		search.put("sub", sub);
+		search.put("sub_code", sub);
 		List<BoardVO> hgList = boardService.selectForMain(search);
 		search.put("bo_name", "학과문의");
 		List<BoardVO> hmList = boardService.selectForMain(search);

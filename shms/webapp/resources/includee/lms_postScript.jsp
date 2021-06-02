@@ -11,6 +11,5 @@
 <script src="${cPath }/resources/lms/assets/js/bootstrap.bundle.min.js"></script>
 
 <script src="${cPath }/resources/lms/assets/vendors/apexcharts/apexcharts.js"></script>
-<script src="${cPath }/resources/lms/assets/js/pages/dashboard.js"></script>
 
 <script src="${cPath }/resources/lms/assets/js/main.js"></script>

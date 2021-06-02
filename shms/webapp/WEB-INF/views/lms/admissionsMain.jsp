@@ -2,7 +2,8 @@
 * [[개정이력(Modification Information)]]
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 5. 20.      박초원        최초작성
+* 2021. 05. 20.      박초원        최초작성
+* 2021. 06. 02.      송수미        입학과 통합정보시스템 페이지 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -77,7 +78,7 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">입시상담</h6>
-									<h6 class="font-extrabold mb-0">3건</h6>
+									<h6 class="font-extrabold mb-0">${EntQnaCnt}건</h6>
 								</div>
 							</a>
 						</div>
@@ -95,7 +96,7 @@
 								</div>
 								<div class="col-md-7">
 									<h6 class="text-muted font-semibold">입시설명회</h6>
-									<h6 class="font-extrabold mb-0">3건</h6>
+									<h6 class="font-extrabold mb-0">${EntDcCnt}건</h6>
 								</div>
 							</a>
 						</div>
@@ -120,41 +121,25 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td scope="row">1</td>
-										<td scope="row"><a class="text-light-black" href="#">대학생활의
-												이해 강의공지</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">100</td>
-									</tr>
-									<tr>
-										<td scope="row">2</td>
-										<td scope="row"><a class="text-light-black" href="#">긴급
-												시험 예정</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">100</td>
-									</tr>
-									<tr>
-										<td scope="row">3</td>
-										<td scope="row"><a class="text-light-black" href="#">이클립스
-												설치하는 법 공지</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">100</td>
-									</tr>
-									<tr>
-										<td scope="row">4</td>
-										<td scope="row"><a class="text-light-black" href="#">대학생활의
-												이해 강의공지</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">100</td>
-									</tr>
-									<tr>
-										<td scope="row">5</td>
-										<td scope="row"><a class="text-light-black" href="#">대학생활의
-												이해 강의공지</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">100</td>
-									</tr>
+									<c:choose>
+										<c:when test="${not empty igList }">
+											<c:forEach items="${igList }" var="igBoard">
+												<tr>
+													<td scope="row">${igBoard.p_bo_no }</td>
+													<td scope="row"><a class="text-light-black" href="#">${igBoard.bo_title }</a></td>
+													<td scope="row">${igBoard.bo_write_de }</td>
+													<td scope="row">${igBoard.bo_hit }</td>
+												</tr>
+											</c:forEach>											
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td colspan="4" class="text-center">
+													현재 등록되어 있는 입시공지가 없습니다.
+												</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>
@@ -180,46 +165,27 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td scope="row">1</td>
-										<th scope="co1"><a class="text-light-black" href="#">고등학교</a></th>
-										<td scope="row">초청</td>
-										<td scope="row">2020.05.03 - 2020.05.04</td>
-										<td scope="row">14:00 - 15:00</td>
-										<td scope="row">대강당</td>
-									</tr>
-									<tr>
-										<td scope="row">2</td>
-										<th scope="co1"><a class="text-light-black" href="#">고등학교</a></th>
-										<td scope="row">초청</td>
-										<td scope="row">2020.05.03 - 2020.05.04</td>
-										<td scope="row">14:00 - 15:00</td>
-										<td scope="row">대강당</td>
-									</tr>
-									<tr>
-										<td scope="row">3</td>
-										<th scope="co1"><a class="text-light-black" href="#">고등학교</a></th>
-										<td scope="row">초청</td>
-										<td scope="row">2020.05.03 - 2020.05.04</td>
-										<td scope="row">14:00 - 15:00</td>
-										<td scope="row">대강당</td>
-									</tr>
-									<tr>
-										<td scope="row">4</td>
-										<th scope="co1"><a class="text-light-black" href="#">고등학교</a></th>
-										<td scope="row">초청</td>
-										<td scope="row">2020.05.03 - 2020.05.04</td>
-										<td scope="row">14:00 - 15:00</td>
-										<td scope="row">대강당</td>
-									</tr>
-									<tr>
-										<td scope="row">5</td>
-										<th scope="co1"><a class="text-light-black" href="#">고등학교</a></th>
-										<td scope="row">초청</td>
-										<td scope="row">2020.05.03 - 2020.05.04</td>
-										<td scope="row">14:00 - 15:00</td>
-										<td scope="row">대강당</td>
-									</tr>
+									<c:choose>
+										<c:when test="${not empty entDcList}">
+											<c:forEach items="${entDcList }" var="entDc">
+												<tr>
+													<td scope="row">${entDc.p_bo_no }</td>
+													<th scope="co1"><a class="text-light-black" href="#">${entDc.hischul_nm }</a></th>
+													<td scope="row">${entDc.dc_section_nm }</td>
+													<td scope="row">${entDc.dc_rsv_date }</td>
+													<td scope="row">${entDc.dc_rsv_time } - ${entDc.dc_end_time }</td>
+													<td scope="row">${entDc.lecrum_info }</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td colspan="6" class="text-center">
+													현재 예약되어 있는 입시설명회가 없습니다.
+												</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>

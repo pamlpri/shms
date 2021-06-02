@@ -7,10 +7,13 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.dao.LmsCommonDAO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
+import kr.ac.shms.lms.common.vo.EntschtestDcVO;
+import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -29,6 +32,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  */
 @Service
 public class LmsCommonServiceImpl implements LmsCommonService {
+	
 	@Inject
 	private LmsCommonDAO lmsCommonDAO;
 	
@@ -50,6 +54,36 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public List<CourseEducVO> selectCourseEducList() {
 		return lmsCommonDAO.selectCourseEducList();
+	}
+
+	@Override
+	public int selectLmsBoardCnt(Map<String, String> search) {
+		return lmsCommonDAO.selectLmsBoardCnt(search);
+	}
+
+	@Override
+	public List<EntschtestDcVO> selectEntDcList() {
+		return lmsCommonDAO.selectEntDcList();
+	}
+
+	@Override
+	public List<StaffVO> selectProfInfo(String sub_code) {
+		return lmsCommonDAO.selectProfInfo(sub_code);
+	}
+
+	@Override
+	public List<FacilityRsvVO> selectFacilityRsvList() {
+		return lmsCommonDAO.selectFacilityRsvList();
+	}
+
+	@Override
+	public List<ScheduleVO> selectTestSchdulList() {
+		return lmsCommonDAO.selectTestSchdulList();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectGenCnt(String sub_code) {
+		return lmsCommonDAO.selectGenCnt(sub_code);
 	}
 	
 }

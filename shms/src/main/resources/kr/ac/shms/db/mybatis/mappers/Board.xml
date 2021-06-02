@@ -33,8 +33,8 @@
 		                  FROM tb_com_code
 		                WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'BO_KIND') 
 		                  AND com_code_nm = #{bo_name, jdbcType=VARCHAR})
-		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub)">
-		 	AND sub_code = #{sub, jdbcType=VARCHAR}
+		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub_code)">
+		 	AND sub_code = #{sub_code, jdbcType=VARCHAR}
 		 </if>
 		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(stdnt_no)">
 			 AND lec_code IN (
