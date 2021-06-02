@@ -34,16 +34,13 @@
 	                </a>
 	                <ul class="submenu">
 	                    <li class="submenu-item ">
-	                        <a href="compose.html">메일보내기</a>
+	                        <a href="${cPath }/lms/compose.do">메일보내기</a>
 	                    </li>
 	                    <li class="submenu-item ">
-	                        <a href="inbox.html">받은메일</a>
+	                        <a href="${cPath }/lms/inbox.do">받은메일</a>
 	                    </li>
 	                    <li class="submenu-item ">
-	                        <a href="send.html">보낸메일</a>
-	                    </li>
-	                    <li class="submenu-item ">
-	                        <a href="addressBook.html">주소록</a>
+	                        <a href="${cPath }/lms/send.do">보낸메일</a>
 	                    </li>
 	                </ul>
 	            </li>
@@ -87,7 +84,7 @@
 	                          <a href="${cPath }/lms/classRegistrationInfo.do">수강신청</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">장바구니</a>
+	                          <a href="${cPath }/lms/classCartInfo.do">장바구니</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">내시간표</a>
