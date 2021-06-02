@@ -47,6 +47,13 @@
  *    1.41 Avatar
  *    1.42 Wizard
  */
+.text-color {
+  color: #666;
+}
+.text-color:hover {
+  text-decoration: none;;
+}
+
 /* 1.1 Article */
 .article {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
@@ -2080,3 +2087,305 @@ tr:first-child > td > .fc-day-grid-event {
 }
 
 /*# sourceMappingURL=components.css.map */
+/* 테이블 th 배경 */
+.table:not(.table-sm) thead th {
+  background-color: #f5f6f9;
+}
+/* card shadow */
+.card {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 12%);;
+}
+
+/* breadcrumb */
+.breadcrumb {
+  background-color: transparent;
+}
+
+/* 뷰어 */
+.pdfobject-container { 
+  margin-top: 2%;
+  height: 60rem;
+  border: 1rem solid rgb(82, 86, 89);
+}
+
+/* 출석관리 테이블 */
+.attendance .table {
+  text-align: center;
+  border: 1px solid rgb(235, 235,235);
+}
+
+.attendance th {
+  background-color: #f5f6f9;
+  color: #666;
+  border-color: #ebebeb!important;
+}
+
+.attendance .table.table-bordered td {
+  border-color: #ebebeb;
+}
+
+/* 전체강의 */
+.lectureList .row {
+  margin-top: -2%;
+}
+.lectureList p {
+  margin-top: 0.9rem;
+}
+.lectureList p span {
+  color : #394eea;
+}
+
+.lectureList .card-body a {
+  margin-top: -2%!important;
+}
+
+.lectureList .video {
+  margin-top: -6%;
+}
+
+
+/* 비디오 창 */
+.video-wrap {position:relative; padding-bottom:56.25%; padding-top:30px; height:0; overflow:hidden;}
+.video-wrap iframe,
+.video-wrap object,
+.video-wrap embed {position:absolute; top:0; left:0; width:100%; height:100%;}
+
+/* 시험응시 */
+#timer {
+  margin-top: 5%;
+}
+
+.answer .form-check-inline {
+  margin-right: 1.2rem;
+}
+.answer h6 {
+  width: 1.5em;
+}
+
+/* 공지게시판 상세조회 */
+#notice-table tbody tr:nth-of-type(2n+1) {
+  background : none!important;
+}
+#notice-table tbody td a i {
+  padding-left: 10px;
+  opacity: 0.5;
+}
+.nontice-title {
+  width: 100%;
+  font-size: 1.3em!important;
+}
+.notice-date {
+  float: right;
+  opacity: 0.8;
+  font-size: 0.8em;
+}
+
+.noticeAns {
+  border-top: 1px solid rgb(214, 214, 214);
+  padding-top: 20px;
+}
+.noticeAns p {
+  margin: 0;
+}
+.noticeAns .userAns {
+  font-weight: 800;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+.noticeAns .userAns span {
+  margin-left: 20px;
+  font-weight: 400;
+  font-size: 0.9em;
+}
+
+.noticeAns .form-control {
+  padding-top: 10px;
+}
+
+#answer {
+  margin-top : 1%;
+}
+
+.board_downloader {
+  border-top: 1px solid #e2e2e2;
+  padding: 3% 3% 0;
+}
+.board_downloader li {
+  margin-left: -5%;
+  list-style: none;
+}
+.board_downloader li:last-child {
+  padding-bottom: 0;
+}
+.board_downloader li a i {
+  margin-right: 10px;
+}
+
+.board_downloader li a:hover {
+  text-decoration: none;
+}
+
+/* 첨부파일 */
+.it .btn-orange
+{
+	background-color: transparent;
+	border-color: rgb(221, 221, 221)!important;
+	color: #777;
+	text-align: left;
+  width:100%;
+}
+.btn:not(.btn-social):not(.btn-social-icon):hover {
+  border-color: rgb(221, 221, 221)!important;
+}
+
+.it .btn-new {
+  color : #6777ef!important;
+  margin-top: 10px;
+}
+.it .btn-new:hover {
+  color : white!important;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px 0;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.it .btn-orange img {
+    width: 30px;
+}
+.it #uploader .docErr
+{
+	position: absolute;
+    right:auto;
+    left: 10px;
+    top: -56px;
+    padding: 10px;
+    font-size: 15px;
+    background-color: #fff;
+    color: red;
+    box-shadow: 0px 0px 7px 2px rgba(0,0,0,0.2);
+    display: none;
+}
+.it #uploader .docErr:after
+{
+	content: '\f0d7';
+	display: inline-block;
+	font-family: FontAwesome;
+	font-size: 50px;
+	color: #fff;
+	position: absolute;
+	left: 30px;
+	bottom: -40px;
+	text-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+}
+
+.uploadDoc .col-sm-2 {
+  padding-top: 4%;
+  display: inline-block;
+  margin-left: -5%;
+  cursor: pointer;
+}
+
+/* qr */
+#qrWrap img {
+  width: 100%;
+}
+#qrWrap p {
+  font-size: 1.2em;
+}
+
+/* textarea */
+.form-textarea {
+    background-color: #fdfdff;
+    border-color: #e4e6fc;
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 15px
+}
+.form-textarea:focus {
+  outline: none;
+}
+
+/* 출석관리 */
+.attendance tr td {
+  vertical-align: middle;
+}
+
+.excelWrap {
+  padding-bottom: 2%;
+}
+
+/* edit table */
+.edit-table {
+  table-layout: fixed;
+}
+.edit-table tr th, table.table tr td {
+  border-color: #e9e9e9;
+}
+.edit-table th i {
+  font-size: 13px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.edit-table th:last-child {
+  width: 100px;
+}
+.edit-table td a {
+cursor: pointer;
+  display: inline-block;
+  margin: 0 5px;
+min-width: 24px;
+}    
+.edit-table td a.add {
+  color: #27C46B;
+}
+.edit-table td a.edit {
+  color: #FFC107;
+}
+.edit-table td a.delete {
+  color: #E34724;
+}
+.edit-table td i {
+  font-size: 19px;
+}
+.edit-table td a.add i {
+  font-size: 24px;
+margin-right: -1px;
+  position: relative;
+  top: 3px;
+}    
+.edit-table .form-control {
+  height: 32px;
+  line-height: 32px;
+  box-shadow: none;
+  border-radius: 2px;
+  text-align: center;
+}
+.edit-table .form-control.error {
+  border-color: #f50000;
+}
+.edit-table td .add {
+  display: none;
+}
+
+/* 엑셀 업로드 */
+#excelUpload {
+  opacity: 0;
+  position: absolute;
+}
+
+/* 과제출제 폼 */
+.report th {
+  width: 15%;
+}
