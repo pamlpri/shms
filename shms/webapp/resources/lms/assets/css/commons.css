@@ -3,20 +3,61 @@
  * 
  * </pre>
  * @author 박초원
- * @since 2021. 5. 14.
+ * @since 2021. 5. 14
  * @version 1.0
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일      			  수정자       수정내용
- * --------     --------    ----------------------
- * 2021. 5. 14.      박초원       최초작성
+ * 수정일           수정자       수정내용
+ * --------        --------    ----------------------
+ * 2021. 5. 14      박초원       최초작성
  * Copyright (c) ${year} by DDIT All right reserved
  * </pre>
  */ 
 
+/* table th */
+.bg-th {
+    background-color: #bfd8f0;
+    color: #394449;
+}
+
+/* cursor pointer */
+.pointer {
+    cursor: pointer;
+}
+
+/* btn hover */
+.bg-danger:hover {
+    color: white!important;
+}
+.bg-primary:hover {
+    color: white!important;
+}
+/* h title*/
+.h4Title {
+    font-size: 1.2em;
+    font-weight: 800;
+    margin: 2em 1em 1em 1em;
+}
+
+/*float*/
+.float-right {
+    float: right !important;
+}
+.float-left {
+    float: left !important;
+}
+
 /* 색상 클래스 */
 .text-light-black {
     color : #607080;
+}
+.text-color {
+    color: inherit!important;
+}
+
+/* logo */
+.logo {
+    margin : auto;
 }
 
 /* 상단 이름, 로그아웃 버튼 부분 */
@@ -31,3 +72,974 @@
 #newLecture {
     margin: 2% 0.6rem;
 }
+
+/* 탭메뉴 */
+#myTabContent {
+    margin-top: 2%;
+}
+
+/* 내정보보기 */
+.profileImg {
+    display: inline-flex;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    margin-bottom: 5%;
+}
+.profileImg img {
+    width: 90%;
+    height: 300px;
+    font-size: 1.4rem;
+}
+
+/* 폼테이블 */
+.inputTable th {
+    min-width: 100px;
+    background-color: #f6f6f6;
+}
+.inputTable .textArea {
+    padding:0;
+}
+
+.inputTable #summernote {
+    padding: 0;
+}
+
+/* 신청반려버튼 */
+.white-color:hover {
+    color : white;
+}
+
+/* 웹메일 */
+.note-toolbar {
+    background-color: #e6eef5;
+}
+.note-editor.note-frame {
+    border: 1px solid #dce7f1;
+}
+
+#mailList {
+    max-height: 350px;
+    overflow: auto;
+}
+
+.email-application .content-area-wrapper .content-right .email-app-list-wrapper .email-app-list .email-user-list .users-list-wrapper {
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+}
+
+.email-application .content-area-wrapper .content-right {
+    width: 100%;
+}
+
+.emailName {
+    padding-left: 2%;
+    width: 12%;
+}
+
+.media h4 {
+    font-size: 1.2em;
+    padding-bottom: 5px;
+}
+
+/* 수강신청 */
+.classInfo {
+    list-style: none;
+    margin-bottom: 0;
+}
+.classInfo li {
+    padding-bottom: 1%;
+}
+.classInfo li:last-of-type {
+    padding-bottom: 0;
+}
+
+#registerInfo li {
+    margin-bottom: 1.2rem;
+    color: #44494e;
+}
+
+.radioBox {
+    margin-top: 3.6%;
+}
+.radioBox > div {
+    margin-right: 25px;
+}
+
+.lectureList th{
+    background-color: #e1e4e7;                              
+}
+.lectureList td {
+    padding : 0.2em!important;
+}
+#lectureForm {
+    max-height : 380px!important;
+    overflow: auto;
+}
+#completionForm {
+    max-height: 190px!important;
+    overflow: auto;
+}
+
+.lectureHeader h5 {
+    font-size: 1em;
+    margin : 1% 0px 1% 10px;
+}
+
+/* 강의개설 */
+#gradePar {
+  list-style: none;
+  padding-left: 5px;
+}
+#gradePar li {
+    margin-right: 40px;
+}
+#gradePar li h6 {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+#gradePar li input {
+    width: 80px;
+}
+
+/* 시간표 */
+.timetable {
+    display: grid;
+    grid-template-areas: ". week" "time content";
+    grid-template-columns: 120px;
+    grid-template-rows: 60px;
+    width: 100%;
+    height: 100vh;
+}
+
+.timetable .accent-pink-gradient {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ee8ebc, #eea08e);
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+
+
+.timetable .weekend {
+    background: #fbfbfc;
+    color: #87a1ad;
+}
+
+.timetable .week-names {
+    grid-area: week;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.timetable .week-names > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #bfd8f0;
+    box-shadow: inset 1px 0 0 #ECEFF1;
+}
+
+.timetable .time-interval {
+    grid-area: time;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    font-size: 14px;
+}
+
+.timetable .time-interval > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 1px 0 0 #ECEFF1;
+}
+
+.timetable .content {
+    grid-area: content;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.timetable .content > div {
+    box-shadow: inset 1px 0 0 #ECEFF1, inset 0 1px 0 0 #ECEFF1;
+}
+
+.timetable .time ul {
+    list-style: none;
+    padding-left: 0;
+    margin: auto;
+}
+.timetable .time ul li {
+    color: rgb(59, 56, 56);
+    font-size: 0.8em;
+    text-align: center;
+}
+.timetable .time ul li:first-child {
+    font-weight: 800;
+    font-size: 0.9em;
+}
+
+.timetable .accent-pink-gradient:hover {
+    box-shadow: 0 20px 30px 0 rgba(238, 142, 188, 0.3);
+    transform: scale(1.05);
+}
+
+.timetable .accent-orange-gradient {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #eec08e, #dcee8e);
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+.timetable .accent-orange-gradient:hover {
+    box-shadow: 0 20px 30px 0 rgba(238, 192, 142, 0.3);
+    transform: scale(1.05);
+}
+
+.timetable .accent-green-gradient {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #bcee8e, #8eeea0);
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+.timetable .accent-green-gradient:hover {
+    box-shadow: 0 20px 30px 0 rgba(188, 238, 142, 0.3);
+    transform: scale(1.05);
+}
+
+.timetable .accent-cyan-gradient {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #8eeec0, #8edcee);
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+.timetable .accent-cyan-gradient:hover {
+    box-shadow: 0 20px 30px 0 rgba(142, 238, 192, 0.3);
+    transform: scale(1.05);
+}
+
+.timetable .accent-blue-gradient {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #8ebcee, #a08eee);
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+.timetable .accent-blue-gradient:hover {
+    box-shadow: 0 20px 30px 0 rgba(142, 188, 238, 0.3);
+    transform: scale(1.05);
+}
+
+.timetable .accent-purple-gradient {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #c08eee, #ee8edc);
+    transition: .2s ease box-shadow, .2s ease transform;
+}
+
+.timetable .accent-purple-gradient:hover {
+    box-shadow: 0 20px 30px 0 rgba(192, 142, 238, 0.3);
+    transform: scale(1.05);
+}
+
+/* 강의평가 테이블 */
+#evalTable {
+    display: none;
+}
+
+/* 고지서 영수증 테이블 */
+.bill {
+    margin: auto;
+    color: rgb(59, 57, 57);
+}
+.bill .billList {
+    list-style:none;
+}
+.bill .billList:first-child {
+    margin-top: 40px;
+}
+.bill .universtiyName li {
+    display: inline-block;
+    font-size: 1.2em;
+    margin-right: 4%;
+    font-weight: 800;
+}
+.bill .universtiyName li:last-of-type {
+    margin-right: 0;
+}
+.bill .universtiyName li img {
+    width: 120px;
+}
+
+/* 변동신청 첨부파일 */
+.attat {
+    list-style : none;
+    margin-left: -30px;
+}
+.attat li {
+    float : left;
+    margin-right: 20px;
+}
+
+/* 책이름 */
+.over, .over2 {
+    display: inline-block;
+    width:200px;
+    margin-bottom: 0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.over2 {
+    width: 80px!important;
+}
+
+/* 도서내역 */
+.myLibray {
+    max-height: 250px!important;
+    overflow: auto;
+}
+
+/* 도서관 열람실 */
+.seat .row .col-lg-9 {
+    padding: 0 20px;
+}
+.seat .row > div:last-of-type .choiceBox {
+    padding : 30px;
+    background-color: #f2f7ff;
+    height: calc(100% - 52px);
+    margin-right: 10px;
+    position: relative
+}
+.seat .row > div:last-of-type .choiceBox h5 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.seat .front {
+    background-color : #ebf1ff;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0px auto 40px;
+}
+
+.seat table {
+    width: 100%;
+}
+.seat .seatTable td {
+    border : 1px solid #dce7f1;
+    display: inline-block;
+    text-align: center;
+    font-weight: 800;
+    width: calc((100% - 140px) / 10);
+    height: 70px;
+    line-height: 70px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.seat .seatTable td:last-of-type {
+    margin-right: 0;
+}
+.seat .seatTable td:nth-of-type(5){
+    margin-right: 50px;
+}
+.seat .seatTable td {
+    background-color: #f2f7ff;
+}
+.seat .seatTable td.rent {
+    background-color: #ecc3cc;
+    pointer-events: none;
+    
+}
+.seat .seatTable td.choice{
+    background-color: #92b1e2;
+}
+
+.choiceWrap ul {
+    list-style: none;
+    margin-left: -30px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.choiceWrap ul li {
+    margin-top: 15px;
+}
+
+.seatInfo {
+    color : #25396f;
+    font-size: 1em;
+}
+
+.seatStat li {
+    margin-top: 10px;
+}
+.seatStat .choice {
+    border: 1px solid #d6dee6;
+    background-color: #92b1e2;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+.seatStat .nomal {
+    border: 1px solid #d6dee6;
+    background-color: #f2f7ff;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+.seatStat .rent {
+    border: 1px solid #d6dee6;
+    background-color: #ecc3cc;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.roomQr {
+    width: 100%;
+    border: 1px solid #d6dee6;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+#roomQrBlock img {
+    width: 100%;
+}
+#roomQrNone {
+    padding: 100px 0;
+    font-size: 1.1em;
+    font-weight: 800;
+}
+#roomQrNone img {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+@media (max-width : 900px){
+    .seat .seatTable td {
+        border : 1px solid #dce7f1;
+        display: inline-block;
+        text-align: center;
+        font-weight: 800;
+        font-size: 0.7em;
+        width: calc((100% - 60px) / 10);
+        height: 50px;
+        line-height: 50px;
+        cursor: pointer;
+        margin-right: 5px;
+        margin-bottom: 10px;
+    }  
+    .seat .seatTable td:nth-of-type(5){
+        margin-right: 20px;
+    }
+    .seat .row > div:last-of-type > div {
+        margin-right: 0;
+    }
+}
+
+/* 스터디룸 예약 */
+#studyRoom > .row {
+    margin: 10px;
+}
+.room {
+    margin: 10px;
+    border-top: 1px solid #ced3d8;
+    padding: 30px 0;
+}
+.room .form-check{
+    padding-left: 0;
+    padding-top: 15px;
+    border-bottom: 1px solid #dce7f1;
+}
+.room .form-check h5 {
+    display: inline-block;
+}
+.room .form-check .custom-control {
+    margin-top: -8px;
+}
+.room .form-check .custom-control label {
+    margin-top: 5px;
+    font-weight: 800;
+}
+.room .roomImg img {
+    width: 100%;
+}
+.room .roomInfo {
+    margin: 20px 0;
+}
+.room .roomInfo tr {
+    display: block;
+    margin-bottom: 10px;
+}
+.room .roomInfo th {
+    color : #25396f;
+    width: 110px;
+}
+
+#roomRent {
+    background-color: #f2f7ff;
+}
+#roomRent h5 {
+    padding: 30px 0;
+    text-align: center;
+}
+#roomRent .choiceRoomName {
+    width: 100%;
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.2em;
+    margin: 10px 0 40px 0;
+}
+#roomRent > .row {
+    margin: 0 10px;
+    padding : 30px 0 5px;
+    border-top: 1px solid #ced3d8;
+}
+.rentTitle {
+    color : #25396f;
+    font-weight: 800;
+}
+
+.calColor td {
+    display: inline-block;
+    margin-right: 20px;
+}
+.calColor td span:first-of-type {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+.calColor .no {
+    background-color: #efefef;
+}
+.calColor .pick {
+    background-color: #25396f;
+
+}
+
+#roomTime table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#roomTime table tr {
+    border-top: 1px solid #ced3d8;
+    border-left: 1px solid #ced3d8;
+    border-right: 1px solid #ced3d8;
+}
+#roomTime table td {
+    display: inline-block;
+    width: calc(100% / 3);
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    background-color: white;
+    border-right: 1px solid #ced3d8;
+    border-bottom: 1px solid #ced3d8;
+    cursor: pointer;
+}
+#roomTime table td:nth-of-type(3n) {
+    border-right: none;
+}
+#roomTime table td.rentNomal {
+    pointer-events: none;
+}
+#roomTime table td.rentNo {
+    background-color: #efefef;
+    pointer-events: none;
+}
+#roomTime table td.rentPick {
+    background-color: #25396f;
+    color: white;
+}
+
+/* 진로교육 */
+.educationRoom {
+    margin-bottom: 30px!important;
+    border-top: none!important;
+}
+
+/* 증명서 */
+.certificateInfo {
+    line-height: 2.5em;
+}
+
+/* 상담내역 */
+#returnWarning {
+    color: rgb(238, 58, 58);
+    display: inline-block;
+    padding-top: 5px;
+} 
+
+/* 장학금 추천 */
+#recomTopArea .card {
+    min-height: 640px;
+}
+
+/* 장학공지 */
+.noticeTitle {
+    display: inline-block;
+    max-width: 400px;
+    margin-bottom: 0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+/* searchArea */
+.searchTitle h6{
+    display: inline;
+    vertical-align: -7px;
+}
+
+.searchInput {
+    border:1px solid #dce7f1;
+}
+.searchInput i {
+    vertical-align: -2px;
+}
+
+/* pagenation */
+.pagenationNav {
+    margin : 20px 0 40px 0;
+    overflow: hidden;
+}
+.pagenationNav::after {
+    content: " "; 
+    display: block;
+    clear: both;
+}
+.pagenationNav ul {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 엑셀 업로드 버튼 */
+#excelUpload {
+    opacity: 0;
+    position: absolute;
+}
+
+/* 캘린더 */
+.dropNewEvent {
+    font-size: 13px;
+  }
+  
+  .popoverTitleCalendar {
+    width: 100%;
+    height: 100%;
+    padding: 15px 15px;
+    font-size: 13px;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .popoverInfoCalendar i {
+    font-size: 14px;
+    margin-right: 10px;
+    line-height: inherit;
+    color: #d3d4da;
+  }
+  
+  .popoverInfoCalendar p {
+    margin-bottom: 1px;
+  }
+  
+  .popoverDescCalendar {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #E3E3E3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  
+  .popover-title {
+    background: transparent;
+    font-weight: 600;
+    padding: 0 !important;
+    border: none;
+  }
+  
+  .popover-content {
+    padding: 15px 15px;
+    font-size: 13px;
+  }
+  
+  .inputModal {
+    width: 65%;
+    margin-bottom: 10px;
+  }
+  
+  #contextMenu {
+    position: absolute;
+    display: none;
+    z-index: 2;
+  }
+  
+  #contextMenu .dropdown-menu {
+    border: none;
+  }
+  
+  .opacityWeekend {
+    background-color: #f4f4fb !important;
+  }
+  
+  .fc-avatar-image {
+    top: 4px;
+    left: 20px;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+  }
+  
+  .fc-avatar-image img {
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+  }
+  
+  .fc-avatar-image:before {
+    content: none !important;
+  }
+  
+  .fc-day-header {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 500;
+    color: #505363;
+    background-color: #FAFAFA;
+    padding: 11px 0px !important;
+    text-decoration: none;
+  }
+  
+  .fc-day-header a {
+    text-decoration: none !important;
+    color: #505363;
+  }
+  
+  .fc-center h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+    color: #505363;
+    line-height: 32px;
+  }
+  
+  .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 22px;
+    padding-top: 22px;
+  }
+  
+  .fc-agenda-view .fc-day-grid .fc-row .fc-content-skeleton {
+    padding-bottom: 1em;
+    padding-top: 1em;
+  }
+  
+  .fc-day {
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+  }
+  
+  .fc-day:hover {
+    background: #EEF7FF;
+    cursor: pointer;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+  }
+  
+  .fc-highlight {
+    background: #EEF7FF;
+    opacity: 0.7;
+  }
+  
+  .fc-time-grid-event.fc-short .fc-time:before {
+    content: attr(data-start);
+    display: none;
+  }
+  
+  .fc-time-grid-event.fc-short .fc-time span {
+    display: inline-block;
+  }
+  
+  .fc-time-grid-event.fc-short .fc-avatar-image {
+    display: none;
+    -webkit-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+  }
+  
+  .fc-time-grid .fc-bgevent,
+  .fc-time-grid .fc-event {
+    border: 1px solid #fff !important;
+  }
+  
+  .fc-time-grid-event.fc-short .fc-content {
+    padding: 4px 20px 10px 22px !important;
+  }
+  
+  .fc-time-grid-event .fc-avatar-image {
+    top: 9px;
+  }
+  
+  .fc-event-vert {
+    min-height: 22px;
+  }
+  
+  .fc .fc-axis {
+    vertical-align: middle;
+    padding: 0 4px;
+    white-space: nowrap;
+    font-size: 10px;
+    color: #505362;
+    text-transform: uppercase;
+    text-align: center !important;
+    background-color: #fafafa;
+  }
+  
+  .fc-unthemed .fc-event .fc-content,
+  .fc-unthemed .fc-event-dot .fc-content {
+    padding: 5px 10px 5px 10px;
+    font-family: 'Roboto', sans-serif;
+    margin-left: -1px;
+    height: 100%;
+  }
+  
+  .fc-event {
+    border: none !important;
+  }
+  
+  .fc-day-grid-event .fc-time {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  
+  .fc-unthemed .fc-day-grid td:not(.fc-axis).fc-event-container {
+    /* padding: 0.2rem 0.5rem; */
+  }
+  
+  .fc-unthemed .fc-content,
+  .fc-unthemed .fc-divider,
+  .fc-unthemed .fc-list-heading td,
+  .fc-unthemed .fc-list-view,
+  .fc-unthemed .fc-popover,
+  .fc-unthemed .fc-row,
+  .fc-unthemed tbody,
+  .fc-unthemed td,
+  .fc-unthemed th,
+  .fc-unthemed thead {
+    border-color: #DADFEA;
+  }
+  
+  .fc-ltr .fc-h-event .fc-end-resizer,
+  .fc-ltr .fc-h-event .fc-end-resizer:before,
+  .fc-ltr .fc-h-event .fc-end-resizer:after,
+  .fc-rtl .fc-h-event .fc-start-resizer,
+  .fc-rtl .fc-h-event .fc-start-resizer:before,
+  .fc-rtl .fc-h-event .fc-start-resizer:after {
+    left: auto;
+    cursor: e-resize;
+    background: none;
+  }
+  
+  select.filter {
+    width: 500px !important;
+  }
+  
+  .popover {
+    background: #fff !important;
+    color: #2E2F34;
+    border: none;
+    margin-bottom: 10px;
+  }
+  
+  /*popover header*/
+  .popover-title {
+    background: #F7F7FC;
+    font-weight: 600;
+    padding: 15px 15px 11px;
+    border: none;
+  }
+  
+  /*popover arrows*/
+  .popover.top .arrow:after {
+    border-top-color: #fff;
+  }
+  
+  .popover.right .arrow:after {
+    border-right-color: #fff;
+  }
+  
+  .popover.bottom .arrow:after {
+    border-bottom-color: #fff;
+  }
+  
+  .popover.left .arrow:after {
+    border-left-color: #fff;
+  }
+  
+  .popover.bottom .arrow:after {
+    border-bottom-color: #fff;
+  }
+  
+  .material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    -webkit-font-feature-settings: 'liga';
+            font-feature-settings: 'liga';
+  }
+  
+  #add-color,
+  #edit-color {
+    color: #d25565;
+  }
