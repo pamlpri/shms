@@ -1,0 +1,485 @@
+/**
+ * <pre>
+ * 
+ * </pre>
+ * @author 박초원
+ * @since 2021. 5. 14.
+ * @version 1.0
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일      			  수정자       수정내용
+ * --------     --------    ----------------------
+ * 2021. 5. 14.      박초원       최초작성
+ * Copyright (c) ${year} by DDIT All right reserved
+ * </pre>
+ */ 
+
+.text-black-color {
+    color : #5c5c77;
+}
+.text-navy-color {
+    color : #1e1e4b;
+}
+
+.headerBtn {
+    background-color: #ffbc3b;
+    display: inline-block;
+    padding: 1rem 1rem;
+    color: #3d3d3d ;
+}
+#lmsBtn:hover {
+    color : #1e1e4b;
+}
+#enterBtn {
+    background-color: #1e1e4b;
+    color: white;
+    margin-left: -2px;
+}
+
+.navigation {
+    background-color: #1a1a37;
+}
+
+.nav-item::before {
+    display: none;
+}
+
+.dropdown {
+    position: inherit;
+}
+
+.navbar .dropdown:hover .dropdown-menu {
+    width: 100vw;
+    left: 50%;
+}
+
+.navbar .dropdown-menu {
+    transform: none;
+}
+
+.dropdown-item  {
+    display: inline-block;
+    width: 7%;
+    font-weight: 800;
+}
+
+.sub {
+    display: inline-block;
+}
+.sub li {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 0.9em;
+}
+
+/* 모바일 퀵메뉴 */
+#top {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    cursor: pointer;
+  }
+  
+#top img {
+    width: 100%;
+}
+
+/* 검색 */
+#searchArea {
+    margin-top: 1.5%;
+}
+
+/* 검색입력창 */
+.searchInput {
+    width: 100%;
+    padding: .375rem 1.75rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #607080;
+    vertical-align: middle;
+    background-color: #fff;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E);
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-bottom : 5%;
+}
+
+#searchBtn {
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #607080;
+    vertical-align: middle;
+    background-color: #fff;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    padding: 0.36rem 0;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+#searchBtn:hover {
+    background-color: #e9ecef;
+}
+
+/* 페이지네이션 */
+.pagination {
+    margin : 2% auto 1% auto;
+}
+.pagination li a {
+    color: #607080;
+}
+.pagination li a:hover {
+    color: #607080;
+}
+
+.pagination .cur {
+    background-color : #1a1a37;
+    color: white;
+}
+
+/* 글쓰기 버튼 */
+#writeBtn {
+    float: right;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    vertical-align: middle;
+    background-color: #1a1a37;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    padding: 0.36rem 1rem;
+    text-align: center;
+}
+
+/* 비밀글 처리 */
+.fa-key {
+    margin: 0 10px;
+    opacity: 0.5;
+}
+
+.dept {
+    font-weight: 800;
+    padding-right: 5px;
+}
+
+/* 답변상태 */
+.wait {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+    display: inline-block;
+    padding: 0.3rem 0.3rem;
+    font-size: 0.9em;
+    text-align: center;
+}
+.success {
+    color: #fff;
+    background-color: #5a6268;
+    border-color: #545b62;
+    display: inline-block;
+    font-size: 0.9em;
+    padding: 0.3rem 0.3rem;
+    text-align: center;
+}
+
+/* 공지게시판 상세조회 */
+.noticeView {
+    table-layout: fixed;
+    border-collapse: collapse;
+    /* IE7 and lower */ border-spacing: 0;
+    max-width: 100%;
+    width: 100%;
+    color: #555;
+    margin-top: 4%;
+}
+.noticeView thead {
+    border-top: 2px solid #1a1a37;
+    border-bottom: 1px solid #e2e2e2;
+}
+.noticeView .noticeTitle {
+    text-align: center !important;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    background-color: #fbfbfb !important;
+    padding: 1.5rem;
+    word-break: break-all;
+    line-height: 1.6em;
+}
+.noticeView tbody td {
+    padding: 12px;
+    text-align: left !important;
+    border-right: 1px solid #ddd;
+}
+.noticeView tbody td:last-child {
+    border-right: none;
+}
+.noticeView tbody td span {
+    display: inline-block;
+    min-width: 80px;
+    font-weight: bold;
+}
+
+.noticeContent {
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 20px 10px;
+    font-size: 1em;
+    line-height: 1.5em;
+    color: #3d3d3d;
+}
+
+.noticeAns {
+    border-bottom: 1px solid #aaa;
+    padding: 20px 10px;
+}
+.noticeAns p {
+    color: #3d3d3d;
+    margin: 0;
+}
+.noticeAns .userAns {
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+.noticeAns .userAns span {
+    margin-left: 10px;
+    font-weight: 400;
+}
+
+.board_downloader {
+    border-bottom: 1px solid #e2e2e2;
+    padding: 3%;
+}
+.board_downloader li {
+    margin-left: -6%;
+    padding-bottom: 1em;
+}
+.board_downloader li:last-child {
+    padding-bottom: 0;
+}
+.board_downloader li a i {
+    margin-right: 10px;
+}
+
+#listBtn {
+    float: right;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    vertical-align: middle;
+    background-color: #1a1a37;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    padding: 0.36rem 1rem;
+    text-align: center;
+    margin-top: 5%;
+}
+
+/* 문의게시판 작성폼 */
+#qnaForm {
+    margin-top: 4%;
+    width: 100%;
+}
+#qnaForm table {
+    width: 100%;
+}
+#qnaForm table tr {
+    border-bottom: 1px solid #ccc;
+}
+#qnaForm table tr:first-child {
+    border-top: 1px solid #ccc;
+}
+#qnaForm table th {
+    border-right: 1px solid #ccc;
+    width: 15%;
+    background-color: #f5f6f9;
+    padding: 2%;
+    text-align: right;
+}
+#qnaForm table td input,
+#qnaForm table td select {
+    padding: 5px 8px;
+    height: 32.8px;
+    border-radius: 2px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    margin: 1px 10px;
+    width: 250px;
+}
+
+.label-box {
+    border-radius: 2px;
+    display: inline-block;
+    padding: 6px 10px;
+    min-width: 80px;
+    font-size: 1em;
+    color: #333;
+    margin-right: 10px;
+    background: #fbfbfb;
+    border: 1px solid #ddd;
+    margin: 1px 10px;
+}
+#qnaForm table td input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+}
+#qnaForm table td input[type=checkbox] {
+    vertical-align: -5px;
+    margin-left: -5px
+}
+
+#qnaForm table td input[name=bo_title] {
+    width: 80%;
+}
+
+#qnaForm table .textArea {
+    padding : 2%;
+}
+
+#cke_1_contents {
+    height: 400px!important;
+}
+
+#saveBtn {
+    float: right;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.5;
+    color: #3d3d3d;
+    vertical-align: middle;
+    background-color: #ffbc3b;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    padding: 0.36rem 1rem;
+    text-align: center;
+    margin-top: 5%;
+}
+
+#noticeBtnBox a {
+    float: right;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    vertical-align: middle;
+    background-color: #1a1a37;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    padding: 0.36rem 1rem;
+    text-align: center;
+    margin-top: 5%;
+}
+
+#deleteModal p {
+    margin-left: 10px;
+    line-height: 2.1em;
+}
+#deleteModal .modal-body {
+    padding : 0 2%;
+} 
+
+/* 비밀글 비밀번호 */
+#passForm {
+    margin: 15% auto;
+    width: 60%;
+}
+#passForm p {
+    font-weight: 800;
+}
+
+#noticeName {
+    height: 50px;
+}
+#noticePass {
+    height: 50px;
+}
+#noticeBtn {
+    height: 50px;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    font-weight: 800;
+}
+
+/* 비밀번호 검사 결과 */
+#passChkRes{
+	color : red;
+	size : 0.5em;
+	text-align: center;
+	margin-bottom : 5px;
+}
+
+/* 뷰어 */
+.pdfobject-container { 
+    margin-top: 4%;
+    height: 60rem;
+    border: 1rem solid rgb(82, 86, 89);
+}
+
+@media(max-width:991px){
+    .top-header {
+        display: none;
+    }
+
+    .nav-item {
+        margin: 0px;
+    }
+
+    .sub {
+        display: none;
+        text-align: center;
+        padding: 0;
+        margin-bottom: 3%;
+    }
+
+    .sub li {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 4%;
+    }
+
+    .navbar .dropdown:hover .dropdown-menu {
+        width: 100%;
+    }
+
+    .dropdown-item  {
+        width: 100%;
+    }
+}

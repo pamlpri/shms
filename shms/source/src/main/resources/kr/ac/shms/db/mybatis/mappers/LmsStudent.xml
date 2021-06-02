@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
+	<select id="student" parameterType="String" resultType="kr.ac.shms.lms.student.vo.StudentVO">
+		SELECT stdnt_no,
+		       sub_code,
+		       entsch_de,
+		       grdtn_de,
+		       empmnt_at,
+		       grade, 
+		       name,
+		       tel_no,
+		       regno1,
+		       regno2,
+		       gen, 
+		       zipcode, 
+		       addr1,
+		       addr2,
+		       email,
+		       webmail,
+		       account,
+		       bank_name,
+		       photo_path,
+		       semstr
+		FROM student
+		WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	</select>
+	
+	<sql id="loanCntFrag">
+		FROM
+		    book_loan
+		where stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		  AND return_dt IS NULL
+	</sql>
+	
+	<select id="bookLoanCnt" parameterType="String" resultType="hashMap">
+		SELECT bookLoancnt, expiredcnt
+		  FROM (
+		SELECT
+		    COUNT(*) bookLoancnt
+		<include refid="loanCntFrag"></include>
+		),
+		(SELECT 
+		    COUNT(*) expiredcnt
+		<include refid="loanCntFrag"></include>
+		<![CDATA[
+		  AND return_exp_dt < SYSDATE)
+		]]>
+	</select>
+	
+</mapper>
+

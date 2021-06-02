@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.staff.dao.LmsStaffDAO">
+	<select id="staff" parameterType="String" resultType="kr.ac.shms.common.vo.StaffVO">
+		SELECT
+		    staff_no,
+		    dept_code,
+		    sub_code,
+		    emp_section,
+		    encpn_de,
+		    retire_de,
+		    contract_endde,
+		    staff_rspofc,
+		    prof_at,
+		    name,
+		    tel_no,
+		    regno1,
+		    regno2,
+		    gen,
+		    zipcode,
+		    addr1,
+		    addr2,
+		    email,
+		    webmail,
+		    account,
+		    bank_name,
+		    photo_path
+		FROM
+		    staff
+		WHERE staff_no = #{staff_no, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectConsltCnt" parameterType="String" resultType="int">
+		SELECT
+		    COUNT(*) cnt
+		FROM
+		    conslt_req
+		WHERE staff_no = #{staff_no, jdbcType=VARCHAR}
+		  AND process_stat = (SELECT COM_CODE
+		                        FROM TB_COM_CODE 
+		                       WHERE CODE_GRP = (SELECT CODE_GRP 
+		                                           FROM TB_CODE_GRP
+		                                          WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		                         AND COM_CODE_NM = '대기')
+	</select>
+</mapper>

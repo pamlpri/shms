@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.common.dao.LmsCommonDAO">
+	<select id="selectDiet" resultType="DietVO">
+		SELECT
+		    diet_no,
+		    TO_CHAR(diet_date, 'YYYY.MM.DD') diet_date,
+		    diet_menu1,
+		    diet_menu2,
+		    diet_menu3,
+		    diet_menu4,
+		    diet_menu5,
+		    diet_menu6,
+		    diet_menu7
+		FROM
+		    diet
+		WHERE diet_date = TO_CHAR(SYSDATE)
+	</select>
+	
+	<select id="selectWebmailCnt" parameterType="String" resultType="hashMap">
+		SELECT recvCnt, todayRecvCnt
+		  FROM (
+		SELECT COUNT(*) recvCnt
+		  FROM tb_receiver A
+		  INNER JOIN webmail B
+		  ON(a.send_no = b.send_no)
+		 WHERE receiver = #{user_id, jdbcType=VARCHAR}
+		   AND read_at = 'N'
+		), 
+		(
+		SELECT COUNT(*) todayRecvCnt
+		  FROM tb_receiver A
+		  INNER JOIN webmail B
+		  ON(a.send_no = b.send_no)
+		 WHERE receiver = #{user_id, jdbcType=VARCHAR}
+		   AND read_at = 'N'
+		   AND b.send_date = TO_CHAR(SYSDATE)
+		)
+	</select>
+	
+	<select id="selectTodaySchdul" resultType="ScheduleVO">
+		 SELECT
+		    schdul_no,
+		    schdul_kind,
+		    title,
+		    cont,
+		    TO_CHAR(begin_dt, 'HH24:MI') begin_dt,
+		    TO_CHAR(end_dt, 'HH24:MI') end_dt
+		FROM
+		    schedule
+		WHERE schdul_kind = (SELECT com_code FROM tb_com_code
+		                      WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'SCHDUL_KIND')
+		                        AND com_code_nm = '학사일정')
+		AND TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI:SS')
+			 BETWEEN TO_CHAR(begin_dt, 'YYYY/MM/DD HH24:MI:SS') AND TO_CHAR(end_dt, 'YYYY/MM/DD HH24:MI:SS')
+	</select>
+	
+	<select id="selectCourseEducList" resultType="CourseEducVO">
+		SELECT *
+		  FROM(
+			SELECT
+			    (SELECT COUNT(educ_no) FROM course_educ)
+			      - (ROW_NUMBER () OVER(ORDER BY educ_reg_date DESC)) + 1 p_bo_no,
+			    (ROW_NUMBER () OVER(ORDER BY educ_reg_date DESC)) rn,
+			    educ_no,
+			    educ_title,
+			    educ_cont,
+			    instrctr_nm,
+			    instrctr_com,
+			    a.lecrum_no,
+			    c.building_nm||' '||b.lecrum_nm||'호' lecrum_info,
+			    educ_nmpr,
+			    educ_target,
+			        TO_CHAR(educ_reg_date, 'YYYY.MM.DD HH24:MI') educ_reg_date,
+			    TO_CHAR(educ_bgnde, 'YYYY.MM.DD HH24:MI') educ_bgnde,
+			    TO_CHAR(educ_endde, 'YYYY.MM.DD HH24:MI') educ_endde,
+			    TO_CHAR(educ_bgnde, 'YYYY.MM.DD') educ_date,
+			    TO_CHAR(educ_bgnde, 'HH24:MI')||' - '||TO_CHAR(educ_endde, 'HH24:MI') educ_time
+			FROM
+			    course_educ a
+			    INNER JOIN lecrum b
+			    ON(a.lecrum_no = b.lecrum_no)
+			    INNER JOIN building c
+			    ON(b.building_no = c.building_no)
+			<![CDATA[
+			WHERE SYSDATE <= educ_bgnde
+			)
+			WHERE rn <= 5
+			]]>
+	</select>
+</mapper>
