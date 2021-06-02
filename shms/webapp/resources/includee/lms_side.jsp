@@ -56,10 +56,10 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">내정보보기</a>
+	                          <a href="${cPath }/lms/myPage.do">내정보보기</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">담당교수상담</a>
+	                          <a href="${cPath }/lms/consultingList.do">담당교수상담</a>
 	                      </li>
 	                  </ul>
 	              </li>
@@ -84,7 +84,7 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">수강신청</a>
+	                          <a href="${cPath }/lms/classRegistrationInfo.do">수강신청</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">장바구니</a>
