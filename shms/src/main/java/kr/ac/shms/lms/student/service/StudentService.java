@@ -3,9 +3,9 @@ package kr.ac.shms.lms.student.service;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 /**
  * @author 박초원
  * @since 2021. 5. 22.
@@ -19,9 +19,11 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * 2021. 5. 31.   김보미		출석(입실)
  * 2021. 5. 31.   송수미	     학생 통합정보시스템 메인 페이지 구현
  * 2021. 6. 01.   김보미		출석(퇴실)
+ * 2021. 6. 02.   최희수          웹메일 등록 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
+import kr.ac.shms.subject.vo.SubjectVO;
 public interface StudentService {
 
 	/**
@@ -59,4 +61,25 @@ public interface StudentService {
 	 * @return 대출 도서 수, 연체 도서 수
 	 */
 	public Map<String, String> bookLoanCnt(String stdnt_no);
+	
+	/**
+	 * 마이페이지에서 웹메일 신청(등록)
+	 * @param stdnt_no
+	 * @return ServiceResult
+	 */
+	public ServiceResult webMailUpdate(String stdnt_no);
+	
+	/**
+	 * 마이페이지 학과명 추출
+	 * @param sub_code
+	 * @return 데이터가 없으면 null
+	 */
+	public SubjectVO subject(String sub_code);
+	
+	/**
+	 * 마이페이지 정보 추출
+	 * @param stdnt_no
+	 * @return 데이터가 없으면 null
+	 */
+	public RegInfoCngVO regInfo(String stdnt_no);
 }

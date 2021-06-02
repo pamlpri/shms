@@ -7,11 +7,13 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.subject.vo.SubjectVO;
 /**
  * @author 박초원
  * @since 2021. 5. 22.
@@ -72,6 +74,24 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public String selectAttendTime(AttendVO attendVO) {
 		return studentDAO.selectAttendTime(attendVO);
+	}
+
+	@Override
+	public ServiceResult webMailUpdate(String stdnt_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.webMailUpdate(stdnt_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public SubjectVO subject(String sub_code) {
+		return studentDAO.subject(sub_code);
+	}
+
+	@Override
+	public RegInfoCngVO regInfo(String stdnt_no) {
+		return studentDAO.regInfo(stdnt_no);
 	}
 	
 }

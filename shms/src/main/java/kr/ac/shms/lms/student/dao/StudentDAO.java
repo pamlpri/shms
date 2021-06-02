@@ -4,9 +4,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 박초원
@@ -69,6 +71,27 @@ public interface StudentDAO {
 	 * @return 대출 도서 수, 연체 도서 수
 	 */
 	public Map<String, String> bookLoanCnt(String stdnt_no);
+	
+	/**
+	 * 마이페이지에서 웹메일 신청(등록)
+	 * @param stdnt_no
+	 * @return cnt > 0 성공
+	 */
+	public int webMailUpdate(String stdnt_no);
+	
+	/**
+	 * 마이페이지 학과명 추출
+	 * @param sub_code
+	 * @return 데이터가 없으면 null
+	 */
+	public SubjectVO subject(String sub_code);
+	
+	/**
+	 * 마이페이지 정보 추출
+	 * @param stdnt_no
+	 * @return 데이터가 없으면 null
+	 */
+	public RegInfoCngVO regInfo(String stdnt_no);
 }
 
 
