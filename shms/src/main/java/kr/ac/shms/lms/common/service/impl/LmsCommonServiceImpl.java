@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.shms.lms.common.dao.LmsCommonDAO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
@@ -22,6 +23,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 31.      송수미       최초작성
+ * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -43,6 +45,11 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public List<ScheduleVO> selectTodaySchdul() {
 		return lmsCommonDAO.selectTodaySchdul();
+	}
+
+	@Override
+	public List<CourseEducVO> selectCourseEducList() {
+		return lmsCommonDAO.selectCourseEducList();
 	}
 	
 }

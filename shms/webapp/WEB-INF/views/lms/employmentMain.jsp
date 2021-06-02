@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 05. 20.      박초원        최초작성
 * 2021. 06. 01.      송수미        통합정보시스템 메인(취업장학과) 구현
+* 2021. 06. 02.      송수미        통합정보시스템 메인(취업장학과) 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -160,46 +161,22 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td scope="row">1</td>
-										<td scope="row"><a class="text-light-black" href="#">회사에서
-												살아남기</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">09:00 - 10:00</td>
-										<td scope="row">학생회관 302호</td>
-									</tr>
-									<tr>
-										<td scope="row">2</td>
-										<td scope="row"><a class="text-light-black" href="#">회사에서
-												살아남기</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">09:00 - 10:00</td>
-										<td scope="row">학생회관 302호</td>
-									</tr>
-									<tr>
-										<td scope="row">3</td>
-										<td scope="row"><a class="text-light-black" href="#">회사에서
-												살아남기</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">09:00 - 10:00</td>
-										<td scope="row">학생회관 302호</td>
-									</tr>
-									<tr>
-										<td scope="row">4</td>
-										<td scope="row"><a class="text-light-black" href="#">회사에서
-												살아남기</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">09:00 - 10:00</td>
-										<td scope="row">학생회관 302호</td>
-									</tr>
-									<tr>
-										<td scope="row">5</td>
-										<td scope="row"><a class="text-light-black" href="#">회사에서
-												살아남기</a></td>
-										<td scope="row">2020.05.05</td>
-										<td scope="row">09:00 - 10:00</td>
-										<td scope="row">학생회관 302호</td>
-									</tr>
+									<c:choose>
+										<c:when test="${not empty courseEducList}">
+											<c:forEach items="${courseEducList }" var="courseEduc">
+												<tr>
+													<td scope="row">${courseEduc.p_bo_no }</td>
+													<td scope="row"><a class="text-light-black" href="#">${courseEduc.educ_title }</a></td>
+													<td scope="row">${courseEduc.educ_date }</td>
+													<td scope="row">${courseEduc.educ_time }</td>
+													<td scope="row">${courseEduc.lecrum_info }</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											현재 등록되어 있는 진로교육 내역이 없습니다.
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>

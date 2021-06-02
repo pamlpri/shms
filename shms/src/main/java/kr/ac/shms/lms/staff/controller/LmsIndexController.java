@@ -21,6 +21,7 @@ import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
@@ -176,9 +177,9 @@ public class LmsIndexController {
 			int consltCnt = commonService.selectCnt(search);
 			model.addAttribute("consltCnt", consltCnt);
 			
-			
 			// 진로 교육 (최근 5개)
-			
+			List<CourseEducVO> courseEducList = lmsCommonService.selectCourseEducList();
+			model.addAttribute("courseEducList", courseEducList);
 			
 		}
 		

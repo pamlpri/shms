@@ -233,6 +233,7 @@
 					<h4>학사일정</h4>
 				</div>
 				<div class="card-body">
+					<div id="datepicker"></div>
 					<jsp:useBean id="today" class="java.util.Date" />
 					<fmt:formatDate var="now" value="${today}" pattern="yyyy년 MM월 dd일" />
 					<p class="dateToday">
@@ -246,7 +247,7 @@
 								</p>
 							</c:forEach>
 						</c:if>
-					</div>
+					</div>					
 				</div>
 			</div>
 			<div class="card">
