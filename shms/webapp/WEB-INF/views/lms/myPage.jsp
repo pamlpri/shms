@@ -7,6 +7,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
@@ -44,24 +45,34 @@
 											<tbody">
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학번</th>
-													<td><input class="form-control" disabled type="text"
-														value="S1401001"></td>
+													<td><input id="stdnt_no" class="form-control" disabled type="text"
+														value="${student.stdnt_no }"></td>
 													<th class="text-bold-500 text-center align-middle">이름</th>
 													<td><input class="form-control" disabled type="text"
-														value="강미나"></td>
+														value="${student.name }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">주민번호</th>
 													<td><input class="form-control" disabled type="text"
-														value="010312 - 1234561"></td>
+														value="${student.regno1 } - ${student.regno2}"></td>
 													<th class="text-bold-500 text-center align-middle">성별</th>
-													<td><input class="form-control" disabled type="text"
-														value="남자"></td>
+													<td>
+														<c:choose>
+															<c:when test="${student.gen eq 'F' }">
+																<input class="form-control" disabled type="text"
+																	value="여자">													
+															</c:when>
+															<c:otherwise>
+																<input class="form-control" disabled type="text"
+																	value="남자">
+															</c:otherwise>
+														</c:choose>
+													</td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">전공</th>
 													<td><input class="form-control" disabled type="text"
-														value="항공학과"></td>
+														value="${subject.sub_name }"></td>
 													<th class="text-bold-500 text-center align-middle">년제</th>
 													<td><input class="form-control" disabled type="text"
 														value="4년제"></td>
@@ -72,15 +83,15 @@
 														value="신입학"></td>
 													<th class="text-bold-500 text-center align-middle">입학일자</th>
 													<td><input class="form-control" disabled type="date"
-														value="2014-03-03"></td>
+														value="${student.entsch_de }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학년</th>
 													<td><input class="form-control" disabled type="text"
-														value="2학년"></td>
+														value="${student.grade }"></td>
 													<th class="text-bold-500 text-center align-middle">학기</th>
 													<td><input class="form-control" disabled type="text"
-														value="1학기"></td>
+														value="${student.semstr }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학적상태</th>
@@ -106,7 +117,7 @@
 												<tr>
 													<th class="text-bold-500 text-center align-middle">졸업일자</th>
 													<td><input class="form-control" disabled type="text"
-														value=""></td>
+														value=${student.grdtn_de }></td>
 													<th class="text-bold-500 text-center align-middle">학위명</th>
 													<td><input class="form-control" disabled type="text"
 														value=""></td>
@@ -118,10 +129,10 @@
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">계좌은행</th>
-													<td><input class="form-control" type="text" value="농협"></td>
+													<td><input class="form-control" type="text" value="${student.bank_name }"></td>
 													<th class="text-bold-500 text-center align-middle">계좌변호</th>
 													<td><input class="form-control" type="text"
-														value="453017-56-105902"></td>
+														value="${student.account }"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -129,17 +140,26 @@
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;&nbsp;&nbsp;웹메일&nbsp;&nbsp;&nbsp;</th>
-													<td colspan="3" id="webMailBox"><button type="button"
-															class="btn btn-primary" data-bs-toggle="modal"
-															data-bs-target="#primary">웹메일 발급</button></td>
+													<td colspan="3" id="webMailBox">
+														<c:choose>
+															<c:when test="${not empty student.webmail }">
+																<input class='form-control' disabled type='text' value='${student.webmail }'>
+															</c:when>
+															<c:otherwise>
+																<button type="button"
+																	class="btn btn-primary" data-bs-toggle="modal"
+																	data-bs-target="#primary" >웹메일 발급</button>
+															</c:otherwise>
+														</c:choose>
+													</td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">전화번호</th>
 													<td><input class="form-control" type="text"
-														value="010-1234-4567"></td>
+														value="${student.tel_no }"></td>
 													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;</th>
 													<td><input class="form-control" type="text"
-														value="shms@co.kr"></td>
+														value="${student.email }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">우편번호</th>
@@ -149,7 +169,7 @@
 																class="bi bi-search"></i></span> <input type="text"
 																class="form-control" aria-label="Recipient's username"
 																aria-describedby="button-addon2" id="sample6_postcode"
-																value="34567">
+																value="${student.zipcode }">
 															<button onclick="sample6_execDaumPostcode()"
 																class="btn btn-outline-secondary" type="button"
 																id="button-addon2" style="border: 1px solid #dfdfdf;">검색</button>
@@ -159,10 +179,10 @@
 												<tr style="border-bottom: 2px solid #95a3d6;">
 													<th class="text-bold-500 text-center align-middle">기본주소</th>
 													<td><input class="form-control" type="text"
-														value="대전광역시 중구 대흥동" id="sample6_address"></td>
+														value="${student.addr1 }" id="sample6_address"></td>
 													<th class="text-bold-500 text-center align-middle">상세주소</th>
 													<td><input class="form-control" type="text"
-														value="영민빌딩 301호" id="sample6_detailAddress"></td>
+														value="${student.addr2 }" id="sample6_detailAddress"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -249,10 +269,20 @@
 <script src="${cPath }/resources/lms/assets/js/postcode.v2.js"></script>
 <script>
 	$("#webMail").on("click",function() {
-		$("#webMailBox").children("button").remove();
-		$("#webMailBox")
-				.append(
-						"<input class='form-control' disabled type='text' value='S1401001@shms.ac'>");
+		var stdnt_no = $("#stdnt_no").val();
+		$.ajax({
+			url: "${cPath}/lms/webMail.do"
+			, data: {"stdnt_no" : stdnt_no}
+			, success: function(res) {
+				$("#webMailBox").children("button").css("display","none");
+				$("#webMailBox").append("<input class='form-control' disabled type='text' value='"+ res.webMail +"'>");
+			}
+			, error: function(error, xhr, msg) {
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
 	});
 
 	function sample6_execDaumPostcode() {

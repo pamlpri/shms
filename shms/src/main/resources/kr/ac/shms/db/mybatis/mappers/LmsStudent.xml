@@ -48,5 +48,63 @@
 		]]>
 	</select>
 	
+	<update id="webMailUpdate" parameterType="String">
+		UPDATE student
+		    SET webmail = #{stdnt_no}||'@injae.ac.kr'
+		WHERE
+		    stdnt_no = #{stdnt_no}
+	</update>
+	
+	<select id="subject" parameterType="String" resultType="SubjectVO">
+		SELECT  sub_code,
+		        sub_name,
+		        col_code,
+		        estbl_de,
+		        reg_amt,
+		        offrum_loc,
+		        tel_no,
+		        fax_no,
+		        grdtn_pnt,
+		        staff_no,
+		        sub_index
+		FROM subject
+		WHERE sub_code = (
+		    SELECT sub_code
+		    FROM student
+		    WHERE stdnt_no = #{stdnt_no}
+		)
+	</select>
+	<select id="regInfo" parameterType="String" resultType="RegInfoCngVO">
+		SELECT  cng_req_no,
+		        stdnt_no,
+		        req_de,
+		        process_stat,
+		        proc_date,
+		        refuse_resn,
+		        atch_file_no,
+		        req_cl_code,
+		        req_resn_code,
+		        cng_bgnde,
+		        cng_endde
+		FROM (
+		    SELECT  cng_req_no,
+		            stdnt_no,
+		            req_de,
+		            process_stat,
+		            proc_date,
+		            refuse_resn,
+		            atch_file_no,
+		            req_cl_code,
+		            req_resn_code,
+		            cng_bgnde,
+		            cng_endde
+		    FROM reginfo_cng
+		    WHERE stdnt_no = 'S19101001'
+		    AND PROCESS_STAT = 'SI'
+		    ORDER BY proc_date DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
 </mapper>
 
