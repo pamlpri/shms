@@ -88,7 +88,7 @@
 
 .dataTable-table th a {
 	text-decoration: none;
-	color: inherit;
+	/* color: inherit; */
 }
 
 .dataTable-sorter {
