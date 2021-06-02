@@ -17,7 +17,7 @@
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">HOME</a></li>
-			<li class="breadcrumb-item"><a href="#">웹메일</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/compose.do">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">메일보내기</li>
 		</ol>
 	</nav>
@@ -98,7 +98,7 @@
 							<div class="input-group mb-3">
 								<select class="form-select" id="basicSelect">
 									<option>전체</option>
-									<option>메일</option>
+									<option>웹메일</option>
 									<option>이름</option>
 									<option>학과</option>
 									<option>부서</option>
