@@ -181,6 +181,8 @@
             			url : "${cPath}/"
             			
             		})
+            	}else{
+            		$('.email-pagination-prev').attr('disabled', true);
             	}
             });
         });
