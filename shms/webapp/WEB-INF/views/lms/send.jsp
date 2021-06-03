@@ -21,7 +21,7 @@
 
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">HOME</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
 			<li class="breadcrumb-item"><a href="#">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">보낸메일</li>
 		</ol>
@@ -82,7 +82,7 @@
 												</div>
 											</div>
 											<!-- pagination and page count -->
-											<span class="d-none d-sm-block">1-10 of 653</span>
+											<span id="pageInfo" class="d-none d-sm-block"></span>
 											<button
 												class="btn btn-icon email-pagination-prev d-none d-sm-block">
 												<i class="fas fa-chevron-left"></i>
@@ -98,309 +98,16 @@
 									<!-- email user list start -->
 									<div class="email-user-list list-group">
 										<ul class="users-list-wrapper media-list" id="listBody">
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media mail-read">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall1"
-																class='form-check-input'> <label
-																for="checkboxsmall1"></label>
-														</div>
-													</div>
-													<span class="favorite"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
-											<li class="media">
-												<div class="user-action">
-													<div class="checkbox-con me-3">
-														<div class="checkbox checkbox-shadow checkbox-sm">
-															<input type="checkbox" id="checkboxsmall11"
-																class='form-check-input'> <label
-																for="checkboxsmall11"></label>
-														</div>
-													</div>
-													<span class="favorite text-primary"> <svg class="bi"
-															width="1.5em" height="1.5em" fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
-                                                                    </svg>
-													</span>
-												</div>
-												<div class="emailName">
-													<strong>김영민</strong>
-												</div> <a href="mailRead.html" class="media-body text-color">
-													<div class="user-details">
-														<div class="mail-items">
-															<span class="list-group-item-text text-truncate">Open
-																source project public release 👍</span>
-														</div>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span class="mail-date">4:14
-																	AM</span>
-															</span>
-														</div>
-													</div>
-													<div class="mail-message">
-														<p class="list-group-item-text truncate mb-0">Hey
-															John, bah kivu decrete epanorthotic unnotched Argyroneta
-															nonius veratrine preimaginary</p>
-														<div class="mail-meta-item">
-															<span class="float-right"> <span
-																class="bullet bullet-success bullet-sm"></span>
-															</span>
-														</div>
-													</div>
-											</a>
-											</li>
 										</ul>
 										<!-- email user list end -->
 									</div>
 								</div>
 							</div>
 							<!--/ Email list Area -->
-							<form id="searchForm" action="${cPath }/lms/inbox.do">
+							<form id="searchForm" action="${cPath }/lms/send.do">
 								<input type="hidden" name="searchWord" />
 								<input type="hidden" name="page" />
+								<input type="hidden" id="totalPage" />
 							</form>
 						</div>
 					</div>
@@ -419,8 +126,19 @@
         });
 
         $("#deleteBtn").on("click", function(){
+        	let checkeds = $(".email-user-list").find("input:checked");
+        	$(checkeds).each(function(idx, checked){
+        		deleteno = $(checked).data("mailno");
+				deletenos.push(deleteno);
+        	})
             $(".email-user-list").find("input:checked").parents(".media").remove();
         });
+        
+        let page = 1;
+        let prevBtn = $(".email-action").find(".email-pagination-prev");
+        let nextBtn = $(".email-action").find(".email-pagination-next");
+        let pageInfo = "";
+        let totalPage = $("#totalPage").val();
         
         $("#searchWord").on("keyup", function(){
         	searchWord = $("#searchWord").val();
@@ -428,7 +146,6 @@
 			$(searchForm).find("input[name='page']").val("");
 			searchForm.submit();
         });
-        
         
         let searchWord = $("#searchWord").val();
         let listBody = $("#listBody");
@@ -491,15 +208,49 @@
 							 + '</li>';
 							 
 						listBody.append(li);
-					});        			
+					});
+   					let startRow = resp.startRow == 1 ? 1 : resp.startRow;
+   					let totalRecord = resp.totalRecord;
+   					let endRow = resp.endRow < totalRecord ? resp.endRow : totalRecord;
+   					totalPage = resp.totalPage;
+					pageInfo = startRow + " - " + endRow + " of " + totalRecord;
+					$("#pageInfo").text("");
+					$("#pageInfo").text(pageInfo);
+					$("#totalPage").val(totalPage);
         		}else{
         			console.log("없음");
         		}
+        		
         	}, error : function(xhr, resp, error){
         		console.log(xhr);
         	}
         });
         searchForm.submit();
+        
+   		if(page == 1){
+   			prevBtn.prop("disabled", true);
+   		}
+        
+   		if(page == totalPage){
+    		$(nextBtn).prop("disabled", true);
+   		}
+   		
+        $(prevBtn).on("click", function(){
+        	if(page > 1){
+        		page = page - 1;
+        		nextBtn.prop("disabled", false);
+        		searchForm.submit();
+        	}
+        });
+        
+        $(nextBtn).on("click", function(){
+        	if(page < totalPage){
+	       		page = page + 1;
+				$(searchForm).find("input[name='page']").val(page);
+	       		searchForm.submit();
+	       		$(prevBtn).prop("disabled", false);
+        	}
+        });
         
         
     });
