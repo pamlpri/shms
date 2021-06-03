@@ -1,10 +1,10 @@
 package kr.ac.shms.lms.student.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.subject.vo.SubjectVO;
 
@@ -52,14 +53,29 @@ public class MypageController {
 		){
 		String user_id = user.getUser_id();
 		StudentVO studentVO = studentService.student(user_id);
-		SubjectVO subjectVO = studentService.subject(studentVO.getSub_code());
-		RegInfoCngVO regInfoVO = studentService.regInfo(user_id);
+		MypageVO regInfoVO = studentService.regInfo(user_id);
+		SubjectVO subjectVO = studentService.subject(regInfoVO.getSub_code());
+		List<RegInfoCngVO> regInfoCngList = studentService.ReginfoList(user_id);
 		if(studentVO != null) {
 			model.addAttribute("student", studentVO);
 			model.addAttribute("subject", subjectVO);
 			model.addAttribute("regInfo", regInfoVO);
+			model.addAttribute("regInfoCngList", regInfoCngList);
 		}
 		return "lms/myPage";
+	}
+	@RequestMapping(value="/myPage.do", method=RequestMethod.POST)
+	public String mypageUpdate(
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @ModelAttribute("student") StudentVO student
+		) {
+		String view = null;
+		student.setStdnt_no(user.getUser_id());
+		ServiceResult result = studentService.mypageUpdate(student);
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/myPage.do";
+		}
+		return view;
 	}
 	
 	@RequestMapping(value="/webMail.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

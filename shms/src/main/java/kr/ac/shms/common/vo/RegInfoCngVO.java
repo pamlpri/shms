@@ -27,6 +27,7 @@ public class RegInfoCngVO {
 	private Integer atch_file_no;
 	
 	private String req_resn_code;
+	private String req_resn_code_name;
 	private String cng_bgnde;
 	private String cng_endde;
 	

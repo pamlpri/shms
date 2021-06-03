@@ -56,54 +56,96 @@
 	</update>
 	
 	<select id="subject" parameterType="String" resultType="SubjectVO">
-		SELECT  sub_code,
-		        sub_name,
-		        col_code,
-		        estbl_de,
-		        reg_amt,
-		        offrum_loc,
-		        tel_no,
-		        fax_no,
-		        grdtn_pnt,
-		        staff_no,
-		        sub_index
-		FROM subject
-		WHERE sub_code = (
-		    SELECT sub_code
-		    FROM student
-		    WHERE stdnt_no = #{stdnt_no}
-		)
+		SELECT
+		    sub_code,
+		    sub_name,
+		    col_code,
+		    estbl_de,
+		    reg_amt,
+		    offrum_loc,
+		    tel_no,
+		    fax_no,
+		    grdtn_pnt,
+		    staff_no,
+		    sub_index
+		FROM
+		    subject
+		WHERE sub_code = #{sub_code}
 	</select>
-	<select id="regInfo" parameterType="String" resultType="RegInfoCngVO">
-		SELECT  cng_req_no,
-		        stdnt_no,
-		        req_de,
-		        process_stat,
-		        proc_date,
-		        refuse_resn,
-		        atch_file_no,
-		        req_cl_code,
-		        req_resn_code,
-		        cng_bgnde,
-		        cng_endde
-		FROM (
-		    SELECT  cng_req_no,
-		            stdnt_no,
-		            req_de,
-		            process_stat,
-		            proc_date,
-		            refuse_resn,
-		            atch_file_no,
-		            req_cl_code,
-		            req_resn_code,
-		            cng_bgnde,
-		            cng_endde
-		    FROM reginfo_cng
-		    WHERE stdnt_no = 'S19101001'
-		    AND PROCESS_STAT = 'SI'
-		    ORDER BY proc_date DESC
-		)
-		WHERE ROWNUM = 1
+	<select id="regInfo" parameterType="String" resultType="MypageVO">
+		SELECT
+		    stdnt_no,
+		    sub_code,
+		    TO_CHAR(entsch_de, 'yyyy-mm-dd') entsch_de,
+		    grdtn_de,
+		    empmnt_at,
+		    grade,
+		    semstr,
+		    name,
+		    tel_no,
+		    regno1,
+		    regno2,
+		    gen,
+		    zipcode,
+		    addr1,
+		    addr2,
+		    email,
+		    webmail,
+		    account,
+		    bank_name,
+		    photo_path,
+		    reginfo_stat
+		FROM
+		    v_stdntinfo
+		WHERE stdnt_no = #{stdnt_no}
+	</select>
+	
+	<update id="mypageUpdate" parameterType="StudentVO">
+		UPDATE student
+	    SET
+	        bank_name = #{bank_name}
+	        , account = #{account}    
+	        , tel_no = #{tel_no}
+	        , email = #{email}      
+	        , zipcode = #{zipcode}
+	        , addr1 = #{addr1}
+	        , addr2 = #{addr2}
+		WHERE
+		    stdnt_no = #{stdnt_no}
+	</update>
+	
+	<select id="ReginfoList" parameterType="String" resultType="RegInfoCngVO">
+		SELECT stdnt_no, 
+		       req_de,
+		       process_stat,
+		       proc_date, 
+		       refuse_resn, 
+		       atch_file_no,
+		       req_cl_code,
+		       b.com_code_nm req_cl_name,
+		       req_resn_code,
+		       c.com_code_nm req_resn_code_name,
+		       TO_CHAR(cng_bgnde, 'yyyy-mm-dd') cng_bgnde, 
+		       TO_CHAR(cng_endde, 'yyyy-mm-dd') cng_endde
+		FROM reginfo_cng a
+		INNER JOIN tb_com_code b
+		  ON(a.req_cl_code = b.com_code)
+		INNER JOIN tb_com_code c
+		  ON(a.req_resn_code = c.com_code)
+		WHERE b.code_grp = (SELECT code_grp
+		                      FROM tb_code_grp
+		                     WHERE code_grp_nm = 'REQ_CL_CODE')
+		  AND c.code_grp = (SELECT code_grp
+		                      FROM tb_code_grp
+		                     WHERE code_grp_nm = 'REQ_RESN_CODE')
+		  AND stdnt_no = #{stdnt_no}
+		  AND process_stat = 'SI'
+	</select>
+	
+	<select id="payCount" resultType="int" parameterType="String">
+		SELECT count(*)
+		FROM reg_fee_pay
+		WHERE stdnt_no = #{stdnt_no}
 	</select>
 	
 </mapper>

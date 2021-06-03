@@ -3,11 +3,14 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 2.      최희수        정보 조회, 변동사항 조회
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div class="page-content">
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
@@ -39,10 +42,10 @@
 							<div class="col-12 col-lg-9">
 								<div class="card-content">
 									<!-- table striped -->
-									<form class="table-responsive">
+									<form class="table-responsive" action="${cPath }/lms/myPage.do" method="post">
 										<table class="table .thead-light mb-0"
 											style="border-top: 2px solid #95a3d6;">
-											<tbody">
+											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학번</th>
 													<td><input id="stdnt_no" class="form-control" disabled type="text"
@@ -83,7 +86,7 @@
 														value="신입학"></td>
 													<th class="text-bold-500 text-center align-middle">입학일자</th>
 													<td><input class="form-control" disabled type="date"
-														value="${student.entsch_de }"></td>
+														value="${regInfo.entsch_de }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학년</th>
@@ -120,7 +123,7 @@
 														value=${student.grdtn_de }></td>
 													<th class="text-bold-500 text-center align-middle">학위명</th>
 													<td><input class="form-control" disabled type="text"
-														value=""></td>
+														value="석사"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -129,9 +132,9 @@
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">계좌은행</th>
-													<td><input class="form-control" type="text" value="${student.bank_name }"></td>
+													<td><input class="form-control" type="text" name="bank_name" value="${student.bank_name }"></td>
 													<th class="text-bold-500 text-center align-middle">계좌변호</th>
-													<td><input class="form-control" type="text"
+													<td><input class="form-control" type="text" name="account"
 														value="${student.account }"></td>
 												</tr>
 											</tbody>
@@ -155,10 +158,10 @@
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">전화번호</th>
-													<td><input class="form-control" type="text"
+													<td><input class="form-control" type="text" name="tel_no"
 														value="${student.tel_no }"></td>
 													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;</th>
-													<td><input class="form-control" type="text"
+													<td><input class="form-control" type="text" name="email"
 														value="${student.email }"></td>
 												</tr>
 												<tr>
@@ -168,7 +171,7 @@
 															<span class="input-group-text" id="basic-addon1"><i
 																class="bi bi-search"></i></span> <input type="text"
 																class="form-control" aria-label="Recipient's username"
-																aria-describedby="button-addon2" id="sample6_postcode"
+																aria-describedby="button-addon2" id="sample6_postcode" name="zipcode"
 																value="${student.zipcode }">
 															<button onclick="sample6_execDaumPostcode()"
 																class="btn btn-outline-secondary" type="button"
@@ -178,16 +181,16 @@
 												</tr>
 												<tr style="border-bottom: 2px solid #95a3d6;">
 													<th class="text-bold-500 text-center align-middle">기본주소</th>
-													<td><input class="form-control" type="text"
+													<td><input class="form-control" type="text" name="addr1"
 														value="${student.addr1 }" id="sample6_address"></td>
 													<th class="text-bold-500 text-center align-middle">상세주소</th>
-													<td><input class="form-control" type="text"
+													<td><input class="form-control" type="text" name="addr2"
 														value="${student.addr2 }" id="sample6_detailAddress"></td>
 												</tr>
 											</tbody>
 										</table>
 										<div class="float-right" style="margin-top: 2%;">
-											<a href="myPage.html" class="btn btn-primary">저장</a>
+											<input type="submit" class="btn btn-primary" value="저장">
 										</div>
 									</form>
 								</div>
@@ -240,22 +243,29 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td class="text-center">1</td>
-										<td class="text-center">휴학</td>
-										<td class="text-center">일반휴학</td>
-										<td class="text-center">2020.03.04</td>
-										<td class="text-center">2021년</td>
-										<td class="text-center">1학기</td>
-									</tr>
-									<tr>
-										<td class="text-center">2</td>
-										<td class="text-center">복학</td>
-										<td class="text-center">일반복학</td>
-										<td class="text-center">2021.03.04</td>
-										<td class="text-center"></td>
-										<td class="text-center"></td>
-									</tr>
+									<c:set var="today" value="<%=new java.util.Date()%>" />
+									<c:if test="${not empty regInfoCngList }">
+										<c:forEach items="${regInfoCngList }" var="reginfo" varStatus="status">
+										<c:set var="year">
+											<fmt:formatDate value="${today }" pattern="yyyy"/>
+										</c:set>
+											<tr>
+												<td class="text-center">${status.index+1  }</td>
+												<td class="text-center">${reginfo.req_cl_name }</td>
+												<td class="text-center">${reginfo.req_resn_code_name }</td>
+												<td class="text-center">${reginfo.cng_bgnde }</td>
+												<c:choose>
+													<c:when test="${not empty reginfo.cng_endde }">
+														<td class="text-center">${fn:substring(reginfo.cng_endde, 0, 4) }년</td>
+													</c:when>
+													<c:otherwise>
+														<td class="text-center">${year }년</td>
+													</c:otherwise>
+												</c:choose>
+												<td class="text-center">${student.semstr }학기</td>
+											</tr>
+										</c:forEach>									
+									</c:if>
 								</tbody>
 							</table>
 						</div>

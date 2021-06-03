@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.student.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -11,8 +12,9 @@ import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
+import kr.ac.shms.lms.student.vo.ConsltReqVO;
+import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 import kr.ac.shms.subject.vo.SubjectVO;
 /**
  * @author 박초원
@@ -90,8 +92,31 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public RegInfoCngVO regInfo(String stdnt_no) {
+	public MypageVO regInfo(String stdnt_no) {
 		return studentDAO.regInfo(stdnt_no);
+	}
+
+	@Override
+	public List<ConsltReqVO> consltReqList(String stdnt_no) {
+		return studentDAO.consltReqList(stdnt_no);
+	}
+
+	@Override
+	public ServiceResult mypageUpdate(StudentVO studentVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.mypageUpdate(studentVO);
+		if(cnt > 0) {result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public List<RegInfoCngVO> ReginfoList(String stdnt_no) {
+		return studentDAO.ReginfoList(stdnt_no);
+	}
+
+	@Override
+	public int payCount(String stdnt_no) {
+		return studentDAO.payCount(stdnt_no);
 	}
 	
 }

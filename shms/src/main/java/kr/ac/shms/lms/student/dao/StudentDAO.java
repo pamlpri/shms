@@ -1,13 +1,15 @@
 package kr.ac.shms.lms.student.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
+import kr.ac.shms.lms.student.vo.ConsltReqVO;
+import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
@@ -91,7 +93,35 @@ public interface StudentDAO {
 	 * @param stdnt_no
 	 * @return 데이터가 없으면 null
 	 */
-	public RegInfoCngVO regInfo(String stdnt_no);
+	public MypageVO regInfo(String stdnt_no);
+	
+	/**
+	 * 지도교수상담내역
+	 * @param stdnt_no
+	 * @return 데이터가 없으면 null
+	 */
+	public List<ConsltReqVO> consltReqList(String stdnt_no);
+	
+	/**
+	 * 마이페이지 정보 수정
+	 * @param studentVO
+	 * @return cnt > 0 성공
+	 */
+	public int mypageUpdate(StudentVO studentVO);
+	
+	/**
+	 * 해당 학생의 학적 변동사항 전체 출력 
+	 * @param stdnt_no
+	 * @return 데이터가 없으면 null
+	 */
+	public List<RegInfoCngVO> ReginfoList(String stdnt_no);
+	
+	/**
+	 * 해당 학생의 등록금 수
+	 * @param stdnt_no
+	 * @return 
+	 */
+	public int payCount(String stdnt_no);
 }
 
 
