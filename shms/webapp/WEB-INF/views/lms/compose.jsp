@@ -11,7 +11,6 @@
 <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
 
-
 <div class="page-content">
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
@@ -143,6 +142,63 @@
 	</section>
 	<!-- contents end -->
 </div>
+<script src="${cPath }/resources/lms/assets/js/main.js"></script>
+
+<!-- filepond validation -->
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+
+<!-- image editor -->
+<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-filter/dist/filepond-plugin-image-filter.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+
+<!-- toastify -->
+<script src="${cPath }/resources/lms/assets/vendors/toastify/toastify.js"></script>
+
+<!-- filepond -->
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script>
+	// Register plugins
+	FilePond.registerPlugin(
+	    FilePondPluginFileValidateSize,
+	    FilePondPluginImageExifOrientation,
+	    FilePondPluginImageCrop,
+	    FilePondPluginImageResize,
+	    FilePondPluginImagePreview,
+	    FilePondPluginImageTransform
+	);
+	
+	// Set default FilePond options
+    FilePond.setOptions({
+
+        // maximum allowed file size
+        maxFileSize: '5MB',
+
+        // crop the image to a 1:1 ratio
+        imageCropAspectRatio: '1:1',
+
+        // resize the image
+        imageResizeTargetWidth: 200,
+
+        // upload to this server end point
+        server: '${cPath}/board/boardImage.do?type=Images'
+    });
+    
+    // Filepond: With Validation
+    FilePond.create( document.querySelector('.with-validation-filepond'), { 
+        allowImagePreview: false,
+        allowMultiple: true,
+        allowFileEncode: false,
+        required: true,
+        fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+            // Do custom type detection here and return with promise
+            resolve(type);
+        })
+    });
+</script>
 
 <script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
 <script>
@@ -166,10 +222,11 @@
     });
 </script>
 
-<script src="${cPath }/resources/lms/assets/js/main.js"></script>
-
 <script>
     $(function(){
+		const inputElement = document.querySelector('input[type="file"]');
+		const pond = FilePond.create( inputElement );
+		
         let searchUI = $("#searchUI");
         searchUI.find("[name='searchType']").val("${userVO.searchMap.searchType }");
         $("#searchBtn").on("click", function(){
