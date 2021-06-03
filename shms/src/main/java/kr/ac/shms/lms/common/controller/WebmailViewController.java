@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.PagingVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.main.commuity.vo.PagingVO;
 /**
  * @author 박초원
  * @since 2021. 6. 2.

@@ -1,4 +1,4 @@
-package kr.ac.shms.lms.common.vo;
+package kr.ac.shms.common.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

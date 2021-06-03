@@ -10,9 +10,9 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.PagingVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
-import kr.ac.shms.main.commuity.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
