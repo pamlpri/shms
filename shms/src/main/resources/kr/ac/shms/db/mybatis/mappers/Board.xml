@@ -135,7 +135,7 @@
 	
 	<resultMap type="BoardVO" id="boardMap" autoMapping="true">
 		<id property="bo_no" column="bo_no"/>
-		<collection property="attachList" ofType="kr.ac.shms.main.commuity.vo.AttachVO" autoMapping="true">
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
 			<id property="atch_file_no" column="atch_file_no"/>
 			<id property="atch_file_seq" column="atch_file_seq"/>
 		</collection>
