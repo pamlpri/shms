@@ -8,6 +8,7 @@
       <!-- 강의명 -->
       <h1>대학생활의 이해</h1>
     </div>
+    <div id="myChart"></div>
   </section>
   <div id="qrWrap" class="text-center">
 	  <div id="qrcode">
@@ -18,14 +19,13 @@
           <span>※ 강의실에 일찍 도착하셨어도 QR코드 인증시간이<br/>강의 시작시간을 넘어버리면 지각으로 체크됩니다.</span>
       </div>
   </div>
-  <a href="${cPath }/lecture/qrSuccess.do" class="btn btn-primary">출결완료 화면</a>
 </div>
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script type="text/javascript" >
-	var b = "${qrInfo.stdnt_no},${qrInfo.lec_code}";
+	var qr = "${qrInfo.stdnt_no},${qrInfo.lec_code}";
 	
 	var qrcode = new QRCode(document.getElementById("qrcode"), {
-		text : b,
+		text : qr,
 		width: 128,
 		height: 128,
 		colorDark : "#000000",
@@ -33,6 +33,5 @@
 		correctLevel : QRCode.CorrectLevel.H
 	});
 	
-	$("#qrcode > img").css({"margin":"auto"});
 </script>
 </HTML>

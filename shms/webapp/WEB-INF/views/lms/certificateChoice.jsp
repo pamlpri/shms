@@ -66,13 +66,9 @@
                            <td class="align-middle">
                                <select class="form-select float-right">
                                    <option>-- 사유선택 --</option>
-                                   <option>일반용</option>
-                                   <option>회사제출용</option>
-                                   <option>교육기관용</option>
-                                   <option>의료기관용</option>
-                                   <option>공공기관용</option>
-                                   <option>금융기관용</option>
-                                   <option>비자발급용</option>
+                                   <c:forEach var="cetfResnList" items="${cetfResnList }">
+                                   <option value="${cetfResnList.com_code }">${cetfResnList.com_code_nm }</option>
+                                   </c:forEach>
                                </select>
                            </td>
                        </tr>
