@@ -199,13 +199,13 @@
 	                      </li>
 	                  </ul>
 	              </li>
-	              <li class="sidebar-item  has-sub active">
+	              <li class="sidebar-item  has-sub">
                        <a href="#" class="sidebar-link">
                            <i class="bi bi-printer-fill"></i>
                            <span>증명서</span>
                        </a>
-                       <ul class="submenu active">
-                           <li class="submenu-item active">
+                       <ul class="submenu">
+                           <li class="submenu-item">
                                <a href="${cPath }/lms/certificateChoice.do">증명서신청</a>
                            </li>                                                                                                                                                                                                
                             <li class="submenu-item ">

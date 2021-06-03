@@ -8,6 +8,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
    <!-- contents start -->
    <nav aria-label="breadcrumb">
@@ -26,7 +27,7 @@
                    <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                        <tr>
                            <th class="align-middle text-center">학과</th>
-                           <td class="align-middle">항공학과</td>
+                           <td class="align-middle">${student.sub_name }</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">학번</th>
@@ -34,7 +35,7 @@
                        </tr>
                        <tr>
                            <th class="align-middle text-center">이름</th>
-                           <td class="align-middle">김지연</td>
+                           <td class="align-middle">${student.name }</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">학적상태</th>
@@ -47,12 +48,11 @@
                                    <div class="col-md-8">
                                        <select class="form-select float-right">
                                            <option>-- 증명서 선택 --</option>
-                                           <option>입학증명서</option>
-                                           <option>재학증명서</option>
-                                           <option>학적증명서</option>
-                                           <option>성적증명서</option>
-                                           <option>휴학증명서</option>
-                                           <option>졸업증명서</option>
+                                           <c:forEach var="cetfList" items="${cetfList }">
+	                                           <option value="${cetfList.com_code }">${cetfList.com_code_nm }</option>
+                                           </c:forEach>
+                                           
+                                           
                                        </select>
                                    </div>
                                    <div class="col-md-4">

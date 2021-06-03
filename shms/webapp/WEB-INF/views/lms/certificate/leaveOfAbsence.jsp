@@ -416,22 +416,6 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 						style='border-left: none; border-right: none; border-top: none; border-bottom: none; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
 							<SPAN
-								STYLE='font-size: 12.0pt; font-family: "굴림"; font-weight: "bold"; line-height: 160%;'>입&nbsp;&nbsp;&nbsp;
-								학&nbsp;&nbsp;&nbsp; 일&nbsp;&nbsp;&nbsp; 자 :</SPAN>
-						</P>
-					</TD>
-					<TD width="345" height="32" valign="middle"
-						style='border-left: none; border-right: none; border-top: none; border-bottom: none; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: left;'>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD width="345" height="32" valign="middle"
-						style='border-left: none; border-right: none; border-top: none; border-bottom: none; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN
 								STYLE='font-size: 12.0pt; font-family: "굴림"; font-weight: "bold"; line-height: 160%;'>휴&nbsp;&nbsp;&nbsp;
 								학&nbsp;&nbsp;&nbsp; 기&nbsp;&nbsp;&nbsp; 간 : </SPAN>
 						</P>

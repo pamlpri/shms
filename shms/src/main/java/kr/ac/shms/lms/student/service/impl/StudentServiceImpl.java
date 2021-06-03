@@ -15,6 +15,7 @@ import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsltReqVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.subject.vo.SubjectVO;
 /**
  * @author 박초원
@@ -27,7 +28,8 @@ import kr.ac.shms.subject.vo.SubjectVO;
  * --------     --------    ----------------------
  * 2021. 5. 22.   박초원        최초작성
  * 2021. 5. 31.   김보미		출석
- * 2021. 5. 31.   송수미	     학생 통합정보시스템 메인 페이지 구현
+ * 2021. 5. 31.   송수미	    학생 통합정보시스템 메인 페이지 구현
+ * 2021. 6.  3.   김보미 		학생 정보 출력(증명서 신청), 증명서 정보출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -117,6 +119,16 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public int payCount(String stdnt_no) {
 		return studentDAO.payCount(stdnt_no);
+	}
+
+	@Override
+	public StudentVO selectStdntInfoForCetf(String stdnt_no) {
+		return studentDAO.selectStdntInfoForCetf(stdnt_no);
+	}
+
+	@Override
+	public List<ComCodeVO> selectCetfList() {
+		return studentDAO.selectCetfList();
 	}
 	
 }

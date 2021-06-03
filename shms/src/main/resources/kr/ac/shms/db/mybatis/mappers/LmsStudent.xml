@@ -148,5 +148,21 @@
 		WHERE stdnt_no = #{stdnt_no}
 	</select>
 	
+	<select id="selectStdntInfoForCetf" parameterType="String" resultType="StudentVO">
+		SELECT DISTINCT b.sub_name,
+	      	   a.stdnt_no, 
+		       a.name,
+		       a.reginfo_stat
+		  FROM V_STDNTINFO a
+		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
+		 WHERE a.stdnt_no= #{stdnt_no, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectCetfList" resultType="ComCodeVO">
+		SELECT com_code, 
+		       com_code_nm
+		  FROM tb_com_code
+		 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_KIND')
+	</select>
 </mapper>
 
