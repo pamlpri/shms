@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.common.dao.LmsCommonDAO">
+	<sql id="searchFrag">
+		<trim prefix="WHERE" prefixOverrides="AND" suffixOverrides="OR"> 
+			webmail IS NOT NULL
+			<trim prefix="AND (" suffix=")">
+				<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+					<choose>
+						<when test="searchMap.searchType eq 'webmail'">
+							INSTR(webmail, #{searchMap.searchWord}) > 0
+						</when>
+						<when test="searchMap.searchType eq 'name'">
+							INSTR(name, #{searchMap.searchWord}) > 0
+						</when>
+						<when test="searchMap.searchType eq 'dept_code'">
+							a.dept_code = (SELECT dept_code
+							             FROM dept d
+	           							 WHERE d.dept_code = dept_code
+							             AND INSTR(dept_nm, #{searchMap.searchWord}) > 0)
+						</when>
+						<when test="searchMap.searchType eq 'sub_code'">
+							a.sub_code = (SELECT sub_code
+							             FROM subject d
+							            WHERE d.sub_code = sub_code
+							             AND INSTR(sub_name, #{searchMap.searchWord}) > 0)
+						</when>
+						<otherwise>
+							INSTR(webmail, #{searchMap.searchWord}) > 0
+							OR
+							INSTR(name, #{searchMap.searchWord}) > 0
+							OR
+							a.dept_code = (SELECT dept_code
+							             FROM dept d
+	           							 WHERE d.dept_code = dept_code
+							             AND INSTR(dept_nm, #{searchMap.searchWord}) > 0)
+							OR
+							a.sub_code = (SELECT sub_code
+							             FROM subject d
+							            WHERE d.sub_code = sub_code
+							             AND INSTR(sub_name, #{searchMap.searchWord}) > 0)
+						</otherwise>
+					</choose>
+				</if>
+			</trim>
+		</trim>
+	</sql>
+	<select id="selectAddressBook" parameterType="UserVO" resultType="UserVO">
+		SELECT
+		    user_no,
+		    a.dept_code,
+		    a.sub_code,
+		    name,
+		    a.tel_no,
+		    regno1,
+		    regno2,
+		    gen,
+		    zipcode,
+		    addr1,
+		    addr2,
+		    email,
+		    webmail,
+		    photo_path,
+		    b.sub_name,
+		    c.dept_nm
+		FROM v_userview a
+			left outer join subject b on (a.sub_code = b.sub_code)
+  			left outer join dept c on (a.dept_code = c.dept_code)	
+		<include refid="searchFrag" />
+	</select>
+</mapper>
