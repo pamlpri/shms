@@ -3,11 +3,14 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 3.		최희수	지도교수 상담 리스트 출력
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div class="page-content">
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
@@ -34,65 +37,68 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-center">1</td>
-							<td class="text-center">2345</td>
-							<td class="text-center">학업</td>
-							<td class="text-center">하재관</td>
-							<td class="text-center">2021.05.25</td>
-							<td class="text-center">PM 02:00</td>
-							<td class="text-center"><a href="${cPath }/lms/consultingView.do"
-								class="badge bg-success white-color">완료</a></td>
-						</tr>
-						<tr>
-							<td class="text-center">2</td>
-							<td class="text-center">2345</td>
-							<td class="text-center">진로</td>
-							<td class="text-center">하재관</td>
-							<td class="text-center">2021.05.25</td>
-							<td class="text-center">PM 02:00</td>
-							<th class="text-center">
-								<button type="button" class="btn badge bg-danger block failBtn"
-									data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-									반려</button>
-							</th>
-						</tr>
-						<tr>
-							<td class="text-center">3</td>
-							<td class="text-center">2345</td>
-							<td class="text-center">생활</td>
-							<td class="text-center">하재관</td>
-							<td class="text-center">2021.05.25</td>
-							<td class="text-center">PM 02:00</td>
-							<th class="text-center">
-								<!-- 상담시간이 됐을때 --> <a href="${cPath }/lms/consulting.do"
-								class="badge bg-primary">승인</a> <!-- 상담시간이 안됐을때 -->
-								<button type="button" class="btn badge bg-primary block failBtn"
-									data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">
-									승인</button>
-							</th>
-						</tr>
-						<tr>
-							<td class="text-center">4</td>
-							<td class="text-center">2345</td>
-							<td class="text-center">생활</td>
-							<td class="text-center">하재관</td>
-							<td class="text-center">2021.05.25</td>
-							<td class="text-center">PM 02:00</td>
-							<th class="text-center">
-								<button type="button" class="btn badge bg-info white-color"
-									data-bs-toggle="modal" data-bs-target="#inlineForm"
-									style="margin-top: -1%;">대기</button>
-							</th>
-						</tr>
+						<c:if test="${not empty consultingList }">
+							<c:forEach items="${consultingList }" var="consulting" varStatus="state">
+								<tr>
+									<td class="text-center">${state.index+1 }</td>
+									<td class="text-center">${consulting.req_no }</td>
+									<td class="text-center">${consulting.consult_cl_nm }</td>
+									<td class="text-center">하재관</td>
+									<c:choose>
+										<c:when test="${consulting.process_stat_nm eq '반려' }">
+											<td class="text-center"></td>
+											<td class="text-center"></td>
+										</c:when>
+										<c:otherwise>
+											<td class="text-center">${consulting.hope_date }</td>
+											<td class="text-center">${consulting.hope_time }</td>
+										</c:otherwise>
+									</c:choose>									
+									<td class="text-center">
+										<c:choose>
+											<c:when test="${consulting.process_stat_nm eq '완료'}">
+												<a href="${cPath }/lms/consultingView.do"
+													class="badge bg-success white-color">완료</a>
+											</c:when>
+											<c:when test="${consulting.process_stat_nm eq '대기'}">
+												<button type="button" class="btn badge bg-info white-color"
+													data-bs-toggle="modal" data-bs-target="#inlineForm"
+				 									style="margin-top: -1%;">대기</button>
+											</c:when>
+											<c:when test="${consulting.process_stat_nm eq '반려'}">
+												<button type="button" class="btn badge bg-danger block failBtn"
+													data-bs-toggle="modal" data-bs-target="#exampleModalCenter">반려</button>
+											</c:when>
+											<c:when test="${consulting.process_stat_nm eq '승인'}">
+												<c:set var="now" value="<%=new java.util.Date() %>" />
+												<c:set value="${consulting.hope_date } ${consulting.hope_time }" var="hopeDate" />
+												<fmt:formatDate value="${now }" pattern="yyyy-MM-dd hh:mm" var="nowDate"/>
+												<c:choose>
+													<c:when test="${hopeDate > nowDate }">
+														<button type="button" class="btn badge bg-primary block failBtn"
+															data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button> 
+													</c:when>
+													<c:otherwise>
+														<a href="${cPath }/lms/consulting.do" class="badge bg-primary">승인</a>
+													</c:otherwise>
+												</c:choose>
+												
+											</c:when>
+										</c:choose>
+									</td>
+								</tr>
+							</c:forEach>						
+						</c:if>
 					</tbody>
 				</table>
 				<!-- 학생한테만 보이는 버튼 -->
-				<div class="breadcrumb breadcrumb-right">
-					<button type="button" class="btn btn-primary"
-						data-bs-toggle="modal" data-bs-target="#inlineForm"
-						style="margin-top: -1%;">상담신청</button>
-				</div>
+				<c:if test="${'ST' eq userSection }">
+					<div class="breadcrumb breadcrumb-right">
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#inlineForm"
+							style="margin-top: -1%;">상담신청</button>
+					</div>			
+				</c:if>
 			</div>
 		</div>
 	</section>
@@ -111,17 +117,17 @@
 						<i data-feather="x"></i>
 					</button>
 				</div>
-				<form action="#">
+				<form action="${cPath }/lms/consulting.do">
 					<div class="modal-body">
 						<div class="form-group">
 							<h6>학번</h6>
 							<input class="form-control form-control-default" type="text"
-								value="S14010001" disabled>
+								value="${user.user[0] }" disabled>
 						</div>
 						<div class="form-group">
 							<h6>이름</h6>
 							<input class="form-control form-control-default" type="text"
-								value="강미나" disabled>
+								value="${userName }" disabled>
 						</div>
 						<div class="form-group">
 							<h6>지도교수</h6>
@@ -131,28 +137,28 @@
 						<div class="form-group">
 							<h6>상담분류</h6>
 							<fieldset class="form-group">
-								<select class="form-select" id="basicSelect">
+								<select class="form-select" id="basicSelect" name="process_stat">
 									<option>-- 분류선택 --</option>
-									<option>학업</option>
-									<option>진로</option>
-									<option>생활</option>
+									<option value="JR">전과</option>
+									<option value="JR">진로</option>
+									<option value="HS">학교생활</option>
 								</select>
 							</fieldset>
 						</div>
 						<div class="form-group">
 							<h6>상담사유</h6>
 							<textarea class="form-control" placeholder="상담을 신청하는 사유를 적어주세요."
-								id="floatingTextarea"></textarea>
+								id="floatingTextarea" name="req_cont"></textarea>
 						</div>
 						<div class="form-group">
 							<h6>상담희망일시</h6>
 							<input class="form-control form-control-default" type="date"
-								value="">
+								name="hope_date" value="${consulting.hope_date }">
 						</div>
 						<div class="form-group">
-							<h6>상담희망시간</h6>
+							<h6>상담희망시간 ${consulting.hope_time } !!! ${userName } ???</h6>
 							<input class="form-control form-control-default" type="time"
-								value="">
+								name="hope_time" value="${consulting.hope_time }">
 						</div>
 						<p>지도교수의 일정에 따라 상담신청이 반려될 수 있습니다.</p>
 					</div>
@@ -168,7 +174,7 @@
 							<i class="bx bx-check d-block d-sm-none"></i> <span
 								class="d-none d-sm-block">삭제</span>
 						</button>
-						<button type="button" class="btn btn-primary ml-1"
+						<button id="saveBtn" type="submit" class="btn btn-primary ml-1"
 							data-bs-dismiss="modal">
 							<i class="bx bx-check d-block d-sm-none"></i> <span
 								class="d-none d-sm-block">저장</span>
@@ -265,7 +271,7 @@
 						<i class="bx bx-x d-block d-sm-none"></i> <span
 							class="d-none d-sm-block">닫기</span>
 					</button>
-					<button type="button" class="btn btn-primary ml-1"
+					<button id="realDelBtn" type="button" class="btn btn-primary ml-1"
 						data-bs-dismiss="modal">
 						<i class="bx bx-check d-block d-sm-none"></i> <span
 							class="d-none d-sm-block">삭제</span>
@@ -289,6 +295,9 @@
             $("#default").find("button").on("click", function(){
                 $(".modal-backdrop").removeClass("show");
             });
+        });
+        $("#realDelBtn").on("click", function() {
+        	// 상담신청 삭제
         });
     });
 </script>

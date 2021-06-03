@@ -49,19 +49,19 @@
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학번</th>
 													<td><input id="stdnt_no" class="form-control" disabled type="text"
-														value="${student.stdnt_no }"></td>
+														value="${mypage.stdnt_no }"></td>
 													<th class="text-bold-500 text-center align-middle">이름</th>
 													<td><input class="form-control" disabled type="text"
-														value="${student.name }"></td>
+														value="${mypage.name }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">주민번호</th>
 													<td><input class="form-control" disabled type="text"
-														value="${student.regno1 } - ${student.regno2}"></td>
+														value="${mypage.regno1 } - ${mypage.regno2}"></td>
 													<th class="text-bold-500 text-center align-middle">성별</th>
 													<td>
 														<c:choose>
-															<c:when test="${student.gen eq 'F' }">
+															<c:when test="${mypage.gen eq 'F' }">
 																<input class="form-control" disabled type="text"
 																	value="여자">													
 															</c:when>
@@ -86,23 +86,23 @@
 														value="신입학"></td>
 													<th class="text-bold-500 text-center align-middle">입학일자</th>
 													<td><input class="form-control" disabled type="date"
-														value="${regInfo.entsch_de }"></td>
+														value="${mypage.entsch_de }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학년</th>
 													<td><input class="form-control" disabled type="text"
-														value="${student.grade }"></td>
+														value="${mypage.grade }"></td>
 													<th class="text-bold-500 text-center align-middle">학기</th>
 													<td><input class="form-control" disabled type="text"
-														value="${student.semstr }"></td>
+														value="${mypage.semstr }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학적상태</th>
 													<td><input class="form-control" disabled type="text"
-														value="재학"></td>
+														value="${mypage.reginfo_stat }"></td>
 													<th class="text-bold-500 text-center align-middle">최종변동</th>
 													<td><input class="form-control" disabled type="text"
-														value="신입학"></td>
+														value="${req_resn_code_name }"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -120,7 +120,7 @@
 												<tr>
 													<th class="text-bold-500 text-center align-middle">졸업일자</th>
 													<td><input class="form-control" disabled type="text"
-														value=${student.grdtn_de }></td>
+														value=${mypage.grdtn_de }></td>
 													<th class="text-bold-500 text-center align-middle">학위명</th>
 													<td><input class="form-control" disabled type="text"
 														value="석사"></td>
@@ -132,10 +132,10 @@
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">계좌은행</th>
-													<td><input class="form-control" type="text" name="bank_name" value="${student.bank_name }"></td>
+													<td><input class="form-control" type="text" name="bank_name" value="${mypage.bank_name }"></td>
 													<th class="text-bold-500 text-center align-middle">계좌변호</th>
 													<td><input class="form-control" type="text" name="account"
-														value="${student.account }"></td>
+														value="${mypage.account }"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -145,8 +145,8 @@
 													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;&nbsp;&nbsp;웹메일&nbsp;&nbsp;&nbsp;</th>
 													<td colspan="3" id="webMailBox">
 														<c:choose>
-															<c:when test="${not empty student.webmail }">
-																<input class='form-control' disabled type='text' value='${student.webmail }'>
+															<c:when test="${not empty mypage.webmail }">
+																<input class='form-control' disabled type='text' value='${mypage.webmail }'>
 															</c:when>
 															<c:otherwise>
 																<button type="button"
@@ -159,10 +159,10 @@
 												<tr>
 													<th class="text-bold-500 text-center align-middle">전화번호</th>
 													<td><input class="form-control" type="text" name="tel_no"
-														value="${student.tel_no }"></td>
+														value="${mypage.tel_no }"></td>
 													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;</th>
 													<td><input class="form-control" type="text" name="email"
-														value="${student.email }"></td>
+														value="${mypage.email }"></td>
 												</tr>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">우편번호</th>
@@ -172,7 +172,7 @@
 																class="bi bi-search"></i></span> <input type="text"
 																class="form-control" aria-label="Recipient's username"
 																aria-describedby="button-addon2" id="sample6_postcode" name="zipcode"
-																value="${student.zipcode }">
+																value="${mypage.zipcode }">
 															<button onclick="sample6_execDaumPostcode()"
 																class="btn btn-outline-secondary" type="button"
 																id="button-addon2" style="border: 1px solid #dfdfdf;">검색</button>
@@ -182,10 +182,10 @@
 												<tr style="border-bottom: 2px solid #95a3d6;">
 													<th class="text-bold-500 text-center align-middle">기본주소</th>
 													<td><input class="form-control" type="text" name="addr1"
-														value="${student.addr1 }" id="sample6_address"></td>
+														value="${mypage.addr1 }" id="sample6_address"></td>
 													<th class="text-bold-500 text-center align-middle">상세주소</th>
 													<td><input class="form-control" type="text" name="addr2"
-														value="${student.addr2 }" id="sample6_detailAddress"></td>
+														value="${mypage.addr2 }" id="sample6_detailAddress"></td>
 												</tr>
 											</tbody>
 										</table>
@@ -255,14 +255,22 @@
 												<td class="text-center">${reginfo.req_resn_code_name }</td>
 												<td class="text-center">${reginfo.cng_bgnde }</td>
 												<c:choose>
-													<c:when test="${not empty reginfo.cng_endde }">
-														<td class="text-center">${fn:substring(reginfo.cng_endde, 0, 4) }년</td>
+													<c:when test="${reginfo.req_cl_code eq 'BH' or reginfo.req_cl_code eq 'JT' }">
+														<td class="text-center"></td>
+														<td class="text-center"></td>																		
 													</c:when>
 													<c:otherwise>
-														<td class="text-center">${year }년</td>
+														<c:choose>
+															<c:when test="${not empty reginfo.cng_endde }">
+																<td class="text-center">${fn:substring(reginfo.cng_endde, 0, 4) }년</td>
+															</c:when>
+															<c:otherwise>
+																<td class="text-center">${year }년</td>
+															</c:otherwise>
+														</c:choose>
+														<td class="text-center">${mypage.semstr }학기</td>
 													</c:otherwise>
 												</c:choose>
-												<td class="text-center">${student.semstr }학기</td>
 											</tr>
 										</c:forEach>									
 									</c:if>

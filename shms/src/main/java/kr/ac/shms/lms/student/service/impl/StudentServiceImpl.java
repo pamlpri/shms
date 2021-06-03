@@ -12,7 +12,7 @@ import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
-import kr.ac.shms.lms.student.vo.ConsltReqVO;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
@@ -99,7 +99,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<ConsltReqVO> consltReqList(String stdnt_no) {
+	public List<ConsultingVO> consltReqList(String stdnt_no) {
 		return studentDAO.consltReqList(stdnt_no);
 	}
 
@@ -134,6 +134,11 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public List<ComCodeVO> selectCetfResnList() {
 		return studentDAO.selectCetfResnList();
+	}
+
+	@Override
+	public String reginfo(String stdnt_no) {
+		return studentDAO.reginfo(stdnt_no);
 	}
 	
 }

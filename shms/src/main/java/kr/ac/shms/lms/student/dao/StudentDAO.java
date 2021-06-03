@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
-import kr.ac.shms.lms.student.vo.ConsltReqVO;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
@@ -106,7 +106,7 @@ public interface StudentDAO {
 	 * @param stdnt_no
 	 * @return 데이터가 없으면 null
 	 */
-	public List<ConsltReqVO> consltReqList(String stdnt_no);
+	public List<ConsultingVO> consltReqList(String stdnt_no);
 	
 	/**
 	 * 마이페이지 정보 수정
@@ -147,6 +147,13 @@ public interface StudentDAO {
 	 * @return 신청 사유
 	 */
 	public List<ComCodeVO> selectCetfResnList();
+	
+	/**
+	 * 마이페이지 학적 추출
+	 * @param stdnt_no
+	 * @return
+	 */
+	public String reginfo(String stdnt_no);
 
 }
 

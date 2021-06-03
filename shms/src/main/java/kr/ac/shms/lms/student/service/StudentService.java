@@ -7,6 +7,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsltReqVO;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
@@ -95,13 +96,6 @@ public interface StudentService {
 	public MypageVO regInfo(String stdnt_no);
 	
 	/**
-	 * 지도교수상담내역
-	 * @param stdnt_no
-	 * @return 데이터가 없으면 null
-	 */
-	public List<ConsltReqVO> consltReqList(String stdnt_no);
-	
-	/**
 	 * 마이페이지 정보 수정
 	 * @param studentVO
 	 * @return cnt > 0 성공
@@ -140,4 +134,18 @@ public interface StudentService {
 	 * @return 신청 사유
 	 */
 	public List<ComCodeVO> selectCetfResnList();
+	
+	/**
+	 * 지도교수상담내역
+	 * @param stdnt_no
+	 * @return 데이터가 없으면 null
+	 */
+	public List<ConsultingVO> consltReqList(String stdnt_no);
+
+	/**
+	 * 마이페이지 학적 추출
+	 * @param stdnt_no
+	 * @return
+	 */
+	public String reginfo(String stdnt_no);
 }
