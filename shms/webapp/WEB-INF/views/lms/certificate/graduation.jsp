@@ -324,14 +324,6 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 </TR>
 <TR>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>학&nbsp; 위&nbsp; 등&nbsp; 록&nbsp; 번&nbsp; 호 :</SPAN></P>
-	</TD>
-	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>&nbsp;</SPAN></P>
-	</TD>
-</TR>
-<TR>
-	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
 	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 위 : </SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
