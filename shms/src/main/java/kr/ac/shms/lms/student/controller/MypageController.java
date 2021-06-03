@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
@@ -52,14 +53,29 @@ public class MypageController {
 			, Model model
 		){
 		String user_id = user.getUser_id();
-		StudentVO studentVO = studentService.student(user_id);
-		MypageVO regInfoVO = studentService.regInfo(user_id);
-		SubjectVO subjectVO = studentService.subject(regInfoVO.getSub_code());
+		int payCount = studentService.payCount(user_id);
+		MypageVO myPageVO = studentService.regInfo(user_id);
+		if(payCount < 3) {
+			myPageVO.setGrade(1);
+		} else if(payCount < 5) {
+			myPageVO.setGrade(2);
+		} else if(payCount < 7) {
+			myPageVO.setGrade(3);
+		} else if(payCount < 9) {
+			myPageVO.setGrade(4);
+		}
+		if(payCount % 2 == 0) {
+			myPageVO.setSemstr(2);
+		} else {
+			myPageVO.setSemstr(1);
+		}
+		SubjectVO subjectVO = studentService.subject(myPageVO.getSub_code());
+		String req_resn_code_name = studentService.reginfo(user_id);
 		List<RegInfoCngVO> regInfoCngList = studentService.ReginfoList(user_id);
-		if(studentVO != null) {
-			model.addAttribute("student", studentVO);
+		if(myPageVO != null) {
+			model.addAttribute("mypage", myPageVO);
 			model.addAttribute("subject", subjectVO);
-			model.addAttribute("regInfo", regInfoVO);
+			model.addAttribute("req_resn_code_name", req_resn_code_name);
 			model.addAttribute("regInfoCngList", regInfoCngList);
 		}
 		return "lms/myPage";

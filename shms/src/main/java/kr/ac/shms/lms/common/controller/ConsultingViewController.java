@@ -1,8 +1,12 @@
 package kr.ac.shms.lms.common.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +16,7 @@ import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
@@ -24,11 +29,13 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 수정일            수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 2.      박초원      	       최초작성
+ * 2021. 6. 3.		최희수		지도교수 상담 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Controller
 public class ConsultingViewController {
+	private static final Logger logger = LoggerFactory.getLogger(ConsultingViewController.class);
 	@Inject
 	private StudentService studentService;
 	
@@ -38,14 +45,16 @@ public class ConsultingViewController {
 	@RequestMapping("/lms/consultingList.do")
 	public String consultingList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, HttpSession session
 		, Model model
 	) {
+		String userSection = user.getUser_section();
 		String user_id = user.getUser_id();
-		StudentVO studentVO = studentService.student(user_id);
+		List<ConsultingVO> consultingList = studentService.consltReqList(user_id);
+		model.addAttribute("consultingList", consultingList);
+		model.addAttribute("userSection", userSection);
+//		StudentVO studentVO = studentService.student(user_id);
 		
-		session.setAttribute("userName", studentVO.getName());
-		model.addAttribute("student", studentVO);
+//		model.addAttribute("student", studentVO);
 		
 		return  "lms/consultingList";
 	}

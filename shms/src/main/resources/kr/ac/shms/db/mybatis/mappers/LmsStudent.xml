@@ -47,6 +47,29 @@
 		  AND return_exp_dt < SYSDATE)
 		]]>
 	</select>
+		
+	<select id="selectStdntInfoForCetf" parameterType="String" resultType="StudentVO">
+		SELECT DISTINCT b.sub_name,
+	      	   a.stdnt_no, 
+		       a.name,
+		       a.reginfo_stat
+		  FROM V_STDNTINFO a
+		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
+		 WHERE a.stdnt_no= #{stdnt_no, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectCetfList" resultType="ComCodeVO">
+		SELECT com_code, 
+		       com_code_nm
+		  FROM tb_com_code
+		 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_KIND')
+	</select>
+	<select id="selectCetfResnList" resultType="ComCodeVO">
+		SELECT com_code, 
+		       com_code_nm
+		  FROM tb_com_code
+		 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_REQ_RESN')
+	</select>
 	
 	<update id="webMailUpdate" parameterType="String">
 		UPDATE student
@@ -72,6 +95,7 @@
 		    subject
 		WHERE sub_code = #{sub_code}
 	</select>
+	
 	<select id="regInfo" parameterType="String" resultType="MypageVO">
 		SELECT
 		    stdnt_no,
@@ -140,6 +164,7 @@
 		                     WHERE code_grp_nm = 'REQ_RESN_CODE')
 		  AND stdnt_no = #{stdnt_no}
 		  AND process_stat = 'SI'
+		  ORDER BY cng_bgnde DESC
 	</select>
 	
 	<select id="payCount" resultType="int" parameterType="String">
@@ -148,21 +173,53 @@
 		WHERE stdnt_no = #{stdnt_no}
 	</select>
 	
-	<select id="selectStdntInfoForCetf" parameterType="String" resultType="StudentVO">
-		SELECT DISTINCT b.sub_name,
-	      	   a.stdnt_no, 
-		       a.name,
-		       a.reginfo_stat
-		  FROM V_STDNTINFO a
-		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
-		 WHERE a.stdnt_no= #{stdnt_no, jdbcType=VARCHAR}
+	<select id="reginfo" resultType="String" parameterType="String">
+		SELECT req_cl_name
+		FROM 
+			(
+				SELECT b.com_code_nm req_cl_name
+				FROM reginfo_cng a
+				INNER JOIN tb_com_code b
+				  ON(a.req_cl_code = b.com_code)
+				INNER JOIN tb_com_code c
+				  ON(a.req_resn_code = c.com_code)
+				WHERE b.code_grp = (SELECT code_grp
+				                      FROM tb_code_grp
+				                     WHERE code_grp_nm = 'REQ_CL_CODE')
+				  AND c.code_grp = (SELECT code_grp
+				                      FROM tb_code_grp
+				                     WHERE code_grp_nm = 'REQ_RESN_CODE')
+				  AND stdnt_no = #{stdnt_no}
+				  AND process_stat = 'SI'
+				  ORDER BY cng_bgnde DESC
+			)
+		WHERE ROWNUM = 1
 	</select>
 	
-	<select id="selectCetfList" resultType="ComCodeVO">
-		SELECT com_code, 
-		       com_code_nm
-		  FROM tb_com_code
-		 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_KIND')
+	<select id="consltReqList" parameterType="String" resultType="ConsultingVO">
+		SELECT  req_no,
+		        consult_cl,
+		        b.com_code_nm consult_cl_nm,
+		        req_date,
+		        TO_CHAR(hope_date, 'YYYY-MM-DD') hope_date,
+		        TO_CHAR(hope_date, 'HH24:MI') hope_time,
+		        req_cont,
+		        process_stat,
+		        c.com_code_nm process_stat_nm,
+		        stdnt_no,
+		        refuse_resn,
+		        staff_no,
+		        conslt_link
+		FROM
+		    conslt_req a
+		INNER JOIN tb_com_code b
+		ON(a.consult_cl = b.com_code)
+		INNER JOIN tb_com_code c
+		ON(a.process_stat = c.com_code)
+		WHERE b.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'CONSULT_CL')
+		  AND c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
+		  AND stdnt_no = #{stdnt_no}
 	</select>
+	
 </mapper>
 

@@ -17,11 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.lms.common.vo.PagingVO;
 import kr.ac.shms.main.commuity.dao.BoardDAO;
 import kr.ac.shms.main.commuity.service.BoardService;
-import kr.ac.shms.main.commuity.vo.AttachVO;
 import kr.ac.shms.main.commuity.vo.BoardVO;
-import kr.ac.shms.main.commuity.vo.PagingVO;
 
 /**
  * @author 송수미

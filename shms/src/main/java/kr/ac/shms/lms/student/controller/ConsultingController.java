@@ -22,24 +22,24 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 2.      박초원      	       최초작성
+ * 2021. 6. 3. 		최희수		지도교수 상담 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Controller
+@RequestMapping("/lms")
 public class ConsultingController {
 	@Inject
 	private StudentService studentService;
 	
-	@RequestMapping("/lms/consulting.do")
+	@RequestMapping("/consulting.do")
 	public String consultingList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, HttpSession session
 		, Model model
 	) {
 		String user_id = user.getUser_id();
 		StudentVO studentVO = studentService.student(user_id);
 		
-		session.setAttribute("userName", studentVO.getName());
 		model.addAttribute("student", studentVO);
 		
 		return  "lms/consultingForm";
