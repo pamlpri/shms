@@ -64,8 +64,7 @@
 										<!-- action left end here -->
 
 										<!-- action right start here -->
-										<div
-											class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
+										<div class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
 											<!-- search bar  -->
 											<div class="email-fixed-search flex-grow-1">
 												<div class="sidebar-toggle d-block d-lg-none">
@@ -74,22 +73,22 @@
 
 												<div
 													class="form-group position-relative  mb-0 has-icon-left">
-													<input type="text" class="form-control" id="emailSearch" placeholder="Search email..">
+													<input type="text" class="form-control" id="emailSearch" name="searchWord" placeholder="Search email..">
 													<div class="form-control-icon">
 														<i class="fas fa-chevron-left"></i>
 													</div>
 												</div>
 											</div>
 											<!-- pagination and page count -->
-											<span class="d-none d-sm-block">
+											<span class="d-none d-sm-block" id="pageInfo">
 												${pagingVO.startRow} - ${pagingVO.endRow < pagingVO.totalRecord ? pagingVO.endRow : pagingVO.totalRecord}
 												 of ${pagingVO.totalRecord}
 											</span>
-											<button
+											<button	${pagingVO.currentPage == 1? "disabled" : "" }
 												class="btn btn-icon email-pagination-prev d-none d-sm-block">
 												<i class="fas fa-chevron-left"></i>
 											</button>
-											<button
+											<button ${pagingVO.currentPage == pagingVO.totalPage? "disabled" : "" }
 												class="btn btn-icon email-pagination-next d-none d-sm-block">
 												<i class="fas fa-chevron-right"></i>
 											</button>
@@ -99,23 +98,31 @@
 
 									<!-- email user list start -->
 									<div class="email-user-list list-group">
-										<ul class="users-list-wrapper media-list">
-											<c:choose>
+										<ul class="users-list-wrapper media-list" id="listBody">
+										<c:choose>
 												<c:when test="${not empty pagingVO.dataList }">
 													<c:forEach items="${pagingVO.dataList }" var="webmail">
 														<li class="media ${webmail.read_at eq 'Y'? 'mail-read' : '' }">
 															<div class="user-action">
 																<div class="checkbox-con me-3">
 																	<div class="checkbox checkbox-shadow checkbox-sm">
-																		<input type="checkbox" id="checkboxsmall1"
-																			class='form-check-input'> <label
-																			for="checkboxsmall1"></label>
+																		<input type="checkbox" id="checkboxsmall1" class='form-check-input' data-mailno=${webmail.send_no }> 
+																		<label for="checkboxsmall1"></label>
 																	</div>
 																</div>
-																<span class="favorite"> 
-																	<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-			                                                    		<use xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
-			                                                        </svg>
+																<span class="favorite">
+																	<c:choose>
+																		<c:when test="${webmail.read_at eq 'Y' }">
+																			<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
+					                                                    		<use xlink:href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />
+					                                                        </svg>
+																		</c:when>
+																		<c:otherwise>
+																			<svg class="bi text-primary" width="1.5em" height="1.5em" fill="currentColor">
+					                                                    		<use xlink:href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />
+					                                                        </svg>
+																		</c:otherwise>
+																	</c:choose>
 																</span>
 															</div>
 																		
@@ -167,24 +174,228 @@
                     $(".email-user-list").find(".form-check-input").prop("checked", false);
                 }
             });
-
+			
+            let deletenos = [];
+            
             $("#deleteBtn").on("click", function(){
+            	let checkeds = $(".email-user-list").find("input:checked");
+            	$(checkeds).each(function(idx, checked){
+            		deleteno = $(checked).data("mailno");
+					deletenos.push(deleteno);
+            	})
+            	console.log(deletenos);
+            	
                 $(".email-user-list").find("input:checked").parents(".media").remove();
+            	
             });
             
-            var startRow = ${pagingVO.startRow};
-            var endRow = ${pagingVO.endRow};
+            let page = ${pagingVO.currentPage};
+            let totalPage = ${pagingVO.totalPage};
+            let searchWord = $("#emailSearch").val();
+            let prevBtn = $(".email-action").find(".email-pagination-prev");
+            let nextBtn = $(".email-action").find(".email-pagination-next");
+            let pageInfo = "";
             
-            $('.email-action email-pagination-prev').on('click', function(event){
-            	if(startRow > 1){
+            $("#emailSearch").on('keyup', function(){
+            	searchWord = $(this).val();
+            	console.log(searchWord);
+//             	$.ajax({
+//             		url : "${cPath}/lms/inbox.do"
+//            			, contentType : "application/json; charset='utf-8'"
+//            			, data : {
+//            				searchWord : searchWord
+//            			}
+//            			, dataType : "json"
+//            			, success : function(resp){
+//            				console.log(resp);
+//            			}
+//            			, error : function(xhr, error, msg){
+//         				console.log(xhr);
+//         				console.log(error);
+//         				console.log(msg);
+//         			}
+            });
+            
+            let listBody = $("#listBody");
+            $(prevBtn).on("click", function(event){
+            	listBody.empty();
+            	if(page > 1){
+	            	page = page - 1;
+					if(page == 1){
+						prevBtn.prop('disabled', true);
+					}
+					nextBtn.prop('disabled', false);
+					
             		$.ajax({
-            			url : "${cPath}/"
-            			
+            			url : "${cPath}/lms/inbox.do"
+            			, contentType : "application/json; charset='utf-8'"
+            			, data : {
+            				page : page,
+            				searchWord : searchWord
+            			}
+            			, dataType : "json"
+            			, success : function(resp){
+            				if(resp.dataList){
+            					$(resp.dataList).each(function (idx, webmail) {
+            						let liClass = "";
+            						if(webmail.read_at == 'Y'){
+            							liClass = "mail-read"; 
+            						}
+            						
+									let li = '<li class="media '+ liClass + '">'
+											 + ' <div class="user-action">'
+											 + '	<div class="checkbox-con me-3">'
+											 + '		<div class="checkbox checkbox-shadow checkbox-sm">'
+											 + '			<input type="checkbox" id="checkboxsmall1"'
+											 + '				class="form-check-input">'
+											 + '				<label for="checkboxsmall1"></label>'
+											 + '		</div>'
+											 + '	</div>'
+											 + '    <span class="favorite">';
+											 if(webmail.read_at == 'Y'){
+												 li += '<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">'
+												      + '	<use xlink:href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />'
+												      + '</svg>';
+											 }else{
+												 li += '<svg class="bi text-primary" width="1.5em" height="1.5em" fill="currentColor">'
+												      + '	<use xlink:href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />'
+												      + '</svg>';
+											 }
+									 li += '		</span>'
+									     + '	</div>'
+									     + '	<div class="emailName">'
+						  				 + '		<strong>' + webmail.name + '</strong>'
+										 + '	</div>'
+						  				 + '	<a href="mailRead.html" class="media-body text-color">'
+										 + '	<div class="user-details">'
+										 + '		<div class="mail-items">'
+										 + '			<span class="list-group-item-text text-truncate">' + webmail.title  +'</span>'
+										 + '		</div>'
+										 + '	    <div class="mail-meta-item">'
+										 + '			<span class="float-right"> <span class="mail-date">'+ webmail.send_date +'</span>'
+										 + '			</span>'
+										 + '		</div>'
+										 + '	</div>' 
+										 + '	<div class="mail-message">'
+										 + '		<p class="list-group-item-text truncate mb-0">' + webmail.cont + '</p>'
+										 + '		<div class="mail-meta-item">'
+										 + '			<span class="float-right">'
+									     + '				<span class="bullet bullet-success bullet-sm"></span>'
+									     + '			</span>'
+										 + '		</div>'
+							             + '	</div>'
+									     + '	</a>'
+										 + '</li>';
+										 
+									listBody.append(li);
+									
+								});
+            					let startRow = resp.startRow == 1 ? 1 : resp.startRow;
+            					pageInfo = startRow + " - " + resp.endRow + " of " + resp.totalRecord;
+            					$("#pageInfo").text("");
+            					$("#pageInfo").text(pageInfo);
+
+            				}
+            				
+            			}
+            			, error : function(xhr, error, msg){
+            				console.log(xhr);
+            				console.log(error);
+            				console.log(msg);
+            			}
             		})
-            	}else{
-            		$('.email-pagination-prev').attr('disabled', true);
             	}
             });
+            
+            $(nextBtn).on("click", function(event){
+            	listBody.empty();
+            	if(totalPage > page){
+	            	page = page + 1;
+					if(page == totalPage){
+						nextBtn.prop('disabled', true);
+					}
+					prevBtn.prop('disabled', false);
+					
+            		$.ajax({
+            			url : "${cPath}/lms/inbox.do"
+            			, contentType : "application/json; charset='utf-8'"
+            			, data : {
+            				page : page,
+            				searchWord : searchWord
+            			}
+            			, dataType : "json"
+            			, success : function(resp){
+            				if(resp.dataList){
+            					$(resp.dataList).each(function (idx, webmail) {
+            						let liClass = "";
+            						if(webmail.read_at == 'Y'){
+            							liClass = "mail-read"; 
+            						}
+            						
+									let li = '<li class="media '+ liClass + '">'
+											 + ' <div class="user-action">'
+											 + '	<div class="checkbox-con me-3">'
+											 + '		<div class="checkbox checkbox-shadow checkbox-sm">'
+											 + '			<input type="checkbox" id="checkboxsmall1"'
+											 + '				class="form-check-input">'
+											 + '				<label for="checkboxsmall1"></label>'
+											 + '		</div>'
+											 + '	</div>'
+											 + '    <span class="favorite">';
+											 if(webmail.read_at == 'Y'){
+												 li += '<svg class="bi" width="1.5em" height="1.5em" fill="currentColor">'
+												      + '	<use xlink:href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-open" />'
+												      + '</svg>';
+											 }else{
+												 li += '<svg class="bi text-primary" width="1.5em" height="1.5em" fill="currentColor">'
+												      + '	<use xlink:href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope-fill" />'
+												      + '</svg>';
+											 }
+									 li += '		</span>'
+									     + '	</div>'
+									     + '	<div class="emailName">'
+						  				 + '		<strong>' + webmail.name + '</strong>'
+										 + '	</div>'
+						  				 + '	<a href="mailRead.html" class="media-body text-color">'
+										 + '	<div class="user-details">'
+										 + '		<div class="mail-items">'
+										 + '			<span class="list-group-item-text text-truncate">' + webmail.title  +'</span>'
+										 + '		</div>'
+										 + '	    <div class="mail-meta-item">'
+										 + '			<span class="float-right"> <span class="mail-date">'+ webmail.send_date +'</span>'
+										 + '			</span>'
+										 + '		</div>'
+										 + '	</div>' 
+										 + '	<div class="mail-message">'
+										 + '		<p class="list-group-item-text truncate mb-0">' + webmail.cont + '</p>'
+										 + '		<div class="mail-meta-item">'
+										 + '			<span class="float-right">'
+									     + '				<span class="bullet bullet-success bullet-sm"></span>'
+									     + '			</span>'
+										 + '		</div>'
+							             + '	</div>'
+									     + '	</a>'
+										 + '</li>';
+										 
+									listBody.append(li);
+									
+								});
+            					let endRow = resp.endRow < resp.totalRecord ? resp.endRow : resp.totalRecord;
+            					pageInfo = resp.startRow + " - " + endRow + " of " + resp.totalRecord;
+            					$("#pageInfo").text("");
+            					$("#pageInfo").text(pageInfo);
+            				}
+            				
+            			}
+            			, error : function(xhr, error, msg){
+            				console.log(xhr);
+            				console.log(error);
+            				console.log(msg);
+            			}
+            		})
+            	}
+            });
+
         });
 
     </script>

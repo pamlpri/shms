@@ -7,10 +7,15 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
@@ -36,6 +41,7 @@ import kr.ac.shms.main.commuity.vo.PagingVO;
  */
 @Controller
 public class WebmailViewController {
+	private static final Logger logger = LoggerFactory.getLogger(WebmailViewController.class);
 	@Inject
 	private StudentService studentService;
 	
@@ -45,9 +51,36 @@ public class WebmailViewController {
 	@Inject
 	private LmsCommonService lmsCommonService;
 	
+	public PagingVO<WebmailVO> settingList(
+			int currentPage
+			, String user_id
+			, String selectMenu
+			, String searchWord
+			) {
+		
+		PagingVO<WebmailVO> pagingVO = new PagingVO<>(5, 5);
+		pagingVO.setCurrentPage(currentPage);
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("user_id", user_id);
+		searchMap.put("selectMenu", selectMenu);
+		searchMap.put("searchWord", searchWord);
+		pagingVO.setSearchMap(searchMap);
+		
+		int totalRecord = lmsCommonService.selectWebmailtotalCnt(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<WebmailVO> webmailList = lmsCommonService.selectWebmailList(pagingVO);
+		pagingVO.setDataList(webmailList);
+		
+		return pagingVO;
+	}
+	
 	@RequestMapping("/lms/inbox.do")
 	public String inboxList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+		, @RequestParam(value="searchWord", required=false) String searchWord
 		, HttpSession session
 		, Model model
 	) {
@@ -63,22 +96,33 @@ public class WebmailViewController {
 			model.addAttribute("student", studentVO);
 		}
 		
-		PagingVO<WebmailVO> pagingVO = new PagingVO<>();
-		pagingVO.setCurrentPage(1);
+		PagingVO<WebmailVO> pagingVO = settingList(currentPage, user_id, "inbox", searchWord);
 		
-		Map<String, Object> searchMap = new HashMap<>();
-		searchMap.put("user_id", user_id);
-		searchMap.put("selectMenu", "inbox");
-		pagingVO.setSearchMap(searchMap);
+		model.addAttribute("pagingVO", pagingVO);
+				
+		return  "lms/inbox";
+	}
+	
+	@RequestMapping(value="/lms/inbox.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public PagingVO<WebmailVO> inboxListForAjax(
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+			, @RequestParam(value="searchWord", required=false) String searchWord
+			, HttpSession session
+			, Model model
+		) {
+		String user_id = user.getUser_id();
+		logger.info("---------------------------------------------");
+		logger.info("user_id : {}", user_id);
+		logger.info("page : {}", currentPage);
+		logger.info("searchWord : {}", searchWord);
+		logger.info("---------------------------------------------");
 		
-		int totalRecord = lmsCommonService.selectWebmailtotalCnt(pagingVO);
-		pagingVO.setTotalRecord(totalRecord);
-		
-		List<WebmailVO> webmailList = lmsCommonService.selectWebmailList(pagingVO);
-		pagingVO.setDataList(webmailList);
+		PagingVO<WebmailVO> pagingVO = settingList(currentPage, user_id, "inbox", searchWord);
 		model.addAttribute("pagingVO", pagingVO);
 		
-		return  "lms/inbox";
+		return pagingVO;
 	}
 	
 	@RequestMapping("/lms/send.do")
