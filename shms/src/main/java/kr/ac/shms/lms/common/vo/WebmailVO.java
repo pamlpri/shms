@@ -1,9 +1,29 @@
 package kr.ac.shms.lms.common.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+/**
+ * @author 송수미
+ * @since 2021. 6. 02.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일            수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 6. 2.      송수미       최초작성
+ * 2021. 6. 3.		박초원 수정
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 
 @Data
 @NoArgsConstructor
@@ -21,4 +41,23 @@ public class WebmailVO {
 	private String send_stat;
 	private Integer atch_file_no;
 	private String cc_at;
+	private String delete_at;
+	
+	private int startAttNo;
+	private List<AttachVO> attachList;
+	private MultipartFile[] mail_files;
+	public void setMail_files(MultipartFile[] mail_files) {
+		this.mail_files = mail_files;
+		if(mail_files != null) {
+			List<AttachVO> attachList = new ArrayList<>();
+			for(MultipartFile file : mail_files) {
+				if(file.isEmpty()) continue;
+				attachList.add(new AttachVO(file));
+			}
+			if(attachList.size() > 0){
+				this.attachList = attachList;
+			}
+		}
+	}
+	private int[] delAttNos;
 }

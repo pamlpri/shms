@@ -83,8 +83,8 @@ public class WebmailInsertController {
 		return userVO;
 	}
 	
-	@RequestMapping("/lms/compose.do")
-	public String consultingList(
+	@RequestMapping("/lms/composeForm.do")
+	public String composeForm(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
@@ -101,10 +101,12 @@ public class WebmailInsertController {
 		return  "lms/compose";
 	}
 	
-	@RequestMapping("/lms/webmailSend.do")
-	public String webmailSend(
-			
+	@RequestMapping("/lms/compose.do")
+	public String compose(
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, Model model
 		) {
+		
 		return null;
 	}
 }

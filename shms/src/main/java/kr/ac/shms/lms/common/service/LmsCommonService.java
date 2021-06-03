@@ -3,6 +3,7 @@ package kr.ac.shms.lms.common.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
@@ -25,6 +26,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 5. 31.      송수미       최초작성
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
+ * 2021. 06. 03       박초원 	웹메일 보내기 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -107,7 +109,15 @@ public interface LmsCommonService {
 	
 	/**
 	 * 웹메일 주소록 검색
+	 * @param user 정보
 	 * @return 데이터가 없으면 null
 	 */
 	public List<UserVO> selectAddressBook(UserVO userVO);
+	
+	/**
+	 * 웹메일 보내기
+	 * @param webmailVO
+	 * @return 데이터가 없으면 null
+	 */
+	public ServiceResult insertWebmail(WebmailVO webmailVO);
 }

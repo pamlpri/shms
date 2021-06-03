@@ -22,11 +22,12 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일            수정자               수정내용
+ * 수정일            수정자         수정내용
  * --------     --------    ----------------------
  * 2021. 05. 31.      송수미       최초작성
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
+ * 2021. 06. 03		  박초원    웹메일 보내기 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -110,7 +111,15 @@ public interface LmsCommonDAO {
 	
 	/**
 	 * 웹메일 주소록 검색
+	 * @param user 정보
 	 * @return 데이터가 없으면 null
 	 */
 	public List<UserVO> selectAddressBook(UserVO userVO);
+	
+	/**
+	 * 웹메일 보내기
+	 * @param webmailVO
+	 * @return 데이터가 없으면 null
+	 */
+	public int insertWebmail(WebmailVO webmailVO);
 }
