@@ -45,9 +45,11 @@ public class CertificateChoiceController {
 	) {
 		StudentVO studentVO = studentService.selectStdntInfoForCetf(user.getUser_id());
 		List<ComCodeVO> cetfList = studentService.selectCetfList();
+		List<ComCodeVO> cetfResnList = studentService.selectCetfResnList();
 		
 		model.addAttribute("student", studentVO);
 		model.addAttribute("cetfList", cetfList);
+		model.addAttribute("cetfResnList", cetfResnList);
 		
 		return  "lms/certificateChoice";
 	}

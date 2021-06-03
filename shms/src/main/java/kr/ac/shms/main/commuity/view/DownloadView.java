@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.view.AbstractView;
 
-import kr.ac.shms.main.commuity.vo.AttachVO;
+import kr.ac.shms.common.vo.AttachVO;
 
 /**
  * @author 작성자명
