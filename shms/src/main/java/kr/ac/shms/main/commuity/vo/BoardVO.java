@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.validator.BoardDeleteGroup;
 import kr.ac.shms.validator.BoardInsertGroup;
 import kr.ac.shms.validator.BoardUpdateGroup;

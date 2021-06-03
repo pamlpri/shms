@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.main.commuity.vo.AttachVO;
+import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.lms.common.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.BoardVO;
-import kr.ac.shms.main.commuity.vo.PagingVO;
 
 /**
  * @author 송수미

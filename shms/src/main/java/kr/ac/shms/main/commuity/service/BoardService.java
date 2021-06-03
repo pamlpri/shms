@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.main.commuity.vo.AttachVO;
+import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.lms.common.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.BoardVO;
-import kr.ac.shms.main.commuity.vo.PagingVO;
 
 /**
  * @author 송수미

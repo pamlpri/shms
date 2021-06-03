@@ -34,6 +34,6 @@ public class AttendVO {
 	private Integer stdnt_atndan_time; // 학생 출석 시간 = 퇴실시간 - 입실시간
 	private Integer finish_lec; 	// 강의 종료 시간
 	private Integer total_lec_time;	// 총 강의 시간
-	private Integer stdnt_exit_time; 	// 학생 퇴실 시간
 	private Integer stdnt_attend_time;	// 학생 입실 시간
+	private int arr; 	// 수업시작시간 - 학생 입실 시간 
 }

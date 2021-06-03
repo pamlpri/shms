@@ -164,5 +164,11 @@
 		  FROM tb_com_code
 		 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_KIND')
 	</select>
+	<select id="selectCetfResnList" resultType="ComCodeVO">
+		SELECT com_code, 
+		       com_code_nm
+		  FROM tb_com_code
+		 WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_REQ_RESN')
+	</select>
 </mapper>
 
