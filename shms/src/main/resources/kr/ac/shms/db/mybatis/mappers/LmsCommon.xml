@@ -262,10 +262,12 @@
 			<when test="searchMap.selectMenu eq 'inbox'">
 				ON(a.sender = c.user_no)
 				WHERE b.receiver = #{searchMap.user_id, jdbcType=VARCHAR}
+				  AND b.delete_at = 'N'
 			</when>
 			<otherwise>
 				ON(b.receiver = c.user_no)
 				WHERE a.sender = #{searchMap.user_id, jdbcType=VARCHAR}
+				  AND a.delete_at = 'N'
 			</otherwise>
 		</choose>
 		  AND send_stat = 'Y'
@@ -304,4 +306,51 @@
 		WHERE rn BETWEEN #{startRow, jdbcType=NUMERIC} AND #{endRow, jdbcType=NUMERIC}
 	</select>
 	
+	<select id="selectWebmail" parameterType="hashMap" resultType="WebmailVO">
+		SELECT
+		    a.send_no,
+		    title,
+		    cont,
+		    read_at,
+		    sender,
+		    send_date,
+		    send_stat,
+		    atch_file_no
+		FROM
+		    webmail a
+		INNER JOIN tb_receiver b
+		ON(a.send_no = b.send_no)
+		WHERE a.send_no = #{send_no, jdbcType=NUMERIC}
+		<choose>
+			<when test="selectMenu eq 'inbox'">
+			  AND a.delete_at = 'N'
+			</when>
+			<otherwise>
+			  AND b.delete_at = 'N'
+			</otherwise>
+		</choose>
+	</select>
+	
+	<update id="updateReadAt" parameterType="int">
+		UPDATE webmail
+		    SET
+		        read_at = 'Y'
+		WHERE
+		    send_no = #{send_no, jdbcType=NUMERIC}
+	</update>
+	
+	<update id="deleteWebmail" parameterType="hashMap">
+		<choose>
+			<when test="selectMenu eq 'inbox'">
+				UPDATE webmail
+			</when>
+			<otherwise>
+				UPDATE tb_receiver
+			</otherwise>
+		</choose>
+		    SET
+		        delete_at = 'Y'
+		WHERE
+		    send_no = #{send_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

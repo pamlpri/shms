@@ -36,6 +36,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * --------     --------    ----------------------
  * 2021. 6. 2.      박초원      	       최초작성
  * 2021. 6. 2.      송수미      	       받은,보낸 메일 리스트 조회
+ * 2021. 6. 3.      송수미      	       받은,보낸 메일 리스트 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -113,11 +114,6 @@ public class WebmailViewController {
 			, Model model
 		) {
 		String user_id = user.getUser_id();
-		logger.info("---------------------------------------------");
-		logger.info("user_id : {}", user_id);
-		logger.info("page : {}", currentPage);
-		logger.info("searchWord : {}", searchWord);
-		logger.info("---------------------------------------------");
 		
 		PagingVO<WebmailVO> pagingVO = settingList(currentPage, user_id, "inbox", searchWord);
 		model.addAttribute("pagingVO", pagingVO);
@@ -127,9 +123,11 @@ public class WebmailViewController {
 	
 	@RequestMapping("/lms/send.do")
 	public String sendList(
-		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, HttpSession session
-		, Model model
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+			, @RequestParam(value="searchWord", required=false) String searchWord
+			, HttpSession session
+			, Model model
 	) {
 		String user_id = user.getUser_id();
 		StudentVO studentVO = studentService.student(user_id);
@@ -143,6 +141,29 @@ public class WebmailViewController {
 			model.addAttribute("student", studentVO);
 		}
 		
+		PagingVO<WebmailVO> pagingVO = settingList(currentPage, user_id, "send", searchWord);
+		
+		model.addAttribute("pagingVO", pagingVO);
+
+		
 		return  "lms/send";
 	}
+	
+	@RequestMapping(value="/lms/send.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public PagingVO<WebmailVO> sendListForAjax(
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+			, @RequestParam(value="searchWord", required=false) String searchWord
+			, HttpSession session
+			, Model model
+		) {
+		String user_id = user.getUser_id();
+		
+		PagingVO<WebmailVO> pagingVO = settingList(currentPage, user_id, "send", searchWord);
+		model.addAttribute("pagingVO", pagingVO);
+		
+		return pagingVO;
+	}
+	
 }
