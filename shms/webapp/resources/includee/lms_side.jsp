@@ -34,7 +34,7 @@
 	                </a>
 	                <ul class="submenu">
 	                    <li class="submenu-item ">
-	                        <a href="${cPath }/lms/compose.do">메일보내기</a>
+	                        <a href="${cPath }/lms/composeForm.do">메일보내기</a>
 	                    </li>
 	                    <li class="submenu-item ">
 	                        <a href="${cPath }/lms/inbox.do">받은메일</a>

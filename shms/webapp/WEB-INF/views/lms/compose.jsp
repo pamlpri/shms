@@ -34,17 +34,30 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailTo" type="text" class="form-control bg-transparent" placeholder=" To" name="receiver">
+								<input id="mailTo" type="text" class="form-control bg-transparent" placeholder=" 수신자" name="receiver">
 								<!-- Button trigger for scrolling content modal -->
-								<button type="button" class="btn btn-outline-primary"
+								<button type="button" class="btn btn-outline-primary mailBtn"
 									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
-									id="button-addon2" style="border: 1px solid #dce7f1;">
+									id=" mailToBtn" style="border: 1px solid #dce7f1;">
+									검색</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="basic-addon1">
+									<i class="bi bi-search"></i>
+								</span>
+								<input id="mailCc" type="text" class="form-control bg-transparent" placeholder=" 참조자" name="receiver">
+								<!-- Button trigger for scrolling content modal -->
+								<button type="button" class="btn btn-outline-primary mailBtn"
+									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
+									id="mailCcBtn" style="border: 1px solid #dce7f1;">
 									검색</button>
 							</div>
 						</div>
 						<div class="form-group">
 							<input type="text" class="form-control bg-transparent"
-								placeholder=" Subject" name="title">
+								placeholder=" 제목" name="title">
 						</div>
 						<div class="form-group">
 							<div id="summernote"></div>
@@ -59,8 +72,8 @@
 									<div class="card">
 										<div class="card-content">
 											<!-- File uploader with validation -->
-											<input type="file" class="with-validation-filepond" required
-												multiple data-max-file-size="5MB" data-max-files="3">
+                                            <input type="file" class="with-validation-filepond" 
+                                            	required multiple data-max-file-size="5MB" data-max-files="3">
 										</div>
 									</div>
 								</div>
@@ -105,8 +118,8 @@
 									<option value="">전체</option>
 									<option value="webmail">웹메일</option>
 									<option value="name">이름</option>
-									<option value="dept_code">학과</option>
-									<option value="sub_code">부서</option>
+									<option value="sub_code">학과</option>
+									<option value="dept_code">부서</option>
 								</select>
 							</div>
 							<div class="input-group mb-3">
@@ -161,34 +174,16 @@
 <!-- filepond -->
 <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 <script>
-	// Register plugins
+	//register desired plugins...
 	FilePond.registerPlugin(
+	    // validates the size of the file...
 	    FilePondPluginFileValidateSize,
-	    FilePondPluginImageExifOrientation,
-	    FilePondPluginImageCrop,
-	    FilePondPluginImageResize,
-	    FilePondPluginImagePreview,
-	    FilePondPluginImageTransform
+	    // validates the file type...
+	    FilePondPluginFileValidateType
 	);
 	
-	// Set default FilePond options
-    FilePond.setOptions({
-
-        // maximum allowed file size
-        maxFileSize: '5MB',
-
-        // crop the image to a 1:1 ratio
-        imageCropAspectRatio: '1:1',
-
-        // resize the image
-        imageResizeTargetWidth: 200,
-
-        // upload to this server end point
-        server: '${cPath}/board/boardImage.do?type=Images'
-    });
-    
     // Filepond: With Validation
-    FilePond.create( document.querySelector('.with-validation-filepond'), { 
+    var pond = FilePond.create( document.querySelector('.with-validation-filepond'), { 
         allowImagePreview: false,
         allowMultiple: true,
         allowFileEncode: false,
@@ -198,6 +193,7 @@
             resolve(type);
         })
     });
+	
 </script>
 
 <script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
@@ -278,19 +274,22 @@
         
         searchForm.submit();
         
+        let curBtn = "";
+        $(".mailBtn").on("click", function(){
+        	curBtn = $(this).attr("id");
+        });
+        
         $("#mailChoice").on("click", function(){
             var list = [];
             $("#mailList").find("input[type='checkbox']:checked").each(function(index, element){
                 var mail = $(element).parent("li").text();
                 list.push(mail.split("-")[0].trim());
             });
-            $("#mailTo").val(list.join(", "));
-        });
-        
-        $('#sendBtn').on('click', function(){
-        	var summernoteContent = $('#summernote').summernote('code');
-            console.log("summernoteContent : " + summernoteContent);
-            
+            if(curBtn == "mailToBtn"){
+	            $("#mailTo").val(list.join(", "));
+            }else{
+	            $("#mailCc").val(list.join(", "));
+            }
         });
         
     });

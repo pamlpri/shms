@@ -5,17 +5,24 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.net.ftp.FTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.dao.LmsCommonDAO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.AttachVO;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.main.commuity.service.impl.BoardServiceImpl;
 import kr.ac.shms.main.commuity.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
@@ -31,14 +38,26 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 5. 31.      송수미       최초작성
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
+ * 2021. 06. 03 	박초원		웹메일 인서트
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Service
 public class LmsCommonServiceImpl implements LmsCommonService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(LmsCommonService.class);
+	
 	@Inject
 	private LmsCommonDAO lmsCommonDAO;
+	
+	@Value("#{appInfo['ip']}")
+	private String ip;
+	@Value("#{appInfo['port']}")
+	private int port;
+	@Value("#{appInfo['id']}")
+	private String id;
+	@Value("#{appInfo['pw']}")
+	private String pw;
 	
 	@Override
 	public DietVO selectDiet() {
@@ -103,5 +122,30 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public List<UserVO> selectAddressBook(UserVO userVO) {
 		return lmsCommonDAO.selectAddressBook(userVO);
+	}
+
+	@Override
+	public ServiceResult insertWebmail(WebmailVO webmailVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = lmsCommonDAO.insertWebmail(webmailVO);
+		if(cnt > 0) {
+			cnt += processes(webmailVO);
+			result = ServiceResult.OK;
+		}
+		
+		return result;
+	}
+
+	private int processes(WebmailVO webmailVO) {
+		int cnt = 0;
+		List<AttachVO> attachList = webmailVO.getAttachList();
+		if(attachList != null && attachList.size() > 0) {
+			FTPClient client = new FTPClient();
+			
+			
+		}
+		
+		return 0;
 	}
 }
