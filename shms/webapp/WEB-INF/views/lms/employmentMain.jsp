@@ -21,7 +21,7 @@
 				<div class="col-6 col-lg-3 col-md-6">
 					<div class="card">
 						<div class="card-body px-3 py-4-5">
-							<a href="#" class="row">
+							<a href="${cPath }/lms/inbox.do" class="row">
 								<div class="col-md-5">
 									<div class="stats-icon purple">
 										<i class="iconly-boldMessage"></i>
@@ -46,7 +46,7 @@
 				<div class="col-6 col-lg-3 col-md-6">
 					<div class="card">
 						<div class="card-body px-3 py-4-5">
-							<a href="#" class="row">
+							<a href="${cPath }/lms/inbox.do" class="row">
 								<div class="col-md-5">
 									<div class="stats-icon blue">
 										<i class="iconly-boldSend"></i>

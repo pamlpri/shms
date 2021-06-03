@@ -15,9 +15,10 @@ public class WebmailVO {
 	private String cont;
 	private String read_at;
 	private String sender;
+	private String receiver;
+	private String name;
 	private String send_date;
 	private String send_stat;
 	private Integer atch_file_no;
-	private String receiver;
 	private String cc_at;
 }

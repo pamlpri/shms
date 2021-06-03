@@ -14,6 +14,8 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.main.commuity.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -85,5 +87,16 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	public List<Map<String, Object>> selectGenCnt(String sub_code) {
 		return lmsCommonDAO.selectGenCnt(sub_code);
 	}
+
+	@Override
+	public List<WebmailVO> selectWebmailList(PagingVO<WebmailVO> search) {
+		return lmsCommonDAO.selectWebmailList(search);
+	}
+
+	@Override
+	public int selectWebmailtotalCnt(PagingVO<WebmailVO> search) {
+		return lmsCommonDAO.selectWebmailtotalCnt(search);
+	}
+	
 	
 }
