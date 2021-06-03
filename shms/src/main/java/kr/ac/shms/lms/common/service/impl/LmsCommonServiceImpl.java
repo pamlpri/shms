@@ -14,6 +14,7 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.main.commuity.vo.PagingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -25,10 +26,11 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일                          수정자               수정내용
+ * 수정일          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 31.      송수미       최초작성
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
+ * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -98,5 +100,8 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		return lmsCommonDAO.selectWebmailtotalCnt(search);
 	}
 	
-	
+	@Override
+	public List<UserVO> selectAddressBook(UserVO userVO) {
+		return lmsCommonDAO.selectAddressBook(userVO);
+	}
 }

@@ -26,14 +26,16 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  
  <link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/simple-datatables/style.css">
+ <link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.css">
 
  <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/app.css">
  <link rel="shortcut icon" href="${cPath }/resources/lms/assets/images/favicon.svg" type="image/x-icon">
  <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/commons.css" />
  <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/studentMain.css" />
 
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
  
 
   
