@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/toastify/toastify.css">
 <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
-<link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.css">
+
 
 <div class="page-content">
 	<!-- contents start -->
@@ -29,12 +29,13 @@
 					<p style="font-size: 0.9em;">
 						전체 메일을 보낼 경우에는 <strong>,</strong> 로 구분하세요.
 					</p>
-					<form action="#">
+					<form action="${cPath}/lms/webmailSend.do">
 						<div class="form-group">
 							<div class="input-group mb-3">
-								<span class="input-group-text" id="basic-addon1"><i
-									class="bi bi-search"></i></span> <input id="mailTo" type="text"
-									class="form-control bg-transparent" placeholder=" To">
+								<span class="input-group-text" id="basic-addon1">
+									<i class="bi bi-search"></i>
+								</span>
+								<input id="mailTo" type="text" class="form-control bg-transparent" placeholder=" To" name="receiver">
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary"
 									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
@@ -44,10 +45,11 @@
 						</div>
 						<div class="form-group">
 							<input type="text" class="form-control bg-transparent"
-								placeholder=" Subject">
+								placeholder=" Subject" name="title">
 						</div>
 						<div class="form-group">
 							<div id="summernote"></div>
+							<input type="hidden" name="cont" id="webCont">
 						</div>
 						<h6 class="m-b-20">
 							<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
@@ -69,9 +71,9 @@
 							<a href="inbox.html"
 								class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20"><i
 								class="ti-close m-r-5 f-s-12"></i> 취소</a>
-							<button onclick="location.href='${cPath}/lms/send.do'"
+							<button
 								class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
-								type="button">
+								type="button" id="sendBtn">
 								<i class="fa fa-paper-plane m-r-5"></i> 메일보내기
 							</button>
 						</div>
@@ -93,143 +95,54 @@
 							<i data-feather="x"></i>
 						</button>
 					</div>
-					<form action="#">
-						<div class="modal-body row">
+					<div class="modal-body row">
+						<form action="${cPath }/lms/addressBook.do" id="searchForm">
+							<input type="hidden" name="searchType" value="${userVO.searchMap.searchType }"/>
+							<input type="hidden" name="searchWord" value="${userVO.searchMap.searchWord }"/>
+						</form>
+						<div id="searchUI">
 							<div class="input-group mb-3">
-								<select class="form-select" id="basicSelect">
-									<option>전체</option>
-									<option>웹메일</option>
-									<option>이름</option>
-									<option>학과</option>
-									<option>부서</option>
+								<select class="form-select" name="searchType">
+									<option value="">전체</option>
+									<option value="webmail">웹메일</option>
+									<option value="name">이름</option>
+									<option value="dept_code">학과</option>
+									<option value="sub_code">부서</option>
 								</select>
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1"><i
-									class="bi bi-search"></i></span> <input type="text"
-									class="form-control" placeholder="검색어를 입력하세요."
-									aria-label="Recipient's username"
-									aria-describedby="button-addon2">
+									class="bi bi-search"></i></span>
+										<input type="text" name="searchWord"
+											class="form-control" placeholder="검색어를 입력하세요." aria-describedby="button-addon2">
 								<button class="btn btn-outline-secondary" type="button"
-									id="button-addon2" style="border: 1px solid #dce7f1;">검색</button>
-							</div>
-							<div id="mailList">
-								<ul class="list-group">
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="김영민 (abc@shms.ac)" aria-label="..."> 김영민
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Dapibus (abc@shms.ac)" aria-label="...">
-										Dapibus (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Morbi (abc@shms.ac)" aria-label="..."> Morbi
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Porta (abc@shms.ac)" aria-label="..."> Porta
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Vestibulum (abc@shms.ac)" aria-label="...">
-										Vestibulum (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="김영민 (abc@shms.ac)" aria-label="..."> 김영민
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Dapibus (abc@shms.ac)" aria-label="...">
-										Dapibus (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Morbi (abc@shms.ac)" aria-label="..."> Morbi
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Porta (abc@shms.ac)" aria-label="..."> Porta
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Vestibulum (abc@shms.ac)" aria-label="...">
-										Vestibulum (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="김영민 (abc@shms.ac)" aria-label="..."> 김영민
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Dapibus (abc@shms.ac)" aria-label="...">
-										Dapibus (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Morbi (abc@shms.ac)" aria-label="..."> Morbi
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Porta (abc@shms.ac)" aria-label="..."> Porta
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Vestibulum (abc@shms.ac)" aria-label="...">
-										Vestibulum (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="김영민 (abc@shms.ac)" aria-label="..."> 김영민
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Dapibus (abc@shms.ac)" aria-label="...">
-										Dapibus (abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Morbi (abc@shms.ac)" aria-label="..."> Morbi
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Porta (abc@shms.ac)" aria-label="..."> Porta
-										(abc@shms.ac)</li>
-									<li class="list-group-item"><input
-										class="form-check-input me-1" type="checkbox"
-										value="Vestibulum (abc@shms.ac)" aria-label="...">
-										Vestibulum (abc@shms.ac)</li>
-								</ul>
+									id="searchBtn" style="border: 1px solid #dce7f1;">검색</button>
 							</div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-light-secondary"
-								data-bs-dismiss="modal">
-								<i class="bx bx-x d-block d-sm-none"></i> <span
-									class="d-none d-sm-block">닫기</span>
-							</button>
-							<button id="mailChoice" type="button"
-								class="btn btn-primary ml-1" data-bs-dismiss="modal">
-								<i class="bx bx-check d-block d-sm-none"></i> <span
-									class="d-none d-sm-block">선택</span>
-							</button>
+						<div id="mailList">
+							<ul class="list-group" id="listBody">
+							
+							</ul>
 						</div>
-					</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light-secondary"
+							data-bs-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">닫기</span>
+						</button>
+						<button id="mailChoice" type="button"
+							class="btn btn-primary ml-1" data-bs-dismiss="modal">
+							<i class="bx bx-check d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">선택</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- contents end -->
 </div>
-<!-- filepond validation -->
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-
-<!-- image editor -->
-<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-filter/dist/filepond-plugin-image-filter.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
-
-<script src="${cPath }/resources/lms/assets/vendors/apexcharts/apexcharts.js"></script>
-<script src="${cPath }/resources/lms/assets/js/pages/dashboard.js"></script>
 
 <script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
 <script>
@@ -251,47 +164,77 @@
             }
         }
     });
-
-</script>
-
-<!-- toastify -->
-<script src="${cPath }/resources/lms/assets/vendors/toastify/toastify.js"></script>
-
-<!-- filepond -->
-<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-<script>
-    // register desired plugins...
-    FilePond.registerPlugin(
-        // validates the size of the file...
-        FilePondPluginFileValidateSize,
-        // validates the file type...
-        FilePondPluginFileValidateType,
-    );
-    
-    // Filepond: With Validation
-    FilePond.create( document.querySelector('.with-validation-filepond'), { 
-        allowImagePreview: false,
-        allowMultiple: true,
-        allowFileEncode: false,
-        required: true,
-        fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
-            // Do custom type detection here and return with promise
-            resolve(type);
-        })
-    });
 </script>
 
 <script src="${cPath }/resources/lms/assets/js/main.js"></script>
 
 <script>
     $(function(){
+        let searchUI = $("#searchUI");
+        searchUI.find("[name='searchType']").val("${userVO.searchMap.searchType }");
+        $("#searchBtn").on("click", function(){
+        	let inputs = searchUI.find(":input[name]");
+        	$(inputs).each(function(idx, input){
+        		let name = $(this).attr("name");
+        		let sameInput = searchForm.find("[name='"+name+"']");
+        		$(sameInput).val($(this).val());
+        	});
+        	
+        	searchForm.submit();
+        });
+
+        let listBody = $("#listBody");
+        let searchForm = $("#searchForm").ajaxForm({
+        	dataType : "json",
+        	success : function(resp) {
+        		listBody.empty();
+        		let liTags = [];
+        		if(resp.userList){
+	        		$(resp.userList).each(function (idx, user) {
+	        			let spanTag = "";
+	        			if(user.dept_code == null && user.sub_code == null){
+	        				spanTag = "총장";
+	        			}else if(user.dept_code == null && user.sub_code != null){
+	        				spanTag = user.sub_name; 
+	        			}else if(user.sub_code == null && user.dept_code != null) {
+	        				spanTag = user.dept_nm;
+	        			}
+	        		
+	        			let li = $("<li>").attr("class", "list-group-item").text(user.name + " (" + user.webmail + ") - ")
+	        					.prepend(
+	        	        				$("<input>").attr("class", "form-check-input me-1").attr("type", "checkbox").val(user.user_no)		
+	        					).append($("<span>").text(spanTag));
+	        			
+	        			
+	        			liTags.push(li);
+	        		});
+        		}else {
+        			liTags.push(
+        				$("<li>").attr("class", "list-group-item").text("검색조건에 해당하는 결과가 없습니다.")
+        			);
+        		}
+        		listBody.html(liTags);
+        	}, error : function(xhr, resp, error) {
+        		console.log(xhr);
+        	}
+        });
+        
+        searchForm.submit();
+        
         $("#mailChoice").on("click", function(){
             var list = [];
             $("#mailList").find("input[type='checkbox']:checked").each(function(index, element){
-                var mail = element.value;
-                list.push(mail);
+                var mail = $(element).parent("li").text();
+                list.push(mail.split("-")[0].trim());
             });
             $("#mailTo").val(list.join(", "));
         });
+        
+        $('#sendBtn').on('click', function(){
+        	var summernoteContent = $('#summernote').summernote('code');
+            console.log("summernoteContent : " + summernoteContent);
+            
+        });
+        
     });
 </script>

@@ -199,26 +199,20 @@
 	                      </li>
 	                  </ul>
 	              </li>
-	              <li class="sidebar-item  has-sub">
-	                  <a href="#" class="sidebar-link">
-	                      <i class="bi bi-printer-fill"></i>
-	                      <span>증명서</span>
-	                  </a>
-	                  <ul class="submenu ">
-	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/registrationCertificate.do">재학증명서</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/graduationCertificate.do">졸업증명서</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/scoreCertificate.do">성적증명서</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/leaveOfAbsenceCertificate.do">휴학증명서</a>
-	                      </li>
-	                  </ul>
-	              </li>
+	              <li class="sidebar-item  has-sub active">
+                       <a href="#" class="sidebar-link">
+                           <i class="bi bi-printer-fill"></i>
+                           <span>증명서</span>
+                       </a>
+                       <ul class="submenu active">
+                           <li class="submenu-item active">
+                               <a href="${cPath }/lms/certificateChoice.do">증명서신청</a>
+                           </li>                                                                                                                                                                                                
+                            <li class="submenu-item ">
+                               <a href="${cPath }/lms/certificateStorage.do">증명서보관함</a>
+                           </li>
+                       </ul>
+                   </li>
 			  </c:if>
 			  
               <!-- 권한 : 교수 -->
