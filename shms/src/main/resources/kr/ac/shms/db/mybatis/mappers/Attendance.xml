@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
-	<select id="selectAttendTime" resultType="String" parameterType="AttendVO">
+	<select id="selectAtndanTime" resultType="string" parameterType="AttendVO">
 	SELECT attend_time
 	  FROM attendance
 	 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 	   AND lec_code = #{lec_code, jdbcType=VARCHAR}
        AND TO_CHAR(attend_time, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
-		
 	</select>
 	<select id="selectAttendInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
 		SELECT

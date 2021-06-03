@@ -206,19 +206,16 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">입학증명서</a>
+	                          <a href="${cPath }/lms/registrationCertificate.do">재학증명서</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">재학증명서</a>
+	                          <a href="${cPath }/lms/graduationCertificate.do">졸업증명서</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">학적증명서</a>
+	                          <a href="${cPath }/lms/scoreCertificate.do">성적증명서</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">성적증명서</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">휴학증명서</a>
+	                          <a href="${cPath }/lms/leaveOfAbsenceCertificate.do">휴학증명서</a>
 	                      </li>
 	                  </ul>
 	              </li>

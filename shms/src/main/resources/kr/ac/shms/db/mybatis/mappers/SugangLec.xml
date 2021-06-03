@@ -119,8 +119,6 @@
 	        RIGHT OUTER JOIN building f ON (f.building_no = e.building_no)
 	       )
 	 WHERE staff_no=#{staff_no, jdbcType=VARCHAR}
-<!-- 	  AND b.estbl_year = EXTRACT(YEAR FROM SYSDATE) -->
-<!-- 	   AND estbl_year='2013' -->
 	</select>
 	
 	<sql id="myLecFrag">
