@@ -55,7 +55,7 @@
         <div class="row feature-blocks bg-gray justify-content-between">
           <div class="col-sm-6 col-xl-5 mb-xl-5 mb-lg-3 mb-4 text-center text-sm-left">
             <i class="ti-agenda mb-xl-4 mb-lg-3 mb-4 feature-icon"></i>
-            <h3 class="mb-xl-4 mb-lg-3 mb-4"><a class="facility" href="education.html">교육이념</a></h3>
+            <h3 class="mb-xl-4 mb-lg-3 mb-4"><a class="facility" href="education.do">교육이념</a></h3>
             <p>
               인재대학교는 성실·인화·창조의 정신으로 심오한 학문의 이론과 응용을 연구하고
               가르치며, 이를 통해 인류사회를 선도할 인재를 양성하고 사회혁신을 이끌
@@ -261,11 +261,11 @@
           <!-- author -->
           <li class="list-inline-item mr-3 ml-0">By injae</li>
         </ul>
-        <a href="education.html">
+        <a href="education.do">
           <h4 class="card-title">INJAE VISION</h4>
         </a>
         <p class="card-text">미래가치를 창출하는 글로벌 산학일체 혁신대학</p>
-        <a href="education.html" class="btn btn-primary btn-sm">read more</a>
+        <a href="education.do" class="btn btn-primary btn-sm">read more</a>
       </div>
     </div>
   </article>
@@ -297,11 +297,11 @@
           <!-- author -->
           <li class="list-inline-item mr-3 ml-0">By injae</li>
         </ul>
-        <a href="map.html">
+        <a href="map.do">
           <h4 class="card-title">캠퍼스 안내</h4>
         </a>
         <p class="card-text">인재대학교 오시는 길을 안내해 드립니다.<br/>감사드리고 환영합니다.</p>
-        <a href="map.html" class="btn btn-primary btn-sm">read more</a>
+        <a href="map.do" class="btn btn-primary btn-sm">read more</a>
       </div>
     </div>
   </article>
