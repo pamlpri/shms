@@ -6,10 +6,12 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
-import kr.ac.shms.lms.student.vo.ConsltReqVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 /**
  * @author 박초원
@@ -169,4 +171,25 @@ public interface StudentService {
 	 * @return ServiceResult
 	 */
 	public ServiceResult consultingUpdate(ConsultingVO consultingVO);
+		
+	/**
+	 * 로그인 한 학생이 듣는 수강 목록 출력
+	 * @param stdnt_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<SugangLecSTVO> sugangList(String stdnt_no);
+	
+	/**
+	 * 수강중인 강의에 대한 정보 출력
+	 * @param lec_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public LectureVO lecture(String lec_code);
+	
+	/**
+	 * 해당 학생이 가지고 있는 시간표 출력
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<TimeTableVO> timeTable(String stdnt_no);
 }

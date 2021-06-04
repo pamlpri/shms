@@ -251,8 +251,58 @@
 		        hope_date = TO_DATE(#{hope_date} || ' ' || #{hope_time}, 'YYYY-MM-DD HH24:MI'),
 		        req_cont = #{req_cont}
 		WHERE req_no = #{req_no}
-	
 	</update>
 	
+	<select id="sugangList" parameterType="String" resultType="SugangLecPRVO">
+		SELECT
+		    lec_code,
+		    stdnt_no,
+		    req_dt,
+		    req_year,
+		    req_semstr,
+		    sugang_at
+		FROM
+		    sugang_req
+		WHERE stdnt_no = #{stdnt_no}			
+	</select>
+	
+	<select id="lecture" parameterType="String" resultType="LectureVO">
+		SELECT
+		    lec_code,
+		    cur_code,
+		    lec_cl,
+		    estbl_year,
+		    estbl_semstr,
+		    summary,
+		    tchmtr,
+		    adi_tchmtr,
+		    tchmtr_scope,
+		    lec_rm,
+		    dayotw,
+		    lec_time,
+		    abolec,
+		    atch_file_no
+		FROM
+		    lecture
+		WHERE lec_code = #{lec_code}
+	</select>
+	
+	<select id="timeTable" parameterType="String" resultType="TimeTableVO">
+		SELECT st.stdnt_no,
+		       su.lec_code,
+		       req_year,
+		       req_semstr,
+		       l.cur_code,
+		       dayotw,
+		       lec_time,
+		       c.lec_name,
+		       lec_pnt
+		FROM student st
+		LEFT OUTER JOIN sugang_req su ON st.stdnt_no = su.stdnt_no
+		LEFT OUTER JOIN lecture l ON su.lec_code = l.lec_code
+		LEFT OUTER JOIN curriculum c ON l.cur_code = c.cur_code
+		WHERE st.stdnt_no = #{stdnt_no}
+		AND req_year = TO_CHAR(SYSDATE, 'YYYY')
+	</select>
 </mapper>
 

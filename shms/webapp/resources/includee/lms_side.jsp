@@ -87,7 +87,7 @@
 	                          <a href="${cPath }/lms/classCartInfo.do">장바구니</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">내시간표</a>
+	                          <a href="${cPath }/lms/timeTableView.do">내시간표</a>
 	                      </li>
 	                  </ul>
 	              </li>

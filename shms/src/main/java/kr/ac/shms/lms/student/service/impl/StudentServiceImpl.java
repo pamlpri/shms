@@ -13,8 +13,11 @@ import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.subject.vo.SubjectVO;
 /**
@@ -30,6 +33,7 @@ import kr.ac.shms.subject.vo.SubjectVO;
  * 2021. 5. 31.   김보미		출석
  * 2021. 5. 31.   송수미	    학생 통합정보시스템 메인 페이지 구현
  * 2021. 6.  3.   김보미 		학생 정보 출력(증명서 신청), 증명서, 신청사유 정보출력
+ * 2021. 6.  4.   최희수	   학생 시간표 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -164,5 +168,25 @@ public class StudentServiceImpl implements StudentService{
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}
+
+	@Override
+	public List<SugangLecSTVO> sugangList(String stdnt_no) {
+		// TODO Auto-generated method stub
+		return studentDAO.sugangList(stdnt_no);
+	}
+
+	@Override
+	public LectureVO lecture(String lec_code) {
+		// TODO Auto-generated method stub
+		return studentDAO.lecture(lec_code);
+	}
+
+	@Override
+	public List<TimeTableVO> timeTable(String stdnt_no) {
+		// TODO Auto-generated method stub
+		return studentDAO.timeTable(stdnt_no);
+	}
+	
+	
 	
 }

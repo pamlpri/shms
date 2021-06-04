@@ -35,6 +35,10 @@ public class SugangLecSTVO {
 	private String com_code_nm;
 	private Integer lec_pnt;
 	private Integer total_lec_time;	// 총 강의시간 = 학점 * 60
+	private String req_dt;
+	private Integer req_semstr;
+	private String sugang_at;
+	private Integer req_year;
 
 }
 
