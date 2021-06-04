@@ -225,7 +225,7 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">내정보보기</a>
+	                          <a href="${cPath }/lms/myInfo.do">내정보보기</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">진행중인 강의</a>

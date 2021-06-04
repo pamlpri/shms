@@ -28,7 +28,7 @@
 				<input type="hidden" name="searchWord" value="${pagingVO.searchMap.searchWord }"/>
 				<input type="hidden" name="page" />
 			</form>
-			<form class="row" id="searchUI">
+			<form class="row" id="searchUI searchArea">
 				<div class="col-md-3 mb-4">
 					<select class="form-select" id="basicSelect" name="searchType">
 						<option value>전체</option>
