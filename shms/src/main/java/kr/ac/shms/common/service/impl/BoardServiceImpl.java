@@ -1,4 +1,4 @@
-package kr.ac.shms.main.commuity.service.impl;
+package kr.ac.shms.common.service.impl;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -16,12 +16,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.dao.BoardDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lms.common.vo.PagingVO;
-import kr.ac.shms.main.commuity.dao.BoardDAO;
-import kr.ac.shms.main.commuity.service.BoardService;
-import kr.ac.shms.main.commuity.vo.BoardVO;
 
 /**
  * @author 송수미

@@ -17,7 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.service.CommonService;
+import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
@@ -30,8 +32,6 @@ import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
-import kr.ac.shms.main.commuity.service.BoardService;
-import kr.ac.shms.main.commuity.vo.BoardVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 /**
  * @author 최희수

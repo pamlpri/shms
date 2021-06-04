@@ -1,4 +1,4 @@
-package kr.ac.shms.main.commuity.dao;
+package kr.ac.shms.common.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lms.common.vo.PagingVO;
-import kr.ac.shms.main.commuity.vo.BoardVO;
 
 /**
  * @author 송수미
