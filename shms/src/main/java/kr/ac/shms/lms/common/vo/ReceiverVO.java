@@ -1,7 +1,5 @@
 package kr.ac.shms.lms.common.vo;
 
-import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,4 +17,6 @@ public class ReceiverVO {
 		super();
 		this.receiver = receiverVO.getReceiver();
 	}
+
+	private UserVO user;
 }

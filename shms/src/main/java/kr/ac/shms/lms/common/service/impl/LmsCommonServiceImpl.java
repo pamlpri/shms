@@ -206,11 +206,13 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public WebmailVO selectWebmail(Map<String, Object> search) {
 		// 받은 메일 쪽에서 열었을 때 read_at를 업데이트
+		int send_no = Integer.parseInt(String.valueOf(search.get("send_no")));
+		
 		if("inbox".equals(search.get("selectMenu"))){
-			lmsCommonDAO.updateReadAt(Integer.parseInt((String)search.get("send_no")));
+			lmsCommonDAO.updateReadAt(send_no);
 		}
 		
-		return lmsCommonDAO.selectWebmail(search);
+		return lmsCommonDAO.selectWebmail(send_no);
 	}
 
 	@Override
