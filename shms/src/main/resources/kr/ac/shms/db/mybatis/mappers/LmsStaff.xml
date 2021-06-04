@@ -43,4 +43,68 @@
 		                                          WHERE CODE_GRP_NM = 'PROCESS_STAT')
 		                         AND COM_CODE_NM = '대기')
 	</select>
+	
+	<select id="pmyPage" parameterType="String" resultType="PMyPageVO">
+		SELECT  staff_no,
+		        sub_code,
+		        emp_section,
+		        TO_CHAR(encpn_de, 'YYYY-MM-DD') encpn_de,
+		        TO_CHAR(retire_de, 'YYYY-MM-DD') retire_de,
+		        contract_endde,
+		        name,
+		        tel_no,
+		        regno1,
+		        regno2,
+		        gen,
+		        zipcode,
+		        addr1,
+		        addr2,
+		        email,
+		        webmail,
+		        account,
+		        bank_name,
+		        photo_path,
+		        dean_at
+		FROM v_prof_info
+		WHERE staff_no = #{staff_no}
+	</select>
+	
+	<select id="subject" parameterType="String" resultType="SubjectVO">
+		SELECT
+		    sub_code,
+		    sub_name,
+		    col_code,
+		    estbl_de,
+		    reg_amt,
+		    offrum_loc,
+		    tel_no,
+		    fax_no,
+		    grdtn_pnt,
+		    staff_no,
+		    sub_index
+		FROM
+		    subject
+		WHERE sub_code = #{sub_code}
+	</select>
+	
+	<update id="webMailUpdate" parameterType="String">
+		UPDATE staff
+		    SET webmail = #{staff_no}||'@injae.ac.kr'
+		WHERE
+		    staff_no = #{staff_no}
+	</update>
+	
+	<update id="mypageUpdate" parameterType="StaffVO">
+		UPDATE staff
+	    SET
+	        bank_name = #{bank_name}
+	        , account = #{account}    
+	        , tel_no = #{tel_no}
+	        , email = #{email}      
+	        , zipcode = #{zipcode}
+	        , addr1 = #{addr1}
+	        , addr2 = #{addr2}
+		WHERE
+		    staff_no = #{staff_no}
+	</update>
 </mapper>
