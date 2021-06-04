@@ -47,20 +47,6 @@ public class WebmailVO {
 	private String delete_at;
 	
 	private List<ReceiverVO> receiverList;
-	private ReceiverVO[] receivers;
-	public void setReceivers(ReceiverVO[] receivers) {
-		this.receivers = receivers;
-		if(receivers != null) {
-			List<ReceiverVO> receiverList = new ArrayList<>();
-			for(ReceiverVO receiverVO : receiverList) {
-				if(receiverVO == null) continue;
-				receiverList.add(new ReceiverVO(receiverVO));
-			}
-			if(receiverList.size() > 0) {
-				this.receiverList = receiverList;
-			}
-		}
-	}
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;

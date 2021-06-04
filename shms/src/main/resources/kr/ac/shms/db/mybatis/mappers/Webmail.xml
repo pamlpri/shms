@@ -21,8 +21,8 @@
 			    sender,
 			    send_date,
 			    send_stat,
-			    delete_at,
-			    <if test="atch_file_no != null">
+			    delete_at
+			    <if test="attachList != null">
 				    ,atch_file_no
 			  	</if>
 			) VALUES (
@@ -34,7 +34,7 @@
 			    SYSDATE,
 			    'Y',
 			    'N'
-			    <if test="atch_file_no != null">
+			    <if test="attachList != null">
 			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
 			    </if>
 			)
@@ -42,26 +42,27 @@
 	
 	<insert id="insertRreceiver" parameterType="WebmailVO">
 		INSERT ALL
-		<foreach collection="receiverList" item="receiver" index="idx">
-		INSERT INTO tb_receiver (
+		<foreach collection="receiverList" item="receivers" index="idx">
+		INTO tb_receiver (
 		    send_no,
 		    receiver,
 		    cc_at,
 		    delete_at
 		) VALUES (
 		    #{send_no},
-		    #{receiver, jdbcType=VARCHAR},
-		    #{cc_at, jdbcType=VARCHAR},
+		    #{receivers.receiver, jdbcType=VARCHAR},
+		    #{receivers.cc_at, jdbcType=CHAR},
 		    'N'
 		)
 		</foreach>
+		SELECT * FROM DUAL
 	</insert>
 	
 	<insert id="insertAttatches" parameterType="WebmailVO">
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
-			SELECT COUNT(*)+1 startAttNo
-			FROM ATTACH
-			WHERE atch_file_no = #{atch_file_no}
+		SELECT COUNT(*)+1 startAttNo
+		FROM ATTACH
+		WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
 		</selectKey>
 		INSERT ALL
 		<foreach collection="attachList" item="attatch" index="idx">
@@ -78,15 +79,15 @@
 		    save_file_nm
 	    )
 		VALUES (
-			#{atch_file_no}
+			(SELECT MAX(atch_file_no) + 1 FROM attach)
 			, #{startAttNo} + #{idx}
 			, #{attatch.file_path,jdbcType=VARCHAR}
 			, #{attatch.file_nm,jdbcType=VARCHAR}
 			, #{attatch.file_cont_type,jdbcType=VARCHAR}
 			, #{attatch.file_size,jdbcType=NUMERIC}
 			, sysdate
-			, #{attatch.reg_user_id,jdbcType=VARCHAR}
-			, #{attatch.biz_type,jdbcType=VARCHAR}
+			, #{sender, jdbcType=VARCHAR}
+			, 'WM'
 			, #{attatch.save_file_nm,jdbcType=VARCHAR}
 		)
 		</foreach>

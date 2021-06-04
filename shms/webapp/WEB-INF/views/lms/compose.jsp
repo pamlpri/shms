@@ -8,16 +8,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/toastify/toastify.css">
-<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
 
 <div class="page-content">
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">HOME</a></li>
-			<li class="breadcrumb-item"><a href="${cPath }/lms/compose.do">웹메일</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/composeForm.do">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">메일보내기</li>
 		</ol>
 	</nav>
@@ -29,7 +26,7 @@
 					<p style="font-size: 0.9em;">
 						전체 메일을 보낼 경우에는 <strong>,</strong> 로 구분하세요.
 					</p>
-					<form action="${cPath}/lms/compose.do" method="post" enctype="multipart/form-data">
+					<form id="mailForm" action="${cPath}/lms/compose.do" method="post" enctype="multipart/form-data">
 						<c:choose>
 							<c:when test="${not empty staff }">
 								<input type="hidden" name="sender" value="${staff.staff_no }" />
@@ -43,7 +40,7 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailTo"  idx="" type="text" class="form-control bg-transparent" placeholder=" 수신자" name="receiver">
+								<input id="mailTo"  type="text" class="form-control bg-transparent" placeholder=" 수신자"  disabled>
 								<input type="hidden" name="receiver" />
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
@@ -57,7 +54,7 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailCc" type="text"  idx="" class="form-control bg-transparent" placeholder=" 참조자" >
+								<input id="mailCc" type="text"  idx="" class="form-control bg-transparent" placeholder=" 참조자" disabled >
 								<input type="hidden" name="receiverCC" />
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
@@ -78,17 +75,8 @@
 							<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
 						</h6>
 						<div class="form-group">
-							<div class="fallback">
-								<div class="col-12 col-md-12">
-									<div class="card">
-										<div class="card-content">
-											<!-- File uploader with validation -->
-                                            <input type="file" class="with-validation-filepond" name="mail_files" 
-                                            	multiple data-max-file-size="5MB" data-max-files="3">
-										</div>
-									</div>
-								</div>
-							</div>
+                           	<input type="file" name="mail_files" 
+                           	multiple data-max-file-size="5MB" data-max-files="3">
 						</div>
 						<div class="text-center m-t-15">
 							<a href="${cPath }/lms/index.do"
@@ -96,7 +84,7 @@
 								class="ti-close m-r-5 f-s-12"></i> 취소</a>
 							<button
 								class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
-								type="submit" id="sendBtn">
+								type="button" id="sendBtn">
 								<i class="fa fa-paper-plane m-r-5"></i> 메일보내기
 							</button>
 						</div>
@@ -168,45 +156,6 @@
 </div>
 <script src="${cPath }/resources/lms/assets/js/main.js"></script>
 
-<!-- filepond validation -->
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-
-<!-- image editor -->
-<script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-filter/dist/filepond-plugin-image-filter.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
-
-<!-- toastify -->
-<script src="${cPath }/resources/lms/assets/vendors/toastify/toastify.js"></script>
-
-<!-- filepond -->
-<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-<script>
-	//register desired plugins...
-	FilePond.registerPlugin(
-	    // validates the size of the file...
-	    FilePondPluginFileValidateSize,
-	    // validates the file type...
-	    FilePondPluginFileValidateType
-	);
-	
-    // Filepond: With Validation
-    var pond = FilePond.create( document.querySelector('.with-validation-filepond'), { 
-        allowImagePreview: false,
-        allowMultiple: true,
-        allowFileEncode: false,
-        required: true,
-        fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
-            // Do custom type detection here and return with promise
-            resolve(type);
-        })
-    });
-	
-</script>
-
 <script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
 <script>
     $('#summernote').summernote({
@@ -231,8 +180,6 @@
 
 <script>
     $(function(){
-		const inputElement = document.querySelector('input[type="file"]');
-		const pond = FilePond.create( inputElement );
 		
         let searchUI = $("#searchUI");
         searchUI.find("[name='searchType']").val("${userVO.searchMap.searchType }");
@@ -288,7 +235,6 @@
         let curBtn = "";
         $(".mailBtn").on("click", function(){
         	curBtn = $(this).attr("id");
-        	console.log(curBtn);
         });
         
         $("#mailChoice").on("click", function(){
@@ -306,13 +252,17 @@
             }else if(curBtn == "mailCcBtn"){
 	            $("#mailCc").val(list.join(", "));
 	            $("input[name='receiverCC']").val(userList.join(", "));
+	            console.log(userList.join(", "));
             }
             
             $("#mailList").find("input[type='checkbox']").attr("checked", false);
         });
         
+        let mailForm = $("#mailForm");
         $("#sendBtn").on("click", function(){
-        	
+        	var sHTML = $(".note-editable").text();
+        	$("input[name='cont']").val(sHTML);
+        	mailForm.submit();
         });
         
     });
