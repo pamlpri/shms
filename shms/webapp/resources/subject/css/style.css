@@ -29,7 +29,10 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: #7b838a; }
-
+  
+.text-color {
+  color: #5c5c77;
+}
 h1,
 h2,
 h3,

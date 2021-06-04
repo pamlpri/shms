@@ -95,9 +95,9 @@
   	<put-attribute name="subjectFooter" value="/resources/includee/subject_footer.jsp" />
   	<put-attribute name="subjectPostScript" value="/resources/includee/subject_postScript.jsp"/>
   </definition>
-  
-  <definition name="subject/main" extends="subject">
-  	<put-attribute name="subjectContent" value="/WEB-INF/views/subject/main.jsp" />
+
+  <definition name="subject/*" extends="subject">
+  	<put-attribute name="subjectContent" value="/WEB-INF/views/subject/{1}.jsp" />
   </definition>
 </tiles-definitions>
 

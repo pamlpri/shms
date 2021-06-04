@@ -44,6 +44,8 @@ public class PagingVO<T> implements Serializable{
 	
 	private Map<String, Object> searchMap;
 	
+	private String sub_code;
+	
 	public void setTotalRecord(int totalRecord) {
 		this.totalRecord = totalRecord;
 		totalPage = totalRecord % screenSize == 0 ?

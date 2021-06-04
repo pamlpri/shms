@@ -90,7 +90,7 @@
 			<div class="card board">
 				<div class="card-title">
 					<h4>
-						학과공지<a href="noticeSubject.html" class="text-navy-color"
+						학과공지<a href="${cPath }/subject/subjectNoticeList.do?sub=${sub_code}" class="text-navy-color"
 							style="float: right; padding-right: 20px;"><i
 							class="fas fa-plus"></i></a>
 					</h4>
@@ -135,7 +135,7 @@
 			<div class="card board">
 				<div class="card-title">
 					<h4>
-						학과문의<a href="qnaSubject.html" class="text-navy-color"
+						학과문의<a href="${cPath }/subject/subjectQnaList.do" class="text-navy-color"
 							style="float: right; padding-right: 20px;"><i
 							class="fas fa-plus"></i></a>
 					</h4>

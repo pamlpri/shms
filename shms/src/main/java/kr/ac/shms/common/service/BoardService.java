@@ -15,12 +15,13 @@ import kr.ac.shms.lms.common.vo.PagingVO;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일                          수정자               수정내용
+ * 수정일         수정자        수정내용
  * --------     --------    ----------------------
- * 2021. 5. 25.      송수미       최초작성
- * 2021. 5. 28.      송수미       인증하는 메서드 작성
- * 2021. 5. 31.      최희수       첨부파일 등록 수정 삭제 작성
- * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
+ * 2021. 5. 25.   송수미       최초작성
+ * 2021. 5. 28.   송수미       인증하는 메서드 작성
+ * 2021. 5. 31.   최희수       첨부파일 등록 수정 삭제 작성
+ * 2021. 6. 01.   송수미       교수의 강의문의 수 조회
+ * 2021. 6.  4.   김보미	   학과게시판
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -123,4 +124,11 @@ public interface BoardService {
 	 * @return 데이터가 없으면 0 반환
 	 */
 	public int selectQnaCnt(Map<String, String> search);
+	
+	/**
+	 * 학과 게시판목록을 출력
+	 * @param pagingVO bo_kind, searchMap, sub_code
+	 * @return 게시글 목록 
+	 */
+	public List<BoardVO> selectHGBoardList(PagingVO<BoardVO> pagingVO);
 }

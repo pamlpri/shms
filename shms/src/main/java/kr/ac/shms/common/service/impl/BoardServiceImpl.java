@@ -286,5 +286,10 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.selectQnaCnt(search);
 	}
 
+	@Override
+	public List<BoardVO> selectHGBoardList(PagingVO<BoardVO> pagingVO) {
+		return boardDAO.selectHGBoardList(pagingVO);
+	}
+
 	
 }

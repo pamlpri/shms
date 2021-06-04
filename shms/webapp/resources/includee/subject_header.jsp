@@ -1,8 +1,9 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
+* 수정일         수정자     수정내용
 * ----------  ---------  -----------------
-* 2021. 5. 20.      박초원        최초작성
+* 2021. 5. 20.   박초원    최초작성
+* 2021. 6.  4.   김보미    연결링크수정
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,7 +12,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
-			<a class="navbar-brand logo_h" href="index.html">
+			<a class="navbar-brand logo_h" href="${cPath }/"">
 			<img src="${cPath }/resources/subject/img/logo.png" alt="" /></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarSupportedContent"
@@ -60,9 +61,9 @@
 						role="button" aria-haspopup="true" aria-expanded="false">정보마당</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
-								href="noticeSubject.html">학과공지</a></li>
+								href="${cPath }/subject/subjectNoticeList.do">학과공지</a></li>
 							<li class="nav-item"><a class="nav-link"
-								href="qnaSubject.html">학과문의</a></li>
+								href="${cPath }/subject/subjectQnaList.do">학과문의</a></li>
 						</ul>
 					</li>
 				</ul>
