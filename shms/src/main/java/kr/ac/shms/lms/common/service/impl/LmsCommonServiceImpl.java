@@ -147,4 +147,24 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		
 		return 0;
 	}
+	
+	@Override
+	public WebmailVO selectWebmail(Map<String, Object> search) {
+		// 받은 메일 쪽에서 열었을 때 read_at를 업데이트
+		if("inbox".equals(search.get("selectMenu"))){
+			lmsCommonDAO.updateReadAt(Integer.parseInt((String)search.get("send_no")));
+		}
+		
+		return lmsCommonDAO.selectWebmail(search);
+	}
+
+	@Override
+	public ServiceResult deleteWebmail(Map<String, Object> search) {
+		ServiceResult result = ServiceResult.FAIL;
+
+		int cnt = lmsCommonDAO.deleteWebmail(search);
+		if(cnt > 0) result = ServiceResult.OK;
+		
+		return result;
+	}
 }

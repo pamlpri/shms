@@ -117,7 +117,21 @@ public interface LmsCommonService {
 	/**
 	 * 웹메일 보내기
 	 * @param webmailVO
-	 * @return 데이터가 없으면 null
+	 * @return rowCnt > 0 성공
 	 */
 	public ServiceResult insertWebmail(WebmailVO webmailVO);
+	
+	/**
+	 * 하나의 웹메일의 상세 정보를 조회
+	 * @param search selectMenu, send_no
+	 * @return 웹메일의 상세 정보
+	 */
+	public WebmailVO selectWebmail(Map<String, Object> search);
+	
+	/**
+	 * 웹메일 삭제하기
+	 * @param search selectMenu, send_no
+	 * @return rowCnt > 0 성공
+	 */
+	public ServiceResult deleteWebmail(Map<String, Object> search);
 }
