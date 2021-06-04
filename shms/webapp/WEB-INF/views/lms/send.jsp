@@ -165,7 +165,7 @@
 	    		, method : "post"
 	    		, data : {
 	    			deletenos : deletenos,
-	    			selectMenu : "inbox"
+	    			selectMenu : "send"
 	    		}, dataType : "json"
 	    		, success : function(resp){
 	    			$(".modal-body").empty();
@@ -267,7 +267,7 @@
 						listBody.append(li);
 					});
 					let totalRecord = resp.totalRecord;
-					let startRow = startRow == 1 ? 1 : resp.startRow;
+					let startRow = resp.startRow == 1 ? 1 : resp.startRow;
 					let endRow = resp.endRow < totalRecord ? resp.endRow : totalRecord;
 					totalPage = resp.totalPage;
 					pageInfo = startRow + " - " + endRow + " of " + totalRecord;
@@ -276,8 +276,6 @@
 					$("#totalPage").val(totalPage);
 	    		}else{
 					$("#pageInfo").text("0 - 0 of 0");
-	    			let li = '<li class="media"><div class="text-center">현재 조회가능한 웹메일이 존재하지 않습니다.</div></li>'
-					listBody.append(li);
 	    		}
 	    	}, error : function(xhr, resp, error){
 	    		console.log(xhr);
