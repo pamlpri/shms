@@ -117,7 +117,7 @@
 			</div>
 		</section>
 	</div>
-
+	
 	<!--Basic Modal -->
 	<div class="modal fade text-left" id="default" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -219,10 +219,10 @@
 					$(resp.dataList).each(function (idx, webmail) {
 						let liClass = "";
 						if(webmail.read_at == 'Y'){
-							liClass = "mail-read"; 
+							liClass = " mail-read"; 
 						}
 						
-						let li = '<li class="media '+ liClass + '">'
+						let li = '<li class="media'+ liClass + '">'
 								 + ' <div class="user-action">'
 								 + '	<div class="checkbox-con me-3">'
 								 + '		<div class="checkbox checkbox-shadow checkbox-sm">'
@@ -246,10 +246,14 @@
 						     + '	<div class="emailName">'
 			  				 + '		<strong>' + webmail.name + '</strong>'
 							 + '	</div>'
-			  				 + '	<a href="mailRead.html" class="media-body text-color">'
+							 + '	<form id ="viewForm' + webmail.send_no + '"action="${cPath}/lms/webmailView.do" method="post">'
+							 + '		<input type="hidden" name="send_no" value="' + webmail.send_no + '">' 
+							 + '		<input type="hidden" name="selectMenu" value="inbox">'
+							 + '	</form>'
+				  			 + '	<a href="#" data-send_no="' + webmail.send_no + '" class="viewWebmail media-body text-color">'
 							 + '	<div class="user-details">'
 							 + '		<div class="mail-items">'
-							 + '			<span class="list-group-item-text text-truncate">' + webmail.title  +'</span>'
+							 + '			<span class="list-group-item-text text-truncate">' + webmail.title +'</span>'
 							 + '		</div>'
 							 + '	    <div class="mail-meta-item">'
 							 + '			<span class="float-right"> <span class="mail-date">'+ webmail.send_date +'</span>'
@@ -285,6 +289,12 @@
 	    	}
 	    });
 	    searchForm.submit();
+	    
+	    $("#listBody").on("click", ".viewWebmail", function(){
+	    	let form = "viewForm" + $(this).data("send_no");
+	    	console.log(form);
+	    	$("#" + form).submit();
+	    });
 	    
 			if(page == 1){
 				prevBtn.prop("disabled", true);

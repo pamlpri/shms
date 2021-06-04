@@ -19,7 +19,7 @@ import lombok.ToString;
  * [[개정이력(Modification Information)]]
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
- * 2021. 5. 26.      송수미       최초작성
+ * 2021. 5. 26.     송수미       최초작성
  * 2021. 5. 31.		최희수	수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>

@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,7 +38,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 2021. 6. 2.      박초원      	       최초작성
  * 2021. 6. 2.      송수미      	       받은,보낸 메일 리스트 조회
  * 2021. 6. 3.      송수미      	       받은,보낸 메일 리스트 조회
- * 2021. 6. 4.		박초원				   웹메일 조회 컨트롤러 최초작성
+ * 2021. 6. 4.		박초원		웹메일 조회 컨트롤러 최초작성
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -159,9 +160,11 @@ public class WebmailViewController {
 		return pagingVO;
 	}
 	
-	@RequestMapping("/lms/webmailView.do")
+	@RequestMapping(value="/lms/webmailView.do", method=RequestMethod.POST)
 	public String webmailView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam("send_no") int send_no
+		, @RequestParam("selectMenu") String selectMenu
 		, Model model	
 	) {
 		String user_id = user.getUser_id();
@@ -173,6 +176,13 @@ public class WebmailViewController {
 		}else if(staffVO == null && studentVO != null) {
 			model.addAttribute("student", studentVO);
 		}
+		
+		Map<String, Object> search = new HashMap<>();
+		search.put("send_no", send_no);
+		search.put("selectMenu", selectMenu);
+		WebmailVO webmail =  lmsCommonService.selectWebmail(search);
+		model.addAttribute("webmail", webmail);
+		model.addAttribute("selectMenu", selectMenu);
 		
 		return "lms/webmailView";
 	}

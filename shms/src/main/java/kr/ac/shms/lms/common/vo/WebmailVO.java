@@ -38,6 +38,8 @@ public class WebmailVO {
 	private String cont;
 	private String read_at;
 	private String sender;
+	private String sender_name;
+	private String sender_webmail;
 	private String receiver;
 	private String name;
 	private String send_date;

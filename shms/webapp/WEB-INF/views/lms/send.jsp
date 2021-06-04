@@ -9,6 +9,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/pages/email.css"/>
 <style>
     body {
@@ -243,7 +244,7 @@
 						     + '	<div class="emailName">'
 			  				 + '		<strong>' + webmail.name + '</strong>'
 							 + '	</div>'
-			  				 + '	<a href="mailRead.html" class="media-body text-color">'
+			  				 + '	<a href="${cPath}/lms/webmailView.do" class="media-body text-color">'
 							 + '	<div class="user-details">'
 							 + '		<div class="mail-items">'
 							 + '			<span class="list-group-item-text text-truncate">' + webmail.title  +'</span>'

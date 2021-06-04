@@ -140,10 +140,10 @@ public interface LmsCommonDAO {
 	
 	/**
 	 * 하나의 웹메일의 상세 정보를 조회
-	 * @param search selectMenu, send_no
+	 * @param send_no
 	 * @return 웹메일의 상세 정보
 	 */
-	public WebmailVO selectWebmail(Map<String, Object> search);
+	public WebmailVO selectWebmail(int send_no);
 	
 	/**
 	 * 읽은 상태로 업데이트

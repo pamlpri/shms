@@ -306,29 +306,57 @@
 		WHERE rn BETWEEN #{startRow, jdbcType=NUMERIC} AND #{endRow, jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectWebmail" parameterType="hashMap" resultType="WebmailVO">
+	<resultMap type="WebmailVO" id="webmailMap" autoMapping="true">
+		<id property="send_no" column="send_no"/>
+		<result property="sender_name" column="sender_name"/>
+		<result property="sender_webmail" column="sender_webmail"/>
+		<collection property="receiverList" ofType="ReceiverVO" autoMapping="true">
+			<id property="receiver" column="receiver"/>
+			<association property="user" javaType="UserVO" autoMapping="true">
+				<id property="user_no" column="user_no"/>
+			</association>
+		</collection>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectWebmail" parameterType="int" resultMap="webmailMap">
 		SELECT
 		    a.send_no,
 		    title,
 		    cont,
 		    read_at,
 		    sender,
-		    send_date,
+		    d.name sender_name,
+		    d.webmail sender_webmail,
+		    receiver,
+		    c.name,
+		    c.webmail,
+		    cc_at,
+		    TO_CHAR(send_date, 'HH:MI AM', 'nls_date_language=american') send_date,
 		    send_stat,
-		    atch_file_no
+		    a.atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
 		FROM
 		    webmail a
 		INNER JOIN tb_receiver b
 		ON(a.send_no = b.send_no)
-		WHERE a.send_no = #{send_no, jdbcType=NUMERIC}
-		<choose>
-			<when test="selectMenu eq 'send'">
-			  AND b.delete_at = 'N'
-			</when>
-			<otherwise>
-			  AND a.delete_at = 'N'
-			</otherwise>
-		</choose>
+		INNER JOIN v_userview c
+		ON(b.receiver = c.user_no)
+		INNER JOIN v_userview d
+		ON(a.sender = d.user_no)
+		LEFT OUTER JOIN attach e
+		ON(a.atch_file_no = e.atch_file_no)
+		WHERE a.send_no = #{send_no, jdbcType=VARCHAR}
 	</select>
 	
 	<update id="updateReadAt" parameterType="int">
@@ -351,10 +379,17 @@
 		    SET
 		        delete_at = 'Y'
 			WHERE
-			    send_no IN( 
-		<foreach collection="deletenos" item="send_no" separator=",">
-			    #{send_no.value, jdbcType=NUMERIC}
-		</foreach>
+			    send_no IN(
+		<choose>
+			<when test="deletenos != null">
+				<foreach collection="deletenos" item="send_no" separator=",">
+					    #{send_no.value, jdbcType=NUMERIC}
+				</foreach>
+			</when>
+			<otherwise>
+				#{send_no, jdbcType=NUMERIC}
+			</otherwise>
+		</choose> 
 				)
 	</update>
 </mapper>

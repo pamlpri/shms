@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.common.service.LmsCommonService;
@@ -40,13 +41,10 @@ public class WebmailDeleteController {
 	
 	@RequestMapping(value="/lms/webmailDelete.do", method=RequestMethod.POST ,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ServiceResult webmailDelete(
+	public ServiceResult webmailDeleteForAjax(
 		@RequestParam("deletenos[]") List<Integer> deletenos
 		, @RequestParam("selectMenu") String selectMenu
 	) {
-		
-		logger.info("deletenos : {}", deletenos.toString());
-		logger.info("selectMenu : {}", selectMenu);
 		
 		Map<String, Object> search = new HashMap<>();
 		search.put("selectMenu", selectMenu);
@@ -55,5 +53,32 @@ public class WebmailDeleteController {
 		ServiceResult result = lmsCommonService.deleteWebmail(search);
 		
 		return result;
+	}
+	
+	@RequestMapping("/lms/webmailDelete.do")
+	public String webmailDelete(
+		@RequestParam("send_no") int send_no
+		, @RequestParam("selectMenu") String selectMenu
+		, RedirectAttributes session
+	) {
+		
+		Map<String, Object> search = new HashMap<>();
+		search.put("selectMenu", selectMenu);
+		search.put("send_no", send_no);
+		
+		ServiceResult result = lmsCommonService.deleteWebmail(search);
+		String message = null;
+		String view = null;
+		
+		if(ServiceResult.OK == result) {
+			message = "성공적으로 삭제되었습니다.";
+			view = "redirect:/lms/" + selectMenu + ".do";
+		}else {
+			message = "성공 실패! 잠시 후 다시 시도해주세요.";
+			view = "redirect:/lms/webmailView.do?send_no=" + send_no + "&selectMenu=" + selectMenu;
+		}
+		session.addFlashAttribute("message", message);
+		
+		return view;
 	}
 }
