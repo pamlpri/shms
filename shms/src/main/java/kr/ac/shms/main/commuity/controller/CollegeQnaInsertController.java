@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.main.commuity.service.BoardService;
-import kr.ac.shms.main.commuity.vo.BoardVO;
+import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.validator.DMBoardInsertGroup;
 
 /**
