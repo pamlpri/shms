@@ -186,7 +186,9 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 								break;
 							}
 						}
+						logger.info("webmailVO {} ", webmailVO);
 						if(isUpload) cnt += lmsCommonDAO.insertAttatches(webmailVO);
+						logger.info("cnt {}" , cnt);
 						
 						client.logout();
 						client.disconnect();

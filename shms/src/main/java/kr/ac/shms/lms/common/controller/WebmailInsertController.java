@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.ReceiverVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
-import kr.ac.shms.lms.student.controller.MypageController;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
@@ -109,29 +109,48 @@ public class WebmailInsertController {
 	public String compose(
 		@RequestParam("receiver") String receiver
 		, @RequestParam("receiverCC") String receiverCC
-		, @ModelAttribute("webmail") WebmailVO webmail
+		, @ModelAttribute("webmail") WebmailVO webmailVO
+		, Model model
 	) {
-		logger.info("receiver {}", receiver);
-		logger.info("ccReceiver {}", receiverCC);
-		String cc_atType = "N";
-		ArrayList<String> receiverList = new ArrayList<>();
-		receiverList.add(receiver);
-		if(!receiverCC.isEmpty()) {
-			cc_atType = "Y";
-			receiverList.add(receiverCC);
+		String[] to = receiver.split(","); 
+		String[] cc = receiverCC.split(",");
+		logger.info("receiver : {}", receiver);
+		logger.info("receivercc : {}", receiverCC);
+		logger.info("sender : {}", webmailVO.getSender());
+		List<ReceiverVO> receiverList = new ArrayList<>();
+		for(int i = 0; i < to.length; i++) {
+			ReceiverVO receiverVO = new ReceiverVO();
+			receiverVO.setReceiver(to[i].trim());
+			receiverVO.setCc_at("N");
+			receiverList.add(receiverVO);
+			logger.info("receiverList : {}", receiverList.toString());
 		}
-		for(int i=0; i<receiverList.size(); i++) {
-			webmail.setReceiver(receiverList.get(i));
-			if("Y".equals(cc_atType)) {
-				if(i == 0) {
-					webmail.setCc_at("N");
-				} else if(i == 1) {
-					webmail.setCc_at(cc_atType);					
-				}
-			}
-			logger.info("receiverVO {}", webmail);
+		
+		for(int i = 0; i < cc.length; i++) {
+			ReceiverVO receiverVO = new ReceiverVO();
+			receiverVO.setReceiver(cc[i].trim());
+			logger.info("cc : {}", cc[i].trim());
+			receiverVO.setCc_at("Y");
+			receiverList.add(receiverVO);
+			logger.info("receiverList : {}", receiverList.toString());
 		}
+		 
+		if(receiverList != null && receiverList.size() >0 ) {
+			webmailVO.setReceiverList(receiverList);
+		}
+		
+		String view = null;
+		String message = null;
+		ServiceResult result = lmsCommonService.insertWebmail(webmailVO);
+		if(ServiceResult.OK.equals(result)) {
+			view = "lms/send";
+		}else {
+			message = "서버 오류입니다.";
+			view = "lms/compose";
+		}
+		
+		model.addAttribute("message", message);
 			
-			return "";
-		}
+		return view;
+	}
 }
