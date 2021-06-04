@@ -46,7 +46,7 @@ import kr.ac.shms.subject.vo.SubjectVO;
  * 2021. 6. 4.		최희수	 시간표 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
- */
+ */	
 public interface StudentService {
 
 	/**

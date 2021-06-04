@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -104,33 +105,33 @@ public class WebmailInsertController {
 		return  "lms/compose";
 	}
 	
-	@RequestMapping("/lms/compose.do")
+	@RequestMapping(value="/lms/compose.do", method=RequestMethod.POST)
 	public String compose(
 		@RequestParam("receiver") String receiver
-		, @RequestParam("cc_at") String ccReceiver
-		, @ModelAttribute("vo") WebmailVO webmailVO
+		, @RequestParam("receiverCC") String receiverCC
+		, @ModelAttribute("webmail") WebmailVO webmail
 	) {
-	logger.info("receiver {}", receiver);
-	logger.info("ccReceiver {}", ccReceiver);
-	String cc_atType = "N";
-	ArrayList<String> receiverList = new ArrayList<>();
-	receiverList.add(receiver);
-	if(!ccReceiver.isEmpty()) {
-		cc_atType = "Y";
-		receiverList.add(ccReceiver);
-	}
-	for(int i=0; i<receiverList.size(); i++) {
-		webmailVO.setReceiver(receiverList.get(i));
-		if("Y".equals(cc_atType)) {
-			if(i == 0) {
-				webmailVO.setCc_at("N");
-			} else if(i == 1) {
-				webmailVO.setCc_at(cc_atType);					
-			}
+		logger.info("receiver {}", receiver);
+		logger.info("ccReceiver {}", receiverCC);
+		String cc_atType = "N";
+		ArrayList<String> receiverList = new ArrayList<>();
+		receiverList.add(receiver);
+		if(!receiverCC.isEmpty()) {
+			cc_atType = "Y";
+			receiverList.add(receiverCC);
 		}
-		logger.info("receiverVO {}", webmailVO);
-	}
-		
-		return "";
-	}
+		for(int i=0; i<receiverList.size(); i++) {
+			webmail.setReceiver(receiverList.get(i));
+			if("Y".equals(cc_atType)) {
+				if(i == 0) {
+					webmail.setCc_at("N");
+				} else if(i == 1) {
+					webmail.setCc_at(cc_atType);					
+				}
+			}
+			logger.info("receiverVO {}", webmail);
+		}
+			
+			return "";
+		}
 }

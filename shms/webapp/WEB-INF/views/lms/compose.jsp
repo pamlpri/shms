@@ -7,6 +7,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/toastify/toastify.css">
 <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
@@ -28,13 +29,22 @@
 					<p style="font-size: 0.9em;">
 						전체 메일을 보낼 경우에는 <strong>,</strong> 로 구분하세요.
 					</p>
-					<form action="${cPath}/lms/compose.do">
+					<form action="${cPath}/lms/compose.do" method="post" enctype="multipart/form-data">
+						<c:choose>
+							<c:when test="${not empty staff }">
+								<input type="hidden" name="sender" value="${staff.staff_no }" />
+							</c:when>
+							<c:otherwise>
+								<input type="hidden" name="sender" value="${student.stdnt_no }" />
+							</c:otherwise>
+						</c:choose>
 						<div class="form-group">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailTo" type="text" class="form-control bg-transparent" placeholder=" 수신자" name="receiver">
+								<input id="mailTo"  idx="" type="text" class="form-control bg-transparent" placeholder=" 수신자" name="receiver">
+								<input type="hidden" name="receiver" />
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
 									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
@@ -47,7 +57,8 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailCc" type="text" class="form-control bg-transparent" placeholder=" 참조자" name="cc_at">
+								<input id="mailCc" type="text"  idx="" class="form-control bg-transparent" placeholder=" 참조자" >
+								<input type="hidden" name="receiverCC" />
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
 									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
@@ -72,15 +83,15 @@
 									<div class="card">
 										<div class="card-content">
 											<!-- File uploader with validation -->
-                                            <input type="file" class="with-validation-filepond" 
-                                            	required multiple data-max-file-size="5MB" data-max-files="3">
+                                            <input type="file" class="with-validation-filepond" name="mail_files" 
+                                            	multiple data-max-file-size="5MB" data-max-files="3">
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="text-center m-t-15">
-							<a href="inbox.html"
+							<a href="${cPath }/lms/index.do"
 								class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20"><i
 								class="ti-close m-r-5 f-s-12"></i> 취소</a>
 							<button
@@ -282,17 +293,26 @@
         
         $("#mailChoice").on("click", function(){
             var list = [];
+            var userList = [];
             $("#mailList").find("input[type='checkbox']:checked").each(function(index, element){
                 var mail = $(element).parent("li").text();
+                var userNo = $(element).parent("li").children("input").val();
                 list.push(mail.split("-")[0].trim());
+                userList.push(userNo);
             });
             if(curBtn == "mailToBtn"){
 	            $("#mailTo").val(list.join(", "));
+	            $("input[name='receiver']").val(userList.join(", "));
             }else if(curBtn == "mailCcBtn"){
 	            $("#mailCc").val(list.join(", "));
+	            $("input[name='receiverCC']").val(userList.join(", "));
             }
             
             $("#mailList").find("input[type='checkbox']").attr("checked", false);
+        });
+        
+        $("#sendBtn").on("click", function(){
+        	
         });
         
     });
