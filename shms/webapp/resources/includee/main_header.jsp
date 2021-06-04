@@ -103,7 +103,7 @@
               <li>
                 <a class="dropdown-item subWrap" href="engineering.html">공학대학</a>
                 <ul class="sub">
-                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=201">화학과</a></li>
+                  <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=201">화학공학과</a></li>
                   <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=202">정보통신학과</a></li>
                   <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=203">항공학과</a></li>
                   <li><a class="text-navy-color" href="${cPath }/subject/main.do?sub=204">기계공학과</a></li>
