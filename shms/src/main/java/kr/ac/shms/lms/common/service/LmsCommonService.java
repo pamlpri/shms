@@ -27,6 +27,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
  * 2021. 06. 03       박초원 	웹메일 보내기 추가
+ * 2021. 06. 04    	  박초원 	수신자, 첨부파일 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */

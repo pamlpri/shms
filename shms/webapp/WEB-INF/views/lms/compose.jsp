@@ -28,7 +28,7 @@
 					<p style="font-size: 0.9em;">
 						전체 메일을 보낼 경우에는 <strong>,</strong> 로 구분하세요.
 					</p>
-					<form action="${cPath}/lms/webmailSend.do">
+					<form action="${cPath}/lms/compose.do">
 						<div class="form-group">
 							<div class="input-group mb-3">
 								<span class="input-group-text" id="basic-addon1">
@@ -38,7 +38,7 @@
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
 									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
-									id=" mailToBtn" style="border: 1px solid #dce7f1;">
+									id="mailToBtn" style="border: 1px solid #dce7f1;">
 									검색</button>
 							</div>
 						</div>
@@ -47,7 +47,7 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailCc" type="text" class="form-control bg-transparent" placeholder=" 참조자" name="receiver">
+								<input id="mailCc" type="text" class="form-control bg-transparent" placeholder=" 참조자" name="cc_at">
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
 									data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"
@@ -85,7 +85,7 @@
 								class="ti-close m-r-5 f-s-12"></i> 취소</a>
 							<button
 								class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
-								type="button" id="sendBtn">
+								type="submit" id="sendBtn">
 								<i class="fa fa-paper-plane m-r-5"></i> 메일보내기
 							</button>
 						</div>
@@ -277,6 +277,7 @@
         let curBtn = "";
         $(".mailBtn").on("click", function(){
         	curBtn = $(this).attr("id");
+        	console.log(curBtn);
         });
         
         $("#mailChoice").on("click", function(){
@@ -287,9 +288,11 @@
             });
             if(curBtn == "mailToBtn"){
 	            $("#mailTo").val(list.join(", "));
-            }else{
+            }else if(curBtn == "mailCcBtn"){
 	            $("#mailCc").val(list.join(", "));
             }
+            
+            $("#mailList").find("input[type='checkbox']").attr("checked", false);
         });
         
     });

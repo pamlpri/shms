@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author 송수미
@@ -30,6 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of="send_no")
+@ToString(exclude="cont")
 public class WebmailVO {
 	private Integer send_no;
 	private String title;
@@ -43,6 +45,22 @@ public class WebmailVO {
 	private Integer atch_file_no;
 	private String cc_at;
 	private String delete_at;
+	
+	private List<ReceiverVO> receiverList;
+	private ReceiverVO[] receivers;
+	public void setReceivers(ReceiverVO[] receivers) {
+		this.receivers = receivers;
+		if(receivers != null) {
+			List<ReceiverVO> receiverList = new ArrayList<>();
+			for(ReceiverVO receiverVO : receiverList) {
+				if(receiverVO == null) continue;
+				receiverList.add(new ReceiverVO(receiverVO));
+			}
+			if(receiverList.size() > 0) {
+				this.receiverList = receiverList;
+			}
+		}
+	}
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;

@@ -28,6 +28,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
  * 2021. 06. 03		  박초원    웹메일 보내기 추가
+ * 2021. 06. 04    	  박초원 	수신자, 첨부파일 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -119,9 +120,23 @@ public interface LmsCommonDAO {
 	/**
 	 * 웹메일 보내기
 	 * @param webmailVO
-	 * @return rowCnt > 0 성공
+	 * @return 데이터가 없으면 null
 	 */
 	public int insertWebmail(WebmailVO webmailVO);
+	
+	/**
+	 * 웹메일 수신자 테이블 insert
+	 * @param webmailVO
+	 * @return 데이터가 없으면 null
+	 */
+	public int insertRreceiver(WebmailVO webmailVO);
+	
+	/**
+	 * 첨부파일 등록
+	 * @param webmailVO
+	 * @return row count > 0 성공
+	 */
+	public int insertAttatches(WebmailVO webmailVO);
 	
 	/**
 	 * 하나의 웹메일의 상세 정보를 조회

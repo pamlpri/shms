@@ -1,11 +1,14 @@
 package kr.ac.shms.lms.common.service.impl;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +24,7 @@ import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.common.vo.PagingVO;
+import kr.ac.shms.lms.common.vo.ReceiverVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -38,6 +42,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 02.      송수미       진로교육 목록 조회 추가
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
  * 2021. 06. 03 	박초원		웹메일 인서트
+ * 2021. 06. 04 	박초원 	    수신자, 첨부파일 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -129,11 +134,23 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		
 		int cnt = lmsCommonDAO.insertWebmail(webmailVO);
 		if(cnt > 0) {
+			cnt += receiver(webmailVO);
 			cnt += processes(webmailVO);
-			result = ServiceResult.OK;
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
+	}
+	
+	private int receiver(WebmailVO webmailVO) {
+		int cnt = 0;
+		List<ReceiverVO> receiverList = webmailVO.getReceiverList();
+		if(receiverList != null && receiverList.size() > 0) {
+			cnt += lmsCommonDAO.insertRreceiver(webmailVO);
 		}
 		
-		return result;
+		return cnt;
 	}
 
 	private int processes(WebmailVO webmailVO) {
@@ -141,11 +158,47 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		List<AttachVO> attachList = webmailVO.getAttachList();
 		if(attachList != null && attachList.size() > 0) {
 			FTPClient client = new FTPClient();
-			
-			
+			try {
+				client.connect(ip, port);
+				int reply = client.getReplyCode();
+				logger.info("client Connect : {}", reply);
+				if(FTPReply.isPositiveCompletion(reply)) {
+					if(client.login(id, pw)) {
+						client.setBufferSize(1000);
+						client.enterLocalPassiveMode();
+						
+						String dir = "/mail";
+						boolean isDirectory = client.changeWorkingDirectory(dir);
+						for(AttachVO attach : attachList) {
+							attach.setFile_path(dir);
+						}
+						logger.info("isDir : {} || {}", isDirectory, dir);
+						if(!isDirectory) {
+							client.mkd(dir);
+						}
+						client.setFileType(FTP.BINARY_FILE_TYPE);
+						
+						boolean isUpload = false;
+						for(AttachVO attach : webmailVO.getAttachList()) {
+							isUpload = client.storeFile(attach.getSave_file_nm(), new ByteArrayInputStream(attach.getFile().getBytes()));
+							if(!isUpload) {
+								client.logout();
+								break;
+							}
+						}
+						if(isUpload) cnt += lmsCommonDAO.insertAttatches(webmailVO);
+						
+						client.logout();
+						client.disconnect();
+					}else {
+						client.disconnect();
+					}
+				}
+			}catch(Exception e) {
+				
+			}
 		}
-		
-		return 0;
+		return cnt;
 	}
 	
 	@Override
