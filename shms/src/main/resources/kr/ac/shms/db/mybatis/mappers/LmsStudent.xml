@@ -208,7 +208,8 @@
 		        c.com_code_nm process_stat_nm,
 		        stdnt_no,
 		        refuse_resn,
-		        staff_no,
+		        a.staff_no,
+                d.name staff_name,
 		        conslt_link
 		FROM
 		    conslt_req a
@@ -216,10 +217,42 @@
 		ON(a.consult_cl = b.com_code)
 		INNER JOIN tb_com_code c
 		ON(a.process_stat = c.com_code)
+        INNER JOIN staff d
+        ON (a.staff_no = d.staff_no)
 		WHERE b.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'CONSULT_CL')
 		  AND c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
 		  AND stdnt_no = #{stdnt_no}
 	</select>
+	
+	<delete id="consultingDelete" parameterType="String">
+		DELETE 
+		FROM conslt_req
+		WHERE req_no = #{req_no}
+	</delete>
+	
+	<insert id="consultingInsert" parameterType="ConsultingVO">
+		INSERT INTO CONSLT_REQ (req_no, consult_cl, req_date, hope_date, req_cont, process_stat, stdnt_no, staff_no)
+		VALUES(
+		    conslt_req_seq.NEXTVAL,
+		    #{consult_cl, jdbcType=VARCHAR},
+		    sysdate,
+		    TO_DATE(#{hope_date}||' '||#{hope_time}, 'YYYY-MM-DD HH24:MI'),
+		    #{req_cont, jdbcType=VARCHAR},
+		    'DG',
+		    #{stdnt_no, jdbcType=VARCHAR},
+		    #{staff_no, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="consultingUpdate" parameterType="ConsultingVO">
+		UPDATE CONSLT_REQ
+		    SET consult_cl = #{consult_cl},
+		        req_date = sysdate,
+		        hope_date = TO_DATE(#{hope_date} || ' ' || #{hope_time}, 'YYYY-MM-DD HH24:MI'),
+		        req_cont = #{req_cont}
+		WHERE req_no = #{req_no}
+	
+	</update>
 	
 </mapper>
 

@@ -148,4 +148,25 @@ public interface StudentService {
 	 * @return
 	 */
 	public String reginfo(String stdnt_no);
+	
+	/**
+	 * 지도교수상담 상담상태가 대기일 때 삭제
+	 * @param curCode
+	 * @return
+	 */
+	public ServiceResult consultingDelete(String req_no);
+	
+	/**
+	 * 지도교수 상담 신청
+	 * @param consultingVO
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingInsert(ConsultingVO consultingVO);
+	
+	/**
+	 * 지도교수 상담 수정
+	 * @param consultingVO
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingUpdate(ConsultingVO consultingVO);
 }

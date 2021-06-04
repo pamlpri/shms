@@ -140,5 +140,29 @@ public class StudentServiceImpl implements StudentService{
 	public String reginfo(String stdnt_no) {
 		return studentDAO.reginfo(stdnt_no);
 	}
+
+	@Override
+	public ServiceResult consultingDelete(String req_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.consultingDelete(req_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ServiceResult consultingInsert(ConsultingVO consultingVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.consultingInsert(consultingVO);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ServiceResult consultingUpdate(ConsultingVO consultingVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.consultingUpdate(consultingVO);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
 	
 }

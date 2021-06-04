@@ -7,11 +7,18 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
@@ -34,6 +41,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * </pre>
  */
 @Controller
+@RequestMapping("/lms")
 public class ConsultingViewController {
 	private static final Logger logger = LoggerFactory.getLogger(ConsultingViewController.class);
 	@Inject
@@ -42,7 +50,7 @@ public class ConsultingViewController {
 	@Inject
 	private LmsStaffService lmsStaffService;
 	
-	@RequestMapping("/lms/consultingList.do")
+	@RequestMapping("/consultingList.do")
 	public String consultingList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
@@ -60,7 +68,7 @@ public class ConsultingViewController {
 	}
 	
 	
-	@RequestMapping("/lms/consultingView.do")
+	@RequestMapping("/consultingView.do")
 	public String consultingView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, HttpSession session
@@ -79,6 +87,36 @@ public class ConsultingViewController {
 		}
 		
 		return  "lms/consultingView";
+	}
+	
+	@DeleteMapping(produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ServiceResult delete(
+			@RequestParam("req_no") String req_no
+		) {
+		ServiceResult result = studentService.consultingDelete(req_no);		
+		
+		return result;
+	}
+	
+	@RequestMapping(value="/consultingSign.do", method=RequestMethod.POST)
+	public String consultingSing(
+			@ModelAttribute("consultingVO") ConsultingVO consultingVO
+			, @RequestParam("update") String update
+		) {
+		logger.info("consultingVo : {}", consultingVO);
+		logger.info("update {}", update);
+		ServiceResult result = null;
+		if("insert".equals(update)) {
+			result = studentService.consultingInsert(consultingVO);
+		} else if("update".equals(update)) {
+			result = studentService.consultingUpdate(consultingVO);
+		}
+		String view = null;
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/consultingList.do";
+		}
+		return view;
 	}
 	
 }

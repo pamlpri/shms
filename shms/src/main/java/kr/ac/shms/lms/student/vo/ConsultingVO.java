@@ -21,4 +21,5 @@ public class ConsultingVO {
 	private String stdnt_no;
 	private String refuse_resn;
 	private String staff_no;
+	private String staff_name;
 }

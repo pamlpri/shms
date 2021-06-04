@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
@@ -154,6 +155,27 @@ public interface StudentDAO {
 	 * @return
 	 */
 	public String reginfo(String stdnt_no);
+	
+	/**
+	 * 지도교수상담 상담상태가 대기일 때 삭제
+	 * @param curCode
+	 * @return
+	 */
+	public int consultingDelete(String req_no);
+	
+	/**
+	 * 지도교수 상담 신청
+	 * @param consultingVO
+	 * @return ServiceResult
+	 */
+	public int consultingInsert(ConsultingVO consultingVO);
+	
+	/**
+	 * 지도교수 상담 수정
+	 * @param consultingVO
+	 * @return ServiceResult
+	 */
+	public int consultingUpdate(ConsultingVO consultingVO);
 
 }
 
