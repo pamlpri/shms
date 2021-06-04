@@ -19,6 +19,19 @@ import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.TimeTableVO;
 
+/**
+ * @author 작성자명
+ * @since 2021. 6. 4.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 6. 4.      최희수       최초작성
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 @Controller
 @RequestMapping("/lms")
 public class TimeTableController {
@@ -31,7 +44,6 @@ public class TimeTableController {
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
-		logger.info("sendForm?");
 		String stdnt_no = user.getUser_id();
 		StudentVO studentVO = sutdentService.student(stdnt_no);
 		List<TimeTableVO> timeTableList = sutdentService.timeTable(stdnt_no);

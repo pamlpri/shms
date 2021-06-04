@@ -5,6 +5,7 @@
 * 2021. 5. 20.      박초원        최초작성
 * 2021. 5. 24.      박초원        메뉴통합
 * 2021. 5. 26.		최희수	메뉴 권한에 따라 보여주기
+* 2021. 6. 4.		최희수	내 시간표 이동
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"

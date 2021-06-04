@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
  * 수정일        수정자          수정내용
  * --------     --------    ----------------------
  * 2021. 5. 28.  김보미          최초작성
+ * 2021. 6. 4.   최희수     	  시간표 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */

@@ -33,6 +33,20 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * </pre>
  */
 import kr.ac.shms.subject.vo.SubjectVO;
+/**
+ * @author 작성자명
+ * @since 2021. 6. 4.
+ * @version 1.0
+ * @see javax.servlet.http.HttpServlet
+ * <pre>
+ * [[개정이력(Modification Information)]]
+ * 수정일                          수정자               수정내용
+ * --------     --------    ----------------------
+ * 2021. 6. 4.      작성자명       최초작성
+ * 2021. 6. 4.		최희수	 시간표 출력
+ * Copyright (c) 2021 by DDIT All right reserved
+ * </pre>
+ */
 public interface StudentService {
 
 	/**
