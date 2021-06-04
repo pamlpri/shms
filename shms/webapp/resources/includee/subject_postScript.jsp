@@ -10,7 +10,6 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="${cPath }/resources/subject/js/jquery-3.2.1.min.js"></script>
 <script src="${cPath }/resources/subject/js/popper.js"></script>
 <script src="${cPath }/resources/subject/js/bootstrap.min.js"></script>
 <script src="${cPath }/resources/subject/vendors/nice-select/js/jquery.nice-select.min.js"></script>

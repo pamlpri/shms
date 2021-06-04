@@ -48,10 +48,10 @@ public class SubjectNoticeViewController {
 			, @RequestParam(value="searchType", required=false) String searchType
 			, @RequestParam(value="searchWord", required=false) String searchWord
 			, @SessionAttribute(name="sub_code", required=false) String sub_code
-			, SessionStatus sessionStatus
+//			, SessionStatus sessionStatus
 			, Model model
 			) {
-		sessionStatus.setComplete();
+//		sessionStatus.setComplete();
 		String bo_name = "학과공지";
 		String bo_kind = boardService.selectBoKind(bo_name);
 		
@@ -64,9 +64,6 @@ public class SubjectNoticeViewController {
 		searchMap.put("bo_kind", bo_kind);
 		searchMap.put("sub_code", sub_code);
 		pagingVO.setSearchMap(searchMap);
-		logger.info("sub_code {}", sub_code);
-		logger.info("pagingVO {}", pagingVO.toString());
-		logger.info("sub_code {}", pagingVO.getSearchMap().get("sub_code"));
 		int totalRecord = boardService.selectBoardCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
@@ -74,6 +71,7 @@ public class SubjectNoticeViewController {
 		pagingVO.setDataList(boardList);
 		model.addAttribute(pagingVO);
 		model.addAttribute("sub_code", sub_code);
+		System.out.println("sub_code : " + sub_code);
 		
 		return "subject/subjectNotice";
 	}
@@ -82,14 +80,14 @@ public class SubjectNoticeViewController {
 	public String subjectNoticeView(
 			@RequestParam("bo_no") int bo_no
 			, @SessionAttribute(name="sub_code", required=false) String sub_code
-			, HttpSession session
 			, Model model
 			) {
 		BoardVO board = boardService.selectBoard(bo_no);
 		boardService.incrementHit(bo_no);
 		
 		model.addAttribute("board", board);
-		return "/subject/subjectNoticeView";
+		model.addAttribute("sub_code", sub_code);
+		return "subject/subjectNoticeView";
 	}
 	
 }
