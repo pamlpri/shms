@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.service.BoardService;
@@ -34,6 +36,7 @@ import kr.ac.shms.subject.vo.SubjectVO;
  */
 
 @Controller
+@SessionAttributes("sub_code")
 public class SubjectIndexController {
 	
 	@Inject
@@ -44,8 +47,8 @@ public class SubjectIndexController {
 	
 	@RequestMapping("/subject/main.do")
 	public String index(
-			@RequestParam("sub") String sub
-			, RedirectAttributes session
+			@RequestParam("sub") String sub  
+			, @SessionAttribute(name="sub_code", required=false) String sub_code
 			, Model model 
 			) {
 //		session에 학과코드 넣어서 갖고 다니기
@@ -65,7 +68,7 @@ public class SubjectIndexController {
 		model.addAttribute("subject", subject);
 		model.addAttribute("profList", profList);
 		
-		session.addAttribute("sub", sub);
+		model.addAttribute("sub_code", sub);
 		
 		return "subject/main";
 	}
