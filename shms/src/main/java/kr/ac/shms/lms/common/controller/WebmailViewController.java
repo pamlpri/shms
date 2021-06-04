@@ -37,6 +37,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 2021. 6. 2.      박초원      	       최초작성
  * 2021. 6. 2.      송수미      	       받은,보낸 메일 리스트 조회
  * 2021. 6. 3.      송수미      	       받은,보낸 메일 리스트 조회
+ * 2021. 6. 4.		박초원				   웹메일 조회 컨트롤러 최초작성
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -51,7 +52,7 @@ public class WebmailViewController {
 	
 	@Inject
 	private LmsCommonService lmsCommonService;
-	
+		
 	public PagingVO<WebmailVO> settingList(
 			int currentPage
 			, String user_id
@@ -59,7 +60,7 @@ public class WebmailViewController {
 			, String searchWord
 			) {
 		
-		PagingVO<WebmailVO> pagingVO = new PagingVO<>(5, 5);
+		PagingVO<WebmailVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
 		
 		Map<String, Object> searchMap = new HashMap<>();
@@ -82,7 +83,6 @@ public class WebmailViewController {
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
 		, @RequestParam(value="searchWord", required=false) String searchWord
-		, HttpSession session
 		, Model model
 	) {
 		String user_id = user.getUser_id();
@@ -90,10 +90,8 @@ public class WebmailViewController {
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
 		if(staffVO != null && studentVO == null) {
-			session.setAttribute("userName", staffVO.getName());
 			model.addAttribute("staff", staffVO);
 		}else if(staffVO == null && studentVO != null) {
-			session.setAttribute("userName", studentVO.getName());
 			model.addAttribute("student", studentVO);
 		}
 		
@@ -110,7 +108,6 @@ public class WebmailViewController {
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchWord", required=false) String searchWord
-			, HttpSession session
 			, Model model
 		) {
 		String user_id = user.getUser_id();
@@ -126,7 +123,6 @@ public class WebmailViewController {
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchWord", required=false) String searchWord
-			, HttpSession session
 			, Model model
 	) {
 		String user_id = user.getUser_id();
@@ -134,10 +130,8 @@ public class WebmailViewController {
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
 		if(staffVO != null && studentVO == null) {
-			session.setAttribute("userName", staffVO.getName());
 			model.addAttribute("staff", staffVO);
 		}else if(staffVO == null && studentVO != null) {
-			session.setAttribute("userName", studentVO.getName());
 			model.addAttribute("student", studentVO);
 		}
 		
@@ -155,7 +149,6 @@ public class WebmailViewController {
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchWord", required=false) String searchWord
-			, HttpSession session
 			, Model model
 		) {
 		String user_id = user.getUser_id();
@@ -166,4 +159,21 @@ public class WebmailViewController {
 		return pagingVO;
 	}
 	
+	@RequestMapping("/lms/webmailView.do")
+	public String webmailView(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, Model model	
+	) {
+		String user_id = user.getUser_id();
+		StudentVO studentVO = studentService.student(user_id);
+		StaffVO staffVO = lmsStaffService.staff(user_id);
+		
+		if(staffVO != null && studentVO == null) {
+			model.addAttribute("staff", staffVO);
+		}else if(staffVO == null && studentVO != null) {
+			model.addAttribute("student", studentVO);
+		}
+		
+		return "lms/webmailView";
+	}
 }

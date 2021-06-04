@@ -68,4 +68,5 @@
   			left outer join dept c on (a.dept_code = c.dept_code)	
 		<include refid="searchFrag" />
 	</select>
+	
 </mapper>

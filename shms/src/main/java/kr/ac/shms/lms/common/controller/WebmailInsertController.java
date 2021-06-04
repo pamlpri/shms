@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.common.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.UserVO;
+import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.controller.MypageController;
@@ -103,10 +106,31 @@ public class WebmailInsertController {
 	
 	@RequestMapping("/lms/compose.do")
 	public String compose(
-			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-			, Model model
-		) {
+		@RequestParam("receiver") String receiver
+		, @RequestParam("cc_at") String ccReceiver
+		, @ModelAttribute("vo") WebmailVO webmailVO
+	) {
+	logger.info("receiver {}", receiver);
+	logger.info("ccReceiver {}", ccReceiver);
+	String cc_atType = "N";
+	ArrayList<String> receiverList = new ArrayList<>();
+	receiverList.add(receiver);
+	if(!ccReceiver.isEmpty()) {
+		cc_atType = "Y";
+		receiverList.add(ccReceiver);
+	}
+	for(int i=0; i<receiverList.size(); i++) {
+		webmailVO.setReceiver(receiverList.get(i));
+		if("Y".equals(cc_atType)) {
+			if(i == 0) {
+				webmailVO.setCc_at("N");
+			} else if(i == 1) {
+				webmailVO.setCc_at(cc_atType);					
+			}
+		}
+		logger.info("receiverVO {}", webmailVO);
+	}
 		
-		return null;
+		return "";
 	}
 }
