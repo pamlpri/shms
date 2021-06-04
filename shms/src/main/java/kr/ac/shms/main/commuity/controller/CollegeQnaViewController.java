@@ -13,9 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lms.common.vo.PagingVO;
-import kr.ac.shms.main.commuity.service.BoardService;
-import kr.ac.shms.main.commuity.vo.BoardVO;
 
 /**
  * @author 박초원

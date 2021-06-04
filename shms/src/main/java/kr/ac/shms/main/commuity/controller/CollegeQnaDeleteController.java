@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.main.commuity.service.BoardService;
+import kr.ac.shms.common.service.BoardService;
 
 /**
  * @author 송수미

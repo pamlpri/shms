@@ -1,4 +1,4 @@
-package kr.ac.shms.main.commuity.vo;
+package kr.ac.shms.common.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.validator.BoardDeleteGroup;
 import kr.ac.shms.validator.BoardInsertGroup;
 import kr.ac.shms.validator.BoardUpdateGroup;
