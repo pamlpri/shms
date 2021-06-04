@@ -3,7 +3,8 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
-* 2021. 6. 2.      송수미        최초작성
+* 2021. 6. 3.      송수미        보낸 메일 리스트 기능 구현
+* 2021. 6. 4.      송수미        보낸 메일 삭제 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -52,8 +53,7 @@
 											<!-- delete unread dropdown -->
 											<ul class="list-inline m-0 d-flex" style="overflow-y: auto;">
 												<li class="list-inline-item mail-delete">
-													<button type="button" class="btn btn-icon action-icon"
-														data-toggle="tooltip" id="deleteBtn">
+													<button type="button" class="btn btn-icon action-icon" id="deleteBtn">
 														<span class="fonticon-wrap"> <i class="far fa-trash-alt"></i>
 														</span>
 													</button>
@@ -115,47 +115,104 @@
 			</div>
 		</section>
 	</div>
+	
+	<!--Basic Modal -->
+	<div class="modal fade text-left" id="default" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel1">메일 삭제</h5>
+					<button type="button" class="close rounded-pill"
+						data-bs-dismiss="modal" aria-label="Close">
+						<i data-feather="x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal" id="close">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">닫기</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 <script>
-    $(function(){
-        $(".selectAll").on("click", "#checkboxsmall", function(){
-            if($(this).prop("checked")){
-                $(".email-user-list").find(".form-check-input").prop("checked", true);
-            }else {
-                $(".email-user-list").find(".form-check-input").prop("checked", false);
-            }
-        });
-
-        $("#deleteBtn").on("click", function(){
-        	let checkeds = $(".email-user-list").find("input:checked");
-        	$(checkeds).each(function(idx, checked){
-        		deleteno = $(checked).data("mailno");
+	$(function(){
+	    $(".selectAll").on("click", "#checkboxsmall", function(){
+	        if($(this).prop("checked")){
+	            $(".email-user-list").find(".form-check-input").prop("checked", true);
+	        }else {
+	            $(".email-user-list").find(".form-check-input").prop("checked", false);
+	        }
+	    });
+		
+	    
+	    $("#deleteBtn").on("click", function(){
+	        let deletenos = new Array();
+	    	let checkeds = $(".email-user-list").find("input:checked");
+	    	let message = "";
+	    	$(checkeds).each(function(idx, checked){
+	    		deleteno = $(checked).data("mailno");
 				deletenos.push(deleteno);
-        	})
-            $(".email-user-list").find("input:checked").parents(".media").remove();
-        });
-        
-        let page = 1;
-        let prevBtn = $(".email-action").find(".email-pagination-prev");
-        let nextBtn = $(".email-action").find(".email-pagination-next");
-        let pageInfo = "";
-        let totalPage = $("#totalPage").val();
-        
-        $("#searchWord").on("keyup", function(){
-        	searchWord = $("#searchWord").val();
+	    	})
+	    	
+	    	$.ajax({
+	    		url : "${cPath}/lms/webmailDelete.do"
+	    		, method : "post"
+	    		, data : {
+	    			deletenos : deletenos,
+	    			selectMenu : "inbox"
+	    		}, dataType : "json"
+	    		, success : function(resp){
+	    			$(".modal-body").empty();
+	    			if(resp == "OK"){
+	    				message = "삭제가 완료되었습니다."	;
+	    			}else{
+	    				message = "삭제에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+	    			}
+	    			$(".modal-body").text(message);
+	    			$("#default").addClass("show").css("display", "block");
+			    	searchForm.submit();
+	    		}, error : function(xhr, error, msg){
+					console.log(xhr);
+					console.log(error);
+					console.log(msg);
+				}
+	    			
+	    	});
+	    	
+	    	$("#default").find("#close").on("click", function(){
+	    		$("#default").removeClass("show").css("display", "none");
+	    	});
+	    	
+	    });
+	    
+	    let page = 1;
+	    let prevBtn = $(".email-action").find(".email-pagination-prev");
+	    let nextBtn = $(".email-action").find(".email-pagination-next");
+	    let pageInfo = "";
+	    let totalPage = $("#totalPage").val();
+	    
+	    $("#searchWord").on("keyup", function(){
+	    	searchWord = $("#searchWord").val();
 			$(searchForm).find("input[name='searchWord']").val(searchWord);     	
 			$(searchForm).find("input[name='page']").val("");
 			searchForm.submit();
-        });
-        
-        let searchWord = $("#searchWord").val();
-        let listBody = $("#listBody");
-        let searchForm = $("#searchForm").ajaxForm({
-        	dataType : "json"
-        	, beforeSubmit: function(){
-        		searchForm.find("[name='page']").val("")
-        	}, success : function(resp){
-        		listBody.empty();
-        		if(resp.dataList){
+	    });
+	    
+	    let searchWord = $("#searchWord").val();
+	    let listBody = $("#listBody");
+	    let searchForm = $("#searchForm").ajaxForm({
+	    	dataType : "json"
+	    	, beforeSubmit: function(){
+	    		searchForm.find("[name='page']").val("")
+	    	}, success : function(resp){
+	    		listBody.empty();
+	    		if(resp.dataList.length > 0){
 					$(resp.dataList).each(function (idx, webmail) {
 						let liClass = "";
 						if(webmail.read_at == 'Y'){
@@ -167,7 +224,7 @@
 								 + '	<div class="checkbox-con me-3">'
 								 + '		<div class="checkbox checkbox-shadow checkbox-sm">'
 								 + '			<input type="checkbox" id="checkboxsmall1"'
-								 + '				class="form-check-input">'
+								 + '				class="form-check-input" data-mailno="' + webmail.send_no +'">'
 								 + '				<label for="checkboxsmall1"></label>'
 								 + '		</div>'
 								 + '	</div>'
@@ -209,49 +266,56 @@
 							 
 						listBody.append(li);
 					});
-   					let startRow = resp.startRow == 1 ? 1 : resp.startRow;
-   					let totalRecord = resp.totalRecord;
-   					let endRow = resp.endRow < totalRecord ? resp.endRow : totalRecord;
-   					totalPage = resp.totalPage;
+					let totalRecord = resp.totalRecord;
+					let startRow = startRow == 1 ? 1 : resp.startRow;
+					let endRow = resp.endRow < totalRecord ? resp.endRow : totalRecord;
+					totalPage = resp.totalPage;
 					pageInfo = startRow + " - " + endRow + " of " + totalRecord;
 					$("#pageInfo").text("");
 					$("#pageInfo").text(pageInfo);
 					$("#totalPage").val(totalPage);
-        		}else{
-        			console.log("없음");
-        		}
-        		
-        	}, error : function(xhr, resp, error){
-        		console.log(xhr);
-        	}
-        });
-        searchForm.submit();
-        
-   		if(page == 1){
-   			prevBtn.prop("disabled", true);
-   		}
-        
-   		if(page == totalPage){
-    		$(nextBtn).prop("disabled", true);
-   		}
-   		
-        $(prevBtn).on("click", function(){
-        	if(page > 1){
-        		page = page - 1;
-        		nextBtn.prop("disabled", false);
-        		searchForm.submit();
-        	}
-        });
-        
-        $(nextBtn).on("click", function(){
-        	if(page < totalPage){
+	    		}else{
+					$("#pageInfo").text("0 - 0 of 0");
+	    			let li = '<li class="media"><div class="text-center">현재 조회가능한 웹메일이 존재하지 않습니다.</div></li>'
+					listBody.append(li);
+	    		}
+	    	}, error : function(xhr, resp, error){
+	    		console.log(xhr);
+	    	}
+	    });
+	    searchForm.submit();
+	    
+			if(page == 1){
+				prevBtn.prop("disabled", true);
+			}
+	    
+			if(page == totalPage){
+				nextBtn.prop("disabled", true);
+			}
+			
+	    $(prevBtn).on("click", function(){
+	    	if(page > 1){
+	    		page = page - 1;
+				if(page == 1){
+					prevBtn.prop("disabled", true);
+				}
+	    		searchForm.find("[name='page']").val(page);
+	    		searchForm.submit();
+	    		nextBtn.prop("disabled", false);
+	    	}
+	    });
+	    
+	    $(nextBtn).on("click", function(){
+	    	if(page < totalPage){
 	       		page = page + 1;
+				if(page == totalPage){
+					nextBtn.prop("disabled", true);
+				}
 				$(searchForm).find("input[name='page']").val(page);
 	       		searchForm.submit();
 	       		$(prevBtn).prop("disabled", false);
-        	}
-        });
-        
-        
-    });
+	    	}
+	    });
+	});
+
 </script>

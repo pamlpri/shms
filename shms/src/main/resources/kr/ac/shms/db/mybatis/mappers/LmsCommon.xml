@@ -322,11 +322,11 @@
 		ON(a.send_no = b.send_no)
 		WHERE a.send_no = #{send_no, jdbcType=NUMERIC}
 		<choose>
-			<when test="selectMenu eq 'inbox'">
-			  AND a.delete_at = 'N'
+			<when test="selectMenu eq 'send'">
+			  AND b.delete_at = 'N'
 			</when>
 			<otherwise>
-			  AND b.delete_at = 'N'
+			  AND a.delete_at = 'N'
 			</otherwise>
 		</choose>
 	</select>
@@ -342,15 +342,19 @@
 	<update id="deleteWebmail" parameterType="hashMap">
 		<choose>
 			<when test="selectMenu eq 'inbox'">
-				UPDATE webmail
+				UPDATE tb_receiver
 			</when>
 			<otherwise>
-				UPDATE tb_receiver
+				UPDATE webmail
 			</otherwise>
 		</choose>
 		    SET
 		        delete_at = 'Y'
-		WHERE
-		    send_no = #{send_no, jdbcType=NUMERIC}
+			WHERE
+			    send_no IN( 
+		<foreach collection="deletenos" item="send_no" separator=",">
+			    #{send_no.value, jdbcType=NUMERIC}
+		</foreach>
+				)
 	</update>
 </mapper>

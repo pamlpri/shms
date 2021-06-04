@@ -42,9 +42,6 @@ public class CollegeQnaPassCheckController {
 	@Inject
 	private BoardService boardService;
 	
-	@Inject
-	private PasswordEncoder encoder;
-	
 	private static final Logger logger = LoggerFactory.getLogger(CollegeQnaPassCheckController.class);
 	
 	@RequestMapping("/main/community/collegeQnaPass.do")
@@ -62,8 +59,6 @@ public class CollegeQnaPassCheckController {
 	public boolean collegeQnaPassCheck(
 			@RequestBody Map<String, String> boardMap
 			) {
-		
-		logger.info("board : {}", boardMap);
 		
 		BoardVO board = new BoardVO();
 		

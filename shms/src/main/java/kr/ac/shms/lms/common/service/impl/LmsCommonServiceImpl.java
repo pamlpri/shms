@@ -162,9 +162,6 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	public ServiceResult deleteWebmail(Map<String, Object> search) {
 		ServiceResult result = ServiceResult.FAIL;
 
-		WebmailVO webmail = lmsCommonDAO.selectWebmail(search);
-		if(webmail == null) result = ServiceResult.NOTEXIST;
-		
 		int cnt = lmsCommonDAO.deleteWebmail(search);
 		if(cnt > 0) result = ServiceResult.OK;
 		
