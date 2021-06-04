@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.ac.shms.main.commuity.dao.BoardDAO">
+<mapper namespace="kr.ac.shms.common.dao.BoardDAO">
 
 	<select id="selectBoKind" parameterType="string" resultType="string">
 		SELECT com_code
