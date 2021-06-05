@@ -17,6 +17,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.subject.vo.SubjectVO;
@@ -186,7 +187,10 @@ public class StudentServiceImpl implements StudentService{
 		// TODO Auto-generated method stub
 		return studentDAO.timeTable(stdnt_no);
 	}
-	
-	
-	
+
+	@Override
+	public SugangVO selectSugangList(SugangVO sugang) {
+		// TODO Auto-generated method stub
+		return studentDAO.selectSugangList(sugang);
+	}
 }

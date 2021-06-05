@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
+	<sql id="searchFrag">
+		<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+			<trim prefix="WHERE" prefixOverrides="AND" suffix="OR">
+				<choose>
+					<when test="searchMap.searchType eq 'lec_name'">
+						INSTR(lec_name, #{searchMap.searchWord}) > 0
+					</when>
+					<when test="searchMap.searchType eq 'lec_code'">
+						INSTR(lec_code, #{searchMap.searchWord}) > 0
+					</when>
+					<when test="searchMap.searchType eq 'name'">
+						INSTR(name, #{searchMap.searchWord}) > 0
+					</when>
+					<otherwise><!-- default -->
+          				INSTR(lec_name, #{searchMap.searchWord}) > 0
+          				OR
+          				INSTR(lec_code, #{searchMap.searchWord}) > 0
+          				OR
+          				INSTR(name, #{searchMap.searchWord}) > 0
+          			</otherwise>
+				</choose>
+			</trim>
+		</if>
+		<trim prefix="AND (" suffix=")" prefixOverrides="AND">
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.Lec_atnlc)">
+				<![CDATA[
+				AND Lec_atnlc <= #{searchMap.Lec_atnlc}
+				]]>
+			</if>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_cl_grp)">
+				AND lec_cl_grp = #{searchMap.lec_cl_grp}
+			</if>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_col_code)">
+				AND col_code = #{searchMap.col_code}
+			</if>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
+				AND sub_code = #{searchMap.sub_code}
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 개설항목조회 -->
+	<select id="selectSugangList" parameterType="SugangVO" resultType="SugangVO">
+		SELECT *
+		  FROM (SELECT a.lec_code,
+		               a.lec_cl,
+		               (SELECT com_code_nm 
+		                  FROM tb_com_code
+		                 WHERE code_grp = 'G06'
+		                   AND a.lec_cl = com_code) lec_cl_nm,
+		               (CASE WHEN a.lec_cl = 01 OR a.lec_cl = 02 THEN 'G06_1'
+		                     WHEN a.lec_cl = 03 OR a.lec_cl = 04 THEN 'G06_2' END) lec_cl_grp,
+		               b.lec_name,
+		               b.staff_no,
+		               d.name,
+		               b.sub_code,
+		               c.sub_name,
+		               c.col_code,
+		               (SELECT col_name
+		                  FROM college
+		                 WHERE c.col_code = col_code) col_name,
+		               NVL(b.lec_atnlc, 0) lec_atnlc,
+		               b.lec_pnt,
+		               a.lec_time,
+		               TO_NUMBER(a.lec_time + b.lec_pnt) lec_end,
+		               (SELECT COUNT(lec_code)
+		                  FROM sugang_req
+		                 WHERE a.lec_code = lec_code) lec_sugang,
+		               b.lec_cpacity,
+		               a.dayotw,
+		               (SELECT SUBSTR(com_code_nm, 1, 1)
+		                  FROM tb_com_code
+		                 WHERE code_grp = 'G19'
+		                   AND a.dayotw = com_code ) dayotw_nm,
+		               a.estbl_year,
+		               a.estbl_semstr,
+		               a.atch_file_no
+		          FROM lecture a
+		               INNER JOIN curriculum b ON (a.cur_code = b.cur_code)
+		               INNER JOIN subject c ON(b.sub_code = c.sub_code)
+		               INNER JOIN staff d ON(b.staff_no = d.staff_no)
+		         WHERE a.estbl_year >= TO_CHAR(SYSDATE, 'YYYY')
+		           AND a.estbl_semstr > (SELECT semstr FROM v_semstr)
+		    )
+		 <include refid="searchFrag" />
+	</select>
+</mapper>

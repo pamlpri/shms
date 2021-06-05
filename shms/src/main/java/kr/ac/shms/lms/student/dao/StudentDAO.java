@@ -12,6 +12,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.subject.vo.SubjectVO;
@@ -31,6 +32,7 @@ import kr.ac.shms.subject.vo.SubjectVO;
  * 2021. 6.  1.   김보미		출석(퇴실)
  * 2021. 6.  3.   김보미        학생 정보 출력(증명서 신청), 증명서, 신청사유 정보출력
  * 2021. 6.  4.   최희수	   내 시간표 출력
+ * 2021. 6.  5.   박초원	   개설과목조회 
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -200,7 +202,13 @@ public interface StudentDAO {
 	 * @return
 	 */
 	public List<TimeTableVO> timeTable(String stdnt_no);
-
+	
+	/**
+	 * 개설과목 조회
+	 * @param sugangVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SugangVO selectSugangList(SugangVO sugang);
 }
 
 

@@ -8,6 +8,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/pages/email.css">
 <style>
     body {
@@ -21,8 +22,8 @@
 
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">HOME</a></li>
-			<li class="breadcrumb-item"><a href="#">수강신청</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/classCartInfo.do">수강신청</a></li>
 			<li class="breadcrumb-item active" aria-current="page">수강신청</li>
 		</ol>
 	</nav>
@@ -31,14 +32,12 @@
 		<div class="row">
 			<div class="radioBox col-md-4 mb-4">
 				<div class="form-check float-left">
-					<input class="form-check-input" type="radio" name="classification"
-						id="flexRadioDefault1"> <label class="form-check-label"
-						for="flexRadioDefault1"> 전공 </label>
+					<input class="form-check-input" type="radio" name="lec_cl_grp" id="flexRadioDefault1" value="G06_1">
+					<label class="form-check-label" for="flexRadioDefault1"> 전공 </label>
 				</div>
 				<div class="form-check float-left">
-					<input class="form-check-input" type="radio" name="classification"
-						id="flexRadioDefault1"> <label class="form-check-label"
-						for="flexRadioDefault1"> 교양 </label>
+					<input class="form-check-input" type="radio" name="lec_cl_grp" id="flexRadioDefault1" value="G06_2">
+					<label class="form-check-label" for="flexRadioDefault1"> 교양 </label>
 				</div>
 			</div>
 		</div>
@@ -48,8 +47,8 @@
 					<div class="col-md-3 mb-2">
 						<h6>단과대선택</h6>
 						<fieldset class="form-group">
-							<select class="form-select" id="basicSelect">
-								<option>전체</option>
+							<select class="form-select" name="col_code">
+								<option value="">전체</option>
 								<option>인문대학</option>
 								<option>경상대학</option>
 								<option>공과대학</option>
@@ -61,7 +60,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>학과선택</h6>
 						<fieldset class="form-group">
-							<select class="form-select" id="basicSelect">
+							<select class="form-select" name="sub_code">
 								<option>전체</option>
 								<option>러시아학과</option>
 								<option>국어국문학과</option>
