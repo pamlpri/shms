@@ -3,6 +3,7 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 3.      송수미        수강신청 조회 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 
@@ -18,8 +19,8 @@
 <div class="page-content">
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">HOME</a></li>
-			<li class="breadcrumb-item"><a href="#">수강신청</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/classRegistrationInfo.do">수강신청</a></li>
 			<li class="breadcrumb-item active" aria-current="page">수강신청</li>
 		</ol>
 	</nav>
@@ -50,7 +51,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>단과대선택</h6>
 						<fieldset class="form-group">
-							<select class="form-select">
+							<select class="form-select" name="col_code">
 								<option>전체</option>
 								<option>인문대학</option>
 								<option>경상대학</option>
@@ -63,7 +64,7 @@
 					<div class="col-md-3 mb-2">
 						<h6>학과선택</h6>
 						<fieldset class="form-group">
-							<select class="form-select">
+							<select class="form-select" name="sub_code">
 								<option>전체</option>
 								<option>러시아학과</option>
 								<option>국어국문학과</option>
@@ -74,7 +75,6 @@
 								<option>경영학과</option>
 								<option>간호학과</option>
 								<option>안경광학과</option>
-								<option>전체</option>
 								<option>러시아학과</option>
 								<option>국어국문학과</option>
 								<option>독일어문학과</option>
@@ -507,11 +507,11 @@
 									<table class="table table-bordered mb-0">
 										<tr>
 											<th class="text-center text-middle">신청교과목수</th>
-											<td class="text-center text-middle">2과목</td>
+											<td class="text-center text-middle">${sugangReqIndexInfo.sugang_lec_cnt }과목</td>
 											<th class="text-center text-middle">신청학점</th>
-											<td class="text-center text-middle">12학점</td>
+											<td class="text-center text-middle">${sugangReqIndexInfo.sugang_at_pnt }학점</td>
 											<th class="text-center text-middle">수강 가능 학점</th>
-											<td class="text-center text-middle">23학점</td>
+											<td class="text-center text-middle">${sugangReqIndexInfo.lec_able_pnt }학점</td>
 										</tr>
 									</table>
 									<!-- lecture list end -->

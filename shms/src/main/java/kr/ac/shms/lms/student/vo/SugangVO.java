@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
  * 수정일           수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 5.      박초원      	       최초작성
+ * 2021. 6. 5.      송수미      	       필요한 정보 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -68,5 +69,11 @@ public class SugangVO {
 	private String dayotw_nm;
 	private String lec_cl_grp;
 	private List<SugangVO> dataList;
+	
+	private String stdnt_name;
+	private String stdnt_grade;
+    private String sugang_lec_cnt;	// 신청 교과목 수
+    private String sugang_at_pnt;	// 신청 학점
+    private String lec_able_pnt;	// 수강 가능 학점
 	
 }
