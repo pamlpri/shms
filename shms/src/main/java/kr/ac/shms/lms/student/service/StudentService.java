@@ -11,6 +11,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 /**
@@ -43,7 +44,8 @@ import kr.ac.shms.subject.vo.SubjectVO;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 4.      작성자명       최초작성
- * 2021. 6. 4.		최희수	 시간표 출력
+ * 2021. 6. 4.		최희수	     시간표 출력
+ * 2021. 6.  5.   박초원	   개설과목조회 
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */	
@@ -206,4 +208,11 @@ public interface StudentService {
 	 * @return
 	 */
 	public List<TimeTableVO> timeTable(String stdnt_no);
+	
+	/**
+	 * 개설과목 조회
+	 * @param sugangVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SugangVO selectSugangList(SugangVO sugang);
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.common.dao.OthersDAO">
+	<select id="selectCollegeList" resultType="hashMap">
+	  SELECT
+		     col_code,
+		     col_name,
+		     building_no
+		FROM
+		     college
+	</select>
+	
+	<select id="selectSubjectList" resultType="SubjectVO" parameterType="String">
+		SELECT
+			    sub_code,
+			    sub_name,
+			    a.col_code,
+			    b.col_name,
+			    estbl_de,
+			    reg_amt,
+			    offrum_loc,
+			    tel_no,
+			    fax_no,
+			    grdtn_pnt,
+			    staff_no,
+			    sub_index
+		   FROM subject a
+			    RIGHT OUTER JOIN college b ON (a.col_code = b.col_code)
+		   <where>
+		   		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(col_code)">
+		   			a.col_code = #{col_code}
+		   		</if>
+		   </where>
+	</select>
+</mapper>

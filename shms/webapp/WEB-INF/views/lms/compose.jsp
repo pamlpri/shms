@@ -74,9 +74,11 @@
 						<h6 class="m-b-20">
 							<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
 						</h6>
-						<div class="form-group">
-                           	<input type="file" name="mail_files" 
-                           	multiple data-max-file-size="5MB" data-max-files="3">
+						<div class="form-inline fileArea">
+							<p class="">
+								<input class="form-control" type="file" name="mail_files">
+								<span class="plusBtn btn btn-secondary">+</span>
+							</p>
 						</div>
 						<div class="text-center m-t-15">
 							<a href="${cPath }/lms/index.do"
@@ -265,5 +267,11 @@
         	mailForm.submit();
         });
         
+        $(".fileArea").on("click", ".plusBtn" ,function(){
+    		let source = $(this).parents("p:first");
+    		let clone = source.clone();
+    		clone.find("input").val("");
+    		$(this).parents(".fileArea:first").append(clone);
+    	});
     });
 </script>
