@@ -2,7 +2,8 @@
 * [[개정이력(Modification Information)]]
 * 수정일        수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 4.   김보미       최초작성
+* 2021. 6. 4.   김보미      최초작성
+* 2021. 6. 5.   김보미      수정, 삭제 버튼 추가
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -12,55 +13,109 @@
 <!-- 컨텐츠 -->
 <section class="feature_area section_gap_top">
 <div class="container">
+<!-- 컨텐츠 -->
 <div class="contents">
-<div style="clear: both;"></div>
-<form>
-	<input type="hidden" value="${sub_code }">
-</form>
- <table class="noticeView">
-   <thead>
-   <tr>
-    <td colspan="3" class="noticeTitle">
-    	${board.bo_title }
-    </td>
-   </tr>
-   </thead>
-   <tbody>
-     <tr>
-     <td><span>작성자</span> ${board.bo_writer }</td>
-     <td><span>작성일</span> ${board.bo_write_de }</td>
-     <td><span>조회수</span> ${board.bo_hit }</td>
-     </tr>
-   </tbody>
- </table>
-<div class="noticeContent">
-	${board.bo_cont }
-</div>
-<c:if test="${not empty board.attachList}">
-	<div class="board_downloader">
-		<ul class="downloader">
-		<c:forEach items="${board.attachList }" var="attach">
-			<c:url value="/main/community/download.do" var="downloadURL">
-				<c:param name="bo_no" value="${board.bo_no }" />
-				<c:param name="atch_file_no" value="${attach.atch_file_no }" />
-				<c:param name="atch_file_seq" value="${attach.atch_file_seq }" />
-			</c:url>
-			<li>
-				<a href="${downloadURL }" class="text-color">
-					<i class="fas fa-arrow-alt-circle-down"></i>${attach.file_nm }
-				</a>
-			</li>
-		</c:forEach>
-		</ul>
+	<table class="noticeView">
+		<thead>
+			<tr>
+				<td colspan="3" class="noticeTitle">
+					${board.bo_title }
+				</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><span>작성자</span>${board.bo_writer }</td>
+				<td><span>작성일</span>${board.bo_write_de }</td>
+				<td><span>답변</span>${not empty board.bo_ans? '완료' : '대기' }</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="noticeContent">
+		${board.bo_cont }
 	</div>
-</c:if>
- <a id="listBtn" href="${cPath }/subject/subjectQnaList.do?sub=${sub_code}">목록으로</a>
+	<div class="noticeAns">
+		<p class="userAns">
+			${board.ans_writer }<span>${board.ans_de }</span>
+		</p>
+		<p class="contAns">
+			${board.bo_ans }
+		</p>
+	</div>
+	<div id="noticeBtnBox">
+		<a id="deleteBtn" class="text-uppercase text-color d-inline-block"href="#" data-toggle="modal" data-target="#deleteModal">삭제</a>
+		<a id="updateBtn" href="${cPath }/subject/subjectQnaUpdate.do?bo_no=${board.bo_no}">수정</a>
+		 <a id="listBtn" href="${cPath }/subject/subjectQnaList.do?sub=${sub_code}">목록으로</a>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content rounded-0 border-0 p-4">
+			<div class="modal-header border-0">
+				<h3>Password</h3>
+				<p>작성자 이름과 비밀번호를 입력하세요.</p>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<span id="passChkRes"></span>
+			<div class="modal-body">
+				<form class="row" method="post">
+					<input type="hidden" id="board_no" name="bo_no" value="${board.bo_no }" />
+					<div class="col-12">
+						<input type="text" class="form-control mb-3" id="deleteName" placeholder="Name" name="bo_writer">
+					</div>
+					<div class="col-12">
+						<input type="password" class="form-control mb-3" id="deletePass" placeholder="Password" name="bo_password">
+					</div>
+					<div class="col-12">
+						<button id="passChkBtn" type="button" class="btn btn-primary">확인</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 </div>
 </section>
 <script type="text/javascript">
 	$(function(){
-		$(".sideMain").eq(0).children("a").addClass("navy");
-		$(".sideMain").eq(0).children(".sideSub").addClass("cur");
+		$(".sideMain").eq(3).children("a").addClass("navy");
+		$(".sideMain").eq(3).children(".sideSub").addClass("cur");
 	});
+	
+	$("#passChkBtn").on("click", function(event){
+		event.preventDefault();
+		var board = {
+				bo_no : $("#board_no").val()
+				, bo_writer : $("#deleteName").val()
+				, bo_password : $("#deletePass").val()
+			}
+		
+		$.ajax({
+			url : "${cPath}/main/community/collegeQnaPass.do"
+			, method : "post"
+			, contentType : "application/json; charset='utf-8'"
+			, data : JSON.stringify(board)
+			, dataType : "json"
+			, success : function(resp){
+				if(resp == true){
+					location.href = "${cPath}/subject/subjectQnaDelete.do?bo_no=${board.bo_no}";
+				}else{
+					$('#passChkRes').text("작성자명 또는 비밀번호가 올바르지 않습니다.");
+				}
+			}
+			, error : function(xhr, error, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
+	});
+	
+	
 </script>
+</div>
