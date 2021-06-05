@@ -1,9 +1,8 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
-* ----------  ---------  -----------------
-* 2021. 5. 20.      박초원        최초작성
-* 2021. 5. 27.      송수미        학과 메인 페이지 구현
+* 수정일         수정자      수정내용
+* ----------   ---------  -----------------
+* 2021. 6. 5.  김보미        최초작성
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -20,7 +19,6 @@
 					<input type="hidden" name="searchType" value="${pagingVO.searchMap.searchType }"/>
 					<input type="hidden" name="searchWord" value="${pagingVO.searchMap.searchWord }"/>
 					<input type="hidden" name="page" />
-					<input type="hidden" name="sub_code" value="${sub_code }">
 				</form>
 				<form class="row" id="searchUI">
 					<div class="col-md-3 mb-4">

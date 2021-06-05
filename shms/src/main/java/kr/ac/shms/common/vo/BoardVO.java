@@ -46,7 +46,6 @@ import lombok.ToString;
 @EqualsAndHashCode(of="bo_no")
 @ToString(exclude="bo_cont")
 public class BoardVO implements Serializable{
-	
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	
 	@NotNull(groups= {BoardUpdateGroup.class, BoardDeleteGroup.class}, message="필수 항목")
