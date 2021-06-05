@@ -58,10 +58,10 @@ public class SubjectNoticeViewController {
 		String bo_name = "학과공지";
 		String bo_kind = boardService.selectBoKind(bo_name);
 		
+		SubjectVO subject = subjectService.selectSub(sub_code);
+		
 		PagingVO<BoardVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
-		
-		SubjectVO subject = subjectService.selectSub(sub_code);
 		
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchType", searchType);
@@ -69,6 +69,7 @@ public class SubjectNoticeViewController {
 		searchMap.put("bo_kind", bo_kind);
 		searchMap.put("sub_code", sub_code);
 		pagingVO.setSearchMap(searchMap);
+		
 		
 		int totalRecord = boardService.selectBoardCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
@@ -94,6 +95,4 @@ public class SubjectNoticeViewController {
 		model.addAttribute("sub_code", sub_code);
 		return "subject/subjectNoticeView";
 	}
-	
 }
-
