@@ -3,24 +3,8 @@ package kr.ac.shms.lms.staff.dao;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
-import kr.ac.shms.lms.student.vo.StudentVO;
-/**
- * @author 박초원
- * @since 2021. 5. 22.
- * @version 1.0
- * @see javax.servlet.http.HttpServlet
- * <pre>
- * [[개정이력(Modification Information)]]
- * 수정일          수정자         수정내용
- * --------     --------    ----------------------
- * 2021. 5. 22.   박초원        최초작성
- * 2021. 5. 31.   송수미        교수 상담건수 조회
- * 2021. 6. 4.    최희수	  교수 마이페이지 조회, 수정
- * Copyright (c) 2021 by DDIT All right reserved
- * </pre>
- */
-import kr.ac.shms.subject.vo.SubjectVO;
 @Repository
 public interface LmsStaffDAO {
 	/**

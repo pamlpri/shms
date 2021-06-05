@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.RegInfoCngVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -15,7 +16,6 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 박초원

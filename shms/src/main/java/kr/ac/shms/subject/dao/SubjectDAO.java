@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.StaffVO;
-import kr.ac.shms.subject.vo.SubjectVO;
+import kr.ac.shms.common.vo.SubjectVO;
 
 /**
  * @author 송수미

@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
-import kr.ac.shms.lms.common.vo.PagingVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;

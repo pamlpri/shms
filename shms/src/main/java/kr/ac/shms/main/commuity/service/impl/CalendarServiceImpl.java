@@ -6,12 +6,12 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.main.commuity.dao.CalendarDAO;
 import kr.ac.shms.main.commuity.service.CalendarService;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.EventWrapper;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 최희수
