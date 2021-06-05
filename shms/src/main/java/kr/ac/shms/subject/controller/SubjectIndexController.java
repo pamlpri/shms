@@ -47,29 +47,28 @@ public class SubjectIndexController {
 	
 	@RequestMapping("/subject/main.do")
 	public String index(
-			@RequestParam("sub") String sub  
-			, @SessionAttribute(name="sub_code", required=false) String sub_code
+			@RequestParam("sub") String sub_code  
 			, Model model 
 			) {
 //		session에 학과코드 넣어서 갖고 다니기
 		Map<String, String> search = new HashMap<>();
 		search.put("bo_name", "학과공지");
-		search.put("sub_code", sub);
+		search.put("sub_code", sub_code);
 		List<BoardVO> hgList = boardService.selectForMain(search);
 		search.put("bo_name", "학과문의");
 		List<BoardVO> hmList = boardService.selectForMain(search);
 		
-		SubjectVO subject = subjectService.selectSub(sub);
+		SubjectVO subject = subjectService.selectSub(sub_code);
 		
-		List<StaffVO> profList = subjectService.selectProf(sub);
+		List<StaffVO> profList = subjectService.selectProf(sub_code);
 		
 		model.addAttribute("hgList", hgList);
 		model.addAttribute("hmList", hmList);
 		model.addAttribute("subject", subject);
 		model.addAttribute("profList", profList);
 		
-		model.addAttribute("sub_code", sub);
-		
+		model.addAttribute("sub_code", sub_code);
+
 		return "subject/main";
 	}
 }

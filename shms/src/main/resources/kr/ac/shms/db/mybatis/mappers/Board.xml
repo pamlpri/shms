@@ -357,7 +357,7 @@
 	</select>
 	
 	<select id="selectHGBoardList" parameterType="PagingVO" resultType="BoardVO">
-		SELECT ROWNUM rn, bo_no,
+		SELECT ROWNUM p_bo_no, bo_no,
 		       bo_kind,
 		       DECODE(bo_secret_at, 'Y', '비밀글', bo_title) bo_title,
 		       bo_cont,
@@ -370,10 +370,10 @@
 		       sub_code
 		  FROM board
 		 WHERE sub_code=#{searchMap.sub_code, jdbcType=VARCHAR}
-		   AND bo_kind=#{searchMap.bo_kind}
+		   AND bo_kind=#{searchMap.bo_kind, jdbcType=VARCHAR}
 		  <trim prefix="AND">
 		  		<include refid="searchFrag"/>
 		  </trim>
-		  ORDER BY bo_write_de, rn desc
+		  ORDER BY bo_write_de asc, p_bo_no desc
 	</select>
 </mapper>

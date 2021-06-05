@@ -9,6 +9,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<form>
+	<input type="hidden" value="${sub_code }">
+</form>
 <!--================ Start Home Banner Area =================-->
 <section class="home_banner_area">
 	<div class="banner_inner">
@@ -112,7 +115,7 @@
 	                          		<c:forEach items="${hgList }" var="hgBoard">
 		                              <tr>
 		                                <th scope="row" class="text-center">${hgBoard.p_bo_no }</th>
-		                                <td class="text-center"><a href="${cPath }/subject/subjectNotice.do?bo_no=${hgBoard.bo_no}">${hgBoard.bo_title }</a></td>
+		                                <td class="text-center"><a href="${cPath }/subject/subjectNoticeView.do?bo_no=${hgBoard.p_bo_no }">${hgBoard.bo_title }</a></td>
 		                                <td class="text-center">${hgBoard.bo_write_de }</td>
 		                                <td class="text-center">${hgBoard.bo_hit }</td>
 		                              </tr>
@@ -157,7 +160,7 @@
 										<c:forEach items="${hmList }" var="hmBoard">
 								     <tr>
 								       <th scope="row" class="text-center">${hmBoard.p_bo_no }</th>
-								       <td class="text-center"><a href="${cPath }/subject/subjectQna.do?bo_no=${hmBoard.bo_no}">${hmBoard.bo_title }</a></td>
+								       <td class="text-center"><a href="${cPath }/subject/subjectQnaView.do?bo_no=${hmBoard.bo_no}">${hmBoard.bo_title }</a></td>
 								       <td class="text-center">${hmBoard.bo_write_de }</td>
 								       <td class="text-center">${hmBoard.bo_hit }</td>
 								     </tr>

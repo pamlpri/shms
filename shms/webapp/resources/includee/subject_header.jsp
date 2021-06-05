@@ -8,6 +8,9 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<form>
+	<input type="hidden" value="${sub_code }">
+</form>
 <div class="main_menu">
 	<nav class="navbar navbar-expand-lg navbar-light">
 		<div class="container">

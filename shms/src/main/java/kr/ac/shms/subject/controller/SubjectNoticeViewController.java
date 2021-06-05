@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lms.common.vo.PagingVO;
+import kr.ac.shms.subject.service.SubjectService;
+import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 김보미
@@ -42,6 +42,9 @@ public class SubjectNoticeViewController {
 	@Inject
 	private BoardService boardService;
 	
+	@Inject
+	private SubjectService subjectService;
+	
 	@RequestMapping("/subject/subjectNoticeList.do")
 	public String subjectNoticeList(
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
@@ -58,12 +61,15 @@ public class SubjectNoticeViewController {
 		PagingVO<BoardVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
 		
+		SubjectVO subject = subjectService.selectSub(sub_code);
+		
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("searchWord", searchWord);
 		searchMap.put("bo_kind", bo_kind);
 		searchMap.put("sub_code", sub_code);
 		pagingVO.setSearchMap(searchMap);
+		
 		int totalRecord = boardService.selectBoardCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
@@ -71,7 +77,7 @@ public class SubjectNoticeViewController {
 		pagingVO.setDataList(boardList);
 		model.addAttribute(pagingVO);
 		model.addAttribute("sub_code", sub_code);
-		System.out.println("sub_code : " + sub_code);
+		model.addAttribute("subject", subject);
 		
 		return "subject/subjectNotice";
 	}
