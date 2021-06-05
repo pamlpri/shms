@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -112,30 +113,30 @@ public class WebmailInsertController {
 		, @ModelAttribute("webmail") WebmailVO webmailVO
 		, Model model
 	) {
+		
 		String[] to = receiver.split(","); 
 		String[] cc = receiverCC.split(",");
-		logger.info("receiver : {}", receiver);
-		logger.info("receivercc : {}", receiverCC);
-		logger.info("sender : {}", webmailVO.getSender());
 		List<ReceiverVO> receiverList = new ArrayList<>();
-		for(int i = 0; i < to.length; i++) {
-			ReceiverVO receiverVO = new ReceiverVO();
-			receiverVO.setReceiver(to[i].trim());
-			receiverVO.setCc_at("N");
-			receiverList.add(receiverVO);
-			logger.info("receiverList : {}", receiverList.toString());
+		
+		if(to != null && to.length > 0 && StringUtils.isNotBlank(to[0])) {
+			for(int i = 0; i < to.length; i++) {
+				ReceiverVO receiverVO = new ReceiverVO();
+				receiverVO.setReceiver(to[i].trim());
+				receiverVO.setCc_at("N");
+				receiverList.add(receiverVO);
+			}
 		}
 		
-		for(int i = 0; i < cc.length; i++) {
-			ReceiverVO receiverVO = new ReceiverVO();
-			receiverVO.setReceiver(cc[i].trim());
-			logger.info("cc : {}", cc[i].trim());
-			receiverVO.setCc_at("Y");
-			receiverList.add(receiverVO);
-			logger.info("receiverList : {}", receiverList.toString());
+		if(cc != null && cc.length > 0 && StringUtils.isNotBlank(cc[0])) {
+			for(int i = 0; i < cc.length; i++) {
+				ReceiverVO receiverVO = new ReceiverVO();
+				receiverVO.setReceiver(cc[i].trim());
+				receiverVO.setCc_at("Y");
+				receiverList.add(receiverVO);
+			}
 		}
 		 
-		if(receiverList != null && receiverList.size() >0 ) {
+		if(receiverList != null && receiverList.size() > 0) {
 			webmailVO.setReceiverList(receiverList);
 		}
 		

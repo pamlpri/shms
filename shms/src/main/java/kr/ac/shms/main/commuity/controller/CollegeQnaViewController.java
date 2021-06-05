@@ -78,7 +78,6 @@ public class CollegeQnaViewController {
 			, Model model
 			) {
 		BoardVO board = boardService.selectBoard(bo_no);
-		boardService.incrementHit(bo_no);
 		
 		model.addAttribute("board", board);
 		return "main/community/collegeQnaView";

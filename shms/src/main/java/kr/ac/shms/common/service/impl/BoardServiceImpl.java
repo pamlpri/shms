@@ -103,6 +103,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO selectBoard(int bo_no) {
+		boardDAO.incrementHit(bo_no);
 		return boardDAO.selectBoard(bo_no);
 	}
 
@@ -153,16 +154,6 @@ public class BoardServiceImpl implements BoardService{
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = boardDAO.deleteBoard(bo_no);
 		
-		if(cnt > 0) result = ServiceResult.OK;
-		
-		return result;
-	}
-
-	@Override
-	public ServiceResult incrementHit(int bo_no) {
-		
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = boardDAO.incrementHit(bo_no);
 		if(cnt > 0) result = ServiceResult.OK;
 		
 		return result;

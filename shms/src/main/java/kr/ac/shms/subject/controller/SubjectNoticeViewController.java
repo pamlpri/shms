@@ -83,7 +83,6 @@ public class SubjectNoticeViewController {
 			, Model model
 			) {
 		BoardVO board = boardService.selectBoard(bo_no);
-		boardService.incrementHit(bo_no);
 		
 		model.addAttribute("board", board);
 		model.addAttribute("sub_code", sub_code);

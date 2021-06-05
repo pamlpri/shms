@@ -5,6 +5,7 @@
 * 2021. 6. 2.      박초원        최초작성
 * 2021. 6. 3.      송수미        보낸 메일 리스트 기능 구현
 * 2021. 6. 4.      송수미        보낸 메일 삭제 기능 구현
+* 2021. 6. 5.      송수미        상세조회 오류 수정
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -217,10 +218,10 @@
 					$(resp.dataList).each(function (idx, webmail) {
 						let liClass = "";
 						if(webmail.read_at == 'Y'){
-							liClass = "mail-read"; 
+							liClass = " mail-read"; 
 						}
 						
-						let li = '<li class="media '+ liClass + '">'
+						let li = '<li class="media'+ liClass + '">'
 								 + ' <div class="user-action">'
 								 + '	<div class="checkbox-con me-3">'
 								 + '		<div class="checkbox checkbox-shadow checkbox-sm">'
@@ -244,10 +245,14 @@
 						     + '	<div class="emailName">'
 			  				 + '		<strong>' + webmail.name + '</strong>'
 							 + '	</div>'
-			  				 + '	<a href="${cPath}/lms/webmailView.do" class="media-body text-color">'
+							 + '	<form id ="viewForm' + webmail.send_no + '"action="${cPath}/lms/webmailView.do" method="post">'
+							 + '		<input type="hidden" name="send_no" value="' + webmail.send_no + '">' 
+							 + '		<input type="hidden" name="selectMenu" value="send">'
+							 + '	</form>'
+				  			 + '	<a href="#" data-send_no="' + webmail.send_no + '" class="viewWebmail media-body text-color">'
 							 + '	<div class="user-details">'
 							 + '		<div class="mail-items">'
-							 + '			<span class="list-group-item-text text-truncate">' + webmail.title  +'</span>'
+							 + '			<span class="list-group-item-text text-truncate">' + webmail.title +'</span>'
 							 + '		</div>'
 							 + '	    <div class="mail-meta-item">'
 							 + '			<span class="float-right"> <span class="mail-date">'+ webmail.send_date +'</span>'
@@ -283,6 +288,12 @@
 	    	}
 	    });
 	    searchForm.submit();
+	    
+	    $("#listBody").on("click", ".viewWebmail", function(){
+	    	let form = "viewForm" + $(this).data("send_no");
+	    	console.log(form);
+	    	$("#" + form).submit();
+	    });
 	    
 			if(page == 1){
 				prevBtn.prop("disabled", true);

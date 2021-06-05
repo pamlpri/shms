@@ -89,14 +89,7 @@ public interface BoardService {
 	 * @return OK, FAIL, NOTEXIST, INVALIDPASSWORD
 	 */
 	public ServiceResult deleteBoard(int bo_no);
-	
-	/**
-	 * 조회수 증가
-	 * @param bo_no
-	 * @return OK, FAIL, NOTEXIST
-	 */
-	public ServiceResult incrementHit(int bo_no);
-	
+
 	/**
 	 * 해당 게시글의 첨부파일 전체 출력
 	 * @param bo_no

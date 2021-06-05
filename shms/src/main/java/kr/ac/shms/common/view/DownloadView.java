@@ -1,4 +1,4 @@
-package kr.ac.shms.main.commuity.view;
+package kr.ac.shms.common.view;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,10 +45,13 @@ public class DownloadView extends AbstractView {
 	
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model
-			, HttpServletRequest req,
-			HttpServletResponse resp) throws Exception {
+			, HttpServletRequest req
+			, HttpServletResponse resp
+		) throws Exception {
 		
-		AttachVO attatch = (AttachVO) model.get("attvo");
+		AttachVO attach = (AttachVO) model.get("attvo");
+		String dir = attach.getFile_path();
+		
 		FTPClient client = new FTPClient();
 		FileOutputStream fos = null;
 		boolean isSuccess = false;
@@ -64,11 +67,11 @@ public class DownloadView extends AbstractView {
 				logger.info("FTP 로그인 실패");
 				client.logout();
 			}
-			String dir = "/test";
+			
 			client.changeWorkingDirectory(dir);
 			
 			try {
-				String fileName = attatch.getFile_nm();
+				String fileName = attach.getFile_nm();
 				logger.info("fileName : {}", fileName);
 				if(StringUtils.containsIgnoreCase(agent, "trident")) {
 					fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", " ");
@@ -76,9 +79,9 @@ public class DownloadView extends AbstractView {
 					byte[] bytes = fileName.getBytes();
 					fileName = new String(bytes, "ISO-8859-1");
 					resp.setHeader("Content-Disposition", "attatchment;filename=\""+fileName+"\"");
-					resp.setHeader("Content-Length", attatch.getFile_size()+"");
+					resp.setHeader("Content-Length", attach.getFile_size()+"");
 					resp.setContentType("application/octet-stream");
-					isSuccess = client.retrieveFile(attatch.getSave_file_nm(), resp.getOutputStream());
+					isSuccess = client.retrieveFile(attach.getSave_file_nm(), resp.getOutputStream());
 					if(isSuccess) {
 						logger.info("download Success");
 					} else {
