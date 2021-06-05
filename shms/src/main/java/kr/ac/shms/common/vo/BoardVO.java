@@ -15,6 +15,7 @@ import kr.ac.shms.validator.BoardInsertGroup;
 import kr.ac.shms.validator.BoardUpdateGroup;
 import kr.ac.shms.validator.DMBoardInsertGroup;
 import kr.ac.shms.validator.DMBoardUpdateGroup;
+import kr.ac.shms.validator.HMBoardInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,13 +29,14 @@ import lombok.ToString;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일                          수정자               수정내용
+ * 수정일         수정자        수정내용
  * --------     --------    ----------------------
- * 2021. 5. 25.      송수미       최초작성
- * 2021. 5. 27.      송수미       첨부파일 관련 객체 추가
- * 2021. 5. 28.      송수미       검증 관련 내용 추가
- * 2021. 5. 31.      최희수       첨부파일 관련 내용 추가
- * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
+ * 2021. 5. 25.   송수미        최초작성
+ * 2021. 5. 27.   송수미        첨부파일 관련 객체 추가
+ * 2021. 5. 28.   송수미        검증 관련 내용 추가
+ * 2021. 5. 31.   최희수        첨부파일 관련 내용 추가
+ * 2021. 6. 01.   송수미        교수의 강의문의 수 조회
+ * 2021. 6.  5.   김보미		학과문의 조건 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -53,17 +55,17 @@ public class BoardVO implements Serializable{
 	
 	private String bo_kind;		// DG, JG,..(공통코드값)
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class}, message="필수 항목")
+	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_title;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class}, message="필수 항목")
+	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_cont;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class}, message="필수 항목")
+	@NotBlank(groups= {DMBoardInsertGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_writer;
 	private String bo_write_de;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class}, message="필수 항목")
+	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_password;
 	
 	private String bo_secret_at;
@@ -71,8 +73,8 @@ public class BoardVO implements Serializable{
 	private Integer bo_hit;
 	private String sub_code;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class}, message="필수 항목")
-	private String univ_inqry_kind;	// PM, HM, JM
+	@NotBlank(groups= {DMBoardInsertGroup.class} , message="필수 항목")
+	private String univ_inqry_kind;	// PM, JM
 	private String lec_code;
 	private String ans_writer;
 	private String ans_de;
