@@ -2,9 +2,8 @@ package kr.ac.shms.lms.staff.service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
-import kr.ac.shms.lms.student.vo.StudentVO;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 public interface LmsStaffService {
 	/**

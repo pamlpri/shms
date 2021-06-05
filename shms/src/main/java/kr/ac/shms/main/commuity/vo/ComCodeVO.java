@@ -2,10 +2,9 @@ package kr.ac.shms.main.commuity.vo;
 
 import java.util.List;
 
-import kr.ac.shms.subject.vo.SubjectVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data

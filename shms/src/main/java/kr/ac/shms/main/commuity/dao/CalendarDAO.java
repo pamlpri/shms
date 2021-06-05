@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.EventWrapper;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 최희수

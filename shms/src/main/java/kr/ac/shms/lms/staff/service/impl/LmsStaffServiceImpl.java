@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 @Service
 public class LmsStaffServiceImpl implements LmsStaffService {

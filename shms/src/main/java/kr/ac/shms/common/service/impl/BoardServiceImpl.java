@@ -21,7 +21,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
-import kr.ac.shms.lms.common.vo.PagingVO;
+import kr.ac.shms.common.vo.PagingVO;
 
 /**
  * @author 송수미

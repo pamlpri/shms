@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.subject.vo.SubjectVO;
+import kr.ac.shms.common.vo.SubjectVO;
 
 /**
  * @author 박초원
