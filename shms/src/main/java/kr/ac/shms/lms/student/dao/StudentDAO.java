@@ -208,7 +208,7 @@ public interface StudentDAO {
 	 * @param sugangVO
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public SugangVO selectSugangList(SugangVO sugang);
+	public List<SugangVO> selectSugangList(SugangVO sugang);
 }
 
 

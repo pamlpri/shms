@@ -63,7 +63,7 @@
 							<select class="form-select" name="sub_code">
 								<option value="">전체</option>
 								<c:forEach items="${subjectList }" var="subject">
-									<option value="${subjectList.sub_code }">
+									<option class="${subject.col_code }" value="${subject.sub_code }">
 										${subject.sub_name }
 									</option>
 								</c:forEach>
@@ -73,30 +73,49 @@
 					<div class="col-md-3 mb-2">
 						<h6>학년</h6>
 						<fieldset class="form-group">
-							<select class="form-select" id="basicSelect">
-								<option>전학년</option>
-								<option>1학년</option>
-								<option>2학년</option>
-								<option>3학년</option>
-								<option>4학년</option>
+							<select class="form-select" name="lec_atnlc">
+								<c:forEach var="i" begin="0" end="${student.grade }">
+									<c:choose>
+										<c:when test="${i eq 0}">
+											<option value="${i }">전학년</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${i }">${i }학년</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
 							</select>
 						</fieldset>
 					</div>
 					<div class="col-md-3 mb-2">
 						<h6>강의검색</h6>
 						<fieldset class="form-group">
-							<select class="form-select" id="basicSelect">
-								<option>전체</option>
-								<option>강의명</option>
-								<option>강의코드</option>
-								<option>강의교수</option>
+							<select class="form-select" name="searchType">
+								<option value="">전체</option>
+								<option value="lec_name">강의명</option>
+								<option value="lec_code">강의코드</option>
+								<option value="name">강의교수</option>
 							</select>
 						</fieldset>
 					</div>
 				</div>
 			</div>
 		</div>
-		<input type="hidden" name="searchWord" value="" />
+		<div class="email-action">
+			<!-- action right start here -->
+			<div
+				class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
+				<!-- search bar  -->
+				<div class="email-fixed-search flex-grow-1">
+					<div class="sidebar-toggle d-block d-lg-none">
+						<i class="bx bx-menu"></i>
+					</div>
+					<div class="form-group position-relative mb-3">
+						<input type="text" class="form-control" placeholder="검색단어를 입력하세요." name="searchWord" value="">
+					</div>
+				</div>
+			</div>
+		</div>
 	</form>
 	<div class="page-heading email-application lectureHeader">
 		<h5>
@@ -111,32 +130,7 @@
 							<!-- Email list Area -->
 							<div class="email-app-list-wrapper">
 								<div class="email-app-list">
-									<div class="email-action">
-										<!-- action right start here -->
-										<div
-											class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
-											<!-- search bar  -->
-											<div class="email-fixed-search flex-grow-1">
-												<div class="sidebar-toggle d-block d-lg-none">
-													<i class="bx bx-menu"></i>
-												</div>
-
-												<div
-													class="form-group position-relative  mb-0 has-icon-left">
-													<input type="text" class="form-control" placeholder="검색단어를 입력하세요." name="searchWord" value="">
-													<div class="form-control-icon">
-														<svg class="bi" width="1.5em" height="1.5em"
-															fill="currentColor">
-                                                                        <use
-																xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
-                                                                    </svg>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
 									<!-- / action right -->
-
 									<form class="email-user-list list-group lectureList"
 										id="lectureForm">
 										<table class="table table-bordered mb-0">
@@ -154,133 +148,8 @@
 													<th class="text-center">신청</th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center">212345</td>
-													<td class="text-center">전필</td>
-													<td class="text-center">시광학이론2222222</td>
-													<td class="text-center">이현</td>
-													<td class="text-center">1</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
-													<td class="text-center">
-														<button class="btn btn-primary btn-sm saveBtn">담기</button>
-													</td>
-												</tr>
+											<tbody id="listBody">
+												
 											</tbody>
 										</table>
 										<!-- lecture list end -->
@@ -488,3 +357,73 @@
 		</section>
 	</div>
 </div>
+<script type="text/javascript">
+	let time = [];
+	for(var i = 0; i <= 20; i++){
+		if(i < 9){
+			time.push(0);
+		}else{
+			time.push(i-8);
+		}
+	}
+
+	let subjectTag = $("[name='sub_code']");
+	$("[name='col_code']").on("change", function(){
+		let selectedCode = $(this).val();
+		if(selectedCode){
+			subjectTag.find("option").hide();
+			subjectTag.find("option."+selectedCode).show();
+		}else {
+			subjectTag.find("option").show();
+		}
+		subjectTag.find("option:first").show();
+	});
+	
+	let listBody = $("#listBody");
+	let searchForm = $("#searchForm").on("change", ":input[name]", function(){
+		searchForm.submit();
+	}).ajaxForm({
+		dataType : "json",
+		success : function(resp){
+			listBody.empty();
+			let trTags = [];
+			if(resp.dataList){
+				$(resp.dataList).each(function(idx, sugang){
+					let tr = $("<tr>").append(
+								$("<td>").text(sugang.lec_code)
+								,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl)
+								,$("<td>").text(sugang.lec_name)
+								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no)
+								,$("<td>").text(sugang.lec_atnlc)
+								,$("<td>").text(sugang.lec_pnt)
+								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end])
+								,$("<td>").text(sugang.let_sugang)
+								,$("<td>").text(sugang.lec_cpacity)
+								,$("<td>").html("<button type='button' class='btn btn-primary btn-sm deleteBtn'>삭제</button>")
+							).data("sugang", sugang);
+					trTags.push(tr);
+				});
+			}else {
+				trTags.push(
+					$("<tr>").html("<td colspan='10'>일치하는 강의가 없습니다.</td>")
+				);
+			}
+			listBody.html(trTags);
+		}, error : function(xhr, resp, error){
+			console.log(xhr);
+		}
+	});
+	
+	searchForm.submit();
+</script>
+
+
+
+
+
+
+
+
+
+
+
