@@ -49,11 +49,11 @@
 						<fieldset class="form-group">
 							<select class="form-select" name="col_code">
 								<option value="">전체</option>
-								<option>인문대학</option>
-								<option>경상대학</option>
-								<option>공과대학</option>
-								<option>보건대학</option>
-								<option>사회과학대학</option>
+								<c:forEach items="${collegeList }" var="college">
+									<option value="${college.col_code }">
+										${college.col_name }
+									</option>
+								</c:forEach>
 							</select>
 						</fieldset>
 					</div>
@@ -61,26 +61,12 @@
 						<h6>학과선택</h6>
 						<fieldset class="form-group">
 							<select class="form-select" name="sub_code">
-								<option>전체</option>
-								<option>러시아학과</option>
-								<option>국어국문학과</option>
-								<option>독일어문학과</option>
-								<option>영문학과</option>
-								<option>항공학과</option>
-								<option>행정학과</option>
-								<option>경영학과</option>
-								<option>간호학과</option>
-								<option>안경광학과</option>
-								<option>전체</option>
-								<option>러시아학과</option>
-								<option>국어국문학과</option>
-								<option>독일어문학과</option>
-								<option>영문학과</option>
-								<option>항공학과</option>
-								<option>행정학과</option>
-								<option>경영학과</option>
-								<option>간호학과</option>
-								<option>안경광학과</option>
+								<option value="">전체</option>
+								<c:forEach items="${subjectList }" var="subject">
+									<option value="${subjectList.sub_code }">
+										${subject.sub_name }
+									</option>
+								</c:forEach>
 							</select>
 						</fieldset>
 					</div>
@@ -137,8 +123,7 @@
 
 												<div
 													class="form-group position-relative  mb-0 has-icon-left">
-													<input type="text" class="form-control" placeholder=""
-														name="searchWord" value="">
+													<input type="text" class="form-control" placeholder="검색단어를 입력하세요." name="searchWord" value="">
 													<div class="form-control-icon">
 														<svg class="bi" width="1.5em" height="1.5em"
 															fill="currentColor">

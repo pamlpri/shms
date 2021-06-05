@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.BoardVO;
-import kr.ac.shms.lms.common.vo.PagingVO;
+import kr.ac.shms.common.vo.PagingVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.subject.service.SubjectService;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 김보미

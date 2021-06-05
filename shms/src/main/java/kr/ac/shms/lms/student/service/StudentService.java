@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -14,26 +15,6 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 import kr.ac.shms.lms.student.vo.TimeTableVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
-/**
- * @author 박초원
- * @since 2021. 5. 22.
- * @version 1.0
- * @see javax.servlet.http.HttpServlet
- * <pre>
- * [[개정이력(Modification Information)]]
- * 수정일          수정자         수정내용
- * --------     --------    ----------------------
- * 2021. 5. 22.   박초원        최초작성
- * 2021. 5. 31.   김보미		출석(입실)
- * 2021. 5. 31.   송수미	    학생 통합정보시스템 메인 페이지 구현
- * 2021. 6.  1.   김보미		출석(퇴실)
- * 2021. 6.  2.   최희수        웹메일 등록 구현
- * 2021. 6.  3.   김보미 		학생 정보 출력(증명서 신청), 증명서, 신청사유 정보출력
- * 
- * Copyright (c) 2021 by DDIT All right reserved
- * </pre>
- */
-import kr.ac.shms.subject.vo.SubjectVO;
 /**
  * @author 작성자명
  * @since 2021. 6. 4.

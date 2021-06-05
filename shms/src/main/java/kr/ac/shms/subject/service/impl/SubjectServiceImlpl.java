@@ -7,9 +7,9 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.subject.dao.SubjectDAO;
 import kr.ac.shms.subject.service.SubjectService;
-import kr.ac.shms.subject.vo.SubjectVO;
 
 /**
  * @author 송수미

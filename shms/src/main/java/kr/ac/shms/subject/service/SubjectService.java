@@ -3,7 +3,7 @@ package kr.ac.shms.subject.service;
 import java.util.List;
 
 import kr.ac.shms.common.vo.StaffVO;
-import kr.ac.shms.subject.vo.SubjectVO;
+import kr.ac.shms.common.vo.SubjectVO;
 
 /**
  * @author 송수미

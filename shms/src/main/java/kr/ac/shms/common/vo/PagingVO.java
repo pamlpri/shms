@@ -1,4 +1,4 @@
-package kr.ac.shms.lms.common.vo;
+package kr.ac.shms.common.vo;
 
 import java.io.Serializable;
 import java.util.List;
