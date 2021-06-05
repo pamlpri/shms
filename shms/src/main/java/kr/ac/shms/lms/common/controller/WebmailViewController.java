@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.PagingVO;
@@ -43,6 +45,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * </pre>
  */
 @Controller
+@RequestMapping("/lms")
 public class WebmailViewController {
 	private static final Logger logger = LoggerFactory.getLogger(WebmailViewController.class);
 	@Inject
@@ -53,6 +56,9 @@ public class WebmailViewController {
 	
 	@Inject
 	private LmsCommonService lmsCommonService;
+	
+	@Inject
+	private BoardService boardService;
 		
 	public PagingVO<WebmailVO> settingList(
 			int currentPage
@@ -79,7 +85,7 @@ public class WebmailViewController {
 		return pagingVO;
 	}
 	
-	@RequestMapping("/lms/inbox.do")
+	@RequestMapping("/inbox.do")
 	public String inboxList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
@@ -103,7 +109,7 @@ public class WebmailViewController {
 		return  "lms/inbox";
 	}
 	
-	@RequestMapping(value="/lms/inbox.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/inbox.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public PagingVO<WebmailVO> inboxListForAjax(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -119,7 +125,7 @@ public class WebmailViewController {
 		return pagingVO;
 	}
 	
-	@RequestMapping("/lms/send.do")
+	@RequestMapping("/send.do")
 	public String sendList(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
@@ -144,7 +150,7 @@ public class WebmailViewController {
 		return  "lms/send";
 	}
 	
-	@RequestMapping(value="/lms/send.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/send.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public PagingVO<WebmailVO> sendListForAjax(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -160,7 +166,7 @@ public class WebmailViewController {
 		return pagingVO;
 	}
 	
-	@RequestMapping(value="/lms/webmailView.do", method=RequestMethod.POST)
+	@RequestMapping(value="/webmailView.do", method=RequestMethod.POST)
 	public String webmailView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @RequestParam("send_no") int send_no
@@ -185,5 +191,15 @@ public class WebmailViewController {
 		model.addAttribute("selectMenu", selectMenu);
 		
 		return "lms/webmailView";
+	}
+	
+	@RequestMapping(value="/webmailDownload.do")
+	public String downloader(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = boardService.download(attach);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
 	}
 }

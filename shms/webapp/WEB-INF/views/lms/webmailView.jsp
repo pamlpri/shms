@@ -17,7 +17,16 @@
        <ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
 			<li class="breadcrumb-item"><a href="#">웹메일</a></li>
-       		<li class="breadcrumb-item active" aria-current="page">받은메일</li>
+       		<li class="breadcrumb-item active" aria-current="page">
+	       		<c:choose>
+	       			<c:when test="${selectMenu eq 'inbox' }">
+	       				받은메일
+	       			</c:when>
+	       			<c:otherwise>
+	       				보낸메일
+	       			</c:otherwise>
+	       		</c:choose>
+       		</li>
        </ol>
    </nav>
    
@@ -76,14 +85,21 @@
                        </p>
                        <middle class="text-muted">from : ${webmail.sender_name }(${webmail.sender_webmail})</middle>
                        <hr>
-                       <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> 첨부파일 <span>(${fn:length(webmail.attachList) })</span></h6>
-                       <div class="row m-b-30">
-                       		<c:forEach items="${webmail.attachList }" var="attach">
-	                           <div class="col-auto"><a href="#" class="text-muted">${attach.file_nm }</a>
-	                           </div>
-                       		</c:forEach>
-                       </div>
-                       <hr>
+                       <c:if test="${not empty webmail.attachList }">
+	                       <h6 class="p-t-15"><i class="fa fa-download mb-2"></i> 첨부파일 <span>(${fn:length(webmail.attachList) })</span></h6>
+	                       <div class="row m-b-30">
+	                       		<c:forEach items="${webmail.attachList }" var="attach">
+           							<c:url value="/lms/webmailDownload.do" var="downloadURL">
+										<c:param name="atch_file_no" value="${attach.atch_file_no }" />
+										<c:param name="atch_file_seq" value="${attach.atch_file_seq }" />
+									</c:url>
+		                           <div class="col-auto">
+		                           		<a href="${downloadURL }" class="text-muted">${attach.file_nm }</a>
+		                           </div>
+	                       		</c:forEach>
+	                       </div>
+	                       <hr>
+                       </c:if>
                    </div>
                </div>
            </div>
