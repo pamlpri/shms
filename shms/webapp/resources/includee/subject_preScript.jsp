@@ -25,3 +25,5 @@ crossorigin="anonymous">
 <link rel="stylesheet" href="${cPath }/resources/subject/css/main.css" />
 
 <script src="${cPath }/resources/subject/js/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="${cPath }/resources/main/plugins/bootstrap/bootstrap.min.js"></script>

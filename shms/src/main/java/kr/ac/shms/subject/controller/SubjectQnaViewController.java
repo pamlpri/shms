@@ -48,7 +48,6 @@ public class SubjectQnaViewController {
 			@RequestParam(value="page", required=false, defaultValue="1") int currentPage
 			, @RequestParam(value="searchType", required=false) String searchType
 			, @RequestParam(value="searchWord", required=false) String searchWord 
-//			, @RequestParam(value="sub_code") String sub_code
 			, @SessionAttribute(name="sub_code", required=false) String sub_code
 			, Model model
 			) {
