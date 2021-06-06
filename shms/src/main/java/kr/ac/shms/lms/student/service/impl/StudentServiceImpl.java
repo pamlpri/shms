@@ -35,6 +35,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 5. 31.   송수미	    학생 통합정보시스템 메인 페이지 구현
  * 2021. 6.  3.   김보미 		학생 정보 출력(증명서 신청), 증명서, 신청사유 정보출력
  * 2021. 6.  4.   최희수	   학생 시간표 출력
+ * 2021. 6.  5.   송수미	   수강신청 인덱스 페이지 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -192,5 +193,10 @@ public class StudentServiceImpl implements StudentService{
 	public List<SugangVO> selectSugangList(SugangVO sugang) {
 		// TODO Auto-generated method stub
 		return studentDAO.selectSugangList(sugang);
+	}
+
+	@Override
+	public SugangVO selectSugangReqInfo(String stdnt_no) {
+		return studentDAO.selectSugangReqInfo(stdnt_no);
 	}
 }

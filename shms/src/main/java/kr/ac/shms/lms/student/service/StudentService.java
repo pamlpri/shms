@@ -24,9 +24,10 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * [[개정이력(Modification Information)]]
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
- * 2021. 6. 4.      작성자명       최초작성
- * 2021. 6. 4.		최희수	     시간표 출력
- * 2021. 6.  5.   박초원	   개설과목조회 
+ * 2021. 6. 4.   	작성자명     	최초작성
+ * 2021. 6. 4.		최희수		시간표 출력
+ * 2021. 6.  5.   	박초원	   	개설과목조회 
+ * 2021. 6.  5.   	송수미 	   	수강신청 인덱스 페이지에 필요한 정보 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */	
@@ -195,5 +196,6 @@ public interface StudentService {
 	 * @param sugangVO
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<SugangVO> selectSugangList(SugangVO sugang);
+	public SugangVO selectSugangList(SugangVO sugang);
+
 }

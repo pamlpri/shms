@@ -13,6 +13,7 @@ public class SubjectVO {
 	private String sub_code;
 	private String sub_name;
 	private String col_code;
+	private String col_name;
 	private String estbl_de;
 	private String offrum_loc;
 	private String tel_no;
@@ -21,5 +22,4 @@ public class SubjectVO {
 	private String staff_no;	// 학과장 교수 번호
 	private Integer reg_amt;
 	private String sub_index;
-	private String col_name;
 }

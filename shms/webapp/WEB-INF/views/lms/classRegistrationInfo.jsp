@@ -3,6 +3,7 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 3.      송수미        수강신청 메인 페이지 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 
@@ -12,8 +13,8 @@
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">HOME</a></li>
-			<li class="breadcrumb-item"><a href="#">수강신청</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/classRegistrationInfo.do">수강신청</a></li>
 			<li class="breadcrumb-item active" aria-current="page">수강신청</li>
 		</ol>
 	</nav>
@@ -29,19 +30,19 @@
 					<div class="card-content pb-4">
 						<ul class="classInfo">
 							<li>
-								<h6 class="mb-0 py-1">학번 : S14010001</h6>
+								<h6 class="mb-0 py-1">학번 : ${sugangReqIndexInfo.stdnt_no }</h6>
 							</li>
 							<li>
-								<h6 class="mb-0 py-1">이름 : 김보미</h6>
+								<h6 class="mb-0 py-1">이름 : ${sugangReqIndexInfo.stdnt_name }</h6>
 							</li>
 							<li>
-								<h6 class="mb-0 py-1">학과 : 러시아학과</h6>
+								<h6 class="mb-0 py-1">학과 : ${sugangReqIndexInfo.sub_name }</h6>
 							</li>
 							<li>
-								<h6 class="mb-0 py-1">수강학년 : 2학년</h6>
+								<h6 class="mb-0 py-1">수강학년 : ${sugangReqIndexInfo.stdnt_grade }</h6>
 							</li>
 							<li>
-								<h6 class="mb-0 py-1">수강가능학점 : 최대 23학점</h6>
+								<h6 class="mb-0 py-1">수강가능학점 : 최대 ${sugangReqIndexInfo.lec_able_pnt }학점</h6>
 							</li>
 						</ul>
 					</div>
