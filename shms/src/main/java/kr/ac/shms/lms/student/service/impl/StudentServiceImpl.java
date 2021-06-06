@@ -190,7 +190,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public SugangVO selectSugangList(SugangVO sugang) {
+	public List<SugangVO> selectSugangList(SugangVO sugang) {
 		// TODO Auto-generated method stub
 		return studentDAO.selectSugangList(sugang);
 	}

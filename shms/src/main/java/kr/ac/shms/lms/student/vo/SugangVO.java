@@ -1,6 +1,7 @@
 package kr.ac.shms.lms.student.vo;
 
 import java.util.List;
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,6 +70,7 @@ public class SugangVO {
 	private String dayotw_nm;
 	private String lec_cl_grp;
 	private List<SugangVO> dataList;
+	private Map<String, Object> searchMap; 
 	
 	private String stdnt_name;
 	private String stdnt_grade;
