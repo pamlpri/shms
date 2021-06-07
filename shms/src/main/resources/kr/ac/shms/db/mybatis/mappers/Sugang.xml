@@ -64,7 +64,7 @@
 		               (SELECT col_name
 		                  FROM college
 		                 WHERE c.col_code = col_code) col_name,
-		               NVL(b.lec_atnlc, 5) lec_atnlc,
+		               NVL(b.lec_atnlc, 0) lec_atnlc,
 		               b.lec_pnt,
 		               a.lec_time,
 		               TO_NUMBER(a.lec_time + b.lec_pnt) lec_end,
@@ -112,7 +112,7 @@
             ON (a.stdnt_no = d.stdnt_no)
          WHERE a.req_year = EXTRACT(YEAR FROM SYSDATE)
            AND a.req_semstr = (SELECT semstr FROM v_semstr)
-           AND a.sugang_at = 'Y'
+           AND a.sugang_at = 'N'
          GROUP BY a.stdnt_no
         ) a
         INNER JOIN student b
@@ -121,7 +121,7 @@
            ON (b.sub_code = c.sub_code)
         LEFT OUTER JOIN v_stdnt_past_scre d
           ON (a.stdnt_no = d.stdnt_no)
-        WHERE a.stdnt_no = #{stdnt_no}
+        WHERE a.stdnt_no = #{stdnt_no} 
     </select>
     
     <select id="selectCartList" parameterType="String" resultType="SugangVO">
@@ -139,7 +139,7 @@
 		       a.req_year,
 		       a.req_semstr,
 		       a.sugang_at,
-		       NVL(c.lec_atnlc, 5) lec_atnlc,
+		       NVL(c.lec_atnlc, 0) lec_atnlc,
 		       c.lec_pnt,
 		       b.lec_time,
 		       TO_NUMBER(b.lec_time + c.lec_pnt) lec_end,
@@ -158,5 +158,75 @@
 		       INNER JOIN staff d ON(d.staff_no = c.staff_no)
 		 WHERE a.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 		   AND a.sugang_at = 'N'
+		   AND a.req_year >= TO_CHAR(SYSDATE, 'YYYY')
+		   AND a.req_semstr > (SELECT semstr FROM v_semstr)
     </select>
+    
+    <insert id="insertCart" parameterType="SugangVO">
+    	INSERT INTO sugang_req
+    	(
+		    lec_code,
+		    stdnt_no,
+		    req_dt,
+		    req_year,
+		    req_semstr,
+		    sugang_at
+		) VALUES (
+		    #{lec_code, jdbcType=VARCHAR},
+		    #{stdnt_no, jdbcType=VARCHAR},
+		    SYSDATE,
+		    #{req_year, jdbcType=NUMERIC},
+		    #{req_semstr, jdbcType=NUMERIC},
+		    'N'
+		)    
+    </insert>
+    
+    <select id="selectSugangInfo" parameterType="String" resultType="SugangVO">
+    	SELECT a.lec_code,
+		       a.lec_cl,
+		       (SELECT com_code_nm 
+		          FROM tb_com_code
+		         WHERE code_grp = 'G06'
+		           AND a.lec_cl = com_code) lec_cl_nm,
+		       (CASE WHEN a.lec_cl = 01 OR a.lec_cl = 02 THEN 'G06_1'
+		             WHEN a.lec_cl = 03 OR a.lec_cl = 04 THEN 'G06_2' END) lec_cl_grp,
+		       b.lec_name,
+		       b.staff_no,
+		       d.name,
+		       b.sub_code,
+		       c.sub_name,
+		       c.col_code,
+		       (SELECT col_name
+		          FROM college
+		         WHERE c.col_code = col_code) col_name,
+		       NVL(b.lec_atnlc, 0) lec_atnlc,
+		       b.lec_pnt,
+		       a.lec_time,
+		       TO_NUMBER(a.lec_time + b.lec_pnt) lec_end,
+		       (SELECT COUNT(lec_code)
+		          FROM sugang_req
+		         WHERE a.lec_code = lec_code) lec_sugang,
+		       b.lec_cpacity,
+		       a.dayotw,
+		       (SELECT SUBSTR(com_code_nm, 1, 1)
+		          FROM tb_com_code
+		         WHERE code_grp = 'G19'
+		           AND a.dayotw = com_code ) dayotw_nm,
+		       a.estbl_year,
+		       a.estbl_semstr,
+		       a.atch_file_no
+		  FROM lecture a
+		       INNER JOIN curriculum b ON (a.cur_code = b.cur_code)
+		       INNER JOIN subject c ON(b.sub_code = c.sub_code)
+		       INNER JOIN staff d ON(b.staff_no = d.staff_no)
+		 WHERE a.estbl_year >= TO_CHAR(SYSDATE, 'YYYY')
+		   AND a.estbl_semstr > (SELECT semstr FROM v_semstr)
+		   AND a.lec_code = #{lec_code, jdbcType=VARCHAR}
+    </select>
+    
+    <delete id="deleteCart" parameterType="SugangVO">
+    	DELETE FROM sugang_req
+			  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+			    AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+    </delete>
 </mapper>
