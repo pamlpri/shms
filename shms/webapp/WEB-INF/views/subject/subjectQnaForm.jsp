@@ -15,12 +15,12 @@
 		color : red;
 	}
 </style>
+<section class="feature_area section_gap_top">
+	<div class="container">
 <c:if test="${not empty savedBoard }">
 	<c:set var="board" value="${savedBoard }"></c:set>
 </c:if>
-<section class="feature_area section_gap_top">
-	<div class="container">
-		<div style="clear: both;"></div>
+<div style="clear: both;"></div>
 <!-- 컨텐츠 -->
 <div class="contents">
 	<form:form modelAttribute="board" id="qnaForm" method="post">

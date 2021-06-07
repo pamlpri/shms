@@ -2,6 +2,8 @@ package kr.ac.shms.subject.controller;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.main.commuity.controller.CollegeQnaUpdateController;
 import kr.ac.shms.validator.BoardUpdateGroup;
 
 /**
@@ -34,6 +37,8 @@ import kr.ac.shms.validator.BoardUpdateGroup;
 @Controller
 @SessionAttributes("sub_code")
 public class SubjectQnaUpdateController {
+	private static final Logger logger = LoggerFactory.getLogger(SubjectQnaUpdateController.class);
+	
 	@Inject
 	private BoardService boardService;
 	
@@ -58,10 +63,11 @@ public class SubjectQnaUpdateController {
 			, Errors errors
 			, Model model
 			) {
-		boolean valid = false;
+		logger.info("board : {}", board.toString());
+		boolean valid = !errors.hasErrors();
 		
 		BoardVO savedBoard = boardService.selectBoard(board.getBo_no());
-		model.addAttribute("board", savedBoard);
+		model.addAttribute("savedboard", savedBoard);
 		
 		String view = null;
 		String message = null;
