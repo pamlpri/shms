@@ -198,7 +198,6 @@ public interface StudentService {
 	 */
 	public List<SugangVO> selectSugangList(SugangVO sugang);
 	
-    
     /**
      * 수강 신청 인덱스 페이지의 정보 조회
      * @param stdnt_no 학번
