@@ -1,8 +1,9 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
+* 수정일        수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 3.      박초원        최초작성
+* 2021. 6. 3.   박초원      최초작성
+* 2021. 6. 7.   김보미		정보출력
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
