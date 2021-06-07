@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,8 @@ import kr.ac.shms.lms.student.vo.SugangVO;
 
 @Controller
 public class ClassCartViewController {
+	private static final Logger logger = LoggerFactory.getLogger(ClassCartViewController.class);
+	
 	@Inject
 	private StudentService studentService;
 	@Inject
@@ -77,7 +81,7 @@ public class ClassCartViewController {
 		StudentVO studentVO = studentService.student(user_id);
 		model.addAttribute("student", studentVO);
 		
-		SugangVO sugang = classCartForAjax(user, sugangVO, null, 0, null, null, null, model);
+		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, 0, null, null, null, model);
 		model.addAttribute("sugang", sugang);
 		
 		return  "lms/classCart";
@@ -88,7 +92,8 @@ public class ClassCartViewController {
 	public SugangVO classCartForAjax(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		,@ModelAttribute("sugang") SugangVO sugangVO
-		, SearchVO searchVO
+		, @RequestParam(value="searchType", required=false) String searchType
+		, @RequestParam(value="searchWord", required=false) String searchWord
 		, @RequestParam(value="lec_atnlc", required=false) int lec_atnlc
 		, @RequestParam(value="lec_cl_grp", required=false) String lec_cl_grp
 		, @RequestParam(value="col_code", required=false) String col_code
@@ -101,10 +106,11 @@ public class ClassCartViewController {
 		StudentVO studentVO = studentService.student(user_id);
 		model.addAttribute("student", studentVO);
 		
-//		SugangVO sugang = new SugangVO();
+		logger.info("lec_atnlc {}", lec_atnlc);
+		
 		Map<String, Object> searchMap = new HashMap<>();
-//		searchMap.put("searchType", searchType);
-//		searchMap.put("searchWord", searchWord);
+		searchMap.put("searchType", searchType);
+		searchMap.put("searchWord", searchWord);
 		searchMap.put("lec_atnlc", lec_atnlc);
 		searchMap.put("lec_cl_grp", lec_cl_grp);
 		searchMap.put("col_code", col_code);
