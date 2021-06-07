@@ -366,7 +366,6 @@
 			time.push(i-8);
 		}
 	}
-
 	let subjectTag = $("[name='sub_code']");
 	$("[name='col_code']").on("change", function(){
 		let selectedCode = $(this).val();
@@ -416,14 +415,3 @@
 	
 	searchForm.submit();
 </script>
-
-
-
-
-
-
-
-
-
-
-

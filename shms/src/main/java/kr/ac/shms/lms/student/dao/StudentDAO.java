@@ -210,11 +210,11 @@ public interface StudentDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<SugangVO> selectSugangList(SugangVO sugang);
-
+	
+    /**
+     * 수강 신청 인덱스 페이지의 정보 조회
+     * @param stdnt_no 학번
+     * @return 신청교과목 수, 신청 학점, 수강 가능 학점
+     */
+    public SugangVO selectSugangReqInfo(String stdnt_no);
 }
-
-
-
-
-
-
