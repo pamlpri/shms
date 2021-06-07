@@ -217,4 +217,11 @@ public interface StudentDAO {
      * @return 신청교과목 수, 신청 학점, 수강 가능 학점
      */
     public SugangVO selectSugangReqInfo(String stdnt_no);
+    
+    /**
+     * 장바구니 과목 조회
+     * @param sugangVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public List<SugangVO> selectCartList(String stdnt_no);
 }

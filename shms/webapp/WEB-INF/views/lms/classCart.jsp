@@ -194,126 +194,23 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">교필</td>
-												<td class="text-center">시광학이론</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">교필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">교필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">전필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">전필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">전필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">전필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
-											<tr>
-												<td class="text-center">212345</td>
-												<td class="text-center">전필</td>
-												<td class="text-center">시광학이론2222222</td>
-												<td class="text-center">이현</td>
-												<td class="text-center">1</td>
-												<td class="text-center">3</td>
-												<td class="text-center">월 1 2</td>
-												<td class="text-center">50</td>
-												<td class="text-center">100</td>
-												<td class="text-center">
-													<button type="button"
-														class="btn btn-primary btn-sm deleteBtn">삭제</button>
-												</td>
-											</tr>
+											<c:forEach var="cart" items="${cartList }">
+												<tr>
+													<td class="text-center">${cart.lec_code }</td>
+													<td class="text-center">${cart.lec_cl_nm }</td>
+													<td class="text-center">${cart.lec_name }</td>
+													<td class="text-center">${cart.name }</td>
+													<td class="text-center">${cart.lec_atnlc }</td>
+													<td class="text-center">3</td>
+													<td class="text-center">월 1 2</td>
+													<td class="text-center">50</td>
+													<td class="text-center">100</td>
+													<td class="text-center">
+														<button type="button"
+															class="btn btn-primary btn-sm deleteBtn">삭제</button>
+													</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 									<!-- lecture list end -->
@@ -339,12 +236,12 @@
 								<div class="email-user-list list-group lectureList">
 									<table class="table table-bordered mb-0">
 										<tr>
-											<th class="text-center text-middle">신청교과목수</th>
-											<td class="text-center text-middle">2과목</td>
-											<th class="text-center text-middle">신청학점</th>
-											<td class="text-center text-middle">12학점</td>
-											<th class="text-center text-middle">수강 가능 학점</th>
-											<td class="text-center text-middle">23학점</td>
+											 <th class="text-center text-middle">신청교과목수</th>
+			                                 <td class="text-center text-middle">${sugangReqIndexInfo.sugang_lec_cnt }과목</td>
+			                                 <th class="text-center text-middle">신청학점</th>
+			                                 <td class="text-center text-middle">${sugangReqIndexInfo.sugang_at_pnt }학점</td>
+			                                 <th class="text-center text-middle">수강 가능 학점</th>
+			                                 <td class="text-center text-middle">${sugangReqIndexInfo.lec_able_pnt }학점</td>
 										</tr>
 									</table>
 									<!-- lecture list end -->
@@ -394,13 +291,19 @@
 								,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl).addClass("text-center")
 								,$("<td>").text(sugang.lec_name).addClass("text-center")
 								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
-								,$("<td>").text(sugang.lec_atnlc).addClass("text-center")
+								,$("<td>").text(
+											if(sugang.lec_atnlc == 5){
+												sugang.lec_atnlc = '전학년'
+											}else {
+												sugang.lec_atnlc
+											}
+										).addClass("text-center")
 								,$("<td>").text(sugang.lec_pnt).addClass("text-center")
 								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center")
 								,$("<td>").text(sugang.lec_sugang).addClass("text-center")
 								,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
 								,$("<td>").html('<button class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
-							).data("sugang", sugang);
+							).data("sugang", sugang.lec_code);
 					trTags.push(tr);
 				});
 			}else {
