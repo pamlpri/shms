@@ -35,10 +35,10 @@
 					AND lec_cl_grp = #{searchMap.lec_cl_grp}
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_col_code)">
-					AND col_code = #{searchMap.col_code}
+					AND col_code = #{searchMap.col_code} OR col_code IS NULL
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
-					AND sub_code = #{searchMap.sub_code}
+					AND sub_code = #{searchMap.sub_code} OR sub_code IS NULL
 				</if>
 			</trim>
 		</trim>
@@ -111,7 +111,7 @@
          INNER JOIN student d
             ON (a.stdnt_no = d.stdnt_no)
          WHERE a.req_year = EXTRACT(YEAR FROM SYSDATE)
-           AND a.req_semstr = (SELECT semstr FROM v_semstr)
+           AND a.req_semstr > (SELECT semstr FROM v_semstr)
            AND a.sugang_at = 'N'
          GROUP BY a.stdnt_no
         ) a
@@ -229,4 +229,43 @@
 			  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
 			    AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
     </delete>
+    
+    <select id="selectSugangAuth" parameterType="SugangVO" resultType="SugangVO">
+    	SELECT a.lec_code,
+		       c.lec_name,
+		       b.lec_cl,
+		       (SELECT com_code_nm 
+		          FROM tb_com_code
+		         WHERE code_grp = 'G06'
+		           AND B.lec_cl = com_code) lec_cl_nm,
+		       c.staff_no,
+		       d.name prof_name,
+		       a.stdnt_no,
+		       a.req_dt,
+		       a.req_year,
+		       a.req_semstr,
+		       a.sugang_at,
+		       NVL(c.lec_atnlc, 0) lec_atnlc,
+		       c.lec_pnt,
+		       b.lec_time,
+		       TO_NUMBER(b.lec_time + c.lec_pnt) lec_end,
+		       (SELECT COUNT(lec_code)
+		          FROM sugang_req
+		         WHERE b.lec_code = lec_code) lec_sugang,
+		       c.lec_cpacity,
+		       b.dayotw,
+		       (SELECT SUBSTR(com_code_nm, 1, 1)
+		          FROM tb_com_code
+		         WHERE code_grp = 'G19'
+		           AND b.dayotw = com_code ) dayotw_nm
+		  FROM sugang_req a
+		       INNER JOIN lecture b ON (a.lec_code = b.lec_code)
+		       INNER JOIN curriculum c ON (b.cur_code = c.cur_code)
+		       INNER JOIN staff d ON(d.staff_no = c.staff_no)
+		 WHERE a.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		   AND a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND a.sugang_at = 'N'
+		   AND a.req_year >= TO_CHAR(SYSDATE, 'YYYY')
+		   AND a.req_semstr > (SELECT semstr FROM v_semstr)
+    </select>
 </mapper>

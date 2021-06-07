@@ -208,9 +208,13 @@ public class StudentServiceImpl implements StudentService{
 	public ServiceResult insertCart(SugangVO sugang) {
 		ServiceResult result = ServiceResult.FAIL;
 		
-		int cnt = studentDAO.insertCart(sugang);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
+		if(studentDAO.selectSugangAuth(sugang) == null) {
+			int cnt = studentDAO.insertCart(sugang);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}else {
+			result = ServiceResult.PKDUPLICATED;
 		}
 		
 		return result;
