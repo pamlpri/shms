@@ -64,6 +64,15 @@
 							<h2 class="text-center text-primary">Login To LMS</h2>
 						</div>
 						<form action="${cPath }/lms/loginProcess.do" method="post" id="loginForm">
+							<select>
+								<option>학생</option>
+								<option>교수</option>
+								<option>학적과</option>
+								<option>학생지원과</option>
+								<option>입학과</option>
+								<option>취업장학과</option>
+								<option>학과관리자</option>
+							</select>
 							<c:choose>
 								<c:when test="${not empty errorMsg }">
 								<div class="input-group custom">

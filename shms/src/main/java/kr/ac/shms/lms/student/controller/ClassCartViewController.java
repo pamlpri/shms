@@ -84,7 +84,7 @@ public class ClassCartViewController {
 		StudentVO studentVO = studentService.student(user_id);
 		model.addAttribute("student", studentVO);
 		
-		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, 5, null, null, null, model);
+		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, studentVO.getGrade(), null, null, null, model);
 		model.addAttribute("sugang", sugang);
 		
 		return  "lms/classCart";
@@ -109,8 +109,6 @@ public class ClassCartViewController {
 		StudentVO studentVO = studentService.student(user_id);
 		model.addAttribute("student", studentVO);
 		
-		logger.info("lec_atnlc {}", lec_atnlc);
-		
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("searchWord", searchWord);
@@ -118,7 +116,6 @@ public class ClassCartViewController {
 		searchMap.put("lec_cl_grp", lec_cl_grp);
 		searchMap.put("col_code", col_code);
 		searchMap.put("sub_code", sub_code);
-		
 		sugangVO.setSearchMap(searchMap);
 		
 		List<SugangVO> dataList = studentService.selectSugangList(sugangVO);

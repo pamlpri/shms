@@ -74,10 +74,10 @@
 						<h6>학년</h6>
 						<fieldset class="form-group">
 							<select class="form-select" name="lec_atnlc">
-								<c:forEach var="i" begin="1" end="${student.grade + 1 }">
+								<c:forEach var="i" begin="0" end="${student.grade }">
 									<c:set var="selected" value="${student.grade eq i  ? 'selected' : ''}"></c:set>
 									<c:choose>
-										<c:when test="${i eq 5}">
+										<c:when test="${i eq 0}">
 											<option value="${i }">전학년</option>
 										</c:when>
 										<c:otherwise>
@@ -193,7 +193,7 @@
 												<th class="text-center">신청</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="cartList">
 											<c:forEach var="cart" items="${cartList }">
 												<tr>
 													<td class="text-center">${cart.lec_code }</td>
@@ -201,10 +201,10 @@
 													<td class="text-center">${cart.lec_name }</td>
 													<td class="text-center">${cart.name }</td>
 													<td class="text-center">${cart.lec_atnlc }</td>
-													<td class="text-center">3</td>
-													<td class="text-center">월 1 2</td>
-													<td class="text-center">50</td>
-													<td class="text-center">100</td>
+													<td class="text-center">${cart.lec_pnt }</td>
+													<td class="text-center">${cart.dayotw_nm } ${cart.lec_time - 8} ${cart.lec_end - 8 }</td>
+													<td class="text-center">${cart.lec_sugang }</td>
+													<td class="text-center">${cart.lec_cpacity }</td>
 													<td class="text-center">
 														<button type="button"
 															class="btn btn-primary btn-sm deleteBtn">삭제</button>
@@ -286,24 +286,26 @@
 			let trTags = [];
 			if(resp.dataList){
 				$(resp.dataList).each(function(idx, sugang){
+					let lec_atnlc = "";
+					if(sugang.lec_atnlc == 0){
+						lec_atnlc = "전학년";
+					}else {
+						lec_atnlc = sugang.lec_atnlc;
+					}
 					let tr = $("<tr>").append(
 								$("<td>").text(sugang.lec_code).addClass("text-center")
 								,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl).addClass("text-center")
 								,$("<td>").text(sugang.lec_name).addClass("text-center")
 								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
-								,$("<td>").text(
-											if(sugang.lec_atnlc == 5){
-												sugang.lec_atnlc = '전학년'
-											}else {
-												sugang.lec_atnlc
-											}
-										).addClass("text-center")
+								,$("<td>").text(lec_atnlc).addClass("text-center")
 								,$("<td>").text(sugang.lec_pnt).addClass("text-center")
 								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center")
 								,$("<td>").text(sugang.lec_sugang).addClass("text-center")
 								,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
-								,$("<td>").html('<button class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
-							).data("sugang", sugang.lec_code);
+								,$("<td>").html('<button type="button" class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
+								,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(sugang.estbl_year)
+								,$("<input>").attr("type", "hidden").attr("name", "estbl_semstr").val(sugang.estbl_semstr)
+							).attr("idx", sugang.lec_code);
 					trTags.push(tr);
 				});
 			}else {
@@ -318,4 +320,48 @@
 	});
 	
 	searchForm.submit();
+	
+	let cartList = $("#cartList");
+	$("#listBody").on("click", ".saveBtn", function(){
+		let lec_code = $(this).parents("tr").attr("idx");
+		let stdnt_no = "${student.stdnt_no}";
+		let req_year = $(this).parents("tr").find("input[name='estbl_year']").val();
+		let req_semstr = $(this).parents("tr").find("input[name='estbl_semstr']").val();
+		
+		$.ajax({
+			url : "${cPath}/lms/classCartInsert.do"
+			,data :{
+				lec_code : lec_code,
+				stdnt_no : stdnt_no,
+				req_year : req_year,
+				req_semstr : req_semstr
+			}
+			,method : "post"
+			,dataType : "json"
+			,success : function(resp){
+				if(resp.result == "OK"){
+					$(cartList).append(
+							$("<tr>").append(
+									$("<td>").text(sugang.lec_code).addClass("text-center")
+									,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl).addClass("text-center")
+									,$("<td>").text(sugang.lec_name).addClass("text-center")
+									,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
+									,$("<td>").text(lec_atnlc).addClass("text-center")
+									,$("<td>").text(sugang.lec_pnt).addClass("text-center")
+									,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center")
+									,$("<td>").text(sugang.lec_sugang).addClass("text-center")
+									,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
+									,$("<td>").html('<button type="button" class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
+									,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(sugang.estbl_year)
+									,$("<input>").attr("type", "hidden").attr("name", "estbl_semstr").val(sugang.estbl_semstr)
+							).attr("idx", sugang.lec_code);
+					)					
+				}
+			},error : function(xhr, error, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
+	});
 </script>

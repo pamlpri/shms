@@ -34,6 +34,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  4.   최희수	   	내 시간표 출력
  * 2021. 6.  5.   박초원	   	개설과목조회 
  * 2021. 6.  5.   송수미 	   	수강신청 인덱스 페이지에 필요한 정보 조회
+ * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -224,4 +225,25 @@ public interface StudentDAO {
      * @return 데이터가 없으면 null 반환
      */
     public List<SugangVO> selectCartList(String stdnt_no);
+    
+    /**
+     * 장바구니 과목 담기
+     * @param sugangVO
+     * @return
+     */
+    public int insertCart(SugangVO sugang);
+    
+    /**
+     * 한 과목만 조회
+     * @param lec_code
+     * @return 데이터가 없으면 null 반환
+     */
+    public SugangVO selectSugangInfo(String lec_code);
+    
+    /**
+     * 장바구니 과목 삭제
+     * @param sugangVO
+     * @return 
+     */
+    public int deleteCart(SugangVO sugang);
 }
