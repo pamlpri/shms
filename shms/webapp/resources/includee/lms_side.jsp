@@ -251,7 +251,7 @@
 	                          <a href="#">학적조회</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">상담내역</a>
+	                          <a href="${cPath }/lms/consultingAdmin.do">상담내역</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">장학금추천</a>

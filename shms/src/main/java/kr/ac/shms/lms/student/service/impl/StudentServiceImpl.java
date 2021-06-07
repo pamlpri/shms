@@ -185,18 +185,21 @@ public class StudentServiceImpl implements StudentService{
 
 	@Override
 	public List<TimeTableVO> timeTable(String stdnt_no) {
-		// TODO Auto-generated method stub
 		return studentDAO.timeTable(stdnt_no);
 	}
 
 	@Override
 	public List<SugangVO> selectSugangList(SugangVO sugang) {
-		// TODO Auto-generated method stub
 		return studentDAO.selectSugangList(sugang);
 	}
 
 	@Override
 	public SugangVO selectSugangReqInfo(String stdnt_no) {
 		return studentDAO.selectSugangReqInfo(stdnt_no);
+	}
+	
+	@Override
+	public List<SugangVO> selectCartList(String stdnt_no){
+		return studentDAO.selectCartList(stdnt_no);
 	}
 }

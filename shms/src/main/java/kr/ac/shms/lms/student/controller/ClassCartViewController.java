@@ -66,6 +66,9 @@ public class ClassCartViewController {
 		
 		model.addAttribute("student", studentVO);
 		
+		SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(user_id);
+        model.addAttribute("sugangReqIndexInfo", sugangReqIndexInfo);
+		
 		return  "lms/classCartInfo";
 	}
 	
@@ -81,7 +84,7 @@ public class ClassCartViewController {
 		StudentVO studentVO = studentService.student(user_id);
 		model.addAttribute("student", studentVO);
 		
-		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, 0, null, null, null, model);
+		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, 5, null, null, null, model);
 		model.addAttribute("sugang", sugang);
 		
 		return  "lms/classCart";
@@ -120,6 +123,12 @@ public class ClassCartViewController {
 		
 		List<SugangVO> dataList = studentService.selectSugangList(sugangVO);
 		sugangVO.setDataList(dataList);
+		
+		List<SugangVO> cartList = studentService.selectCartList(user_id);
+		model.addAttribute("cartList", cartList);
+		
+        SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(user_id);
+        model.addAttribute("sugangReqIndexInfo", sugangReqIndexInfo);
 		
 		return sugangVO;
 	}
