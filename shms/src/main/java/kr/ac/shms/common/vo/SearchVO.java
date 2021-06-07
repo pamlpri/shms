@@ -14,4 +14,8 @@ import lombok.NoArgsConstructor;
 public class SearchVO {
 	private String searchType;
 	private String searchWord;
+	private Integer lec_atnlc;
+	private String lec_cl_grp;
+	private String col_code;
+	private String sub_code;
 }

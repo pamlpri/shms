@@ -79,9 +79,7 @@
 			<tr>
 				<th>내용</th>
 				<td class="textArea">
-					<textarea name="bo_cont" class="form-control" rows="5" cols="1000" id="bo_cont" >
-						${board.bo_cont }
-					</textarea>
+					<textarea name="bo_cont" class="form-control" rows="5" cols="1000" id="bo_cont" >${board.bo_cont }</textarea>
 					<form:errors path="bo_cont" element="span" cssClass="error" />
 				</td>
 			</tr>

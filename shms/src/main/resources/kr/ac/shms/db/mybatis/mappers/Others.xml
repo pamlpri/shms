@@ -3,9 +3,8 @@
 <mapper namespace="kr.ac.shms.common.dao.OthersDAO">
 	<select id="selectCollegeList" resultType="hashMap">
 	  SELECT
-		     col_code,
-		     col_name,
-		     building_no
+		     col_code "col_code",
+		     col_name "col_name"
 		FROM
 		     college
 	</select>

@@ -50,7 +50,7 @@
 							<select class="form-select" name="col_code">
 								<option value="">전체</option>
 								<c:forEach items="${collegeList }" var="college">
-									<option value="${college.col_code }">
+									<option value="${college.col_code}" ${selected }>
 										${college.col_name }
 									</option>
 								</c:forEach>
@@ -63,7 +63,7 @@
 							<select class="form-select" name="sub_code">
 								<option value="">전체</option>
 								<c:forEach items="${subjectList }" var="subject">
-									<option class="${subject.col_code }" value="${subject.sub_code }">
+									<option class="${subject.col_code }" value="${subject.sub_code }" ${selected }>
 										${subject.sub_name }
 									</option>
 								</c:forEach>
@@ -74,13 +74,14 @@
 						<h6>학년</h6>
 						<fieldset class="form-group">
 							<select class="form-select" name="lec_atnlc">
-								<c:forEach var="i" begin="0" end="${student.grade }">
+								<c:forEach var="i" begin="1" end="${student.grade + 1 }">
+									<c:set var="selected" value="${student.grade eq i  ? 'selected' : ''}"></c:set>
 									<c:choose>
-										<c:when test="${i eq 0}">
+										<c:when test="${i eq 5}">
 											<option value="${i }">전학년</option>
 										</c:when>
 										<c:otherwise>
-											<option value="${i }">${i }학년</option>
+											<option value="${i }" ${selected}>${i }학년</option>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
@@ -389,22 +390,22 @@
 			if(resp.dataList){
 				$(resp.dataList).each(function(idx, sugang){
 					let tr = $("<tr>").append(
-								$("<td>").text(sugang.lec_code)
-								,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl)
-								,$("<td>").text(sugang.lec_name)
-								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no)
-								,$("<td>").text(sugang.lec_atnlc)
-								,$("<td>").text(sugang.lec_pnt)
-								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end])
-								,$("<td>").text(sugang.let_sugang)
-								,$("<td>").text(sugang.lec_cpacity)
-								,$("<td>").html("<button type='button' class='btn btn-primary btn-sm deleteBtn'>삭제</button>")
+								$("<td>").text(sugang.lec_code).addClass("text-center")
+								,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl).addClass("text-center")
+								,$("<td>").text(sugang.lec_name).addClass("text-center")
+								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
+								,$("<td>").text(sugang.lec_atnlc).addClass("text-center")
+								,$("<td>").text(sugang.lec_pnt).addClass("text-center")
+								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center")
+								,$("<td>").text(sugang.lec_sugang).addClass("text-center")
+								,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
+								,$("<td>").html('<button class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
 							).data("sugang", sugang);
 					trTags.push(tr);
 				});
 			}else {
 				trTags.push(
-					$("<tr>").html("<td colspan='10'>일치하는 강의가 없습니다.</td>")
+					$("<tr>").html("<td colspan='10' class='text-center'>일치하는 강의가 없습니다.</td>")
 				);
 			}
 			listBody.html(trTags);
