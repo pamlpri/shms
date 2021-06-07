@@ -40,6 +40,7 @@
 								<input type="hidden" name="req_cont" value="${consulting.req_cont }" />
 								<input type="hidden" name="hope_date" value="${consulting.hope_date }" />
 								<input type="hidden" name="hope_time" value="${consulting.hope_time }" />
+								<input type="hidden" name="refuse_resn" value="${consulting.refuse_resn }" />
 							</td>
                    			<td class="text-center">${consulting.req_no }</td>
                    			<td class="text-center">${consulting.consult_cl_nm }</td>
@@ -111,9 +112,13 @@
                    </button>
                </div>
                <div class="modal-body">
-                   <p>
-                       해당 시간에는 일정이 있어 상담 시간을 일주일 후로 미뤄주게나<br/>
-                       일주일 후에 적성검사지를 준비해주게나.
+               		<p class="resn">
+	                   <script type="text/javascript">
+	                    $("#exampleModalCenter").on('show.bs.modal', function(event) {
+		                   	let resn = $("input[name='refuse_resn']").val();
+		                   	$(".modal-body .resn").text(resn);
+	                    });
+	                   </script>
                    </p>
                </div>
                <div class="modal-footer">
