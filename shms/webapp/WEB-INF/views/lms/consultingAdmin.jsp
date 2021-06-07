@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <div class="page-content">
    <!-- contents start -->
    <nav aria-label="breadcrumb">
@@ -28,291 +30,65 @@
                        </tr>
                    </thead>
                    <tbody>
-                       <tr>
-                           <td class="text-center">1</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">학업</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <td class="text-center"><a href="consultingView.html" class="badge bg-success white-color">완료</a></td>
-                       </tr>
-                       <tr>
-                           <td class="text-center">2</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">진로</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-danger block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                               반려
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">3</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <!-- 상담시간이 됐을때 -->
-                               <a href="consultingForm.html" class="badge bg-primary">승인</a>
-                               <!-- 상담시간이 안됐을때 -->
-                               <button type="button" class="btn badge bg-primary block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">
-                               승인
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">4</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-info white-color" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
-                                   대기
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">1</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">학업</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <td class="text-center"><a href="consultingView.html" class="badge bg-success white-color">완료</a></td>
-                       </tr>
-                       <tr>
-                           <td class="text-center">2</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">진로</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-danger block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                               반려
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">3</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <!-- 상담시간이 됐을때 -->
-                               <a href="consultingForm.html" class="badge bg-primary">승인</a>
-                               <!-- 상담시간이 안됐을때 -->
-                               <button type="button" class="btn badge bg-primary block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">
-                               승인
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">4</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-info white-color" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
-                                   대기
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">1</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">학업</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <td class="text-center"><a href="consultingView.html" class="badge bg-success white-color">완료</a></td>
-                       </tr>
-                       <tr>
-                           <td class="text-center">2</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">진로</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-danger block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                               반려
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">3</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <!-- 상담시간이 됐을때 -->
-                               <a href="consultingForm.html" class="badge bg-primary">승인</a>
-                               <!-- 상담시간이 안됐을때 -->
-                               <button type="button" class="btn badge bg-primary block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">
-                               승인
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">4</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-info white-color" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
-                                   대기
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">1</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">학업</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <td class="text-center"><a href="consultingView.html" class="badge bg-success white-color">완료</a></td>
-                       </tr>
-                       <tr>
-                           <td class="text-center">2</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">진로</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-danger block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                               반려
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">3</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <!-- 상담시간이 됐을때 -->
-                               <a href="consultingForm.html" class="badge bg-primary">승인</a>
-                               <!-- 상담시간이 안됐을때 -->
-                               <button type="button" class="btn badge bg-primary block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">
-                               승인
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">4</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-info white-color" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
-                                   대기
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">1</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">학업</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <td class="text-center"><a href="consultingView.html" class="badge bg-success white-color">완료</a></td>
-                       </tr>
-                       <tr>
-                           <td class="text-center">2</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">진로</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-danger block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                               반려
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">3</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <!-- 상담시간이 됐을때 -->
-                               <a href="consultingForm.html" class="badge bg-primary">승인</a>
-                               <!-- 상담시간이 안됐을때 -->
-                               <button type="button" class="btn badge bg-primary block failBtn"
-                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">
-                               승인
-                               </button>
-                           </th>
-                       </tr>
-                       <tr>
-                           <td class="text-center">4</td>
-                           <td class="text-center">2345</td>
-                           <td class="text-center">생활</td>
-                           <td class="text-center">S1010232</td>
-                           <td class="text-center">하재관</td>
-                           <td class="text-center">2021.05.25</td>
-                           <td class="text-center">PM 02:00</td>
-                           <th class="text-center">
-                               <button type="button" class="btn badge bg-info white-color" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
-                                   대기
-                               </button>
-                           </th>
-                       </tr>
+                   	<c:forEach items="${consultingList }" var="consulting" varStatus="state">
+                   		<tr class="consultingBox"  idx="${consulting.req_no }">
+                   			<td class="text-center inputBox">
+								${state.index + 1 }
+								<input type="hidden" name="stdnt_no" value="${consulting.stdnt_no }" />
+								<input type="hidden" name="name" value="${consulting.name }" />
+								<input type="hidden" name ="consult_cl_nm" value="${consulting.consult_cl_nm }" />
+								<input type="hidden" name="req_cont" value="${consulting.req_cont }" />
+								<input type="hidden" name="hope_date" value="${consulting.hope_date }" />
+								<input type="hidden" name="hope_time" value="${consulting.hope_time }" />
+							</td>
+                   			<td class="text-center">${consulting.req_no }</td>
+                   			<td class="text-center">${consulting.consult_cl_nm }</td>
+                   			<td class="text-center">${consulting.stdnt_no }</td>
+                   			<td class="text-center">${consulting.name }</td>
+              				<c:choose>
+              					<c:when test="${consulting.process_stat_nm eq '반려' or consulting.process_stat_nm eq '대기'}">
+              						<td class="text-center"></td>
+              						<td class="text-center"></td>
+              					</c:when>
+              					<c:otherwise>
+              						<td class="text-center">${consulting.hope_date }</td>
+              						<td class="text-center">${consulting.hope_time }</td>
+              					</c:otherwise>
+              				</c:choose>
+                   			<td class="text-center">
+                   				<c:choose>
+                   					<c:when test="${consulting.process_stat_nm eq '완료'}">
+										<a href="${cPath }/lms/consultingView.do"
+											class="badge bg-success white-color">완료</a>
+									</c:when>
+									<c:when test="${consulting.process_stat_nm eq '대기'}">
+										<button type="button" class="btn badge bg-info white-color stat_wait"
+											data-bs-toggle="modal" data-bs-target="#inlineForm"
+		 									style="margin-top: -1%;">대기</button>
+									</c:when>
+									<c:when test="${consulting.process_stat_nm eq '반려'}">
+										<button type="button" class="btn badge bg-danger block failBtn"
+											data-bs-toggle="modal" data-bs-target="#exampleModalCenter">반려</button>
+									</c:when>
+									<c:when test="${consulting.process_stat_nm eq '승인'}">
+										<c:set var="now" value="<%=new java.util.Date() %>" />
+										<c:set value="${consulting.hope_date } ${consulting.hope_time }" var="hopeDate" />
+										<fmt:formatDate value="${now }" pattern="yyyy-MM-dd hh:mm" var="nowDate"/>
+										<c:choose>
+											<c:when test="${hopeDate > nowDate }">
+												<button type="button" class="btn badge bg-primary block failBtn"
+													data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button> 
+											</c:when>
+											<c:otherwise>
+												<a href="${cPath }/lms/consulting.do" class="badge bg-primary">승인</a>
+											</c:otherwise>
+										</c:choose>
+										
+									</c:when>
+                   				</c:choose>
+                   			</td>
+                   		</tr>
+                   	</c:forEach>
                    </tbody>
                </table>
            </div>
@@ -396,36 +172,37 @@
                        <i data-feather="x"></i>
                    </button>
                </div>
-               <form action="#">
+               <form id="consultingForm" action="${cPath }/lms/consultingAdmin.do" method="post">
                    <div class="modal-body">
+                   	   <input type="hidden" name="req_no" value="" />
+                   	   <input type="hidden" name="approval" value="" />
                        <div class="form-group">
                            <h6>학번</h6>
-                           <input class="form-control form-control-default" type="text" value="S14010001" disabled>
+                           <input class="form-control form-control-default" type="text" name="stdnt_no" value="" disabled>
                        </div>
                        <div class="form-group">
                            <h6>이름</h6>
-                           <input class="form-control form-control-default" type="text" value="강미나" disabled>
+                           <input class="form-control form-control-default" type="text" name="name" value="" disabled>
                        </div>
                        <div class="form-group">
                            <h6>상담분류</h6>
-                           <input class="form-control form-control-default" type="text" value="학업" disabled>
+                           <input class="form-control form-control-default" type="text" name="consult_cl_nm" value="" disabled>
                        </div>
                        <div class="form-group">
                            <h6>상담사유</h6>
-                           <textarea class="form-control" disabled id="floatingTextarea">상담신청합니다 교수님!
-                           </textarea>
+                           <textarea class="form-control cont" disabled id="floatingTextarea" name="req_cont"></textarea>
                        </div>
                        <div class="form-group">
                            <h6>상담희망일시</h6>
-                           <input class="form-control form-control-default" type="date" value="2021-05-23" disabled>
+                           <input class="form-control form-control-default" type="date" name="hope_date" value="" disabled>
                        </div>
                        <div class="form-group">
                            <h6>상담희망시간</h6>
-                           <input class="form-control form-control-default" type="time" value="14:00" disabled>
+                           <input class="form-control form-control-default" type="time" name="hope_time" value="" disabled>
                        </div>
                        <div class="form-group" >
                            <h6>반려사유</h6>
-                           <textarea class="form-control" id="returnResult" placeholder="반려사유를 입력하세요."></textarea>
+                           <textarea class="form-control" id="returnResult" name="refuse_resn" placeholder="반려사유를 입력하세요."></textarea>
                            <span id="returnWarning"></span>
                        </div>
                    </div>
@@ -434,8 +211,7 @@
                            <i class="bx bx-x d-block d-sm-none"></i>
                            <span class="d-none d-sm-block">반려</span>
                        </button>
-                       <button type="button" class="btn btn-primary ml-1"
-                           data-bs-dismiss="modal">
+                       <button type="submit" id="approvalBtn" class="btn btn-primary ml-1">
                            <i class="bx bx-check d-block d-sm-none"></i>
                            <span class="d-none d-sm-block">승인</span>
                        </button>
@@ -453,15 +229,37 @@
     let dataTable = new simpleDatatables.DataTable(table1);
 </script>
 <script>
-    $("#returnBtn").on("click", function(){
-        let txt = $("#inlineForm").find("#returnResult").val();
-        if(txt == null || txt == ""){
-            console.log(txt)
-            $("#returnWarning").text("반려사유는 필수입력 항목입니다.");
-            $("#returnResult").focus();
-        }else {
-            $("#inlineForm").removeClass("show");
-            $(".modal-backdrop").removeClass("show");
-        }
-    }); 
+	$(function() {
+		let curCode = "";
+		$("#table1").find(".stat_wait").on("click", function() {
+			curCode = $(this).parents(".consultingBox").attr("idx");
+			
+			$(this).parents(".consultingBox").children(".inputBox").children(":input[name]").each(function(){
+    			if($(this).attr("name")== "req_cont"){
+	    			$("#inlineForm").find(".cont").text(this.value);
+    			}
+    			let name = $(this).attr("name");
+    			$("#inlineForm").find("input[name="+name+"]").val(this.value);
+    			$("#inlineForm").find("input[name='req_no']").val(curCode);
+    		});
+		});
+		
+	    $("#returnBtn").on("click", function(){
+	        let txt = $("#inlineForm").find("#returnResult").val();
+	        if(txt == null || txt == ""){
+	            console.log(txt)
+	            $("#returnWarning").text("반려사유는 필수입력 항목입니다.");
+	            $("#returnResult").focus();
+	        }else {
+	        	$("#inlineForm").find("input[name='approval']").val("companion");
+	            $("#inlineForm").removeClass("show");
+	            $(".modal-backdrop").removeClass("show");
+	            $("#consultingForm").submit();
+	        }
+	    });
+	    
+	    $("#approvalBtn").on("click", function() {
+	    	$("#inlineForm").find("input[name='approval']").val("approval");
+	    });
+	});
 </script>

@@ -135,4 +135,48 @@
 		ON uv.dept_code = d.dept_code
 		WHERE uv.user_no = #{user_no}
 	</select>
+	
+	<select id="consultingList" parameterType="String" resultType="ConsultingVO">
+		SELECT  req_no,
+		        consult_cl,
+		        b.com_code_nm consult_cl_nm,
+		        req_date,
+		        TO_CHAR(hope_date, 'YYYY-MM-DD') hope_date,
+		        TO_CHAR(hope_date, 'HH24:MI') hope_time,
+		        req_cont,
+		        process_stat,
+		        c.com_code_nm process_stat_nm,
+		        a.stdnt_no,
+                st.name,
+		        refuse_resn,
+		        a.staff_no,
+                d.name staff_name,
+		        conslt_link
+		FROM
+		    conslt_req a
+		INNER JOIN tb_com_code b
+		ON(a.consult_cl = b.com_code)
+		INNER JOIN tb_com_code c
+		ON(a.process_stat = c.com_code)
+        INNER JOIN staff d
+        ON (a.staff_no = d.staff_no)
+        INNER JOIN student st
+        ON (a.stdnt_no = st.stdnt_no)
+		WHERE b.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'CONSULT_CL')
+		  AND c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
+		  AND d.staff_no = #{staff_no}
+	</select>
+	
+	<update id="consultingCompanion" parameterType="ConsultingVO">
+		UPDATE CONSLT_REQ SET
+		    process_stat = 'BR',
+		    refuse_resn = #{refuse_resn}
+		WHERE req_no = #{req_no}	
+	</update>
+	
+	<update id="consultingApproval" parameterType="int">
+		UPDATE CONSLT_REQ SET
+		    process_stat = 'SI'
+		WHERE req_no = #{req_no}
+	</update>
 </mapper>

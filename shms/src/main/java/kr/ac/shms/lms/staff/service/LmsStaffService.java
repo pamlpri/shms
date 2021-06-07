@@ -1,10 +1,13 @@
 package kr.ac.shms.lms.staff.service;
 
+import java.util.List;
+
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 
 public interface LmsStaffService {
 	/**
@@ -54,4 +57,25 @@ public interface LmsStaffService {
 	 * @return
 	 */
 	public SMyPageVO staffMyPage(String user_no);
+	
+	/**
+	 * 학생 상담 내역(교수)
+	 * @param staff_no
+	 * @return
+	 */
+	public List<ConsultingVO> consultingList(String staff_no); 
+	
+	/**
+	 * 상담 신청이 승인 되었을 경우
+	 * @param req_no
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingApproval(int req_no);
+	
+	/**
+	 * 상담 신청이 반려 되었을 경우
+	 * @param consultingVO
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingCompanion(ConsultingVO consultingVO);
 }

@@ -19,6 +19,7 @@ public class ConsultingVO {
 	private String process_stat;
 	private String process_stat_nm;
 	private String stdnt_no;
+	private String name;
 	private String refuse_resn;
 	private String staff_no;
 	private String staff_name;
