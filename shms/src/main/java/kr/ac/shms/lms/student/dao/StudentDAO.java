@@ -234,6 +234,13 @@ public interface StudentDAO {
     public int insertCart(SugangVO sugang);
     
     /**
+     * 장바구니 중복 조회
+     * @param sugangVO
+     * @return
+     */
+    public SugangVO selectSugangAuth(SugangVO sugang);
+    
+    /**
      * 한 과목만 조회
      * @param lec_code
      * @return 데이터가 없으면 null 반환

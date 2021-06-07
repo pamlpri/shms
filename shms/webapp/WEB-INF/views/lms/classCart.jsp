@@ -10,6 +10,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" href="${cPath }/resources/lms/assets/css/pages/email.css">
+<link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/toastify/toastify.css">
 <style>
     body {
         overflow-x: hidden;
@@ -161,6 +162,7 @@
 						</div>
 					</div>
 				</div>
+			</div>
 		</section>
 	</div>
 
@@ -195,20 +197,25 @@
 										</thead>
 										<tbody id="cartList">
 											<c:forEach var="cart" items="${cartList }">
-												<tr>
+												<tr class="${cart.lec_code }">
 													<td class="text-center">${cart.lec_code }</td>
 													<td class="text-center">${cart.lec_cl_nm }</td>
 													<td class="text-center">${cart.lec_name }</td>
 													<td class="text-center">${cart.name }</td>
-													<td class="text-center">${cart.lec_atnlc }</td>
+													<td class="text-center">${cart.lec_atnlc eq 0 ? "전학년" : cart.lec_atnlc}</td>
 													<td class="text-center">${cart.lec_pnt }</td>
-													<td class="text-center">${cart.dayotw_nm } ${cart.lec_time - 8} ${cart.lec_end - 8 }</td>
-													<td class="text-center">${cart.lec_sugang }</td>
+													<td class="text-center times">${cart.dayotw_nm } ${cart.lec_time - 8} ${cart.lec_end - 8 }</td>
+													<td class="text-center sugangNum">${cart.lec_sugang }</td>
 													<td class="text-center">${cart.lec_cpacity }</td>
 													<td class="text-center">
-														<button type="button"
-															class="btn btn-primary btn-sm deleteBtn">삭제</button>
+														<button type="button" class="btn btn-danger btn-sm deleteBtn">삭제</button>
 													</td>
+													<input type="hidden"  name="estbl_year"  value="${cart.estbl_year}" />
+													<input type="hidden"  name="estbl_semstr"  value="${cart.estbl_semstr}" />
+													<input type="hidden"  name="lec_pnt"  value="${cart.lec_pnt}" />
+													<input type="hidden"  name="dayotw_nm"  value="${cart.dayotw_nm}" />
+													<input type="hidden"  name="lec_time"  value="${cart.lec_time}" />
+													<input type="hidden"  name="lec_end"  value="${cart.lec_end}" />
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -235,13 +242,19 @@
 							<div class="email-app-list-wrapper">
 								<div class="email-user-list list-group lectureList">
 									<table class="table table-bordered mb-0">
-										<tr>
+										<tr id="sugangReqList">
 											 <th class="text-center text-middle">신청교과목수</th>
-			                                 <td class="text-center text-middle">${sugangReqIndexInfo.sugang_lec_cnt }과목</td>
+			                                 <td class="text-center text-middle sugang_cnt" data-cnt="${sugangReqIndexInfo.sugang_lec_cnt }">
+			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_lec_cnt : "0"}과목
+			                                 </td>
 			                                 <th class="text-center text-middle">신청학점</th>
-			                                 <td class="text-center text-middle">${sugangReqIndexInfo.sugang_at_pnt }학점</td>
+			                                 <td class="text-center text-middle sugang_at_pnt" data-cnt="${sugangReqIndexInfo.sugang_at_pnt}">
+			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_at_pnt : "0"}학점
+			                                 </td>
 			                                 <th class="text-center text-middle">수강 가능 학점</th>
-			                                 <td class="text-center text-middle">${sugangReqIndexInfo.lec_able_pnt }학점</td>
+			                                 <td class="text-center text-middle sugang_able_pnt" data-cnt="${sugangReqIndexInfo.lec_able_pnt }">
+			                                 	${sugangReqIndexInfo.lec_able_pnt }학점
+			                                 </td>
 										</tr>
 									</table>
 									<!-- lecture list end -->
@@ -299,13 +312,17 @@
 								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
 								,$("<td>").text(lec_atnlc).addClass("text-center")
 								,$("<td>").text(sugang.lec_pnt).addClass("text-center")
-								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center")
-								,$("<td>").text(sugang.lec_sugang).addClass("text-center")
+								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center times")
+								,$("<td>").text(sugang.lec_sugang).addClass("text-center sugangNum")
 								,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
 								,$("<td>").html('<button type="button" class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
 								,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(sugang.estbl_year)
 								,$("<input>").attr("type", "hidden").attr("name", "estbl_semstr").val(sugang.estbl_semstr)
-							).attr("idx", sugang.lec_code);
+								,$("<input>").attr("type", "hidden").attr("name", "lec_pnt").val(sugang.lec_pnt)
+								,$("<input>").attr("type", "hidden").attr("name", "dayotw_nm").val(sugang.dayotw_nm)
+								,$("<input>").attr("type", "hidden").attr("name", "lec_time").val(sugang.lec_time)
+								,$("<input>").attr("type", "hidden").attr("name", "lec_end").val(sugang.lec_end)
+							).attr("class", sugang.lec_code);
 					trTags.push(tr);
 				});
 			}else {
@@ -322,11 +339,83 @@
 	searchForm.submit();
 	
 	let cartList = $("#cartList");
+	let sugangReqList = $("#sugangReqList");
 	$("#listBody").on("click", ".saveBtn", function(){
-		let lec_code = $(this).parents("tr").attr("idx");
+		let lec_code = $(this).parents("tr").attr("class");
+		let sugangNum = $(this).parents("tr").find(".sugangNum").text();
 		let stdnt_no = "${student.stdnt_no}";
 		let req_year = $(this).parents("tr").find("input[name='estbl_year']").val();
 		let req_semstr = $(this).parents("tr").find("input[name='estbl_semstr']").val();
+		let lec_pnt = $(this).parents("tr").find("input[name='lec_pnt']").val();
+		let sugang_cnt = $(sugangReqList).find(".sugang_cnt").data("cnt");
+		let sugang_at_pnt = $(sugangReqList).find(".sugang_at_pnt").data("cnt");
+		let sugang_able_pnt = $(sugangReqList).find(".sugang_able_pnt").data("cnt");
+		let times = $(this).parents("tr").children(".times").text();
+		let dayotw_nm = $(this).parents("tr").find("input[name='dayotw_nm']").val();
+		let lec_time = $(this).parents("tr").find("input[name='lec_time']").val();
+		let lec_end = $(this).parents("tr").find("input[name='lec_end']").val();
+		
+		if($(cartList).find("tr").length > 0){
+			let trs = $(cartList).children("tr");
+			$(trs).each(function(idx, tr){
+				if($(this).attr("class") == lec_code){
+					Toastify({
+			            text: "이미 장바구니에 담긴 강의입니다.",
+			            duration: 3000,
+			            close:true,
+			            gravity:"bottom",
+			            position: "center",
+			            backgroundColor: "#435ebe",
+			        }).showToast();
+					return preventDefaultAction(false);
+				}
+			});
+		}
+		
+		if(parseInt(sugang_at_pnt) + parseInt(lec_pnt) > sugang_able_pnt){
+			Toastify({
+	            text: "수강가능학점이 초과되었습니다.",
+	            duration: 3000,
+	            close:true,
+	            gravity:"bottom",
+	            position: "center",
+	            backgroundColor: "#eaca4a",
+	        }).showToast();
+			return false;
+		}
+		
+		if($(cartList).find("tr").length > 0){
+			let trs = $(cartList).children("tr");
+			$(trs).each(function(idx, tr){
+				let trDayo = $(this).find("input[name='dayotw_nm']").val();
+				let trTime = $(this).find("input[name='lec_time']").val();
+				let trEnd = $(this).find("input[name='lec_end']").val();
+				console.log(trDayo + " " + trTime+ " " +trEnd);
+				if(trDayo == dayotw_nm){
+					if(trTime <= lec_time < trEnd){
+						Toastify({
+				            text: "해당 강의시간의 강의가 존재합니다.",
+				            duration: 3000,
+				            close:true,
+				            gravity:"bottom",
+				            position: "center",
+				            backgroundColor: "#56b6f7",
+				        }).showToast();
+						return preventDefaultAction(false);
+					}else if(lec_time <= trTime < lec_end){
+						Toastify({
+				            text: "해당 강의시간의 강의가 존재합니다.",
+				            duration: 3000,
+				            close:true,
+				            gravity:"bottom",
+				            position: "center",
+				            backgroundColor: "#56b6f7",
+				        }).showToast();
+						return preventDefaultAction(false);
+					}
+				}	
+			});
+		}
 		
 		$.ajax({
 			url : "${cPath}/lms/classCartInsert.do"
@@ -340,22 +429,102 @@
 			,dataType : "json"
 			,success : function(resp){
 				if(resp.result == "OK"){
+					let lec_atnlc = "";
+					if(resp.sugang.lec_atnlc == 0){
+						lec_atnlc = "전학년";
+					}else {
+						lec_atnlc = resp.sugang.lec_atnlc;
+					}
+					
+					$(listBody).children("." + lec_code).children(".sugangNum").text(parseInt(sugangNum) + 1);
+					$(sugangReqList).find(".sugang_cnt").data("cnt", sugang_cnt + 1).text(sugang_cnt + 1 + "과목");
+					$(sugangReqList).find(".sugang_at_pnt").data("cnt", sugang_at_pnt + resp.sugang.lec_pnt).text(sugang_at_pnt + resp.sugang.lec_pnt + "학점");
+					
 					$(cartList).append(
-							$("<tr>").append(
-									$("<td>").text(sugang.lec_code).addClass("text-center")
-									,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl).addClass("text-center")
-									,$("<td>").text(sugang.lec_name).addClass("text-center")
-									,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
+							$("<tr>").attr("class", resp.sugang.lec_code).append(
+									$("<td>").text(resp.sugang.lec_code).addClass("text-center")
+									,$("<td>").text(resp.sugang.lec_cl_nm).data("lec_cl", resp.sugang.lec_cl).addClass("text-center")
+									,$("<td>").text(resp.sugang.lec_name).addClass("text-center")
+									,$("<td>").text(resp.sugang.name).data("staff_no", resp.sugang.staff_no).addClass("text-center")
 									,$("<td>").text(lec_atnlc).addClass("text-center")
-									,$("<td>").text(sugang.lec_pnt).addClass("text-center")
-									,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center")
-									,$("<td>").text(sugang.lec_sugang).addClass("text-center")
-									,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
-									,$("<td>").html('<button type="button" class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
-									,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(sugang.estbl_year)
-									,$("<input>").attr("type", "hidden").attr("name", "estbl_semstr").val(sugang.estbl_semstr)
-							).attr("idx", sugang.lec_code);
-					)					
+									,$("<td>").text(resp.sugang.lec_pnt).addClass("text-center")
+									,$("<td>").text(resp.sugang.dayotw_nm + " " + time[resp.sugang.lec_time] + " " + time[resp.sugang.lec_end]).addClass("text-center times")
+									,$("<td>").text(resp.sugang.lec_sugang).addClass("text-center sugangNum")
+									,$("<td>").text(resp.sugang.lec_cpacity).addClass("text-center")
+									,$("<td>").html('<button type="button" class="btn btn-danger btn-sm deleteBtn">삭제</button>').addClass("text-center")
+									,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(resp.sugang.estbl_year)
+									,$("<input>").attr("type", "hidden").attr("name", "estbl_semstr").val(resp.sugang.estbl_semstr)
+									,$("<input>").attr("type", "hidden").attr("name", "lec_pnt").val(resp.sugang.lec_pnt)
+									,$("<input>").attr("type", "hidden").attr("name", "dayotw_nm").val(resp.sugang.dayotw_nm)
+									,$("<input>").attr("type", "hidden").attr("name", "lec_time").val(resp.sugang.lec_time)
+									,$("<input>").attr("type", "hidden").attr("name", "lec_end").val(resp.sugang.lec_end)
+							)
+					);
+					Toastify({
+			            text: "선택하신 강의가 장바구니에 담겼습니다.",
+			            duration: 3000,
+			            close:true,
+			            gravity:"bottom",
+			            position: "center",
+			            backgroundColor: "#4fbe87",
+			        }).showToast();
+					
+				}else if(resp.result == "PKDUPLICATED"){
+					Toastify({
+			            text: "이미 장바구니에 담긴 강의입니다.",
+			            duration: 3000,
+			            close:true,
+			            gravity:"bottom",
+			            position: "center",
+			            backgroundColor: "#435ebe",
+			        }).showToast();
+				}
+			},error : function(xhr, error, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
+	});
+	
+	
+	$("#cartList").on("click", ".deleteBtn", function(){
+		let lec_code = $(this).parents("tr").attr("class"); 
+		let sugangNum = $(this).parents("tr").find(".sugangNum").text();
+		let stdnt_no = "${student.stdnt_no}";
+		let lec_pnt = $(this).parents("tr").find("input[name='lec_pnt']").val();
+		let sugang_cnt = $(sugangReqList).find(".sugang_cnt").data("cnt");
+		let sugang_at_pnt = $(sugangReqList).find(".sugang_at_pnt").data("cnt");
+		
+		$.ajax({
+			url : "${cPath}/lms/classCartDelete.do"
+			,data :{
+				lec_code : lec_code,
+				stdnt_no : stdnt_no
+			}
+			,method : "post"
+			,dataType : "json"
+			,success : function(resp){
+				if(resp.result == "OK"){
+					$(listBody).children("." + lec_code).children(".sugangNum").text(parseInt(sugangNum) - 1);
+					$(sugangReqList).find(".sugang_cnt").data("cnt", sugang_cnt - 1).text(sugang_cnt - 1 + "과목");
+					$(sugangReqList).find(".sugang_at_pnt").data("cnt", sugang_at_pnt - lec_pnt).text(sugang_at_pnt - lec_pnt + "학점");
+					
+					Toastify({
+			            text: "선택하신 강의가 장바구니에서 삭제되었습니다.",
+			            duration: 3000,
+			            close:true,
+			            gravity:"bottom",
+			            position: "center",
+			            backgroundColor: "#f3616d",
+			        }).showToast();
+					
+					let tr = $("#cartList").children("tr");
+					$(tr).each(function(){
+						if($(this).attr("class") == lec_code){
+							$(this).remove();
+						}
+					});
 				}
 			},error : function(xhr, error, msg){
 				console.log(xhr);
@@ -365,3 +534,4 @@
 		});
 	});
 </script>
+<script src="${cPath }/resources/lms/assets/vendors/toastify/toastify.js"></script>

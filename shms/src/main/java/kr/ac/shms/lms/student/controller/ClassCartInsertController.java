@@ -46,17 +46,28 @@ public class ClassCartInsertController {
 	private StudentService studentService;
 	
 	@RequestMapping(value="/lms/classCartInsert.do", method=RequestMethod.POST)
-	public SugangVO classCartInsert(
+	public String classCartInsert(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		,@ModelAttribute("sugang") SugangVO sugangVO
 		,HttpServletResponse resp
 		, Model model
 	) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
-		if(ServiceResult.FAIL.equals(studentService.insertCart(sugangVO))) {
-			resultMap.put("result", ServiceResult.FAIL);
-		}else {
+		ServiceResult result = studentService.insertCart(sugangVO);
+		
+		switch(result) {
+		case PKDUPLICATED:
+			resultMap.put("result", ServiceResult.PKDUPLICATED);
+			break;
+		case OK:
 			resultMap.put("result", ServiceResult.OK);
+			
+			SugangVO sugang = studentService.selectSugangInfo(sugangVO.getLec_code());
+			resultMap.put("sugang", sugang);
+			break;
+		case FAIL:
+			resultMap.put("result", ServiceResult.FAIL);
+			break;
 		}
 		
 		resp.setContentType(MimeType.JSON.getMime());
@@ -67,8 +78,6 @@ public class ClassCartInsertController {
 			mapper.writeValue(out, resultMap);
 		}
 		
-		SugangVO sugang = studentService.selectSugangInfo(sugangVO.getLec_code());
-		
-		return sugang;
+		return null;
 	}
 }
