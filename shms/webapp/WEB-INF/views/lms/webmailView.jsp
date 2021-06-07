@@ -104,7 +104,7 @@
                </div>
            </div>
            <div class="text-center">
-               <a href="${cPath }/lms/inbox.do" class="btn btn-primary">목록으로</a>
+               <a href="${url }" class="btn btn-primary">목록으로</a>
            </div>
        </div>
    </div>

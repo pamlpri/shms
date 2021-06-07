@@ -195,7 +195,6 @@
         	
         	searchForm.submit();
         });
-
         let listBody = $("#listBody");
         let searchForm = $("#searchForm").ajaxForm({
         	dataType : "json",
