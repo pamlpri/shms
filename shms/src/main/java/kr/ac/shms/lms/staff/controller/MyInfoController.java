@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
@@ -22,6 +23,7 @@ import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
+import kr.ac.shms.lms.staff.vo.SMyPageVO;
 
 /**
  * @author 박초원
@@ -59,6 +61,7 @@ public class MyInfoController {
 			staffVO.setEmp_section_nm("단시간");
 		}
 		SubjectVO subjectVO = lmsStaffService.subject(staffVO.getSub_code());
+		model.addAttribute("isStaff", "n");
 		model.addAttribute("staff", staffVO);
 		model.addAttribute("subject", subjectVO);
 //		model.addAttribute("staff", staffVO);
@@ -70,14 +73,33 @@ public class MyInfoController {
 	public String mypageUpdate(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @ModelAttribute("staff") StaffVO staff
+			, @RequestParam("isStaff") String isStaff
 		) {
 		String view = null;
 		staff.setStaff_no(user.getUser_id());
 		ServiceResult result = lmsStaffService.mypageUpdate(staff);
 		if(ServiceResult.OK.equals(result)) {
-			view = "redirect:/lms/myInfo.do";
+			if("y".equals(isStaff)) {
+				view = "redirect:/lms/staffInfo.do";
+			} else {
+				view = "redirect:/lms/myInfo.do";
+			}
 		}
 		return view;
+	}
+	
+	@RequestMapping("/staffInfo.do")
+	public String staffInfo(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, Model model
+	){	
+		String user_id = user.getUser_id();
+		SMyPageVO staffVO = lmsStaffService.staffMyPage(user_id);
+		
+		model.addAttribute("isStaff", "y");
+		model.addAttribute("staff", staffVO);
+		
+		return "lms/myInfo";
 	}
 	
 	@RequestMapping(value="/pWebMail.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

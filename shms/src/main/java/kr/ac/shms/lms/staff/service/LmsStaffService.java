@@ -4,6 +4,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
+import kr.ac.shms.lms.staff.vo.SMyPageVO;
 
 public interface LmsStaffService {
 	/**
@@ -46,4 +47,11 @@ public interface LmsStaffService {
 	 * @return cnt > 0 성공
 	 */
 	public ServiceResult mypageUpdate(StaffVO staffVO);
+	
+	/**
+	 * 행정실 교직원 마이페이지 정보 호출
+	 * @param user_no
+	 * @return
+	 */
+	public SMyPageVO staffMyPage(String user_no);
 }

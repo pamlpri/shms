@@ -107,4 +107,32 @@
 		WHERE
 		    staff_no = #{staff_no}
 	</update>
+	
+	<select id="staffMyPage" parameterType="String" resultType="SMyPageVO">
+		SELECT  user_no staff_no,
+				TO_CHAR(bgn_de,'YYYY-MM-DD') encpn_de,
+				TO_CHAR(end_de,'YYYY-MM-DD') retire_de,
+				TO_CHAR(contract_endde, 'YYYY-MM-DD') contract_endde,
+		        uv.dept_code,
+		        d.dept_nm, 
+		        sub_code,
+		        name,
+		        tel_no, 
+		        regno1, 
+		        regno2, 
+		        gen, 
+		        zipcode,
+		        addr1, 
+		        addr2, 
+		        email, 
+		        webmail,
+		        account,
+		        bank_name,
+		        photo_path,
+		        rspofc
+		FROM V_USERVIEW uv 
+		INNER JOIN DEPT d 
+		ON uv.dept_code = d.dept_code
+		WHERE uv.user_no = #{user_no}
+	</select>
 </mapper>

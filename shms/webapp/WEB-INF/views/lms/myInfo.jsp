@@ -31,6 +31,9 @@
                        <div class="card-content">
                            <!-- table striped -->
                            <form class="table-responsive" action="${cPath }/lms/myInfo.do" method="post">
+                           	   <c:if test="${isStaff eq 'y' }">
+	                           	   <input type="hidden" value="y" name="isStaff" />
+                           	   </c:if>
                                <table class="table .thead-light mb-0" style="border-top:2px solid #95a3d6;">
                                    <tbody>
                                        <tr>
@@ -55,19 +58,32 @@
                                            </td>
                                        </tr>
                                        <tr>
-                                           <th class="text-bold-500 text-center align-middle">학과</th>
-                                           <td><input class="form-control" disabled type="text" value="${subject.sub_name }"></td>
-                                           <th class="text-bold-500 text-center align-middle">직급</th>
-                                           <td>
-                                           	<c:choose>
-                                           		<c:when test="${staff.dean_at eq 'Y'}">
-                                           			<input class="form-control" disabled type="text" value="학과장">
-                                           		</c:when>
-                                           		<c:otherwise>
-                                           			<input class="form-control" disabled type="text" value="${staff.emp_section_nm }" />
-                                           		</c:otherwise>
-                                           	</c:choose>
-                                           </td>
+                                       	   <c:choose>
+                                       	   	<c:when test="${isStaff eq 'y' }">
+                                       	   		<th class="text-bold-500 text-center align-middle">부서</th>
+	                                           <td><input class="form-control" disabled type="text" value="${staff.dept_nm }"></td>  
+                                       	   	</c:when>
+                                       	   	<c:otherwise>
+	                                           <th class="text-bold-500 text-center align-middle">학과</th>
+	                                           <td><input class="form-control" disabled type="text" value="${subject.sub_name }"></td>                                       	   		
+                                       	   	</c:otherwise>
+                                       	   </c:choose>
+	                                          <th class="text-bold-500 text-center align-middle">직급</th>
+	                                          <td>
+			                                      <c:if test="${isStaff eq 'n' }">
+		                                         	<c:choose>
+			                                        	<c:when test="${staff.dean_at eq 'Y'}">
+			                                           		<input class="form-control" disabled type="text" value="학과장">
+			                                           	</c:when>
+			                                           	<c:otherwise>
+			                                           		<input class="form-control" disabled type="text" value="${staff.emp_section_nm }" />
+			                                           	</c:otherwise>
+			                                        </c:choose>
+		                                         </c:if>
+		                                         <c:if test="${isStaff eq 'y' }">
+		                                         	<input class="form-control" disabled type="text" value="${staff.rspofc }" />
+		                                         </c:if>
+	                                         </td>
                                        </tr>
                                        <tr>
                                            <th class="text-bold-500 text-center align-middle">입사일</th>
@@ -75,6 +91,14 @@
                                            <th class="text-bold-500 text-center align-middle">퇴사일</th>
                                            <td><input class="form-control" disabled type="date" value="${staff.retire_de }"></td>
                                        </tr>
+                                       <c:if test="${isStaff eq 'y' and not empty staff.contract_endde }">
+                                       	<tr>
+                                       	  <th class="text-bold-500 text-center align-middle">계약직</th>
+                                          <td><input class="form-control" disabled value="Y"></td> 
+                                          <th class="text-bold-500 text-center align-middle">계약만료일</th>
+                                          <td><input class="form-control" disabled type="date" value="${staff.contract_endde }"></td>                                            
+                                       	</tr>
+                                       </c:if>
                                    </tbody>
                                </table>
                                <table class="table .thead-light mb-0" style="border-top:2px solid #95a3d6; border-bottom : 2px solid #95a3d6;">
@@ -82,7 +106,7 @@
                                        <tr>
                                            <th class="text-bold-500 text-center align-middle">계좌은행</th>
                                            <td><input class="form-control" type="text" name="bank_name" value="${staff.bank_name }"></td>
-                                           <th class="text-bold-500 text-center align-middle">계좌변호</th>
+                                           <th class="text-bold-500 text-center align-middle">계좌번호</th>
                                            <td><input class="form-control" type="text" name="account" value="${staff.account }"></td>
                                        </tr>
                                    </tbody>

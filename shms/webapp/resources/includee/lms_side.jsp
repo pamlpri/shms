@@ -261,6 +261,17 @@
               </c:if>
               <!-- 권한 : 입학과 -->
               <c:if test="${'IH' eq user.user[1] }">
+              	  <li class="sidebar-item  has-sub">
+	                  <a href="#" class="sidebar-link">
+	                      <i class="bi bi-person-badge-fill"></i>
+	                      <span>마이페이지</span>
+	                  </a>
+	                  <ul class="submenu ">
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
+	                      </li>
+	                  </ul>
+	              </li>
 	              <li class="sidebar-item">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-person-badge-fill"></i>
@@ -375,6 +386,17 @@
 			  
               <!-- 권한 : 학적과 -->
               <c:if test="${'HJ' eq user.user[1] }">
+              	  <li class="sidebar-item  has-sub">
+	                  <a href="#" class="sidebar-link">
+	                      <i class="bi bi-person-badge-fill"></i>
+	                      <span>마이페이지</span>
+	                  </a>
+	                  <ul class="submenu ">
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
+	                      </li>
+	                  </ul>
+	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-person-badge-fill"></i>
@@ -456,6 +478,17 @@
 			  </c:if>
               <!-- 권한 : 학생지원과, 취업장학과 -->
               <c:if test="${'HS' eq user.user[1] or 'CJ' eq user.user[1] }">
+	              <li class="sidebar-item  has-sub">
+	                  <a href="#" class="sidebar-link">
+	                      <i class="bi bi-person-badge-fill"></i>
+	                      <span>마이페이지</span>
+	                  </a>
+	                  <ul class="submenu ">
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
+	                      </li>
+	                  </ul>
+	              </li>
 	              <li class="sidebar-item">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-person-badge-fill"></i>
@@ -465,6 +498,17 @@
 			  </c:if>
               <!-- 권한 : 학생지원과 -->
               <c:if test="${'HS' eq user.user[1]}">
+              	  <li class="sidebar-item  has-sub">
+	                  <a href="#" class="sidebar-link">
+	                      <i class="bi bi-person-badge-fill"></i>
+	                      <span>마이페이지</span>
+	                  </a>
+	                  <ul class="submenu ">
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
+	                      </li>
+	                  </ul>
+	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-bookmarks-fill"></i>
@@ -528,6 +572,17 @@
 			  </c:if>
               <!-- 권한 : 취업장학과 -->
               <c:if test="${'CJ' eq user.user[1] }">
+                  <li class="sidebar-item  has-sub">
+	                  <a href="#" class="sidebar-link">
+	                      <i class="bi bi-person-badge-fill"></i>
+	                      <span>마이페이지</span>
+	                  </a>
+	                  <ul class="submenu ">
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
+	                      </li>
+	                  </ul>
+	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-chat-right-quote-fill"></i>
@@ -583,6 +638,17 @@
               </c:if>
               <!-- 권한 : 학과관리자 -->
               <c:if test="${'HG' eq user.user[1] }">
+<!--                   <li class="sidebar-item  has-sub"> -->
+<!-- 	                  <a href="#" class="sidebar-link"> -->
+<!-- 	                      <i class="bi bi-person-badge-fill"></i> -->
+<!-- 	                      <span>마이페이지</span> -->
+<!-- 	                  </a> -->
+<!-- 	                  <ul class="submenu "> -->
+<!-- 	                      <li class="submenu-item "> -->
+<%-- 	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a> --%>
+<!-- 	                      </li> -->
+<!-- 	                  </ul> -->
+<!-- 	              </li> -->
 	              <li class="sidebar-item">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-person-badge-fill"></i>
