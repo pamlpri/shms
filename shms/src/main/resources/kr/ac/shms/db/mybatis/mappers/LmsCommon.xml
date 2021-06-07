@@ -258,14 +258,13 @@
 		INNER JOIN tb_receiver b
 		ON(a.send_no = b.send_no)
 		INNER JOIN v_userview c
+		ON(a.sender = c.user_no)
 		<choose>
 			<when test="searchMap.selectMenu eq 'inbox'">
-				ON(a.sender = c.user_no)
 				WHERE b.receiver = #{searchMap.user_id, jdbcType=VARCHAR}
 				  AND b.delete_at = 'N'
 			</when>
 			<otherwise>
-				ON(b.receiver = c.user_no)
 				WHERE a.sender = #{searchMap.user_id, jdbcType=VARCHAR}
 				  AND a.delete_at = 'N'
 			</otherwise>
