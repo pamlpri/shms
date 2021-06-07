@@ -27,7 +27,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 수정일         수정자      수정내용
  * --------     --------    ----------------------
  * 2021. 6. 3.    박초원      최초작성
- * 2021. 6. 6.    김보미	  학생 정보 출력(증명서 신청)
+ * 2021. 6. 5.    김보미	  학생 정보 출력(증명서 신청)
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
