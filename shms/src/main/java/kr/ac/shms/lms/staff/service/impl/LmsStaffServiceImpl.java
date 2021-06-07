@@ -10,6 +10,7 @@ import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
+import kr.ac.shms.lms.staff.vo.SMyPageVO;
 
 @Service
 public class LmsStaffServiceImpl implements LmsStaffService {
@@ -48,7 +49,14 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	public ServiceResult mypageUpdate(StaffVO staffVO) {
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = lmsStaffDAO.mypageUpdate(staffVO);
-		if(cnt > 0) {result = ServiceResult.OK; }
+		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}
+
+	@Override
+	public SMyPageVO staffMyPage(String user_no) {
+		return lmsStaffDAO.staffMyPage(user_no);
+	}
+	
+	
 }
