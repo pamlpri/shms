@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="student" class="kr.ac.shms.quartz.Student">
+		<constructor-arg value="java" />
+	</bean>
+	
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="kr.ac.shms.quartz.Hello"></property>
+		<property name="jobDataMap">
+			<map>
+				<entry key="student" value-ref="student" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	    <property name="jobDetail" ref="jobDetail"/>
+	    <property name="cronExpression" value="0/5 * * * * ?"/>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>
+ 
