@@ -84,10 +84,10 @@
 		 ON (a.lec_code = b.lec_code)	
 	</select>
 	
-	<select id="selectTodayLecList" parameterType="String" resultType="LectureDetailsVO">
+	<select id="selectTodayLecList" parameterType="String" resultType="LectureVO">
 		SELECT lec_code,
 		       LPAD(lec_time, 2, '0')||':00 - '||
-		       LPAD(lec_time + lec_pnt, 2, '0')||':00' lec_time,
+		       LPAD(lec_time + lec_pnt, 2, '0')||':00' lec_full_time,
 		       lec_name
 		  FROM lecture a
 		 INNER JOIN curriculum b
@@ -98,4 +98,138 @@
 		   AND estbl_semstr = (SELECT semstr FROM v_semstr)
 		   AND TO_NUMBER(dayotw) = (SELECT TO_CHAR(SYSDATE, 'D') FROM DUAL)
 	</select>
+	
+	<select id="selectLecListForOpen" parameterType="String" resultType="LectureVO">
+		SELECT lec_code, lec_name 
+		  FROM lecture a 
+		 INNER JOIN curriculum b 
+		    ON(a.cur_code = b.cur_code) 
+		 WHERE a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		   AND a.estbl_semstr = (SELECT semstr FROM v_semstr)
+		   AND b.staff_no = #{staff_no, jdbcType=VARCHAR}
+		   AND summary IS NULL
+	</select>
+	
+	<select id="selectLecForOpen" parameterType="String" resultType="SugangVO">
+		SELECT 
+		    lec_code,
+		    cur_code,
+		    lec_cl,
+		   (SELECT com_code_nm
+		      FROM tb_com_code
+		     WHERE code_grp = 'G06'
+		       AND lec_cl = com_code ) lec_cl_nm,
+		    lec_name,
+		    estbl_year,
+		    estbl_semstr,
+		    summary,
+		    tchmtr,
+		    adi_tchmtr,
+		    tchmtr_scope,
+		    lec_rm,
+		    dayotw,
+		   (SELECT com_code_nm
+		      FROM tb_com_code
+		     WHERE code_grp = 'G19'
+		       AND dayotw = com_code ) dayotw_nm,
+		    (lec_time - 8) || ' - ' || (lec_time + lec_pnt - 8 - 1) || '교시' lec_full_time,
+		    abolec,
+		    staff_no,
+		    name,
+		    atch_file_no
+			  FROM(
+				SELECT 
+				    lec_code,
+				    a.cur_code,
+				    a.lec_cl,
+				    b.lec_name,
+				    a.estbl_year,
+				    a.estbl_semstr,
+				    summary,
+				    tchmtr,
+				    adi_tchmtr,
+				    tchmtr_scope,
+				    lec_rm,
+				    dayotw,
+				    lec_time,
+				    abolec,
+				    b.staff_no,
+				    lec_pnt,
+				    c.name,
+				    atch_file_no
+				 FROM lecture a
+				INNER JOIN curriculum b 
+				ON(a.cur_code = b.cur_codE)
+				INNER JOIN staff c
+				ON(b.staff_no = c.staff_no)
+				WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+			) 
+	</select>
+	
+	<update id="updateLecture" parameterType="LectureVO">
+		UPDATE lecture
+		    SET
+	        summary = #{summary, jdbcType=VARCHAR},
+	        tchmtr = #{tchmtr, jdbcType=VARCHAR},
+	        adi_tchmtr = #{adi_tchmtr, jdbcType=VARCHAR}
+  			<if test="attachList != null">
+			    ,(SELECT MAX(atch_file_no) + 1 FROM attach)
+			</if>
+		WHERE
+		    lec_code = #{lec_code, jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="insertLectureDetails" parameterType="LectureVO">
+		INSERT INTO lec_score_st (
+		    lec_code,
+		    midterm,
+		    finals,
+		    attend,
+		    task,
+		    etc
+		) VALUES (
+		    #{lec_code, jdbcType=VARCHAR},
+		    #{midterm, jdbcType=NUMERIC},
+		    #{finals, jdbcType=NUMERIC},
+		    #{attend, jdbcType=NUMERIC},
+		    #{task, jdbcType=NUMERIC},
+		    #{etc, jdbcType=NUMERIC}
+		)
+	</insert>
+	
+	<insert id="insertAttaches" parameterType="LectureVO">
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+			SELECT COUNT(*)+1 startAttNo
+			FROM ATTACH
+			WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attachList" item="attatch" index="idx">
+			INTO ATTACH(
+				atch_file_no,
+			    atch_file_seq,
+			    file_path,
+			    file_nm,
+			    file_cont_type,
+			    file_size,
+			    reg_date,
+			    reg_user_id,
+			    biz_type,
+			    save_file_nm
+		    )
+			VALUES (
+				(SELECT MAX(atch_file_no) + 1 FROM attach)
+				, #{startAttNo} + #{idx}
+				, #{attatch.file_path,jdbcType=VARCHAR}
+				, #{attatch.file_nm,jdbcType=VARCHAR}
+				, #{attatch.file_cont_type,jdbcType=VARCHAR}
+				, #{attatch.file_size,jdbcType=NUMERIC}
+				, sysdate
+				, #{staff_no, jdbcType=VARCHAR}
+				, 'GG'
+				, #{attatch.save_file_nm,jdbcType=VARCHAR}
+			)
+		</foreach>
+			SELECT * FROM DUAL
+	</insert>
 </mapper>

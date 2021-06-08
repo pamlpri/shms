@@ -30,12 +30,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lecture.service.LectureService;
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
@@ -81,7 +81,7 @@ public class LmsStudentIndexController {
 		model.addAttribute("taskList", taskList);
 		
 		// 오늘 강의 출력
-		List<LectureDetailsVO> todayLecList	= lectureService.selectTodayLecList(user_id);
+		List<LectureVO> todayLecList	= lectureService.selectTodayLecList(user_id);
 		model.addAttribute("todayLecList", todayLecList);
 		
 		// 오늘 학사일정 출력

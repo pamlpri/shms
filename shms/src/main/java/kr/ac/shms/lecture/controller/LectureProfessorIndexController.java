@@ -3,21 +3,17 @@ package kr.ac.shms.lecture.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
-import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 
 /**
  * @author 박초원
@@ -63,7 +59,7 @@ public class LectureProfessorIndexController {
 			@RequestParam("lec_code") String lec_code
 			, Model model
 			) {
-		List<LectureDetailsVO> lectureDetails = lectureService.selectLectureDetails(lec_code);
+		List<LectureVO> lectureDetails = lectureService.selectLectureDetails(lec_code);
 		System.out.println(lectureDetails);
 		model.addAttribute("lecture", lectureDetails);
 		return "lecture/main";

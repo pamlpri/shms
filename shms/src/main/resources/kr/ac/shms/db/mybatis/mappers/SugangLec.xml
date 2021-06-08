@@ -34,7 +34,7 @@
 			       d.lec_cl,
 			       c.estbl_year,
 			       c.estbl_semstr,
-			       h.building_nm||' '||g.lecrum_nm||'호' lecrum,
+			       h.building_nm||' '||g.lecrum_nm lecrum,
 			       c.lec_code,
 			       d.lec_pnt,
 			       b.sugang_at,
@@ -65,7 +65,7 @@
 	                                  END AS SEMSTR
 	                            FROM DUAL)
 	</select>
-	<select id="selectLectureDetails" parameterType="String" resultType="LectureDetailsVO">
+	<select id="selectLectureDetails" parameterType="String" resultType="LectureVO">
 		SELECT a.lec_code, 
 		       d.lec_name, 
 		       a.summary, 
@@ -109,7 +109,7 @@
 	               b.lec_atnlc,
 	               c.lec_code,
 	               c.lec_cl,
-	               f.building_nm||' '||e.lecrum_nm||'호' lecrum,
+	               f.building_nm||' '||e.lecrum_nm lecrum,
 	               b.estbl_year
 	          FROM staff a
 	         INNER JOIN curriculum b ON (a.staff_no=b.staff_no)
@@ -169,10 +169,10 @@
 		ORDER BY p_bo_no desc
 	</select>
 	
-	<select id="selectTodayLecList" parameterType="String" resultType="LectureDetailsVO">
+	<select id="selectTodayLecList" parameterType="String" resultType="LectureVO">
  		SELECT lec_code,
 	         LPAD(lec_time, 2, '0')||':00 - '||
-	         LPAD(lec_time + lec_pnt, 2, '0')||':00' lec_time,
+	         LPAD(lec_time + lec_pnt, 2, '0')||':00' lec_full_time,
 	         lec_name
 	    FROM lecture a
 	   INNER JOIN curriculum b

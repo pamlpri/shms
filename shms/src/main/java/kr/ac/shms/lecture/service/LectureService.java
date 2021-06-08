@@ -2,8 +2,8 @@ package kr.ac.shms.lecture.service;
 
 import java.util.List;
 
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 
 /**
@@ -35,7 +35,7 @@ public interface LectureService {
 	 * @param lec_code 강의코드
 	 * @return 
 	 */
-	public List<LectureDetailsVO> selectLectureDetails(String lec_code);
+	public List<LectureVO> selectLectureDetails(String lec_code);
 	
 	/**
 	 * 교수가 관리하는 강의 목록 추출
@@ -56,7 +56,7 @@ public interface LectureService {
 	 * @param id 학생 번호, 교수 번호
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<LectureDetailsVO> selectTodayLecList(String id);
+	public List<LectureVO> selectTodayLecList(String id);
 	
 	/**
 	 * 수강 완료된 강의 목록 출력

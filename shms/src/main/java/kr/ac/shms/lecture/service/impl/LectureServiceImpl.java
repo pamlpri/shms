@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.shms.lecture.dao.LectureDAO;
 import kr.ac.shms.lecture.service.LectureService;
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 /**
  * @author 김보미
@@ -38,7 +38,7 @@ public class LectureServiceImpl implements LectureService{
 	}
 
 	@Override
-	public List<LectureDetailsVO> selectLectureDetails(String lec_code) {
+	public List<LectureVO> selectLectureDetails(String lec_code) {
 		return lectureDAO.selectLectureDetails(lec_code);
 	}
 
@@ -53,7 +53,7 @@ public class LectureServiceImpl implements LectureService{
 	}
 
 	@Override
-	public List<LectureDetailsVO> selectTodayLecList(String id) {
+	public List<LectureVO> selectTodayLecList(String id) {
 		return lectureDAO.selectTodayLecList(id);
 	}
 

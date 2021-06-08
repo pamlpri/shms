@@ -1,5 +1,11 @@
 package kr.ac.shms.lms.student.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.ac.shms.common.vo.AttachVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +30,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of="lec_code")
 public class LectureVO {
 	private String lec_code;
+	private String lec_name;
 	private String cur_code;
 	private String lec_cl;
 	private Integer estbl_year;
@@ -35,6 +42,36 @@ public class LectureVO {
 	private String lec_rm;
 	private String dayotw;
 	private Integer lec_time;
+	private String lec_full_time;
 	private String abolec;
 	private Integer atch_file_no;
+	public Integer midterm;
+	public Integer finals;
+	public Integer attend;
+	public Integer task;
+	public Integer etc;
+	public Integer lec_week;
+	public String diary_title;
+	public String diary_cont;
+	public String week_bgnde;
+	public String week_dndde;
+	public String staff_no;
+	
+	private int startAttNo;
+	private List<AttachVO> attachList;
+	private MultipartFile[] mail_files;
+	public void setMail_files(MultipartFile[] mail_files) {
+		this.mail_files = mail_files;
+		if(mail_files != null) {
+			List<AttachVO> attachList = new ArrayList<>();
+			for(MultipartFile file : mail_files) {
+				if(file.isEmpty()) continue;
+				attachList.add(new AttachVO(file));
+			}
+			if(attachList.size() > 0){
+				this.attachList = attachList;
+			}
+		}
+	}
+	private int[] delAttNos;
 }
