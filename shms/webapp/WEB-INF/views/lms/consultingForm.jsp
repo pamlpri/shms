@@ -22,7 +22,7 @@
 
 	<div class="card inputTable">
 		<div class="card-body">
-			<iframe src="https://192.168.0.140:3000/" allow='camera *;microphone *' width="100%" height="500"
+			<iframe src="https://192.168.0.140:3000" allow='camera *; microphone *' width="100%" height="500"
 				id="videoView"></iframe>
 			
 			<c:choose>

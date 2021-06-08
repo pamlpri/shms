@@ -24,8 +24,8 @@
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
-			<li class="breadcrumb-item"><a href="${cPath }/lms/classCartInfo.do">수강신청</a></li>
-			<li class="breadcrumb-item active" aria-current="page">수강신청</li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/classResiInfo.do">수강신청</a></li>
+			<li class="breadcrumb-item active" aria-current="page">장바구니</li>
 		</ol>
 	</nav>
 
@@ -206,7 +206,7 @@
 													<td class="text-center">${cart.lec_pnt }</td>
 													<td class="text-center times">${cart.dayotw_nm } ${cart.lec_time - 8} ${cart.lec_end - 8 }</td>
 													<td class="text-center sugangNum">${cart.lec_sugang }</td>
-													<td class="text-center">${cart.lec_cpacity }</td>
+													<td class="text-center cpacityNum">${cart.lec_cpacity }</td>
 													<td class="text-center">
 														<button type="button" class="btn btn-danger btn-sm deleteBtn">삭제</button>
 													</td>
@@ -314,7 +314,7 @@
 								,$("<td>").text(sugang.lec_pnt).addClass("text-center")
 								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center times")
 								,$("<td>").text(sugang.lec_sugang).addClass("text-center sugangNum")
-								,$("<td>").text(sugang.lec_cpacity).addClass("text-center")
+								,$("<td>").text(sugang.lec_cpacity).addClass("text-center cpacityNum")
 								,$("<td>").html('<button type="button" class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
 								,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(sugang.estbl_year)
 								,$("<input>").attr("type", "hidden").attr("name", "estbl_semstr").val(sugang.estbl_semstr)
@@ -343,6 +343,7 @@
 	$("#listBody").on("click", ".saveBtn", function(){
 		let lec_code = $(this).parents("tr").attr("class");
 		let sugangNum = $(this).parents("tr").find(".sugangNum").text();
+		let cpacityNum = $(this).parents("tr").find(".cpacityNum").text();
 		let stdnt_no = "${student.stdnt_no}";
 		let req_year = $(this).parents("tr").find("input[name='estbl_year']").val();
 		let req_semstr = $(this).parents("tr").find("input[name='estbl_semstr']").val();
@@ -354,6 +355,18 @@
 		let dayotw_nm = $(this).parents("tr").find("input[name='dayotw_nm']").val();
 		let lec_time = $(this).parents("tr").find("input[name='lec_time']").val();
 		let lec_end = $(this).parents("tr").find("input[name='lec_end']").val();
+		
+		if(sugangNum == cpacityNum){
+			Toastify({
+	            text: "수강 인원을 초과하여 신청이 불가합니다.",
+	            duration: 3000,
+	            close:true,
+	            gravity:"bottom",
+	            position: "center",
+	            backgroundColor: "#454546",
+	        }).showToast();
+			return preventDefaultAction(false);
+		}
 		
 		if($(cartList).find("tr").length > 0){
 			let trs = $(cartList).children("tr");
