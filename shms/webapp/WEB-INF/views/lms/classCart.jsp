@@ -145,7 +145,6 @@
 													<th class="text-center">학년</th>
 													<th class="text-center">학점</th>
 													<th class="text-center">강의시간</th>
-													<th class="text-center">수강인원</th>
 													<th class="text-center">제한인원</th>
 													<th class="text-center">신청</th>
 												</tr>
@@ -190,7 +189,6 @@
 												<th class="text-center">학년</th>
 												<th class="text-center">학점</th>
 												<th class="text-center">강의시간</th>
-												<th class="text-center">수강인원</th>
 												<th class="text-center">제한인원</th>
 												<th class="text-center">신청</th>
 											</tr>
@@ -205,7 +203,6 @@
 													<td class="text-center">${cart.lec_atnlc eq 0 ? "전학년" : cart.lec_atnlc}</td>
 													<td class="text-center">${cart.lec_pnt }</td>
 													<td class="text-center times">${cart.dayotw_nm } ${cart.lec_time - 8} ${cart.lec_end - 8 }</td>
-													<td class="text-center sugangNum">${cart.lec_sugang }</td>
 													<td class="text-center cpacityNum">${cart.lec_cpacity }</td>
 													<td class="text-center">
 														<button type="button" class="btn btn-danger btn-sm deleteBtn">삭제</button>
@@ -243,16 +240,16 @@
 								<div class="email-user-list list-group lectureList">
 									<table class="table table-bordered mb-0">
 										<tr id="sugangReqList">
-											 <th class="text-center text-middle">신청교과목수</th>
-			                                 <td class="text-center text-middle sugang_cnt" data-cnt="${sugangReqIndexInfo.sugang_lec_cnt }">
+											 <th class="text-center align-middle">장바구니<br/>신청교과목수</th>
+			                                 <td class="text-center align-middle sugang_cnt" data-cnt="${sugangReqIndexInfo.sugang_lec_cnt }">
 			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_lec_cnt : "0"}과목
 			                                 </td>
-			                                 <th class="text-center text-middle">신청학점</th>
-			                                 <td class="text-center text-middle sugang_at_pnt" data-cnt="${sugangReqIndexInfo.sugang_at_pnt}">
+			                                 <th class="text-center align-middle">장바구니<br/>신청학점</th>
+			                                 <td class="text-center align-middle sugang_at_pnt" data-cnt="${sugangReqIndexInfo.sugang_at_pnt}">
 			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_at_pnt : "0"}학점
 			                                 </td>
-			                                 <th class="text-center text-middle">수강 가능 학점</th>
-			                                 <td class="text-center text-middle sugang_able_pnt" data-cnt="${sugangReqIndexInfo.lec_able_pnt }">
+			                                 <th class="text-center align-middle">수강 가능 학점</th>
+			                                 <td class="text-center align-middle sugang_able_pnt" data-cnt="${sugangReqIndexInfo.lec_able_pnt }">
 			                                 	${sugangReqIndexInfo.lec_able_pnt }학점
 			                                 </td>
 										</tr>
@@ -313,7 +310,6 @@
 								,$("<td>").text(lec_atnlc).addClass("text-center")
 								,$("<td>").text(sugang.lec_pnt).addClass("text-center")
 								,$("<td>").text(sugang.dayotw_nm + " " + time[sugang.lec_time] + " " + time[sugang.lec_end]).addClass("text-center times")
-								,$("<td>").text(sugang.lec_sugang).addClass("text-center sugangNum")
 								,$("<td>").text(sugang.lec_cpacity).addClass("text-center cpacityNum")
 								,$("<td>").html('<button type="button" class="btn btn-primary btn-sm saveBtn">담기</button>').addClass("text-center")
 								,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(sugang.estbl_year)
@@ -342,8 +338,6 @@
 	let sugangReqList = $("#sugangReqList");
 	$("#listBody").on("click", ".saveBtn", function(){
 		let lec_code = $(this).parents("tr").attr("class");
-		let sugangNum = $(this).parents("tr").find(".sugangNum").text();
-		let cpacityNum = $(this).parents("tr").find(".cpacityNum").text();
 		let stdnt_no = "${student.stdnt_no}";
 		let req_year = $(this).parents("tr").find("input[name='estbl_year']").val();
 		let req_semstr = $(this).parents("tr").find("input[name='estbl_semstr']").val();
@@ -353,20 +347,8 @@
 		let sugang_able_pnt = $(sugangReqList).find(".sugang_able_pnt").data("cnt");
 		let times = $(this).parents("tr").children(".times").text();
 		let dayotw_nm = $(this).parents("tr").find("input[name='dayotw_nm']").val();
-		let lec_time = $(this).parents("tr").find("input[name='lec_time']").val();
-		let lec_end = $(this).parents("tr").find("input[name='lec_end']").val();
-		
-		if(sugangNum == cpacityNum){
-			Toastify({
-	            text: "수강 인원을 초과하여 신청이 불가합니다.",
-	            duration: 3000,
-	            close:true,
-	            gravity:"bottom",
-	            position: "center",
-	            backgroundColor: "#454546",
-	        }).showToast();
-			return preventDefaultAction(false);
-		}
+		let lec_time = parseInt($(this).parents("tr").find("input[name='lec_time']").val());
+		let lec_end = parseInt($(this).parents("tr").find("input[name='lec_end']").val());
 		
 		if($(cartList).find("tr").length > 0){
 			let trs = $(cartList).children("tr");
@@ -400,12 +382,12 @@
 		if($(cartList).find("tr").length > 0){
 			let trs = $(cartList).children("tr");
 			$(trs).each(function(idx, tr){
-				let trDayo = $(this).find("input[name='dayotw_nm']").val();
-				let trTime = $(this).find("input[name='lec_time']").val();
-				let trEnd = $(this).find("input[name='lec_end']").val();
-				console.log(trDayo + " " + trTime+ " " +trEnd);
+				let trDayo = $(tr).find("input[name='dayotw_nm']").val();
+				let trTime = parseInt($(tr).find("input[name='lec_time']").val());
+				let trEnd = parseInt($(tr).find("input[name='lec_end']").val());
+						
 				if(trDayo == dayotw_nm){
-					if(trTime <= lec_time < trEnd){
+					if(trTime <= lec_time && lec_time <= trEnd){
 						Toastify({
 				            text: "해당 강의시간의 강의가 존재합니다.",
 				            duration: 3000,
@@ -415,7 +397,7 @@
 				            backgroundColor: "#56b6f7",
 				        }).showToast();
 						return preventDefaultAction(false);
-					}else if(lec_time <= trTime < lec_end){
+					}else if(lec_time <= trTime && trTime <= lec_end){
 						Toastify({
 				            text: "해당 강의시간의 강의가 존재합니다.",
 				            duration: 3000,
@@ -449,7 +431,6 @@
 						lec_atnlc = resp.sugang.lec_atnlc;
 					}
 					
-					$(listBody).children("." + lec_code).children(".sugangNum").text(parseInt(sugangNum) + 1);
 					$(sugangReqList).find(".sugang_cnt").data("cnt", sugang_cnt + 1).text(sugang_cnt + 1 + "과목");
 					$(sugangReqList).find(".sugang_at_pnt").data("cnt", sugang_at_pnt + resp.sugang.lec_pnt).text(sugang_at_pnt + resp.sugang.lec_pnt + "학점");
 					
@@ -462,7 +443,6 @@
 									,$("<td>").text(lec_atnlc).addClass("text-center")
 									,$("<td>").text(resp.sugang.lec_pnt).addClass("text-center")
 									,$("<td>").text(resp.sugang.dayotw_nm + " " + time[resp.sugang.lec_time] + " " + time[resp.sugang.lec_end]).addClass("text-center times")
-									,$("<td>").text(resp.sugang.lec_sugang).addClass("text-center sugangNum")
 									,$("<td>").text(resp.sugang.lec_cpacity).addClass("text-center")
 									,$("<td>").html('<button type="button" class="btn btn-danger btn-sm deleteBtn">삭제</button>').addClass("text-center")
 									,$("<input>").attr("type", "hidden").attr("name", "estbl_year").val(resp.sugang.estbl_year)
@@ -503,7 +483,6 @@
 	
 	$("#cartList").on("click", ".deleteBtn", function(){
 		let lec_code = $(this).parents("tr").attr("class"); 
-		let sugangNum = $(this).parents("tr").find(".sugangNum").text();
 		let stdnt_no = "${student.stdnt_no}";
 		let lec_pnt = $(this).parents("tr").find("input[name='lec_pnt']").val();
 		let sugang_cnt = $(sugangReqList).find(".sugang_cnt").data("cnt");
@@ -519,7 +498,6 @@
 			,dataType : "json"
 			,success : function(resp){
 				if(resp.result == "OK"){
-					$(listBody).children("." + lec_code).children(".sugangNum").text(parseInt(sugangNum) - 1);
 					$(sugangReqList).find(".sugang_cnt").data("cnt", sugang_cnt - 1).text(sugang_cnt - 1 + "과목");
 					$(sugangReqList).find(".sugang_at_pnt").data("cnt", sugang_at_pnt - lec_pnt).text(sugang_at_pnt - lec_pnt + "학점");
 					

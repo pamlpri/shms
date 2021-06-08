@@ -29,6 +29,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  5.   	박초원	   	개설과목조회 
  * 2021. 6.  5.   	송수미 	   	수강신청 인덱스 페이지에 필요한 정보 조회
  * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
+ * 2021. 6.  8.   박초원       수강신청 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */	
@@ -204,7 +205,7 @@ public interface StudentService {
      * @param stdnt_no 학번
      * @return 신청교과목 수, 신청 학점, 수강 가능 학점
      */
-    public SugangVO selectSugangReqInfo(String stdnt_no);
+    public SugangVO selectSugangReqInfo(SugangVO sugang);
     
     /**
      * 장바구니 과목 조회
@@ -233,4 +234,18 @@ public interface StudentService {
      * @return 
      */
     public ServiceResult deleteCart(SugangVO sugang);
+    
+    /**
+     * 수강신청 항목 조회
+     * @param sugangVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public List<SugangVO> selectRegistrationList(String stdnt_no);
+    
+    /**
+     * 수강신청 등록
+     * @param sugangVO
+     * @return 
+     */
+    public ServiceResult insertRegistration(SugangVO sugang);
 }

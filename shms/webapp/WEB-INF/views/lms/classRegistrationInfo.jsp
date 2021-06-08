@@ -39,7 +39,7 @@
 								<h6 class="mb-0 py-1">학과 : ${sugangReqIndexInfo.sub_name }</h6>
 							</li>
 							<li>
-								<h6 class="mb-0 py-1">수강학년 : ${sugangReqIndexInfo.stdnt_grade }</h6>
+								<h6 class="mb-0 py-1">수강학년 : ${sugangReqIndexInfo.stdnt_grade }학년</h6>
 							</li>
 							<li>
 								<h6 class="mb-0 py-1">수강가능학점 : 최대 ${sugangReqIndexInfo.lec_able_pnt }학점</h6>

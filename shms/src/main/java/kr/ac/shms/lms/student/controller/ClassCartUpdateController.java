@@ -1,15 +1,16 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.dao.StudentDAO;
 
 /**
  * @author 박초원
@@ -24,14 +25,16 @@ import kr.ac.shms.lms.student.service.StudentService;
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
-@Controller
+@Component
 public class ClassCartUpdateController {
 	private static final Logger logger = LoggerFactory.getLogger(ClassCartUpdateController.class);
 
 	@Inject
-	private StudentService studentService;
+	private StudentDAO studentDAO;
 	
-	public static void main(String[] args) {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("spring.xml");
-	}
+//	@Scheduled(cron = "")
+//	public void realSugang() {
+//		Map<String, Object> map = new HashMap<>();
+//		
+//	}
 }

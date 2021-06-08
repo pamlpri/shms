@@ -37,6 +37,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  4.   최희수	   학생 시간표 출력
  * 2021. 6.  5.   송수미	   수강신청 인덱스 페이지 구현
  * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
+ * 2021. 6.  8.   박초원       수강신청 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -195,8 +196,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public SugangVO selectSugangReqInfo(String stdnt_no) {
-		return studentDAO.selectSugangReqInfo(stdnt_no);
+	public SugangVO selectSugangReqInfo(SugangVO sugang) {
+		return studentDAO.selectSugangReqInfo(sugang);
 	}
 	
 	@Override
@@ -235,5 +236,23 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public SugangVO selectSugangInfo(String lec_code) {
 		return studentDAO.selectSugangInfo(lec_code);
+	}
+
+	@Override
+	public List<SugangVO> selectRegistrationList(String stdnt_no) {
+		return studentDAO.selectRegistrationList(stdnt_no);
+	}
+
+	@Override
+	public ServiceResult insertRegistration(SugangVO sugang) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = 0;
+		cnt = studentDAO.insertRegistration(sugang);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+	
+		return result;
 	}
 }
