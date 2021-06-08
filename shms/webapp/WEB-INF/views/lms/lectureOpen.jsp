@@ -12,8 +12,8 @@
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">HOME</a></li>
-          <li class="breadcrumb-item"><a href="#">강의관리</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lms/lectureList.do">강의관리</a></li>
           <li class="breadcrumb-item active" aria-current="page">강의개설</li>
       </ol>
   </nav>
