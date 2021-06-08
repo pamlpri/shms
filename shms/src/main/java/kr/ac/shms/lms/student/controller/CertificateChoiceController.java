@@ -89,17 +89,11 @@ public class CertificateChoiceController {
 			crtf.setCrtf_kind(crtf_kind);
 		}
 		int cnt = certificateService.selectReginfoCount(crtf);
-		System.out.println("****************************");
-		System.out.println("crtf_kind :" + crtf_kind);
-		if(crtf_kind.equals("SJ")) {
-			resultMap.put("result", ServiceResult.OK);
-		}
 		if(cnt > 0) {
 			resultMap.put("result", ServiceResult.OK);
 		}else if(cnt < 0){
 			resultMap.put("result", ServiceResult.FAIL);
 		}
-		
 		resp.setContentType(MimeType.JSON.getMime());
 		try(
 			PrintWriter out = resp.getWriter();	
