@@ -88,7 +88,7 @@
 															data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button> 
 													</c:when>
 													<c:otherwise>
-														<a href="${cPath }/lms/consulting.do" class="badge bg-primary">승인</a>
+														<a href="${cPath }/lms/consulting.do?bo_no=${consulting.req_no }" class="badge bg-primary">승인</a>
 													</c:otherwise>
 												</c:choose>
 												

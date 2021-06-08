@@ -82,4 +82,5 @@
 		                      FROM tb_code_grp
 		                     WHERE code_grp_nm = 'REQ_CL_CODE')
 	</select>
+	
 </mapper>

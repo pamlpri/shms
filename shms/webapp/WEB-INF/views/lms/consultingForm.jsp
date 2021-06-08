@@ -23,38 +23,39 @@
 	<div class="card inputTable">
 		<div class="card-body">
 			<iframe src="https://192.168.0.140:3000" allow='camera *; microphone *' width="100%" height="500"
-				id="videoView"></iframe>
+				id="videoView">
+			</iframe>
 			
 			<c:choose>
-				<c:when test="${not empty staff}">
+				<c:when test="${'PR' eq section}">
 					<!-- 교수만 보이는 폼 -->
 					<form class="table-responsive">
 						<table class="table table-bordered table-md">
 							<tr>
 								<th rowspan="2" class="align-middle text-center">상담대상</th>
 								<th class="align-middle text-center">학번</th>
-								<td>S1401001</td>
+								<td>${consulting.stdnt_no }</td>
 								<th class="align-middle text-center">이름</th>
-								<td>강미나</td>
+								<td>${student.name }</td>
 							</tr>
 							<tr>
 								<th class="align-middle text-center">전화번호</th>
-								<td>010-2344-1234</td>
+								<td>${student.tel_no }</td>
 								<th class="align-middle text-center">웹메일</th>
-								<td>asdgasdg@shms.ac</td>
+								<td>${student.webmail }</td>
 							</tr>
 							<tr>
 								<th class="align-middle text-center">상담일자</th>
-								<td colspan="2">2020.05.01</td>
+								<td colspan="2">${consulting.hope_date }</td>
 								<th class="align-middle text-center">작성자</th>
-								<td>하재관</td>
+								<td>${userName }</td>
 							</tr>
 							<tr>
 								<th class="align-middle text-center">상담주제</th>
 								<td colspan="2"><textarea class="form-control"
 										id="floatingTextarea"></textarea></td>
 								<th class="align-middle text-center">상담분류</th>
-								<td>진로</td>
+								<td>${consulting.consult_cl_nm }</td>
 							</tr>
 							<tr>
 								<th class="align-middle text-center">내용</th>
@@ -69,7 +70,7 @@
 						</div>
 					</form>
 				</c:when>
-				<c:when test="${empty staff }">
+				<c:when test="${'PR' ne section }">
 					<div class="text-center">
 						<a href="${cPath }/lms/consultingList.do" class="btn btn-primary">목록으로</a>
 					</div>

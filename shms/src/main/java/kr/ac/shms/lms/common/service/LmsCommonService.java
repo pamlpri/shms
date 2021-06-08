@@ -12,6 +12,7 @@ import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -28,6 +29,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
  * 2021. 06. 03       박초원 	웹메일 보내기 추가
  * 2021. 06. 04    	  박초원 	수신자, 첨부파일 추가
+ * 2021. 06. 08		 최희수	상담 내역 상세 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -135,4 +137,11 @@ public interface LmsCommonService {
 	 * @return rowCnt > 0 성공
 	 */
 	public ServiceResult deleteWebmail(Map<String, Object> search);
+	
+	/**
+	 * 상담 일지에 쓰일 상담 내용 출력
+	 * @param bo_no
+	 * @return
+	 */
+	public ConsultingVO consulting(String bo_no);
 }

@@ -27,6 +27,7 @@ import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.common.vo.ReceiverVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -223,5 +224,10 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		if(cnt > 0) result = ServiceResult.OK;
 		
 		return result;
+	}
+
+	@Override
+	public ConsultingVO consulting(String bo_no) {
+		return lmsCommonDAO.consulting(bo_no);
 	}
 }
