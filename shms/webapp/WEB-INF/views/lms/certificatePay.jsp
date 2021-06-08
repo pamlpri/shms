@@ -39,7 +39,7 @@
                        </tr>
                        <tr>
                            <th class="align-middle text-center">결제금액</th>
-                           <td class="align-middle">원</td>
+                           <td class="align-middle">${won }원</td>
                        </tr>
                    </table>
                    <div class="text-center">

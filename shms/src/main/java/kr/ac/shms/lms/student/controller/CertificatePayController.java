@@ -66,6 +66,7 @@ public class CertificatePayController {
 		model.addAttribute("student", studentVO);
 		model.addAttribute("crtf_kind", crtf_kind);
 		model.addAttribute("no_of_issue", no_of_issue);
+		model.addAttribute("won", no_of_issue*2000);
 		
 		return "lms/certificatePay";
 	}
