@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div style="clear: both;"></div>
 <!-- 컨텐츠 -->
+<section class="feature_area section_gap_top">
+<div class="container">
 <div class="contents">
 	<form class="row" id="passForm" method="post">
 		<p>비밀글은 작성자와 비밀번호 확인 후 열람 가능합니다.</p>
@@ -28,6 +30,8 @@
 		</div>
 	</form>
 </div>
+</div>
+</section>
 <script type="text/javascript">
 	$(function(){
 		$(".sideMain").eq(3).children("a").addClass("navy");
