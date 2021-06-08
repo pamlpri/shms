@@ -27,49 +27,46 @@
 					<tr>
 						<th rowspan="2" class="align-middle text-center">상담대상</th>
 						<th class="align-middle text-center">학번</th>
-						<td>S1401001</td>
+						<td>${consulting.stdnt_no }</td>
 						<th class="align-middle text-center">이름</th>
-						<td>강미나</td>
+						<td>${student.name }</td>
 					</tr>
 					<tr>
 						<th class="align-middle text-center">전화번호</th>
-						<td>010-2344-1234</td>
+						<td>${student.tel_no }</td>
 						<th class="align-middle text-center">웹메일</th>
-						<td>asdgasdg@shms.ac</td>
+						<td>${student.webmail }</td>
 					</tr>
 					<tr>
 						<th class="align-middle text-center">상담일자</th>
-						<td colspan="2">2020.05.01</td>
+						<td colspan="2">${consltDiary.consult_date }</td>
 						<th class="align-middle text-center">작성자</th>
-						<td>하재관</td>
+						<td>${userName }</td>
 					</tr>
 					<tr>
 						<th class="align-middle text-center">상담주제</th>
-						<td colspan="2">진로방향 설정</td>
+						<td colspan="2">${consltDiary.thema }</td>
 						<th class="align-middle text-center">상담분류</th>
-						<td>진로</td>
+						<td>${consulting.consult_cl_nm }</td>
 					</tr>
 					<tr>
 						<th class="align-middle text-center">상담내용</th>
-						<td colspan="4">Lorem Ipsum is simply dummy text of the
-							printing and typesetting industry. Lorem Ipsum has been the
-							industry's standard dummy text ever since the 1500s, when an
-							unknown printer took a galley of type and scrambled it to make a
-							type specimen book. It has survived not only five centuries, but
-							also the leap into electronic typesetting, remaining essentially
-							unchanged. It was popularised in the 1960s with the release of
-							Letraset sheets containing Lorem Ipsum passages, and more
-							recently with desktop publishing software like Aldus PageMaker
-							including versions of Lorem Ipsum.</td>
+						<td colspan="4">${consltDiary.contents }</td>
 					</tr>
 				</table>
 				<div class="text-center">
-					<a href="consulting.html" class="btn btn-primary">목록으로</a>
-					<!-- 교수만 보이는 버튼 -->
-					<button onclick="location.href='${cPath}/lms/consultingUpdate.do'"
-						class="btn btn-primary">수정</button>
-					<button type="button" class="btn btn-danger block"
-						data-bs-toggle="modal" data-bs-target="#default">삭제</button>
+					<c:choose>
+						<c:when test="${'PR' eq userSection }">
+							<a href="${cPath }/lms/consultingAdmin.do" class="btn btn-primary">목록으로</a>	
+						<button onclick="location.href='${cPath}/lms/consultingUpdate.do'"
+							class="btn btn-primary">수정</button>
+						<button type="button" class="btn btn-danger block"
+							data-bs-toggle="modal" data-bs-target="#default">삭제</button>
+						</c:when>
+						<c:otherwise>
+							<a href="${cPath }/lms/consultingList.do" class="btn btn-primary">목록으로</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

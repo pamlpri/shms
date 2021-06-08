@@ -392,7 +392,7 @@
 				)
 	</update>
 	
-	<select id="consulting" parameterType="String" resultType="ConsultingVO">
+	<select id="consulting" parameterType="int" resultType="ConsultingVO">
 		SELECT  req_no,
 		        consult_cl,
 		        b.com_code_nm consult_cl_nm,
@@ -418,4 +418,37 @@
 		  AND c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
           AND a.req_no = #{req_no}	
 	</select>
+	
+	<insert id="consultingDiaryInsert" parameterType="ConsltDiaryVO">
+		INSERT INTO conslt_diary (
+		    diary_no,
+		    req_no,
+		    thema,
+		    contents,
+		    consult_date
+		) VALUES (
+		    CONSLT_DIARY_SEQ.NEXTVAL,
+		    #{req_no},
+		    #{thema},
+		    #{contents},
+		    TO_DATE(#{hope_date} || ' ' || #{hope_time}, 'YYYY-MM-DD HH24:MI:SS')
+		)
+	</insert>
+	
+	<select id="consltDiary" parameterType="int" resultType="ConsltDiaryVO">
+		SELECT
+		    diary_no,
+		    req_no,
+		    thema,
+		    contents,
+		    TO_CHAR(consult_date, 'YYYY-MM-DD HH24:MI:SS') consult_date
+		FROM
+		    conslt_diary
+		WHERE req_no = #{req_no}
+	</select>
+	<update id="consultingCompletion" parameterType="int">
+		UPDATE CONSLT_REQ SET
+		    process_stat = 'WR'
+		WHERE req_no = #{req_no}
+	</update>
 </mapper>

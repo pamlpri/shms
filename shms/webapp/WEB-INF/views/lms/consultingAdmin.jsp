@@ -59,7 +59,7 @@
                    			<td class="text-center">
                    				<c:choose>
                    					<c:when test="${consulting.process_stat_nm eq '완료'}">
-										<a href="${cPath }/lms/consultingView.do"
+										<a href="${cPath }/lms/consultingView.do?bo_no=${consulting.req_no }"
 											class="badge bg-success white-color">완료</a>
 									</c:when>
 									<c:when test="${consulting.process_stat_nm eq '대기'}">

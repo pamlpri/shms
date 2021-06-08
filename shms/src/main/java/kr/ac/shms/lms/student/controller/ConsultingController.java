@@ -48,7 +48,7 @@ public class ConsultingController {
 	@RequestMapping("/consulting.do")
 	public String consultingList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, @RequestParam("bo_no") String bo_no
+		, @RequestParam("bo_no") int bo_no
 		, Model model
 	) {
 		ConsultingVO consultingVO = lmsCommonService.consulting(bo_no);

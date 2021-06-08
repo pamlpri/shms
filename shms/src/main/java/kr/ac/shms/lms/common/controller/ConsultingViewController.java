@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.StudentService;
@@ -46,9 +48,10 @@ public class ConsultingViewController {
 	private static final Logger logger = LoggerFactory.getLogger(ConsultingViewController.class);
 	@Inject
 	private StudentService studentService;
-	
 	@Inject
 	private LmsStaffService lmsStaffService;
+	@Inject
+	private LmsCommonService lmsCommonService;
 	
 	@RequestMapping("/consultingList.do")
 	public String consultingList(
@@ -71,22 +74,37 @@ public class ConsultingViewController {
 	@RequestMapping("/consultingView.do")
 	public String consultingView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, HttpSession session
+		, @RequestParam("bo_no") int bo_no
 		, Model model
 	) {
-		String user_id = user.getUser_id();
-		StudentVO studentVO = studentService.student(user_id);
-		StaffVO staffVO = lmsStaffService.staff(user_id);
+		String userSection = user.getUser_section();
+		ConsultingVO consultingVO = lmsCommonService.consulting(bo_no);
+		StudentVO studentVO = studentService.student(consultingVO.getStdnt_no());
+		ConsltDiaryVO consltDiaryVO = lmsCommonService.consltDiary(bo_no);
 		
-		if(staffVO != null && studentVO == null) {
-			session.setAttribute("userName", staffVO.getName());
-			model.addAttribute("staff", staffVO);
-		}else if(staffVO == null && studentVO != null) {
-			session.setAttribute("userName", studentVO.getName());
-			model.addAttribute("student", studentVO);
-		}
+		model.addAttribute("student", studentVO);
+		model.addAttribute("consulting", consultingVO);
+		model.addAttribute("consltDiary", consltDiaryVO);
+		model.addAttribute("userSection", userSection);
 		
 		return  "lms/consultingView";
+	}
+	
+	@RequestMapping(value="/consultingView.do", method=RequestMethod.POST)
+	public String consultingViewInsert(
+			@ModelAttribute("consltDiary") ConsltDiaryVO consltDiaryVO
+		) {
+		ConsultingVO consultingVO = lmsCommonService.consulting(consltDiaryVO.getReq_no());
+		consltDiaryVO.setHope_date(consultingVO.getHope_date());
+		consltDiaryVO.setHope_time(consultingVO.getHope_time());
+		ServiceResult result = lmsCommonService.consultingDiaryInsert(consltDiaryVO);
+		lmsCommonService.consultingCompletion(consltDiaryVO.getReq_no());
+		
+		String view = null;
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/consultingView.do?bo_no="+consltDiaryVO.getReq_no();
+		}
+		return view;
 	}
 	
 	@DeleteMapping(produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

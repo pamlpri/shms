@@ -179,4 +179,5 @@
 		    process_stat = 'SI'
 		WHERE req_no = #{req_no}
 	</update>
+	
 </mapper>

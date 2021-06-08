@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
@@ -143,5 +144,26 @@ public interface LmsCommonService {
 	 * @param bo_no
 	 * @return
 	 */
-	public ConsultingVO consulting(String bo_no);
+	public ConsultingVO consulting(int bo_no);
+	
+	/**
+	 * 상담 일지 저장
+	 * @param consltDiaryVO
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingDiaryInsert(ConsltDiaryVO consltDiaryVO);
+	
+	/**
+	 * 상담 일지 상세보기 내용
+	 * @param bo_no
+	 * @return 데이터가 없으면 null
+	 */
+	public ConsltDiaryVO consltDiary(int bo_no);
+	
+	/**
+	 * 상담이 완료 되면 상담상태 변경
+	 * @param bo_no
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingCompletion(int bo_no);
 }

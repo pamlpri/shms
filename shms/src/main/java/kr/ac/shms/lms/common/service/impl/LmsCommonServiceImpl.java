@@ -20,6 +20,7 @@ import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.dao.LmsCommonDAO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
@@ -44,6 +45,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 02 	  박초원	웹메일 주소록 검색 추가
  * 2021. 06. 03 	박초원		웹메일 인서트
  * 2021. 06. 04 	박초원 	    수신자, 첨부파일 추가
+ * 2021. 06. 08		최희수	상담 일지 등록, 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -227,7 +229,28 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	}
 
 	@Override
-	public ConsultingVO consulting(String bo_no) {
+	public ConsultingVO consulting(int bo_no) {
 		return lmsCommonDAO.consulting(bo_no);
+	}
+
+	@Override
+	public ServiceResult consultingDiaryInsert(ConsltDiaryVO consltDiaryVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsCommonDAO.consultingDiaryInsert(consltDiaryVO);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ConsltDiaryVO consltDiary(int bo_no) {
+		return lmsCommonDAO.consltDiary(bo_no);
+	}
+
+	@Override
+	public ServiceResult consultingCompletion(int bo_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsCommonDAO.consultingCompletion(bo_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
 	}
 }

@@ -29,12 +29,14 @@
 			<c:choose>
 				<c:when test="${'PR' eq section}">
 					<!-- 교수만 보이는 폼 -->
-					<form class="table-responsive">
+					<form id="consultingDiary" action="${cPath }/lms/consultingView.do" class="table-responsive" method="post">
+						<input type="hidden" name="req_no" value="${consulting.req_no }" />
+						<input type="hidden" name="contents" value="" />
 						<table class="table table-bordered table-md">
 							<tr>
 								<th rowspan="2" class="align-middle text-center">상담대상</th>
 								<th class="align-middle text-center">학번</th>
-								<td>${consulting.stdnt_no }</td>
+								<td>${student.stdnt_no }</td>
 								<th class="align-middle text-center">이름</th>
 								<td>${student.name }</td>
 							</tr>
@@ -53,7 +55,7 @@
 							<tr>
 								<th class="align-middle text-center">상담주제</th>
 								<td colspan="2"><textarea class="form-control"
-										id="floatingTextarea"></textarea></td>
+										id="floatingTextarea" name="thema"></textarea></td>
 								<th class="align-middle text-center">상담분류</th>
 								<td>${consulting.consult_cl_nm }</td>
 							</tr>
@@ -66,7 +68,8 @@
 						</table>
 						<div class="text-center">
 							<a href="consultingAdmin.html" class="btn btn-secondary">취소</a>
-							<a href="consultingAdmin.html" class="btn btn-primary">저장</a>
+							<button id="sendBtn" type="button" class="btn btn-primary">저장</button>
+<%-- 							<a href="${cPath }/lms/consultingView.do" class="btn btn-primary">저장</a> --%>
 						</div>
 					</form>
 				</c:when>
@@ -99,6 +102,15 @@
                     }));
                 }
             }
+        });
+        
+        $(function() {
+	        let consultingDiary = $("#consultingDiary");
+	        $("#sendBtn").on("click", function(){
+	        	var sHTML = $(".note-editable").text();
+	        	$("input[name='contents']").val(sHTML);
+	        	consultingDiary.submit();	        	
+	        });
         });
 
     </script>
