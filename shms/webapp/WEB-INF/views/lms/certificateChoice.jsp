@@ -25,8 +25,7 @@
        <div class="card inputTable">
            <div class="card-body">
                <h5>증명서선택</h5>
-               <form:form modelAttribute="crtfInfo" class="table-responsive" method="post">
-<%--                <form class="table-responsive"> --%>
+               <form action="${cPath }/lms/certificatePay.do" class="table-responsive" method="post">
                    <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                        <tr>
                            <th class="align-middle text-center">학과</th>
@@ -55,11 +54,10 @@
 	                                           <option value="${cetfList.com_code }">${cetfList.com_code_nm }</option>
                                            </c:forEach>
                                            
-                                           
                                        </select>
                                    </div>
                                    <div class="col-md-4">
-                                       <input type="number" min="0" class="form-control" placeholder="통수"/>
+                                       <input type="number" min="0" class="form-control" placeholder="통수" name="no_of_issue"/>
                                    </div>
                                </div>
                            </td>
@@ -77,10 +75,9 @@
                        </tr>
                    </table>
                    <div class="text-center">
-                       <a href="${cPath }/lms/certificatePay.do" id="crtfReq" class="btn btn-primary" style="margin-top: 1.2em;">신청</a>
+                       <input type="submit" class="btn btn-primary" style="margin-top: 1.2em;" value="신청">
                    </div>
-<%--                </form> --%>
-               </form:form>
+               </form>
            </div>
        </div>
        <div class="card">
@@ -111,25 +108,32 @@
    <!-- contents end -->
 </div>
 <script>
-	$("#crtfReq").on("click", function(){
-		let crtf_kind = $(".crtf_kind").val();
-		let reason = $('.crtf_req_resn').val();
-		
+	$("[name='crtf_kind']").on("change", function(){
+		let selectedKind = $(this).val();
+		console.log(selectedKind);
 		$.ajax({
-			url :"${cPath}/lms/certificateInsert.do"
-			, data : {
-				crtf_kind : crtf_kind,
-				reason : reason
-			}
+			url : "${cPath}/lms/chcekReginfo.do"
+			, data : {"crtf_kind" : selectedKind}
+			, method : "post"
 			, dataType : "json"
 			, success : function(resp){
-				
-			}
-			, error : function(error, xhr, msg){
+				if(resp.result == "OK"){
+				}else{
+					alert("신청할 수 없는 증명서입니다.");
+					$("[name='crtf_kind'] option:eq(0)").prop("selected", true);
+				}
+			}, error : function(xhr, error, msg){
 				console.log(xhr);
 				console.log(error);
-				console.log(msg);
+				console.log(msg);				
 			}
 		});
 	});
+	
+	
+	
+	
+	
+	
+	
 </script>
