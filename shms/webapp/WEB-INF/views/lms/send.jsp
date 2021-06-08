@@ -25,7 +25,7 @@
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
-			<li class="breadcrumb-item"><a href="#">웹메일</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/composeForm.do">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">보낸메일</li>
 		</ol>
 	</nav>

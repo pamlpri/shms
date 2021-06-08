@@ -13,7 +13,7 @@
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">HOME</a></li>
+			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
 			<li class="breadcrumb-item"><a href="${cPath }/lms/composeForm.do">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">메일보내기</li>
 		</ol>
