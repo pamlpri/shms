@@ -64,7 +64,7 @@
 							<h2 class="text-center text-primary">Login To LMS</h2>
 						</div>
 						<form action="${cPath }/lms/loginProcess.do" method="post" id="loginForm">
-							<select	id="uId" name="user_id" onchange="Login()">
+							<select	id="uId" onchange="Login()">
 								<option>--로그인 선택--</option>
 								<option value="S19101001">학생</option>
 								<option value="P19101001">교수</option>
@@ -77,7 +77,7 @@
 							<c:choose>
 								<c:when test="${not empty errorMsg }">
 								<div class="input-group custom">
-		                            <input type="text" name="user_id" class="form-control form-control-lg is-invalid" placeholder="id" value="${cookie.checkID.value }">
+		                            <input type="text" name="user_id" class="form-control form-control-lg is-invalid uId" placeholder="id" value="${cookie.checkID.value }">
 								</div>
 								<div class="input-group custom">
 									<input type="password" name="user_password" class="form-control form-control-lg is-invalid uPass" placeholder="**********">
@@ -90,7 +90,7 @@
 								</c:when>
 								<c:otherwise>
 									<div class="input-group custom">	
-										<input type="text" name="user_id" class="form-control form-control-lg" placeholder="id" value="${cookie.checkID.value }">
+										<input type="text" name="user_id" class="form-control form-control-lg uId" placeholder="id" value="${cookie.checkID.value }">
 										<div class="input-group-append custom">
 											<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
 										</div>
@@ -147,24 +147,31 @@
 		let uId = $("#uId").val(); 
 		switch (uId) {
 		case 'S19101001':
+			$(".uId").val("S19101001");
 			$(".uPass").val("001010");
 			break;
 		case 'P19101001':
+			$(".uId").val("P19101001");
 			$(".uPass").val("770101");		
 			break;
 		case 'E15001002':
+			$(".uId").val("E15001002");
 			$(".uPass").val("781105");
 			break;
 		case 'E15002001':
+			$(".uId").val("E15002001");
 			$(".uPass").val("770101");
 			break;
 		case 'E15003001':
+			$(".uId").val("E15003001");
 			$(".uPass").val("770101");
 			break;
 		case 'E15004001':
+			$(".uId").val("E15004001");
 			$(".uPass").val("770101");	
 			break;
 		case 'M15101001':
+			$(".uId").val("M15101001");
 			$(".uPass").val("710210");
 			break;
 		}
