@@ -1,3 +1,16 @@
+/* 상단 네비게이션 */
+.header_area .navbar {
+	background-color : #dfdfdf!important;	
+}
+
+.header_area .navbar .nav .nav-item:hover .nav-link, .header_area .navbar .nav .nav-item.active .nav-link {
+    color: #fdb904;
+}
+
+.dropdown-menu .nav-item {
+	background-color : #efefef;
+}
+
 /* 게시판 영역 */
 #boardArea {
     padding: 8% 7% 1% 7%
@@ -409,3 +422,4 @@
 #location .last::after {
   content: "";
 }
+
