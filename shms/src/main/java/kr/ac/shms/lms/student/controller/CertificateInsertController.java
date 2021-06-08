@@ -2,17 +2,17 @@ package kr.ac.shms.lms.student.controller;
 
 import javax.inject.Inject;
 
-import org.springframework.http.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.CertificateService;
-import kr.ac.shms.lms.student.vo.CertificateReqVO;
 
 /**
  * @author 김보미
@@ -30,38 +30,42 @@ import kr.ac.shms.lms.student.vo.CertificateReqVO;
  */
 @Controller
 public class CertificateInsertController {
+	private static final Logger logger = LoggerFactory.getLogger(CertificateInsertController.class);
+	
 	@Inject
 	private CertificateService certificateService;
 	
-	@RequestMapping(value="/lms/certificateInsert.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public CertificateReqVO insertCertificateReq(
+	@RequestMapping(value="/lms/certificateInsert.do", method=RequestMethod.POST)
+	public String insertCertificateReq(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-			, Errors errors
+			, @RequestParam("crtf_kind") String crtf_kind
+			, @RequestParam("no_of_issue") int no_of_issue
+			, @RequestParam("crtf_req_resn") String crtf_req_resn
+			, Model model
 			) {
-		boolean valid = !errors.hasErrors();
-		
+//		boolean valid = !errors.hasErrors();
 		String view = null;
 		String message = null;
-		
-		CertificateReqVO crtf = new CertificateReqVO();
-		if(valid) {
-			ServiceResult result = certificateService.insertCrtfReq(crtf); 
-			if(ServiceResult.OK.equals(result)) {
-				view = "redirect:/lms/certificateStorage.do";
-			}else {
-				message = "증명서 신청 실패! 잠시 후에 다시 시도해주세요.";
-				view = "lms/certificateChoice";
-			}
-		}else {
-			message = "암튼 에러";
-			view = "lms/certificateChoice";
-		}
-		
-		return crtf;
+//		
+//		CertificateReqVO crtf = new CertificateReqVO();
+//		if(valid) {
+//			ServiceResult result = certificateService.insertCrtfReq(crtf); 
+//			if(ServiceResult.OK.equals(result)) {
+//				crtf.setStdnt_no(user.getUser_id());
+//				crtf = certificateService.selectCrtf(crtf);
+//				view = "redirect:/lms/certificateStorage.do";
+//			}else {
+//				message = "증명서 신청 실패! 잠시 후에 다시 시도해주세요.";
+//				view = "lms/certificateChoice";
+//			}
+//		}else {
+//			message = "암튼 에러";
+//			view = "lms/certificateChoice";
+//		}
+		model.addAttribute("crtf_kind", crtf_kind);
+		return "lms/certificatePay";
 	}
 }
-
 
 
 

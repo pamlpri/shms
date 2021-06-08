@@ -17,13 +17,60 @@
 		              FROM tb_com_code
 		             WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'CRTF_KIND')
 		               AND com_code = crtf_kind) crtf_kind,
-		          (SELECT com_code_nm
-		               FROM tb_com_code
-		              WHERE code_grp = (SELECT code_grp FROM tb_code_grp WHERE CODE_GRP_NM = 'CRTF_REQ_RESN') 
-		                AND com_code = crtf_req_resn) crtf_req_resn
+		          crtf_req_resn
 		         FROM crtf_req 
 		        WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}  
 		    ) A
 		 )
 	</select>
+	
+	<select id="selectCrtf" parameterType="CertificateReqVO" resultType="CertificateReqVO">
+		SELECT (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'CRTF_KIND')
+		           AND com_code = crtf_kind) crtf_kind,
+		       crtf_price,
+		       no_of_issue,
+		       sub_name
+	  FROM crtf_req a
+	 INNER JOIN student b ON(a.stdnt_no=b.stdnt_no)
+	 INNER JOIN subject c ON(b.sub_code=c.sub_code)
+	 WHERE req_no = #{req_no, jdbcType=NUMERIC}
+	   AND a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}  
+	</select>
+	
+	<select id="selectCrtfKind" resultType="String" parameterType="String">
+		 SELECT com_code_nm
+		   FROM tb_com_code
+		  WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'CRTF_KIND')
+		    AND com_code = #{crtf_req_resn, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectCrtfReqResn" resultType="String" parameterType="String">
+		 SELECT com_code_nm
+		   FROM tb_com_code
+		  WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'CRTF_REQ_RESN')
+		    AND com_code = #{crtf_kind, jdbcType=VARCHAR}
+	</select>
+	<select id="selectReginfoCount" parameterType="String" resultType="int">
+		SELECT  COUNT(req_cl_code)
+		  FROM reginfo_cng
+		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND req_cl_code=#{crtf_kind, jdbcType=VARCHAR} 
+		   AND process_stat='SI'
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,7 @@
 <!-- 컨텐츠 -->
 <section class="feature_area section_gap_top">
 <div class="container">
-	<div class="contents" id="sub">
+	<div class="contents" id="academic">
 		<div class="card board" style="border: none;">
 			<div class="card-body board-body">
 				<form id="searchForm">

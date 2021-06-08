@@ -27,24 +27,24 @@
                    <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                        <tr>
                            <th class="align-middle text-center">학과</th>
-                           <td class="align-middle">항공학과</td>
+                           <td class="align-middle">${student.sub_name }</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">신청증명서</th>
-                           <td class="align-middle">입학증명서</td>
+                           <td class="align-middle">${crtf_kind }</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">발급통수</th>
-                           <td class="align-middle">1통</td>
+                           <td class="align-middle">${no_of_issue} 통</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">결제금액</th>
-                           <td class="align-middle">2,000원</td>
+                           <td class="align-middle">원</td>
                        </tr>
                    </table>
                    <div class="text-center">
                        <button type="button" class="btn btn-primary"
-                           data-bs-toggle="modal" data-bs-target="#primary" style="margin-top: 20px;">
+                           style="margin-top: 20px;"  onclick="payment();">
                            결제
                        </button>
                    </div>
@@ -103,3 +103,8 @@
    </section>
    <!-- contents end -->
 </div>
+<script>
+	function payment(){
+		location.href="${cPath}/paymentSystem.jsp";
+	}
+</script>

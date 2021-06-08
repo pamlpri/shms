@@ -32,4 +32,31 @@ public interface CertificateService {
 	 * @return 
 	 */
 	public ServiceResult insertCrtfReq(CertificateReqVO crtf);
+	
+	/**
+	 * 신청한 증명서 내용 출력
+	 * @param crtf
+	 * @return 신청한 증명서 내용
+	 */
+	public CertificateReqVO selectCrtf(CertificateReqVO crtf);
+	
+	/**
+	 * 증명서 종류 
+	 * @param crtf_kind
+	 * @return
+	 */
+	public String selectCrtfKind(String com_code);
+	
+	/**
+	 * 신청 사유
+	 * @param crtf_req_resn
+	 * @return
+	 */
+	public String selectCrtfReqResn(String com_code);
+	
+	/**
+	 * @param crtf 학번, 증명서종류
+	 * @return
+	 */
+	public int selectReginfoCount(CertificateReqVO crtf);
 }

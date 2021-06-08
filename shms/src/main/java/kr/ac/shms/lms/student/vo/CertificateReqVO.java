@@ -32,4 +32,5 @@ public class CertificateReqVO {
 	private String req_de;
 	private String crtf_req_resn;
 	private String crtf_kind;
+	private String sub_name;	// 학과 이름
 }

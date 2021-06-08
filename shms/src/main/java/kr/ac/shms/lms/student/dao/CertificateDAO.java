@@ -17,6 +17,7 @@ import kr.ac.shms.lms.student.vo.CertificateReqVO;
  * 수정일        수정자        수정내용
  * --------     --------    ----------------------
  * 2021. 6. 7.   김보미        최초작성
+ * 2021. 6. 8.   김보미        신청증명서 내역
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -36,4 +37,33 @@ public interface CertificateDAO {
 	 * @return 
 	 */
 	public int insertCrtfReq(CertificateReqVO crtf);
+	
+	/**
+	 * 신청한 증명서 내용 출력
+	 * @param crtf
+	 * @return 신청한 증명서 내용
+	 */
+	public CertificateReqVO selectCrtf(CertificateReqVO crtf);
+	
+	/**
+	 * 증명서 종류 
+	 * @param crtf_kind
+	 * @return
+	 */
+	public String selectCrtfKind(String com_code);
+	
+	/**
+	 * 신청 사유
+	 * @param crtf_req_resn
+	 * @return
+	 */
+	public String selectCrtfReqResn(String com_code);
+	
+	/**
+	 * @param crtf 학번, 증명서종류
+	 * @return
+	 */
+	public int selectReginfoCount(CertificateReqVO crtf);
 }
+
+

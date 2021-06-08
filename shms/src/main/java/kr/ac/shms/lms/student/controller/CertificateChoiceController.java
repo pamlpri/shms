@@ -1,19 +1,33 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.ac.shms.common.enumpkg.MimeType;
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.common.controller.WebmailInsertController;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.service.CertificateService;
 import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.CertificateReqVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 
@@ -38,6 +52,9 @@ public class CertificateChoiceController {
 	@Inject
 	private StudentService studentService;
 	
+	@Inject
+	private CertificateService certificateService;
+	
 	@RequestMapping("/lms/certificateChoice.do")
 	public String certificateChoice (
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -52,5 +69,44 @@ public class CertificateChoiceController {
 		model.addAttribute("cetfResnList", cetfResnList);
 		
 		return  "lms/certificateChoice";
+	}
+	
+	@RequestMapping(value="/lms/chcekReginfo.do",  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public String checkReginfo(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam("crtf_kind") String crtf_kind
+		,HttpServletResponse resp
+		) throws IOException {
+		Map<String, Object> resultMap = new HashMap<>();
+		String req_cl_name = studentService.reginfo(user.getUser_id());
+		
+		CertificateReqVO crtf = new CertificateReqVO();
+		crtf.setStdnt_no(user.getUser_id());
+		if(crtf_kind.equals("JH")) { 
+			crtf.setCrtf_kind("BH"); 
+		}else {
+			crtf.setCrtf_kind(crtf_kind);
+		}
+		int cnt = certificateService.selectReginfoCount(crtf);
+		System.out.println("****************************");
+		System.out.println("crtf_kind :" + crtf_kind);
+		if(crtf_kind.equals("SJ")) {
+			resultMap.put("result", ServiceResult.OK);
+		}
+		if(cnt > 0) {
+			resultMap.put("result", ServiceResult.OK);
+		}else if(cnt < 0){
+			resultMap.put("result", ServiceResult.FAIL);
+		}
+		
+		resp.setContentType(MimeType.JSON.getMime());
+		try(
+			PrintWriter out = resp.getWriter();	
+		){
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(out, resultMap);
+		}
+		return null;
 	}
 }

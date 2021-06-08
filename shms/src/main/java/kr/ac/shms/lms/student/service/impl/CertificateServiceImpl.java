@@ -41,4 +41,24 @@ public class CertificateServiceImpl implements CertificateService{
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}
+
+	@Override
+	public CertificateReqVO selectCrtf(CertificateReqVO crtf) {
+		return certificateDAO.selectCrtf(crtf);
+	}
+
+	@Override
+	public String selectCrtfKind(String com_code) {
+		return certificateDAO.selectCrtfKind(com_code);
+	}
+
+	@Override
+	public String selectCrtfReqResn(String com_code) {
+		return certificateDAO.selectCrtfReqResn(com_code);
+	}
+
+	@Override
+	public int selectReginfoCount(CertificateReqVO crtf) {
+		return certificateDAO.selectReginfoCount(crtf);
+	}
 }
