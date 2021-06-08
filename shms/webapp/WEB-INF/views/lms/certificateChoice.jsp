@@ -1,14 +1,16 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
+* 수정일        수정자       수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 3.      박초원        최초작성
+* 2021. 6. 3.   박초원        최초작성
+* 2021. 6. 5.   김보미        증명서 신청 insert
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <div class="page-content">
    <!-- contents start -->
    <nav aria-label="breadcrumb">
@@ -23,7 +25,8 @@
        <div class="card inputTable">
            <div class="card-body">
                <h5>증명서선택</h5>
-               <form class="table-responsive">
+               <form:form modelAttribute="crtfInfo" class="table-responsive" method="post">
+<%--                <form class="table-responsive"> --%>
                    <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                        <tr>
                            <th class="align-middle text-center">학과</th>
@@ -31,7 +34,7 @@
                        </tr>
                        <tr>
                            <th class="align-middle text-center">학번</th>
-                           <td class="align-middle">S13412345</td>
+                           <td class="align-middle">${student.stdnt_no }</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">이름</th>
@@ -39,14 +42,14 @@
                        </tr>
                        <tr>
                            <th class="align-middle text-center">학적상태</th>
-                           <td class="align-middle">재학</td>
+                           <td class="align-middle">${student.reginfo_stat }</td>
                        </tr>
                        <tr>
                            <th class="align-middle text-center">증명서선택</th>
                            <td class="align-middle">
                                <div class="col-lg-12 row">
                                    <div class="col-md-8">
-                                       <select class="form-select float-right">
+                                       <select class="form-select float-right" name="crtf_kind">
                                            <option>-- 증명서 선택 --</option>
                                            <c:forEach var="cetfList" items="${cetfList }">
 	                                           <option value="${cetfList.com_code }">${cetfList.com_code_nm }</option>
@@ -56,7 +59,7 @@
                                        </select>
                                    </div>
                                    <div class="col-md-4">
-                                       <input type="number" class="form-control" placeholder="통수"/>
+                                       <input type="number" min="0" class="form-control" placeholder="통수"/>
                                    </div>
                                </div>
                            </td>
@@ -64,7 +67,7 @@
                        <tr>
                            <th class="align-middle text-center">신청사유</th>
                            <td class="align-middle">
-                               <select class="form-select float-right">
+                               <select class="form-select float-right" name="crtf_req_resn">
                                    <option>-- 사유선택 --</option>
                                    <c:forEach var="cetfResnList" items="${cetfResnList }">
                                    <option value="${cetfResnList.com_code }">${cetfResnList.com_code_nm }</option>
@@ -74,9 +77,10 @@
                        </tr>
                    </table>
                    <div class="text-center">
-                       <a href="${cPath }/lms/certificatePay.do" class="btn btn-primary" style="margin-top: 1.2em;">신청</a>
+                       <a href="${cPath }/lms/certificatePay.do" id="crtfReq" class="btn btn-primary" style="margin-top: 1.2em;">신청</a>
                    </div>
-               </form>
+<%--                </form> --%>
+               </form:form>
            </div>
        </div>
        <div class="card">
@@ -106,3 +110,26 @@
    </section>
    <!-- contents end -->
 </div>
+<script>
+	$("#crtfReq").on("click", function(){
+		let crtf_kind = $(".crtf_kind").val();
+		let reason = $('.crtf_req_resn').val();
+		
+		$.ajax({
+			url :"${cPath}/lms/certificateInsert.do"
+			, data : {
+				crtf_kind : crtf_kind,
+				reason : reason
+			}
+			, dataType : "json"
+			, success : function(resp){
+				
+			}
+			, error : function(error, xhr, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
+	});
+</script>
