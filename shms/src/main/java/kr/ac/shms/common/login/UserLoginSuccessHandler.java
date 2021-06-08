@@ -44,6 +44,8 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {		
 		HttpSession session = request.getSession();
 		UserLoginVO vo = loginDAO.selectMemberForAuth(authentication.getName());
+		logger.info("UserLoginVO : {}", vo);
+		
 		String userInfo[] = new String[2];
 		userInfo[0] = vo.getUser_id();
 		userInfo[1] = vo.getAuth_grp_code();

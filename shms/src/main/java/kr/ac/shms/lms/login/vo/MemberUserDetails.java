@@ -1,4 +1,6 @@
 package kr.ac.shms.lms.login.vo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * @author 최희수
  * @since 2021. 05. 25.
@@ -19,10 +21,12 @@ import lombok.Getter;
 
 @Getter
 public class MemberUserDetails extends User{
+	private static final Logger logger = LoggerFactory.getLogger(MemberUserDetails.class);
 	private UserLoginVO realUser;
 	public MemberUserDetails(UserLoginVO adaptee) {
 		super(adaptee.getUser_id(), adaptee.getUser_password(),
 				AuthorityUtils.createAuthorityList(adaptee.getUser_section()));
+		logger.info("MemberUserDetails : {}", adaptee);
 		this.realUser = adaptee;
 	}
 }

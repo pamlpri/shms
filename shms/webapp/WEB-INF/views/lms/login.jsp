@@ -64,14 +64,15 @@
 							<h2 class="text-center text-primary">Login To LMS</h2>
 						</div>
 						<form action="${cPath }/lms/loginProcess.do" method="post" id="loginForm">
-							<select>
-								<option>학생</option>
-								<option>교수</option>
-								<option>학적과</option>
-								<option>학생지원과</option>
-								<option>입학과</option>
-								<option>취업장학과</option>
-								<option>학과관리자</option>
+							<select	id="uId" name="user_id" onchange="Login()">
+								<option>--로그인 선택--</option>
+								<option value="S19101001">학생</option>
+								<option value="P19101001">교수</option>
+								<option value="E15002001">학적과</option>
+								<option value="E15001002">학생지원과</option>
+								<option value="E15004001">입학과</option>
+								<option value="E15003001">취업장학과</option>
+								<option value="M15101001">학과관리자</option>
 							</select>
 							<c:choose>
 								<c:when test="${not empty errorMsg }">
@@ -79,7 +80,7 @@
 		                            <input type="text" name="user_id" class="form-control form-control-lg is-invalid" placeholder="id" value="${cookie.checkID.value }">
 								</div>
 								<div class="input-group custom">
-									<input type="password" name="user_password" class="form-control form-control-lg is-invalid" placeholder="**********">
+									<input type="password" name="user_password" class="form-control form-control-lg is-invalid uPass" placeholder="**********">
 									<div class="invalid-feedback">
 		                                <i class="bx bx-radio-circle"></i>
 		                                ${errorMsg }
@@ -95,7 +96,7 @@
 										</div>
 									</div>
 									<div class="input-group custom">
-										<input type="password" name="user_password" class="form-control form-control-lg" placeholder="**********">
+										<input type="password" name="user_password" class="form-control form-control-lg uPass" placeholder="**********">
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -140,6 +141,35 @@
 	<script src="${cPath }/resources/lms/vendors/scripts/script.min.js"></script>
 	<script src="${cPath }/resources/lms/vendors/scripts/process.js"></script>
 	<script src="${cPath }/resources/lms/vendors/scripts/layout-settings.js"></script>
-	
+	<script type="text/javascript">
+// 		테스트용 script
+	function Login() {
+		let uId = $("#uId").val(); 
+		switch (uId) {
+		case 'S19101001':
+			$(".uPass").val("001010");
+			break;
+		case 'P19101001':
+			$(".uPass").val("770101");		
+			break;
+		case 'E15001002':
+			$(".uPass").val("781105");
+			break;
+		case 'E15002001':
+			$(".uPass").val("770101");
+			break;
+		case 'E15003001':
+			$(".uPass").val("770101");
+			break;
+		case 'E15004001':
+			$(".uPass").val("770101");	
+			break;
+		case 'M15101001':
+			$(".uPass").val("710210");
+			break;
+		}
+	 $("#loginForm").submit();
+	}
+	</script>
 </body>
 </html>
