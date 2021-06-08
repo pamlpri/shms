@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 
 /**
@@ -38,7 +38,7 @@ public interface LectureDAO {
 	 * @param lec_code 강의코드
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<LectureDetailsVO> selectLectureDetails(String lec_code);
+	public List<LectureVO> selectLectureDetails(String lec_code);
 	
 	/**
 	 * 교수가 관리하는 강의 목록 추출
@@ -59,7 +59,7 @@ public interface LectureDAO {
 	 * @param id 학생 번호, 교수 번호
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<LectureDetailsVO> selectTodayLecList(String id);
+	public List<LectureVO> selectTodayLecList(String id);
 	
 	
 	/**

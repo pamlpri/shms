@@ -1,5 +1,4 @@
 package kr.ac.shms.lms.staff.controller;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +6,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.digester.Substitutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -23,7 +21,6 @@ import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.CourseEducVO;
@@ -32,6 +29,7 @@ import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 /**
  * @author 최희수
@@ -114,7 +112,7 @@ public class LmsIndexController {
 			model.addAttribute("taskList", taskList);
 			
 			// 오늘 강의 출력
-			List<LectureDetailsVO> todayLecList	= lectureProfService.selectTodayLecList(user_id);
+			List<LectureVO> todayLecList	= lectureProfService.selectTodayLecList(user_id);
 			model.addAttribute("todayLecList", todayLecList);
 		}
 		

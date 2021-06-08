@@ -77,5 +77,5 @@ public class SugangVO {
     private String sugang_lec_cnt;    // 신청 교과목 수
     private String sugang_at_pnt;    // 신청 학점
     private String lec_able_pnt;    // 수강 가능 학점
-	
+	private String lec_full_time;	// 출력 형식 : 9 - 12시
 }

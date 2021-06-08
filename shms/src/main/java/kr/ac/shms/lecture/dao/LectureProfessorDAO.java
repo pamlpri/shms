@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.StaffVO;
-import kr.ac.shms.lecture.vo.LectureDetailsVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 
 /**
  * @author 박초원
@@ -19,6 +20,7 @@ import kr.ac.shms.lecture.vo.SetTaskVO;
  * --------     --------    ----------------------
  * 2021. 5. 24.      박초원      	       최초작성
  * 2021. 06. 01.     송수미      	       교수 과제 조회
+ * 2021. 06. 08.     송수미      	       교수 강의 개설
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -45,5 +47,40 @@ public interface LectureProfessorDAO {
 	 * @param id 교수 번호
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<LectureDetailsVO> selectTodayLecList(String id);
+	public List<LectureVO> selectTodayLecList(String id);
+	
+	/**
+	 * 교수가 개설 가능한 강의 목록 조회
+	 * @param id 교수 번호
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<LectureVO> selectLecListForOpen(String id);
+	
+	/**
+	 * 강의 개설을 위해 강의의 기본 정보를 조회
+	 * @param lec_code 강의 코드
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SugangVO selectLecForOpen(String lec_code);
+	
+	/**
+	 * 강의 개설
+	 * @param lecture
+	 * @return row count > 0 : 성공
+	 */
+	public int updateLecture(LectureVO lecture);
+	
+	/**
+	 * 강의에 대한 상세 정보 입력
+	 * @param lecture
+	 * @return row count > 0 : 성공
+	 */
+	public int insertLectureDetails(LectureVO lecture);
+	
+	/**
+	 * 첨부파일 등록
+	 * @param lecture
+	 * @return row count > 0 성공
+	 */
+	public int insertAttaches(LectureVO lecture);
 }
