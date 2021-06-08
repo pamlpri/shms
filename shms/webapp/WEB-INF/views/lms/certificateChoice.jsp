@@ -49,7 +49,7 @@
                                <div class="col-lg-12 row">
                                    <div class="col-md-8">
                                        <select class="form-select float-right" name="crtf_kind">
-                                           <option>-- 증명서 선택 --</option>
+                                           <option value="">-- 증명서 선택 --</option>
                                            <c:forEach var="cetfList" items="${cetfList }">
 	                                           <option value="${cetfList.com_code }">${cetfList.com_code_nm }</option>
                                            </c:forEach>
@@ -66,7 +66,7 @@
                            <th class="align-middle text-center">신청사유</th>
                            <td class="align-middle">
                                <select class="form-select float-right" name="crtf_req_resn">
-                                   <option>-- 사유선택 --</option>
+                                   <option value="">-- 사유선택 --</option>
                                    <c:forEach var="cetfResnList" items="${cetfResnList }">
                                    <option value="${cetfResnList.com_code }">${cetfResnList.com_code_nm }</option>
                                    </c:forEach>
@@ -75,7 +75,7 @@
                        </tr>
                    </table>
                    <div class="text-center">
-                       <input type="submit" class="btn btn-primary" style="margin-top: 1.2em;" value="신청">
+                       <input type="submit" class="btn btn-primary" style="margin-top: 1.2em;" id="subBtn" value="신청">
                    </div>
                </form>
            </div>
@@ -107,7 +107,24 @@
    </section>
    <!-- contents end -->
 </div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+	$("#subBtn").on("click", function(){
+		let crtf_kind = $("[name='crtf_kind']").val();
+		let crtf_req_resn = $("[name='crtf_req_resn']").val();
+		let no_of_issue = $("input[type=number]").val();
+		console.log("crtf_kind" + crtf_kind);
+		console.log("crtf_req_resn" + crtf_req_resn);
+		console.log("no_of_issue" + no_of_issue);
+		if(crtf_kind == "" || crtf_req_resn == "" || no_of_issue == ""){
+			alert("선택해!");
+			$("#subBtn").prop("disabled", true);
+		}else{
+			$("#subBtn").prop("disabled", false);
+		}
+	})
+	
 	$("[name='crtf_kind']").on("change", function(){
 		let selectedKind = $(this).val();
 		console.log(selectedKind);
@@ -129,11 +146,4 @@
 			}
 		});
 	});
-	
-	
-	
-	
-	
-	
-	
 </script>

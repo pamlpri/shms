@@ -44,11 +44,9 @@
                    </table>
                    <div class="text-center">
                        <button type="button" class="btn btn-primary"
-                           style="margin-top: 20px;"  onclick="payment();">
-                           결제
+                           style="margin-top: 20px;" id="payBtn">결제
                        </button>
                    </div>
-
                    <!--primary theme Modal -->
                    <div class="modal fade text-left" id="primary" tabindex="-1"
                        role="dialog" aria-labelledby="myModalLabel160"
@@ -73,7 +71,7 @@
                                        확인을 누르시면 증명서보관함으로 이동합니다.
                                    </p>
                                    <br/>
-                                   <a href="${cPath}/lms/certifidateStorage.do" class="btn btn-primary ml-1">
+                                   <a href="${cPath}/lms/certificateStorage.do" class="btn btn-primary ml-1">
                                        <i class="bx bx-check d-block d-sm-none"></i>
                                        <span class="d-none d-sm-block">확인</span>
                                    </a>
@@ -103,8 +101,38 @@
    </section>
    <!-- contents end -->
 </div>
+<div class="modal-backdrop fade"></div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
-	function payment(){
-		location.href="${cPath}/paymentSystem.jsp";
-	}
+	$("#payBtn").on("click", function(){
+		var IMP = window.IMP; // 생략가능
+		  IMP.init('iamport'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		  IMP.request_pay({
+		    pg : 'inicis', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '증명서명:${crtf_kind}',
+		    amount : '100',
+		    buyer_email : '${student.email}',
+		    buyer_name : '${student.sub_name}',
+		    buyer_tel : '${student.tel_no}',
+		    buyer_addr : '${student.addr1}',
+		    buyer_postcode : '${student.zipcode}',
+		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+		}, function(rsp) {
+		    if ( rsp.success ) {
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        $(".modal-backdrop").addClass("show").css("display", "block");
+				$("#primary").addClass("show").css("display","block");
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		});
+	});
 </script>
