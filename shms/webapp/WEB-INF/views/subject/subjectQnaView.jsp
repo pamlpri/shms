@@ -34,14 +34,18 @@
 	<div class="noticeContent">
 		${board.bo_cont }
 	</div>
-	<div class="noticeAns">
-		<p class="userAns">
-			${board.ans_writer }<span>${board.ans_de }</span>
-		</p>
-		<p class="contAns">
-			${board.bo_ans }
-		</p>
-	</div>
+	<c:choose>
+		<c:when test="${not empty board.bo_ans }">
+			<div class="noticeAns">
+				<p class="userAns">
+					${board.ans_writer }<span>${board.ans_de }</span>
+				</p>
+				<p class="contAns">
+					${board.bo_ans }
+				</p>
+			</div>
+		</c:when>
+	</c:choose>
 	<div id="noticeBtnBox">
 		<a id="deleteBtn" class="text-uppercase text-color d-inline-block"href="#" data-toggle="modal" data-target="#deleteModal">삭제</a>
 		<a id="updateBtn" href="${cPath }/subject/subjectQnaUpdate.do?bo_no=${board.bo_no}">수정</a>
@@ -115,7 +119,4 @@
 			}
 		});
 	});
-	
-	
 </script>
-</div>
