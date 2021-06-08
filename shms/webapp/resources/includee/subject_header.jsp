@@ -30,10 +30,10 @@
 				<ul class="nav navbar-nav menu_nav ml-auto">
 					<li class="nav-item submenu dropdown"><a href="#"
 						class="nav-link dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">학과소개</a>
+						role="button" aria-haspopup="true" aria-expanded="false" style="color:#002347">학과소개</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
-								href="aboutSubject.html">학과소개</a></li>
+								href="aboutSubject.html" >학과소개</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="mapSubject.html">오시는길</a></li>
 						</ul>
@@ -41,7 +41,7 @@
 					<li class="nav-item submenu dropdown">
 						<a href="#"
 						class="nav-link dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">교수소개</a>
+						role="button" aria-haspopup="true" aria-expanded="false"  style="color:#002347">교수소개</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
 								href="professor.html">교수진</a></li>
@@ -50,7 +50,7 @@
 					<li class="nav-item submenu dropdown">
 						<a href="#"
 						class="nav-link dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">학과정보</a>
+						role="button" aria-haspopup="true" aria-expanded="false"  style="color:#002347">학과정보</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
 								href="curriculum.html">교육과정</a></li>
@@ -61,7 +61,7 @@
 					<li class="nav-item submenu dropdown">
 						<a href="#"
 						class="nav-link dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-haspopup="true" aria-expanded="false">정보마당</a>
+						role="button" aria-haspopup="true" aria-expanded="false"  style="color:#002347">정보마당</a>
 						<ul class="dropdown-menu">
 							<li class="nav-item"><a class="nav-link"
 								href="${cPath }/subject/subjectNoticeList.do">학과공지</a></li>

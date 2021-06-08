@@ -498,17 +498,6 @@
 			  </c:if>
               <!-- 권한 : 학생지원과 -->
               <c:if test="${'HS' eq user.user[1]}">
-              	  <li class="sidebar-item  has-sub">
-	                  <a href="#" class="sidebar-link">
-	                      <i class="bi bi-person-badge-fill"></i>
-	                      <span>마이페이지</span>
-	                  </a>
-	                  <ul class="submenu ">
-	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
-	                      </li>
-	                  </ul>
-	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-bookmarks-fill"></i>
@@ -572,17 +561,6 @@
 			  </c:if>
               <!-- 권한 : 취업장학과 -->
               <c:if test="${'CJ' eq user.user[1] }">
-                  <li class="sidebar-item  has-sub">
-	                  <a href="#" class="sidebar-link">
-	                      <i class="bi bi-person-badge-fill"></i>
-	                      <span>마이페이지</span>
-	                  </a>
-	                  <ul class="submenu ">
-	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/staffInfo.do">내정보보기</a>
-	                      </li>
-	                  </ul>
-	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-chat-right-quote-fill"></i>
@@ -650,7 +628,7 @@
 <!-- 	                  </ul> -->
 <!-- 	              </li> -->
 	              <li class="sidebar-item">
-	                  <a href="#" class="sidebar-link">
+	                  <a href="${cPath }/lms/academicList.do" class="sidebar-link">
 	                      <i class="bi bi-person-badge-fill"></i>
 	                      <span>학적조회</span>
 	                  </a>
@@ -731,10 +709,10 @@
 	                    </a>
 	                    <ul class="submenu ">
 	                        <li class="submenu-item ">
-	                            <a href="#">공지사항</a>
+	                            <a href="${cPath}/lms/subjectNoticeList.do">학과공지</a>
 	                        </li>
 	                        <li class="submenu-item ">
-	                            <a href="#">학과문의</a>
+	                            <a href="${cPath}/lms/subjectQnaList.do">학과문의</a>
 	                        </li>
 	                        <li class="submenu-item ">
 	                            <a href="#">학과일정</a>
