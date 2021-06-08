@@ -59,6 +59,7 @@ public class ClassCartViewController {
 	@RequestMapping("/lms/classCartInfo.do")
 	public String classCartInfo (
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		,@ModelAttribute("sugang") SugangVO sugangVO
 		, Model model
 	) {
 		String user_id = user.getUser_id();
@@ -66,8 +67,10 @@ public class ClassCartViewController {
 		
 		model.addAttribute("student", studentVO);
 		
-		SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(user_id);
-		logger.info("sugangReqIndexInfo {}", sugangReqIndexInfo);
+		String sugang_at = "N";
+		sugangVO.setSugang_at(sugang_at);
+		sugangVO.setStdnt_no(user_id);
+		SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(sugangVO);
         model.addAttribute("sugangReqIndexInfo", sugangReqIndexInfo);
 		
 		return  "lms/classCartInfo";
@@ -125,7 +128,10 @@ public class ClassCartViewController {
 		List<SugangVO> cartList = studentService.selectCartList(user_id);
 		model.addAttribute("cartList", cartList);
 		
-        SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(user_id);
+		String sugang_at = "N";
+		sugangVO.setSugang_at(sugang_at);
+		sugangVO.setStdnt_no(user_id);
+        SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(sugangVO);
         model.addAttribute("sugangReqIndexInfo", sugangReqIndexInfo);
 		
 		return sugangVO;

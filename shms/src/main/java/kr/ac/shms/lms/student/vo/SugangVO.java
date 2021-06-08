@@ -70,7 +70,8 @@ public class SugangVO {
 	private String dayotw_nm;
 	private String lec_cl_grp;
 	private List<SugangVO> dataList;
-	private Map<String, Object> searchMap; 
+	private Map<String, Object> searchMap;
+	private Integer cart_cnt;
 	
     private String stdnt_name;
     private String stdnt_grade;
