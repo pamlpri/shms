@@ -3,10 +3,12 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 06. 08.      박초원        최초작성
+* 2021. 06. 09.		최희수	학생 조회
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -36,216 +38,30 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                          <td class="text-center">1</td>
+                  	<c:forEach items="${studentList }" var="student" varStatus="status">
+                  		<tr>
+                          <td class="text-center">${status.index + 1 }</td>
                           <td class="text-center">사회복지학과</td>
                           <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
+                              <a href="${cPath}/lms/academicView.do" class="text-color">${student.stdnt_no }</a>
                           </td>
                           <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
+                              <a href="${cPath}/lms/academicView.do?stdnt_no=${student.stdnt_no }" class="text-color">${student.name }</a>
                           </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
+                          <td class="text-center">${student.regno1 }</td>
+                          <c:choose>
+                          	<c:when test="${student.gen eq 'F' }">
+	                          <td class="text-center">여자</td>                          	
+                          	</c:when>
+                          	<c:otherwise>
+                          	  <td class="text-center">남자</td>
+                          	</c:otherwise>
+                          </c:choose>
+                          <td class="text-center">${student.grade }학년 ${student.semstr }학기</td>
+                          <td class="text-center">${student.reginfo_stat }</td>
                           <td class="text-center">신입학</td>
                       </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
-                          <td class="text-center">신입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
-                          <td class="text-center">신입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
-                          <td class="text-center">신입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
-                          <td class="text-center">신입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
-                          <td class="text-center">신입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">김유리</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">재학</td>
-                          <td class="text-center">신입학</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2</td>
-                          <td class="text-center">사회복지학과</td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">S1052345</a>
-                          </td>
-                          <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">이민지</a>
-                          </td>
-                          <td class="text-center">950503</td>
-                          <td class="text-center">여자</td>
-                          <td class="text-center">2학년 1학기</td>
-                          <td class="text-center">휴학</td>
-                          <td class="text-center">편입학</td>
-                      </tr>
+                  	</c:forEach>
                   </tbody>
               </table>
           </div>

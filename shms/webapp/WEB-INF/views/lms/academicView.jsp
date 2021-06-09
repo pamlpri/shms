@@ -5,8 +5,12 @@
 * 2021. 06. 08.      박초원        최초작성
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -46,27 +50,36 @@
                                   <!-- table striped -->
                                   <div class="table-responsive">
                                       <table class="table .thead-light mb-0" style="border-top:2px solid #95a3d6;">
-                                          <tbody">
+                                          <tbody>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">학번</th>
-                                                      <td class="col-lg-4">S1401001</td>
+                                                      <td class="col-lg-4">${mypage.stdnt_no }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">이름</th>
-                                                      <td class="col-lg-4">강미나</td>
+                                                      <td class="col-lg-4">${mypage.name }</td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">주민번호</th>
-                                                      <td class="col-lg-4">010312 - 1234561</td>
+                                                      <td class="col-lg-4">${mypage.regno1 } - ${mypage.regno2 }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">성별</th>
-                                                      <td class="col-lg-4">남자</td>
+                                                      <td class="col-lg-4">
+                                                      <c:choose>
+							                          	<c:when test="${student.gen eq 'F' }">
+								                        	여자    	
+							                          	</c:when>
+							                          	<c:otherwise>
+							                          	  	남자
+							                          	</c:otherwise>
+							                          </c:choose>
+							                          </td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">전공</th>
-                                                      <td class="col-lg-4">항공학과</td>
+                                                      <td class="col-lg-4">${subject.sub_name }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">년제</th>
                                                       <td class="col-lg-4">4년제</td>
                                                   </div>
@@ -76,23 +89,23 @@
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">입학구분</th>
                                                       <td class="col-lg-4">신입학</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">입학일자</th>
-                                                      <td class="col-lg-4">2014-03-03</td>
+                                                      <td class="col-lg-4">${mypage.entsch_de }</td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">학년</th>
-                                                      <td class="col-lg-4">2학년</td>
+                                                      <td class="col-lg-4">${mypage.grade }학년</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">학기</th>
-                                                      <td class="col-lg-4">1학기</td>
+                                                      <td class="col-lg-4">${mypage.semstr }학기</td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">학적상태</th>
-                                                      <td class="col-lg-4">재학</td>
+                                                      <td class="col-lg-4">${mypage.reginfo_stat }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">최종변동</th>
-                                                      <td class="col-lg-4">신입학</td>
+                                                      <td class="col-lg-4">${req_resn_code_name }</td>
                                                   </div>
                                               </tr>
                                           </tbody>
@@ -102,17 +115,26 @@
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">졸업상태</th>
-                                                      <td class="col-lg-4"></td>
+                                                      <td class="col-lg-4">
+	                                                      <c:choose>
+								                          	<c:when test="${not empty mypage.grdtn_de }">
+									                          	졸업
+								                          	</c:when>
+								                          	<c:otherwise>
+								                          	 	미졸업
+								                          	</c:otherwise>
+								                          </c:choose>
+								                      </td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">졸업년도</th>
-                                                      <td class="col-lg-4"></td>
+                                                      <td class="col-lg-4">${fn:substring(mypage.grdtn_de,1,5) }</td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">졸업일자</th>
-                                                      <td class="col-lg-4"></td>
+                                                      <td class="col-lg-4">${mypage.grdtn_de }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">학위명</th>
-                                                      <td class="col-lg-4"></td>
+                                                      <td class="col-lg-4">학사</td>
                                                   </div>
                                               </tr>
                                           </tbody>
@@ -122,9 +144,9 @@
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">계좌은행</th>
-                                                      <td class="col-lg-4">농협</td>
+                                                      <td class="col-lg-4">${mypage.bank_name }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">계좌변호</th>
-                                                      <td class="col-lg-4">453017-56-105902</td>
+                                                      <td class="col-lg-4">${mypage.account }</td>
                                                   </div>
                                               </tr>
                                           </tbody>
@@ -134,29 +156,29 @@
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">웹메일</th>
-                                                      <td colspan="3" class="col-lg-10">sasdg@shms.ac.kr</td>
+                                                      <td colspan="3" class="col-lg-10">${mypage.webmail }</td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">전화번호</th>
-                                                      <td class="col-lg-4">010-1234-4567</td>
+                                                      <td class="col-lg-4">${mypage.tel_no }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">Email</th>
-                                                      <td class="col-lg-4">shms@co.kr</td>
+                                                      <td class="col-lg-4">${mypage.email }</td>
                                                   </div>
                                               </tr>
                                               <tr>
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">우편번호</th>
-                                                      <td colspan="3" class="col-lg-10">34562</td>
+                                                      <td colspan="3" class="col-lg-10">${mypage.zipcode }</td>
                                                   </div>
                                               </tr>
                                               <tr style="border-bottom:2px solid #95a3d6;">
                                                   <div class="row">
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">기본주소</th>
-                                                      <td class="col-lg-4">대전광역시 중구 대흥동</td>
+                                                      <td class="col-lg-4">${mypage.addr1 }</td>
                                                       <th class="text-bold-500 text-center align-middle col-lg-2">상세주소</th>
-                                                      <td class="col-lg-4">영민빌딩 301호</td>
+                                                      <td class="col-lg-4">${mypage.addr2 }</td>
                                                   </div>
                                               </tr>
                                           </tbody>
@@ -180,22 +202,37 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr>
-                                      <td class="text-center">1</td>
-                                      <td class="text-center">휴학</td>
-                                      <td class="text-center">일반휴학</td>
-                                      <td class="text-center">2020.03.04</td>
-                                      <td class="text-center">2021년</td>
-                                      <td class="text-center">1학기</td>
-                                  </tr>
-                                  <tr>
-                                      <td class="text-center">2</td>
-                                      <td class="text-center">복학</td>
-                                      <td class="text-center">일반복학</td>
-                                      <td class="text-center">2021.03.04</td>
-                                      <td class="text-center"></td>
-                                      <td class="text-center"></td>
-                                  </tr>
+                              	<c:set var="today" value="<%=new java.util.Date()%>" />
+								<c:if test="${not empty regInfoCngList }">
+									<c:forEach items="${regInfoCngList }" var="reginfo" varStatus="status">
+									<c:set var="year">
+										<fmt:formatDate value="${today }" pattern="yyyy"/>
+									</c:set>
+										<tr>
+											<td class="text-center">${status.index+1  }</td>
+											<td class="text-center">${reginfo.req_cl_name }</td>
+											<td class="text-center">${reginfo.req_resn_code_name }</td>
+											<td class="text-center">${reginfo.cng_bgnde }</td>
+											<c:choose>
+												<c:when test="${reginfo.req_cl_code eq 'BH' or reginfo.req_cl_code eq 'JT' }">
+													<td class="text-center"></td>
+													<td class="text-center"></td>																		
+												</c:when>
+												<c:otherwise>
+													<c:choose>
+														<c:when test="${not empty reginfo.cng_endde }">
+															<td class="text-center">${fn:substring(reginfo.cng_endde, 0, 4) }년</td>
+														</c:when>
+														<c:otherwise>
+															<td class="text-center">${year }년</td>
+														</c:otherwise>
+													</c:choose>
+													<td class="text-center">${mypage.semstr }학기</td>
+												</c:otherwise>
+											</c:choose>
+										</tr>
+									</c:forEach>									
+								</c:if>
                               </tbody>
                           </table>
                       </div>

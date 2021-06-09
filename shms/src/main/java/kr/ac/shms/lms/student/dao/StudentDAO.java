@@ -31,11 +31,12 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 5. 31.   송수미	   	학생 통합정보시스템 메인 페이지 구현
  * 2021. 6.  1.   김보미		출석(퇴실)
  * 2021. 6.  3.   김보미        학생 정보 출력(증명서 신청), 증명서, 신청사유 정보출력
- * 2021. 6.  4.   최희수	   	내 시간표 출력
+ * 2021. 6.  4.   최희수	   	내 시간표 출력	
  * 2021. 6.  5.   박초원	   	개설과목조회 
  * 2021. 6.  5.   송수미 	   	수강신청 인덱스 페이지에 필요한 정보 조회
  * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
  * 2021. 6.  8.   박초원       수강신청 추가
+ * 2021. 6.  9.   최희수	  학과 학생들 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -274,4 +275,11 @@ public interface StudentDAO {
      * @param map
      */
     public void updateSugang(Map<String, Object> pMap);
+    
+    /**
+     * 해당 학과에 포함된 학생들만 추출
+     * @param sub_code
+     * @return 데이터가 없으면 null
+     */
+    public List<MypageVO> studentSubList(String sub_code);
 }
