@@ -74,4 +74,11 @@ public interface CertificateService {
 	 * @return
 	 */
 	public CertificateReqVO selectHH(String stdnt_no);
+	
+	/**
+	 * 출력매수 업데이트
+	 * @param req_no
+	 * @return
+	 */
+	public ServiceResult updateIssuedCnt(int req_no);
 }

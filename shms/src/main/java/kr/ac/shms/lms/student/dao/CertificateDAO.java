@@ -79,6 +79,13 @@ public interface CertificateDAO {
 	 * @return
 	 */
 	public CertificateReqVO selectHH(String stdnt_no);
+	
+	/**
+	 * 출력매수 업데이트
+	 * @param req_no
+	 * @return
+	 */
+	public int updateIssuedCnt(int req_no);
 }
 
 

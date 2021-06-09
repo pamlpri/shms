@@ -1,19 +1,28 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.ac.shms.common.vo.BoardVO;
-import kr.ac.shms.common.vo.PagingVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.ac.shms.common.enumpkg.MimeType;
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.common.controller.WebmailInsertController;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.CertificateService;
@@ -60,4 +69,35 @@ public class CertificateStorageController {
 		
 		return "lms/certificateStorage";
 	}
+	
+	@RequestMapping(value="/lms/updateIssue.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public String updateIssue(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam("req_no") int req_no
+		, HttpServletResponse resp
+		) throws IOException {
+		Map<String, Object> resultMap = new HashMap<>();
+		ServiceResult result = certificafeService.updateIssuedCnt(req_no);
+		
+		if(ServiceResult.OK.equals(result)) {
+			resultMap.put("result", ServiceResult.OK);
+		}else if(ServiceResult.FAIL.equals(result)) {
+			resultMap.put("result", ServiceResult.FAIL);
+		}
+		
+		resp.setContentType(MimeType.JSON.getMime());
+		try(
+			PrintWriter out = resp.getWriter();	
+		){
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(out, resultMap);
+		}
+		return null;
+	}
 }
+
+
+
+
+

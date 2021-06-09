@@ -85,24 +85,3 @@ public class CertificateInsertController {
 		return view;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

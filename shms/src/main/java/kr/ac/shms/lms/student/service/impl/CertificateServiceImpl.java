@@ -72,4 +72,16 @@ public class CertificateServiceImpl implements CertificateService{
 	public CertificateReqVO selectHH(String stdnt_no) {
 		return certificateDAO.selectHH(stdnt_no);
 	}
+
+	@Override
+	public ServiceResult updateIssuedCnt(int req_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = certificateDAO.updateIssuedCnt(req_no);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
 }
