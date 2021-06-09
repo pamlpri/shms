@@ -2,31 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.shms.lms.student.dao.CertificateDAO">
 	<select id="selectCrtfList" resultType="CertificateReqVO" parameterType="string">
-	SELECT * 
-      FROM (
-			SELECT *
-			  FROM (
-			  SELECT A.*, ROW_NUMBER () OVER (ORDER BY req_de DESC) rn
-			    FROM (
-			        SELECT 
-			            (SELECT COUNT(*) FROM crtf_req WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}  )
-			             - (ROW_NUMBER () OVER 
-			            (ORDER BY req_de DESC))+1 p_bo_no,
-			            req_no,
-			            TO_CHAR(req_de, 'YYYY.MM.DD') req_de,
-			            ROUND(TO_DATE(req_de) + 30 - SYSDATE) end_de,
-			            no_of_issue,
-			           (SELECT com_code_nm
-			              FROM tb_com_code
-			             WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'CRTF_KIND')
-			               AND com_code = crtf_kind) crtf_kind,
-			          crtf_req_resn
-			         FROM crtf_req 
-			        WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}  
-			    ) A
-			 )
-		  )
-	  WHERE end_de > 0
+		SELECT *
+		  FROM (
+		  SELECT A.*, ROW_NUMBER () OVER (ORDER BY req_de DESC) rn
+		    FROM (
+		        SELECT 
+		            (SELECT COUNT(*) FROM crtf_req WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}  )
+		             - (ROW_NUMBER () OVER 
+		            (ORDER BY req_de DESC))+1 p_bo_no,
+		            req_no,
+		            TO_CHAR(req_de, 'YYYY.MM.DD') req_de,
+		            ROUND(TO_DATE(req_de) + 30 - SYSDATE) end_de,
+		            no_of_issue,
+		            issued_cnt,
+		           (SELECT com_code_nm
+		              FROM tb_com_code
+		             WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'CRTF_KIND')
+		               AND com_code = crtf_kind) crtf_kind,
+		          crtf_req_resn
+		         FROM crtf_req 
+		        WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}  
+		    ) A
+		 )
 	  ORDER BY req_no desc
 	</select>
 	
@@ -111,6 +108,7 @@
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND b.req_no=#{req_no, jdbcType=NUMERIC}
 	</select>
+	
 	<select id="selectHH" resultType="CertificateReqVO" parameterType="String">
 		SELECT TO_CHAR(cng_bgnde, 'YYYY-MM-DD') cng_bgnde,
       		   TO_CHAR(cng_endde, 'YYYY-MM-DD') cng_endde
@@ -119,4 +117,13 @@
 		   AND req_cl_code='HH'
            AND process_stat='SI'
 	</select>
+	
+	<update id="updateIssuedCnt" parameterType="int">
+		UPDATE crtf_req
+		  SET issued_cnt = issued_cnt+1
+		WHERE req_no=#{req_no, jdbcType=NUMERIC}
+		<![CDATA[
+		  AND issued_cnt < no_of_issue
+		 ]]>
+	</update>
 </mapper>

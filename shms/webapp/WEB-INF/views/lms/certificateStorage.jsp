@@ -30,7 +30,8 @@
                            <th class="text-center">신청번호</th>
                            <th class="text-center">신청증명서</th>
                            <th class="text-center">신청사유</th>
-                           <th class="text-center">신청 / 출력</th>
+                           <th class="text-center">신청</th>
+                           <th class="text-center">출력</th>
                            <th class="text-center">발급일자</th>
                            <th class="text-center">보관만료</th>
                            <th class="text-center">출력</th>
@@ -42,25 +43,33 @@
                    				<c:forEach items="${crtfList }" var="crtf">
 			                       <tr>
 			                           <td class="text-center">${crtf.p_bo_no }</td>
-			                           <td class="text-center">${crtf.req_no }</td>
+			                           <td class="text-center req_no">${crtf.req_no }</td>
 			                           <td class="text-center">${crtf.crtf_kind }</td>
 			                           <td class="text-center">${crtf.crtf_req_resn }</td>
-			                           <td class="text-center">${crtf.no_of_issue } / 0</td>
+			                           <td class="text-center">${crtf.no_of_issue }</td>
+			                           <td class="text-center" id="updateIssue">${crtf.issued_cnt }</td>
 			                           <td class="text-center">${crtf.req_de }</td>
-			                           <td class="text-center">D-${crtf.end_de }</td>
+			                           <c:choose>
+			                           		<c:when test="${crtf.end_de > 0 }">
+					                           <td class="text-center">D-${crtf.end_de }</td>
+			                           		</c:when>
+			                           		<c:otherwise>
+					                           <td class="text-center expired">만료</td>
+			                           		</c:otherwise>
+			                           </c:choose>
 			                           <td class="text-center">
 			                           		<c:choose>
 			                           			<c:when test="${crtf.crtf_kind eq '재학증명서' }">
-					                               <a href="${cPath }/lms/registrationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+					                               <a href="${cPath }/lms/registrationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
 			                           			</c:when>
 			                           			<c:when test="${crtf.crtf_kind eq '휴학증명서' }">
-					                               <a href="${cPath }/lms/leaveOfAbsenceCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+					                               <a href="${cPath }/lms/leaveOfAbsenceCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
 			                           			</c:when>
 			                           			<c:when test="${crtf.crtf_kind eq '성적증명서' }">
-					                               <a href="${cPath }/lms/scoreCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+					                               <a href="${cPath }/lms/scoreCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
 			                           			</c:when>
 			                           			<c:when test="${crtf.crtf_kind eq '졸업증명서' }">
-					                               <a href="${cPath }/lms/graduationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+					                               <a href="${cPath }/lms/graduationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
 			                           			</c:when>
 			                           		</c:choose>
 			                           </td>
@@ -84,5 +93,34 @@
 <script type="text/javascript">
 	// Simple Datatable
 	let table1 = document.querySelector('#table1');
-	let dataTable = new simpleDatatables.DataTable(table1);
+	let dataTable = new simpleDatatables.DataTable(table1);	
+	
+	
+	$(".printBtn").on("click", function(){
+		event.preventDefault();
+		let req_no = $(this).parents("tr").find(".req_no").text();
+		console.log(req_no);		
+		$.ajax({
+			url : "${cPath}/lms/updateIssue.do"
+			, data : { "req_no" : req_no }
+			, dataType : "json"
+			, success : function(resp){
+				if(resp.result == "OK"){
+					
+				}else{
+					event.preventDefault();
+					
+				}
+			}, error : function(xhr, error, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);				
+			}
+		});
+	});
+	
+	
+	
+	
+	
 </script>

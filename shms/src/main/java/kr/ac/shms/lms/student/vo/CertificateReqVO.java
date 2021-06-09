@@ -44,7 +44,8 @@ public class CertificateReqVO {
 	private String crtf_req_resn;
 	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String crtf_kind;
-
+	private Integer issued_cnt;
+	
 	private String sub_name;	// 학과 이름
 	
 	private String regno; 	// 생년월일
