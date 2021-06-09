@@ -25,7 +25,7 @@
        <div class="card inputTable">
            <div class="card-body">
                <h5>증명서선택</h5>
-               <form action="${cPath }/lms/certificatePay.do" class="table-responsive" method="post">
+               <form action="${cPath }/lms/certificatePay.do" class="table-responsive" method="post" id="crtfForm">
                    <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                        <tr>
                            <th class="align-middle text-center">학과</th>
@@ -68,7 +68,7 @@
                                <select class="form-select float-right" name="crtf_req_resn">
                                    <option value="">-- 사유선택 --</option>
                                    <c:forEach var="cetfResnList" items="${cetfResnList }">
-                                   <option value="${cetfResnList.com_code }">${cetfResnList.com_code_nm }</option>
+                                   <option value="${cetfResnList.com_code_nm }">${cetfResnList.com_code_nm }</option>
                                    </c:forEach>
                                </select>
                            </td>
@@ -104,6 +104,35 @@
                </ul>
            </div>
        </div>
+       
+       <!-- 삭제확인 -->
+		<!--Basic Modal -->
+		<div class="modal fade text-left" id="default" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-scrollable" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel1"></h5>
+						<button type="button" class="close rounded-pill"
+							data-bs-dismiss="modal" aria-label="Close">
+							<i data-feather="x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>
+							
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" id="close"
+ 							data-bs-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">닫기</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
    </section>
    <!-- contents end -->
 </div>
@@ -118,12 +147,20 @@
 		console.log("crtf_req_resn" + crtf_req_resn);
 		console.log("no_of_issue" + no_of_issue);
 		if(crtf_kind == "" || crtf_req_resn == "" || no_of_issue == ""){
-			alert("선택해!");
+			$("#default").find(".modal-title").empty().text("필수사항 누락");
+			$("#default").find(".modal-body p").empty().text("모두 선택해야 다음 단계로 진행됩니다.");
+			$("#default").addClass("show").css("display","block");
 			$("#subBtn").prop("disabled", true);
-		}else{
-			$("#subBtn").prop("disabled", false);
 		}
 	})
+		$("#crtfForm").find(":input[name]").on("change", function(){
+			$("#subBtn").prop("disabled", false);
+		})
+		
+		$("#close, .modal").on("click", function(){
+			$("#default").removeClass("show").css("display","none");
+		})
+	
 	
 	$("[name='crtf_kind']").on("change", function(){
 		let selectedKind = $(this).val();
@@ -136,7 +173,9 @@
 			, success : function(resp){
 				if(resp.result == "OK"){
 				}else{
-					alert("신청할 수 없는 증명서입니다.");
+					$("#default").find(".modal-title").empty().text("신청불가");
+					$("#default").find(".modal-body p").empty().text("신청할 수 없는 증명서입니다.");
+					$("#default").addClass("show").css("display","block");
 					$("[name='crtf_kind'] option:eq(0)").prop("selected", true);
 				}
 			}, error : function(xhr, error, msg){

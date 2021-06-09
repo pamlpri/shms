@@ -89,6 +89,9 @@ public class CertificateChoiceController {
 			crtf.setCrtf_kind(crtf_kind);
 		}
 		int cnt = certificateService.selectReginfoCount(crtf);
+		if(crtf_kind.equals("SJ")) {
+			resultMap.put("result", ServiceResult.OK);
+		}
 		if(cnt > 0) {
 			resultMap.put("result", ServiceResult.OK);
 		}else if(cnt < 0){

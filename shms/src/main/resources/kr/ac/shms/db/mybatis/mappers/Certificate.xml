@@ -59,6 +59,26 @@
 		   AND req_cl_code=#{crtf_kind, jdbcType=VARCHAR} 
 		   AND process_stat='SI'
 	</select>
+	
+	<insert id="insertCrtfReq" parameterType="CertificateReqVO">
+		INSERT INTO crtf_req (
+		    req_no,
+		    stdnt_no,
+		    req_de,
+		    crtf_req_resn,
+		    crtf_kind,
+		    crtf_price,
+		    no_of_issue
+		) VALUES (
+		    CRTF_REQ_SEQ.NEXTVAL,
+		    #{stdnt_no, jdbcType=VARCHAR},
+		    SYSDATE,
+		    #{crtf_req_resn, jdbcType=VARCHAR},
+		    #{crtf_kind, jdbcType=VARCHAR},
+		    #{crtf_price, jdbcType=NUMERIC},
+		    #{no_of_issue, jdbcType=NUMERIC}
+		)
+	</insert>
 </mapper>
 
 
