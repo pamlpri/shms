@@ -63,6 +63,13 @@ public interface BoardService {
 	public List<BoardVO> selectBoardList(PagingVO<BoardVO> pagingVO);
 	
 	/**
+	 * 게시글 목록 조회(페이징처리 X)
+	 * @param searchMap
+	 * @return 해당 조건을 만족하는 페이징 처리가 되지 않은 전체 게시글 목록
+	 */
+	public List<BoardVO> selectAllBoardList(Map<String, String> searchMap);
+	
+	/**
 	 * 비밀글일 경우 비밀번호 비교 후 하나의 게시글 조회
 	 * @param bo_no
 	 * @return 게시글 하나에 대한 상세 조회
