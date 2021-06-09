@@ -116,7 +116,7 @@
 									</div>
 								</div>
 								<div class="col-6">
-									<div class="forgot-password"><a href="forgot_password.html">Forgot Password</a></div>
+									<div class="forgot-password"><a href="${cPath }/lms/auth.do">Forgot Password</a></div>
 								</div>
 							</div>
 							<div class="row">

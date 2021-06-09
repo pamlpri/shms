@@ -142,7 +142,7 @@
 										<table class="table .thead-light mb-0">
 											<tbody>
 												<tr>
-													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;&nbsp;&nbsp;웹메일&nbsp;&nbsp;&nbsp;</th>
+													<th class="text-bold-500 text-center align-middle">웹메일</th>
 													<td colspan="3" id="webMailBox">
 														<c:choose>
 															<c:when test="${not empty mypage.webmail }">
@@ -160,7 +160,7 @@
 													<th class="text-bold-500 text-center align-middle">전화번호</th>
 													<td><input class="form-control" type="text" name="tel_no"
 														value="${mypage.tel_no }"></td>
-													<th class="text-bold-500 text-center align-middle">&nbsp;&nbsp;Email&nbsp;&nbsp;&nbsp;</th>
+													<th class="text-bold-500 text-center align-middle">Email</th>
 													<td><input class="form-control" type="text" name="email"
 														value="${mypage.email }"></td>
 												</tr>

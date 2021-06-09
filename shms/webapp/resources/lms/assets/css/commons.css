@@ -1052,3 +1052,14 @@
 .modal-backdrop {
 	display : none;	
 }
+
+.fileBox input {
+	width: 70%!important;
+}
+.fileBox span {
+	width: 40px;
+}
+.fileBox input, .fileBox span {
+	display : inline-block;
+	margin-right : 5px;
+}
