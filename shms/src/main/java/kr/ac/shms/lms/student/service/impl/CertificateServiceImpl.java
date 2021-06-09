@@ -21,6 +21,7 @@ import kr.ac.shms.lms.student.vo.CertificateReqVO;
  * 수정일        수정자        수정내용
  * --------     --------    ----------------------
  * 2021. 6. 7.   김보미        최초작성
+ * 2021. 6. 9.   김보미 	   선택한 증명서에 대한 데이터 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -60,5 +61,15 @@ public class CertificateServiceImpl implements CertificateService{
 	@Override
 	public int selectReginfoCount(CertificateReqVO crtf) {
 		return certificateDAO.selectReginfoCount(crtf);
+	}
+
+	@Override
+	public CertificateReqVO selectCrtfPrint(CertificateReqVO crtf) {
+		return certificateDAO.selectCrtfPrint(crtf);
+	}
+
+	@Override
+	public CertificateReqVO selectHH(String stdnt_no) {
+		return certificateDAO.selectHH(stdnt_no);
 	}
 }

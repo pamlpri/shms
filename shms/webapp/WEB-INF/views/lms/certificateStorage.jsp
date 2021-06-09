@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 6. 3.  박초원       최초작성
 * 2021. 6. 7.  김보미		증명서신청 목록 출력
+* 2021. 6. 9.  김보미		데이터 전달
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -22,9 +23,6 @@
    <section class="section">
        <div class="card">
            <div class="card-body">
-           <form id="hiddenForm">
-           		<input type="hidden" name="page" />
-           </form>
                <table class="table table-striped" id="table1">
                    <thead>
                        <tr>
@@ -49,9 +47,22 @@
 			                           <td class="text-center">${crtf.crtf_req_resn }</td>
 			                           <td class="text-center">${crtf.no_of_issue } / 0</td>
 			                           <td class="text-center">${crtf.req_de }</td>
-			                           <td class="text-center"></td>
+			                           <td class="text-center">D-${crtf.end_de }</td>
 			                           <td class="text-center">
-			                               <a href="certificate01.html" target="_blank" class="btn-sm btn-primary">출력</a>
+			                           		<c:choose>
+			                           			<c:when test="${crtf.crtf_kind eq '재학증명서' }">
+					                               <a href="${cPath }/lms/registrationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+			                           			</c:when>
+			                           			<c:when test="${crtf.crtf_kind eq '휴학증명서' }">
+					                               <a href="${cPath }/lms/leaveOfAbsenceCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+			                           			</c:when>
+			                           			<c:when test="${crtf.crtf_kind eq '성적증명서' }">
+					                               <a href="${cPath }/lms/scoreCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+			                           			</c:when>
+			                           			<c:when test="${crtf.crtf_kind eq '졸업증명서' }">
+					                               <a href="${cPath }/lms/graduationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary">출력</a>
+			                           			</c:when>
+			                           		</c:choose>
 			                           </td>
 			                       </tr>
                    				</c:forEach>

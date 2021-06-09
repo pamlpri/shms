@@ -15,6 +15,7 @@ import kr.ac.shms.lms.student.vo.CertificateReqVO;
  * 수정일        수정자        수정내용
  * --------     --------    ----------------------
  * 2021. 6. 7.   김보미        최초작성
+ * 2021. 6. 9.   김보미 	   선택한 증명서에 대한 데이터 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -59,4 +60,18 @@ public interface CertificateService {
 	 * @return
 	 */
 	public int selectReginfoCount(CertificateReqVO crtf);
+	
+	/**
+	 * 선택한 증명서에 출력할 데이터 조회
+	 * @param crtf
+	 * @return 
+	 */
+	public CertificateReqVO selectCrtfPrint(CertificateReqVO crtf);
+	
+	/**
+	 * 휴학증명서 출력을 위한 데이터 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public CertificateReqVO selectHH(String stdnt_no);
 }
