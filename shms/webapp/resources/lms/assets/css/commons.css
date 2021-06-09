@@ -1074,3 +1074,22 @@
     transform: translateX(-50%);
 }
 
+/* 비밀번호 변경 */
+.login-box {
+    max-width: 400px;
+    width: 100%;
+    padding: 40px 20px;
+    margin: 5px auto;
+}
+
+.login-box .login-title h2 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.pwImg img {
+	border: 0;
+    vertical-align: top;
+    max-width: 100%;
+    height: auto;
+}

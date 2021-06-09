@@ -3,6 +3,7 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 9.	   박초원        ckeditor 적용
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -75,9 +76,7 @@
 								placeholder=" 제목" name="title">
 						</div>
 						<div class="form-group">
-<!-- 							<div id="summernote"></div> -->
 							<textarea class="form-control" rows="5" cols="100" name="cont" id="cont"></textarea>
-<!-- 							<input type="hidden" name="cont" id="webCont"> -->
 						</div>
 						<h6 class="m-b-20">
 							<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
@@ -168,7 +167,7 @@
 <script type="text/javascript" src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
 <script>
     CKEDITOR.replace("cont", {
-		filebrowserImageUploadUrl : '${cPath}/lms/mailImage.do?type=Images'
+		filebrowserUploadUrl : '${cPath}/lms/mailFiles.do'
 	});
 </script>
 
