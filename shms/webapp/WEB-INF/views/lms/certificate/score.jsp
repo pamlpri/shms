@@ -273,7 +273,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 			<TABLE border="1" cellspacing="0" cellpadding="0"
 				style='border-collapse: collapse; border: none;'>
 				<CAPTION align="top">
-					<P CLASS=HStyle0>제 2021-00001 호</P>
+					<P CLASS=HStyle0>제 ${crtf.year }-${crtf.req_no } 호</P>
 				</CAPTION>
 				<TR>
 					<TD colspan="4" width="170" height="17" valign="middle"
@@ -2123,8 +2123,8 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 			</P>
 			<P CLASS=HStyle0 STYLE='text-align: center;'>
 				<SPAN
-					STYLE='font-size: 13.0pt; font-family: "굴림"; line-height: 160%;'>2021
-					년 6월 2일</SPAN>
+					STYLE='font-size: 13.0pt; font-family: "굴림"; line-height: 160%;'>${crtf.req_year }년&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								${crtf.req_month }월&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${crtf.req_day }일</SPAN>
 			</P>
 			<P CLASS=HStyle0 STYLE='text-align: center;'>
 				<SPAN

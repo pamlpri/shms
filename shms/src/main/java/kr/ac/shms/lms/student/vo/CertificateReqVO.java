@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
  * 수정일        수정자       수정내용
  * --------     --------    ----------------------
  * 2021. 6. 7.   김보미       증명서 신청vo
+ * 2021. 6. 9.   김보미		  vo 추가
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -43,6 +44,24 @@ public class CertificateReqVO {
 	private String crtf_req_resn;
 	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String crtf_kind;
-	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
+
 	private String sub_name;	// 학과 이름
+	
+	private String regno; 	// 생년월일
+	private String col_name;	// 대학이름
+	private Integer grade;		// 학년
+	private String entsch_de;	// 입학일자
+	private String grdtn_de;	// 졸업일자
+	private String reginfo_stat;	// 학적상태
+	private String name;		// 이름
+	private String end_de;		// 만료일
+	private Integer year;		// 년도 추출
+	
+	private Integer req_year;	// 신청년도추출
+	private Integer req_month;		// 신청달추출
+	private Integer req_day;		// 신청날짜추출
+	
+	private String cng_bgnde;		// 휴학시작일
+	private String cng_endde;		// 휴학종료일
+	
 }

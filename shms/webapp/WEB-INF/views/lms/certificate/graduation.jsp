@@ -1,8 +1,9 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일        수정자         수정내용
+* 수정일        수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 3.  김보미         최초작성
+* 2021. 6. 3.  김보미       최초작성
+* 2021. 6. 9.  김보미		데이터
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -268,7 +269,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 <TABLE border="1" cellspacing="0" cellpadding="0" style='border-collapse:collapse;border:none;'>
 <TR>
 	<TD colspan="2" width="689" height="29" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0><SPAN STYLE='font-family:"굴림";'>제 2021 &#8211; 1호</SPAN></P>
+	<P CLASS=HStyle0><SPAN STYLE='font-family:"굴림";'>제 ${crtf.year } &#8211; ${crtf.req_no }호</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -287,7 +288,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:right;line-height:130%;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:130%;'>성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 명 :</SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0><SPAN STYLE='font-family:"굴림";'>&nbsp;</SPAN></P>
+	<P CLASS=HStyle0><SPAN STYLE='font-family:"굴림";'>${crtf.name }</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -295,7 +296,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>생&nbsp;&nbsp;&nbsp;&nbsp; 년&nbsp;&nbsp;&nbsp;&nbsp; 월&nbsp;&nbsp;&nbsp; 일</SPAN><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'> :</SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>&nbsp;</SPAN></P>
+	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>${crtf.regno }</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -303,7 +304,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 학 :</SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>&nbsp;</SPAN></P>
+	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>${crtf.col_name }</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -311,7 +312,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 과 :</SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>&nbsp;</SPAN></P>
+	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>${crtf.sub_name }</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -319,15 +320,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 번 :</SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>&nbsp;</SPAN></P>
-	</TD>
-</TR>
-<TR>
-	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 위 : </SPAN></P>
-	</TD>
-	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>&nbsp;</SPAN></P>
+	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-family:"굴림";'>${crtf.stdnt_no }</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -335,7 +328,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:right;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";font-weight:"bold";line-height:160%;'>취&nbsp;&nbsp;&nbsp;&nbsp; 득&nbsp;&nbsp;&nbsp;&nbsp; 일&nbsp;&nbsp;&nbsp; 자 :</SPAN></P>
 	</TD>
 	<TD width="345" height="32" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'></SPAN></P>
+	<P CLASS=HStyle0 STYLE='text-align:left;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>${crtf.grdtn_de }</SPAN></P>
 	</TD>
 </TR>
 <TR>
@@ -354,7 +347,8 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 	<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>&nbsp;</SPAN></P>
 	<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>&nbsp;</SPAN></P>
 	<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>&nbsp;</SPAN></P>
-	<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>2021년&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6월&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2일</SPAN></P>
+	<P CLASS=HStyle0 STYLE='text-align:center;'><SPAN STYLE='font-size:12.0pt;font-family:"굴림";line-height:160%;'>${crtf.req_year }년&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								${crtf.req_month }월&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${crtf.req_day }일</SPAN></P>
 	</TD>
 </TR>
 <TR>

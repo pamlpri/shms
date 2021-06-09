@@ -32,6 +32,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * --------     --------    ----------------------
  * 2021. 6. 3.   박초원       최초작성
  * 2021. 6. 7.   김보미       증명서보관함 내역 조회
+ * 2021. 6. 9.   김보미		  증명서 출력을 위한 데이터 전달 
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -60,14 +61,3 @@ public class CertificateStorageController {
 		return "lms/certificateStorage";
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
