@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 06. 08.      박초원        최초작성
+* 2021. 06. 09.  	 최희수	  학적조회 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@page import="java.util.Date"%>
@@ -245,27 +246,27 @@
                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                       <tr>
                           <th class="align-middle text-center">학번</th>
-                          <td class="align-middle">S1002001</td>
+                          <td class="align-middle">${mypage.stdnt_no }</td>
                           <th class="align-middle text-center">이름</th>
-                          <td class="align-middle">김민지</td>
+                          <td class="align-middle">${mypage.name }</td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">주민번호</th>
-                          <td class="align-middle">205223 - 2******</td>
+                          <td class="align-middle">${mypage.regno1 } - ${mypage.regno2 }</td>
                           <th class="align-middle text-center">학적상태</th>
-                          <td class="align-middle">재학</td>
+                          <td class="align-middle">${mypage.reginfo_stat }</td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">학과</th>
-                          <td class="align-middle">치기공과</td>
+                          <td class="align-middle">${subject.sub_name }</td>
                           <th class="align-middle text-center">학년 / 년제</th>
-                          <td class="align-middle">3학년 / 4년제</td>
+                          <td class="align-middle">${mypage.grade }학년 / 4년제</td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">입학일</th>
-                          <td class="align-middle">2021.03.03</td>
+                          <td class="align-middle">${mypage.entsch_de }</td>
                           <th class="align-middle text-center">졸업일</th>
-                          <td class="align-middle"></td>
+                          <td class="align-middle">${mypage.grdtn_de }</td>
                       </tr>
                   </table>
               </div>
