@@ -13,7 +13,14 @@
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+			<c:choose>
+				<c:when test="${not empty student }">
+					<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="breadcrumb-item"><a href="${cPath }/lms/main.do">HOME</a></li>
+				</c:otherwise>
+			</c:choose>
 			<li class="breadcrumb-item"><a href="${cPath }/lms/composeForm.do">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">메일보내기</li>
 		</ol>
@@ -68,8 +75,9 @@
 								placeholder=" 제목" name="title">
 						</div>
 						<div class="form-group">
-							<div id="summernote"></div>
-							<input type="hidden" name="cont" id="webCont">
+<!-- 							<div id="summernote"></div> -->
+							<textarea class="form-control" rows="5" cols="100" name="cont" id="cont"></textarea>
+<!-- 							<input type="hidden" name="cont" id="webCont"> -->
 						</div>
 						<h6 class="m-b-20">
 							<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
@@ -86,7 +94,7 @@
 								class="ti-close m-r-5 f-s-12"></i> 취소</a>
 							<button
 								class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
-								type="button" id="sendBtn">
+								type="submit" id="sendBtn">
 								<i class="fa fa-paper-plane m-r-5"></i> 메일보내기
 							</button>
 						</div>
@@ -157,27 +165,11 @@
 	<!-- contents end -->
 </div>
 <script src="${cPath }/resources/lms/assets/js/main.js"></script>
-
-<script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
+<script type="text/javascript" src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
 <script>
-    $('#summernote').summernote({
-        tabsize: 2,
-        height: 420,
-    })
-    $("#hint").summernote({
-        height: 100,
-        toolbar: false,
-        placeholder: 'type with apple, orange, watermelon and lemon',
-        hint: {
-            words: ['apple', 'orange', 'watermelon', 'lemon'],
-            match: /\b(\w{1,})$/,
-            search: function (keyword, callback) {
-                callback($.grep(this.words, function (item) {
-                    return item.indexOf(keyword) === 0;
-                }));
-            }
-        }
-    });
+    CKEDITOR.replace("cont", {
+		filebrowserImageUploadUrl : '${cPath}/lms/mailImage.do?type=Images'
+	});
 </script>
 
 <script>
@@ -259,12 +251,12 @@
             $("#mailList").find("input[type='checkbox']").attr("checked", false);
         });
         
-        let mailForm = $("#mailForm");
-        $("#sendBtn").on("click", function(){
-        	var sHTML = $(".note-editable").text();
-        	$("input[name='cont']").val(sHTML);
-        	mailForm.submit();
-        });
+//         let mailForm = $("#mailForm");
+//         $("#sendBtn").on("click", function(){
+//         	var sHTML = $(".note-editable").text();
+//         	$("input[name='cont']").val(sHTML);
+//         	mailForm.submit();
+//         });
         
    		var source = '<p class="fileBox col-lg-6">'
 					+ '<input class="form-control" type="file" name="mail_files">'

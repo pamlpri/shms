@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
 * 2021. 6. 2.      최희수        정보 조회, 변동사항 조회
+* 2021. 6. 9	   박초원 		 비밀번호 변경 탭 추가
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -31,6 +32,9 @@
 					<li class="nav-item" role="presentation"><a class="nav-link"
 						id="trans-tab" data-bs-toggle="tab" href="#trans" role="tab"
 						aria-controls="trans" aria-selected="true">학적변동</a></li>
+					<li class="nav-item" role="presentation"><a class="nav-link"
+						id="password-tab" data-bs-toggle="tab" href="#password" role="tab"
+						aria-controls="password" aria-selected="true">비밀번호 변경</a></li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active" id="profile" role="tabpanel"
@@ -277,6 +281,71 @@
 								</tbody>
 							</table>
 						</div>
+					</div>
+					<div class="tab-pane fade" id="password" role="tabpanel"
+						aria-labelledby="password-tab">
+						<div class="match-height">
+	                        <div class="col-md-6 col-12 passwordBox">
+	                            <div class="card">
+	                                <div class="card-header">
+	                                    <h4 class="card-title text-center">비밀번호 변경</h4>
+	                                </div>
+	                                <div class="card-content">
+	                                    <div class="card-body">
+	                                        <form class="form form-horizontal">
+	                                            <div class="form-body">
+	                                                <div class="row">
+	                                                	<div class="col-md-4">
+	                                                        <label>현재 비밀번호</label>
+	                                                    </div>
+	                                                    <div class="col-md-8">
+	                                                        <div class="form-group has-icon-left">
+	                                                            <div class="position-relative">
+	                                                                <input type="password" class="form-control" placeholder="Password">
+	                                                                <div class="form-control-icon">
+	                                                                    <i class="bi bi-lock"></i>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="col-md-4">
+	                                                        <label>새 비밀번호</label>
+	                                                    </div>
+	                                                    <div class="col-md-8">
+	                                                        <div class="form-group has-icon-left">
+	                                                            <div class="position-relative">
+	                                                                <input type="password" class="form-control" placeholder="Password">
+	                                                                <div class="form-control-icon">
+	                                                                    <i class="bi bi-lock"></i>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="col-md-4">
+	                                                        <label>비밀번호 확인</label>
+	                                                    </div>
+	                                                    <div class="col-md-8">
+	                                                        <div class="form-group has-icon-left">
+	                                                            <div class="position-relative">
+	                                                                <input type="password" class="form-control" placeholder="Password">
+	                                                                <div class="form-control-icon">
+	                                                                    <i class="bi bi-lock"></i>
+	                                                                </div>
+	                                                            </div>
+	                                                        </div>
+	                                                    </div>
+	                                                    <div class="col-12 justify-content-end mt-5 text-center">
+	                                                        <button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
+	                                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                                        </form>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
 					</div>
 				</div>
 			</div>

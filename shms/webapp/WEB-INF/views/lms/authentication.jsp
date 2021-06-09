@@ -63,189 +63,72 @@
 						<div class="wizard-content">
 							<form class="tab-wizard2 wizard-circle wizard">
 								<h5>본인인증<br/>인증방법 선택</h5>
-								<section class="mt-5">
-									<div class="form-wrap max-width-600 mx-auto mt-5">
+								<section>
+									<br/>
+									<div class="form-wrap max-width-600 mx-auto">
 										<div class="form-group align-items-center row mt-5">
 											<div class="row col-lg-12 text-center">
 												<div class="custom-control custom-radio pb-0 col-lg-6">
-													<input type="radio" id="email" name="authType" class="custom-control-input">
+													<input type="radio" id="email" name="authType" class="custom-control-input" value="email">
 													<label class="custom-control-label" for="email">이메일인증</label>
 												</div>
 												<div class="custom-control custom-radio pb-0 col-lg-6">
-													<input type="radio" id="phone" name="authType" class="custom-control-input">
+													<input type="radio" id="phone" name="authType" class="custom-control-input" value="phone">
 													<label class="custom-control-label" for="phone">휴대폰인증</label>
 												</div>
 											</div>
 										</div>
+										<p class="mt-4">새비밀번호 발급을 위한 본인인증이 필요합니다.</p>
 									</div>
 								</section>
 								<!-- Step 2 -->
-								<h5>Personal Information</h5>
+								<h5>본인인증<br/>인증정보 입력</h5>
 								<section>
-									<div class="form-wrap max-width-600 mx-auto">
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Full Name*</label>
+									<div class="form-wrap max-width-600 mx-auto" id="emailBox">
+										<p class="mt-4 text-center mb-4">입력하신 아이디의 회원정보와 일치하는<br/>이메일로 인증번호가 전송됩니다.</p>
+										<div class="form-group row mt-5">
+											<label class="col-sm-4 col-form-label">아이디</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control">
 											</div>
 										</div>
-										<div class="form-group row align-items-center">
-											<label class="col-sm-4 col-form-label">Gender*</label>
-											<div class="col-sm-8">
-												<div class="custom-control custom-radio custom-control-inline pb-0">
-													<input type="radio" id="male" name="gender" class="custom-control-input">
-													<label class="custom-control-label" for="male">Male</label>
-												</div>
-												<div class="custom-control custom-radio custom-control-inline pb-0">
-													<input type="radio" id="female" name="gender" class="custom-control-input">
-													<label class="custom-control-label" for="female">Female</label>
-												</div>
-											</div>
-										</div>
 										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Email Address*</label>
+											<label class="col-sm-4 col-form-label">이메일주소</label>
 											<div class="col-sm-8">
 												<input type="email" class="form-control">
 											</div>
 										</div>
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Username*</label>
+									</div>
+									
+									<div class="form-wrap max-width-600 mx-auto" id="phoneBox">
+										<p class="mt-4 text-center mb-4">입력하신 아이디의 회원정보와 일치하는<br/>전화번호로 인증번호가 전송됩니다.</p>
+										<div class="form-group row mt-5">
+											<label class="col-sm-4 col-form-label">아이디</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control">
 											</div>
 										</div>
 										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Password*</label>
+											<label class="col-sm-4 col-form-label">전화번호</label>
 											<div class="col-sm-8">
-												<input type="password" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Confirm Password*</label>
-											<div class="col-sm-8">
-												<input type="password" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">City</label>
-											<div class="col-sm-8">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">State</label>
-											<div class="col-sm-8">
-												<input type="text" class="form-control">
+												<input type="tel" class="form-control">
 											</div>
 										</div>
 									</div>
 								</section>
 								<!-- Step 3 -->
-								<h5>Payment Method & Info</h5>
+								<h5>본인인증<br/>인증번호 입력</h5>
 								<section>
 									<div class="form-wrap max-width-600 mx-auto">
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Credit Card Type</label>
-											<div class="col-sm-8">
-												<select class="form-control selectpicker" title="Select Card Type">
-													<option value="1">Option 1</option>
-													<option value="2">Option 2</option>
-													<option value="3">Option 3</option>
-												</select>
-											</div>
-										</div>
-										<div class="form-group row align-items-center">
-											<label class="col-sm-4 col-form-label">Credit Card Number</label>
+										<p class="mt-4 text-center mb-4">인증번호가 전송되었습니다.</p>
+										<div class="form-group row mt-5">
+											<label class="col-sm-4 col-form-label">인증번호 입력</label>
 											<div class="col-sm-8">
 												<input type="text" class="form-control">
 											</div>
 										</div>
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">CVC</label>
-											<div class="col-sm-3">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-sm-4 col-form-label">Expiration Date</label>
-											<div class="col-sm-8">
-												<div class="row">
-													<div class="col-6">
-														<select class="form-control selectpicker" title="Month" data-size="5">
-															<option value='01'>January</option>
-															<option value='02'>February</option>
-															<option value='03'>March</option>
-															<option value='04'>April</option>
-															<option value='05'>May</option>
-															<option value='06'>June</option>
-															<option value='07'>July</option>
-															<option value='08'>August</option>
-															<option value='09'>September</option>
-															<option value='10'>October</option>
-															<option value='11'>November</option>
-															<option value='12'>December</option>
-														</select>
-													</div>
-													<div class="col-6">
-														<select class="form-control selectpicker" title="Year" data-size="5">
-															<option>2020</option>
-															<option>2019</option>
-															<option>2018</option>
-															<option>2017</option>
-															<option>2016</option>
-															<option>2015</option>
-															<option>2014</option>
-															<option>2013</option>
-															<option>2012</option>
-															<option>2011</option>
-															<option>2010</option>
-															<option>2009</option>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-								<!-- Step 4 -->
-								<h5>Overview Information</h5>
-								<section>
-									<div class="form-wrap max-width-600 mx-auto">
-										<ul class="register-info">
-											<li>
-												<div class="row">
-													<div class="col-sm-4 weight-600">Email Address</div>
-													<div class="col-sm-8">example@abc.com</div>
-												</div>
-											</li>
-											<li>
-												<div class="row">
-													<div class="col-sm-4 weight-600">Username</div>
-													<div class="col-sm-8">Example</div>
-												</div>
-											</li>
-											<li>
-												<div class="row">
-													<div class="col-sm-4 weight-600">Password</div>
-													<div class="col-sm-8">.....000</div>
-												</div>
-											</li>
-											<li>
-												<div class="row">
-													<div class="col-sm-4 weight-600">Full Name</div>
-													<div class="col-sm-8">john smith</div>
-												</div>
-											</li>
-											<li>
-												<div class="row">
-													<div class="col-sm-4 weight-600">Location</div>
-													<div class="col-sm-8">123 Example</div>
-												</div>
-											</li>
-										</ul>
-										<div class="custom-control custom-checkbox mt-4">
-											<input type="checkbox" class="custom-control-input" id="customCheck1">
-											<label class="custom-control-label" for="customCheck1">I have read and agreed to the terms of services and privacy policy</label>
+										<div class="float-right">
+											<span style="color :#e83e8c;">유효시간 1:12초</span>
 										</div>
 									</div>
 								</section>
@@ -262,16 +145,17 @@
 		<div class="modal-dialog modal-dialog-centered max-width-400" role="document">
 			<div class="modal-content">
 				<div class="modal-body text-center font-18">
-					<h3 class="mb-20">Form Submitted!</h3>
-					<div class="mb-30 text-center"><img src="vendors/images/success.png"></div>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					<h5 class="mb-4">본인인증 성공</h5>
+					<div class="mb-30 text-center"><img src="${cPath }/resources/lms/vendors/images/success.png"></div>
+					새비밀번호를 생성하세요.
 				</div>
 				<div class="modal-footer justify-content-center">
-					<a href="login.html" class="btn btn-primary">Done</a>
+					<a href="${cPath }/lms/password.do" class="btn btn-primary">확인</a>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 	<!-- success Popup html End -->
 	<!-- js -->
 	<script src="${cPath }/resources/lms/vendors/scripts/core.js"></script>
@@ -280,5 +164,19 @@
 	<script src="${cPath }/resources/lms/vendors/scripts/layout-settings.js"></script>
 	<script src="${cPath }/resources/lms/vendors/jquery-steps/jquery.steps.js"></script>
 	<script src="${cPath }/resources/lms/vendors/scripts/steps-setting.js"></script>
+	<script type="text/javascript">
+		$("a:contains('Next')").css("opacity", "0");
+		$("input[name='authType']").on("click", function(){
+			let authType = $(this).val();
+			$("a:contains('Next')").animate({"opacity" : 1});
+			if(authType == "email"){
+				$("#emailBox").css("display", "block");
+				$("#phoneBox").css("display", "none");
+			}else if(authType == "phone") {
+				$("#emailBox").css("display", "none");
+				$("#phoneBox").css("display", "phone");
+			}
+		});
+	</script>
 </body>
 </html>

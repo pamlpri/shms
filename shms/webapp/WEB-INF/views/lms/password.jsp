@@ -62,28 +62,24 @@
 						<div class="login-title">
 							<h2 class="text-center text-primary">Reset Password</h2>
 						</div>
-						<h6 class="mb-20">Enter your new password, confirm and submit</h6>
+						<h6 class="mb-20">새비밀번호를 입력하세요.</h6>
 						<form>
 							<div class="input-group custom">
-								<input type="text" class="form-control form-control-lg" placeholder="New Password">
+								<input type="text" class="form-control form-control-lg" placeholder="새비밀번호">
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
 								</div>
 							</div>
 							<div class="input-group custom">
-								<input type="text" class="form-control form-control-lg" placeholder="Confirm New Password">
+								<input type="text" class="form-control form-control-lg" placeholder="비밀번호 확인">
 								<div class="input-group-append custom">
 									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
 								</div>
 							</div>
 							<div class="row align-items-center">
-								<div class="col-5">
-									<div class="input-group mb-0">
-										<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">
-										-->
-										<a class="btn btn-primary btn-lg btn-block" href="index.html">Submit</a>
+								<div class="col-12">
+									<div class="text-center">
+										<button class="btn btn-primary btn-lg" style="width:100px">저장</button>
 									</div>
 								</div>
 							</div>

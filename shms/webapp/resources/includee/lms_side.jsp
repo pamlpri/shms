@@ -17,10 +17,24 @@
           <div class="d-flex justify-content-between">
               <div class="logo">
               	  <!-- 로그인한 사람에 따라 주소가 달라져야함!! -->
-                  <a href="admin.html"><img src="${cPath }/resources/lms/vendors/images/logo_black.png" alt="Logo" srcset=""></a>
+              	  <c:choose>
+              	  	<c:when test="${not empty student }">
+	                  <a href="${cPath}/lms/index.do"><img src="${cPath }/resources/lms/vendors/images/logo_black.png" alt="Logo" srcset=""></a>
+              	  	</c:when>
+              	  	<c:otherwise>
+              	  		  <a href="${cPath}/lms/main.do"><img src="${cPath }/resources/lms/vendors/images/logo_black.png" alt="Logo" srcset=""></a>
+              	  	</c:otherwise>
+              	  </c:choose>
               </div>
               <div class="toggler">
-                  <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+              		<c:choose>
+              	  	<c:when test="${not empty student }">
+	                	 <a href="${cPath}/lms/index.do" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+              	  	</c:when>
+              	  	<c:otherwise>
+              	  		 <a href="${cPath}/lms/main.do" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+              	  	</c:otherwise>
+              	  </c:choose>
               </div>
           </div>
       </div>
