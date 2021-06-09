@@ -1,10 +1,19 @@
 package kr.ac.shms.lms.student.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.validator.LectureInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -25,6 +34,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor 
+@EqualsAndHashCode(of="lec_code")
 public class SugangVO {
 //	lecture 테이블
 	private String lec_code;
@@ -32,7 +42,9 @@ public class SugangVO {
 	private String lec_cl;
 	private Integer estbl_year;
 	private Integer estbl_semstr;
+	@NotBlank(groups={LectureInsertGroup.class})
 	private String summary;
+	@NotBlank(groups={LectureInsertGroup.class})
 	private String tchmtr;
 	private String adi_tchmtr;
 	private String tchmtr_scope;
@@ -79,4 +91,33 @@ public class SugangVO {
     private String sugang_at_pnt;    // 신청 학점
     private String lec_able_pnt;    // 수강 가능 학점
 	private String lec_full_time;	// 출력 형식 : 9 - 12시
+	
+	public Integer midterm;
+	public Integer finals;
+	public Integer attend;
+	public Integer task;
+	public Integer etc;
+	public Integer lec_week;
+	public String diary_title;
+	public String diary_cont;
+	public String week_bgnde;
+	public String week_dndde;
+	
+	private int startAttNo;
+	private List<AttachVO> attachList;
+	private MultipartFile[] lecture_files;
+	public void setLecture_files(MultipartFile[] lecture_files) {
+		this.lecture_files = lecture_files;
+		if(lecture_files != null) {
+			List<AttachVO> attachList = new ArrayList<>();
+			for(MultipartFile file : lecture_files) {
+				if(file.isEmpty()) continue;
+				attachList.add(new AttachVO(file));
+			}
+			if(attachList.size() > 0){
+				this.attachList = attachList;
+			}
+		}
+	}
+	private int[] delAttNos;
 }

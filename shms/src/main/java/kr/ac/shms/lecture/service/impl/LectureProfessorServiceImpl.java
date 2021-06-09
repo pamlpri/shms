@@ -8,8 +8,11 @@ import javax.inject.Inject;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
@@ -38,7 +41,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
 
 @Service
 public class LectureProfessorServiceImpl implements LectureProfessorService {
-	
+	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorServiceImpl.class);	
 	@Inject
 	private LectureProfessorDAO lectureProfessorDAO;
 	
@@ -76,9 +79,10 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	public SugangVO selectLecForOpen(String lec_code) {
 		return lectureProfessorDAO.selectLecForOpen(lec_code);
 	}
-
+	
+	@Transactional
 	@Override
-	public ServiceResult updateLecture(LectureVO lecture) {
+	public ServiceResult updateLecture(SugangVO lecture) {
 		ServiceResult result = ServiceResult.FAIL;
 		
 		int cnt = lectureProfessorDAO.updateLecture(lecture);
@@ -94,11 +98,11 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	}
 	
 	
-	private int setDetails(LectureVO lecture) {
+	private int setDetails(SugangVO lecture) {
 		return lectureProfessorDAO.insertLectureDetails(lecture);
 	}
 
-	private int processes(LectureVO lecture) {
+	private int processes(SugangVO lecture) {
 		int cnt = 0;
 		List<AttachVO> attachList = lecture.getAttachList();
 		if(attachList != null && attachList.size() > 0) {
@@ -107,6 +111,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			try {
 				client.connect(ip, port);
 				int reply = client.getReplyCode();
+				logger.info("client Connect : {}", reply);
 				if(FTPReply.isPositiveCompletion(reply)) {
 					if(client.login(id, pw)) {
 						client.setBufferSize(1000);
@@ -117,7 +122,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 						for(AttachVO attach : attachList) {
 							attach.setFile_path(dir);
 						}
-						
+						logger.info("isDir : {} || {}", isDirectory, dir);						
 						if(!isDirectory) {
 							client.mkd(dir);
 						}
@@ -131,8 +136,9 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 								break;
 							}
 						}
+						logger.info("lectureVO {} ", lecture);
 						if(isUpload) cnt += lectureProfessorDAO.insertAttaches(lecture);
-						
+						logger.info("cnt {}" , cnt);
 						client.logout();
 						client.disconnect();
 						

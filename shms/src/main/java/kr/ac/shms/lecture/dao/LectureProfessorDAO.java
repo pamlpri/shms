@@ -68,19 +68,19 @@ public interface LectureProfessorDAO {
 	 * @param lecture
 	 * @return row count > 0 : 성공
 	 */
-	public int updateLecture(LectureVO lecture);
+	public int updateLecture(SugangVO lecture);
 	
 	/**
 	 * 강의에 대한 상세 정보 입력
 	 * @param lecture
 	 * @return row count > 0 : 성공
 	 */
-	public int insertLectureDetails(LectureVO lecture);
+	public int insertLectureDetails(SugangVO lecture);
 	
 	/**
 	 * 첨부파일 등록
 	 * @param lecture
 	 * @return row count > 0 성공
 	 */
-	public int insertAttaches(LectureVO lecture);
+	public int insertAttaches(SugangVO lecture);
 }
