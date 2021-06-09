@@ -3,14 +3,23 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 06. 08.      박초원        최초작성
+* 2021. 06. 09.      송수미        학과 공지 게시글 목록 조회 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">HOME</a></li>
+     	  <c:choose>
+			 <c:when test="${not empty student }">
+	               <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+	         </c:when>
+	         <c:otherwise>
+	               <li class="breadcrumb-item"><a href="${cPath }/lms/main.do">HOME</a></li>
+	         </c:otherwise>
+     	  </c:choose>
           <li class="breadcrumb-item"><a href="#">게시판/일정관리</a></li>
           <li class="breadcrumb-item active" aria-current="page">학과공지</li>
       </ol>
