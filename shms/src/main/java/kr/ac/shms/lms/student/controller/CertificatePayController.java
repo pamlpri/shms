@@ -1,32 +1,18 @@
 package kr.ac.shms.lms.student.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import kr.ac.shms.common.enumpkg.MimeType;
-import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.CertificateService;
 import kr.ac.shms.lms.student.service.StudentService;
-import kr.ac.shms.lms.student.vo.CertificateReqVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 /**
  * @author 박초원
@@ -63,11 +49,12 @@ public class CertificatePayController {
 		StudentVO studentVO = studentService.selectStdntInfoForCetf(user.getUser_id());
 
 		crtf_kind = certificateService.selectCrtfKind(crtf_kind);
-		
+	
 		model.addAttribute("student", studentVO);
 		model.addAttribute("crtf_kind", crtf_kind);
 		model.addAttribute("no_of_issue", no_of_issue);
-		model.addAttribute("won", no_of_issue*2000);
+		model.addAttribute("crtf_req_resn", crtf_req_resn);
+		model.addAttribute("crtf_price", no_of_issue*2000);
 		
 		return "lms/certificatePay";
 	}

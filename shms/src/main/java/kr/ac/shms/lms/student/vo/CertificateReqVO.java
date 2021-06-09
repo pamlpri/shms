@@ -1,5 +1,9 @@
 package kr.ac.shms.lms.student.vo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import kr.ac.shms.validator.CertificateInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,13 +29,20 @@ import lombok.NoArgsConstructor;
 public class CertificateReqVO {
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	
+	@NotBlank(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private Integer crtf_price;
+	@NotBlank(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private Integer no_of_issue;		// 증명서 발급 매수
+	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private Integer req_no;
+	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String stdnt_no;
+	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String req_de;
+	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String crtf_req_resn;
+	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String crtf_kind;
+	@NotNull(groups= {CertificateInsertGroup.class}, message="필수항목")
 	private String sub_name;	// 학과 이름
-	private Integer won;
 }

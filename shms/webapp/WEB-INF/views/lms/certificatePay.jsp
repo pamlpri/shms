@@ -23,8 +23,15 @@
        <div class="card inputTable">
            <div class="card-body">
                <h5>증명서결제</h5>
-               <form class="table-responsive">
-                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
+               <form class="table-responsive" method="post" action="${cPath}/lms/certificateInsert.do" id="submitForm">
+	               <div id="submitBox">
+		               <input type="hidden" value="${crtf_req_resn }" name="crtf_req_resn"/>
+		               <input type="hidden" value="${crtf_kind }" name="crtf_kind"/>
+		               <input type="hidden" value="${no_of_issue }" name="no_of_issue"/>
+		               <input type="hidden" value="${crtf_price }" name="crtf_price"/>
+	               </div>
+               
+                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;" id="submitTable">
                        <tr>
                            <th class="align-middle text-center">학과</th>
                            <td class="align-middle">${student.sub_name }</td>
@@ -39,7 +46,7 @@
                        </tr>
                        <tr>
                            <th class="align-middle text-center">결제금액</th>
-                           <td class="align-middle">${won }원</td>
+                           <td class="align-middle">${crtf_price }원</td>
                        </tr>
                    </table>
                    <div class="text-center">
@@ -71,10 +78,10 @@
                                        확인을 누르시면 증명서보관함으로 이동합니다.
                                    </p>
                                    <br/>
-                                   <a href="${cPath}/lms/certificateStorage.do" class="btn btn-primary ml-1">
+                                   <button type="submit" class="btn btn-primary ml-1" id="submitBtn">
                                        <i class="bx bx-check d-block d-sm-none"></i>
                                        <span class="d-none d-sm-block">확인</span>
-                                   </a>
+                                   </button>
                                </div>
                            </div>
                        </div>
@@ -127,7 +134,6 @@
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		        $(".modal-backdrop").addClass("show").css("display", "block");
 				$("#primary").addClass("show").css("display","block");
 		    } else {
 		        var msg = '결제에 실패하였습니다.';

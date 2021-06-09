@@ -64,9 +64,6 @@
                    		</c:choose>
                    </tbody>
                </table>
-				<div id="pagingArea" class="d-flex justify-content-center">
-				${pagingVO.pagingHTMLBS }
-				</div>
            </div>
        </div>
    </section>
