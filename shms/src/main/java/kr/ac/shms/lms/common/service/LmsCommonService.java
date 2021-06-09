@@ -166,4 +166,11 @@ public interface LmsCommonService {
 	 * @return ServiceResult
 	 */
 	public ServiceResult consultingCompletion(int bo_no);
+	
+	/**
+	 * 상담일지 수정
+	 * @param consltDiaryVO
+	 * @return ServiceResult
+	 */
+	public ServiceResult consultingDiaryUpdate(ConsltDiaryVO consltDiaryVO);
 }

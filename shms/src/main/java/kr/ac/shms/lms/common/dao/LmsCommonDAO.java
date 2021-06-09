@@ -190,4 +190,11 @@ public interface LmsCommonDAO {
 	 * @return cnt > 0 성공
 	 */
 	public int consultingCompletion(int bo_no);
+	
+	/**
+	 * 상담일지 수정
+	 * @param consltDiaryVO
+	 * @return cnt > 0 성공
+	 */
+	public int consultingDiaryUpdate(ConsltDiaryVO consltDiaryVO);
 }

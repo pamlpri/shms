@@ -17,7 +17,7 @@
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="#">HOME</a></li>
 			<li class="breadcrumb-item"><a href="#">마이페이지</a></li>
-			<li class="breadcrumb-item active" aria-current="page">지도교수상담</li>
+			<li class="breadcrumb-item active" aria-current="page">담당교수상담</li>
 		</ol>
 	</nav>
 

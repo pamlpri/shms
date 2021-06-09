@@ -59,7 +59,6 @@ public class ConsultingAdminController {
 			@ModelAttribute("consulting") ConsultingVO consultingVO
 			, @RequestParam("approval") String approval
 		) {
-		logger.info("consultingUpdate : {}", consultingVO.getReq_no().TYPE);
 		ServiceResult result = null;
 		if("companion".equals(approval)) {	// 상담 반려일 경우
 			result = lmsStaffService.consultingCompanion(consultingVO);

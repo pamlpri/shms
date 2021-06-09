@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.StudentService;
@@ -40,8 +41,6 @@ public class ConsultingController {
 	@Inject
 	private StudentService studentService;
 	@Inject
-	private LmsStaffService staffService;
-	@Inject
 	private LmsCommonService lmsCommonService;
 	
 	
@@ -52,8 +51,12 @@ public class ConsultingController {
 		, Model model
 	) {
 		ConsultingVO consultingVO = lmsCommonService.consulting(bo_no);
+		ConsltDiaryVO consltDiaryVO = lmsCommonService.consltDiary(bo_no);
 		StudentVO studentVO = studentService.student(consultingVO.getStdnt_no());
 		
+//		if(consltDiaryVO != null) {
+//			model.addAttribute("consltDiary", consltDiaryVO);
+//		}
 		model.addAttribute("student", studentVO);
 		model.addAttribute("consulting", consultingVO);
 		model.addAttribute("section", user.getUser_section());

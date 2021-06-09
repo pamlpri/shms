@@ -49,8 +49,6 @@ public class ConsultingViewController {
 	@Inject
 	private StudentService studentService;
 	@Inject
-	private LmsStaffService lmsStaffService;
-	@Inject
 	private LmsCommonService lmsCommonService;
 	
 	@RequestMapping("/consultingList.do")
@@ -63,9 +61,6 @@ public class ConsultingViewController {
 		List<ConsultingVO> consultingList = studentService.consltReqList(user_id);
 		model.addAttribute("consultingList", consultingList);
 		model.addAttribute("userSection", userSection);
-//		StudentVO studentVO = studentService.student(user_id);
-		
-//		model.addAttribute("student", studentVO);
 		
 		return  "lms/consultingList";
 	}
@@ -93,11 +88,18 @@ public class ConsultingViewController {
 	@RequestMapping(value="/consultingView.do", method=RequestMethod.POST)
 	public String consultingViewInsert(
 			@ModelAttribute("consltDiary") ConsltDiaryVO consltDiaryVO
+			, @RequestParam("isUpdate") String isUpdate
 		) {
 		ConsultingVO consultingVO = lmsCommonService.consulting(consltDiaryVO.getReq_no());
 		consltDiaryVO.setHope_date(consultingVO.getHope_date());
 		consltDiaryVO.setHope_time(consultingVO.getHope_time());
-		ServiceResult result = lmsCommonService.consultingDiaryInsert(consltDiaryVO);
+		logger.info("consltDiaryVO : {}", consltDiaryVO.getThema());
+		ServiceResult result = null;
+		if("update".equals(isUpdate)) {
+			result = lmsCommonService.consultingDiaryUpdate(consltDiaryVO);
+		} else {
+			 result = lmsCommonService.consultingDiaryInsert(consltDiaryVO);
+		}
 		lmsCommonService.consultingCompletion(consltDiaryVO.getReq_no());
 		
 		String view = null;

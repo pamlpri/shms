@@ -22,16 +22,19 @@
 
 	<div class="card inputTable">
 		<div class="card-body">
-			<iframe src="https://192.168.0.140:3000" allow='camera *; microphone *' width="100%" height="500"
-				id="videoView">
-			</iframe>
+			<c:if test="${isUpdate ne 'update' or empty isUpdate}">
+				<iframe src="https://192.168.0.140:3000" allow='camera *; microphone *' width="100%" height="500"
+					id="videoView">
+				</iframe>			
+			</c:if>
 			
 			<c:choose>
 				<c:when test="${'PR' eq section}">
 					<!-- 교수만 보이는 폼 -->
 					<form id="consultingDiary" action="${cPath }/lms/consultingView.do" class="table-responsive" method="post">
 						<input type="hidden" name="req_no" value="${consulting.req_no }" />
-						<input type="hidden" name="contents" value="" />
+						<input type="hidden" name="contents" value="${consltDiary.contents }" />
+						<input type="hidden" name="isUpdate" value="${isUpdate }" />
 						<table class="table table-bordered table-md">
 							<tr>
 								<th rowspan="2" class="align-middle text-center">상담대상</th>
@@ -54,22 +57,21 @@
 							</tr>
 							<tr>
 								<th class="align-middle text-center">상담주제</th>
-								<td colspan="2"><textarea class="form-control"
-										id="floatingTextarea" name="thema"></textarea></td>
+								<td colspan="2">
+								<textarea class="form-control" id="floatingTextarea" name="thema">${consltDiary.thema }</textarea></td>
 								<th class="align-middle text-center">상담분류</th>
 								<td>${consulting.consult_cl_nm }</td>
 							</tr>
 							<tr>
 								<th class="align-middle text-center">내용</th>
 								<td colspan="4">
-									<div id="summernote"></div>
+									<div id="summernote">${consltDiary.contents }</div>
 								</td>
 							</tr>
 						</table>
 						<div class="text-center">
 							<a href="consultingAdmin.html" class="btn btn-secondary">취소</a>
 							<button id="sendBtn" type="button" class="btn btn-primary">저장</button>
-<%-- 							<a href="${cPath }/lms/consultingView.do" class="btn btn-primary">저장</a> --%>
 						</div>
 					</form>
 				</c:when>
@@ -89,28 +91,17 @@
             tabsize: 2,
             height: 800,
         })
-        $("#hint").summernote({
-            height: 100,
-            toolbar: false,
-            placeholder: 'type with apple, orange, watermelon and lemon',
-            hint: {
-                words: ['apple', 'orange', 'watermelon', 'lemon'],
-                match: /\b(\w{1,})$/,
-                search: function (keyword, callback) {
-                    callback($.grep(this.words, function (item) {
-                        return item.indexOf(keyword) === 0;
-                    }));
-                }
-            }
-        });
         
         $(function() {
 	        let consultingDiary = $("#consultingDiary");
 	        $("#sendBtn").on("click", function(){
-	        	var sHTML = $(".note-editable").text();
+	        	var sHTML = $(".note-editable").html();
 	        	$("input[name='contents']").val(sHTML);
-	        	consultingDiary.submit();	        	
+	        	consultingDiary.submit();
 	        });
+	        
+	        let contents = $("input[name='contents']").val();
+	        $(".note-editable").html(contents);
         });
 
     </script>

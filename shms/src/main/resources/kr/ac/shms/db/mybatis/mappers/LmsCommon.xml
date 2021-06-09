@@ -446,9 +446,17 @@
 		    conslt_diary
 		WHERE req_no = #{req_no}
 	</select>
+	
 	<update id="consultingCompletion" parameterType="int">
 		UPDATE CONSLT_REQ SET
 		    process_stat = 'WR'
+		WHERE req_no = #{req_no}
+	</update>
+	
+	<update id="consultingDiaryUpdate" parameterType="ConsltDiaryVO">
+		UPDATE conslt_diary
+		    SET thema = #{thema},
+		        contents = #{contents}
 		WHERE req_no = #{req_no}
 	</update>
 </mapper>

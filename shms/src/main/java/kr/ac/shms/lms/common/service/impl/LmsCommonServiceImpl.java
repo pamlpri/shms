@@ -255,4 +255,12 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}
+
+	@Override
+	public ServiceResult consultingDiaryUpdate(ConsltDiaryVO consltDiaryVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsCommonDAO.consultingDiaryUpdate(consltDiaryVO);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
 }

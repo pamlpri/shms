@@ -57,49 +57,16 @@
 				<div class="text-center">
 					<c:choose>
 						<c:when test="${'PR' eq userSection }">
+						<form action="${cPath}/lms/consultingUpdate.do" method="post">
+							<input type="hidden" name="req_no" value="${consltDiary.req_no }" />
 							<a href="${cPath }/lms/consultingAdmin.do" class="btn btn-primary">목록으로</a>	
-						<button onclick="location.href='${cPath}/lms/consultingUpdate.do'"
-							class="btn btn-primary">수정</button>
-						<button type="button" class="btn btn-danger block"
-							data-bs-toggle="modal" data-bs-target="#default">삭제</button>
+							<button type="submit" class="btn btn-primary">수정</button>
+						</form>
 						</c:when>
 						<c:otherwise>
 							<a href="${cPath }/lms/consultingList.do" class="btn btn-primary">목록으로</a>
 						</c:otherwise>
 					</c:choose>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--Basic Modal -->
-	<div class="modal fade text-left" id="default" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="myModalLabel1">게시글 삭제</h5>
-					<button type="button" class="close rounded-pill"
-						data-bs-dismiss="modal" aria-label="Close">
-						<i data-feather="x"></i>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p>
-						삭제한 게시글은 복원이 불가합니다.<br /> 삭제하시겠습니까?
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn  btn-secondary"
-						data-bs-dismiss="modal">
-						<i class="bx bx-x d-block d-sm-none"></i> <span
-							class="d-none d-sm-block">닫기</span>
-					</button>
-					<button type="button" class="btn btn-primary ml-1"
-						data-bs-dismiss="modal">
-						<i class="bx bx-check d-block d-sm-none"></i> <span
-							class="d-none d-sm-block">삭제</span>
-					</button>
 				</div>
 			</div>
 		</div>

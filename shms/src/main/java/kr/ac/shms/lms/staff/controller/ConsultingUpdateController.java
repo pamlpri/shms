@@ -3,14 +3,23 @@ package kr.ac.shms.lms.staff.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lms.common.service.LmsCommonService;
+import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
+import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
  * @author 박초원
@@ -26,22 +35,32 @@ import kr.ac.shms.lms.staff.service.LmsStaffService;
  * </pre>
  */
 @Controller
+@RequestMapping("/lms")
 public class ConsultingUpdateController {
+	private static final Logger logger = LoggerFactory.getLogger(ConsultingUpdateController.class);
 	@Inject
-	private LmsStaffService lmsStaffService;
+	private StudentService studentService;
+	@Inject
+	private LmsCommonService lmsCommonService;
 	
-	@RequestMapping("/lms/consultingUpdate.do")
+	@RequestMapping(value="/consultingUpdate.do", method=RequestMethod.POST)
 	public String consultingUpdate (
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, HttpSession session
+		, @ModelAttribute("consltDiary") ConsltDiaryVO consltDiaryVO 
 		, Model model
 	){
-		String user_id = user.getUser_id();
-		StaffVO staffVO = lmsStaffService.staff(user_id);
+		ConsultingVO consultingVO = lmsCommonService.consulting(consltDiaryVO.getReq_no());
+		StudentVO studentVO = studentService.student(consultingVO.getStdnt_no());
+		consltDiaryVO = lmsCommonService.consltDiary(consltDiaryVO.getReq_no());
 		
-		session.setAttribute("userName", staffVO.getName());
-		model.addAttribute("staff", staffVO);
+		logger.info("Update : {}", consltDiaryVO.getReq_no());
 		
-		return  "lms/consultingForm";
+		model.addAttribute("isUpdate", "update");
+		model.addAttribute("consltDiary", consltDiaryVO);
+		model.addAttribute("student", studentVO);
+		model.addAttribute("consulting", consultingVO);
+		model.addAttribute("section", user.getUser_section());
+		
+		return "lms/consultingForm";
 	}
 }
