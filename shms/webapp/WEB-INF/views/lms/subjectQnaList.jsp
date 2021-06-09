@@ -6,11 +6,19 @@
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>]
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
  <nav aria-label="breadcrumb">
      <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a href="#">HOME</a></li>
+     	 <c:choose>
+			 <c:when test="${not empty student }">
+	               <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+	         </c:when>
+	         <c:otherwise>
+	               <li class="breadcrumb-item"><a href="${cPath }/lms/main.do">HOME</a></li>
+	         </c:otherwise>
+     	 </c:choose>
          <li class="breadcrumb-item"><a href="#">게시판/일정관리</a></li>
          <li class="breadcrumb-item active" aria-current="page">학과문의</li>
      </ol>

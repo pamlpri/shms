@@ -21,10 +21,17 @@
 
 <div class="page-content">
 	<!-- contents start -->
-
+	${userAuth }
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+	     	<c:choose>
+				 <c:when test="${not empty student }">
+		               <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+		         </c:when>
+		         <c:otherwise>
+		               <li class="breadcrumb-item"><a href="${cPath }/lms/main.do">HOME</a></li>
+		         </c:otherwise>
+	     	</c:choose>
 			<li class="breadcrumb-item"><a href="${cPath }/lms/composeForm.do">웹메일</a></li>
 			<li class="breadcrumb-item active" aria-current="page">보낸메일</li>
 		</ol>

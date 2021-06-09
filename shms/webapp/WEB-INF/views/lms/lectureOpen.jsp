@@ -14,7 +14,14 @@
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+     	<c:choose>
+			 <c:when test="${not empty student }">
+	               <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
+	         </c:when>
+	         <c:otherwise>
+	               <li class="breadcrumb-item"><a href="${cPath }/lms/main.do">HOME</a></li>
+	         </c:otherwise>
+     	</c:choose>
           <li class="breadcrumb-item"><a href="${cPath }/lms/lectureList.do">강의관리</a></li>
           <li class="breadcrumb-item active" aria-current="page">강의개설</li>
       </ol>
