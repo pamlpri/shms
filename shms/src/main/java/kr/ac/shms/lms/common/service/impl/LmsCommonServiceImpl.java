@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
@@ -130,7 +131,8 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	public List<UserVO> selectAddressBook(UserVO userVO) {
 		return lmsCommonDAO.selectAddressBook(userVO);
 	}
-
+	
+	@Transactional
 	@Override
 	public ServiceResult insertWebmail(WebmailVO webmailVO) {
 		ServiceResult result = ServiceResult.FAIL;
