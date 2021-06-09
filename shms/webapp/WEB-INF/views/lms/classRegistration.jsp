@@ -126,7 +126,7 @@
 	</form>
 	<div class="page-heading email-application lectureHeader">
 		<h5>
-			<i class="fas fa-bookmark"></i> 수강신청 장바구니 과목
+			<i class="fas fa-bookmark"></i> 수강신청 과목
 		</h5>
 		<section class="section content-area-wrapper">
 			<div class="content-right">
@@ -173,7 +173,7 @@
 
 	<div class="page-heading email-application lectureHeader">
 		<h5>
-			<i class="fas fa-bookmark"></i> 나의 수강신청 장바구니 현황
+			<i class="fas fa-bookmark"></i> 나의 수강신청 현황
 		</h5>
 		<section class="section content-area-wrapper">
 			<div class="content-right">

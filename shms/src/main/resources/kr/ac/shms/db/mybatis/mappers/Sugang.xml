@@ -311,5 +311,9 @@
 		   AND a.req_semstr = (SELECT semstr FROM v_semstr)
     </select>
     
-    
+    <select id="updateSugang" parameterType="map" statementType="CALLABLE">
+    	{
+    		CALL p_sugangupdate(#{updatecount,mode=OUT,jdbcType=NUMERIC,javaType=java.lang.Integer})
+    	}
+    </select>
 </mapper>

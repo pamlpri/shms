@@ -268,4 +268,10 @@ public interface StudentDAO {
      * @return 
      */
     public int insertRegistration(SugangVO sugang);
+    
+    /**
+     * 장바구니 인원이 제한인원보다 미달이거나 같을때 자동 업데이트
+     * @param map
+     */
+    public void updateSugang(Map<String, Object> pMap);
 }
