@@ -72,7 +72,7 @@ public class WebmailInsertController {
 	private WebApplicationContext container;
 	private ServletContext application;
 	
-	@Value("#{appInfo.boardImages}")
+	@Value("#{appInfo.mailFiles}")
 	private String saveFolderURL;
 	
 	private String saveFolderPath;
@@ -185,8 +185,7 @@ public class WebmailInsertController {
 	}
 	
 	@RequestMapping(value="/lms/mailFiles.do", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	//request가 가진 accept header의 특징 - response의 contextType의 mime - 한쌍의 mime을 완성시킨다.
-	@ResponseBody //마샬링과 직렬화를 handler adapter가 해준다. requestMapping에서 추가 설정(mime)이 필요하다.
+	@ResponseBody 
 	public Map<String, Object> mailFiles(
 			@RequestPart("upload") MultipartFile upload
 	) throws IOException {
