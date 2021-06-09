@@ -98,6 +98,27 @@
 		</trim>
 	</select>
 	
+	<sql id="selectFrag">
+			bo_no,
+			bo_kind,
+			DECODE(bo_secret_at, 'Y', '비밀글', bo_title) bo_title,
+			bo_cont,
+			bo_writer,
+			TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de, 
+			bo_hit,
+			bo_password, 
+			bo_secret_at,
+			bo_ans,
+			a.univ_inqry_kind,
+			b.com_code_nm inqry_kind_name,
+			c.sub_code
+		FROM board a
+           LEFT OUTER JOIN tb_com_code b
+           ON (a.univ_inqry_kind = b.com_code)
+           LEFT OUTER JOIN subject c 
+           ON (a.sub_code=c.sub_code)
+	</sql>
+	
 	<select id="selectBoardList" parameterType="PagingVO" resultType="BoardVO">
 		SELECT *
 			FROM (
@@ -107,36 +128,28 @@
 						(SELECT COUNT(*) FROM board WHERE bo_kind = #{searchMap.bo_kind})
 						 - (ROW_NUMBER () OVER 
 						(ORDER BY bo_write_de DESC)) + 1 p_bo_no,
-						bo_no,
-						bo_kind,
-						DECODE(bo_secret_at, 'Y', '비밀글', bo_title) bo_title,
-						bo_cont,
-						bo_writer,
-						TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de, 
-						bo_hit,
-						bo_password, 
-						bo_secret_at,
-						bo_ans,
-						a.univ_inqry_kind,
-						b.com_code_nm inqry_kind_name,
-						c.sub_code
-					FROM board a
-		            LEFT OUTER JOIN tb_com_code b
-		            ON (a.univ_inqry_kind = b.com_code)
-		            LEFT OUTER JOIN subject c 
-		            ON (a.sub_code=c.sub_code)
+				<include refid="selectFrag"/>
 					WHERE bo_kind = #{searchMap.bo_kind}
-					<if test="searchMap.bo_kind eq 'DM'">
-		              AND b.code_grp =  (SELECT code_grp 
-		                                  FROM tb_code_grp
-		                                 WHERE code_grp_nm = 'UNIV_INQRY_KIND')
-					</if>
+				<if test="searchMap.bo_kind eq 'DM'">
+		             AND b.code_grp =  (SELECT code_grp 
+		                                 FROM tb_code_grp
+		                                WHERE code_grp_nm = 'UNIV_INQRY_KIND')
+				</if>
 				) A
 		  	<trim prefix="WHERE">
 		  		<include refid="searchFrag"/>
 			</trim>
 			)
 			WHERE rn BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="selectAllBoardList" parameterType="hashMap" resultType="BoardVO">
+		SELECT
+			<include refid="selectFrag" />
+		WHERE bo_kind = #{bo_kind, jdbcType=VARCHAR}
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub_code)">
+				AND a.sub_code = #{sub_code, jdbcType=VARCHAR}
+			</if>
 	</select>
 	
 	<resultMap type="BoardVO" id="boardMap" autoMapping="true">

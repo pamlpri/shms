@@ -102,6 +102,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public List<BoardVO> selectAllBoardList(Map<String, String> searchMap) {
+		return boardDAO.selectAllBoardList(searchMap);
+	}	
+	
+	@Override
 	public BoardVO selectBoard(int bo_no) {
 		boardDAO.incrementHit(bo_no);
 		return boardDAO.selectBoard(bo_no);
@@ -135,11 +140,14 @@ public class BoardServiceImpl implements BoardService{
 		int cnt = 0;
 		
 		BoardVO savedBoard = boardDAO.selectBoard(board.getBo_no());
+		boolean authChk = true;
 		
 		if(savedBoard == null) {
 			result = ServiceResult.NOTEXIST;
 		}else {
-			boolean authChk = boardAuth(board);
+			if(savedBoard.getBo_password()!=null) {
+				authChk = boardAuth(board);
+			}
 			
 			if(!authChk) {
 				result = ServiceResult.INVALIDPASSWORD;
@@ -289,6 +297,7 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardVO> selectHGBoardList(PagingVO<BoardVO> pagingVO) {
 		return boardDAO.selectHGBoardList(pagingVO);
 	}
+
 
 	
 }

@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 06. 08.      박초원        최초작성
+* 2021. 06. 09.      송수미        학과공지 목록 조회 기능 구현
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -39,136 +40,33 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">1</td>
-                          <td class="text-center">
-                              <a class="text-color noticeTitle" href="${cPath}/lms/subjectNoticeView.do">학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목 학사공지 제목</a>
-                          </td>
-                          <td class="text-center">이현수</td>
-                          <td class="text-center">2021.05.03</td>
-                          <td class="text-center">200</td>
-                      </tr>
+                  	<c:choose>
+                  		<c:when test="${not empty boardList }">
+                  			<c:forEach items="${boardList }" varStatus="idx" var="board">
+		                      <tr>
+		                          <td class="text-center">${idx.count }</td>
+		                          	<c:url var="viewURL" value="/lms/subjectNoticeView.do">
+		                          		<c:param name="bo_no" value="${board.bo_no }"></c:param>
+		                          	</c:url>
+		                          <td class="text-center">
+		                              <a class="text-color noticeTitle" href="${viewURL }">${board.bo_title }</a>
+		                          </td>
+		                          <td class="text-center">${board.bo_writer }</td>
+		                          <td class="text-center">${board.bo_write_de }</td>
+		                          <td class="text-center">${board.bo_hit }</td>
+		                      </tr>
+                  			</c:forEach>
+                  		</c:when>
+                  		<c:otherwise>
+                  			<tr>
+                  				<td colspan="5">현재 조회가능한 게시글이 없습니다.</td>
+                  			</tr>
+                  		</c:otherwise>
+                  	</c:choose>
                   </tbody>
               </table>
               <div class="breadcrumb breadcrumb-right">
-                  <a href="${cPath }/lms/subjectNoticeForm.do" type="button" class="btn btn-primary" >
+                  <a href="${cPath }/lms/subjectNoticeInsert.do" type="button" class="btn btn-primary" >
                       <i class="fas fa-edit"></i> 글쓰기
                   </a>
               </div>

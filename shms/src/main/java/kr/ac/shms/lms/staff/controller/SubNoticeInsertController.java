@@ -44,6 +44,7 @@ import kr.ac.shms.validator.BoardInsertGroup;
  * 수정일           수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 8.      박초원      	       최초작성
+ * 2021. 6. 9.      송수미      	       학과 공지 게시글 등록 기능 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -76,7 +77,7 @@ public class SubNoticeInsertController {
 		logger.info("{} 초기화, {} 주입됨.", getClass().getSimpleName(), saveFolder.getAbsolutePath());
 	}
 	
-	@RequestMapping("/lms/subjectNoticeForm.do")
+	@RequestMapping("/lms/subjectNoticeInsert.do")
 	public String subjectNoticeForm(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
@@ -88,7 +89,7 @@ public class SubNoticeInsertController {
 		return  "lms/subjectNoticeForm";
 	}
 	
-	@RequestMapping(value="/lms/subjectNoticeForm.do", method=RequestMethod.POST)
+	@RequestMapping(value="/lms/subjectNoticeInsert.do", method=RequestMethod.POST)
 	public String subjectNoticeForm(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @Validated(BoardInsertGroup.class)
@@ -97,11 +98,12 @@ public class SubNoticeInsertController {
 			, Model model
 			) {
 		String user_id = user.getUser_id();
+		String user_name = user.getUser_name();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
 		logger.info("board:{}", board);
 		
-		board.setBo_writer(user_id);
+		board.setBo_writer(user_name);
 		String bo_kind = boardService.selectBoKind("학과공지");
 		board.setBo_kind(bo_kind);
 		String sub_code = user.getSub_code();
