@@ -1063,3 +1063,14 @@
 	display : inline-block;
 	margin-right : 5px;
 }
+
+#phoneBox {
+	display : none;
+}
+
+.passwordBox {
+	position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+

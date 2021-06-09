@@ -786,6 +786,7 @@ function paginationClickHandler(event)
         options = getOptions(wizard),
         state = getState(wizard),
         href = anchor.attr("href");
+    	classs = anchor.attr("class");
 
     switch (href.substring(href.lastIndexOf("#") + 1))
     {
