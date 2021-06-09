@@ -66,5 +66,5 @@ public interface LectureProfessorService {
 	 * @param lecture
 	 * @return row count > 0 : 성공
 	 */
-	public ServiceResult updateLecture(LectureVO lecture);
+	public ServiceResult updateLecture(SugangVO lecture);
 }

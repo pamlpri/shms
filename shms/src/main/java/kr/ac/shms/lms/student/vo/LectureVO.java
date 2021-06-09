@@ -3,9 +3,12 @@ package kr.ac.shms.lms.student.vo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.validator.LectureInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,10 +38,14 @@ public class LectureVO {
 	private String lec_cl;
 	private Integer estbl_year;
 	private Integer estbl_semstr;
+	
+	@NotBlank(groups={LectureInsertGroup.class})
 	private String summary;
+	@NotBlank(groups={LectureInsertGroup.class})
 	private String tchmtr;
 	private String adi_tchmtr;
 	private String tchmtr_scope;
+	
 	private String lec_rm;
 	private String dayotw;
 	private Integer lec_time;
@@ -59,12 +66,12 @@ public class LectureVO {
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
-	private MultipartFile[] mail_files;
-	public void setMail_files(MultipartFile[] mail_files) {
-		this.mail_files = mail_files;
-		if(mail_files != null) {
+	private MultipartFile[] lecture_files;
+	public void setLecture_files(MultipartFile[] lecture_files) {
+		this.lecture_files = lecture_files;
+		if(lecture_files != null) {
 			List<AttachVO> attachList = new ArrayList<>();
-			for(MultipartFile file : mail_files) {
+			for(MultipartFile file : lecture_files) {
 				if(file.isEmpty()) continue;
 				attachList.add(new AttachVO(file));
 			}

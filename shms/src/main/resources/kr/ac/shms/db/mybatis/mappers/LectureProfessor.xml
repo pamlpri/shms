@@ -166,20 +166,20 @@
 			) 
 	</select>
 	
-	<update id="updateLecture" parameterType="LectureVO">
+	<update id="updateLecture" parameterType="SugangVO">
 		UPDATE lecture
 		    SET
 	        summary = #{summary, jdbcType=VARCHAR},
 	        tchmtr = #{tchmtr, jdbcType=VARCHAR},
 	        adi_tchmtr = #{adi_tchmtr, jdbcType=VARCHAR}
   			<if test="attachList != null">
-			    ,(SELECT MAX(atch_file_no) + 1 FROM attach)
+			    , atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
 			</if>
 		WHERE
 		    lec_code = #{lec_code, jdbcType=VARCHAR}
 	</update>
 	
-	<insert id="insertLectureDetails" parameterType="LectureVO">
+	<insert id="insertLectureDetails" parameterType="SugangVO">
 		INSERT INTO lec_score_st (
 		    lec_code,
 		    midterm,
@@ -197,9 +197,9 @@
 		)
 	</insert>
 	
-	<insert id="insertAttaches" parameterType="LectureVO">
+	<insert id="insertAttaches" parameterType="SugangVO">
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
-			SELECT COUNT(*)+1 startAttNo
+			SELECT COUNT(*) + 1 startAttNo
 			FROM ATTACH
 			WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
 		</selectKey>

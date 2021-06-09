@@ -3,7 +3,6 @@ package kr.ac.shms.lms.staff.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.validation.ConstraintValidatorContext.ConstraintViolationBuilder.LeafNodeBuilderCustomizableContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
@@ -57,6 +57,7 @@ public class LectureOpenController {
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
+		logger.info("get방식으로 감");
 		String user_id = user.getUser_id();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
@@ -83,10 +84,11 @@ public class LectureOpenController {
 	@RequestMapping(value="/lms/lectureOpen.do", method=RequestMethod.POST)
 	public String lectureOpen(
 		@Validated(LectureInsertGroup.class)
-		@ModelAttribute("lecture") LectureVO lectureVO
+		@ModelAttribute("lecture") SugangVO lectureVO
 		, Errors errors
 		, @AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
+		, RedirectAttributes session
 	){
 		
 		boolean valid = !errors.hasErrors();
@@ -96,30 +98,36 @@ public class LectureOpenController {
 		logger.info("lectureVO : {}", lectureVO);
 		String view = null;
 		String message = null;
-		int midterm = 0;
-		int finals = 0;
-		int attend = 0; 
-		int task = 0;
-		int etc = 0;
-		int sum = 0;
+		double midterm = 0;
+		double finals = 0;
+		double attend = 0; 
+		double task = 0;
+		double etc = 0;
+		double sum = 0;
 		
-		if(lectureVO.getMidterm()!=null) midterm = lectureVO.getMidterm() / 100;
-		if(lectureVO.getFinals()!=null) finals = lectureVO.getFinals() / 100;
-		if(lectureVO.getAttend()!=null) attend = lectureVO.getAttend() / 100;
-		if(lectureVO.getTask()!=null) task = lectureVO.getTask() / 100;
-		if(lectureVO.getEtc()!=null) etc = lectureVO.getEtc() / 100;
+		if(lectureVO.getMidterm()!=null) midterm = (double)lectureVO.getMidterm() / 100;
+		if(lectureVO.getFinals()!=null) finals = (double)lectureVO.getFinals() / 100;
+		if(lectureVO.getAttend()!=null) attend = (double)lectureVO.getAttend() / 100;
+		if(lectureVO.getTask()!=null) task = (double)lectureVO.getTask() / 100;
+		if(lectureVO.getEtc()!=null) etc = (double)lectureVO.getEtc() / 100;
 		
 		if(valid) {
 			sum = midterm + finals + attend + task + etc;
-			if(sum != 100) {
+			if(sum != 1) {
 				message = "평가방법의 총합은 100이어야 합니다.";
+				view = "lms/lectureOpen";
+			}else if(lectureVO.getAttachList() == null){
+				message = "반드시 강의 계획서 파일을 첨부하여야 합니다.";
 				view = "lms/lectureOpen";
 			}else {
 				ServiceResult result = lectureProfService.updateLecture(lectureVO);
 				if(ServiceResult.OK.equals(result)) {
-					message = "아 졸려";
+					logger.info("성공");
+					message = "강의가 개설되었습니다.";
 					view = "redirect:/lms/lectureList.do";
+					session.addFlashAttribute("message", message);
 				}else {
+					logger.info("실패");
 					message = "강의 개설에 실패하였습니다. 잠시 후 다시 시도해주세요";
 					view = "lms/lectureOpen";
 				}
@@ -128,7 +136,7 @@ public class LectureOpenController {
 			message = "필수항목 누락";
 			view = "lms/lectureOpen";
 		}
-		model.addAttribute("lecture", lectureVO);
+		model.addAttribute("lectureVO", lectureVO);
 		model.addAttribute("message", message);
 		
 		return view;
