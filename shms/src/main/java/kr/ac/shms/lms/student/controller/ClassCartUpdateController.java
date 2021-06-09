@@ -32,11 +32,11 @@ public class ClassCartUpdateController {
 	@Inject
 	private StudentDAO studentDAO;
 	
-	@Scheduled(cron = "0 */5 * * * *")
-	public void realSugang() {
-		Map<String, Object> pMap = new HashMap<>();
-		studentDAO.updateSugang(pMap);
-		Integer updatecount = (Integer) pMap.get("updatecount");
-		logger.info("스케쥴러가 동작했고, {} 건이 수강신청 되었음.", updatecount);
-	}
+//	@Scheduled(cron = "0 */5 * * * *")
+//	public void realSugang() {
+//		Map<String, Object> pMap = new HashMap<>();
+//		studentDAO.updateSugang(pMap);
+//		Integer updatecount = (Integer) pMap.get("updatecount");
+//		logger.info("스케쥴러가 동작했고, {} 건이 수강신청 되었음.", updatecount);
+//	}
 }

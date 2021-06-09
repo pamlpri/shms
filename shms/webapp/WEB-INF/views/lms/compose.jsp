@@ -74,8 +74,8 @@
 						<h6 class="m-b-20">
 							<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
 						</h6>
-						<div class="form-inline fileArea">
-							<p class="">
+						<div class="form-inline fileArea row">
+							<p class="fileBox col-lg-6">
 								<input class="form-control" type="file" name="mail_files">
 								<span class="plusBtn btn btn-secondary">+</span>
 							</p>
@@ -266,11 +266,18 @@
         	mailForm.submit();
         });
         
+   		var source = '<p class="fileBox col-lg-6">'
+					+ '<input class="form-control" type="file" name="mail_files">'
+					+ '<span class="plusBtn btn btn-secondary">+</span>'
+					+ '<span class="delBtn btn btn-danger">-</span>'
+				    + '</p>';
+	    
         $(".fileArea").on("click", ".plusBtn" ,function(){
-    		let source = $(this).parents("p:first");
-    		let clone = source.clone();
-    		clone.find("input").val("");
-    		$(this).parents(".fileArea:first").append(clone);
+    		$(this).parents(".fileArea:first").append(source);
     	});
+        
+        $(".fileArea").on("click", ".delBtn", function(){
+        	$(this).parent("p").remove();
+        });
     });
 </script>
