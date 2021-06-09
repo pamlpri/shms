@@ -3,6 +3,7 @@
 * 수정일           수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 2.      박초원        최초작성
+* 2021. 6. 9.	   박초원        ckeditor 적용
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,7 +34,6 @@
 					<!-- 교수만 보이는 폼 -->
 					<form id="consultingDiary" action="${cPath }/lms/consultingView.do" class="table-responsive" method="post">
 						<input type="hidden" name="req_no" value="${consulting.req_no }" />
-						<input type="hidden" name="contents" value="${consltDiary.contents }" />
 						<input type="hidden" name="isUpdate" value="${isUpdate }" />
 						<table class="table table-bordered table-md">
 							<tr>
@@ -65,13 +65,13 @@
 							<tr>
 								<th class="align-middle text-center">내용</th>
 								<td colspan="4">
-									<div id="summernote">${consltDiary.contents }</div>
+									<textarea class="form-control" rows="5" cols="100" name="contents" id="contents">${consltDiary.contents }</textarea>
 								</td>
 							</tr>
 						</table>
 						<div class="text-center">
 							<a href="consultingAdmin.html" class="btn btn-secondary">취소</a>
-							<button id="sendBtn" type="button" class="btn btn-primary">저장</button>
+							<button id="sendBtn" type="submit" class="btn btn-primary">저장</button>
 						</div>
 					</form>
 				</c:when>
@@ -85,23 +85,9 @@
 	</div>
 	<!-- contents end -->
 </div>
-<script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
-    <script>
-        $('#summernote').summernote({
-            tabsize: 2,
-            height: 800,
-        })
-        
-        $(function() {
-	        let consultingDiary = $("#consultingDiary");
-	        $("#sendBtn").on("click", function(){
-	        	var sHTML = $(".note-editable").html();
-	        	$("input[name='contents']").val(sHTML);
-	        	consultingDiary.submit();
-	        });
-	        
-	        let contents = $("input[name='contents']").val();
-	        $(".note-editable").html(contents);
-        });
-
-    </script>
+<script type="text/javascript" src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace("contents", {
+		filebrowserUploadUrl : '${cPath}/lms/consultingFiles.do'
+	});
+</script>

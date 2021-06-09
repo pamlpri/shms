@@ -284,68 +284,52 @@
 					</div>
 					<div class="tab-pane fade" id="password" role="tabpanel"
 						aria-labelledby="password-tab">
-						<div class="match-height">
-	                        <div class="col-md-6 col-12 passwordBox">
-	                            <div class="card">
-	                                <div class="card-header">
-	                                    <h4 class="card-title text-center">비밀번호 변경</h4>
-	                                </div>
-	                                <div class="card-content">
-	                                    <div class="card-body">
-	                                        <form class="form form-horizontal">
-	                                            <div class="form-body">
-	                                                <div class="row">
-	                                                	<div class="col-md-4">
-	                                                        <label>현재 비밀번호</label>
-	                                                    </div>
-	                                                    <div class="col-md-8">
-	                                                        <div class="form-group has-icon-left">
-	                                                            <div class="position-relative">
-	                                                                <input type="password" class="form-control" placeholder="Password">
-	                                                                <div class="form-control-icon">
-	                                                                    <i class="bi bi-lock"></i>
-	                                                                </div>
-	                                                            </div>
-	                                                        </div>
-	                                                    </div>
-	                                                    <div class="col-md-4">
-	                                                        <label>새 비밀번호</label>
-	                                                    </div>
-	                                                    <div class="col-md-8">
-	                                                        <div class="form-group has-icon-left">
-	                                                            <div class="position-relative">
-	                                                                <input type="password" class="form-control" placeholder="Password">
-	                                                                <div class="form-control-icon">
-	                                                                    <i class="bi bi-lock"></i>
-	                                                                </div>
-	                                                            </div>
-	                                                        </div>
-	                                                    </div>
-	                                                    <div class="col-md-4">
-	                                                        <label>비밀번호 확인</label>
-	                                                    </div>
-	                                                    <div class="col-md-8">
-	                                                        <div class="form-group has-icon-left">
-	                                                            <div class="position-relative">
-	                                                                <input type="password" class="form-control" placeholder="Password">
-	                                                                <div class="form-control-icon">
-	                                                                    <i class="bi bi-lock"></i>
-	                                                                </div>
-	                                                            </div>
-	                                                        </div>
-	                                                    </div>
-	                                                    <div class="col-12 justify-content-end mt-5 text-center">
-	                                                        <button type="submit" class="btn btn-primary me-1 mb-1">저장</button>
-	                                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">취소</button>
-	                                                    </div>
-	                                                </div>
-	                                            </div>
-	                                        </form>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
+						<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center mb-4">
+							<div class="container">
+								<div class="row align-items-center">
+									<div class="col-md-6 pwImg">
+										<img src="${cPath }/resources/lms/assets/images/password.png" alt="">
+									</div>
+									<div class="col-md-6">
+										<div class="login-box bg-white box-shadow border-radius-10">
+											<div class="login-title">
+												<h2 class="text-center text-primary mb-4">Reset Password</h2>
+											</div>
+											<form>
+												<div class="form-group has-icon-left">
+                                                    <div class="position-relative">
+                                                        <input type="password" class="form-control" placeholder="현재 비밀번호">
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-key-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+												<div class="form-group has-icon-left">
+                                                    <div class="position-relative">
+                                                        <input type="password" class="form-control" placeholder="새 비밀번호">
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-unlock-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+												<div class="form-group has-icon-left">
+                                                    <div class="position-relative">
+                                                        <input type="password" class="form-control" placeholder="비밀번호 확인">
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-lock-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center mt-4">
+                                                	<button type="button" class="btn btn-light-secondary">취소</button>
+                                                	<button type="submit" class="btn btn-primary">저장</button>
+                                                </div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
