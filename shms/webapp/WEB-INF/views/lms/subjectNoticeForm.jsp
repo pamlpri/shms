@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 06. 08.      박초원        최초작성
 * 2021. 06. 09.      송수미        학과공지 등록 기능 구현
+* 2021. 6. 9.	   박초원        ckeditor 적용
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,8 +29,7 @@
  <!-- contents start -->
  <div class="card inputTable">
      <div class="card-body">
-         <form id="submitForm" class="table-responsive" method="post" enctype="multipart/form-data">
-         	 <input type="hidden" name="bo_cont">
+         <form id="submitForm" method="post" enctype="multipart/form-data">
              <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                  <tr>
                      <th class="align-middle text-center">제목</th>
@@ -40,7 +40,7 @@
                  <tr>
                      <th class="align-middle text-center">내용</th>
                      <td colspan="3">
-                         <div id="summernote"></div>
+                         <textarea class="form-control" rows="5" cols="100" name="bo_cont" id="bo_cont">${board.bo_cont}</textarea>
                      </td>
                  </tr>
              </table>
@@ -55,7 +55,7 @@
 			</div>
              <div class="text-center">
                  <a href="${cPath }/lms/subjectNoticeList.do" class="btn btn-light-secondary">취소</a>
-                 <button id="submitBtn" type="button" class="btn btn-primary" >저장</button>
+                 <button id="submitBtn" type="submit" class="btn btn-primary" >저장</button>
              </div>
          </form>
      </div>
@@ -90,50 +90,22 @@
  <!-- contents end -->
 </div>
 
-<script src="${cPath }/resources/lms/assets/vendors/summernote/summernote-lite.min.js"></script>
+<script type="text/javascript" src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace("bo_cont", {
+		filebrowserUploadUrl : '${cPath}/lms/boardFiles.do'
+	});
+</script>
 <c:if test="${not empty message }">
 	<script>
 		$("#default").find(".modal-body p").empty().text("${message}");
 		$("#default").addClass("show").css("display","block");
-	</script>
-</c:if>
-<c:if test="${not empty board }">
-	<script>
-		$(".note-editable").html("${board.bo_cont}");
+		$("#close, .modal").on("click", function(){
+			$("#default").removeClass("show").css("display","none");
+		})	
 	</script>
 </c:if>
 <script>
-    $('#summernote').summernote({
-        tabsize: 2,
-        height: 625,
-    })
-    
-    var sHTML = null; 
-	$("#submitBtn").on("click", function(){
-		sHTML = $(".note-editable").html();
-		$("input[name='bo_cont']").val(sHTML);
-		$("#submitForm").submit();
-	});
-		
-	$("#close, .modal").on("click", function(){
-		$("#default").removeClass("show").css("display","none");
-	})	
-	
-    $("#hint").summernote({
-        height: 100,
-        toolbar: false,
-        placeholder: 'type with apple, orange, watermelon and lemon',
-        hint: {
-            words: ['apple', 'orange', 'watermelon', 'lemon'],
-            match: /\b(\w{1,})$/,
-            search: function (keyword, callback) {
-                callback($.grep(this.words, function (item) {
-                    return item.indexOf(keyword) === 0;
-                }));
-            }
-        }
-    });
-	
     var source = '<p class="fileBox col-lg-6">'
 		+ '<input class="form-control" type="file" name="mail_files">'
 		+ '<span class="plusBtn btn btn-secondary">+</span>'
