@@ -342,6 +342,6 @@
         INNER JOIN subject su
         ON st.sub_code = su.sub_code
         WHERE st.sub_code = #{sub_code}
-	</select>
+	</select> 
 </mapper>
 

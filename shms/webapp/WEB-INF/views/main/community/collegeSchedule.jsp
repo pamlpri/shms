@@ -76,9 +76,9 @@
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
-        left: 'prevYear,prev',
+        left: 'prevYear,prev,today',
         center: 'title',
-        right: 'next,nextYear'
+        right: 'dayGridMonth,dayGridWeek,dayGridDay,next,nextYear'
       }
       , initialDate : new Date()
       , navLinks : true // can click day/week names to navigate views
