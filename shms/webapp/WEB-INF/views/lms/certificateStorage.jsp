@@ -5,6 +5,7 @@
 * 2021. 6. 3.  박초원       최초작성
 * 2021. 6. 7.  김보미		증명서신청 목록 출력
 * 2021. 6. 9.  김보미		데이터 전달
+* 2021. 6. 10. 김보미		버튼 제어
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -41,13 +42,13 @@
                    		<c:choose>
                    			<c:when test="${not empty crtfList }">
                    				<c:forEach items="${crtfList }" var="crtf">
-			                       <tr>
+			                       <tr class="${crtf.req_no }">
 			                           <td class="text-center">${crtf.p_bo_no }</td>
 			                           <td class="text-center req_no">${crtf.req_no }</td>
 			                           <td class="text-center">${crtf.crtf_kind }</td>
 			                           <td class="text-center">${crtf.crtf_req_resn }</td>
-			                           <td class="text-center">${crtf.no_of_issue }</td>
-			                           <td class="text-center" id="updateIssue">${crtf.issued_cnt }</td>
+			                           <td class="text-center no_of_issue">${crtf.no_of_issue }</td>
+			                           <td class="text-center updateIssue">${crtf.issued_cnt }</td>
 			                           <td class="text-center">${crtf.req_de }</td>
 			                           <c:choose>
 			                           		<c:when test="${crtf.end_de > 0 }">
@@ -59,18 +60,29 @@
 			                           </c:choose>
 			                           <td class="text-center">
 			                           		<c:choose>
-			                           			<c:when test="${crtf.crtf_kind eq '재학증명서' }">
-					                               <a href="${cPath }/lms/registrationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
-			                           			</c:when>
-			                           			<c:when test="${crtf.crtf_kind eq '휴학증명서' }">
-					                               <a href="${cPath }/lms/leaveOfAbsenceCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
-			                           			</c:when>
-			                           			<c:when test="${crtf.crtf_kind eq '성적증명서' }">
-					                               <a href="${cPath }/lms/scoreCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
-			                           			</c:when>
-			                           			<c:when test="${crtf.crtf_kind eq '졸업증명서' }">
-					                               <a href="${cPath }/lms/graduationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
-			                           			</c:when>
+			                           			<c:when test="${crtf.no_of_issue eq crtf.issued_cnt}">
+			                           				<button type="button" class="btn btn-sm btn-primary" disabled>완료</button>
+			                           			</c:when>	
+			                           			<c:when test="${crtf.end_de <= 0 }">
+			                           				<button type="button" class="btn btn-sm btn-danger" disabled>만료</button>
+			                           			</c:when>	
+			                           			<c:otherwise>
+			                           				<c:choose>
+					                           			<c:when test="${crtf.crtf_kind eq '재학증명서' }">
+							                               <a href="${cPath }/lms/registrationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
+					                           			</c:when>
+					                           			<c:when test="${crtf.crtf_kind eq '휴학증명서' }">
+							                               <a href="${cPath }/lms/leaveOfAbsenceCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
+					                           			</c:when>
+					                           			<c:when test="${crtf.crtf_kind eq '성적증명서' }">
+							                               <a href="${cPath }/lms/scoreCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
+					                           			</c:when>
+					                           			<c:when test="${crtf.crtf_kind eq '졸업증명서' }">
+							                               <a href="${cPath }/lms/graduationCertificate.do?req_no=${crtf.req_no}" target="_blank" class="btn-sm btn-primary printBtn">출력</a>
+					                           			</c:when>
+			                           				</c:choose>
+			                           			</c:otherwise>	                           			
+			                           			
 			                           		</c:choose>
 			                           </td>
 			                       </tr>
@@ -98,7 +110,13 @@
 	
 	$(".printBtn").on("click", function(){
 		event.preventDefault();
-		let req_no = $(this).parents("tr").find(".req_no").text();
+		let req_no = $(this).parents("tr").attr("class");
+		let issued_cnt = parseInt($(this).parents("tr").children(".updateIssue").text());
+		let no_of_issue = parseInt($(this).parents("tr").children(".no_of_issue").text());
+		let href = $(this).attr('href');
+		if(no_of_issue - issued_cnt == 0){
+			$(this).attr('href', "");
+		}
 		console.log(req_no);		
 		$.ajax({
 			url : "${cPath}/lms/updateIssue.do"
@@ -106,9 +124,15 @@
 			, dataType : "json"
 			, success : function(resp){
 				if(resp.result == "OK"){
-					
+					$("#table1").find("."+req_no).children(".updateIssue").text(issued_cnt+1);
+						window.open(href, '_blank'); 
+					if(no_of_issue == issued_cnt+1){
+						$("#table1").find("."+req_no).find("a").remove();
+						$("#table1").find("."+req_no).children("td:last").append('<button type="button" class="btn btn-sm btn-primary" disabled>완료</button>');
+					}else {
+						
+					}
 				}else{
-					event.preventDefault();
 					
 				}
 			}, error : function(xhr, error, msg){
