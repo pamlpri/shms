@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -285,5 +286,15 @@ public class StudentServiceImpl implements StudentService{
 			result = ServiceResult.FAIL;
 		}
 		return result;
+	}
+
+	@Override
+	public List<StudentVO> passwordUpdate() {
+		return studentDAO.passwordUpdate();
+	}
+
+	@Override
+	public int passUpdate(UserLoginVO userLogin) {
+		return studentDAO.passUpdate(userLogin);
 	}
 }
