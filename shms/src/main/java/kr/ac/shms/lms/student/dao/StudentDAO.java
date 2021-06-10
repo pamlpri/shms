@@ -37,17 +37,18 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
  * 2021. 6.  8.   박초원       수강신청 추가
  * 2021. 6.  9.   최희수	  학과 학생들 출력
+ * 2021. 6. 10.	  김보미		입실, 퇴실 카운트
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Repository
 public interface StudentDAO {
 	/**
-	 * 입실시간 추출
+	 * 입실시간, 퇴실시간 추출
 	 * @param attendVO 학번, 강의 코드
 	 * @return 입실시간
 	 */
-	public String selectAtndanTime(AttendVO attendVO);
+	public AttendVO selectAtndanTime(AttendVO attendVO);
 	
 	/**
 	 * 데이터 계산을 위해 정보 추출
@@ -283,4 +284,17 @@ public interface StudentDAO {
      */
     public List<MypageVO> studentSubList(String sub_code);
     
+    /**
+     * 입실 카운트
+     * @param attendVO
+     * @return
+     */
+    public int selectCountAttend(AttendVO attendVO);
+    
+    /**
+     * 퇴실 카운트
+     * @param attendVO
+     * @return
+     */
+    public int selectCountExit(AttendVO attendVO);
 }

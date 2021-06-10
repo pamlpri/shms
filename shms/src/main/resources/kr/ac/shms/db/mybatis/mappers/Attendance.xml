@@ -3,6 +3,7 @@
 <mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
 	<select id="selectAtndanTime" resultType="string" parameterType="AttendVO">
 	SELECT attend_time
+		   , exit_time
 	  FROM attendance
 	 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 	   AND lec_code = #{lec_code, jdbcType=VARCHAR}
@@ -32,7 +33,9 @@
 
 	<select id="selectQRInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
 		SELECT lec_code,
-		       stdnt_no
+		       stdnt_no,
+		       attend_time,
+       		   exit_time
 		  FROM attendance
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND lec_code=#{lec_code, jdbcType=VARCHAR}
@@ -68,4 +71,20 @@
 		   AND lec_code =  #{lec_code, jdbcType=VARCHAR}
 		   AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
 	</update>
+	
+	<select id="selectCountAttend" resultType="int" parameterType="AttendVO">
+		SELECT COUNT(attend_time) attend_time
+		  FROM attendance
+		 WHERE stdnt_no =  #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
+	
+	<select id="selectCountExit" resultType="int" parameterType="AttendVO">
+		SELECT COUNT(exit_time) exit_time
+		  FROM attendance
+		 WHERE stdnt_no =  #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</select>
 </mapper>
