@@ -37,6 +37,7 @@ import kr.ac.shms.common.vo.PagingVO;
  * 2021. 5. 29.      송수미       학사문의 게시글 비밀번호 인증, 삭제 기능 구현
  * 2021. 5. 31.      최희수        첨부파일 다운로드 기능 구현
  * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
+ * 2021. 6. 09.      송수미       학과 공지 게시글 등록, 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -125,7 +126,10 @@ public class BoardServiceImpl implements BoardService{
 		int cnt = boardDAO.insertBoard(board);
 		
 		if(cnt > 0) {
+			logger.info("여기까지 들어오나");
+			logger.info("---------------------------------------------");
 			cnt += processes(board);
+			logger.info("여기까지 들어오나");
 			
 			if(cnt > 0) {
 				result = ServiceResult.OK;
@@ -154,9 +158,11 @@ public class BoardServiceImpl implements BoardService{
 			}else {
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
-					result = ServiceResult.OK;
-				}else {
-					result = ServiceResult.FAIL;
+					cnt += processes(board);
+					cnt += deleteFileProcesses(board);
+					if(cnt > 0) {
+						result = ServiceResult.OK;
+					}
 				}
 			}
 		}
@@ -165,11 +171,23 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ServiceResult deleteBoard(int bo_no) {
+	public ServiceResult deleteBoard(BoardVO board) {
+		BoardVO savedBoard = boardDAO.selectBoard(board.getBo_no());
 		ServiceResult result = ServiceResult.FAIL;
-		int cnt = boardDAO.deleteBoard(bo_no);
 		
-		if(cnt > 0) result = ServiceResult.OK;
+		if(savedBoard == null) {
+			result = ServiceResult.NOTEXIST;
+		}else {
+			int cnt = boardDAO.deleteBoard(board);
+			if(cnt > 0) {
+				cnt += deleteFileProcesses(board);
+				if(cnt > 0) {
+					result = ServiceResult.OK;
+				}
+			}
+			
+		}
+		
 		
 		return result;
 	}
@@ -258,8 +276,8 @@ public class BoardServiceImpl implements BoardService{
 						System.out.println("Login Success");
 						client.setBufferSize(1000);	// 버퍼 사이즈
 						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
-						
-						String dir = "/test";
+						String dir = "/" + board.getBo_kind() + "board";
+
 						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
 						logger.info("isDir : {} || {}",isDirectory, dir);
 //						if(!isDirectory) {

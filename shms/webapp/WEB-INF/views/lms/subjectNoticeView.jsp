@@ -58,8 +58,8 @@
 	                          			<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
 	                          			<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
 	                          		</c:url>
-	                          	</c:forEach>
 	                              <li><a href="${downloadURL }" class="text-color">${attach.file_nm }</a></li>
+	                          	</c:forEach>
 	                          </ul>
 	                      </td>
 	                  </tr>
@@ -87,10 +87,19 @@
                               </button>
                           </div>
                           <div class="modal-body">
+                          <form id="deleteForm" action="${cPath}/lms/subjectNoticeDelete.do" method="post">
+                          	<input type="hidden" name="bo_no" value="${board.bo_no }">
+                          	<c:if test="${not empty board.attachList }">
+                          		<input type="hidden" name="atch_file_no" value="${board.atch_file_no}">
+                          		<c:forEach items="${board.attachList }" var="attach">
+                          			<input type="hidden" name="delAttNos" value="${attach.atch_file_seq }">
+                          		</c:forEach>
+                          	</c:if>
                               <p>
 			                                  삭제한 게시글은 복원이 불가합니다.<br/>
 			                                  삭제하시겠습니까?		
                               </p>
+                          </form>
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn  btn-secondary" data-bs-dismiss="modal">
@@ -112,7 +121,8 @@
   <!-- contents end -->
 </div>
 <script>
+	let delAttnos = [];
 	$("#deleteBtn").on("click", function(){
-		location.href = "${cPath}/lms/subjectNoticeDelete.do?bo_no=${board.bo_no}";
+		$("#deleteForm").submit();
 	});
 </script>

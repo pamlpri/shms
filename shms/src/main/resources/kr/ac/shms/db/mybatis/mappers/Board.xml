@@ -210,7 +210,7 @@
 			    sub_code,
 			    univ_inqry_kind,
 			    lec_code
-			  	<if test="atch_file_no != null">
+			  	<if test="attachList != null">
 				    ,atch_file_no
 			  	</if>
 			) VALUES (
@@ -226,7 +226,7 @@
 			    #{sub_code, jdbcType=VARCHAR},
 			    #{univ_inqry_kind, jdbcType=VARCHAR},
 			    #{lec_code, jdbcType=VARCHAR}
-			    <if test="atch_file_no != null">
+			    <if test="attachList != null">
 			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
 			    </if>
 			)
@@ -268,9 +268,9 @@
 	
 	<insert id="insertAttatches" parameterType="BoardVO">
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
-			SELECT COUNT(*)+1 startAttNo
-			FROM ATTACH
-			WHERE atch_file_no = #{atch_file_no}
+		SELECT COUNT(*)+1 startAttNo
+		FROM ATTACH
+		WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
 		</selectKey>
 		INSERT ALL
 		<foreach collection="attachList" item="attatch" index="idx">
@@ -287,15 +287,22 @@
 		    save_file_nm
 	    )
 		VALUES (
-			#{atch_file_no}
+		<choose>
+			<when test="atch_file_no != null and !atch_file_no.equals('')">
+				#{atch_file_no, jdbcType=NUMERIC}
+			</when>
+			<otherwise>
+				(SELECT MAX(atch_file_no) + 1 FROM attach)
+			</otherwise>
+		</choose>
 			, #{startAttNo} + #{idx}
 			, #{attatch.file_path,jdbcType=VARCHAR}
 			, #{attatch.file_nm,jdbcType=VARCHAR}
 			, #{attatch.file_cont_type,jdbcType=VARCHAR}
 			, #{attatch.file_size,jdbcType=NUMERIC}
 			, sysdate
-			, #{attatch.reg_user_id,jdbcType=VARCHAR}
-			, #{attatch.biz_type,jdbcType=VARCHAR}
+			, #{bo_writer, jdbcType=VARCHAR}
+			, 'TG'
 			, #{attatch.save_file_nm,jdbcType=VARCHAR}
 		)
 		</foreach>

@@ -14,6 +14,12 @@
  * </pre>
  */ 
 
+/* 에러 메세지 */
+.error{
+	font-size : 0.9em;
+	color : #dc3545;
+}
+
 /* 모달 back */
 .modal {
     background-color: rgba(0,0,0,0.5)!important;
@@ -920,7 +926,7 @@
 	display : none;	
 }
 
-.fileBox input {
+.fileBox input, .fileBox .curFiles {
 	width: 70%!important;
 }
 .fileBox span {

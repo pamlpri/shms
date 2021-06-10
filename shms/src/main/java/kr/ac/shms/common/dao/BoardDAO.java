@@ -86,10 +86,10 @@ public interface BoardDAO {
 	
 	/**
 	 * 게시글 삭제
-	 * @param bo_no
+	 * @param board
 	 * @return row count > 0 성공
 	 */
-	public int deleteBoard(int bo_no);
+	public int deleteBoard(BoardVO board);
 	
 	/**
 	 * 조회수 증가

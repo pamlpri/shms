@@ -32,6 +32,7 @@ import kr.ac.shms.validator.BoardUpdateGroup;
  * 수정일           수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 9.      송수미      	       최초작성
+ * 2021. 6. 10.     송수미      	       게시글 수정 오류 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -72,12 +73,17 @@ private static final Logger logger = LoggerFactory.getLogger(SubNoticeViewContro
 			) {
 		
 		String user_id = user.getUser_id();
+		String user_name = user.getUser_name();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
+		
+		board.setBo_writer(user_name);
+		String bo_kind = boardService.selectBoKind("학과공지");
+		board.setBo_kind(bo_kind);
 		
 		boolean valid = !(errors.hasErrors());
 		String message = null;
 		String view = null;
-
+		
 		if(valid) {
 			ServiceResult result = boardService.updateBoard(board);
 			if(ServiceResult.OK.equals(result)) {
