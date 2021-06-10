@@ -113,10 +113,10 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">성적조회</a>
+	                          <a href="${cPath }/lms/grades.do">성적조회</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">강의평가</a>
+	                          <a href="${cPath }/lms/evaluation.do">강의평가</a>
 	                      </li>
 	                  </ul>
 	              </li>
@@ -127,16 +127,16 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">등록금 조회</a>
+	                          <a href="${cPath }/lms/tuitionList.do">등록금 조회</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">등록금 고지서</a>
+	                          <a href="${cPath }/lms/tuitionBill.do">등록금 고지서</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">등록금 영수증</a>
+	                          <a href="${cPath }/lms/tuitionReceipt.do">등록금 영수증</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">등록금 환불</a>
+	                          <a href="${cPath }/lms/tuitionRefund.do">등록금 환불</a>
 	                      </li>
 	                  </ul>
 	              </li>
