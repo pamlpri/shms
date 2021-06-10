@@ -48,7 +48,7 @@ public interface StudentService {
 	 * @param attendVO 학번, 강의 코드
 	 * @return 입실시간
 	 */
-	public String selectAttendTime(AttendVO attendVO);
+	public String selectAtndanTime(AttendVO attendVO);
 	/**
 	 * qr코드에 넣을 정보 추출
 	 * @param attendInfo 학번, 강의코드

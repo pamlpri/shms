@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.BoardVO;
 
 /**
  * @author 송수미
@@ -35,11 +36,12 @@ public class CollegeQnaDeleteController {
 	
 	@RequestMapping("/main/community/collegeQnaDelete.do")
 	public String collegeQnaForm(
-			@RequestParam("bo_no") String bo_no
+			@RequestParam("bo_no") int bo_no
 			, RedirectAttributes session
 			) {
-		logger.info("bo_no : {}", bo_no);
-		ServiceResult result = boardService.deleteBoard(Integer.parseInt(bo_no));
+		BoardVO board = new BoardVO();
+		board.setBo_no(bo_no);
+		ServiceResult result = boardService.deleteBoard(board);
 		
 		String message = null;
 		String view = null;

@@ -47,7 +47,7 @@ public interface StudentDAO {
 	 * @param attendVO 학번, 강의 코드
 	 * @return 입실시간
 	 */
-	public String selectAttendTime(AttendVO attendVO);
+	public String selectAtndanTime(AttendVO attendVO);
 	
 	/**
 	 * 데이터 계산을 위해 정보 추출

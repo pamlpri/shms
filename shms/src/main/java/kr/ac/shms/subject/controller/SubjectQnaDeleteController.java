@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.BoardVO;
 
 /**
  * @author 김보미
@@ -34,12 +35,15 @@ public class SubjectQnaDeleteController {
 	
 	@RequestMapping("/subject/subjectQnaDelete.do")
 	public String subjectQnaDelete(
-			@RequestParam("bo_no") String bo_no
+			@RequestParam("bo_no") int bo_no
 			, @SessionAttribute(name="sub_code", required=false) String sub_code
 			, Model model
 			, RedirectAttributes session
 			) {
-		ServiceResult result = boardService.deleteBoard(Integer.parseInt(bo_no));
+		
+		BoardVO board = new BoardVO();
+		board.setBo_no(bo_no);
+		ServiceResult result = boardService.deleteBoard(board);
 		
 		String message = null;
 		String view = null;
