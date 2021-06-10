@@ -296,4 +296,10 @@ public interface StudentDAO {
      */
     public int selectCountExit(AttendVO attendVO);
     
+    /**
+     * 출석상태 업데이트 
+     * @param attendVO
+     * @return 
+     */
+    public int updateAttendStat(AttendVO attendVO);
 }

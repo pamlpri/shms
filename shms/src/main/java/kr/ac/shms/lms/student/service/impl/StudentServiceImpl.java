@@ -286,4 +286,21 @@ public class StudentServiceImpl implements StudentService{
 		}
 		return result;
 	}
+
+	@Override
+	public AttendVO selectAttendInfo(AttendVO studentInfo) {
+		return studentDAO.selectAttendInfo(studentInfo);
+	}
+
+	@Override
+	public ServiceResult updateAttendStat(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.updateAttendStat(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
 }

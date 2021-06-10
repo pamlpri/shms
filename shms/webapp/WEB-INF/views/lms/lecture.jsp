@@ -4,7 +4,6 @@
 * ----------  ---------  -----------------
 * 2021. 5. 20.  박초원        최초작성
 * 2021. 5. 27.  김보미      강의 개설 버튼 수정 
-* 2021. 6. 7. 
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
