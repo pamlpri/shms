@@ -301,4 +301,10 @@ public interface StudentDAO {
     
     public int passUpdate(UserLoginVO userLogin);
     
+    /**
+     * 출석상태 업데이트 
+     * @param attendVO
+     * @return 
+     */
+    public int updateAttendStat(AttendVO attendVO);
 }

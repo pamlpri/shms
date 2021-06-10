@@ -297,4 +297,22 @@ public class StudentServiceImpl implements StudentService{
 	public int passUpdate(UserLoginVO userLogin) {
 		return studentDAO.passUpdate(userLogin);
 	}
+
+	@Override
+	public ServiceResult updateAttendStat(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.updateAttendStat(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+	@Override
+	public AttendVO selectAttendInfo(AttendVO studentInfo) {
+		return studentDAO.selectAttendInfo(studentInfo);
+	}
+	
 }

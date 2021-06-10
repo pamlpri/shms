@@ -46,6 +46,13 @@ public interface StudentService {
 	public StudentVO student(String id);
 	
 	/**
+	 * 데이터 계산을 위해 정보 추출
+	 * @param studentInfo 학번, 강의코드
+	 * @return attendVO
+	 */
+	public AttendVO selectAttendInfo(AttendVO studentInfo);
+	
+	/**
 	 * 입실시간, 퇴실시간 추출
 	 * @param attendVO 학번, 강의 코드
 	 * @return 입실시간
@@ -276,4 +283,11 @@ public interface StudentService {
     public List<StudentVO> passwordUpdate();
     
     public int passUpdate(UserLoginVO userLogin);
+
+    /**
+     * 출석상태 업데이트 
+     * @param attendVO
+     * @return 
+     */
+    public ServiceResult updateAttendStat(AttendVO attendVO);
 }
