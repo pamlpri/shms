@@ -28,7 +28,9 @@ import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.common.vo.ReceiverVO;
 import kr.ac.shms.lms.common.vo.UserVO;
+import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
@@ -47,6 +49,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 03 	박초원		웹메일 인서트
  * 2021. 06. 04 	박초원 	    수신자, 첨부파일 추가
  * 2021. 06. 08		최희수	상담 일지 등록, 조회
+ * 2021. 06. 10		  박초원    비밀번호 변경
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -263,4 +266,14 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}
+
+	@Override
+	public ServiceResult updateNewPassword(UsersVO usersVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsCommonDAO.updateNewPassword(usersVO);
+		if(cnt > 0) result = ServiceResult.OK;
+		return result; 
+	}
+
+	
 }
