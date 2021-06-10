@@ -1,9 +1,13 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.ac.shms.common.enumpkg.MimeType;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lecture.service.LectureService;
@@ -60,7 +67,6 @@ public class AttendanceController {
 		AttendVO qrInfoVO = new AttendVO();
 		qrInfoVO.setLec_code(lec_code);
 		qrInfoVO.setStdnt_no(user.getUser_id());
-	
 		studentService.selectQRInfo(qrInfoVO);
 		model.addAttribute("qrInfo", qrInfoVO);
 		return "lecture/qrgenerator";
@@ -78,7 +84,9 @@ public class AttendanceController {
 		AttendVO attendVO = new AttendVO();
 		attendVO.setStdnt_no(stdnt_no);
 		attendVO.setLec_code(lec_code);
-		String attend_time = studentService.selectAtndanTime(attendVO);
+		
+		AttendVO attend = studentService.selectAtndanTime(attendVO);
+		String attend_time = attend.getAttend_time();
 		
 		AttendVO attendInfo = new AttendVO();
 		attendInfo.setStdnt_no(stdnt_no);
@@ -116,16 +124,36 @@ public class AttendanceController {
 	@RequestMapping(value="/qrTimeout.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public String qrTimeoutForAjax(
-			@RequestBody Map<String, String> atndan
-			) {
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @RequestBody Map<String, String> atndan
+			, HttpServletResponse resp
+			) throws IOException {
 		logger.info("qrDataMap : {}", atndan);
+		Map<String, Object> resultMap = new HashMap<>();
 		
 		AttendVO atVo = new AttendVO();
-		atVo.setStdnt_no(atndan.get("stdnt_no"));
+		atVo.setStdnt_no(user.getUser_id());
 		atVo.setLec_code(atndan.get("lec_code"));
 		
-	
-		return "lecture/main";
+		ServiceResult attendResult = studentService.selectCountAttend(atVo);
+		ServiceResult exitResult = studentService.selectCountExit(atVo);
+		
+		if(ServiceResult.OK.equals(attendResult) || ServiceResult.OK.equals(exitResult)) {
+			resultMap.put("result", ServiceResult.OK);
+		}else {
+			resultMap.put("result", ServiceResult.FAIL);
+		}
+		
+		resp.setContentType(MimeType.JSON.getMime());
+		try(
+			PrintWriter out = resp.getWriter();	
+		){
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(out, resultMap);
+		}
+		
+		
+		return null;
 	}
 	
 	public String updateAttendance() {
