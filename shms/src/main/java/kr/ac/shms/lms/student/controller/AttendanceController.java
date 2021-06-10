@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.ac.shms.common.enumpkg.MimeType;
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
@@ -42,7 +41,8 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  * 수정일        수정자      수정내용
  * --------     --------    ----------------------
  * 2021. 5. 31.  김보미      최초작성
- * 2021. 6. 01.  김보미		 출석(퇴실)
+ * 2021. 6.  1.  김보미		 출석(퇴실)
+ * 2021. 6. 10.  김보미		 출석상태 업데이트
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -81,13 +81,13 @@ public class AttendanceController {
 		String stdnt_no = arr[0];
 		String lec_code = arr[1];
 		
+		
 		AttendVO attendVO = new AttendVO();
 		attendVO.setStdnt_no(stdnt_no);
 		attendVO.setLec_code(lec_code);
 		
-		AttendVO attend = studentService.selectAtndanTime(attendVO);
-		String attend_time = attend.getAttend_time();
-		
+		ServiceResult attendResult = studentService.selectCountAttend(attendVO);
+
 		AttendVO attendInfo = new AttendVO();
 		attendInfo.setStdnt_no(stdnt_no);
 		attendInfo.setLec_code(lec_code);
@@ -95,12 +95,15 @@ public class AttendanceController {
 		List<LectureVO> lecture = lectureService.selectLectureDetails(lec_code);
 
 		String view = null;
-		ServiceResult result = null;
-		if(attend_time == null) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		if(ServiceResult.FAIL.equals(attendResult)) {
 			result = studentService.attend(attendInfo);
 			if(ServiceResult.OK.equals(result)) {
+				AttendVO getAttendInfo = new AttendVO();
+				studentService.selectAtndanTime(getAttendInfo);
 				model.addAttribute("attendInfo", attendInfo);
-				model.addAttribute("attend_time", attend_time);
+				model.addAttribute("attend_time", getAttendInfo.getAttend_time());
 				model.addAttribute("lecture", lecture);
 				view = "lecture/qrResult";
 			}else {
@@ -109,8 +112,13 @@ public class AttendanceController {
 		}else {
 			result = studentService.exit(attendInfo);
 			if(ServiceResult.OK.equals(result)) {
+				AttendVO getAttendInfo = new AttendVO();
+				getAttendInfo.setStdnt_no(stdnt_no);
+				getAttendInfo.setLec_code(lec_code);
+				AttendVO vo = studentService.selectAtndanTime(getAttendInfo);
+				
 				model.addAttribute("attendInfo", attendInfo);
-				model.addAttribute("attend_time", attend_time);
+				model.addAttribute("attend_time", vo.getAttend_time());
 				model.addAttribute("lec_code", lec_code);
 				model.addAttribute("lecture", lecture);
 				view = "lecture/qrResult";
@@ -139,34 +147,67 @@ public class AttendanceController {
 		ServiceResult exitResult = studentService.selectCountExit(atVo);
 		
 		if(ServiceResult.OK.equals(attendResult) || ServiceResult.OK.equals(exitResult)) {
+			// 출석 상태 update하기
+			AttendVO studentInfo = new AttendVO();
+			studentInfo.setStdnt_no(user.getUser_id());
+			studentInfo.setLec_code(atndan.get("lec_code"));
+			
+			AttendVO vo = studentService.selectAttendInfo(studentInfo);
+			int total_lec_time = vo.getTotal_lec_time();	// 총 강의 시간(분)
+			int attend_check = vo.getAttend_check();		// 출석인정시간(분)
+			int start_check = vo.getStart_check();			// 강의시작시간-입실시간(분)
+			int finish_check = vo.getFinish_check();		// 퇴실시간-강의종료시간(분)
+			
+			AttendVO attend = new AttendVO();
+			attend.setStdnt_no(user.getUser_id());
+			attend.setLec_code(atndan.get("lec_code"));
+			
+			if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
+				ServiceResult updateResult = ServiceResult.FAIL;
+				if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
+					if(attend_check < 15 && attend_check > -15) {
+						if(start_check< 15 && start_check > -15 && finish_check < 15 && finish_check > -15) {
+							attend.setAttend_stat("CS");
+							updateResult = studentService.updateAttendStat(attend);
+							if(ServiceResult.OK.equals(updateResult)) {
+								resultMap.put("result", ServiceResult.OK);
+							}else {
+								resultMap.put("result", ServiceResult.FAIL);
+							}
+						}
+					}else {
+						if((total_lec_time / 2) < attend_check) {
+							attend.setAttend_stat("JG");
+							updateResult = studentService.updateAttendStat(attend);
+							if(ServiceResult.OK.equals(updateResult)) {
+								resultMap.put("result", ServiceResult.OK);							
+							}else {
+								resultMap.put("result", ServiceResult.FAIL);
+							}
+						}else if((total_lec_time / 2) > attend_check) {
+							attend.setAttend_stat("GS");
+							updateResult = studentService.updateAttendStat(attend);
+							if(ServiceResult.OK.equals(updateResult)) {
+								resultMap.put("result", ServiceResult.OK);							
+							}else {
+								resultMap.put("result", ServiceResult.FAIL);
+							}
+						}
+					}
+				}
+			}
 			resultMap.put("result", ServiceResult.OK);
-		}else {
+		}else if(ServiceResult.FAIL.equals(attendResult) || ServiceResult.FAIL.equals(exitResult)){
 			resultMap.put("result", ServiceResult.FAIL);
+		}else if(ServiceResult.OK.equals(exitResult)) {
+
 		}
-		
 		resp.setContentType(MimeType.JSON.getMime());
 		try(
 			PrintWriter out = resp.getWriter();	
 		){
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.writeValue(out, resultMap);
-		}
-		
-		
-		return null;
-	}
-	
-	public String updateAttendance() {
-		AttendVO vo = new AttendVO();
-		int stdnt_atndan_time = vo.getStdnt_atndan_time();	// 학생 출석 시간 = 퇴실시간 - 입실시간
-		int tm = vo.getTm();	// 강의 시작 시간
-		int finish_lec = vo.getFinish_lec();	// 강의 종료 시간
-		int total_lec_time = vo.getTotal_lec_time();	// 총 강의 시간
-		String exit_time = vo.getExit_time();	// 학생 퇴실 시간
-		int stdnt_attend_time = vo.getStdnt_attend_time();	// 학생 입실 시간
-		
-		if(total_lec_time - stdnt_atndan_time <= 0) {
-			
 		}
 		return null;
 	}
