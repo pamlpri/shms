@@ -101,8 +101,6 @@ public class SubNoticeInsertController {
 		String user_name = user.getUser_name();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
-		logger.info("board:{}", board);
-		
 		board.setBo_writer(user_name);
 		String bo_kind = boardService.selectBoKind("학과공지");
 		board.setBo_kind(bo_kind);

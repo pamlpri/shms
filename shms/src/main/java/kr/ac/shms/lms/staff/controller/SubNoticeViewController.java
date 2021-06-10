@@ -84,7 +84,7 @@ public class SubNoticeViewController {
 		return  "lms/subjectNoticeView";
 	}
 	
-	@RequestMapping(value="/boardDownload.do")
+	@RequestMapping(value="/lms/boardDownload.do")
 	public String downloader(
 		@ModelAttribute("attach") AttachVO attach
 		, Model model

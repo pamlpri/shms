@@ -92,10 +92,10 @@ public interface BoardService {
 	
 	/**
 	 * 게시글 삭제
-	 * @param bo_no
+	 * @param board
 	 * @return OK, FAIL, NOTEXIST, INVALIDPASSWORD
 	 */
-	public ServiceResult deleteBoard(int bo_no);
+	public ServiceResult deleteBoard(BoardVO board);
 
 	/**
 	 * 해당 게시글의 첨부파일 전체 출력

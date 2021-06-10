@@ -125,7 +125,9 @@
 											<c:forEach items="${hgList }" var="hgBoard">
 												<tr>
 													<td scope="row">${hgBoard.p_bo_no }</td>
-													<td scope="row"><a class="text-light-black" href="#">${hgBoard.bo_title }</a></td>
+													<td scope="row">
+														<a class="text-light-black" href="${cPath }/lms/subjectNoticeView.do?bo_no=${hgBoard.bo_no}">${hgBoard.bo_title }</a>
+													</td>
 													<td scope="row">${hgBoard.bo_write_de }</td>
 													<td scope="row">${hgBoard.bo_hit }</td>
 												</tr>
