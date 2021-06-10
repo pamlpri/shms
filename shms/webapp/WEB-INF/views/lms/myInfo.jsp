@@ -215,10 +215,10 @@
 											<div class="login-title">
 												<h2 class="text-center text-primary mb-4">Reset Password</h2>
 											</div>
-											<form>
+											<form action="${cPath }/lms/newPassword.do" method="post" id="newForm">
 												<div class="form-group has-icon-left">
                                                     <div class="position-relative">
-                                                        <input type="password" class="form-control" placeholder="현재 비밀번호">
+                                                        <input type="password" class="form-control" placeholder="현재 비밀번호" name="cur_password">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-key-fill"></i>
                                                         </div>
@@ -226,7 +226,7 @@
                                                 </div>
 												<div class="form-group has-icon-left">
                                                     <div class="position-relative">
-                                                        <input type="password" class="form-control" placeholder="새 비밀번호">
+                                                        <input type="password" class="form-control" placeholder="새 비밀번호" name="user_password">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-unlock-fill"></i>
                                                         </div>
@@ -234,15 +234,15 @@
                                                 </div>
 												<div class="form-group has-icon-left">
                                                     <div class="position-relative">
-                                                        <input type="password" class="form-control" placeholder="비밀번호 확인">
+                                                        <input type="password" class="form-control" placeholder="비밀번호 확인" name="confirm_password">
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-lock-fill"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="text-center mt-4">
-                                                	<button type="button" class="btn btn-light-secondary">취소</button>
-                                                	<button type="submit" class="btn btn-primary">저장</button>
+                                                	<button type="button" onclick="location.href='${cPath}/lms/myPage.do'" class="btn btn-light-secondary">취소</button>
+                                                	<button type="button" class="btn btn-primary" id="newBtn" >저장</button>
                                                 </div>
 											</form>
 										</div>
@@ -250,6 +250,47 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<c:if test="${not empty message }">
+			<script>
+				$(function(){
+					$("#default").find(".modal-title").empty().text("비밀번호 오류");
+					$("#default").find(".modal-body p").empty().text("사용중인 비밀번호가 아닙니다. ");
+					$("#default").addClass("show").css("display","block");
+					$("input[name='cur_password']").addClass("is-invalid");
+					$("#profile-tab").removeClass("active").attr("aria-selected", false);
+					$("#profile").removeClass("active show");
+					$("#password-tab").addClass("active").attr("aria-selected", true);
+					$("#password").addClass("active show");
+				});
+			</script>
+		</c:if>
+		<!--Basic Modal -->
+		<div class="modal fade text-left" id="default" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-scrollable" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel1"></h5>
+						<button type="button" class="close rounded-pill"
+							data-bs-dismiss="modal" aria-label="Close">
+							<i data-feather="x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" id="close"
+ 							data-bs-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">닫기</span>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -272,6 +313,26 @@
 					console.log(msg);
 				}
 			});
+		});
+	   
+	   $("#newBtn").on("click", function(){
+			let user_password = $("input[name='user_password']").val();
+			let confirm_password = $("input[name='confirm_password']").val();
+			console.log(user_password);
+			console.log(confirm_password);
+			
+			if(user_password != confirm_password){
+				$("#default").find(".modal-title").empty().text("비밀번호 오류");
+				$("#default").find(".modal-body p").empty().text("새 비밀번호가 일치하지 않습니다. ");
+				$("#default").addClass("show").css("display","block");
+				$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid");
+			}else {
+				$("#newForm").submit();
+			}
+		});
+		
+		$("#close, .modal").on("click", function(){
+			$("#default").removeClass("show").css("display","none");
 		});
 	   
 	   function sample6_execDaumPostcode() {

@@ -282,4 +282,5 @@ public interface StudentDAO {
      * @return 데이터가 없으면 null
      */
     public List<MypageVO> studentSubList(String sub_code);
+    
 }

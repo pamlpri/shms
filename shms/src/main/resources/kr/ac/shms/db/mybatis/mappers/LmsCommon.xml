@@ -459,4 +459,10 @@
 		        contents = #{contents}
 		WHERE req_no = #{req_no}
 	</update>
+	
+	<update id="updateNewPassword" parameterType="kr.ac.shms.lms.common.vo.UsersVO">
+		UPDATE users
+		   SET user_password = #{user_password, jdbcType=VARCHAR}
+		 WHERE user_id = #{user_id, jdbcType=VARCHAR}
+	</update>
 </mapper>
