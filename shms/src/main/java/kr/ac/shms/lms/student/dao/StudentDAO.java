@@ -47,7 +47,7 @@ public interface StudentDAO {
 	 * @param attendVO 학번, 강의 코드
 	 * @return 입실시간
 	 */
-	public String selectAtndanTime(AttendVO attendVO);
+	public AttendVO selectAtndanTime(AttendVO attendVO);
 	
 	/**
 	 * 데이터 계산을 위해 정보 추출
@@ -282,5 +282,18 @@ public interface StudentDAO {
      * @return 데이터가 없으면 null
      */
     public List<MypageVO> studentSubList(String sub_code);
+    /**
+     * 입실 카운트
+     * @param attendVO
+     * @return
+     */
+    public int selectCountAttend(AttendVO attendVO);
+    
+    /**
+     * 퇴실 카운트
+     * @param attendVO
+     * @return
+     */
+    public int selectCountExit(AttendVO attendVO);
     
 }

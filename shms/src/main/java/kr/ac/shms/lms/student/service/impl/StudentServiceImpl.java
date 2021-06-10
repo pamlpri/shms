@@ -39,6 +39,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
  * 2021. 6.  8.   박초원       수강신청 추가
  * 2021. 6.  9.   최희수	  학과 학생들 출력
+ * 2021. 6. 10.	  김보미		입실, 퇴실 카운트
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -85,7 +86,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public String selectAtndanTime(AttendVO attendVO) {
+	public AttendVO selectAtndanTime(AttendVO attendVO) {
 		return studentDAO.selectAtndanTime(attendVO);
 	}
 
@@ -256,9 +257,33 @@ public class StudentServiceImpl implements StudentService{
 	
 		return result;
 	}
-
+	
 	@Override
 	public List<MypageVO> studentSubList(String sub_code) {
 		return studentDAO.studentSubList(sub_code);
+	}
+
+	@Override
+	public ServiceResult selectCountAttend(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = studentDAO.selectCountAttend(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult selectCountExit(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = studentDAO.selectCountExit(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
 	}
 }
