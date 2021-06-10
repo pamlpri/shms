@@ -40,150 +40,26 @@
                      </tr>
                  </thead>
                  <tbody>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-success">대기</span></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">
-                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do">대학문의 드립니다!!!!! 대학문의!!!!! 대학문의 대학문의</a>
-                         </td>
-                         <td class="text-center">이현수</td>
-                         <td class="text-center">2021.05.03</td>
-                         <td class="text-center"><span class="badge bg-secondary">완료</span></td>
-                     </tr>
+                 	<c:choose>
+                 		<c:when test="${not empty boardList }">
+		                 	<c:forEach items="${boardList }" var="board" varStatus="status">
+		                 		<tr>
+			                         <td class="text-center">${status.index + 1 }</td>
+			                         <td class="text-center">
+			                             <a class="text-color noticeTitle" href="${cPath}/lms/subjectQnaView.do?bo_no=${board.bo_no }">${board.bo_title }</a>
+			                         </td>
+			                         <td class="text-center">${board.bo_writer }</td>
+			                         <td class="text-center">${board.bo_write_de }</td>
+			                         <td class="text-center"><span class="badge bg-success">${not empty board.bo_ans ? '완료' : '대기'}</span></td>
+			                     </tr>
+		                 	</c:forEach>
+                 		</c:when>
+                 		<c:otherwise>
+                 			<tr>
+                 				<td colspan="5">해당 게시글의 내용이 없습니다.</td>
+                 			</tr>
+                 		</c:otherwise>
+                 	</c:choose>
                  </tbody>
              </table>
          </div>
