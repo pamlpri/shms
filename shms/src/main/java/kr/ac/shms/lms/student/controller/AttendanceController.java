@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 
 /**
  * @author PC-24
@@ -43,6 +47,9 @@ public class AttendanceController {
 	@Inject
 	private StudentService studentService;
 	
+	@Inject
+	private LectureService lectureService;
+	
 	@RequestMapping("/qrGen.do")
 	public String selectQRInfo(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -50,7 +57,6 @@ public class AttendanceController {
 			, HttpSession session
 			, Model model
 			) {
-		
 		AttendVO qrInfoVO = new AttendVO();
 		qrInfoVO.setLec_code(lec_code);
 		qrInfoVO.setStdnt_no(user.getUser_id());
@@ -72,11 +78,13 @@ public class AttendanceController {
 		AttendVO attendVO = new AttendVO();
 		attendVO.setStdnt_no(stdnt_no);
 		attendVO.setLec_code(lec_code);
-		String attend_time = studentService.selectAttendTime(attendVO);
+		String attend_time = studentService.selectAtndanTime(attendVO);
 		
 		AttendVO attendInfo = new AttendVO();
 		attendInfo.setStdnt_no(stdnt_no);
 		attendInfo.setLec_code(lec_code);
+
+		List<LectureVO> lecture = lectureService.selectLectureDetails(lec_code);
 
 		String view = null;
 		ServiceResult result = null;
@@ -85,6 +93,7 @@ public class AttendanceController {
 			if(ServiceResult.OK.equals(result)) {
 				model.addAttribute("attendInfo", attendInfo);
 				model.addAttribute("attend_time", attend_time);
+				model.addAttribute("lecture", lecture);
 				view = "lecture/qrResult";
 			}else {
 				view = "lecture/main";
@@ -94,6 +103,8 @@ public class AttendanceController {
 			if(ServiceResult.OK.equals(result)) {
 				model.addAttribute("attendInfo", attendInfo);
 				model.addAttribute("attend_time", attend_time);
+				model.addAttribute("lec_code", lec_code);
+				model.addAttribute("lecture", lecture);
 				view = "lecture/qrResult";
 			}else {
 				view = "lecture/main";

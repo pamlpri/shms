@@ -85,8 +85,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public String selectAttendTime(AttendVO attendVO) {
-		return studentDAO.selectAttendTime(attendVO);
+	public String selectAtndanTime(AttendVO attendVO) {
+		return studentDAO.selectAtndanTime(attendVO);
 	}
 
 	@Override
