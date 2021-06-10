@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 
 import kr.ac.shms.lms.login.dao.LoginDAO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.utils.CookieUtils;
 
 @Service
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
@@ -46,9 +47,16 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		UserLoginVO vo = loginDAO.selectMemberForAuth(authentication.getName());
 		logger.info("UserLoginVO : {}", vo);
 		
+		String rememberId = request.getParameter("rememberId");
+		if("on".equals(rememberId)) {
+			Cookie cookie = new Cookie("checkID", vo.getUser_id());
+			cookie.setMaxAge(60*60*24);
+			response.addCookie(cookie);
+		}
 		String userInfo[] = new String[2];
 		userInfo[0] = vo.getUser_id();
 		userInfo[1] = vo.getAuth_grp_code();
+		
 		Map<String, String[]> userMap = new HashMap<>();
 		userMap.put("user", userInfo);
 		session.setAttribute("user", userMap);
