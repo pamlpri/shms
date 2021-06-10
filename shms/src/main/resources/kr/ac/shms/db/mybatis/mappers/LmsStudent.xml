@@ -288,21 +288,29 @@
 	</select>
 	
 	<select id="timeTable" parameterType="String" resultType="TimeTableVO">
-		SELECT st.stdnt_no,
-		       su.lec_code,
-		       req_year,
-		       req_semstr,
-		       l.cur_code,
-		       dayotw,
-		       lec_time,
-		       c.lec_name,
-		       lec_pnt
-		FROM student st
-		LEFT OUTER JOIN sugang_req su ON st.stdnt_no = su.stdnt_no
-		LEFT OUTER JOIN lecture l ON su.lec_code = l.lec_code
-		LEFT OUTER JOIN curriculum c ON l.cur_code = c.cur_code
-		WHERE st.stdnt_no = #{stdnt_no}
-		AND req_year = TO_CHAR(SYSDATE, 'YYYY')
+		SELECT  c.lec_name, 
+		        b.dayotw, 
+		        b.lec_time, 
+		        c.lec_pnt, 
+		        a.stdnt_no, 
+		        a.req_year, 
+		        a.req_semstr,
+		        a.lec_code, 
+		        d.name, 
+		        f.lecrum_nm, 
+		        g.building_nm,
+		        b.cur_code
+		  FROM sugang_req a
+		 INNER JOIN lecture b ON (a.lec_code = b.lec_code)
+		 INNER JOIN curriculum c ON (b.cur_code = c.cur_code)
+		 INNER JOIN staff d ON (c.staff_no = d.staff_no)
+		 INNER JOIN lecrum_ttable e ON (b.lec_code = e.lec_code)
+		 INNER JOIN lecrum f ON (e.lecrum_no = f.lecrum_no)
+		 INNER JOIN building g ON (f.building_no = g.building_no)
+		 WHERE stdnt_no=#{stdnt_no}
+		   AND b.estbl_year >= TO_CHAR(SYSDATE, 'YYYY')
+   		   AND b.estbl_semstr = (SELECT semstr FROM v_semstr)
+   		   AND a.sugang_at = 'Y'
 	</select>
 	
 	<select id="studentSubList" parameterType="String" resultType="MyPageVO">

@@ -32,4 +32,8 @@ public class TimeTableVO {
 	private int lec_time;
 	private String lec_name;
 	private int lec_pnt;
+	private String name;
+	private String lecrum_nm;
+	private String building_nm;
+	
 }

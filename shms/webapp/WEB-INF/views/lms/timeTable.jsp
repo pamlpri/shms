@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 06. 04		최희수	최초작성
+* 2021. 06. 09		박초원	스타일 적용, 조회 컬럼 추가
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,24 +18,24 @@
        <ol class="breadcrumb">
            <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
            <li class="breadcrumb-item"><a href="#">수강신청</a></li>
-           <li class="breadcrumb-item active" aria-current="page"><a href="${cPath }/lms/timeTableView.do">내 시간표</li>
+           <li class="breadcrumb-item active" aria-current="page">내 시간표</li>
        </ol>
    </nav>
 
    <section class="section">
+       <h5 class="mt-5 mb-3">${student.name }의 시간표</h5>
        <div class="card inputTable">
            <div class="card-body">
-               <h5>${student.name }의 시간표</h5>
                <div class="table-responsive">
 					<table id="timeTable">
 						<thead>
 							<tr class="text-center">
-								<th scope="col" style="width: 150px">시간</th>
-								<th scope="col" style="width: 300px">월</th>
-								<th scope="col" style="width: 300px">화</th>
-								<th scope="col" style="width: 300px">수</th>
-								<th scope="col" style="width: 300px">목</th>
-								<th scope="col" style="width: 300px">금</th>
+								<th scope="col" >시간</th>
+								<th scope="col" >월</th>
+								<th scope="col" >화</th>
+								<th scope="col" >수</th>
+								<th scope="col" >목</th>
+								<th scope="col" >금</th>
 							</tr>
 						</thead>
 						<tbody id="tableTbody">
@@ -72,7 +73,9 @@
 								}
 								$(".t02"+i).attr("rowSpan", v.lec_pnt);
 								let color = makecir();
-								$(".t02"+i).html(v.lec_name).css("background-color", color);
+								$(".t02"+i).html(
+										v.lec_name + "<br/>("+ v.building_nm + " " + v.lecrum_nm+")<br/>" + v.name 
+								).css("background-color", color);
 							}
 							if(v.dayotw == 03) {
 								for(var j=1; j< v.lec_pnt; j++) {
@@ -81,7 +84,9 @@
 								}
 								$(".t03"+i).attr("rowSpan", v.lec_pnt);
 								let color = makecir();
-								$(".t03"+i).html(v.lec_name).css("background-color", color);
+								$(".t03"+i).html(
+										v.lec_name + "<br/>("+ v.building_nm + " " + v.lecrum_nm+")<br/>" + v.name 
+								).css("background-color", color);
 							}
 							if(v.dayotw == 04) {
 								for(var j=1; j< v.lec_pnt; j++) {
@@ -90,7 +95,9 @@
 								}
 								$(".t04"+i).attr("rowSpan", v.lec_pnt);
 								let color = makecir();
-								$(".t04"+i).html(v.lec_name).css("background-color", color);
+								$(".t04"+i).html(
+										v.lec_name + "<br/>("+ v.building_nm + " " + v.lecrum_nm+")<br/>" + v.name 
+								).css("background-color", color);
 							}
 							if(v.dayotw == 05) {
 								for(var j=1; j< v.lec_pnt; j++) {
@@ -99,7 +106,9 @@
 								}
 								$(".t05"+i).attr("rowSpan", v.lec_pnt);
 								let color = makecir();
-								$(".t05"+i).html(v.lec_name).css("background-color", color);
+								$(".t05"+i).html(
+										v.lec_name + "<br/>("+ v.building_nm + " " + v.lecrum_nm+")<br/>" + v.name 
+								).css("background-color", color);
 							}
 							if(v.dayotw == 06) {
 								for(var j=1; j< v.lec_pnt; j++) {
@@ -108,7 +117,9 @@
 								}
 								$(".t06"+i).attr("rowSpan", v.lec_pnt);
 								let color = makecir();
-								$(".t06"+i).html(v.lec_name).css("background-color", color);
+								$(".t06"+i).html(
+										v.lec_name + "<br/>("+ v.building_nm + "" + v.lecrum_nm+")<br/>" + v.name 
+								).css("background-color", color);
 							}
 						}
 					}
@@ -132,12 +143,9 @@
 				return;
 			}
 			
-			var s = rand(30,100);
-			var x = rand(0,800);
-			var y = rand(0,500);
-			var r = rand(230,255);
-			var g = rand(180,200);
-			var b = rand(180,200);
+			var r = rand(50,80);
+			var g = rand(120,180);
+			var b = rand(200,250);
 			
 			return "rgb("+ r +","+ g +","+ b +")";
 		}
