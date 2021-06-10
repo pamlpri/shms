@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -296,10 +297,8 @@ public interface StudentDAO {
      */
     public int selectCountExit(AttendVO attendVO);
     
-    /**
-     * 출석상태 업데이트 
-     * @param attendVO
-     * @return 
-     */
-    public int updateAttendStat(AttendVO attendVO);
+    public List<StudentVO> passwordUpdate();
+    
+    public int passUpdate(UserLoginVO userLogin);
+    
 }

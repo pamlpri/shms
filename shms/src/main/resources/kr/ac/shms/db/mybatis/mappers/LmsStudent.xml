@@ -343,5 +343,19 @@
         ON st.sub_code = su.sub_code
         WHERE st.sub_code = #{sub_code}
 	</select> 
+	
+	<select id="passwordUpdate" resultType="StudentVO">
+		SELECT S.STDNT_NO, S.REGNO1, U.USER_ID aa
+	    FROM STUDENT S
+	    RIGHT OUTER JOIN USERS U
+	    ON S.STDNT_NO = U.USER_ID
+	    WHERE STDNT_NO LIKE 'S18%'
+	</select>
+	
+	<update id="passUpdate" parameterType="UserLoginVO">
+		UPDATE USERS
+		SET USER_PASSWORD = #{user_password}
+		WHERE USER_ID = #{user_id}
+	</update>
 </mapper>
 

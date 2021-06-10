@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -43,12 +44,6 @@ public interface StudentService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public StudentVO student(String id);
-	/**
-	 * 데이터 계산을 위해 정보 추출
-	 * @param studentInfo 학번, 강의코드
-	 * @return attendVO
-	 */
-	public AttendVO selectAttendInfo(AttendVO studentInfo);
 	
 	/**
 	 * 입실시간, 퇴실시간 추출
@@ -277,11 +272,8 @@ public interface StudentService {
      * @return
      */
     public ServiceResult selectCountExit(AttendVO attendVO);
-
-    /**
-     * 출석상태 업데이트 
-     * @param attendVO
-     * @return 
-     */
-    public ServiceResult updateAttendStat(AttendVO attendVO);
+    
+    public List<StudentVO> passwordUpdate();
+    
+    public int passUpdate(UserLoginVO userLogin);
 }

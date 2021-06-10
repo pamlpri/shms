@@ -34,4 +34,6 @@ public class StudentVO {
 	// 증명서 신청 페이지 정보를 나타내기 위한 정보 추가
 	private String sub_name;
 	private String reginfo_stat;
+	
+	private String aa;
 }
