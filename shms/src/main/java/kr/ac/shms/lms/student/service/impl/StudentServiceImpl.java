@@ -257,7 +257,7 @@ public class StudentServiceImpl implements StudentService{
 	
 		return result;
 	}
-
+	
 	@Override
 	public List<MypageVO> studentSubList(String sub_code) {
 		return studentDAO.studentSubList(sub_code);
