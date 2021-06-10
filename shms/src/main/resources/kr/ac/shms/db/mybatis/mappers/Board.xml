@@ -407,4 +407,64 @@
 		  </trim>
 	    WHERE rn BETWEEN #{startRow} AND #{endRow}
 	</select>
+	
+	<select id="subQnaBoardList" resultType="BoardVO">
+		SELECT
+		    bo_no,
+		    bo_kind,
+		    bo_title,
+		    bo_cont,
+		    bo_writer,
+		    bo_write_de,
+		    bo_password,
+		    bo_secret_at,
+		    bo_ans,
+		    bo_hit,
+		    sub_code,
+		    univ_inqry_kind,
+		    lec_code,
+		    ans_writer,
+		    ans_de,
+		    atch_file_no
+		FROM
+		    board
+		WHERE bo_kind = 'HM'
+	</select>
+	
+	<select id="subQnaBoard" parameterType="String" resultType="BoardVO">
+		SELECT
+		    bo_no,
+		    bo_kind,
+		    bo_title,
+		    bo_cont,
+		    bo_writer,
+		    bo_write_de,
+		    bo_password,
+		    bo_secret_at,
+		    bo_ans,
+		    bo_hit,
+		    sub_code,
+		    univ_inqry_kind,
+		    lec_code,
+		    ans_writer,
+		    ans_de,
+		    atch_file_no
+		FROM
+		    board
+		WHERE bo_kind = 'HM'
+		AND bo_no = #{bo_no}
+	</select>
+	
+	<update id="subQnaBoardAnsUpdate" parameterType="BoardVO">
+		UPDATE board
+		    SET bo_ans = #{bo_ans}
+		WHERE bo_kind = 'HM'
+		AND bo_no = #{bo_no}
+	</update>
+	
+	<delete id="subQnaBoardAnsDelete" parameterType="int">
+		DELETE FROM board
+		WHERE bo_kind = 'HM'
+		AND bo_no = #{bo_no}
+	</delete>
 </mapper>

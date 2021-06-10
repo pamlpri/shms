@@ -38,6 +38,7 @@ import kr.ac.shms.common.vo.PagingVO;
  * 2021. 5. 31.      최희수        첨부파일 다운로드 기능 구현
  * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
  * 2021. 6. 09.      송수미       학과 공지 게시글 등록, 조회
+ * 2021. 6. 10.      최희수	학과 문의 게시판 답글 등록, 수정, 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -316,6 +317,30 @@ public class BoardServiceImpl implements BoardService{
 		return boardDAO.selectHGBoardList(pagingVO);
 	}
 
+	@Override
+	public List<BoardVO> subQnaBoardList() {
+		return boardDAO.subQnaBoardList();
+	}
 
+	@Override
+	public BoardVO subQnaBoard(String bo_no) {
+		return boardDAO.subQnaBoard(bo_no);
+	}
+
+	@Override
+	public ServiceResult subQnaBoardAnsUpdate(BoardVO boardVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = boardDAO.subQnaBoardAnsUpdate(boardVO);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ServiceResult subQnaBoardAnsDelete(int bo_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = boardDAO.subQnaBoardAnsDelete(bo_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
 	
 }

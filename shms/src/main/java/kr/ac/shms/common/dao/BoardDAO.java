@@ -22,6 +22,7 @@ import kr.ac.shms.common.vo.PagingVO;
  * 2021. 5. 31.   최희수        첨부파일 등록 수정 삭제 작성
  * 2021. 6. 01.   송수미        교수의 강의문의 수 조회
  * 2021. 6.  4.   김보미		학과게시판
+ * 2021. 6. 10.   최희수	   학과 문의 게시판
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -153,4 +154,31 @@ public interface BoardDAO {
 	 * @return 게시글 목록 
 	 */
 	public List<BoardVO> selectHGBoardList(PagingVO<BoardVO> pagingVO);
+	
+	/**
+	 * 학과 문의 게시판 출력
+	 * @return 데이터가 없으면 null
+	 */
+	public List<BoardVO> subQnaBoardList();
+	
+	/**
+	 * 학과 문의 게시판 상세 정보 출력
+	 * @param bo_no
+	 * @return 데이터가 없으면 null
+	 */
+	public BoardVO subQnaBoard(String bo_no);
+	
+	/**
+	 * 학과 문의 게시판 답글 달기
+	 * @param boardVO
+	 * @return cnt > 0 성공
+	 */
+	public int subQnaBoardAnsUpdate(BoardVO boardVO);
+	
+	/**
+	 * 학과 문의 게시글 삭제
+	 * @param bo_no
+	 * @return cnt > 0 성공
+	 */
+	public int subQnaBoardAnsDelete(int bo_no);
 }
