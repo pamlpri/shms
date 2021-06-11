@@ -5,9 +5,11 @@ import java.util.List;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.StudentVO;
 
 public interface LmsStaffService {
 	/**
@@ -78,4 +80,11 @@ public interface LmsStaffService {
 	 * @return ServiceResult
 	 */
 	public ServiceResult consultingCompanion(ConsultingVO consultingVO);
+	
+	/**
+	 * 교직원 비밀번호 변경을 위해 필요
+	 * @return
+	 */
+    public List<StaffVO> passwordUpdate();    
+    public int passUpdate(UserLoginVO userLogin);
 }

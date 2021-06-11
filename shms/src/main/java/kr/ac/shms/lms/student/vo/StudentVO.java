@@ -35,5 +35,6 @@ public class StudentVO {
 	private String sub_name;
 	private String reginfo_stat;
 	
+	// 학생 비밀번호 변경 때문에 필요
 	private String aa;
 }

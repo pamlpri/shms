@@ -180,4 +180,18 @@
 		WHERE req_no = #{req_no}
 	</update>
 	
+	<select id="passwordUpdate" resultType="StaffVO">
+		SELECT S.STAFF_NO, S.REGNO1, U.USER_ID aa
+		FROM STAFF S
+		RIGHT OUTER JOIN USERS U
+		ON S.STAFF_NO = U.USER_ID
+		WHERE STAFF_NO LIKE 'P%'
+	</select>
+	
+	<update id="passUpdate" parameterType="UserLoginVO">
+		UPDATE USERS
+		SET USER_PASSWORD = #{user_password}
+		WHERE USER_ID = #{user_id}
+	</update>
+	
 </mapper>

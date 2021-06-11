@@ -74,6 +74,7 @@
 								<option value="E15003001">취업장학과</option>
 								<option value="M15101001">학과관리자</option>
 							</select>
+							<a href="${cPath }/lms/passwordUpdate.do">비밀번호 encode</a>
 							<c:choose>
 								<c:when test="${not empty errorMsg }">
 								<div class="input-group custom">
