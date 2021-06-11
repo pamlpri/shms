@@ -78,6 +78,7 @@
 					</div>
 					<div class="col-md-3 mb-2">
 						<h6>학년</h6>
+						<input type="hidden" name="grade" value="${student.grade }" />
 						<fieldset class="form-group">
 							<select class="form-select" name="lec_atnlc">
 								<c:forEach var="i" begin="0" end="${student.grade }">

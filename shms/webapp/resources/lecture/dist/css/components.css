@@ -2389,3 +2389,20 @@ margin-right: -1px;
 .report th {
   width: 15%;
 }
+
+/* 평가비율 */
+#gradePar {
+    list-style: none;
+    padding-left: 5px;
+}
+#gradePar li {
+	margin-right : 20px;
+}
+
+.float-left {
+    float: left !important;
+}
+
+#gradePar li h6 {
+    margin-right: 10px;
+}

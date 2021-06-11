@@ -18,4 +18,5 @@ public class SearchVO {
 	private String lec_cl_grp;
 	private String col_code;
 	private String sub_code;
+	private Integer grade;
 }

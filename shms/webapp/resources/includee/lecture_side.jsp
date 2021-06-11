@@ -53,7 +53,7 @@
                <li><a href="${cPath }/lecture/lectureInfo.do">강의정보</a></li>
                <li><a href="${cPath }/lecture/lectureSetting.do">강의설정</a></li>
                <li><a href="${cPath }/lecture/attendanceAdmin.do">출석관리</a></li> 
-               <li><a href="gradeAdmin.html">성적관리</a></li>
+               <li><a href="${cPath }/lecture/gradeAdmin.do">성적관리</a></li>
             </ul>
           </li>
           
@@ -61,9 +61,9 @@
           <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-user-graduate"></i> <span>학습활동</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="weeks.html">주/회차 관리</a></li>
-              <li><a class="nav-link" href="report.html">과제관리</a></li>  
-              <li><a class="nav-link" href="examAdmin.html">시험관리</a></li>
+              <li><a class="nav-link" href="${cPath }/lecture/weeks.do">주/회차 관리</a></li>
+              <li><a class="nav-link" href="${cPath }/lecture/report.do">과제관리</a></li>  
+              <li><a class="nav-link" href="${cPath }/lecture/examAdmin.do">시험관리</a></li>
             </ul>
           </li>
           </c:if>
@@ -73,8 +73,8 @@
             <a href="#" class="nav-link has-dropdown"><i class="fab fa-readme"></i> <span>강의개요</span></a>
             <ul class="dropdown-menu">
               <li><a class="nav-link" href="${cPath }/lecture/notice.do">공지사항</a></li> 
-              <li><a class="nav-link" href="qnaLecture.html">강의 Q&A</a></li> 
-              <li><a class="nav-link" href="noticeLecture.html">자료실</a></li> 
+              <li><a class="nav-link" href="${cPath }/lecture/qna.do">강의 Q&A</a></li> 
+              <li><a class="nav-link" href="${cPath }/lecture/reference.do">자료실</a></li> 
             </ul>
           </li>
         </ul>
@@ -92,7 +92,6 @@
 					class="fas fa-graduation-cap"></i> 통합정보시스템
 				</a>
 			</c:if>
-			
 		</div>
 	</aside>
 </div>

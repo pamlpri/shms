@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
@@ -28,47 +27,30 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
-public class ExamViewController {
-	private static final Logger logger = LoggerFactory.getLogger(ExamViewController.class);
-	
-	@Inject
-	private LectureStudentService lectureStudentService;
+public class LectureReferenceViewController {
+	private static final Logger logger = LoggerFactory.getLogger(LectureReferenceViewController.class);
+
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	@Inject
+	private LectureStudentService lectureStudentService;
+	@Inject
 	private LectureService lectureService;
 	
-	@RequestMapping("/lecture/exam.do")
-	public String exam(
-			@SessionAttribute(name="lec_code", required=false) String lec_code
-			, Model model
-		) {
-	
-		return "lecture/exam";
-	}
-	
-	@RequestMapping("/lecture/examInfo.do")
-	public String examInfo(
+	@RequestMapping("/lecture/reference.do")
+	public String reference(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
-		return "lecture/examInfo";
+		return "lecture/reference";
 	}
 	
-	@RequestMapping("/lecture/examAdmin.do")
-	public String examAdmin(
+	@RequestMapping("/lecture/referenceView.do")
+	public String referenceView(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
-		return "lecture/examAdmin";
-	}
-	
-	@RequestMapping("/lecture/examAdminList.do")
-	public String examAdminList(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
-		, Model model
-	) {
-		return "lecture/examAdminList";
+
+		return "lecture/referenceView";
 	}
 }

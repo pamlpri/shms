@@ -47,4 +47,13 @@ public class LectureNoticeViewController {
 
 		return "lecture/notice";
 	}
+	
+	@RequestMapping("/lecture/noticeView.do")
+	public String noticeView(
+		@SessionAttribute(name="lec_code", required=false) String lec_code
+		, Model model
+	) {
+
+		return "lecture/noticeView";
+	}
 }
