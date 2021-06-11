@@ -147,10 +147,10 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">장학금 조회</a>
+	                          <a href="${cPath }/lms/scholarship.do">장학금 조회</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">교내 장학금 신청</a>
+	                          <a href="${cPath }/lms/scholarshipCampus.do">교내 장학금 신청</a>
 	                      </li>
 	                  </ul>
 	              </li>
@@ -159,23 +159,26 @@
 	                      <i class="bi bi-pen-fill"></i>
 	                      <span>변동사항</span>
 	                  </a>
-	                  <ul class="submenu ">
-	                      <li class="submenu-item ">
-	                          <a href="#">휴·복학 신청</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">학사학위취득유예 신청</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">조기졸업 신청</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">자퇴 신청</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">전과이력</a>
-	                      </li>
-	                  </ul>
+	                  <ul class="submenu">
+                         <li class="submenu-item ">
+                             <a href="${cPath }/lms/absence.do">휴학신청</a>
+                         </li>
+                         <li class="submenu-item ">
+                             <a href="${cPath }/lms/returning.do">복학신청</a>
+                         </li>
+                         <li class="submenu-item ">
+                             <a href="${cPath }/lms/respite.do">학사학위취득유예 신청</a>
+                         </li>
+                         <li class="submenu-item ">
+                             <a href="${cPath }/lms/early.do">조기졸업 신청</a>
+                         </li>
+                         <li class="submenu-item ">
+                             <a href="${cPath }/lms/drop.do">자퇴신청</a>
+                         </li>
+                         <li class="submenu-item">
+                             <a href="${cPath }/lms/transfer.do">전과이력</a>
+                         </li>
+                     </ul>
 	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
@@ -184,16 +187,13 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">진로교육</a>
+	                          <a href="${cPath }/lms/careerEducation.do">진로교육</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">진로상담예약</a>
+	                          <a href="${cPath }/lms/careerCounseling.do">진로상담예약</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">일자리</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">이력서/자기소개서</a>
+	                          <a href="${cPath }/lms/resume.do">이력서/자기소개서</a>
 	                      </li>
 	                  </ul>
 	              </li>
@@ -582,7 +582,7 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">진로상담</a>
+	                          <a href="${cPath }/lms/careerCounselingAdmin.do">진로상담</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">면접클리닉</a>
@@ -590,7 +590,7 @@
 	                  </ul>
 	              </li>
 	              <li class="sidebar-item">
-	                  <a href="#" class="sidebar-link">
+	                  <a href="${cPath }/lms/careerEducation.do" class="sidebar-link">
 	                      <i class="bi bi-person-fill"></i>
 	                      <span>진로교육</span>
 	                  </a>
