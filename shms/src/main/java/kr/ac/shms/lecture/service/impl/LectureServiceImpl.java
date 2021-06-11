@@ -38,7 +38,7 @@ public class LectureServiceImpl implements LectureService{
 	}
 
 	@Override
-	public List<LectureVO> selectLectureDetails(String lec_code) {
+	public LectureVO selectLectureDetails(String lec_code) {
 		return lectureDAO.selectLectureDetails(lec_code);
 	}
 

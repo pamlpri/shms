@@ -12,7 +12,6 @@
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
-			<c:forEach var="lecture" items="${lecture }" begin="0" end="0">
 			<h1>${lecture.lec_name}</h1>
 		</div>
 
@@ -67,7 +66,6 @@
 				</div>
 				<div class="card-body">
 					<p>중간고사(${lecture.midterm }), 기말고사(${lecture.finals }), 출석(${lecture.attend })</p>
-				</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -76,14 +74,14 @@
 	<section class="section">
 		<h2 class="section-title">이번주강의</h2>
 	</section>
-
-	<div class="card" id="curWeek"
-		style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
-		<div class="card-body p-0">
-			<h6>2주차 [3월11일 - 3월17일] : 학습 데이터</h6>
-			<a class="text-color text-deco-none" href="lecture.html"> 2주차
-				데이터베이스 이론 1차 : 2021년 05월 3일 ~ 2021년 05월 10일 </a>
+	
+	<c:if test="${not empty lecture.lec_week }">
+		<div class="card" id="curWeek"
+			style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
+			<div class="card-body p-0">
+				<h6>${lecture.lec_week }주차 [${lecture.week_bgnde} - ${lecture.week_endde}] :  ${lecture.diary_title }</h6>
+				<a class="text-color text-deco-none" href="lecture.html"> ${lecture.diary_cont }</a>
+			</div>
 		</div>
-	</div>
-</div>
+	</c:if>
 </div>

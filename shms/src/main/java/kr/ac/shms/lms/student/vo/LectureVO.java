@@ -61,7 +61,7 @@ public class LectureVO {
 	public String diary_title;
 	public String diary_cont;
 	public String week_bgnde;
-	public String week_dndde;
+	public String week_endde;
 	public String staff_no;
 	
 	private int startAttNo;

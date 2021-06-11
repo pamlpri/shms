@@ -38,7 +38,9 @@ import kr.ac.shms.common.vo.PagingVO;
  * 2021. 5. 31.      최희수        첨부파일 다운로드 기능 구현
  * 2021. 6. 01.      송수미       교수의 강의문의 수 조회
  * 2021. 6. 09.      송수미       학과 공지 게시글 등록, 조회
+ * 2021. 6. 10.      송수미       학과 공지 게시글 수정, 삭제
  * 2021. 6. 10.      최희수	학과 문의 게시판 답글 등록, 수정, 삭제
+ * 2021. 6. 11.      송수미       학과 공지 첨부파일 오류 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -127,10 +129,7 @@ public class BoardServiceImpl implements BoardService{
 		int cnt = boardDAO.insertBoard(board);
 		
 		if(cnt > 0) {
-			logger.info("여기까지 들어오나");
-			logger.info("---------------------------------------------");
 			cnt += processes(board);
-			logger.info("여기까지 들어오나");
 			
 			if(cnt > 0) {
 				result = ServiceResult.OK;
@@ -157,6 +156,9 @@ public class BoardServiceImpl implements BoardService{
 			if(!authChk) {
 				result = ServiceResult.INVALIDPASSWORD;
 			}else {
+				int savedAtchNo = savedBoard.getAtch_file_no();
+				logger.info("atch: {}" , savedAtchNo);
+				
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
 					cnt += processes(board);

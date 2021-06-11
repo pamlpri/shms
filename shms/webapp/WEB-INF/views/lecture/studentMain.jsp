@@ -12,9 +12,7 @@
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
-			<c:forEach var="lecture" items="${lecture }" begin="0" end="0">
 			<h1>${lecture.lec_name}</h1>
-			
 		</div>
 	</section>
 
@@ -86,7 +84,6 @@
 			</div>
 			<div class="card-body">
 				<p>중간고사(${lecture.midterm }), 기말고사(${lecture.finals }), 출석(${lecture.attend })</p>
-				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -103,5 +100,4 @@
 				데이터베이스 이론 1차 : 2021년 05월 3일 ~ 2021년 05월 10일 </a>
 		</div>
 	</div>
-</div>
 </div>

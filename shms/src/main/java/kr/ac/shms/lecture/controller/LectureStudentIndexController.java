@@ -1,7 +1,5 @@
 package kr.ac.shms.lecture.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -59,7 +57,7 @@ public class LectureStudentIndexController {
 			@RequestParam("lec_code") String lec_code
 			, Model model
 			) {
-		List<LectureVO> lectureDetails = lectureService.selectLectureDetails(lec_code);
+		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		System.out.println(lectureDetails);
 		model.addAttribute("lecture", lectureDetails);
 		return "lecture/main";

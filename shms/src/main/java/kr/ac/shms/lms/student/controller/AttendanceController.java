@@ -92,7 +92,7 @@ public class AttendanceController {
 		attendInfo.setStdnt_no(stdnt_no);
 		attendInfo.setLec_code(lec_code);
 
-		List<LectureVO> lecture = lectureService.selectLectureDetails(lec_code);
+		LectureVO lecture = lectureService.selectLectureDetails(lec_code);
 
 		String view = null;
 		ServiceResult result = ServiceResult.FAIL;

@@ -69,21 +69,24 @@
 		SELECT a.lec_code, 
 		       d.lec_name, 
 		       a.summary, 
-		       b.midterm * 100 midterm, 
-               b.finals * 100 finals, 
-               b.attend * 100 attend, 
-               b.task * 100 task, 
-		       b.etc,
+		       NVL(b.midterm, 0) * 100 midterm, 
+               NVL(b.finals, 0) * 100 finals, 
+               NVL(b.attend, 0) * 100 attend, 
+               NVL(b.task, 0) * 100 task, 
+		       NVL(b.etc, 0) * 100 etc,
 		       c.lec_week, 
-		       c.week_bgnde, 
-		       c.week_endde, 
+		       TO_CHAR(c.week_bgnde, 'MM')||'월 '||TO_CHAR(c.week_bgnde, 'DD')||'일' week_bgnde, 
+		       TO_CHAR(c.week_endde, 'MM')||'월 '||TO_CHAR(c.week_endde, 'DD')||'일' week_endde, 
 		       c.diary_title,
 		       c.diary_cont
 	      FROM lecture a
 	     INNER JOIN lec_score_st b ON (a.lec_code=b.lec_code)
-	     INNER JOIN lec_week_diary c ON (b.lec_code=c.lec_code)
+	     LEFT OUTER JOIN lec_week_diary c ON (b.lec_code=c.lec_code)
 	     INNER JOIN curriculum d ON (a.cur_code=d.cur_code)
 	     WHERE a.lec_code= #{lec_code, jdbcType=VARCHAR}
+           AND (week_bgnde = (SELECT MAX(week_bgnde) FROM lec_week_diary WHERE lec_code = #{lec_code, jdbcType=VARCHAR})
+                or 
+                week_bgnde is null)
 <!-- 	       AND c.lec_week = TO_CHAR(SYSDATE,'W') -->
 <!-- 	         AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE) -->
 <!-- 		   AND a.estbl_year='2013' -->
@@ -100,7 +103,8 @@
 	           AND com_code = lec_cl) lec_cl,
 	       lec_code,
 	       lecrum,
-	       estbl_year
+	       estbl_year,
+	       estbl_semstr
 	  FROM (
 	        SELECT DISTINCT a.name, 
 	               a.staff_no, 
@@ -110,7 +114,8 @@
 	               c.lec_code,
 	               c.lec_cl,
 	               f.building_nm||' '||e.lecrum_nm lecrum,
-	               b.estbl_year
+	               c.estbl_year,
+	               c.estbl_semstr
 	          FROM staff a
 	         INNER JOIN curriculum b ON (a.staff_no=b.staff_no)
 	         INNER JOIN lecture c ON (b.cur_code=c.cur_code)
@@ -119,6 +124,8 @@
 	        RIGHT OUTER JOIN building f ON (f.building_no = e.building_no)
 	       )
 	 WHERE staff_no=#{staff_no, jdbcType=VARCHAR}
+	   AND estbl_year = EXTRACT(YEAR FROM SYSDATE)
+	   AND estbl_semstr = (SELECT semstr FROM v_semstr)
 	</select>
 	
 	<sql id="myLecFrag">
@@ -126,7 +133,7 @@
 	   WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 	     AND sugang_at = 'Y'
 	     AND req_year = EXTRACT(MONTH FROM SYSDATE)
-	     AND req_semstr = (SELECT SEMSTR FROM STUDENT WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
+	     AND req_semstr = (SELECT semstr FROM student WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
 	</sql>
 	
 	<select id="selectTask" parameterType="String" resultType="kr.ac.shms.lecture.vo.SetTaskVO">
