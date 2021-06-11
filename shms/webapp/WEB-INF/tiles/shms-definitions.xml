@@ -69,11 +69,6 @@
   	<put-attribute name="lectureContent" value="/WEB-INF/views/lecture/{1}.jsp" />
   </definition>
   
-  <!-- 공통 강의사이트 --> 	
-  <definition name="lecture/*" extends="lecture">
-  	<put-attribute name="lectureContent" value="/WEB-INF/views/lecture/{1}.jsp" />
-  </definition>
-  
   <!-- 입학사이트 -->
   <definition name="admission" template="/WEB-INF/views/admissionTemplate.jsp">
   	<put-attribute name="admissionTitle" value="인재대학교 입학홈페이지"/>
