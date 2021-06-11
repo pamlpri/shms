@@ -100,7 +100,7 @@ public class AttendanceController {
 		Map<String, String> resp = new HashMap<>();
 		ServiceResult result = ServiceResult.FAIL;
 		
-		if(ServiceResult.FAIL.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)) {
+		if(ServiceResult.FAIL.equals(attendResult)) {
 			result = studentService.attend(attendInfo);
 			if(ServiceResult.OK.equals(result)) {
 				AttendVO getAttendInfo = new AttendVO();
