@@ -12,6 +12,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="page-content">
  <nav aria-label="breadcrumb">
      <ol class="breadcrumb">
@@ -58,14 +59,16 @@
 				<i class="fa fa-paperclip m-r-5 f-s-18"></i> 첨부파일
 			</h6>
 			<div class="form-inline fileArea row">
-				<c:if test="${not empty board.attachList }">
+				<c:if test="${not empty board.attachList and not(fn:length(board.attachList) eq 0)}">
 					<c:forEach items="${board.attachList }" var="attach">
-						<p class="fileBox col-lg-6">
-							<span class="form-control curFiles" data-attno="${attach.atch_file_seq }">
-								${attach.file_nm }
-							</span>
-							<span class="delBtn btn btn-danger">-</span>
-						</p>	
+						<c:if test="${not empty attach.atch_file_seq }">
+							<p class="fileBox col-lg-6">
+								<span class="form-control curFiles" data-attno="${attach.atch_file_seq }">
+									${attach.file_nm }
+								</span>
+								<span class="delBtn btn btn-danger">-</span>
+							</p>	
+						</c:if>
 					</c:forEach>
 				</c:if>
 				<p class="fileBox col-lg-6">
