@@ -48,22 +48,22 @@
                       	${board.bo_cont }
                       </td>
                   </tr>
-                  <c:if test="${not empty board.attachList }">
 	                  <tr>
 	                      <th class="text-center align-middle">첨부파일</th>
-	                      <td colspan="5">
-	                          <ul class="attat">
-	                          	<c:forEach items="${board.attachList }" var="attach">
-	                          		<c:url value="/lms/boardDownload.do" var="downloadURL">
-	                          			<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
-	                          			<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
-	                          		</c:url>
-	                              <li><a href="${downloadURL }" class="text-color">${attach.file_nm }</a></li>
-	                          	</c:forEach>
-	                          </ul>
+		                  <td colspan="5">
+			                  <c:if test="${not empty board.attachList }">
+	        	                  <ul class="attat">
+	            	              	<c:forEach items="${board.attachList }" var="attach">
+	                	          		<c:url value="/lms/boardDownload.do" var="downloadURL">
+	                    	      			<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
+	                        	  			<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
+	                          			</c:url>
+	                             		 <li><a href="${downloadURL }" class="text-color">${attach.file_nm }</a></li>
+	                          		</c:forEach>
+	                          	</ul>
+		                  	</c:if>
 	                      </td>
 	                  </tr>
-                  </c:if>
               </table>
               <div class="text-center">
                   <a href="${cPath }/lms/subjectNoticeList.do" class="btn btn-primary">목록으로</a>

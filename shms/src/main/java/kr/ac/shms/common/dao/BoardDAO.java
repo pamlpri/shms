@@ -181,4 +181,11 @@ public interface BoardDAO {
 	 * @return cnt > 0 성공
 	 */
 	public int subQnaBoardAnsDelete(int bo_no);
+	
+	/**
+	 * 첨부파일 없는 게시글 수정할 때 첨부파일 추가 시, 첨부파일 번호 새로 부여
+	 * @param board  
+	 * @return row count > 0 성공
+	 */
+	public int updateAtchNo(BoardVO board);
 }

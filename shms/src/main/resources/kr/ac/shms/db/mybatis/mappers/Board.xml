@@ -150,6 +150,7 @@
 			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub_code)">
 				AND a.sub_code = #{sub_code, jdbcType=VARCHAR}
 			</if>
+		ORDER BY bo_write_de desc
 	</select>
 	
 	<resultMap type="BoardVO" id="boardMap" autoMapping="true">
@@ -474,4 +475,10 @@
 		WHERE bo_kind = 'HM'
 		AND bo_no = #{bo_no}
 	</delete>
+	
+	<update id="updateAtchNo" parameterType="BoardVO">
+         UPDATE board
+            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
+          WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
+	</update>
 </mapper>
