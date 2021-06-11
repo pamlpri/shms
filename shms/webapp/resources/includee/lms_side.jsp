@@ -204,13 +204,13 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/library.do">도서관</a>
+	                          <a href="#">도서관</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/readingroom.do">도서관 열람실 예약</a>
+	                          <a href="#">도서관 열람실 예약</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/studyroom.do">도서관 스터디룸 예약</a>
+	                          <a href="#">도서관 스터디룸 예약</a>
 	                      </li>
 	                  </ul>
 	              </li>
@@ -585,7 +585,7 @@
 	                          <a href="${cPath }/lms/careerCounselingAdmin.do">진로상담</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/resumeAdmin.do">면접클리닉</a>
+	                          <a href="#">면접클리닉</a>
 	                      </li>
 	                  </ul>
 	              </li>
@@ -716,7 +716,7 @@
 	                      </li>
 	                  </ul>
 	              </li>
-	                <li class="sidebar-item  has-sub ">
+	                <li class="sidebar-item  has-sub">
 	                    <a href="#" class="sidebar-link">
 	                        <i class="bi bi-file-text-fill"></i>
 	                        <span>게시판/일정관리</span>

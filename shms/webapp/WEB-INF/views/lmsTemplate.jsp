@@ -30,28 +30,6 @@
         </div>
     </div>
     <tiles:insertAttribute name="lmsPostScript"/>
-<script type="text/javascript">
-	$(function(){
-		var param = document.location.href.split("/");
-		url = param[param.length-1].split(".")[0];
-		console.log(url);
-		
-		let aTag = $(".sidebar-menu").find("a");
-		$(aTag).each(function(idx, aTag){
-			let aHref = $(this).attr("href");
-			if(aHref.includes(url)){
-				console.log(aHref);
-				if($(this).attr("class") == "sideboar-link"){
-					$(this).parent(".sidebar-item").addClass("active");
-				}else{
-					$(this).parent(".submenu-item").addClass("active");
-					$(this).parents(".submenu").addClass("active");
-					$(this).parents(".sidebar-item").addClass("active");
-				}
-			}
-		});
-	})
-</script>
 </body>
 
 </html>
