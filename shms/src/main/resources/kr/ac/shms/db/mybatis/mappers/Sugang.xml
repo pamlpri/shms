@@ -27,9 +27,18 @@
 			</trim>
 			<trim prefix="AND (" suffix=")" prefixOverrides="AND">
 				<if test="searchMap.lec_atnlc != null">
-					<![CDATA[
-					AND lec_atnlc = #{searchMap.lec_atnlc}
-					]]>
+					<choose>	
+						<when test="searchMap.lec_atnlc == 0">
+							<![CDATA[
+							AND lec_atnlc <= #{searchMap.grade, jdbcType=NUMERIC}
+							]]>
+						</when>
+						<otherwise>
+							<![CDATA[
+							AND lec_atnlc = #{searchMap.lec_atnlc, jdbcType=NUMERIC}
+							]]>
+						</otherwise>
+					</choose>
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_cl_grp)">
 					AND lec_cl_grp = #{searchMap.lec_cl_grp}

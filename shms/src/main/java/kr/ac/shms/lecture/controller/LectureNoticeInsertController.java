@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
-import kr.ac.shms.lecture.service.LectureStudentService;
 
 /**
  * @author 박초원
@@ -29,46 +28,19 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  */
 @Controller
 @SessionAttributes("lec_code")
-public class ExamViewController {
-	private static final Logger logger = LoggerFactory.getLogger(ExamViewController.class);
-	
-	@Inject
-	private LectureStudentService lectureStudentService;
+public class LectureNoticeInsertController {
+	private static final Logger logger = LoggerFactory.getLogger(LectureNoticeInsertController.class);
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	@Inject
 	private LectureService lectureService;
 	
-	@RequestMapping("/lecture/exam.do")
-	public String exam(
+	@RequestMapping("/lecture/noticeForm.do")
+	public String noticeForm(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, Model model
 		) {
-	
-		return "lecture/exam";
-	}
-	
-	@RequestMapping("/lecture/examInfo.do")
-	public String examInfo(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
-		, Model model
-	) {
-		return "lecture/examInfo";
-	}
-	
-	@RequestMapping("/lecture/examAdmin.do")
-	public String examAdmin(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
-		, Model model
-	) {
-		return "lecture/examAdmin";
-	}
-	
-	@RequestMapping("/lecture/examAdminList.do")
-	public String examAdminList(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
-		, Model model
-	) {
-		return "lecture/examAdminList";
+		return "lecture/noticeForm";
+		
 	}
 }

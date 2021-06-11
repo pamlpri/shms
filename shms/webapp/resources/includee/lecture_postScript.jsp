@@ -7,24 +7,32 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- General JS Scripts -->
-	<script src="${cPath }/resources/lecture/dist/modules/tooltip.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/nicescroll/jquery.nicescroll.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/moment.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/js/stisla.js"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jquery.min.js" type="text/javascript"></script>
+  	<script src="${cPath }/resources/lecture/dist/modules/popper.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/tooltip.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/nicescroll/jquery.nicescroll.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/moment.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/js/stisla.js" type="text/javascript"></script>
 
 	<!-- JS Libraies -->
-	<script src="${cPath }/resources/lecture/dist/modules/simple-weather/jquery.simpleWeather.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/chart.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/jqvmap/dist/jquery.vmap.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/summernote/summernote-bs4.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
-
+	<script src="${cPath }/resources/lecture/dist/modules/simple-weather/jquery.simpleWeather.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/chart.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jqvmap/dist/jquery.vmap.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jqvmap/dist/maps/jquery.vmap.world.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/chocolat/dist/js/jquery.chocolat.min.js" type="text/javascript"></script>
+	
+	<!-- JS Libraies -->
+	<script src="${cPath }/resources/lecture/dist/modules/datatables/datatables.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/datatables/Select-1.2.4/js/dataTables.select.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+	
 	<!-- Page Specific JS File -->
-	<script src="${cPath }/resources/lecture/dist/js/page/dashboard-general.js"></script>
+	<script src="${cPath }/resources/lecture/dist/js/page/modules-datatables.js" type="text/javascript"></script>
 
 	<!-- Template JS File -->
-	<script src="${cPath }/resources/lecture/dist/js/scripts.js"></script>
-	<script src="${cPath }/resources/lecture/dist/js/custom.js"></script>
+	<script src="${cPath }/resources/lecture/dist/js/scripts.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/js/custom.js" type="text/javascript"></script>

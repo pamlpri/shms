@@ -90,7 +90,7 @@ public class ClassRegistrationViewController {
         StudentVO studentVO = studentService.student(user_id);
         model.addAttribute("student", studentVO);
 		
-		SugangVO sugang = classRegistrationForAjax(user, sugangVO, null, null, studentVO.getGrade(), null, null, null, model);
+		SugangVO sugang = classRegistrationForAjax(user, sugangVO, null, null, studentVO.getGrade(), null, null, null, studentVO.getGrade(), model);
 		model.addAttribute("sugang", sugang);
 		
 		return  "lms/classRegistration";
@@ -107,6 +107,7 @@ public class ClassRegistrationViewController {
 		, @RequestParam(value="lec_cl_grp", required=false) String lec_cl_grp
 		, @RequestParam(value="col_code", required=false) String col_code
 		, @RequestParam(value="sub_code", required=false) String sub_code
+		, @RequestParam(value="grade", required=false) int grade
 		, Model model	
 	) {
 		addAttribute(model);
@@ -122,6 +123,7 @@ public class ClassRegistrationViewController {
 		searchMap.put("lec_cl_grp", lec_cl_grp);
 		searchMap.put("col_code", col_code);
 		searchMap.put("sub_code", sub_code);
+		searchMap.put("grade", grade);
 		sugangVO.setSearchMap(searchMap);
 		
 		if(lec_cl_grp != null && lec_cl_grp.equals("cart")) {

@@ -19,15 +19,15 @@
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">강의실홈</a></li>
-      <li class="breadcrumb-item active" aria-current="page">강의설정</li>
-    </ol>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">강의개요</a></li>
+          <li class="breadcrumb-item active" aria-current="page">자료실</li>
+      </ol>
   </nav>
-  
+
   <section class="section">
-      <h2 class="section-title">강의 설정</h2>
+      <h2 class="section-title">강의 자료실 등록</h2>
   </section>
 
   <div class="card attendance">
@@ -35,60 +35,62 @@
         <form class="table-responsive">
           <table class="table table-bordered table-md report">
             <tr>
-              <th class="align-middle">학습목표</th>
-              <td class="text-left"><textarea class="form-control" rows="5" cols="1000" id="bo_cont"></textarea></td>
+              <th class="align-middle">제목</th>
+              <td class="text-left"><input type="text" class="form-control"></td>
             </tr>
             <tr>
-              <th class="align-middle">강의교재</th>
-              <td class="text-left"><textarea class="form-control" rows="5" cols="1000" id="bo_cont"></textarea></td>
-            </tr>
-            <tr>
-              <th class="align-middle">강의부교재</th>
-              <td>
-                  <textarea class="form-control" rows="5" cols="1000" id="bo_cont"></textarea>
+              <th class="align-middle">내용</th>
+              <td class="textArea">
+                <textarea class="form-control" rows="5" cols="1000" id="bo_cont"></textarea>
               </td>
             </tr>
             <tr>
-               <th class="align-middle text-center">평가방법</th>
-               <td class="align-middle" colspan="3">
-                   <ul id="gradePar">
-                   	   <li class="float-left">
-                           <h6>중간</h6>
-                           <input class="form-control form-control-sm" type="number" placeholder="단위 %">
-                       </li>
-                       <li class="float-left">
-                           <h6>기말</h6>
-                           <input class="form-control form-control-sm" type="number" placeholder="단위 %">
-                       </li>
-                       <li class="float-left">
-                           <h6>과제</h6>
-                           <input class="form-control form-control-sm" type="number" placeholder="단위 %">
-                       </li>
-                       <li class="float-left">
-                           <h6>출석</h6>
-                           <input class="form-control form-control-sm" type="number" placeholder="단위 %">
-                       </li>
-                       <li class="float-left">
-                           <h6>기타</h6>
-                           <input class="form-control form-control-sm" type="number" placeholder="단위 %">
-                       </li>
-                   </ul>
-               </td>
-           </tr>
+              <th>첨부파일</th>
+              <td class="text-left">
+                <div>
+                  <div class="it">
+                    <div class="text-left">
+                      <a class="btn btn-outline-primary btn-new"><i class="far fa-file"></i> Add File</a>
+                    </div>
+                    <div class="col-sm-offset-1" id="one">
+                      <div id="uploader" class="row">
+                        <div class="row uploadDoc col-sm-4">
+                          <div class="col-sm-10">
+                            <div class="docErr">업로드할 수 없는 파일입니다.</div><!--error-->
+                            <div class="fileUpload btn btn-orange">
+                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
+                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
+                            </div><!-- btn-orange -->
+                          </div><!-- col-3 -->
+                          <div class="col-sm-2"><a class="btn-check">
+                            <i class="fa fa-times"></i></a>
+                          </div><!-- col-1 -->
+                        </div><!--row-->
+                      </div><!--uploader-->
+                    </div><!--one-->
+                  </div><!-- row -->
+                </div><!-- container -->
+              </td>
+            </tr>
           </table>
           <div class="text-center">
-              <a href="lectureSetting.html" class="btn btn-secondary">취소</a>
-              <a href="lectureSetting.html" class="btn btn-primary">저장</a>
+              <a href="${cPath }/lecture/reference.do" class="btn btn-secondary">취소</a>
+              <button type="button" class="btn btn-primary">저장</button>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-    <!-- contents end -->
+  <!-- contents end -->
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
-  
+<script src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
 <script>
     $(function(){
+	    CKEDITOR.replace("bo_cont", {
+	          filebrowserImageUploadUrl : ''
+	    });
+	    
     var fileTypes = ['pdf', 'docx', 'rtf', 'jpg', 'jpeg', 'png', 'txt'];  //acceptable file types
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -100,6 +102,20 @@
                 reader.onload = function (e) {
                     if (extension == 'pdf'){
                       $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/179/179483.svg');
+                    }
+                    else if (extension == 'docx'){
+                      $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/281/281760.svg');
+                    }
+                    else if (extension == 'rtf'){
+                      $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136539.svg');
+                    }
+                    else if (extension == 'png'){ $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136523.svg'); 
+                    }
+                    else if (extension == 'jpg' || extension == 'jpeg'){
+                      $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136524.svg');
+                    }
+                  else if (extension == 'txt'){
+                      $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136538.svg');
                     }
                     else {
                       //console.log('here=>'+$(input).closest('.uploadDoc').length);

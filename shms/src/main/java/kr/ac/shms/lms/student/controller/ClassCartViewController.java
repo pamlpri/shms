@@ -88,7 +88,7 @@ public class ClassCartViewController {
         StudentVO studentVO = studentService.student(user_id);
         model.addAttribute("student", studentVO);
 		
-		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, studentVO.getGrade(), null, null, null, model);
+		SugangVO sugang = classCartForAjax(user, sugangVO, null, null, studentVO.getGrade(), null, null, null,studentVO.getGrade(), model);
 		model.addAttribute("sugang", sugang);
 		
 		return  "lms/classCart";
@@ -105,6 +105,8 @@ public class ClassCartViewController {
 		, @RequestParam(value="lec_cl_grp", required=false) String lec_cl_grp
 		, @RequestParam(value="col_code", required=false) String col_code
 		, @RequestParam(value="sub_code", required=false) String sub_code
+		, @RequestParam(value="grade", required=false) int grade
+		
 		, Model model
 	) {
 		addAttribute(model);
@@ -120,6 +122,7 @@ public class ClassCartViewController {
 		searchMap.put("lec_cl_grp", lec_cl_grp);
 		searchMap.put("col_code", col_code);
 		searchMap.put("sub_code", sub_code);
+		searchMap.put("grade", grade);
 		sugangVO.setSearchMap(searchMap);
 		
 		List<SugangVO> dataList = studentService.selectSugangList(sugangVO);

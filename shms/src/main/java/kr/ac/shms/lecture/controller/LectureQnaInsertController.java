@@ -29,46 +29,22 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  */
 @Controller
 @SessionAttributes("lec_code")
-public class ExamViewController {
-	private static final Logger logger = LoggerFactory.getLogger(ExamViewController.class);
+public class LectureQnaInsertController {
+	private static final Logger logger = LoggerFactory.getLogger(LectureQnaInsertController.class);
 	
-	@Inject
-	private LectureStudentService lectureStudentService;
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	@Inject
+	private LectureStudentService lectureStudentService;
+	@Inject
 	private LectureService lectureService;
 	
-	@RequestMapping("/lecture/exam.do")
-	public String exam(
-			@SessionAttribute(name="lec_code", required=false) String lec_code
-			, Model model
-		) {
-	
-		return "lecture/exam";
-	}
-	
-	@RequestMapping("/lecture/examInfo.do")
-	public String examInfo(
+	@RequestMapping("/lecture/qnaForm.do")
+	public String qnaForm(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
-		return "lecture/examInfo";
-	}
-	
-	@RequestMapping("/lecture/examAdmin.do")
-	public String examAdmin(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
-		, Model model
-	) {
-		return "lecture/examAdmin";
-	}
-	
-	@RequestMapping("/lecture/examAdminList.do")
-	public String examAdminList(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
-		, Model model
-	) {
-		return "lecture/examAdminList";
+
+		return "lecture/qnaForm";
 	}
 }

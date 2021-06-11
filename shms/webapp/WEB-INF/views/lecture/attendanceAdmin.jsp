@@ -70,7 +70,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -97,7 +97,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -124,7 +124,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -151,7 +151,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -178,7 +178,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -205,7 +205,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -232,7 +232,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -259,7 +259,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -286,7 +286,7 @@
                           <tr>
                               <td class="text-center">1</td>
                               <td class="text-center">
-                                  <a class="text-color" href="attendance.html">박초원</a>
+                                  <a class="text-color" href="${cPath}/lecture/attendance.do">박초원</a>
                               </td>
                               <td class="text-center">S1400714</td>
                               <td class="text-center">안경광학과</td>
@@ -321,11 +321,13 @@
   </section>
   <!-- contents end -->
 </div>
-<!-- JS Libraies -->
-<script src="${cPath }/resources/lecture/dist/modules/datatables/datatables.min.js"></script>
-<script src="${cPath }/resources/lecture/dist/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-<script src="${cPath }/resources/lecture/dist/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
-<script src="${cPath }/resources/lecture/dist/modules/jquery-ui/jquery-ui.min.js"></script>
-
-<!-- Page Specific JS File -->
-<script src="${cPath }/resources/lecture/dist/js/page/modules-datatables.js"></script>
+<script>
+$(document).ready(function() {
+    $('#attendance-table').DataTable({
+    	"columnDefs": [ {
+	   		"targets": [4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],
+	   		"orderable": false
+   		}]
+    });
+} );
+</script>
