@@ -23,6 +23,12 @@
       </div>
   </div>
 </div>
+<form id="submitForm" action="${cPath }/lecture/updateAttendanceStat.do">
+	<input type="hidden" name="stdnt_no"/>
+	<input type="hidden" name="lec_code"/>
+	<input type="hidden" name="attend_time"/>
+	<input type="hidden" name="exit_time"/>
+</form>
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script type="text/javascript" src="${cPath }/resources/lms/assets/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" >
@@ -37,7 +43,6 @@
 		colorLight : "#ffffff",
 		correctLevel : QRCode.CorrectLevel.H
 	});
-
 </script>
 <script type="text/javascript" >
 	$(function(){
@@ -45,37 +50,52 @@
 		var downloadTimer = setInterval(function(){
 		  if(timeleft <= 0){
 		    clearInterval(downloadTimer);
-		    document.getElementById("countdown").innerHTML = "이동";
+		    document.getElementById("countdown").innerHTML = "";
 		  } else {
 		    document.getElementById("countdown").innerHTML = timeleft + " 초 후에 이동합니다.";
 		  }
 		  timeleft -= 1;
 		}, 1000);
-		
+		var attend_time = "${qrInfo.attend_time}";
+		var exit_time = "${qrInfo.exit_time}";
 		var atndan = {
 			stndt_no : "${qrInfo.stdnt_no}"
 			, lec_code : "${qrInfo.lec_code}"
 		}
-		$.ajax({
-			url : "${cPath}/lecture/qrTimeout.do"
-			, data : JSON.stringify(atndan)
-			, method : "post"
-			, contentType: 'application/json'
-			, dataType : "json"
-			, success : function(res){
-				if(res.result == "OK"){
-					var count = 5;
-					var countdown = setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 5000);
-				}else if(res.result == "FAIL"){
-					setInterval(function(){location.href="#"}, 5000);
+		setInterval(function(){
+			$.ajax({
+				url : "${cPath}/lecture/qrTimeout.do"
+				, data : JSON.stringify(atndan)
+				, method : "post"
+				, contentType: 'application/json'
+				, dataType : "json"
+				, success : function(res){
+					let stdnt_no = $("input[name='stdnt_no']").val(res.stdnt_no);
+					$("input[name='lec_code']").val("${qrInfo.lec_code}");
+					$("input[name='attend_time']").val(res.attend_time);
+					$("input[name='exit_time']").val(res.exit_time);
+					$("#submitForm").submit();
+					if(res.result == "FAIL"){
+						var count = 5;
+						if(attend_time == null){
+							var countdown = setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 5000);
+						}else if(res.result == "OK"){
+							location.href="{cPath}/lecture/attendResult.do";
+						}else if(res.result == "DUFLICATED"){
+	// 						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 1000);
+							alert("이미 있어!");
+						}
+					}else if(res.result == "FAIL"){
+						setInterval(function(){location.reload(); }, 5000);
+					}
 				}
-			}
-			, error : function(error, xhr, msg){
-				console.log(xhr);
-				console.log(error);
-				console.log(msg);
-			}
-		});
+				, error : function(error, xhr, msg){
+					console.log(xhr);
+					console.log(error);
+					console.log(msg);
+				}
+			});	
+		}, 5000);
 	});
 </script>
 

@@ -16,9 +16,7 @@
         <section class="section">
           <div class="section-header">
             <!-- 강의명 -->
-            <c:forEach var="lecture" items="${lecture }" begin="0" end="0">
-				<h1>${lecture.lec_name}</h1>
-            </c:forEach>
+			<h1>${lecture.lec_name}</h1>
           </div>
         </section>
         
@@ -46,15 +44,13 @@
           </section>
       </div>
 	</c:when>
-	<c:when test="${not empty attend_time }">
+	<c:when test="${not empty exit_time }">
 		<!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
             <!-- 강의명 -->
-            <c:forEach var="lecture" items="${lecture }" begin="0" end="0">
-				<h1>${lecture.lec_name}</h1>
-            </c:forEach>
+			<h1>${lecture.lec_name}</h1>
           </div>
         </section>
         
@@ -69,7 +65,7 @@
                             <label class="control-label">퇴실이 정상적으로 완료되었습니다.</label>
                         </div>
                         <div class="form-group">
-                          <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4"
+                         <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4"
                                   onclick="location.href='${cPath}/lecture/index.do?lec_code=${lec_code}'">
                             강의실 홈
                           </button>

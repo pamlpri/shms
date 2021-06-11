@@ -13,25 +13,24 @@
 	</select>
 	<select id="selectAttendInfo" parameterType="AttendVO" resultType="AttendVO">
 		SELECT
-		    end_time, 
-		    attend_date, 
-		    lec_time,  
-		    exit_time,  
+		    TO_CHAR(end_time, 'RRRR/MM/DD HH24:MI:SS') end_time, 
+		    TO_CHAR(attend_date, 'RRRR/MM/DD HH24:MI:SS') attend_date, 
+		    TO_CHAR(lec_time, 'RRRR/MM/DD HH24:MI:SS') lec_time,  
+		    TO_CHAR(exit_time, 'RRRR/MM/DD HH24:MI:SS') exit_time,
 		    (end_time - lec_time) * 1440 total_lec_time, 
 		    ((end_time - lec_time) * 1440 - stdnt_atndan_time) attend_check, 
 		    TO_CHAR(attend_time, 'YYYY/MM/DD HH24:MI:SS') attend_time, 
-		    TRUNC((TO_DATE(TO_CHAR(exit_time, 'YYYY/MM/DD HH24:MI:SS')) - TO_DATE(TO_CHAR(attend_time, 'YYYY/MM/DD HH24:MI:SS'))) * 24 * 60, 0) stdnt_atndan_time,
-		    TRUNC((exit_time - finish_lec)* 1440) finish_check, 
+		    TRUNC(((exit_time) - attend_time) * 24 * 60, 0) stdnt_atndan_time,
+		    TRUNC((exit_time - end_time)* 1440) finish_check, 
 		    (lec_time - attend_time)* 1440 start_check 
 		  FROM(
 		SELECT
 		    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD(b.lec_time, 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') lec_time,
-		    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD(b.lec_time  + a.lec_pnt, 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') end_time,
-		    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD((a.lec_pnt + b.lec_time) , 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') finish_lec,
+		    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD((a.lec_pnt + b.lec_time) , 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') end_time,
 		    c.attend_time,
 		    c.exit_time,
 		    c.attend_date,
-		    TRUNC((TO_DATE(TO_CHAR(c.exit_time, 'YYYY/MM/DD HH24:MI:SS')) - TO_DATE(TO_CHAR(c.attend_time, 'YYYY/MM/DD HH24:MI:SS'))) * 24 * 60, 0) stdnt_atndan_time
+		    TRUNC(((c.exit_time) - c.attend_time) * 24 * 60, 0) stdnt_atndan_time
 		  FROM curriculum a
 		 INNER JOIN lecture b ON (a.cur_code=b.cur_code)
 		 INNER JOIN attendance c ON (b.lec_code=c.lec_code)
@@ -60,7 +59,9 @@
 
 	<select id="selectQRInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
 		SELECT lec_code,
-		       stdnt_no
+		       stdnt_no,
+		       attend_time,
+		       exit_time
 		  FROM attendance
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND lec_code=#{lec_code, jdbcType=VARCHAR}

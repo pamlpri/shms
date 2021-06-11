@@ -134,9 +134,28 @@
 					outputData.parentElement.hidden = false;
 					// QR코드 메시지 출력
  					outputData.innerHTML = code.data;
+					
 					var qrcodedata = $("#outputData").text();
- 					location.href = "<%= request.getContextPath()%>/lecture/qrScanner.do?qrcodedata=" +qrcodedata;
-	
+					
+					$.ajax({
+						url:"${cPath}/lecture/qrScanner.do"
+						, method: "post"
+						, dataType: "html"
+						, data : {"qrcodedata" : qrcodedata }
+						, success : function(resp) {
+							if(resp.resp == "OK"){
+								location.reload();
+							}else{
+								location.reload();
+							}
+						}, error : function(xhr, error, msg) {
+							console.log(xhr);
+							console.log(error);
+							console.log(msg);
+							location.reload();
+						}
+					})
+					
 					return;
 				}
 				// QR코드 인식에 실패한 경우 
@@ -147,7 +166,7 @@
 			}
 			requestAnimationFrame(tick);
 		}
-
 	});
 </script>
+
 </html>
