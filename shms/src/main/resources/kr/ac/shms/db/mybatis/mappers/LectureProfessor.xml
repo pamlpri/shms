@@ -189,11 +189,11 @@
 		    etc
 		) VALUES (
 		    #{lec_code, jdbcType=VARCHAR},
-		    #{midterm, jdbcType=NUMERIC},
-		    #{finals, jdbcType=NUMERIC},
-		    #{attend, jdbcType=NUMERIC},
-		    #{task, jdbcType=NUMERIC},
-		    #{etc, jdbcType=NUMERIC}
+		    #{midterm, jdbcType=NUMERIC} / 100,
+		    #{finals, jdbcType=NUMERIC} / 100,
+		    #{attend, jdbcType=NUMERIC} / 100,
+		    #{task, jdbcType=NUMERIC} / 100,
+		    #{etc, jdbcType=NUMERIC} / 100
 		)
 	</insert>
 	
