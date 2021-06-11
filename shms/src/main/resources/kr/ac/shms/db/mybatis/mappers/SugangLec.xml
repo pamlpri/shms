@@ -19,9 +19,7 @@
 		    lecrum,
 		    lec_code,
 		    lec_pnt,
-		    sugang_at,
-		    req_year,
-		    estbl_year
+		    sugang_at
 			  FROM
 			(
 			SELECT DISTINCT
@@ -55,15 +53,10 @@
 			  INNER JOIN building h
 			  ON(g.building_no = h.building_no)
 			)
-<!-- 		WHERE ESTBL_YEAR = EXTRACT(YEAR FROM SYSDATE) -->
 	     WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}   
 	       AND sugang_at = 'Y'
-	       AND req_year = 2019        
-	       AND estbl_year = 2019
-	       AND ESTBL_SEMSTR = (SELECT  CASE WHEN EXTRACT(MONTH FROM SYSDATE) BETWEEN 2 AND 7 THEN  1
-	                                  ELSE 2
-	                                  END AS SEMSTR
-	                            FROM DUAL)
+	       AND estbl_year = EXTRACT(YEAR FROM SYSDATE)
+	   	   AND estbl_semstr = 1
 	</select>
 	<select id="selectLectureDetails" parameterType="String" resultType="LectureVO">
 		SELECT a.lec_code, 
@@ -80,7 +73,7 @@
 		       c.diary_title,
 		       c.diary_cont
 	      FROM lecture a
-	     INNER JOIN lec_score_st b ON (a.lec_code=b.lec_code)
+	     LEFT OUTER JOIN lec_score_st b ON (a.lec_code=b.lec_code)<!-- INNER JOIN으로 수정해야함 -->
 	     LEFT OUTER JOIN lec_week_diary c ON (b.lec_code=c.lec_code)
 	     INNER JOIN curriculum d ON (a.cur_code=d.cur_code)
 	     WHERE a.lec_code= #{lec_code, jdbcType=VARCHAR}

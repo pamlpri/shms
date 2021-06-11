@@ -3,7 +3,6 @@ package kr.ac.shms.lms.student.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,7 +32,7 @@ import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 
 /**
- * @author PC-24
+ * @author 김보미
  * @since 2021. 5. 31.
  * @version 1.0
  * @see javax.servlet.http.HttpServlet
@@ -71,33 +71,36 @@ public class AttendanceController {
 		model.addAttribute("qrInfo", qrInfoVO);
 		return "lecture/qrgenerator";
 	}
-	@RequestMapping("/qrScanner.do")
-	public String insertAttendance(
+	
+	@RequestMapping(value="/qrScanner.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE, method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> insertAttendance(
 			@RequestParam("qrcodedata") String qrcodeData
-			, HttpSession session
 			, Model model
 			) {
 		String[] arr = qrcodeData.split(",");
 		String stdnt_no = arr[0];
 		String lec_code = arr[1];
 		
-		
+		logger.info("qrcodeData : {}", qrcodeData);
 		AttendVO attendVO = new AttendVO();
 		attendVO.setStdnt_no(stdnt_no);
 		attendVO.setLec_code(lec_code);
 		
 		ServiceResult attendResult = studentService.selectCountAttend(attendVO);
+		ServiceResult exitResult = studentService.selectCountExit(attendVO);
 
 		AttendVO attendInfo = new AttendVO();
 		attendInfo.setStdnt_no(stdnt_no);
 		attendInfo.setLec_code(lec_code);
 
 		LectureVO lecture = lectureService.selectLectureDetails(lec_code);
+		logger.info("lecture {}", lecture);
 
-		String view = null;
+		Map<String, String> resp = new HashMap<>();
 		ServiceResult result = ServiceResult.FAIL;
 		
-		if(ServiceResult.FAIL.equals(attendResult)) {
+		if(ServiceResult.FAIL.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)) {
 			result = studentService.attend(attendInfo);
 			if(ServiceResult.OK.equals(result)) {
 				AttendVO getAttendInfo = new AttendVO();
@@ -105,11 +108,12 @@ public class AttendanceController {
 				model.addAttribute("attendInfo", attendInfo);
 				model.addAttribute("attend_time", getAttendInfo.getAttend_time());
 				model.addAttribute("lecture", lecture);
-				view = "lecture/qrResult";
+				resp.put("resp", "OK");
+				
 			}else {
-				view = "lecture/main";
+				resp.put("resp", "FAIL");
 			}
-		}else {
+		}else if(ServiceResult.OK.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)){
 			result = studentService.exit(attendInfo);
 			if(ServiceResult.OK.equals(result)) {
 				AttendVO getAttendInfo = new AttendVO();
@@ -121,14 +125,13 @@ public class AttendanceController {
 				model.addAttribute("attend_time", vo.getAttend_time());
 				model.addAttribute("lec_code", lec_code);
 				model.addAttribute("lecture", lecture);
-				view = "lecture/qrResult";
+				resp.put("resp", "OK");
 			}else {
-				view = "lecture/main";
+				resp.put("resp", "FAIL");
 			}
 		}
-		return view;
+		return resp;
 	}
-	
 	@RequestMapping(value="/qrTimeout.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public String qrTimeoutForAjax(
@@ -136,7 +139,6 @@ public class AttendanceController {
 			, @RequestBody Map<String, String> atndan
 			, HttpServletResponse resp
 			) throws IOException {
-		logger.info("qrDataMap : {}", atndan);
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		AttendVO atVo = new AttendVO();
@@ -146,61 +148,27 @@ public class AttendanceController {
 		ServiceResult attendResult = studentService.selectCountAttend(atVo);
 		ServiceResult exitResult = studentService.selectCountExit(atVo);
 		
+		AttendVO attend = new AttendVO();
+		attend.setStdnt_no(user.getUser_id());
+		attend.setLec_code(atndan.get("lec_code"));
+		String attendTime = studentService.selectAtndanTime(attend).getAttend_time();
+		String exitTime = studentService.selectAtndanTime(attend).getExit_time();
+		
 		if(ServiceResult.OK.equals(attendResult) || ServiceResult.OK.equals(exitResult)) {
-			// 출석 상태 update하기
-			AttendVO studentInfo = new AttendVO();
-			studentInfo.setStdnt_no(user.getUser_id());
-			studentInfo.setLec_code(atndan.get("lec_code"));
-			
-			AttendVO vo = studentService.selectAttendInfo(studentInfo);
-			int total_lec_time = vo.getTotal_lec_time();	// 총 강의 시간(분)
-			int attend_check = vo.getAttend_check();		// 출석인정시간(분)
-			int start_check = vo.getStart_check();			// 강의시작시간-입실시간(분)
-			int finish_check = vo.getFinish_check();		// 퇴실시간-강의종료시간(분)
-			
-			AttendVO attend = new AttendVO();
-			attend.setStdnt_no(user.getUser_id());
-			attend.setLec_code(atndan.get("lec_code"));
-			
-			if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
-				ServiceResult updateResult = ServiceResult.FAIL;
-				if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
-					if(attend_check < 15 && attend_check > -15) {
-						if(start_check< 15 && start_check > -15 && finish_check < 15 && finish_check > -15) {
-							attend.setAttend_stat("CS");
-							updateResult = studentService.updateAttendStat(attend);
-							if(ServiceResult.OK.equals(updateResult)) {
-								resultMap.put("result", ServiceResult.OK);
-							}else {
-								resultMap.put("result", ServiceResult.FAIL);
-							}
-						}
-					}else {
-						if((total_lec_time / 2) < attend_check) {
-							attend.setAttend_stat("JG");
-							updateResult = studentService.updateAttendStat(attend);
-							if(ServiceResult.OK.equals(updateResult)) {
-								resultMap.put("result", ServiceResult.OK);							
-							}else {
-								resultMap.put("result", ServiceResult.FAIL);
-							}
-						}else if((total_lec_time / 2) > attend_check) {
-							attend.setAttend_stat("GS");
-							updateResult = studentService.updateAttendStat(attend);
-							if(ServiceResult.OK.equals(updateResult)) {
-								resultMap.put("result", ServiceResult.OK);							
-							}else {
-								resultMap.put("result", ServiceResult.FAIL);
-							}
-						}
-					}
-				}
-			}
 			resultMap.put("result", ServiceResult.OK);
+			resultMap.put("stdnt_no", user.getUser_id());
+			resultMap.put("lec_no", atndan.get("lec_code"));
+			resultMap.put("attend_time", attendTime);
+			resultMap.put("exit_time", exitTime);
+			
 		}else if(ServiceResult.FAIL.equals(attendResult) || ServiceResult.FAIL.equals(exitResult)){
 			resultMap.put("result", ServiceResult.FAIL);
-		}else if(ServiceResult.OK.equals(exitResult)) {
-
+			resultMap.put("stdnt_no", user.getUser_id());
+			resultMap.put("lec_code", atndan.get("lec_code"));
+			resultMap.put("attend_time", attendTime);
+			resultMap.put("exit_time", exitTime);
+		}else if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
+			resultMap.put("result", "DUFLICATED");
 		}
 		resp.setContentType(MimeType.JSON.getMime());
 		try(
