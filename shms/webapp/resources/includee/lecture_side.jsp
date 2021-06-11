@@ -52,7 +52,7 @@
             <ul class="dropdown-menu">
                <li><a href="${cPath }/lecture/lectureInfo.do">강의정보</a></li>
                <li><a href="${cPath }/lecture/lectureSetting.do">강의설정</a></li>
-               <li><a href="attendanceAdmin.html">출석관리</a></li> 
+               <li><a href="${cPath }/lecture/attendanceAdmin.do">출석관리</a></li> 
                <li><a href="gradeAdmin.html">성적관리</a></li>
             </ul>
           </li>

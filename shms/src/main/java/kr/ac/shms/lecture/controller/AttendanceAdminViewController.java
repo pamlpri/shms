@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
@@ -26,6 +27,7 @@ import kr.ac.shms.lecture.service.LectureService;
  * </pre>
  */
 @Controller
+@SessionAttributes("lec_code")
 public class AttendanceAdminViewController {
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceAdminViewController.class);
 	@Inject
