@@ -29,18 +29,18 @@
           <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-home"></i> <span>강의실 홈</span></a>
             <ul class="dropdown-menu">
-              <li><a href="lectureInfo.html">강의정보</a></li> 
-              <li><a href="attendance.html">출석관리</a></li> 
-              <li><a href="grade.html">성적관리</a></li> 
+              <li><a href="${cPath }/lecture/lectureInfo.do">강의정보</a></li> 
+              <li><a href="${cPath }/lecture/attendance.do">출석관리</a></li> 
+              <li><a href="${cPath }/lecture/grade.do">성적관리</a></li> 
             </ul>
           </li>
           <!-- 권한 학생 -->
           <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-user-graduate"></i> <span>학습활동</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="lecture.html">전체강의</a></li> 
-              <li><a class="nav-link" href="tesk.html">과제제출</a></li> 
-              <li><a class="nav-link" href="exam.html">시험응시</a></li> 
+              <li><a class="nav-link" href="${cPath }/lecture/lectureWeek.do">전체강의</a></li> 
+              <li><a class="nav-link" href="${cPath }/lecture/task.do">과제제출</a></li> 
+              <li><a class="nav-link" href="${cPath }/lecture/exam.do">시험응시</a></li> 
             </ul>
           </li>
           </c:if>
@@ -50,9 +50,10 @@
           <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-home"></i> <span>강의실 홈</span></a>
             <ul class="dropdown-menu">
-              <li><a href="lectureInfo.html">강의정보</a></li>
-              <li><a href="attendanceAdmin.html">출석관리</a></li> 
-              <li><a href="gradeAdmin.html">성적관리</a></li> 
+               <li><a href="${cPath }/lecture/lectureInfo.do">강의정보</a></li>
+               <li><a href="${cPath }/lecture/lectureSetting.do">강의설정</a></li>
+               <li><a href="attendanceAdmin.html">출석관리</a></li> 
+               <li><a href="gradeAdmin.html">성적관리</a></li>
             </ul>
           </li>
           
@@ -71,7 +72,7 @@
           <li class="dropdown">
             <a href="#" class="nav-link has-dropdown"><i class="fab fa-readme"></i> <span>강의개요</span></a>
             <ul class="dropdown-menu">
-              <li><a class="nav-link" href="noticeLecture.html">공지사항</a></li> 
+              <li><a class="nav-link" href="${cPath }/lecture/notice.do">공지사항</a></li> 
               <li><a class="nav-link" href="qnaLecture.html">강의 Q&A</a></li> 
               <li><a class="nav-link" href="noticeLecture.html">자료실</a></li> 
             </ul>
