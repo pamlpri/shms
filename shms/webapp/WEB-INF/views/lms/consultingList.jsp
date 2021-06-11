@@ -82,7 +82,7 @@
 											<c:when test="${consulting.process_stat_nm eq '승인'}">
 												<c:set var="now" value="<%=new java.util.Date() %>" />
 												<c:set value="${consulting.hope_date } ${consulting.hope_time }" var="hopeDate" />
-												<fmt:formatDate value="${now }" pattern="yyyy-MM-dd hh:mm" var="nowDate"/>
+												<fmt:formatDate value="${now }" pattern="yyyy-MM-dd HH:mm" var="nowDate"/>
 												<c:choose>
 													<c:when test="${hopeDate > nowDate }">
 														<button type="button" class="btn badge bg-primary block failBtn"
