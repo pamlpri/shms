@@ -156,9 +156,9 @@ public class BoardServiceImpl implements BoardService{
 			if(!authChk) {
 				result = ServiceResult.INVALIDPASSWORD;
 			}else {
-				int savedAtchNo = savedBoard.getAtch_file_no();
-				logger.info("atch: {}" , savedAtchNo);
-				
+				if(savedBoard.getAtch_file_no() == null) {
+					boardDAO.updateAtchNo(board);
+				}
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
 					cnt += processes(board);
