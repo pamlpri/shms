@@ -21,3 +21,6 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="${cPath }/resources/lecture/dist/css/style.css">
   <link rel="stylesheet" href="${cPath }/resources/lecture/dist/css/components.css">
+ 
+  <script src="${cPath }/resources/lecture/dist/modules/jquery.min.js"></script>
+  <script src="${cPath }/resources/lecture/dist/modules/popper.js"></script>

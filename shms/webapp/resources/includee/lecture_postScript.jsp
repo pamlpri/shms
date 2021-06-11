@@ -8,8 +8,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- General JS Scripts -->
-	<script src="${cPath }/resources/lecture/dist/modules/jquery.min.js"></script>
-	<script src="${cPath }/resources/lecture/dist/modules/popper.js"></script>
 	<script src="${cPath }/resources/lecture/dist/modules/tooltip.js"></script>
 	<script src="${cPath }/resources/lecture/dist/modules/bootstrap/js/bootstrap.min.js"></script>
 	<script src="${cPath }/resources/lecture/dist/modules/nicescroll/jquery.nicescroll.min.js"></script>

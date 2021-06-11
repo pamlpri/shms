@@ -28,7 +28,7 @@
 			<trim prefix="AND (" suffix=")" prefixOverrides="AND">
 				<if test="searchMap.lec_atnlc != null">
 					<![CDATA[
-					AND lec_atnlc <= #{searchMap.lec_atnlc}
+					AND lec_atnlc = #{searchMap.lec_atnlc}
 					]]>
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_cl_grp)">
