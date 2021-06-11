@@ -83,4 +83,8 @@
 		                     WHERE code_grp_nm = 'REQ_CL_CODE')
 	</select>
 	
+	<select id="lecScoreList" parameterType="String" resultType="LecScoreVO">
+	
+	</select>
+	
 </mapper>
