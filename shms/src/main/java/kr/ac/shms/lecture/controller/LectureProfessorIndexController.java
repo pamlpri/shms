@@ -59,7 +59,7 @@ public class LectureProfessorIndexController {
 			@RequestParam("lec_code") String lec_code
 			, Model model
 			) {
-		List<LectureVO> lectureDetails = lectureService.selectLectureDetails(lec_code);
+		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		System.out.println(lectureDetails);
 		model.addAttribute("lecture", lectureDetails);
 		return "lecture/main";

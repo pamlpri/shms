@@ -268,9 +268,16 @@
 	
 	<insert id="insertAttatches" parameterType="BoardVO">
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
-		SELECT COUNT(*)+1 startAttNo
+		SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
 		FROM ATTACH
-		WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+		<choose>
+			<when test="atch_file_no != null and !atch_file_no.equals('')">
+				WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
+			</when>
+			<otherwise>
+				WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+			</otherwise>
+		</choose>
 		</selectKey>
 		INSERT ALL
 		<foreach collection="attachList" item="attatch" index="idx">

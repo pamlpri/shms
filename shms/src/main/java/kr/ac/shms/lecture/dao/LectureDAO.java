@@ -38,7 +38,7 @@ public interface LectureDAO {
 	 * @param lec_code 강의코드
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<LectureVO> selectLectureDetails(String lec_code);
+	public LectureVO selectLectureDetails(String lec_code);
 	
 	/**
 	 * 교수가 관리하는 강의 목록 추출
