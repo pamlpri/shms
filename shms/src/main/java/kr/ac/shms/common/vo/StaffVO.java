@@ -36,4 +36,7 @@ public class StaffVO {
 	private String bank_name;
 	private String photo_path;
 	private String dean_at;	// 학과장 여부
+	
+	// 학생 비밀번호 변경 때문에 필요
+	private String aa;
 }

@@ -349,7 +349,7 @@
 	    FROM STUDENT S
 	    RIGHT OUTER JOIN USERS U
 	    ON S.STDNT_NO = U.USER_ID
-	    WHERE STDNT_NO LIKE 'S18%'
+	    WHERE STDNT_NO LIKE 'S21%'
 	</select>
 	
 	<update id="passUpdate" parameterType="UserLoginVO">

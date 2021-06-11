@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
@@ -80,6 +81,16 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 		int cnt = lmsStaffDAO.consultingCompanion(consultingVO);
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
+	}
+
+	@Override
+	public List<StaffVO> passwordUpdate() {
+		return lmsStaffDAO.passwordUpdate();
+	}
+
+	@Override
+	public int passUpdate(UserLoginVO userLogin) {
+		return lmsStaffDAO.passUpdate(userLogin);
 	}
 	
 	
