@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
@@ -33,6 +34,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  */
 
 @Controller
+@SessionAttributes("lec_code")
 public class LectureProfessorIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorIndexController.class);
 	@Inject

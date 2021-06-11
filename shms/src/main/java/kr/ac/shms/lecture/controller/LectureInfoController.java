@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
@@ -31,6 +32,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  * </pre>
  */
 @Controller
+@SessionAttributes("lec_code")
 public class LectureInfoController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureInfoController.class);
 	

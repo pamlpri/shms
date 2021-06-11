@@ -246,10 +246,11 @@
   </section>
   <!-- contents end -->
 </div>
-<!-- Page Specific JS File -->
-<script src="${cPath }/resources/lecture/dist/js/page/modules-datatables.js"></script>
 <!-- JS Libraies -->
 <script src="${cPath }/resources/lecture/dist/modules/datatables/datatables.min.js"></script>
 <script src="${cPath }/resources/lecture/dist/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="${cPath }/resources/lecture/dist/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
 <script src="${cPath }/resources/lecture/dist/modules/jquery-ui/jquery-ui.min.js"></script>
+
+<!-- Page Specific JS File -->
+<script src="${cPath }/resources/lecture/dist/js/page/modules-datatables.js"></script>
