@@ -82,13 +82,13 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	
 	@Transactional
 	@Override
-	public ServiceResult updateLecture(SugangVO lecture) {
+	public ServiceResult insertLecture(SugangVO lecture) {
 		ServiceResult result = ServiceResult.FAIL;
 		
 		int cnt = lectureProfessorDAO.updateLecture(lecture);
 		
 		if(cnt > 0) {
-			cnt += setDetails(lecture);
+			cnt += lectureProfessorDAO.insertLectureDetails(lecture);
 			cnt += processes(lecture);
 			if(cnt > 2) {
 				result = ServiceResult.OK;
@@ -97,11 +97,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		return result;
 	}
 	
-	
-	private int setDetails(SugangVO lecture) {
-		return lectureProfessorDAO.insertLectureDetails(lecture);
-	}
-
 	private int processes(SugangVO lecture) {
 		int cnt = 0;
 		List<AttachVO> attachList = lecture.getAttachList();
@@ -151,6 +146,21 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			}
 		}
 		return cnt;
+	}
+
+	@Override
+	public ServiceResult updateLecture(SugangVO lecture) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = lectureProfessorDAO.updateLecture(lecture);
+		
+		if(cnt > 0) {
+			cnt += lectureProfessorDAO.updateLectureDetails(lecture);
+			if(cnt > 1) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
 	}
 	
 }

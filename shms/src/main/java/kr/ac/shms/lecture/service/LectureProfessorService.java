@@ -64,7 +64,14 @@ public interface LectureProfessorService {
 	/**
 	 * 강의 개설
 	 * @param lecture
-	 * @return row count > 0 : 성공
+	 * @return OK, FAIL
+	 */
+	public ServiceResult insertLecture(SugangVO lecture);
+	
+	/**
+	 * 강의 정보 변경
+	 * @param lecture
+	 * @return OK, FAIL
 	 */
 	public ServiceResult updateLecture(SugangVO lecture);
 }

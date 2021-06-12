@@ -36,7 +36,7 @@
 								<c:forEach items="${lecListST }" var="lecListST">
 									<tr>
 										<td class="text-center">${lecListST.grade }</td>
-										<td class="text-center"><a class="text-color" href="${cPath }/lecture/index.do?lec_code=${lecListST.lec_code}">${lecListST.lec_name }</a></td>
+										<td class="text-center"><a class="text-color" href="${cPath }/lecture/index.do?lec_code=${lecListST.lec_code}&lec_name=${lecListST.lec_name}">${lecListST.lec_name }</a></td>
 										<td class="text-center">${lecListST.prof_name }</td>
 										<td class="text-center">${lecListST.lec_pnt }</td>
 										<td class="text-center">${lecListST.lec_cl}</td>
@@ -57,7 +57,7 @@
 								<c:forEach items="${lecListPR }" var="lecListPR">
 									<tr>
 										<td class="text-center">${empty lecListPR.lec_atnlc ?  "전체" : lecListPR.lec_atnlc}</td>
-										<td class="text-center"><a class="text-color" href="${cPath }/lecture/main.do?lec_code=${lecListPR.lec_code}">${lecListPR.lec_name }</a></td>
+										<td class="text-center"><a class="text-color" href="${cPath }/lecture/main.do?lec_code=${lecListPR.lec_code}&lec_name=${lecListPR.lec_name}">${lecListPR.lec_name }</a></td>
 										<td class="text-center">${lecListPR.lec_pnt }</td>
 										<td class="text-center">${lecListPR.lec_cl}</td>
 										<td class="text-center">${lecListPR.lecrum }</td>

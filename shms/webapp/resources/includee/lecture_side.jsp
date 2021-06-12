@@ -12,18 +12,33 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="main-sidebar sidebar-style-2">
 	<aside id="sidebar-wrapper">
-		<div class="sidebar-brand">
-			<!-- 권한에 따라 주소 달라져야함! -->
-			<a href="${cPath }/lecture/professor/main.do"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
-				style="width: 45%;"></a>
-		</div>
-		<div class="sidebar-brand sidebar-brand-sm">
-		    <!-- 권한에 따라 주소 달라져야함! -->
-			<a href="${cPath }/lecture/professor/main.do"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
-				style="width: 40%;" /></a>
-		</div>
+		<c:choose>
+			<c:when test="${'ST' eq user.user[1] }">
+				<div class="sidebar-brand">
+					<!-- 권한에 따라 주소 달라져야함! -->
+					<a href="${cPath }/lecture/index.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
+						style="width: 45%;"></a>
+				</div>
+				<div class="sidebar-brand sidebar-brand-sm">
+				    <!-- 권한에 따라 주소 달라져야함! -->
+					<a href="${cPath }/lecture/index.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
+						style="width: 40%;" /></a>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="sidebar-brand">
+					<!-- 권한에 따라 주소 달라져야함! -->
+					<a href="${cPath }/lecture/main.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
+						style="width: 45%;"></a>
+				</div>
+				<div class="sidebar-brand sidebar-brand-sm">
+				    <!-- 권한에 따라 주소 달라져야함! -->
+					<a href="${cPath }/lecture/main.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
+						style="width: 40%;" /></a>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<ul class="sidebar-menu">
-
 		  <!-- 권한 학생 -->
 		  <c:if test="${'ST' eq user.user[1] }">
           <li class="dropdown">
@@ -58,9 +73,9 @@
           </li>
           
           <!-- 권한 교수 -->
-          <li class="dropdown">
+          <li class="dropdown ">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-user-graduate"></i> <span>학습활동</span></a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu ">
               <li><a class="nav-link" href="${cPath }/lecture/weeks.do">주/회차 관리</a></li>
               <li><a class="nav-link" href="${cPath }/lecture/report.do">과제관리</a></li>  
               <li><a class="nav-link" href="${cPath }/lecture/examAdmin.do">시험관리</a></li>
