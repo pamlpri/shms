@@ -49,7 +49,7 @@
 						<th class="align-middle text-center">상담분류</th>
 						<td>${consulting.consult_cl_nm }</td>
 					</tr>
-					<tr>
+					<tr class="minH">
 						<th class="align-middle text-center">상담내용</th>
 						<td colspan="4">${consltDiary.contents }</td>
 					</tr>

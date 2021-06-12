@@ -61,7 +61,7 @@
               <th class="align-middle"><span class="red-color">* </span>강의종류</th>
               <td class="text-left">
                 <select class="form-control" name="week_lec_cl">
-                  <option>-- 강의종류 --</option>
+                  <option value="">-- 강의종류 --</option>
                   <option value="DM">대면</option>
                   <option value="BG">비대면</option>
                   <option value="SG">비대면 실시간</option>
@@ -127,31 +127,15 @@
     </div>
   </div>
   
-  <script>
-    let weeksForm = $("#weeksForm");
-  	$("#saveBtn").on("click",function(){
-  		let lec_week = $(weeksForm).find("input[name='lec_week']").val().length;
-  		let week_bgnde = $(weeksForm).find("input[name='lec_week']").val().length;
-  		let week_endde = $(weeksForm).find("input[name='lec_week']").val().length;
-  		let diary_title = $(weeksForm).find("input[name='lec_week']").val().length;
-  		let week_lec_cl = $(weeksForm).find("input[name='lec_week']").val().length;
-  		
-  		let list = [];
-  		list.push(lec_week);
-  		console.log(lec_week);
-  		list.push(week_bgnde);
-  		list.push(week_endde);
-  		list.push(diary_title);
-  		list.push(week_lec_cl);
-  		
-  		let multi = 0;
-  		for(var i = 0; i < list.length; i++){
-  			multi *= list[i];
-  		}
-  		
-  		if(multi == 0){
-  			alert("필수입력 누락");
-  			$("#exampleModal").addClass("show")
-  		}
-  	});s
+  <script type="text/javascript">
+  let weeksForm = $("#weeksForm");
+	$("#saveBtn").on("click",function(){
+		let inputs = $(weeksForm).find(":input[name]");
+		$(inputs).each(function(idx, input){
+			console.log($(this).val());
+			if(typeof $(this).val() == "undefined"){
+				$("#exampleModal").addClass("show");
+			}
+		});
+	});
   </script>

@@ -966,3 +966,12 @@
     max-width: 100%;
     height: auto;
 }
+
+.page-content {
+    min-height: 80vh;
+}
+
+.minH {
+	height : 500px;
+	overflow : auto;
+}
