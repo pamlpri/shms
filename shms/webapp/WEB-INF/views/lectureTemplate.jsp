@@ -32,5 +32,25 @@
 	</div>
 
 	<tiles:insertAttribute name="lecturePostScript"/>
+	
+	<script type="text/javascript">
+	$(function(){
+		var param = document.location.href.split("/");
+		url = param[param.length-1].split(".")[0];
+		console.log(url);
+		
+		let aTag = $(".dropdown").find("a");
+		$(aTag).each(function(idx, aTag){
+			let aHref = $(this).attr("href").split("/");
+			aHref = aHref[aHref.length-1].split(".")[0];
+			if(aHref.includes(url)){
+				console.log(aHref);
+				$(this).parent("li").addClass("active");
+				$(this).parents(".dropdown-menu").addClass("active");
+				$(this).parents(".dropdown").addClass("active");
+			}
+		});
+	})
+</script>
 </body>
 </html>

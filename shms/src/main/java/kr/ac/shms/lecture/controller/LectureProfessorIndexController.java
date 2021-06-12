@@ -1,7 +1,5 @@
 package kr.ac.shms.lecture.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -34,7 +32,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  */
 
 @Controller
-@SessionAttributes("lec_code")
+@SessionAttributes({"lec_code", "lec_name"})
 public class LectureProfessorIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorIndexController.class);
 	@Inject
@@ -45,11 +43,14 @@ public class LectureProfessorIndexController {
 	@RequestMapping("/lecture/main.do")
 	public String lectureDetailsPR(
 			@RequestParam("lec_code") String lec_code
+			, @RequestParam("lec_name") String lec_name
 			, Model model
 			) {
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
-		model.addAttribute("lecture", lectureDetails);
-		model.addAttribute("lec_code", lec_code);
+        model.addAttribute("lecture", lectureDetails);
+        model.addAttribute("lec_code", lec_code);
+        model.addAttribute("lec_name", lec_name);
+        
 		return "lecture/main";
 		
 	}

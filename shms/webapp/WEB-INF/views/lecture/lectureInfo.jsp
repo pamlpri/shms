@@ -7,18 +7,26 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-		<h1>${lecture.lec_name}</h1>
+		<h1>${lec_name}</h1>
 	</div>
   </section>
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <c:choose>
+      	<c:when test="${'ST' eq user.user[1] }">
+      		<li class="breadcrumb-item"><a href="${cPath }/lecture/index.do?lec_code=${lec_code}">Home</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}">Home</a></li>
+		</c:otherwise>
+      </c:choose>
       <li class="breadcrumb-item"><a href="#">강의실홈</a></li>
       <li class="breadcrumb-item active" aria-current="page">강의정보</li>
     </ol>

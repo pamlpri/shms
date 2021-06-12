@@ -32,7 +32,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
+@SessionAttributes({"lec_code", "lec_name"})
 public class LectureInfoController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureInfoController.class);
 	
@@ -46,6 +46,7 @@ public class LectureInfoController {
 	@RequestMapping("/lecture/lectureInfo.do")
 	public String lectureInfo(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			,@SessionAttribute(name="lec_name", required=false) String lec_name
 			, Model model
 			) {
 		
