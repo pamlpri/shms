@@ -6,12 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
+import kr.ac.shms.lms.student.vo.LectureVO;
 
 /**
  * @author 박초원
@@ -40,7 +43,33 @@ public class WeeksInsertController {
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, Model model
 		) {
+		int max = lectureProfessorService.selectWeeksMaxWeek(lec_code);
+		model.addAttribute("max", max);
+		model.addAttribute("insert", "insert");
 		return "lecture/weeksForm";
-		
 	}
+	
+	@RequestMapping("/lecture/weeksInsert.do")
+	public String weeksInsert(
+		@SessionAttribute(name="lec_code", required=false) String lec_code
+ 		, @ModelAttribute("lecture") LectureVO lecture
+		, Model model
+	) {
+		lecture.setLec_code(lec_code);
+		
+		String message = null;
+		String view = null;
+		
+		ServiceResult result = lectureProfessorService.insertWeeks(lecture);
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lecture/weeks.do";
+		}else {
+			message = "서버 오류입니다.";
+			view = "lecture/weeksForm";
+		}
+		
+		model.addAttribute(lecture);
+		return view;
+	}
+	
 }

@@ -64,6 +64,11 @@ public class LectureVO {
 	public String week_endde;
 	public String staff_no;
 	
+	private Integer diary_no;
+	private String week_lec_cl;
+	private String ut_lec_link;
+	private String rt_lec_link;
+	
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] lecture_files;

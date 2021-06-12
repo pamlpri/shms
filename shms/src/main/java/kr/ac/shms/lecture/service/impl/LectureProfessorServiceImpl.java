@@ -163,4 +163,25 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		return result;
 	}
 	
+	@Override
+	public ServiceResult insertWeeks(LectureVO lecture) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = 0;
+		cnt = lectureProfessorDAO.insertWeeks(lecture);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int selectWeeksMaxWeek(String lec_code) {
+		int cnt = 0;
+		cnt = lectureProfessorDAO.selectWeeksMaxWeek(lec_code);
+		
+		return cnt;
+	}
+	
 }

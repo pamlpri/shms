@@ -2406,3 +2406,14 @@ margin-right: -1px;
 #gradePar li h6 {
     margin-right: 10px;
 }
+
+.red-color {
+	color : #fc544b;
+	font-weight : 700;
+}
+
+.docErrs {
+	display : none;
+	color : #fc544b;
+	font-size : 0.8em!important;
+}

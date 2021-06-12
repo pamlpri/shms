@@ -32,7 +32,6 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  * </pre>
  */
 @Controller
-@SessionAttributes({"lec_code", "lec_name"})
 public class LectureInfoController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureInfoController.class);
 	
