@@ -91,4 +91,18 @@ public interface LectureProfessorDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int updateLectureDetails(SugangVO lecture); 
+
+	/**
+	 * 교수 주/회차 등록
+	 * @param lectureVO
+	 * @return cnt > 0 성공
+	 */
+	public int insertWeeks(LectureVO lecture);
+	
+	/**
+	 * 주/회차 가장 마지막 회차의 번호 조회
+	 * @param lec_code
+	 * @return int cnt
+	 */
+	public int selectWeeksMaxWeek(String lec_code);
 }

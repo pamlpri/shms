@@ -35,7 +35,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  */
 
 @Controller
-@SessionAttributes("lec_code")
+@SessionAttributes({"lec_code", "lec_name"})
 public class LectureStudentIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureStudentIndexController.class);
 	@Inject
@@ -47,11 +47,13 @@ public class LectureStudentIndexController {
 	@RequestMapping("/lecture/index.do")
 	public String lectureDetailsST(
 			@RequestParam("lec_code") String lec_code
+			, @RequestParam("lec_name") String lec_name
 			, Model model
 			) {
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		model.addAttribute("lecture", lectureDetails);
 		model.addAttribute("lec_code", lec_code);
+		 model.addAttribute("lec_name", lec_name);
 		
 		return "lecture/main";
 	}
