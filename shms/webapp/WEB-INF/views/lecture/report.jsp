@@ -20,14 +20,14 @@
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
           <li class="breadcrumb-item"><a href="#">학습활동</a></li>
           <li class="breadcrumb-item active" aria-current="page">과제관리</li>
       </ol>
   </nav>
 
   <div class="text-left" style="margin-bottom:2%;">
-    <a href="${cPath }/lecture/reportForm.do" class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> 과제출제</a>
+    <a href="${cPath }/lecture/reportInsert.do" class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> 과제출제</a>
   </div>
 
   <div class="card">

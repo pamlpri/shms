@@ -22,8 +22,8 @@
   <!-- contents start -->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}">Home</a></li>
-      <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}">강의실홈</a></li>
+      <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
+      <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">강의실홈</a></li>
       <li class="breadcrumb-item active" aria-current="page">강의설정</li>
     </ol>
   </nav>
