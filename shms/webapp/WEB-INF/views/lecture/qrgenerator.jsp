@@ -72,19 +72,25 @@
 				, success : function(res){
 					let stdnt_no = $("input[name='stdnt_no']").val(res.stdnt_no);
 					$("input[name='lec_code']").val("${qrInfo.lec_code}");
-					$("input[name='attend_time']").val(res.attend_time);
-					$("input[name='exit_time']").val(res.exit_time);
-					$("#submitForm").submit();
-					if(res.result == "FAIL"){
-						var count = 5;
+					let attend_time = $("input[name='attend_time']").val(res.attend_time);
+					let exit_time = $("input[name='exit_time']").val(res.exit_time);
+// 					$("#submitForm").submit();
+					if(res.result == "OK"){
 						if(attend_time == null){
-							var countdown = setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 5000);
-						}else if(res.result == "OK"){
-							location.href="{cPath}/lecture/attendResult.do";
-						}else if(res.result == "DUFLICATED"){
-	// 						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 1000);
-							alert("이미 있어!");
+							setInterval(function(){location.reload(); }, 5000);
+// 							setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 5000);
+						}else{
+							$("#submitForm").submit();
+							location.href="${cPath}//lecture/attendanceResult.do";
 						}
+						
+						
+// 						else if(res.result == "OK"){
+// 							location.href="{cPath}/lecture/attendResult.do";
+// 						}else if(res.result == "DUFLICATED"){
+// 	 						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 1000);
+// 							alert("이미 있어!");
+// 						}
 					}else if(res.result == "FAIL"){
 						setInterval(function(){location.reload(); }, 5000);
 					}
