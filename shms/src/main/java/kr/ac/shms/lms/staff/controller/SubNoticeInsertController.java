@@ -90,28 +90,34 @@ public class SubNoticeInsertController {
 	}
 	
 	@RequestMapping(value="/lms/subjectNoticeInsert.do", method=RequestMethod.POST)
-	public String subjectNoticeForm(
+	public String subjectNoticeInsert(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @Validated(BoardInsertGroup.class)
 			@ModelAttribute("board") BoardVO board 
 			, Errors errors
 			, Model model
 			) {
-		String user_id = user.getUser_id();
-		String user_name = user.getUser_name();
-		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
-		board.setBo_writer(user_name);
-		String bo_kind = boardService.selectBoKind("학과공지");
-		board.setBo_kind(bo_kind);
-		String sub_code = user.getSub_code();
-		board.setSub_code(sub_code);
 		
+		/** 파라미터 조회  */ 
+		String userId = user.getUser_id();
+		String userName = user.getUser_name();
+		String boKind = boardService.selectBoKind("학과공지");
+		String subCode = user.getSub_code();
+		
+		StaffVO staffVO = lmsStaffService.staff(userId);
+		board.setBo_writer(userName);
+		board.setBo_kind(boKind);
+		board.setSub_code(subCode);
+		
+		/** 파라미터 검증 */ 
 		boolean valid = !(errors.hasErrors());
 		String message = null;
 		String view = null;
 		
 		if(valid) {
+			
+			/** 서비스 호출 */
 			ServiceResult result = boardService.insertBoard(board);
 			if(ServiceResult.OK.equals(result)) {
 				view = "redirect:/lms/subjectNoticeList.do";
@@ -124,9 +130,13 @@ public class SubNoticeInsertController {
 			view = "lms/subjectNoticeForm";
 		}
 		
+		
+		/** 결과자료 구성 */
 		logger.info("message : {}", message);
 		model.addAttribute("message", message);
 		model.addAttribute("staff", staffVO);
+		
+		/** 화면설정 후 반환 */ 
 		return  view;
 	}
 	
