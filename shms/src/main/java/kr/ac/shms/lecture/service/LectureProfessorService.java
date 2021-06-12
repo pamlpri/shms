@@ -74,4 +74,18 @@ public interface LectureProfessorService {
 	 * @return OK, FAIL
 	 */
 	public ServiceResult updateLecture(SugangVO lecture);
+	
+	/**
+	 * 교수 주/회차 등록
+	 * @param lectureVO
+	 * @return cnt > 0 성공
+	 */
+	public ServiceResult insertWeeks(LectureVO lecture);
+	
+	/**
+	 * 주/회차 가장 마지막 회차의 번호 조회
+	 * @param lec_code
+	 * @return int cnt
+	 */
+	public int selectWeeksMaxWeek(String lec_code);
 }

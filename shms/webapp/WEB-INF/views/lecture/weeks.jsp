@@ -13,15 +13,15 @@
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">학습활동</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code }&lec_name=${lec_name}">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">학습활동</a></li>
           <li class="breadcrumb-item active" aria-current="page">주/회차 관리</li>
       </ol>
   </nav>
@@ -33,7 +33,7 @@
   <div class="card lectureList">
       <div class="card-header">
           <h4>4주차 대학생활의 개념</h4>
-          <a href="weeksForm.html" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
+          <a href="${cPath }/lecture/weeksForm.do" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
       </div>
       <div class="card-body">
           <p><strong>학습기간 : </strong>2021년 05월 03일 오전 8:00 ~ 2021.05.10 오후 1:00</p>
@@ -49,7 +49,7 @@
   <div class="card lectureList">
       <div class="card-header">
           <h4>3주차 대학생활의 개념</h4>
-          <a href="weeksForm.html" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
+          <a href="${cPath }/lecture/weeksForm.do" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
       </div>
       <div class="card-body">
           <p><strong>학습기간 : </strong>2021년 05월 03일 오전 8:00 ~ 2021.05.10 오후 1:00</p>
@@ -63,7 +63,7 @@
   <div class="card lectureList">
       <div class="card-header">
           <h4>2주차 대학생활의 개념</h4>
-          <a href="weeksForm.html" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
+          <a href="${cPath }/lecture/weeksForm.do" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
       </div>
       <div class="card-body">
           <p><strong>학습기간 : </strong>2021년 05월 03일 오전 8:00 ~ 2021.05.10 오후 1:00</p>
@@ -77,7 +77,7 @@
   <div class="card lectureList">
       <div class="card-header">
           <h4>1주차 대학생활의 개념</h4>
-          <a href="weeksForm.html" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
+          <a href="${cPath }/lecture/weeksForm.do" class="edit"><i class="fas fa-pen">&#xE254;</i></a>
       </div>
       <div class="card-body">
           <p><strong>학습기간 : </strong>2021년 05월 03일 오전 8:00 ~ 2021.05.10 오후 1:00</p>

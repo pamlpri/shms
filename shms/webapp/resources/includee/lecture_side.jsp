@@ -16,24 +16,24 @@
 			<c:when test="${'ST' eq user.user[1] }">
 				<div class="sidebar-brand">
 					<!-- 권한에 따라 주소 달라져야함! -->
-					<a href="${cPath }/lecture/index.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
+					<a href="${cPath }/lecture/index.do?lec_code=${lec_code}&lec_name=${lec_name}"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
 						style="width: 45%;"></a>
 				</div>
 				<div class="sidebar-brand sidebar-brand-sm">
 				    <!-- 권한에 따라 주소 달라져야함! -->
-					<a href="${cPath }/lecture/index.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
+					<a href="${cPath }/lecture/index.do?lec_code=${lec_code}&lec_name=${lec_name}"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
 						style="width: 40%;" /></a>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-brand">
 					<!-- 권한에 따라 주소 달라져야함! -->
-					<a href="${cPath }/lecture/main.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
+					<a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}"><img src="${cPath }/resources/lecture/dist/img/logo_black.png"
 						style="width: 45%;"></a>
 				</div>
 				<div class="sidebar-brand sidebar-brand-sm">
 				    <!-- 권한에 따라 주소 달라져야함! -->
-					<a href="${cPath }/lecture/main.do?lec_code=${lec_code}"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
+					<a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}"><img src="${cPath }/resources/lecture/dist/img/favicon.png"
 						style="width: 40%;" /></a>
 				</div>
 			</c:otherwise>
