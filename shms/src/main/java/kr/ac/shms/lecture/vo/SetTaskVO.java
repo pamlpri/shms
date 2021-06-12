@@ -1,7 +1,14 @@
 package kr.ac.shms.lecture.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.validator.SetTaskInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +24,7 @@ import lombok.NoArgsConstructor;
  * 수정일                          수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 31.      송수미       최초작성
+ * 2021. 6. 12.      송수미       과제 출제 기능 validate 설정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -32,6 +40,7 @@ public class SetTaskVO {
 	private String task_reg_de;
 	private String submit_bgnde;
 	private String submit_endde;
+	@NotBlank(groups=SetTaskInsertGroup.class)
 	private String task_title;
 	private String task_cont;
 	private Integer task_allot;
@@ -41,4 +50,24 @@ public class SetTaskVO {
 	
 	private Integer submit_cnt;	// 과제 제출한 학생 수
 	private Integer total_cnt;	// 내 강의 듣는 수강생 수
+	
+	private int startAttNo;
+	private List<AttachVO> attachList;
+	private MultipartFile[] set_task_files;
+	public void setBo_files(MultipartFile[] set_task_files) {
+		System.out.println("set_task_files : "+ set_task_files.length);
+		this.set_task_files = set_task_files;
+		if(set_task_files!=null) {
+			List<AttachVO> attatchList = new ArrayList<>();
+			for(MultipartFile file : set_task_files) {
+				if(file.isEmpty()) continue;
+				attatchList.add(new AttachVO(file));
+			}
+			if(attatchList.size()>0)
+				this.attachList = attatchList;
+		}
+	}
+	private int[] delAttNos;	
+	
+	
 }
