@@ -13,7 +13,7 @@
    <section class="section">
      <div class="section-header">
 		<h1>${lecture.lec_name}</h1>
-	</div>
+	 </div>
    </section>
 
    <!-- contents start -->

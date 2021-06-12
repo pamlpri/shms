@@ -1,6 +1,8 @@
 package kr.ac.shms.lecture.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureService;
@@ -26,6 +29,7 @@ import kr.ac.shms.lms.student.vo.LectureVO;
  * 2021. 5. 21.   박초원      	 최초작성
  * 2021. 5. 27.   김보미         학생 전용 페이지로 이동하기 위한 수정
  * 2021. 5. 29.   김보미        학생용 강의 정보
+ * 2021. 6. 12.   박초원         강의코드 쿠키 생성
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -48,6 +52,7 @@ public class LectureStudentIndexController {
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		model.addAttribute("lecture", lectureDetails);
 		model.addAttribute("lec_code", lec_code);
+		
 		return "lecture/main";
 	}
 }

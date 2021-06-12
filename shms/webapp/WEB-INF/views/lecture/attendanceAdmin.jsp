@@ -12,16 +12,15 @@
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
-    </div>
+		<h1>${lecture.lec_name}</h1>
+	 </div>
   </section>
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">강의실 홈</a></li>
+          <li class="breadcrumb-item"><a href="">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/lectureInfo.do">강의실 홈</a></li>
           <li class="breadcrumb-item active" aria-current="page">출석관리</li>
       </ol>
   </nav>
