@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.student.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
@@ -46,6 +48,10 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  */
 @Service
 public class StudentServiceImpl implements StudentService{
+	
+	@Inject
+	private OthersDAO othersDAO;
+	
 	@Inject
 	private StudentDAO studentDAO;	
 	
@@ -313,6 +319,36 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public AttendVO selectAttendInfo(AttendVO studentInfo) {
 		return studentDAO.selectAttendInfo(studentInfo);
+	}
+
+	@Override
+	public void selectMainSuganList(Map<String,Object> paramMap) {
+		
+		/** 반환객체  */
+		
+		/** 파라미터 */ 
+		SugangVO sugangVO = (SugangVO) paramMap.get("sugangVO");
+		String userId = sugangVO.getStdnt_no();
+		
+		List<Map<String, Object>> collegeList = othersDAO.selectCollegeList();
+		/** 학과 조회  */ 
+		List<SubjectVO> subjectList = othersDAO.selectSubjectList(null);
+
+		
+		/** 수강신청 목록 */ 
+		List<SugangVO> dataList = selectSugangList(sugangVO);
+		sugangVO.setDataList(dataList);
+		
+		/** 내가 신청한 목록 조회 */ 
+		List<SugangVO> cartList = selectCartList(userId);
+		SugangVO sugangReqIndexInfo = selectSugangReqInfo(sugangVO);	
+		
+		/** 결과 반영 */ 
+		paramMap.put("subjectList", subjectList);
+		paramMap.put("collegeList", collegeList);
+		paramMap.put("cartList", cartList);
+		paramMap.put("sugangReqIndexInfo", sugangReqIndexInfo);
+		
 	}
 	
 }

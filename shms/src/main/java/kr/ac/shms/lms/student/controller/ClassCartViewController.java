@@ -106,15 +106,20 @@ public class ClassCartViewController {
 		, @RequestParam(value="col_code", required=false) String col_code
 		, @RequestParam(value="sub_code", required=false) String sub_code
 		, @RequestParam(value="grade", required=false) int grade
-		
 		, Model model
 	) {
-		addAttribute(model);
 		
-		String user_id = user.getUser_id();
-		StudentVO studentVO = studentService.student(user_id);
-		model.addAttribute("student", studentVO);
+		/** 파라미터 조회 */
+		String userId = user.getUser_id();
+		StudentVO studentVO = studentService.student(userId);
+		String sugangAt = "N";
 		
+		sugangVO.setSugang_at(sugangAt);
+		sugangVO.setStdnt_no(userId);
+		
+		/** 파라미터 검증 */
+
+		/** 검색조건 */ 
 		Map<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchType", searchType);
 		searchMap.put("searchWord", searchWord);
@@ -125,17 +130,23 @@ public class ClassCartViewController {
 		searchMap.put("grade", grade);
 		sugangVO.setSearchMap(searchMap);
 		
-		List<SugangVO> dataList = studentService.selectSugangList(sugangVO);
-		sugangVO.setDataList(dataList);
 		
-		List<SugangVO> cartList = studentService.selectCartList(user_id);
-		model.addAttribute("cartList", cartList);
+		/** 서비스 호출 ***************************************************************************************/
+		Map<String,Object> paramMap = new HashMap<>();
+		paramMap.put("sugangVO", sugangVO);
+		studentService.selectMainSuganList(paramMap);
+		/*****************************************************************************************************/
 		
-		String sugang_at = "N";
-		sugangVO.setSugang_at(sugang_at);
-		sugangVO.setStdnt_no(user_id);
-        SugangVO sugangReqIndexInfo = studentService.selectSugangReqInfo(sugangVO);
-        model.addAttribute("sugangReqIndexInfo", sugangReqIndexInfo);
+		
+		/** 자료구성 */
+		model.addAttribute("subjectList", paramMap.get("subjectList"));
+		model.addAttribute("collegeList", paramMap.get("collegeList"));
+		model.addAttribute("cartList", paramMap.get("cartList"));
+		model.addAttribute("student", studentVO);
+		model.addAttribute("sugangReqIndexInfo", paramMap.get("sugangReqIndexInfo"));
+		
+		/** 반환 */ 
+		addAttribute(model);
 		
 		return sugangVO;
 	}
