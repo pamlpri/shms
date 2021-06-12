@@ -65,12 +65,12 @@
 							<tr>
 								<th class="align-middle text-center">내용</th>
 								<td colspan="4">
-									<textarea class="form-control" rows="5" cols="100" name="contents" id="contents">${consltDiary.contents }</textarea>
+									<textarea class="form-control" rows="5" cols="700" name="contents" id="contents">${consltDiary.contents }</textarea>
 								</td>
 							</tr>
 						</table>
 						<div class="text-center">
-							<a href="consultingAdmin.html" class="btn btn-secondary">취소</a>
+							<a href="${cPath }/lms/consultingAdmin.do" class="btn btn-secondary">취소</a>
 							<button id="sendBtn" type="submit" class="btn btn-primary">저장</button>
 						</div>
 					</form>
