@@ -37,24 +37,6 @@
 		 WHERE c.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND c.lec_code=#{lec_code, jdbcType=VARCHAR})
 		WHERE TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
-<!-- 		SELECT -->
-<!-- 		    (end_time - lec_time) * 1440 total_lec_time, -->
-<!-- 		    TRUNC((attend_time - lec_time) * 24 * 60, 0) arr, -->
-<!-- 		    TO_CHAR(lec_time, 'YYYY/MM/DD HH24:MI:SS') lec_time, -->
-<!-- 		    TO_CHAR(attend_time, 'YYYY/MM/DD HH24:MI:SS') attend_time, -->
-<!-- 		    TRUNC((TO_DATE(TO_CHAR(exit_time, 'YYYY/MM/DD HH24:MI:SS')) - TO_DATE(TO_CHAR(attend_time, 'YYYY/MM/DD HH24:MI:SS'))) * 24 * 60, 0) stdnt_atndan_time -->
-<!-- 		  FROM( -->
-<!-- 		SELECT -->
-<!-- 		    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD(b.lec_time, 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') lec_time, -->
-<!-- 		    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD(b.lec_time  + a.lec_pnt, 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') end_time, -->
-<!-- 		    b.lec_code, -->
-<!-- 		    c.attend_time, -->
-<!-- 		    c.exit_time -->
-<!-- 		  FROM curriculum a -->
-<!-- 		 INNER JOIN lecture b ON (a.cur_code=b.cur_code) -->
-<!-- 		 INNER JOIN attendance c ON (b.lec_code=c.lec_code) -->
-<!-- 		 WHERE c.stdnt_no=#{stdnt_no, jdbcType=VARCHAR} -->
-<!-- 		   AND c.lec_code=#{lec_code, jdbcType=VARCHAR}) -->
 	</select>
 
 	<select id="selectQRInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
