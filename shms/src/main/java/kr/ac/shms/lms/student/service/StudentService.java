@@ -38,6 +38,9 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  */	
 public interface StudentService {
 
+	public void selectMainSuganList(Map<String,Object> paramMap);
+	
+	
 	/**
 	 * 한 학생에 대한 정보 추출
 	 * @param id
@@ -202,6 +205,9 @@ public interface StudentService {
 	 * @return
 	 */
 	public List<TimeTableVO> timeTable(String stdnt_no);
+	
+	
+	
 	
 	/**
 	 * 개설과목 조회

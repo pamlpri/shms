@@ -164,6 +164,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	private int processes(WebmailVO webmailVO) {
 		int cnt = 0;
 		List<AttachVO> attachList = webmailVO.getAttachList();
+	
 		if(attachList != null && attachList.size() > 0) {
 			FTPClient client = new FTPClient();
 			try {
