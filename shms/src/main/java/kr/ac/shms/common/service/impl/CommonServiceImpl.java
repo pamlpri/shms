@@ -39,12 +39,32 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public List<RegInfoCngVO> SelectRegInfoCngList() {
-		return commonDAO.SelectRegInfoCngList();
+		return commonDAO.selectRegInfoCngList();
 	}
 
 	@Override
-	public List<LecScoreVO> lecScoreList(String lec_code) {
-		return commonDAO.lecScoreList(lec_code);
+	public List<LecScoreVO> lecScoreList(LecScoreVO lecScoreVO) {
+		return commonDAO.selectLecScoreList(lecScoreVO);
+	}
+
+	@Override
+	public List<LecScoreVO> lecYear(String stdnt_no) {
+		return commonDAO.selectLecYear(stdnt_no);
+	}
+
+	@Override
+	public int totalCredit(LecScoreVO lecScoreVO) {
+		return commonDAO.selectTotalCredit(lecScoreVO);
+	}
+
+	@Override
+	public double totalPntVal(LecScoreVO lecScoreVO) {
+		return commonDAO.selectTotalPntVal(lecScoreVO);
+	}
+
+	@Override
+	public double selectTotalAvg(LecScoreVO lecScoreVO) {
+		return commonDAO.selectTotalAvg(lecScoreVO);
 	}
 	
 }
