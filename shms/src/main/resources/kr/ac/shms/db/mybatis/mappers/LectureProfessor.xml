@@ -232,4 +232,16 @@
 		</foreach>
 			SELECT * FROM DUAL
 	</insert>
+	
+	<update id="updateLectureDetails" parameterType="SugangVO">
+		UPDATE lec_score_st
+		    SET
+			   midterm = #{midterm, jdbcType=NUMERIC} / 100,
+			   finals = #{finals, jdbcType=NUMERIC} / 100,
+			   attend = #{attend, jdbcType=NUMERIC} / 100,
+			   task = #{task, jdbcType=NUMERIC} / 100,
+			   etc = #{etc, jdbcType=NUMERIC} / 100
+		WHERE
+		    lec_code = #{lec_code, jdbcType=VARCHAR} 
+	</update>	
 </mapper>

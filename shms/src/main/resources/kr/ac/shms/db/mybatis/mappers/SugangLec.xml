@@ -62,6 +62,8 @@
 		SELECT a.lec_code, 
 		       d.lec_name, 
 		       a.summary, 
+		       tchmtr,
+		       adi_tchmtr,
 		       NVL(b.midterm, 0) * 100 midterm, 
                NVL(b.finals, 0) * 100 finals, 
                NVL(b.attend, 0) * 100 attend, 

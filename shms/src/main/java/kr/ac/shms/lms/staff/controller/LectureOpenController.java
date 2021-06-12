@@ -57,7 +57,6 @@ public class LectureOpenController {
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
-		logger.info("get방식으로 감");
 		String user_id = user.getUser_id();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
@@ -113,14 +112,18 @@ public class LectureOpenController {
 		
 		if(valid) {
 			sum = midterm + finals + attend + task + etc;
-			if(sum != 1) {
+			if(midterm < 0 || finals < 0 || attend < 0 || task < 0 || etc < 0
+				|| midterm > 100 || finals > 100 || attend > 100 || task > 100 || etc > 100 ) {
+				message = "평가방법에는 0과 100 사이의 수만 입력할  수 있습니다.";
+				view = "lms/lectureOpen";
+			}else if(sum != 1) {
 				message = "평가방법의 총합은 100이어야 합니다.";
 				view = "lms/lectureOpen";
 			}else if(lectureVO.getAttachList() == null){
 				message = "반드시 강의 계획서 파일을 첨부하여야 합니다.";
 				view = "lms/lectureOpen";
 			}else {
-				ServiceResult result = lectureProfService.updateLecture(lectureVO);
+				ServiceResult result = lectureProfService.insertLecture(lectureVO);
 				if(ServiceResult.OK.equals(result)) {
 					logger.info("성공");
 					message = "강의가 개설되었습니다.";

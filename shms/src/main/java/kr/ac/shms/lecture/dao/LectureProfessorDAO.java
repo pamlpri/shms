@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -64,7 +65,7 @@ public interface LectureProfessorDAO {
 	public SugangVO selectLecForOpen(String lec_code);
 	
 	/**
-	 * 강의 개설
+	 * 강의 개설, 강의 정보 변경
 	 * @param lecture
 	 * @return row count > 0 : 성공
 	 */
@@ -83,4 +84,11 @@ public interface LectureProfessorDAO {
 	 * @return row count > 0 성공
 	 */
 	public int insertAttaches(SugangVO lecture);
+	
+	/**
+	 * 강의 세부 정보 변경
+	 * @param lecture
+	 * @return row count > 0 : 성공
+	 */
+	public int updateLectureDetails(SugangVO lecture); 
 }

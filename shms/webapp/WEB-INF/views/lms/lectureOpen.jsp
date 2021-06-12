@@ -101,7 +101,7 @@
                           <tr>
                               <th class="align-middle text-center">강의개요</th>
                               <td class="align-middle" colspan="3">
-                                  <textarea class="form-control" placeholder="" id="floatingTextarea" name="summary">${not empty lectureVO.summary ? lectureVO.summary : "" }</textarea>
+                                  <textarea class="form-control" placeholder="" id="floatingTextarea" name="summary">${lectureVO.summary }</textarea>
                               </td>
                           </tr>
                           <tr>
@@ -110,27 +110,27 @@
                                   <ul id="gradePar">
                                       <li class="float-left">
                                           <h6>중간고사</h6>
-                                          <input class="form-control form-control-sm" type="number" placeholder="단위 %" name="midterm"
+                                          <input class="form-control form-control-sm" type="number" min=0 max= 100 placeholder="단위 %" name="midterm"
                                           	value="${not empty lectureVO.midterm ? lectureVO.midterm : '-'}"/>
                                       </li>
                                       <li class="float-left">
                                           <h6>기말고사</h6>
-                                          <input class="form-control form-control-sm" type="number" placeholder="단위 %" name="finals"
+                                          <input class="form-control form-control-sm" type="number" min=0 max= 100 placeholder="단위 %" name="finals"
                                           	value="${not empty lectureVO.finals ? lectureVO.finals : '-'}"/>
                                       </li>
                                       <li class="float-left">
                                           <h6>과제</h6>
-                                          <input class="form-control form-control-sm" type="number" placeholder="단위 %" name="task"
+                                          <input class="form-control form-control-sm" type="number" min=0 max= 100 placeholder="단위 %" name="task"
                                           value="${not empty lectureVO.task ? lectureVO.task : '-'}"/>
                                       </li>
                                       <li class="float-left">
                                           <h6>출석</h6>
-                                          <input class="form-control form-control-sm" type="number" placeholder="단위 %" name="attend"
+                                          <input class="form-control form-control-sm" type="number" min=0 max= 100 placeholder="단위 %" name="attend"
                                           value="${not empty lectureVO.attend ? lectureVO.attend : '-'}"/>
                                       </li>
                                       <li class="float-left">
                                           <h6>기타</h6>
-                                          <input class="form-control form-control-sm" type="number" placeholder="단위 %" name="etc"
+                                          <input class="form-control form-control-sm" type="number" min=0 max= 100 placeholder="단위 %" name="etc"
                                           value="${not empty lectureVO.etc ? lectureVO.etc : '-'}"/>
                                       </li>
                                   </ul>
@@ -139,19 +139,19 @@
                           <tr>
                               <th class="align-middle text-center">강의교재</th>
                               <td class="align-middle" colspan="3">
-                                  <textarea class="form-control" placeholder="" name="tchmtr" id="floatingTextarea">${not empty lectureVO.tchmtr ? lectureVO.tchmtr : "" }</textarea>
+                                  <textarea class="form-control" placeholder="" name="tchmtr" id="floatingTextarea">${lectureVO.tchmtr }</textarea>
                               </td>
                           </tr>
                           <tr>
                               <th class="align-middle text-center">강의부교재</th>
                               <td class="align-middle" colspan="3">
-                                  <textarea class="form-control" placeholder="" name="adi_tchmtr" id="floatingTextarea">${not empty lectureVO.adi_tchmtr ? lectureVO.adi_tchmtr : "" }</textarea>
+                                  <textarea class="form-control" placeholder="" name="adi_tchmtr" id="floatingTextarea">${lectureVO.adi_tchmtr }</textarea>
                               </td>
                           </tr>
                           <tr>
                               <th class="align-middle text-center">비고</th>
                               <td class="align-middle" colspan="3">
-                                  <textarea class="form-control" placeholder="" name="lec_rm" id="floatingTextarea">${not empty lectureVO.lec_rm ? lectureVO.lec_rm : "" }</textarea>
+                                  <textarea class="form-control" placeholder="" name="lec_rm" id="floatingTextarea">${lectureVO.lec_rm }</textarea>
                               </td>
                           </tr>
                       </table>
