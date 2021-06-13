@@ -10,13 +10,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:choose>
-	<c:when test="${empty attend_time }">
+	<c:when test="${not empty attend_time }">
 		<!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
             <!-- 강의명 -->
-			<h1>${lecture.lec_name}</h1>
+			<h1>${lec_name }</h1>
           </div>
         </section>
         
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4"
-                                  onclick="location.href='${cPath}/lecture/index.do?lec_code=${lec_code}'">
+                                  onclick="location.href='${cPath}/lecture/index.do?lec_code=${lec_code}&lec_name=${lec_name }'">
                             강의실 홈
                           </button>
                         </div>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="form-group">
                          <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4"
-                                  onclick="location.href='${cPath}/lecture/index.do?lec_code=${lec_code}'">
+                                  onclick="location.href='${cPath}/lecture/index.do?lec_code=${lec_code}&lec_name=${lec_name }'">
                             강의실 홈
                           </button>
                         </div>

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.service.StudentService;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 
 /**
@@ -44,16 +48,29 @@ public class LectureStudentIndexController {
 	@Inject
 	private LectureService lectureService;
 	
+	@Inject
+	private StudentService studentService;
+	
 	@RequestMapping("/lecture/index.do")
 	public String lectureDetailsST(
-			@RequestParam("lec_code") String lec_code
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @RequestParam("lec_code") String lec_code
 			, @RequestParam("lec_name") String lec_name
 			, Model model
 			) {
+		String stdnt_no = user.getUser_id();
+		
+		AttendVO attend = new AttendVO();
+		attend.setStdnt_no(stdnt_no);
+		attend.setLec_code(lec_code);
+		AttendVO attVO = studentService.selectAtndanTime(attend);
+		
+		
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		model.addAttribute("lecture", lectureDetails);
 		model.addAttribute("lec_code", lec_code);
 		 model.addAttribute("lec_name", lec_name);
+		model.addAttribute("attend", attVO);
 		
 		return "lecture/main";
 	}

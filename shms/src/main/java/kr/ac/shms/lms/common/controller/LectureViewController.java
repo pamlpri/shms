@@ -44,14 +44,17 @@ public class LectureViewController {
 		, HttpSession session
 		, Model model
 	) {
-		List<SugangLecSTVO> lecListST = lectureService.selectStudentSugangList(user.getUser_id());
-		List<SugangLecSTVO> lecListPR = lectureService.selectProfessorSugangList(user.getUser_id());
+		String user_id = user.getUser_id();
+		String user_section = user.getUser_section();
+		
+		List<SugangLecSTVO> lecListST = lectureService.selectStudentSugangList(user_id);
+		List<SugangLecSTVO> lecListPR = lectureService.selectProfessorSugangList(user_id);
 		
 		if("PR".equals(user.getUser_section())) {
-			session.setAttribute("staff", user.getUser_section());
+			session.setAttribute("staff", user_section);
 			model.addAttribute("lecListPR", lecListPR);
 		}else if("ST".equals(user.getUser_section())) {
-			session.setAttribute("student", user.getUser_section());
+			session.setAttribute("student", user_section);
 			model.addAttribute("lecListST", lecListST);
 			
 		}

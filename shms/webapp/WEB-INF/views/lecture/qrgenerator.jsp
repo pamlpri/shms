@@ -6,14 +6,13 @@
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
     <div id="myChart"></div>
   </section>
   
   <div id="qrWrap" class="text-center">
  	 	  <p id="countdown"></p>
-          <p>입실, 퇴실 기록이 있으면 5초 후에 자동으로 강의홈으로 이동합니다</p>
 	  <div id="qrcode">
 	  </div>
       <div>
@@ -23,11 +22,12 @@
       </div>
   </div>
 </div>
-<form id="submitForm" action="${cPath }/lecture/updateAttendanceStat.do">
+<form id="submitForm" action="${cPath }/lecture/attendanceResult.do" method="post">
 	<input type="hidden" name="stdnt_no"/>
-	<input type="hidden" name="lec_code"/>
+	<input type="hidden" name="lec_code" />
 	<input type="hidden" name="attend_time"/>
 	<input type="hidden" name="exit_time"/>
+	<input type="hidden" name="lec_name" value="${lec_name}"/>
 </form>
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script type="text/javascript" src="${cPath }/resources/lms/assets/js/jquery-3.6.0.min.js"></script>
@@ -52,56 +52,43 @@
 		    clearInterval(downloadTimer);
 		    document.getElementById("countdown").innerHTML = "";
 		  } else {
-		    document.getElementById("countdown").innerHTML = timeleft + " 초 후에 이동합니다.";
+		    document.getElementById("countdown").innerHTML = timeleft + " 초 후 자동으로 강의홈으로 이동합니다.";
 		  }
 		  timeleft -= 1;
 		}, 1000);
-		var attend_time = "${qrInfo.attend_time}";
-		var exit_time = "${qrInfo.exit_time}";
+
 		var atndan = {
 			stndt_no : "${qrInfo.stdnt_no}"
 			, lec_code : "${qrInfo.lec_code}"
 		}
-		setInterval(function(){
-			$.ajax({
-				url : "${cPath}/lecture/qrTimeout.do"
-				, data : JSON.stringify(atndan)
-				, method : "post"
-				, contentType: 'application/json'
-				, dataType : "json"
-				, success : function(res){
-					let stdnt_no = $("input[name='stdnt_no']").val(res.stdnt_no);
-					$("input[name='lec_code']").val("${qrInfo.lec_code}");
-					let attend_time = $("input[name='attend_time']").val(res.attend_time);
-					let exit_time = $("input[name='exit_time']").val(res.exit_time);
-// 					$("#submitForm").submit();
-					if(res.result == "OK"){
-						if(attend_time == null){
-							setInterval(function(){location.reload(); }, 5000);
-// 							setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 5000);
-						}else{
-							$("#submitForm").submit();
-							location.href="${cPath}//lecture/attendanceResult.do";
-						}
-						
-						
-// 						else if(res.result == "OK"){
-// 							location.href="{cPath}/lecture/attendResult.do";
-// 						}else if(res.result == "DUFLICATED"){
-// 	 						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}"}, 1000);
-// 							alert("이미 있어!");
-// 						}
-					}else if(res.result == "FAIL"){
-						setInterval(function(){location.reload(); }, 5000);
-					}
+		$.ajax({
+			url : "${cPath}/lecture/qrTimeout.do"
+			, data : JSON.stringify(atndan)
+			, method : "post"
+			, contentType: 'application/json'
+			, dataType : "json"
+			, success : function(res){
+                $("input[name='attend_time']").val(res.attendTime);
+                $("input[name='exit_time']").val(res.exitTime);
+                
+				if(res.result == "attendOK"){
+					setInterval(function(){$("#submitForm").submit();}, 1000);
+// 					setInterval(function(){location.href="${cPath }/lecture/attendanceResult.do"}, 1000);
+
+				}else if(res.result == "FAIL"){
+					setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
+				}else if(res.result == "OK"){
+					setInterval(function(){$("#submitForm").submit();}, 1000);
+				}else if(res.result == "exitFAIL"){
+					setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
 				}
-				, error : function(error, xhr, msg){
-					console.log(xhr);
-					console.log(error);
-					console.log(msg);
-				}
-			});	
-		}, 5000);
+			}
+			, error : function(error, xhr, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});	
 	});
 </script>
 
