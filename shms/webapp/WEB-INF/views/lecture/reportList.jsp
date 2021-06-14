@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 14.      송수미        과제 상세 조회 페이지 기능 구현
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -21,7 +22,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">학습활동</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">학습활동</a></li>
           <li class="breadcrumb-item active" aria-current="page">과제관리</li>
       </ol>
   </nav>
@@ -30,32 +31,32 @@
       <div class="card-body">
         <div class="table-responsive">
               <div class="text-right excelWrap">
-                <a href="reportForm.html" class="btn btn-icon btn-primary"><i class="fas fa-pen"></i> 과제수정</a>
+                <a href="${cPath }/lecture/reportUpdate.do?set_task_no=${setTask.set_task_no}" class="btn btn-icon btn-primary"><i class="fas fa-pen"></i> 과제수정</a>
               </div>
               <table class="table table-bordered table-md">
                   <tr>
                   <th>과제명</th>
-                  <td class="text-left">대학생활의 이해 ppt 제출</td>
+                  <td class="text-left">${setTask.task_title }</td>
                   </tr>
                   <tr>
                   <th>상태</th>
-                  <td class="text-left">진행중</td>
+                  <td class="text-left">${setTask.process_at }</td>
                   </tr>
                   <tr>
                   <th>배점</th>
-                  <td class="text-left">20</td>
+                  <td class="text-left">${setTask.task_allot }</td>
                   </tr>
                   <tr>
                   <th>채점</th>
-                  <td class="text-left">5 / 15</td>
+                  <td class="text-left">${setTask.grade_cnt } / ${setTask.total_cnt }</td>
                   </tr>
                   <tr>
                   <th>제출</th>
-                  <td class="text-left">10 / 15</td>
+                  <td class="text-left">${setTask.submit_cnt } / ${setTask.total_cnt }</td>
                   </tr>
                   <tr>
                   <th>마감일</th>
-                  <td class="text-left">2020.05.05 오전 10:00</td>
+                  <td class="text-left">${setTask.submit_endde }</td>
                   </tr>
               </table>
           </div>
