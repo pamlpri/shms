@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.dao.LmsCommonDAO;
@@ -50,6 +51,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 04 	박초원 	    수신자, 첨부파일 추가
  * 2021. 06. 08		최희수	상담 일지 등록, 조회
  * 2021. 06. 10		  박초원    비밀번호 변경
+ * 2021. 06. 14		최희수	강의평가 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -274,6 +276,16 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		int cnt = lmsCommonDAO.updateNewPassword(usersVO);
 		if(cnt > 0) result = ServiceResult.OK;
 		return result; 
+	}
+
+	@Override
+	public List<LecScoreVO> selectLecEvlList(String stdnt_no) {
+		return lmsCommonDAO.selectLecEvlList(stdnt_no);
+	}
+
+	@Override
+	public int selectEvlCnt(String stdnt_no) {
+		return lmsCommonDAO.selectEvlCnt(stdnt_no);
 	}
 
 	

@@ -3,10 +3,12 @@
 * 수정일            수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 9.      박초원        최초작성
+* 2021. 6. 14.     최희수  	강의평가 조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -35,78 +37,38 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td class="text-center">1235</td>
-                                  <td class="text-center">직업과 취업 전략</td>
-                                  <td class="text-center">2</td>
-                                  <td class="text-center">교필</td>
-                                  <td class="text-center">이필선</td>
-                                  <td class="text-center">
-                                      <button type="button" class="btn icon icon-left btn-light-secondary disabled">
-                                          완료
-                                      </button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">1235</td>
-                                  <td class="text-center">재무설계1</td>
-                                  <td class="text-center">2</td>
-                                  <td class="text-center">교선</td>
-                                  <td class="text-center">김진영</td>
-                                  <td class="text-center">
-                                      <button type="button" class="btn icon icon-left btn-primary actionBtn">
-                                          미완료
-                                      </button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">1235</td>
-                                  <td class="text-center">재무설계2</td>
-                                  <td class="text-center">2</td>
-                                  <td class="text-center">교선</td>
-                                  <td class="text-center">김진영</td>
-                                  <td class="text-center">
-                                      <button type="button" class="btn icon icon-left btn-primary actionBtn">
-                                          미완료
-                                      </button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">1235</td>
-                                  <td class="text-center">청년의 꿈</td>
-                                  <td class="text-center">1</td>
-                                  <td class="text-center">교선</td>
-                                  <td class="text-center">김문명</td>
-                                  <td class="text-center">
-                                      <button type="button" class="btn icon icon-left btn-primary actionBtn">
-                                          미완료
-                                      </button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">1235</td>
-                                  <td class="text-center">직업과 취업 전략</td>
-                                  <td class="text-center">2</td>
-                                  <td class="text-center">교필</td>
-                                  <td class="text-center">이필선</td>
-                                  <td class="text-center">
-                                      <button type="button" class="btn icon icon-left btn-light-secondary disabled">
-                                          완료
-                                      </button>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">1235</td>
-                                  <td class="text-center">직업과 취업 전략</td>
-                                  <td class="text-center">2</td>
-                                  <td class="text-center">교필</td>
-                                  <td class="text-center">이필선</td>
-                                  <td class="text-center">
-                                      <button type="button" class="btn icon icon-left btn-light-secondary disabled">
-                                          완료
-                                      </button>
-                                  </td>
-                              </tr>
+                          	<c:choose>
+                          		<c:when test="${not empty selectLecEvlList }">
+		                          	<c:forEach items="${selectLecEvlList }" var="lecEvl">
+		                          		<tr>
+		                                  <td class="text-center">${lecEvl.scre_no }</td>
+		                                  <td class="text-center">${lecEvl.lec_name }</td>
+		                                  <td class="text-center">${lecEvl.lec_pnt }</td>
+		                                  <td class="text-center">${lecEvl.com_code_nm }</td>
+		                                  <td class="text-center">${lecEvl.name }</td>
+		                                  <td class="text-center">
+		                                  	<c:choose>
+		                                  		<c:when test="${selectEvlCnt > 0 }">
+		                                  			<button type="button" class="btn icon icon-left btn-light-secondary disabled">
+														완료
+				                                    </button>
+		                                  		</c:when>
+		                                  		<c:otherwise>
+		                                  			<button type="button" class="btn icon icon-left btn-light-secondary disabled">
+														미완료
+				                                    </button>
+		                                  		</c:otherwise>
+		                                  	</c:choose>
+		                                  </td>
+		                              </tr>
+		                          	</c:forEach>                          		
+                          		</c:when>
+                          		<c:otherwise>
+                          			<tr>
+                          				<td class="text-center" colspan="6">데이터가 없습니다.</td>
+                          			</tr>
+                          		</c:otherwise>
+                          	</c:choose>
                           </tbody>
                       </table>
                   </div>

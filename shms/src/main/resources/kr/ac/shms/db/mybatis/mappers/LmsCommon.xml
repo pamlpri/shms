@@ -465,4 +465,33 @@
 		   SET user_password = #{user_password, jdbcType=VARCHAR}
 		 WHERE user_id = #{user_id, jdbcType=VARCHAR}
 	</update>
+	
+	<select id="selectLecEvlList" parameterType="String" resultType="LecScoreVO">
+		SELECT  a.SCRE_NO,
+		        c.lec_name,
+		        c.lec_pnt,
+		        e.com_code_nm,
+		        d.name,
+		        a.STDNT_NO,
+		        a.LEC_CODE,
+		        b.cur_code
+		FROM LEC_SCRE a
+		INNER JOIN lecture b
+		ON a.lec_code = b.lec_code
+		INNER JOIN curriculum c
+		ON b.cur_code = c.cur_code
+		INNER JOIN staff d
+		ON c.staff_no = d.staff_no
+		INNER JOIN tb_com_code e
+		ON b.lec_cl = e.com_code
+		WHERE a.stdnt_no = #{stdnt_no}
+		AND year = TO_CHAR(SYSDATE, 'YYYY')
+		AND e.code_grp = 'G06'
+	</select>
+	
+	<select id="selectEvlCnt" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM LEC_EVL_RES
+		WHERE stdnt_no = #{stdnt_no}
+	</select>
 </mapper>

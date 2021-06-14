@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
@@ -34,6 +35,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 04    	  박초원 	수신자, 첨부파일 추가
  * 2021. 06. 08		 최희수  	상담 내역 상세 조회
  * 2021. 06. 10		  박초원    비밀번호 변경
+ * 2021. 06. 14		최희수	강의평가 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -204,4 +206,18 @@ public interface LmsCommonDAO {
 	 * @param usersVO
 	 */
 	public int updateNewPassword(UsersVO usersVO);
+	
+	/**
+	 * 강의 평가 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<LecScoreVO> selectLecEvlList(String stdnt_no);
+	
+	/**
+	 * 강의평가 유무
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectEvlCnt(String stdnt_no);
 }

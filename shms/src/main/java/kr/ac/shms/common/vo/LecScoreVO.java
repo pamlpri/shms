@@ -27,4 +27,8 @@ public class LecScoreVO {
 	private Integer totalCredit;
 	private double totalPntVal;
 	private double totalAvg;
+	
+	// 강의평가
+	private String com_code_nm;
+	private String cur_code;
 }
