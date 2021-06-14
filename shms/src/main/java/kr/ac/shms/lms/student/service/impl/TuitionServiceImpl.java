@@ -13,6 +13,7 @@ import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
 import kr.ac.shms.lms.student.vo.SugangVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
+import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
  * @author 김보미
@@ -48,6 +49,22 @@ public class TuitionServiceImpl implements TuitionService{
 			resultMap.put("", "");
 		}
 		return tuitionDAO.selectTuitionBill(stdnt_no);
+	}
+
+	@Override
+	public ScheduleVO selectTuitionPaySchdule() {
+		return tuitionDAO.selectTuitionPaySchdule();
+	}
+
+	@Override
+	public TuitionVO selectTuitionReceipt(String stdnt_no) {
+		return tuitionDAO.selectTuitionReceipt(stdnt_no);
+	}
+
+	@Override
+	public TuitionVO selectRefundTuition(String stdnt_no) {
+		
+		return null;
 	}
 
 }

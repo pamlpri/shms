@@ -1,5 +1,7 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -9,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.ac.shms.lms.common.controller.TuitionViewController;
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.TuitionService;
+import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
+import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
  * @author 박초원
@@ -35,13 +39,23 @@ public class TuitionBillController {
 	@Inject
 	private TuitionService tuitinoService;
 	
+	@Inject
+	private LectureService lectureService;
+	
 	@RequestMapping("/lms/tuitionBill.do")
 	public String tuitionBill(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
-		TuitionVO tuition = tuitinoService.selectTuitionBill(user.getUser_id());
+		String stdnt_no = user.getUser_id();
+		
+		ScheduleVO tuitionPay = tuitinoService.selectTuitionPaySchdule();
+		TuitionVO tuition = tuitinoService.selectTuitionBill(stdnt_no);
+		List<SugangLecSTVO> sugangLec = lectureService.selectStudentSugangList(stdnt_no);
+		
 		model.addAttribute("tuition", tuition);
+		model.addAttribute("tuitionPay", tuitionPay);
+		model.addAttribute("sugangLec", sugangLec);
 		return "lms/tuitionBill";
 	}
 }

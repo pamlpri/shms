@@ -61,34 +61,37 @@
 			stndt_no : "${qrInfo.stdnt_no}"
 			, lec_code : "${qrInfo.lec_code}"
 		}
-		$.ajax({
-			url : "${cPath}/lecture/qrTimeout.do"
-			, data : JSON.stringify(atndan)
-			, method : "post"
-			, contentType: 'application/json'
-			, dataType : "json"
-			, success : function(res){
-                $("input[name='attend_time']").val(res.attendTime);
-                $("input[name='exit_time']").val(res.exitTime);
-                
-				if(res.result == "attendOK"){
-					setInterval(function(){$("#submitForm").submit();}, 1000);
-// 					setInterval(function(){location.href="${cPath }/lecture/attendanceResult.do"}, 1000);
-
-				}else if(res.result == "FAIL"){
-					setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
-				}else if(res.result == "OK"){
-					setInterval(function(){$("#submitForm").submit();}, 1000);
-				}else if(res.result == "exitFAIL"){
-					setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
+		setInterval(function(){
+			$.ajax({
+				url : "${cPath}/lecture/qrTimeout.do"
+				, data : JSON.stringify(atndan)
+				, method : "post"
+				, contentType: 'application/json'
+				, dataType : "json"
+				, success : function(res){
+	                $("input[name='attend_time']").val(res.attendTime);
+	                $("input[name='exit_time']").val(res.exitTime);
+	                
+					if(res.result == "attendOK"){
+						setInterval(function(){$("#submitForm").submit();}, 1000);
+	// 					setInterval(function(){location.href="${cPath }/lecture/attendanceResult.do"}, 1000);
+	
+					}else if(res.result == "FAIL"){
+						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
+					}else if(res.result == "OK"){
+						setInterval(function(){$("#submitForm").submit();}, 1000);
+					}else if(res.result == "exitFAIL"){
+						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
+					}
 				}
-			}
-			, error : function(error, xhr, msg){
-				console.log(xhr);
-				console.log(error);
-				console.log(msg);
-			}
-		});	
+				, error : function(error, xhr, msg){
+					console.log(xhr);
+					console.log(error);
+					console.log(msg);
+				}
+			});	
+			
+		}, 1000);
 	});
 </script>
 

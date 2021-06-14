@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.lms.student.vo.TuitionVO;
+import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
  * @author 김보미
@@ -35,4 +36,25 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public TuitionVO selectTuitionBill(String stdnt_no);
+	
+	/**
+	 * 등록금 납부 일정 조회
+	 * @return
+	 */
+	public ScheduleVO selectTuitionPaySchdule();
+	
+	/**
+	 * 등록금 영수증 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public TuitionVO selectTuitionReceipt(String stdnt_no);
+	
+	/**
+	 * 등록금 환불 신청 내역
+	 * @param stdnt_no
+	 * @return
+	 */
+	public TuitionVO selectRefundTuition(String stdnt_no);
+	
 }

@@ -39,7 +39,7 @@
 		WHERE TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
 	</select>
 
-	<select id="selectQRInfo" parameterType="SugangLecSTVO" resultType="AttendVO">
+	<select id="selectQRInfo" parameterType="AttendVO" resultType="AttendVO">
 		SELECT lec_code,
 		       stdnt_no,
 		       attend_time,

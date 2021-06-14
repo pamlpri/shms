@@ -204,3 +204,25 @@
 </div>
     <!-- contents end -->
 </div>
+<script type="text/javascript">
+	$(function(){
+		let 
+		
+		$(".ml-1").on("click", function(){
+			$.ajax({
+				url : "${cPath}/lms/tuitionRefundForm"
+				, data : 
+				, method : "post"
+				, datType : "json"
+				, success : function(res){
+					
+				}, error : function(error, xhr, msg){
+					console.log(xhr);
+					console.log(error);
+					console.log(msg);
+				} 
+			});
+		});
+	});
+
+</script>

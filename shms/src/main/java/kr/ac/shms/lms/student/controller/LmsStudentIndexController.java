@@ -92,7 +92,6 @@ public class LmsStudentIndexController {
 		DietVO diet = lmsCommonService.selectDiet();
 		model.addAttribute("diet", diet);
 		
-		
 		if(studentVO != null) {
 			model.addAttribute("student", studentVO);
 		}
