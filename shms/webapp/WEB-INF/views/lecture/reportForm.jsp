@@ -9,12 +9,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
@@ -33,30 +34,41 @@
 
   <div class="card attendance">
       <div class="card-body">
-        <form class="table-responsive" method="post">
+        <form id="setTaskForm" class="table-responsive" method="post" enctype="multipart/form-data" >
           <table class="table table-bordered table-md report">
             <tr>
-              <th class="align-middle">과제명</th>
+              <th class="align-middle">
+              	<span class="red-color">* </span>과제명
+              </th>
               <td class="text-left">
-              	<input type="text" class="form-control" name="task_title" value="${task.task_title }">
+              	<input type="text" class="form-control im" name="task_title" value="${setTask.task_title }">
+              	<div class="invalid-feedback">
+	                      필수항목
+                </div>
               </td>
             </tr>
             <tr>
-              <th class="align-middle">배점</th>
+              <th class="align-middle">
+              	<span class="red-color">* </span>
+              	배점
+              </th>
               <td class="text-left">
-              	<input type="number" class="form-control col-md-6" name="task_allot" value="${task.task_allot }"/>
+              	<input type="number" class="form-control col-md-6 im" name="task_allot" value="${setTask.task_allot }"/>
+              	<div class="invalid-feedback">
+	                      필수항목
+                </div>
               </td>
             </tr>
             <tr>
               <th class="align-middle">마감일</th>
               <td>
-                  <input type="datetime-local" class="form-control col-md-6" name="submit_endde" value="${task.task_endde }">
+                  <input type="datetime-local" class="form-control col-md-6" name="submit_endde" value="${setTask.submit_endde }">
               </td>
             </tr>
             <tr>
               <th class="align-middle">내용</th>
               <td class="textArea">
-                <textarea class="form-control" rows="5" cols="1000" id="bo_cont" name="task_cont">${task.task_cont }</textarea>
+                <textarea class="form-control" rows="5" cols="1000" id="bo_cont" name="task_cont">${setTask.task_cont }</textarea>
               </td>
             </tr>
             <tr>
@@ -74,7 +86,7 @@
                             <div class="fileUpload btn btn-orange">
                               <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
                               <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-                              <input type="file" class="upload up" id="up" onchange="readURL(this);"/>
+                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
                             </div><!-- btn-orange -->
                             <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!--error-->
                           </div><!-- col-3 -->
@@ -91,14 +103,46 @@
           </table>
           <div class="text-center">
               <a href="${cPath }/lecture/report.do" class="btn btn-secondary">취소</a>
-              <button type="submit" class="btn btn-primary">저장</button>
+              <button id="saveBtn" type="button" class="btn btn-primary">저장</button>
           </div>
         </form>
       </div>
     </div>
+	<!--Basic Modal -->
+	<div class="modal fade text-left" id="default" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel1"></h5>
+					<button type="button" class="close rounded-pill"
+						data-bs-dismiss="modal" aria-label="Close">
+						<i data-feather="x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="close"
+							data-bs-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">닫기</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
   <!-- contents end -->
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+<c:if test="${not empty message }">
+<script>
+	$("#default").find(".modal-body p").empty().text("${message}");
+	$("#default").addClass("show").css("display","block");
+</script>
+</c:if>
   
 <script src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
 <script>
@@ -120,26 +164,26 @@ $(function(){
                 reader.onload = function (e) {
                     if (extension == 'pdf'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/179/179483.svg');
-                    	$(input).attr("name", "task_files");
+                    	$(input).attr("name", "set_task_files");
                     }
                     else if (extension == 'docx'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/281/281760.svg');
-                    	$(input).attr("name", "task_files");
+                    	$(input).attr("name", "set_task_files");
                     }
                     else if (extension == 'rtf'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136539.svg');
-                    	$(input).attr("name", "task_files");
+                    	$(input).attr("name", "set_task_files");
                     }
                     else if (extension == 'png'){ $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136523.svg'); 
-                    	$(input).attr("name", "task_files");
+                    	$(input).attr("name", "set_task_files");
                     }
                     else if (extension == 'jpg' || extension == 'jpeg'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136524.svg');
-                    	$(input).attr("name", "task_files");
+                    	$(input).attr("name", "set_task_files");
                     }
                   	else if (extension == 'txt'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136538.svg');
-                    	$(input).attr("name", "task_files");
+                    	$(input).attr("name", "set_task_files");
                     }
                     else {
                     	//console.log('here=>'+$(input).closest('.uploadDoc').length);
@@ -186,5 +230,36 @@ $(function(){
           }
        });
     });
+    
+    $("#close, .modal").on("click", function(){
+		$("#default").removeClass("show").css("display","none");
+	})
+	
+	let setTaskForm = $("#setTaskForm");
+    var frag = false;
+	$("#saveBtn").on("click",function(){
+		let inputs = $(setTaskForm).find(":input[name]");
+		
+		$(inputs).each(function(idx, input){
+			console.log($(this).val());
+			if($(this).val() == ""){
+				if($(this).hasClass("im")){
+					$(this).addClass("is-invalid");
+				}
+				frag = false;
+			}else {
+				frag = true;
+			}
+		});
+		
+		if(frag){
+			setTaskForm.submit();
+		}
+	});
+	
+	$(setTaskForm).find(":input[name]").on("change", function(){
+		$(this).removeClass("is-invalid");
+		
+	});
     
 </script>
