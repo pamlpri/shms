@@ -1,17 +1,21 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 
 /**
  * @author 박초원
@@ -28,7 +32,6 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
 public class LectureWeekController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureWeekController.class);
 	
@@ -40,8 +43,15 @@ public class LectureWeekController {
 	@RequestMapping("/lecture/lectureWeek.do")
 	public String lectureWeek(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			,@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, Model model
 		) {
+		LectureVO lecture = new LectureVO();
+		lecture.setLec_code(lec_code);
+		lecture.setStdnt_no(user.getUser_id());
+		
+		List<LectureVO> weeksList = lectureStudentService.selectStudentWeeksList(lecture);
+		model.addAttribute("weeksList", weeksList);
 		
 		return "lecture/lectureWeek";
 	}	

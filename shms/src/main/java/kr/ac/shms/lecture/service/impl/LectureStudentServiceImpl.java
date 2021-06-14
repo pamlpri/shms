@@ -1,11 +1,14 @@
 package kr.ac.shms.lecture.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureStudentService;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
@@ -32,4 +35,11 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 	public StudentVO student(String id) {
 		return lectureStudentDAO.student(id);
 	}
+
+	@Override
+	public List<LectureVO> selectStudentWeeksList(LectureVO lecture) {
+		return lectureStudentDAO.selectStudentWeeksList(lecture);
+	}
+
+
 }

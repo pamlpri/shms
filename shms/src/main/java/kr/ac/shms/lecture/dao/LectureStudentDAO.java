@@ -1,7 +1,10 @@
 package kr.ac.shms.lecture.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
@@ -30,6 +33,8 @@ public interface LectureStudentDAO {
 	
 	/**
 	 * 전체 강의 주/회차별 조회
-	 * @param 
+	 * @param lectureVO
+	 * @return 데이터가 없으면 null 반환
 	 */
+	public List<LectureVO> selectStudentWeeksList(LectureVO lecture);
 }

@@ -48,7 +48,6 @@
          <div class="card-body">
              <div class="table-responsive">
                   <div class="table-responsive">
-                      <form>  
                           <table class="table table-bordered mb-0" style="border-color: #dfdfdf;">
                               <thead>
                                   <tr>
@@ -134,62 +133,109 @@
                                       <th class="text-center align-middle">10</th>
                                   </tr>
                                   <tr>
-                                      <th class="text-center align-middle">1</th>
+                                      <th class="text-center align-middle">11</th>
                                       <th class="align-middle" colspan="7">
                                           이 강의에서 특별히 좋았던 점이 있다면 무엇이라고 생각하는가?
                                       </th>
                                   </tr>
                                   <tr>
                                   	<td class="align-middle" colspan="8">
-	                                  	<div class="card">
-			                                <div class="card-body">
-			                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-			                                        <div class="carousel-inner">
-			                                            <div class="carousel-item active">
-			                                            	<p>너무 수업 좋았습니당!</p>
-			                                            </div>
-			                                            <div class="carousel-item">
-			                                            	<p>수업 정말 재밌었어요</p>
-			                                            </div>
-			                                        </div>
-			                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
-			                                            data-bs-slide="prev">
-			                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			                                            <span class="visually-hidden">Previous</span>
-			                                        </a>
-			                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
-			                                            data-bs-slide="next">
-			                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			                                            <span class="visually-hidden">Next</span>
-			                                        </a>
-			                                    </div>
-			                                </div>
-			                            </div>
+		                                <div class="card-body">
+		                                    <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carouselfade">
+		                                        <div class="carousel-inner">
+		                                            <div class="carousel-item active">
+		                                            	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+		                                            	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+		                                            	when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+		                                            	It has survived not only five centuries, but also the leap into electronic typesetting, 
+		                                            	remaining essentially unchanged. It was popularised in the 1960s with the release of
+		                                            	 Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
+		                                            	 software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		                                            </div>
+		                                            <div class="carousel-item">
+		                                            	<p>Contrary to popular belief, Lorem Ipsum is not simply random text.
+		                                            	 It has roots in a piece of classical Latin literature from 45 BC,
+		                                            	  making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, 
+		                                            	  looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage,
+		                                            	   and going through the cites of the word in classical literature, 
+		                                            	   discovered the undoubtable source. Lorem Ipsum comes from sections 
+		                                            	   1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
+		                                            	   (The Extremes of Good and Evil) by Cicero, 
+		                                            	written in 45 BC. This book is a treatise on the theory of ethics, 
+		                                            	very popular during the Renaissance. The first line of Lorem Ipsum, 
+		                                            	"Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+		                                            </div>
+		                                        </div>
+		                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+		                                            data-bs-slide="prev">
+		                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		                                            <span class="visually-hidden">Previous</span>
+		                                        </a>
+		                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+		                                            data-bs-slide="next">
+		                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		                                            <span class="visually-hidden">Next</span>
+		                                        </a>
+		                                    </div>
+		                                </div>
                                   	</td>
                                   </tr>
                                   <tr>
-                                      <th class="text-center align-middle">2</th>
+                                      <th class="text-center align-middle">12</th>
                                       <th class="align-middle" colspan="7">
                                           교수님의 강의내용 및 방법에 개선할 점이 있다면 구체적으로 무엇인가?
                                       </th>
                                   </tr>
+                                  <tr>
+                                  	<td class="align-middle" colspan="8">
+		                                <div class="card-body">
+		                                    <div id="carouselExampleControls2" class="carousel slide carousel-fade" data-bs-ride="carouselfade">
+		                                        <div class="carousel-inner">
+		                                            <div class="carousel-item active">
+		                                            	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+		                                            	Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+		                                            	when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+		                                            	It has survived not only five centuries, but also the leap into electronic typesetting, 
+		                                            	remaining essentially unchanged. It was popularised in the 1960s with the release of
+		                                            	 Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing 
+		                                            	 software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		                                            </div>
+		                                            <div class="carousel-item">
+		                                            	<p>Contrary to popular belief, Lorem Ipsum is not simply random text.
+		                                            	 It has roots in a piece of classical Latin literature from 45 BC,
+		                                            	  making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, 
+		                                            	  looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage,
+		                                            	   and going through the cites of the word in classical literature, 
+		                                            	   discovered the undoubtable source. Lorem Ipsum comes from sections 
+		                                            	   1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
+		                                            	   (The Extremes of Good and Evil) by Cicero, 
+		                                            	written in 45 BC. This book is a treatise on the theory of ethics, 
+		                                            	very popular during the Renaissance. The first line of Lorem Ipsum, 
+		                                            	"Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+		                                            </div>
+		                                        </div>
+		                                        <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
+		                                            data-bs-slide="prev">
+		                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		                                            <span class="visually-hidden">Previous</span>
+		                                        </a>
+		                                        <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
+		                                            data-bs-slide="next">
+		                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		                                            <span class="visually-hidden">Next</span>
+		                                        </a>
+		                                    </div>
+		                                </div>
+                                  	</td>
+                                  </tr>
                               </tbody>
                           </table>
-                          <div class="text-center m-t-15" style="margin-top: 2%;">
-                              <button type="submit" class="btn btn-primary" type="button">저장</button>
-                          </div>  
-                      </form>
                   </div>
               </div>
          </div>  
      </div>
      <div class="text-center">
-         <a href="elective.html" class="btn btn-primary">목록으로</a>
-         <a href="electiveForm.html" class="btn btn-primary">수정</a>
-         <button type="button" class="btn btn-danger block" data-bs-toggle="modal"
-             data-bs-target="#default">
-             삭제
-         </button>
+         <a href="${cPath }/lms/lectureEvaluation.do" class="btn btn-primary">목록으로</a>
      </div>
  </section>
 

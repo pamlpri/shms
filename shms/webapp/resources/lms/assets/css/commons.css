@@ -26,7 +26,7 @@
 }
 /* table th */
 .bg-th {
-    background-color: #bfd8f0;
+    background-color: #e2ebf8;
     color: #394449;
 }
 
@@ -974,4 +974,16 @@
 .minH {
 	height : 500px;
 	overflow : auto;
+}
+
+.carousel-item  {
+	background : #f6f6f6;
+	padding : 40px 20px;
+}
+.carousel-item p {
+	width: 80%;
+    margin: auto;
+}
+.carousel-control-next-icon {
+	color : black;
 }

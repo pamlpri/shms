@@ -27,4 +27,9 @@ public class LectureEvaluationController {
 	public String lectureEvaluationView() {
 		return "lms/lectureEvaluationView";
 	}
+	
+	@RequestMapping("/lms/evaluationView.do")
+	public String evaluationView() {
+		return "lms/lectureEvaluation";
+	}
 }

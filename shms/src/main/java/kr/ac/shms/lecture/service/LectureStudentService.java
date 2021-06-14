@@ -1,5 +1,8 @@
 package kr.ac.shms.lecture.service;
 
+import java.util.List;
+
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
@@ -24,5 +27,11 @@ public interface LectureStudentService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public StudentVO student(String id);
-
+	
+	/**
+	 * 전체 강의 주/회차별 조회
+	 * @param lectureVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<LectureVO> selectStudentWeeksList(LectureVO lecture);
 }

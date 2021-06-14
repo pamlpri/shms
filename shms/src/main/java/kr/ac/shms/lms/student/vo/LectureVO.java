@@ -71,6 +71,11 @@ public class LectureVO {
 	private String week_bgnde_char;
 	private String week_endde_char;
 	
+	private Integer sugang_no;
+	private String stdnt_no;
+	private String sugang_de;
+	private Integer sugang_req;
+	
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] lecture_files;

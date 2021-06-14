@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.shms.lecture.dao.LectureStudentDAO">
-
+	<select id="selectStudentWeeksList" parameterType="LectureVO" resultType="LectureVO">
+		SELECT
+		        a.diary_no,
+		        a.lec_code,
+		        a.lec_week,
+		        TO_CHAR(week_bgnde, '""YYYY"년 "MM"월 "DD"일"') week_bgnde,
+       		    TO_CHAR(week_endde, '""YYYY"년 "MM"월 "DD"일"') week_endde,
+		        a.diary_title,
+		        a.diary_cont,
+		        a.week_lec_cl,
+		        a.ut_lec_link,
+		        a.rt_lec_link,
+		        NVL((SELECT sugang_req
+		           FROM ut_lec_sg 
+		          WHERE a.diary_no = diary_no
+		            AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}), 0) sugang_req
+		  FROM  lec_week_diary a
+		  WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		  ORDER BY diary_no DESC
+	</select>
 </mapper>
