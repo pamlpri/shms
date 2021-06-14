@@ -34,6 +34,10 @@
 		<div class="row">
 			<div class="radioBox col-md-4 mb-4">
 				<div class="form-check float-left">
+					<input class="form-check-input" type="radio" name="lec_cl_grp" id="cartBtn" value="">
+					<label class="form-check-label" for="flexRadioDefault1"> 전체 </label>
+				</div>
+				<div class="form-check float-left">
 					<input class="form-check-input" type="radio" name="lec_cl_grp" id="cartBtn" value="cart">
 					<label class="form-check-label" for="flexRadioDefault1"> 장바구니 </label>
 				</div>	
@@ -171,6 +175,43 @@
 			</div>
 		</section>
 	</div>
+	
+	<div class="page-heading email-application">
+		<section class="section content-area-wrapper">
+			<div class="content-right">
+				<div class="content-wrapper">
+					<div class="content-body">
+						<!-- email app overlay -->
+						<div class="email-app-area">
+							<!-- Email list Area -->
+							<div class="email-app-list-wrapper">
+								<div class="email-user-list list-group lectureList">
+									<table class="table table-bordered mb-0">
+										<tr id="sugangReqList">
+											 <th class="text-center align-middle">신청교과목수</th>
+			                                 <td class="text-center align-middle sugang_cnt" data-cnt="${sugangReqIndexInfo.sugang_lec_cnt }">
+			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_lec_cnt : "0"}과목
+			                                 </td>
+			                                 <th class="text-center align-middle">신청학점</th>
+			                                 <td class="text-center align-middle sugang_at_pnt" data-cnt="${sugangReqIndexInfo.sugang_at_pnt}">
+			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_at_pnt : "0"}학점
+			                                 </td>
+			                                 <th class="text-center align-middle">수강 가능 학점</th>
+			                                 <td class="text-center align-middle sugang_able_pnt" data-cnt="${sugangReqIndexInfo.lec_able_pnt }">
+			                                 	${sugangReqIndexInfo.lec_able_pnt }학점
+			                                 </td>
+										</tr>
+									</table>
+									<!-- lecture list end -->
+								</div>
+							</div>
+						</div>
+						<!--/ lecture list Area -->
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
 
 	<div class="page-heading email-application lectureHeader">
 		<h5>
@@ -237,42 +278,7 @@
 		</section>
 	</div>
 
-	<div class="page-heading email-application">
-		<section class="section content-area-wrapper">
-			<div class="content-right">
-				<div class="content-wrapper">
-					<div class="content-body">
-						<!-- email app overlay -->
-						<div class="email-app-area">
-							<!-- Email list Area -->
-							<div class="email-app-list-wrapper">
-								<div class="email-user-list list-group lectureList">
-									<table class="table table-bordered mb-0">
-										<tr id="sugangReqList">
-											 <th class="text-center align-middle">신청교과목수</th>
-			                                 <td class="text-center align-middle sugang_cnt" data-cnt="${sugangReqIndexInfo.sugang_lec_cnt }">
-			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_lec_cnt : "0"}과목
-			                                 </td>
-			                                 <th class="text-center align-middle">신청학점</th>
-			                                 <td class="text-center align-middle sugang_at_pnt" data-cnt="${sugangReqIndexInfo.sugang_at_pnt}">
-			                                 	${not empty sugangReqIndexInfo ? sugangReqIndexInfo.sugang_at_pnt : "0"}학점
-			                                 </td>
-			                                 <th class="text-center align-middle">수강 가능 학점</th>
-			                                 <td class="text-center align-middle sugang_able_pnt" data-cnt="${sugangReqIndexInfo.lec_able_pnt }">
-			                                 	${sugangReqIndexInfo.lec_able_pnt }학점
-			                                 </td>
-										</tr>
-									</table>
-									<!-- lecture list end -->
-								</div>
-							</div>
-						</div>
-						<!--/ lecture list Area -->
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
+	
 </div>
 <script type="text/javascript">
 	let time = [];
@@ -286,6 +292,7 @@
 	let subjectTag = $("[name='sub_code']");
 	$("[name='col_code']").on("change", function(){
 		let selectedCode = $(this).val();
+		subjectTag.val("");
 		if(selectedCode){
 			subjectTag.find("option").hide();
 			subjectTag.find("option."+selectedCode).show();

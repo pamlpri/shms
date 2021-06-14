@@ -22,6 +22,9 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 5. 24.      박초원      	       최초작성
  * 2021. 06. 01.     송수미      	       교수 과제 조회
  * 2021. 06. 08.     송수미      	       교수 강의 개설
+ * 2021. 06. 12.     박초원				 주/회차 등록
+ * 2021. 06. 14.  	  송수미        	 과제 등록
+ * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -105,4 +108,39 @@ public interface LectureProfessorDAO {
 	 * @return int cnt
 	 */
 	public int selectWeeksMaxWeek(String lec_code);
+	
+	/**
+	 * 교수의 과제 등록
+	 * @param setTask
+	 * @return row count > 0 : 성공
+	 */
+	public int insertSetTask(SetTaskVO setTask);
+
+	/**
+	 * 과제 첨부파일 등록
+	 * @param setTask
+	 * @return row count > 0 : 성공
+	 */
+	public int insertTaskAttaches(SetTaskVO setTask);
+	
+	/**
+	 * 주/회차 조회
+	 * @param lec_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<LectureVO> selectWeeksList(String lec_code);
+	
+	/**
+	 * 한 회차에 대한 세부정보 조회
+	 * @param diary_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public LectureVO selectWeekDetail(int diary_no);
+	
+	/**
+	 * 한 회차 수정
+	 * @param diary_no
+	 * @return cnt > 0 성공
+	 */
+	public int updateWeek(LectureVO lecture);
 }

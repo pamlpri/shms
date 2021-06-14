@@ -8,6 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -67,66 +69,39 @@
                                   <th class="text-center">취득학점</th>
                                   <th class="text-center">평점계</th> 
                                   <th class="text-center">평점평균</th>
-                                  <th class="text-center">등급</th>
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td class="text-center">2012학년도 / 1학기</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">80</td>
-                                  <td class="text-center">3.05</td>
-                                  <td class="text-center">B0</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">2012학년도 / 2학기</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">80</td>
-                                  <td class="text-center">3.05</td>
-                                  <td class="text-center">80.15</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">2013학년도 / 1학기</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">80</td>
-                                  <td class="text-center">3.05</td>
-                                  <td class="text-center">80.15</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">2013학년도 / 2학기</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">80</td>
-                                  <td class="text-center">3.05</td>
-                                  <td class="text-center">80.15</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">2014학년도 / 1학기</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">80</td>
-                                  <td class="text-center">3.05</td>
-                                  <td class="text-center">80.15</td>
-                              </tr>
-                              <tr>
-                                  <td class="text-center">2014학년도 / 2학기</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">21</td>
-                                  <td class="text-center">80</td>
-                                  <td class="text-center">3.05</td>
-                                  <td class="text-center">80.15</td>
-                              </tr>
-                              <tr>
-                                  <th class="text-center">누계</th>
-                                  <th class="text-center">126</th>
-                                  <th class="text-center">126</th>
-                                  <th class="text-center">420</th>
-                                  <th class="text-center">3.05</th>
-                                  <th class="text-center">80.15</th>
-                              </tr>
+                          	<c:choose>
+                          		<c:when test="${not empty selectStatisticsList }">
+                          			<c:set value="${fn:length(selectStatisticsList) }" var="totalCnt" />
+                          			<c:forEach items="${selectStatisticsList }" var="statistics" varStatus="status">
+                          				<c:set var="totalPntVal" value="${totalPntVal + statistics.totalPntVal}"/>
+                          				<c:set var="totalAvg" value="${totalAvg + statistics.totalAvg}"/>
+                          				<c:set var="totalCredit" value="${totalCredit + statistics.totalCredit }" />
+                          			</c:forEach>
+                                    <fmt:formatNumber var="totalPntVal" value="${totalPntVal/totalCnt}" pattern="#.#"/>
+                                    <fmt:formatNumber var="totalAvg" value="${totalAvg/totalCnt}" pattern="#.#"/>
+		                          	<c:forEach items="${selectStatisticsList }" var="statistic" varStatus="status">
+		                          		<tr>
+		                                  <td class="text-center">${statistic.year }학년도 / ${statistic.semstr }학기</td>
+		                                  <td class="text-center">${statistic.totalCredit }</td>
+		                                  <td class="text-center">${statistic.totalCredit }</td>
+		                                  <fmt:formatNumber var="pntval" value="${statistic.totalPntVal}" pattern="#.#"/>
+                                    <fmt:formatNumber var="avg" value="${statistic.totalAvg}" pattern="#.#"/>
+		                                  <td class="text-center">${avg }</td>
+		                                  <td class="text-center">${pntval }</td>
+		                              </tr>
+		                          	</c:forEach>
+                          		</c:when>
+                          		<c:otherwise>
+                          			<tr>
+                          				<td class="text-center" colspan="6">
+                          					데이터가 없습니다.
+                          				</td>
+                          			</tr>
+                          		</c:otherwise>
+                          	</c:choose>
                           </tbody>
                       </table>
                   </div>
@@ -136,15 +111,15 @@
       <h4 class="h4Title"><i class="fas fa-minus"></i> 성적조회</h4>
       <div class="card inputTable">
           <div class="card-body">
-              <div class="row">
+              <form class="row" id="searchForm">
                   <div class="col-lg-12 row">
                       <div class="col-md-3 mb-4">
                           <h6>학년도</h6>
                           <fieldset class="form-group">
                               <select id="seachYear" class="form-select" name="year">
-                              	  <option>--년--</option>
+                              	  <option value="">전체 년도</option>
                                   <c:forEach items="${lecYearList }" var="lecYear">
-                                  	<option value=${lecYear.year }>${lecYear.year }</option>
+                                  	<option value="${lecYear.year }">${lecYear.year }</option>
                                   </c:forEach>
                               </select>
                           </fieldset>
@@ -152,15 +127,16 @@
                       <div class="col-md-3 mb-4">
                           <h6>학기</h6>
                           <fieldset class="form-group">
-                              <select id="seachSemstr" class="form-select" name="semstr">
-                              	  <option>--학기--</option>
-                                  <option value="1">1학기</option>
-                                  <option value="2">2학기</option>
+                              <select id="searchSemstr" class="form-select" name="semstr">
+                              	  <option value="">전체 학기</option>
+                              	  <c:forEach items="${selectSemstrList }" var="semstr">
+                              	  	<option class="${semstr.year }" value="${semstr.semstr }">${semstr.semstr }학기</option>
+                              	  </c:forEach>
                               </select>
                           </fieldset>
                       </div>
                   </div>
-              </div>
+              </form>
 
               <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                   <tr>
@@ -192,13 +168,13 @@
                           		<c:when test="${not empty lecScoreList }">
                           			<c:forEach items="${lecScoreList }" var="lecScore">
 	                          			<tr>
-	                          				<td>${lecScore.scre_no }</td>
-	                          				<td>${lecScore.lec_name }</td>
-	                          				<td>${lecScore.name }</td>
-	                          				<td>${lecScore.lec_cl_nm }</td>
-	                          				<td>${lecScore.lec_pnt }</td>
-	                          				<td>${lecScore.total }</td>
-	                          				<td>${lecScore.pnt_rank_nm }</td>
+	                          				<td class="text-center">${lecScore.scre_no }</td>
+	                          				<td class="text-center">${lecScore.lec_name }</td>
+	                          				<td class="text-center">${lecScore.name }</td>
+	                          				<td class="text-center">${lecScore.lec_cl_nm }</td>
+	                          				<td class="text-center">${lecScore.lec_pnt }</td>
+	                          				<td class="text-center">${lecScore.total }</td>
+	                          				<td class="text-center">${lecScore.pnt_rank_nm }</td>
 	                          			</tr>
                           			</c:forEach>
                           		</c:when>
@@ -214,88 +190,82 @@
               </div>
           </div>
       </div>
-  </section>
-  <input type="hidden" name="year" value="" />
-  <input type="hidden" name="semstr" value="" />
   <!-- contents end -->
   <script type="text/javascript">
-  	$(function() {
-  		function ajaxFunction() {
-			let search = {
-				"year" : $("input[name='year']").val()
-				, "semstr" : $("input[name='semstr']").val()
-			}
-	  		$.ajax({
-	  			url:"${cPath}/lms/lesScoreList.do"
-	  			, method: "post"
-	  			, dataType: "json"
-	  			, data : search
-	  			, success: function(res) {
-	  				let tbodyData;
-	  				let totalCredit;
-	  				$.each(res, function(idx, v) {
-	  					tbodyData += "<tr>";
-	  					tbodyData += "<td class='text-center'>" + v.scre_no + "</td>";
-	  					tbodyData += "<td class='text-center'>" + v.lec_name + "</td>";
-	  					tbodyData += "<td class='text-center'>" + v.name + "</td>";
-	  					tbodyData += "<td class='text-center'>" + v.lec_cl_nm + "</td>";
-	  					tbodyData += "<td class='text-center'>" + v.lec_pnt + "</td>";
-	  					tbodyData += "<td class='text-center'>" + v.total + "</td>";
-	  					tbodyData += "<td class='text-center'>" + v.pnt_rank_nm + "</td>";
-		  				tbodyData += "</tr>";
-	  				});
-	  				let ysDate = search.year + "년도 / " + search.semstr + "학기"
-	  				$("#ysData").html(ysDate);
-	  				$("#lecTbody").html(tbodyData);
-	  			}
-	  			, error: function(xhr, error, msg) {
-	  				console.log(xhr);
-	  				console.log(error);
-	  				console.log(msg);
-	  			}
-	  		});
-			$.ajax({
-				url:"${cPath}/lms/totalCredit.do"
-	  			, method: "post"
-	  			, dataType: "json"
-	  			, data : search
-	  			, success: function(res) {
-	  				$("#totalCredit").html(res + " / " + res);
-	  			}
-	  			, error: function(xhr, error, msg) {
-	  				console.log(xhr);
-	  				console.log(error);
-	  				console.log(msg);
-	  			}
-			});
+	let subjectTag = $("[name='semstr']");
+	$("[name='year']").on("change", function(){
+		let selectedCode = $(this).val();
+		if(selectedCode){
+			subjectTag.find("option").hide();
+			subjectTag.find("option."+selectedCode).show();
+		}else {
+			subjectTag.find("option").show();
+		}
+		subjectTag.find("option:first").show();
+	});
+	
+	let searchForm = $("#searchForm").on("change", ":input[name]", function(){
+		let year = $("select[name='year']").val();
+		let semstr = $("select[name='semstr']").val();
+		ajaxFunction(year, semstr);
+	});
+	function ajaxFunction(year, semstr) {
+  		$.ajax({
+  			url:"${cPath}/lms/lesScoreList.do"
+  			, method: "post"
+  			, dataType: "json"
+  			, data : {"year" : year, "semstr" : semstr}
+  			, success: function(res) {
+  				let tbodyData;
+  				let totalCredit;
+  				$.each(res, function(idx, v) {
+  					tbodyData += "<tr>";
+  					tbodyData += "<td class='text-center'>" + v.scre_no + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.lec_name + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.name + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.lec_cl_nm + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.lec_pnt + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.total + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.pnt_rank_nm + "</td>";
+	  				tbodyData += "</tr>";
+  				});
+  				let ysDate = year + "년도 / " + semstr + "학기"
+  				$("#ysData").html(ysDate);
+  				$("#lecTbody").html(tbodyData);
+  			}
+  			, error: function(xhr, error, msg) {
+  				console.log(xhr);
+  				console.log(error);
+  				console.log(msg);
+  			}
+  		});
+		
+		$.ajax({
+			url:"${cPath}/lms/statistics.do"
+  			, method: "post"
+  			, dataType: "json"
+  			, data :  {"year" : year, "semstr" : semstr}
+  			, success: function(res) {
+  				let totalCredit = 0;
+  				let totalPntval = 0.0;
+  				let totalAvg = 0.0;
+  				let num = 0;
+  				$.each(res, function(idx, v) {
+  					totalCredit += v.totalCredit;
+  					totalPntval += v.totalPntVal;
+  					totalAvg += v.totalAvg;
+  					num = idx + 1;
+  				});
+  				$("#totalCredit").html(totalCredit + " / " + totalCredit);
+  				$("#totalData").html((Math.round((totalAvg/num) * 10) / 10) + " / " + (Math.round((totalPntval/num) * 10) / 10));
+  			}
+  			, error: function(xhr, error, msg) {
+  				console.log(xhr);
+  				console.log(error);
+  				console.log(msg);
+  			}
+		});
+	}
 			
-			$.ajax({
-				url:"${cPath}/lms/average.do"
-	  			, method: "post"
-	  			, dataType: "json"
-	  			, data : search
-	  			, success: function(res) {
-// 	  				console.log(res.totalPntVal);
-// 	  				console.log(res.selectTotalAvg);
-	  				$("#totalData").html(res.selectTotalAvg + " / " + res.totalPntVal);
-	  			}
-	  			, error: function(xhr, error, msg) {
-	  				console.log(xhr);
-	  				console.log(error);
-	  				console.log(msg);
-	  			}
-			});
-  		}
-  		$("[name='year']").on("change", function() {
-  			let seachYear = $(this).val();
-  			$("input[name='year']").val(seachYear);
-  			ajaxFunction();
-  		});
-  		$("[name='semstr']").on("change", function() {
-  			let seachSemstr = $(this).val();
-  			$("input[name='semstr']").val(seachSemstr);
-  			ajaxFunction();
-  		});
-  	});
   </script>
 </div>
