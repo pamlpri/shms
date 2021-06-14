@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
  * --------     --------    ----------------------
  * 2021. 5. 31.      송수미       최초작성
  * 2021. 6. 12.      송수미       과제 출제 기능 validate 설정
+ * 2021. 6. 14.      송수미       과제 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -43,6 +44,7 @@ public class SetTaskVO {
 	private String task_reg_de;
 	private String submit_bgnde;
 	private String submit_endde;
+	private String process_at;	// 진행 상황
 	
 	@NotBlank(groups=SetTaskInsertGroup.class)
 	private String task_title;
@@ -53,6 +55,7 @@ public class SetTaskVO {
 	
 	private List<TaskSubmitVO> taskSubmitList;
 	private String submit_at;	// 학생이 과제 정보 출력할 때 제출 여부
+	private Integer grade_cnt;	// 채점한 과제 수 
 	private Integer submit_cnt;	// 과제 제출한 학생 수
 	private Integer total_cnt;	// 내 강의 듣는 수강생 수
 	

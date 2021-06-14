@@ -10,6 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -35,6 +36,8 @@
   <div class="card attendance">
       <div class="card-body">
         <form id="setTaskForm" class="table-responsive" method="post" enctype="multipart/form-data" >
+          <input type="hidden" value="${setTask.set_task_no}" name="atch_file_no"/>
+          <input type="hidden" value="${setTask.atch_file_no }" name="atch_file_no"/>
           <table class="table table-bordered table-md report">
             <tr>
               <th class="align-middle">
@@ -81,21 +84,46 @@
                     </div>
                     <div class="col-sm-offset-1" id="one">
                       <div id="uploader" class="row">
-                        <div class="row uploadDoc col-sm-4">
-                          <div class="col-sm-10">
-                            <div class="fileUpload btn btn-orange">
-                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
-                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
-                            </div><!-- btn-orange -->
-                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!--error-->
-                          </div><!-- col-3 -->
-                          <div class="col-sm-2"><a class="btn-check">
-                            <i class="fa fa-times"></i></a>
-                          </div><!-- col-1 -->
-                        </div><!--row-->
-                      </div><!--uploader-->
-                    </div><!--one-->
+                      	<c:choose>
+			             	<c:when test="${not empty setTask.attachList and not(fn:length(setTask.attachList) eq 0)}">
+								<c:forEach items="${setTask.attachList }" var="attach">
+									<c:if test="${not empty attach.atch_file_seq }">
+				                        <div class="row uploadDoc col-sm-4">
+				                          <div class="col-sm-10">
+				                            <div class="fileUpload btn btn-orange">
+				                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+				                              <span class="upl" id="upload" data-attno="${attach.atch_file_seq }"> ${attach.file_nm }</span>
+				                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
+				                            </div><!-- btn-orange -->
+				                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+				                          </div><!-- col-3 -->
+				                          <div class="col-sm-2">
+				                          	<a class="btn-check">
+				                            	<i class="fa fa-times"></i>
+				                            </a>
+				                          </div><!-- col-1 -->
+				                        </div><!-- row -->
+									</c:if>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+		                        <div class="row uploadDoc col-sm-4">
+		                          <div class="col-sm-10">
+		                            <div class="fileUpload btn btn-orange">
+		                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+		                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
+		                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
+		                            </div><!-- btn-orange -->
+		                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+		                          </div><!-- col-3 -->
+		                          <div class="col-sm-2"><a class="btn-check">
+		                            <i class="fa fa-times"></i></a>
+		                          </div><!-- col-1 -->
+		                        </div><!-- row -->
+							</c:otherwise>
+                      	</c:choose>
+                      </div><!-- uploader -->
+                    </div><!-- one -->
                   </div><!-- row -->
                 </div><!-- container -->
               </td>
@@ -141,6 +169,9 @@
 <script>
 	$("#default").find(".modal-body p").empty().text("${message}");
 	$("#default").addClass("show").css("display","block");
+    $("#close, .modal").on("click", function(){
+		$("#default").removeClass("show").css("display","none");
+	})
 </script>
 </c:if>
   
@@ -223,17 +254,29 @@ $(function(){
                      + '<input type="file" class="upload up" id="up" onchange="readURL(this);" /></div><!-- btn-orange --> <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!--error--></div><!-- col-3 --><div class="col-sm-2"><a class="btn-check">'
                      + '<i class="fa fa-times"></i></a></div><!-- col-1 --></div><!--row-->');
        });
+       
+		let setTaskForm = $("#setTaskForm");
+		$(".btn-check").on("click", function(){
+			let fileSpan = $(this).parents(".row").find("span");
+			let delAttNo = fileSpan.data("attno");
+			console.log(delAttNo);
+			let newInput = $("<input>").attr({
+							"type" : "text"
+							, "name" : "delAttNos"
+						}).val(delAttNo);
+			
+			setTaskForm.append(newInput);
+			fileSpan.hide();
+		});
         
        $(document).on("click", "a.btn-check" , function() {
-         if($(".uploadDoc").length>1){
+         if($(".uploadDoc").length>0){
             $(this).closest(".uploadDoc").remove();
           }
        });
-    });
+       
     
-    $("#close, .modal").on("click", function(){
-		$("#default").removeClass("show").css("display","none");
-	})
+    });
 	
 	let setTaskForm = $("#setTaskForm");
     var frag = false;
@@ -261,5 +304,6 @@ $(function(){
 		$(this).removeClass("is-invalid");
 		
 	});
-    
+	
+	
 </script>

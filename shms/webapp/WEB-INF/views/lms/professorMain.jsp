@@ -200,7 +200,7 @@
 											<c:when test="${not empty todayLecList}">
 												<c:forEach items="${todayLecList }" var="lecture">
 													<tr>
-														<td class="col-4">${lecture.lec_time }</td>
+														<td class="col-4">${lecture.lec_full_time }</td>
 														<td class="col-auto">
 															<p class=" mb-0">
 																<a class="text-light-black" href="#">${lecture.lec_name }</a>
