@@ -15,6 +15,7 @@
 <script type="text/javascript" src="${cPath }/resources/lms/assets/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${cPath }/resources/lms/assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="${cPath }/resources/lms/assets/js/jspdf.min.js"></script>
+
 <title>Insert title here</title>
 <style type="text/css">
 <!--
@@ -373,13 +374,15 @@ $(document).ready(function() {
 	    html2canvas($('#pdfDiv')[0]).then(function(canvas) { //저장 영역 div id		
 		    // 캔버스를 이미지로 변환
 		    var imgData = canvas.toDataURL('image/png');			     
-		    var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+		    var imgWidth = 210; // 이미지 가로 길이(mm) / A4 기준 210mm
 		    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
 		    var imgHeight = canvas.height * imgWidth / canvas.width;
 		    var heightLeft = imgHeight;
 		    var margin = 10; // 출력 페이지 여백설정
 		    var doc = new jsPDF('p', 'mm');
 		    var position = 0;
+		    var image = "https://storage.cloud.google.com/shms/logo/sig.png";
+		    
 		       
 		    // 첫 페이지 출력
 		    doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
@@ -389,7 +392,7 @@ $(document).ready(function() {
 		    while (heightLeft >= 20) {
 		        position = heightLeft - imgHeight;
 		        doc.addPage();
-		        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+		        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, image);
 		        heightLeft -= pageHeight;
 		    }
 		 

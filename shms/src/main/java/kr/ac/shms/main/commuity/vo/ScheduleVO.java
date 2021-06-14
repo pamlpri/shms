@@ -39,4 +39,9 @@ public class ScheduleVO {
 	private Integer semstr;
 	
 	private List<CalendarVO> calendarList;
+	
+	private Integer start_month;
+	private Integer start_day;
+	private Integer end_day;
+
 }

@@ -30,6 +30,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
+import kr.ac.shms.subject.service.SubjectService;
 
 /**
  * @author 김보미
@@ -61,6 +62,7 @@ public class AttendanceController {
 	public String selectQRInfo(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestParam("lec_code") String lec_code
+			, @RequestParam("lec_name") String lec_name
 			, HttpSession session
 			, Model model
 			) {
@@ -69,6 +71,7 @@ public class AttendanceController {
 		qrInfoVO.setStdnt_no(user.getUser_id());
 		studentService.selectQRInfo(qrInfoVO);
 		model.addAttribute("qrInfo", qrInfoVO);
+		model.addAttribute("lec_name", lec_name);
 		return "lecture/qrgenerator";
 	}
 	
@@ -141,34 +144,38 @@ public class AttendanceController {
 			) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
 		
+		String stdnt_no = user.getUser_id();
+		String lec_code = atndan.get("lec_code");
+		
 		AttendVO atVo = new AttendVO();
-		atVo.setStdnt_no(user.getUser_id());
-		atVo.setLec_code(atndan.get("lec_code"));
+		atVo.setStdnt_no(stdnt_no);
+		atVo.setLec_code(lec_code);
 		
 		ServiceResult attendResult = studentService.selectCountAttend(atVo);
 		ServiceResult exitResult = studentService.selectCountExit(atVo);
 		
 		AttendVO attend = new AttendVO();
-		attend.setStdnt_no(user.getUser_id());
-		attend.setLec_code(atndan.get("lec_code"));
-		String attendTime = studentService.selectAtndanTime(attend).getAttend_time();
-		String exitTime = studentService.selectAtndanTime(attend).getExit_time();
+		attend.setStdnt_no(stdnt_no);
+		attend.setLec_code(lec_code);
+        String attendTime = studentService.selectAtndanTime(attend).getAttend_time();
+        String exitTime = studentService.selectAtndanTime(attend).getExit_time();
 		
-		if(ServiceResult.OK.equals(attendResult) || ServiceResult.OK.equals(exitResult)) {
-			resultMap.put("result", ServiceResult.OK);
-			resultMap.put("stdnt_no", user.getUser_id());
-			resultMap.put("lec_no", atndan.get("lec_code"));
-			resultMap.put("attend_time", attendTime);
-			resultMap.put("exit_time", exitTime);
+		
+		if(ServiceResult.OK.equals(attendResult)&& ServiceResult.FAIL.equals(exitResult)) {
+			resultMap.put("result", "exitFAIL");
+		}else if(ServiceResult.FAIL.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)){	// 출석 기록이나 퇴실기록이 없을 때
+			resultMap.put("result", "FAIL");
+			resultMap.put("lec_code", lec_code);
+		}else if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {	// 퇴실기록이 있을 때 
+			resultMap.put("result", "OK");
+			resultMap.put("attendTime", attendTime);
+			resultMap.put("exitTime", exitTime);
+			System.out.println("exitTime : " + exitTime);
+		}else if(ServiceResult.OK.equals(attendResult) ) {	// 이미 출석한 기록이 있을 때
+			resultMap.put("result", "attendOK");
+			resultMap.put("lec_code", lec_code);
+			resultMap.put("attendTime", attendTime);
 			
-		}else if(ServiceResult.FAIL.equals(attendResult) || ServiceResult.FAIL.equals(exitResult)){
-			resultMap.put("result", ServiceResult.FAIL);
-			resultMap.put("stdnt_no", user.getUser_id());
-			resultMap.put("lec_code", atndan.get("lec_code"));
-			resultMap.put("attend_time", attendTime);
-			resultMap.put("exit_time", exitTime);
-		}else if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
-			resultMap.put("result", "DUFLICATED");
 		}
 		resp.setContentType(MimeType.JSON.getMime());
 		try(

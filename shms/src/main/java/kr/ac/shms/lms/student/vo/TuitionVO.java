@@ -38,5 +38,7 @@ public class TuitionVO {
 	private String year;			// 년도 
 	private String tuition;		// 등록금
 	private String name;		// 학생 이름
+	private Integer month;		
+	private Integer day;
 	
 }

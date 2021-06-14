@@ -43,4 +43,40 @@
 		   AND EXTRACT(YEAR FROM c.req_de) =EXTRACT(YEAR FROM SYSDATE)
 <!-- 		   AND a.semstr = (SELECT semstr FROM v_semstr) -->
 	</select>
+	<select id="selectTuitionPaySchdule" resultType="ScheduleVO">
+		SELECT title,
+		       TO_NUMBER(TO_CHAR(begin_dt, 'YYYY')) year,
+		       EXTRACT(MONTH FROM begin_dt) start_month,
+		       EXTRACT(DAY FROM begin_dt) start_day,
+		       EXTRACT(DAY FROM end_dt) end_day
+		  FROM schedule a
+		 WHERE title = TO_CHAR(EXTRACT(YEAR FROM SYSDATE))||'학년도 '||        
+	    		TO_CHAR((SELECT semstr FROM v_semstr))||'학기 등록금 수납 기간'
+	</select>
+	<select id="selectTuitionReceipt" parameterType="String" resultType="TuitionVO">
+		SELECT DISTINCT b.sub_name,
+		       a.grade,
+		       a.stdnt_no,
+		       a.name,
+		       TO_CHAR(b.reg_amt, '999,999,999') reg_amt,
+		       TO_CHAR(d.reciv_amt, '999,999,999') reciv_amt,
+		       TO_CHAR(c.pay_amt, '999,999,999') pay_amt,
+		       c.pay_dt,
+		       EXTRACT(YEAR FROM c.pay_dt) year,
+		       EXTRACT(MONTH FROM c.pay_dt) month,
+		       EXTRACT(DAY FROM c.pay_dt) day
+		  FROM student a
+		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
+		 INNER JOIN reg_fee_pay c ON(a.stdnt_no=c.stdnt_no)
+		 INNER JOIN schl_req c ON(a.stdnt_no=c.stdnt_no)
+		 INNER JOIN reciv_schl d ON(c.req_no=d.req_no)
+		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND EXTRACT(YEAR FROM c.pay_dt) =EXTRACT(YEAR FROM SYSDATE)
+<!-- 		   AND EXTRACT(YEAR FROM c.pay_dt) = 2020 -->
+		   AND pay_semstr = (SELECT semstr FROM V_SEMSTR)
+	</select>
+	
+	<select id="selectRefundTuition" resultType="RefundReqVO">
+	
+	</select>
 </mapper>
