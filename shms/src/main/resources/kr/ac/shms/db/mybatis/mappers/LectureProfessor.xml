@@ -272,7 +272,7 @@
 		    #{diary_cont, jdbcType=VARCHAR},
 		    #{week_lec_cl, jdbcType=VARCHAR}
 		    <if test="ut_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(ut_lec_link)">
-			    ,#{ut_lec_link, jdbcType=VARCHAR},
+			    ,#{ut_lec_link, jdbcType=VARCHAR}
 		    </if>
 		    <if test="rt_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(rt_lec_link)">
 			    ,#{rt_lec_link, jdbcType=VARCHAR}

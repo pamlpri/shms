@@ -147,13 +147,15 @@
 		                                       </tr>
 		                                       <tr>
 		                                           <th class="text-bold-500 text-center align-middle">우편번호</th>
-		                                           <td colspan="3">
+		                                           <td>
 		                                               <div class="input-group">
 		                                                   <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
 		                                                   <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2" id="sample6_postcode" name="zipcode" value="${staff.zipcode }">
 		                                                   <button onclick="sample6_execDaumPostcode()" class="btn btn-outline-secondary" type="button" id="button-addon2" style="border:1px solid #dfdfdf;">검색</button>
 		                                               </div>
 		                                           </td>
+		                                           <td></td>
+		                                           <td></td>
 		                                       </tr>
 		                                       <tr style="border-bottom:2px solid #95a3d6;">
 		                                           <th class="text-bold-500 text-center align-middle">기본주소</th>
@@ -321,9 +323,16 @@
 			console.log(user_password);
 			console.log(confirm_password);
 			
+			var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+			
 			if(user_password != confirm_password){
 				$("#default").find(".modal-title").empty().text("비밀번호 오류");
 				$("#default").find(".modal-body p").empty().text("새 비밀번호가 일치하지 않습니다. ");
+				$("#default").addClass("show").css("display","block");
+				$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid");
+			}else if(!regExpPw.test(user_password)){
+				$("#default").find(".modal-title").empty().text("비밀번호 형식 오류");
+				$("#default").find(".modal-body p").empty().text("비밀번호는 영문 2자리 이상, 숫자, 특수문자 1자리 이상 사용하여 총 8자리 입니다.");
 				$("#default").addClass("show").css("display","block");
 				$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid");
 			}else {
