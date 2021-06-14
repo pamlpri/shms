@@ -3,7 +3,10 @@ package kr.ac.shms.lecture.vo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,21 +43,23 @@ public class SetTaskVO {
 	private String task_reg_de;
 	private String submit_bgnde;
 	private String submit_endde;
+	
 	@NotBlank(groups=SetTaskInsertGroup.class)
 	private String task_title;
 	private String task_cont;
+	@NotNull(groups=SetTaskInsertGroup.class)
 	private Integer task_allot;
 	private Integer atch_file_no;
+	
 	private List<TaskSubmitVO> taskSubmitList;
 	private String submit_at;	// 학생이 과제 정보 출력할 때 제출 여부
-	
 	private Integer submit_cnt;	// 과제 제출한 학생 수
 	private Integer total_cnt;	// 내 강의 듣는 수강생 수
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] set_task_files;
-	public void setBo_files(MultipartFile[] set_task_files) {
+	public void setSet_task_files(MultipartFile[] set_task_files) {
 		System.out.println("set_task_files : "+ set_task_files.length);
 		this.set_task_files = set_task_files;
 		if(set_task_files!=null) {

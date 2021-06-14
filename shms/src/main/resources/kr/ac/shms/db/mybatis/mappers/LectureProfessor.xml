@@ -287,4 +287,90 @@
 		    lec_week_diary
 		WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
 	</select>
+	
+	<insert id="insertSetTask" parameterType="SetTaskVO">
+		<selectKey resultType="int" keyProperty="set_task_no" order="BEFORE">
+			SELECT task_seq.nextval  
+			FROM dual
+		</selectKey>
+			INSERT INTO set_task (
+			    set_task_no,
+			    lec_code,
+			    task_reg_de,
+			    submit_bgnde,
+			    submit_endde,
+			    task_title,
+			    task_cont,
+			    task_allot
+   			  	<if test="attachList != null">
+				    ,atch_file_no
+			  	</if>
+			) VALUES (
+			    #{set_task_no},
+			    #{lec_code, jdbcType=VARCHAR},
+			    TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI'),
+			    TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI'),
+			    TO_DATE(#{submit_endde, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
+			    #{task_title, jdbcType=VARCHAR},
+			    #{task_cont, jdbcType=VARCHAR},
+			    #{task_allot, jdbcType=NUMERIC}
+				<if test="attachList != null">
+			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
+			    </if>
+			)
+	</insert>
+	
+	<insert id="insertTaskAttaches" parameterType="SetTaskVO">
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+			SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
+			FROM ATTACH
+		<choose>
+			<when test="atch_file_no != null and !atch_file_no.equals('')">
+				WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
+			</when>
+			<otherwise>
+				WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+			</otherwise>
+		</choose>
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attachList" item="attatch" index="idx">
+			INTO ATTACH(
+				atch_file_no,
+			    atch_file_seq,
+			    file_path,
+			    file_nm,
+			    file_cont_type,
+			    file_size,
+			    reg_date,
+			    reg_user_id,
+			    biz_type,
+			    save_file_nm
+		    )
+			VALUES (
+			<choose>
+				<when test="atch_file_no != null and !atch_file_no.equals('')">
+					#{atch_file_no, jdbcType=NUMERIC}
+				</when>
+				<otherwise>
+					(SELECT MAX(atch_file_no) + 1 FROM attach)
+				</otherwise>
+			</choose>
+				, #{startAttNo} + #{idx}
+				, #{attatch.file_path,jdbcType=VARCHAR}
+				, #{attatch.file_nm,jdbcType=VARCHAR}
+				, #{attatch.file_cont_type,jdbcType=VARCHAR}
+				, #{attatch.file_size,jdbcType=NUMERIC}
+				, SYSDATE
+				, (SELECT name 
+					FROM curriculum a 
+					INNER JOIN staff b  
+					ON(a.staff_no = b.staff_no)
+					WHERE cur_code = SUBSTR(#{lec_code}, 1, 8))
+				, 'GC'
+				, #{attatch.save_file_nm,jdbcType=VARCHAR}
+			)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
 </mapper>

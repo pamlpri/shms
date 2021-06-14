@@ -61,11 +61,12 @@ public interface LectureDAO {
 	 */
 	public List<LectureVO> selectTodayLecList(String id);
 	
-	
 	/**
 	 * 수강 완료된 강의 목록 출력
 	 * @param stdnt_no 학생의 학번
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<SugangLecSTVO> selectCompleteSugangList(String stdnt_no);
+	
+
 }

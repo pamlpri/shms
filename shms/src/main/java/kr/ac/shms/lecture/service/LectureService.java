@@ -2,6 +2,7 @@ package kr.ac.shms.lecture.service;
 
 import java.util.List;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
@@ -17,7 +18,7 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * --------     --------    ----------------------
  * 2021. 5. 28.   김보미         최초작성
  * 2021. 5. 29.   김보미         교수 강의 목록 
- * 2021. 5. 31.   송수미      	 학생 과제, 강의 정보 출력 기능 구현
+ * 2021. 5. 31.   송수미         학생 과제, 강의 정보 출력 기능 구현
  * 2021. 6. 02.   김보미         수강 완료 강의 목록 출력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
@@ -64,4 +65,5 @@ public interface LectureService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<SugangLecSTVO> selectCompleteSugangList(String stdnt_no);
+
 }

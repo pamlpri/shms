@@ -22,6 +22,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 5. 24.      박초원      	       최초작성
  * 2021. 06. 01.     송수미      	       교수 과제 조회
  * 2021. 06. 08.     송수미      	       교수 강의 개설
+ * 2021. 06. 14.  	  송수미        	 과제 등록
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -105,4 +106,19 @@ public interface LectureProfessorDAO {
 	 * @return int cnt
 	 */
 	public int selectWeeksMaxWeek(String lec_code);
+	
+	/**
+	 * 교수의 과제 등록
+	 * @param setTask
+	 * @return row count > 0 : 성공
+	 */
+	public int insertSetTask(SetTaskVO setTask);
+
+	/**
+	 * 과제 첨부파일 등록
+	 * @param setTask
+	 * @return row count > 0 : 성공
+	 */
+	public int insertTaskAttaches(SetTaskVO setTask);
+	
 }
