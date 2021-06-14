@@ -1,10 +1,10 @@
 package kr.ac.shms.lecture.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -143,4 +143,25 @@ public interface LectureProfessorDAO {
 	 * @return cnt > 0 성공
 	 */
 	public int updateWeek(LectureVO lecture);
+	
+	/**
+	 * 출제한 과제 목록 조회
+	 * @param lec_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<SetTaskVO> selectSetTaskList(String lec_code);
+	
+	/**
+	 * 과제 하나에 대한 정보 조회
+	 * @param search
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SetTaskVO selectSetTaskInfo(Map<String, Object> search);
+	
+	/**
+	 * 과제 하나 상세 조회
+	 * @param set_task_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SetTaskVO selectSetTask(int set_task_no);
 }

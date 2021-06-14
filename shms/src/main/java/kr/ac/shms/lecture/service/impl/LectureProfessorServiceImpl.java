@@ -2,6 +2,7 @@ package kr.ac.shms.lecture.service.impl;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -273,6 +274,21 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			result = ServiceResult.OK;
 		}
 		return result;
+	}
+
+	@Override
+	public List<SetTaskVO> selectSetTaskList(String lec_code) {
+		return lectureProfessorDAO.selectSetTaskList(lec_code);
+	}
+
+	@Override
+	public SetTaskVO selectSetTaskInfo(Map<String, Object> search) {
+		return lectureProfessorDAO.selectSetTaskInfo(search);
+	}
+
+	@Override
+	public SetTaskVO selectSetTask(int set_task_no) {
+		return lectureProfessorDAO.selectSetTask(set_task_no);
 	}
 	
 //	private int deleteFileProcesses(SetTaskVO setTask) {

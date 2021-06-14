@@ -1,6 +1,7 @@
 package kr.ac.shms.lecture.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
@@ -118,4 +119,26 @@ public interface LectureProfessorService {
 	 * @return cnt > 0 성공
 	 */
 	public ServiceResult updateWeek(LectureVO lecture);
+	
+	/**
+	 * 출제한 과제 목록 조회
+	 * @param lec_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<SetTaskVO> selectSetTaskList(String lec_code);
+	
+	/**
+	 * 과제 하나의 정보  조회
+	 * @param search
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SetTaskVO selectSetTaskInfo(Map<String, Object> search);
+	
+	/**
+	 * 과제 하나 상세 조회
+	 * @param set_task_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public SetTaskVO selectSetTask(int set_task_no);
+	
 }

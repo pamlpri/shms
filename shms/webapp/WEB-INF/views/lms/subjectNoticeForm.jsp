@@ -102,8 +102,8 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" id="close"
 						data-bs-dismiss="modal">
-					<i class="bx bx-x d-block d-sm-none"></i> <span
-						class="d-none d-sm-block">닫기</span>
+					<i class="bx bx-x d-block d-sm-none"></i> 
+					<span class="d-none d-sm-block">닫기</span>
 				</button>
 			</div>
 		</div>

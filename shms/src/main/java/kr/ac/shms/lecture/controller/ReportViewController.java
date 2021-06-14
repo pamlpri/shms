@@ -1,5 +1,9 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -7,11 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
+import kr.ac.shms.lecture.vo.SetTaskVO;
 
 /**
  * @author 박초원
@@ -23,11 +28,11 @@ import kr.ac.shms.lecture.service.LectureService;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
+ * 2021. 6. 14.      송수미      	       교수 과제 목록 조회 기능 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
 public class ReportViewController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportViewController.class);
 	@Inject
@@ -40,6 +45,10 @@ public class ReportViewController {
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, Model model
 		) {
+		
+		List<SetTaskVO> setTaskList = lectureProfessorService.selectSetTaskList(lec_code);
+		model.addAttribute("setTaskList", setTaskList);
+		
 		return "lecture/report";
 		
 	}
@@ -47,8 +56,17 @@ public class ReportViewController {
 	@RequestMapping("/lecture/reportList.do")
 	public String reportList(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			, @SessionAttribute(name="lec_name", required=false) String lec_name
+			, @RequestParam("set_task_no") Integer set_task_no
 			, Model model
 		) {
+		Map<String, Object> search = new HashMap<>();
+		search.put("set_task_no", set_task_no);
+		search.put("lec_code", lec_code);
+		
+		SetTaskVO setTask = lectureProfessorService.selectSetTaskInfo(search);
+		model.addAttribute("setTask", setTask);
+		
 		return "lecture/reportList";
 		
 	}

@@ -420,4 +420,77 @@
 		WHERE
 		    diary_no = #{diary_no, jdbcType=NUMERIC}
 	</update>
+	
+		<select id="selectSetTaskList" parameterType="String" resultType="SetTaskVO">
+		SELECT
+		    DISTINCT
+		    a.set_task_no,
+		    TO_CHAR(submit_endde, 'YYYY.MM.DD AM HH:MI') submit_endde,
+		    CASE WHEN SYSDATE BETWEEN submit_bgnde AND submit_endde THEN
+		    '진행중'
+		    ELSE
+		    '마감'
+		    END process_at,
+		    task_title,
+		    COUNT(DECODE(task_score, null, null, 1)) OVER (PARTITION BY b.set_task_no) grade_cnt,
+		    COUNT(writer) OVER (PARTITION BY a.set_task_no) submit_cnt,
+		    (SELECT COUNT(stdnt_no) FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR} AND sugang_at = 'Y') total_cnt
+		FROM
+		    set_task a
+		LEFT OUTER JOIN task_submit b 
+		ON(a.set_task_no = b.set_task_no)
+		WHERE lec_code = #{lec_code, jdbcType=VARCHAR} 
+		ORDER BY submit_endde desc
+	</select>
+	
+	<select id="selectSetTaskInfo" parameterType="hashMap" resultType="SetTaskVO">
+		SELECT
+		    DISTINCT
+		    a.set_task_no,
+		    TO_CHAR(submit_endde, 'YYYY.MM.DD AM HH:MI') submit_endde,
+		    CASE WHEN SYSDATE BETWEEN submit_bgnde AND submit_endde THEN
+		    '진행중'
+		    ELSE
+		    '마감'
+		    END process_at,
+		    task_allot,
+		    task_title,
+		    COUNT(DECODE(task_score, null, null, 1)) OVER (PARTITION BY b.set_task_no) grade_cnt,
+		    COUNT(writer) OVER (PARTITION BY a.set_task_no) submit_cnt,
+		    (SELECT COUNT(stdnt_no) FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR} AND sugang_at = 'Y') total_cnt
+		FROM
+		    set_task a
+		LEFT OUTER JOIN task_submit b 
+		ON(a.set_task_no = b.set_task_no)
+		WHERE LEC_CODE = #{lec_code, jdbcType=VARCHAR}
+		  AND a.set_task_no = #{set_task_no, jdbcType=VARCHAR}
+	</select>
+	
+	<resultMap type="SetTaskVO" id="setTaskMap" autoMapping="true">
+		<id property="set_task_no" column="set_task_no"/> 
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectSetTask" parameterType="int" resultMap="setTaskMap">
+		SELECT
+		    set_task_no,
+		    lec_code,
+		    task_reg_de,
+		    submit_bgnde,
+		    submit_endde,
+		    task_title,
+		    task_cont,
+		    task_allot,
+		    a.atch_file_no,
+   		    b.atch_file_seq,
+		    b.file_nm
+		FROM
+		    set_task a
+		    LEFT OUTER JOIN attach b
+		    ON(a.atch_file_no = b.atch_file_no)
+		WHERE
+		    set_task_no = #{set_task_no, jdbcType=NUMERIC}
+	</select>
 </mapper>
