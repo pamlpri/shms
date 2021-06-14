@@ -40,12 +40,15 @@
               <td class="text-left">
               	<c:choose>
               		<c:when test="${not empty insert}">
-		                <select class="form-control" name="lec_week">
-		                  <option>-- 주차선택 --</option>
+		                <select class="form-control im" name="lec_week">
+		                  <option value="">-- 주차선택 --</option>
 		                  <c:forEach var="i" begin="${max + 1}" end="${15}">
 		                  	<option value="${i }">${i }주차</option>
 		                  </c:forEach>
 		                </select>
+		                <div class="invalid-feedback">
+	                      필수항목
+	                    </div>
               		</c:when>
               		<c:otherwise>
 <%--               			${lecture.lec_week} --%>
@@ -55,26 +58,44 @@
             </tr>
             <tr>
               <th class="align-middle"><span class="red-color">* </span>주차명</th>
-              <td class="text-left"><input type="text" class="form-control" name="diary_title"></td>
+              <td class="text-left">
+              	  <input type="text" class="form-control im" name="diary_title">
+	              <div class="invalid-feedback">
+	                필수항목
+	              </div>
+              </td>
             </tr>
             <tr>
               <th class="align-middle"><span class="red-color">* </span>강의종류</th>
               <td class="text-left">
-                <select class="form-control" name="week_lec_cl">
+                <select class="form-control im" name="week_lec_cl">
                   <option value="">-- 강의종류 --</option>
                   <option value="DM">대면</option>
                   <option value="BG">비대면</option>
                   <option value="SG">비대면 실시간</option>
                 </select>
+                <div class="invalid-feedback">
+                   필수항목
+                 </div>
               </td>
             </tr>
             <tr>
               <th class="align-middle">강의영상</th>
-              <td class="text-left"><input type="text" class="form-control" name="ut_lec_link"></td>
+              <td class="text-left">
+              	  <input type="text" class="form-control" name="ut_lec_link">
+	              <div class="invalid-feedback">
+	                   필수항목
+	               </div>
+               </td>
             </tr>
             <tr>
               <th class="align-middle">실시간 강의 주소</th>
-              <td class="text-left"><input type="text" class="form-control" name="rt_lec_link"></td>
+              <td class="text-left">
+              	 <input type="text" class="form-control" name="rt_lec_link">
+              	 <div class="invalid-feedback">
+                   필수항목
+                 </div>
+              </td>
             </tr>
             <tr>
               <th class="align-middle"><span class="red-color">* </span>학습기간</th>
@@ -82,11 +103,17 @@
                 <div class="row">
                   <div class="col-md-6 text-left">
                     <label for="inputEmail4"><span class="red-color">* </span>시작일</label>
-                    <input type="date" class="form-control" name="week_bgnde">
+                    <input type="date" class="form-control im" name="week_bgnde">
+                    <div class="invalid-feedback">
+                      필수항목
+                    </div>
                   </div>
                   <div class="col-md-6 text-left">
                     <label for="inputEmail4"><span class="red-color">* </span>종료일</label>
-                    <input type="date" class="form-control" name="week_endde">
+                    <input type="date" class="form-control im" name="week_endde">
+                    <div class="invalid-feedback">
+                      필수항목
+                    </div>
                   </div>
                 </div>
               </td>
@@ -106,36 +133,45 @@
         </div>
       </div>
     </div>
-  <!-- contents end -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer bg-whitesmoke br">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
   
   <script type="text/javascript">
-  let weeksForm = $("#weeksForm");
+    let weeksForm = $("#weeksForm");
+    var frag = false;
 	$("#saveBtn").on("click",function(){
 		let inputs = $(weeksForm).find(":input[name]");
+		
 		$(inputs).each(function(idx, input){
 			console.log($(this).val());
-			if(typeof $(this).val() == "undefined"){
-				$("#exampleModal").addClass("show");
+			if($(this).val() == ""){
+				if($(this).hasClass("im")){
+					$(this).addClass("is-invalid");
+				}
+				frag = false;
+			}else {
+				frag = true;
 			}
 		});
+		
+		if(frag){
+			weeksForm.submit();
+		}
+	});
+	
+	$(weeksForm).find(":input[name]").on("change", function(){
+		$(this).removeClass("is-invalid");
+		
+	});
+	
+	$(weeksForm).find("select[name='week_lec_cl']").on("change", function(){
+		let week_lec_cl = $("select[name='week_lec_cl']").val();
+		console.log(week_lec_cl);
+
+		if(week_lec_cl == "BG"){
+			$("input[name='ut_lec_link']").parents("tr").children("th").prepend('<span class="red-color">* </span>');
+			$("input[name='ut_lec_link']").addClass("im");
+		}else if(week_lec_cl == "SG"){
+			$("input[name='rt_lec_link']").parents("tr").children("th").prepend('<span class="red-color">* </span>');
+			$("input[name='rt_lec_link']").addClass("im");
+		}
 	});
   </script>
