@@ -60,13 +60,20 @@ public class ReportViewController {
 			, @RequestParam("set_task_no") Integer set_task_no
 			, Model model
 		) {
+		
+		/** 파라미터 조회 */
 		Map<String, Object> search = new HashMap<>();
 		search.put("set_task_no", set_task_no);
 		search.put("lec_code", lec_code);
 		
+		/** 서비스 호출 */
 		SetTaskVO setTask = lectureProfessorService.selectSetTaskInfo(search);
+		
+		
+		/** 자료 구성 */
 		model.addAttribute("setTask", setTask);
 		
+		/** 반환 */
 		return "lecture/reportList";
 		
 	}

@@ -37,7 +37,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 01.     송수미      	       교수 과제 조회
  * 2021. 06. 08.     송수미      	       교수 강의 개설
  * 2021. 06. 12.     박초원				 주/회차 등록
- * 2021. 06. 14.   	 송수미              과제 등록
+ * 2021. 06. 14.   	 송수미              과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
@@ -188,7 +188,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		return cnt;
 	}
 	
-	
 	@Transactional
 	@Override
 	public ServiceResult insertSetTask(SetTaskVO setTask) {
@@ -204,7 +203,68 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		}
 		return result;
 	}
+
+	@Override
+	public List<LectureVO> selectWeeksList(String lec_code) {
+		return lectureProfessorDAO.selectWeeksList(lec_code);
+	}
+
+	@Override
+	public LectureVO selectWeekDetail(int diary_no) {
+		return lectureProfessorDAO.selectWeekDetail(diary_no);
+	}
+
+	@Override
+	public ServiceResult updateWeek(LectureVO lecture) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureProfessorDAO.updateWeek(lecture);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		return result;
+	}
+
+	@Override
+	public List<SetTaskVO> selectSetTaskList(String lec_code) {
+		return lectureProfessorDAO.selectSetTaskList(lec_code);
+	}
+
+	@Override
+	public SetTaskVO selectSetTaskInfo(Map<String, Object> search) {
+		return lectureProfessorDAO.selectSetTaskInfo(search);
+	}
+
+	@Override
+	public SetTaskVO selectSetTask(int set_task_no) {
+		return lectureProfessorDAO.selectSetTask(set_task_no);
+	}
 	
+	@Transactional
+	@Override
+	public ServiceResult updateSetTask(SetTaskVO setTask) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = 0;
+		
+		SetTaskVO savedTask = lectureProfessorDAO.selectSetTask(setTask.getSet_task_no());
+		
+		if(savedTask == null) {
+			result = ServiceResult.NOTEXIST;
+		}else {
+			if(savedTask.getAtch_file_no() == null) {
+				lectureProfessorDAO.updateAtchNo(setTask);
+			}
+			cnt = lectureProfessorDAO.updateSetTask(setTask);
+			if(cnt > 0) {
+				cnt += taskProcesses(setTask);
+				cnt += deleteFileProcesses(setTask);
+				if(cnt > 0) {
+					result = ServiceResult.OK;
+				}
+			}
+		}
+		return result;
+	}
+
 	private int taskProcesses(SetTaskVO setTask) {
 		int cnt = 0;		
 		List<AttachVO> attachList = setTask.getAttachList();
@@ -254,86 +314,51 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			}
 		}
 		return cnt;
-	}
-
-	@Override
-	public List<LectureVO> selectWeeksList(String lec_code) {
-		return lectureProfessorDAO.selectWeeksList(lec_code);
-	}
-
-	@Override
-	public LectureVO selectWeekDetail(int diary_no) {
-		return lectureProfessorDAO.selectWeekDetail(diary_no);
-	}
-
-	@Override
-	public ServiceResult updateWeek(LectureVO lecture) {
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = lectureProfessorDAO.updateWeek(lecture);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}
-		return result;
-	}
-
-	@Override
-	public List<SetTaskVO> selectSetTaskList(String lec_code) {
-		return lectureProfessorDAO.selectSetTaskList(lec_code);
-	}
-
-	@Override
-	public SetTaskVO selectSetTaskInfo(Map<String, Object> search) {
-		return lectureProfessorDAO.selectSetTaskInfo(search);
-	}
-
-	@Override
-	public SetTaskVO selectSetTask(int set_task_no) {
-		return lectureProfessorDAO.selectSetTask(set_task_no);
-	}
+	}	
 	
-//	private int deleteFileProcesses(SetTaskVO setTask) {
-//		logger.info("deleteFileProcesses : {}", setTask);
-//		FTPClient client = new FTPClient();
-//		int cnt = 0;
-//		int[] delAttNos = setTask.getDelAttNos();
-//		if(delAttNos!=null && delAttNos.length > 0) {
-//			List<String> saveNames = lectureProfessorDAO.selectSaveNamesForDelete(setTask);
-//			logger.info("saveNames : {}", saveNames.size());
-//			try {
-//				client.connect(ip, port);
-//				int reply = client.getReplyCode();
-//				logger.info("client Connect : {}", reply);
-//				if(FTPReply.isPositiveCompletion(reply)) { // 접속 연결이 됐을 경우 
-//					if(client.login(id, pw)) {	// FTP 서버 로그인 성공 했을 경우
-//						System.out.println("Login Success");
-//						client.setBufferSize(1000);	// 버퍼 사이즈
-//						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
-//						String dir = "/lecture" + "/" + setTask.getLec_code() + "/setTask";
-//
-//						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
-//						logger.info("isDir : {} || {}",isDirectory, dir);
-//						
-//						client.setFileType(FTP.BINARY_FILE_TYPE);
-//						
-////						이진 데이터 삭제
-//						for(String saveName : saveNames) {
-//							client.deleteFile(saveName);
-//						}
-////						첨부파일의 메타 데이터 삭제
-//						lectureProfessorDAO.deleteAttathes(setTask);
-//						
-//						
-//						client.logout();
-//						client.disconnect();
-//					} else {
-//						client.disconnect(); // 연결 종료
-//					}
-//				}
-//			} catch(Exception e) {
-//				
-//			}
-//		}
-//		return cnt;
-//	}
+	private int deleteFileProcesses(SetTaskVO setTask) {
+		logger.info("deleteFileProcesses : {}", setTask);
+		FTPClient client = new FTPClient();
+		int cnt = 0;
+		int[] delAttNos = setTask.getDelAttNos();
+		if(delAttNos!=null && delAttNos.length > 0) {
+			List<String> saveNames = lectureProfessorDAO.selectSaveNamesForDelete(setTask);
+			logger.info("saveNames : {}", saveNames.size());
+			try {
+				client.connect(ip, port);
+				int reply = client.getReplyCode();
+				logger.info("client Connect : {}", reply);
+				if(FTPReply.isPositiveCompletion(reply)) { // 접속 연결이 됐을 경우 
+					if(client.login(id, pw)) {	// FTP 서버 로그인 성공 했을 경우
+						System.out.println("Login Success");
+						client.setBufferSize(1000);	// 버퍼 사이즈
+						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
+						String dir = "/lecture" + "/" + setTask.getLec_code() + "/setTask";
+
+						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
+						logger.info("isDir : {} || {}",isDirectory, dir);
+						
+						client.setFileType(FTP.BINARY_FILE_TYPE);
+						
+//						이진 데이터 삭제
+						for(String saveName : saveNames) {
+							client.deleteFile(saveName);
+						}
+//						첨부파일의 메타 데이터 삭제
+						lectureProfessorDAO.deleteAttathes(setTask);
+						
+						
+						client.logout();
+						client.disconnect();
+					} else {
+						client.disconnect(); // 연결 종료
+					}
+				}
+			} catch(Exception e) {
+				
+			}
+		}
+		return cnt;
+	}
 	
 }

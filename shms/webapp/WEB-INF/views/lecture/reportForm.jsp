@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
 * 2021. 6. 12.      송수미        과제 등록 기능 구현
+* 2021. 6. 14.      송수미        과제 수정 기능 구현
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -130,7 +131,7 @@
             </tr>
           </table>
           <div class="text-center">
-              <a href="${cPath }/lecture/report.do" class="btn btn-secondary">취소</a>
+              <a href="${cPath }/lecture/reportList.do?set_task_no=${setTask.set_task_no}" class="btn btn-secondary">취소</a>
               <button id="saveBtn" type="button" class="btn btn-primary">저장</button>
           </div>
         </form>
@@ -170,7 +171,7 @@
 	$("#default").find(".modal-body p").empty().text("${message}");
 	$("#default").addClass("show").css("display","block");
     $("#close, .modal").on("click", function(){
-		$("#default").removeClass("show").css("display","none");
+	$("#default").removeClass("show").css("display","none");
 	})
 </script>
 </c:if>
@@ -285,13 +286,13 @@ $(function(){
 		
 		$(inputs).each(function(idx, input){
 			console.log($(this).val());
-			if($(this).val() == ""){
-				if($(this).hasClass("im")){
+			if($(this).hasClass("im")){
+				if($(this).val() == ""){
 					$(this).addClass("is-invalid");
+					frag = false;
+				}else{
+					frag = true;
 				}
-				frag = false;
-			}else {
-				frag = true;
 			}
 		});
 		
