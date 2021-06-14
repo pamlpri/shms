@@ -23,13 +23,14 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
+ * 2021. 6. 14. 	 박초원				전체 강의 주/회차별 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Controller
 @SessionAttributes("lec_code")
-public class LectureWeeklViewController {
-	private static final Logger logger = LoggerFactory.getLogger(LectureWeeklViewController.class);
+public class LectureWeekController {
+	private static final Logger logger = LoggerFactory.getLogger(LectureWeekController.class);
 	
 	@Inject
 	private LectureStudentService lectureStudentService;
@@ -41,7 +42,7 @@ public class LectureWeeklViewController {
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, Model model
 		) {
-	
+		
 		return "lecture/lectureWeek";
 	}	
 }
