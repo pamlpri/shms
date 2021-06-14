@@ -242,18 +242,27 @@
 	                          <a href="${cPath }/lms/myInfo.do">내정보보기</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">진행중인 강의</a>
-	                      </li>
-	                      <li class="submenu-item ">
 	                          <a href="#">일정관리</a>
 	                      </li>
 	                  </ul>
 	              </li>
-	              <li class="sidebar-item">
-	                  <a href="${cPath }/lms/lectureList.do" class="sidebar-link">
+	              <li class="sidebar-item has-sub">
+	                  <a href="#" class="sidebar-link">
 	                      <i class="bi bi-book-fill"></i>
 	                      <span>강의관리</span>
 	                  </a>
+	                  
+	                  <ul class="submenu ">
+	                      <li class="submenu-item ">
+	                          <a href="#">진행중인 강의</a>
+	                      </li>
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/lectureList.do">전체강의</a>
+	                      </li>
+	                      <li class="submenu-item ">
+	                          <a href="${cPath }/lms/evaluationView.do">강의평가</a>
+	                      </li>
+	                  </ul>
 	              </li>
 	              <li class="sidebar-item  has-sub">
 	                  <a href="#" class="sidebar-link">
