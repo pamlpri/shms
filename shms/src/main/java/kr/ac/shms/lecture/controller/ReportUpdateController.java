@@ -1,8 +1,5 @@
 package kr.ac.shms.lecture.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,11 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
@@ -48,6 +49,7 @@ public class ReportUpdateController {
 			, Model model
 		) {
 		
+		
 		SetTaskVO setTask = lectureProfessorService.selectSetTask(set_task_no);
 		String endde = setTask.getSubmit_endde();
 		
@@ -64,10 +66,57 @@ public class ReportUpdateController {
 	
 	@RequestMapping(value="/lecture/reportUpdate.do", method=RequestMethod.POST)
 	public String reportUpdate(
-			
+			@SessionAttribute(name="lec_code", required=false) String lec_code
+			, @Validated
+			@ModelAttribute("setTask") SetTaskVO setTask
+			, Errors errors
+			, Model model
 		) {
 		
-		return null;
+		/** 파라미터 조회 */
+		setTask.setLec_code(lec_code);
+		String endde = setTask.getSubmit_endde();
+		if(StringUtils.isNotBlank(endde)) {
+			String date = endde.substring(0, endde.indexOf("T"));
+			String time = endde.substring(endde.indexOf("T") + 1);
+			String setEndde = date + " " + time;
+			setTask.setSubmit_endde(setEndde);
+		}
+		
+		/** 파라미터 검증 */
+		boolean valid = !(errors.hasErrors());
+		String message = null;
+		String view = null;
+		
+		if(valid) {
+			if(setTask.getTask_allot() < 0 || setTask.getTask_allot() > 100) {
+				setTask.setSubmit_endde(endde);
+				message = "배점은 0 ~ 100점 사이로 입력해주세요.";
+				view = "lecture/reportForm";
+			}else {
+				/** 서비스 호출 */
+				ServiceResult result = lectureProfessorService.updateSetTask(setTask);
+				if(ServiceResult.OK.equals(result)) {
+					view = "redirect:/lecture/reportList.do?set_task_no=" + setTask.getSet_task_no();
+				}else if(ServiceResult.NOTEXIST.equals(result)){
+					setTask.setSubmit_endde(endde);
+					message = "해당 과제가 존재하지 않습니다.";
+					view = "lecture/reportForm";
+				}else {
+					setTask.setSubmit_endde(endde);
+					message = "과제 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+					view = "lecture/reportForm";
+				}
+			}
+		}
+		
+		/** 결과자료 구성 */
+		logger.info("message : {}", message);
+		model.addAttribute("message", message);
+		model.addAttribute("setTask", setTask);
+		
+		/** 화면 설정 후 반환*/
+		return view;
 	}
 	
 }

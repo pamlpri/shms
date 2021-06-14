@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.validator.SetTaskInsertGroup;
+import kr.ac.shms.validator.SetTaskUpdateGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,6 +40,8 @@ import lombok.NoArgsConstructor;
 public class SetTaskVO {
 	private Integer p_bo_no;	// 페이지 상의 번호(DB 저장X)
 	
+	@NotNull(groups= {SetTaskUpdateGroup.class})
+	@Min(value=1, groups= {SetTaskUpdateGroup.class})
 	private Integer set_task_no;
 	private String lec_code;
 	private String task_reg_de;
@@ -46,10 +49,10 @@ public class SetTaskVO {
 	private String submit_endde;
 	private String process_at;	// 진행 상황
 	
-	@NotBlank(groups=SetTaskInsertGroup.class)
+	@NotBlank(groups= {SetTaskInsertGroup.class, SetTaskUpdateGroup.class})
 	private String task_title;
 	private String task_cont;
-	@NotNull(groups=SetTaskInsertGroup.class)
+	@NotNull(groups= {SetTaskInsertGroup.class, SetTaskUpdateGroup.class})
 	private Integer task_allot;
 	private Integer atch_file_no;
 	

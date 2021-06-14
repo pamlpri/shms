@@ -23,7 +23,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 01.     송수미      	       교수 과제 조회
  * 2021. 06. 08.     송수미      	       교수 강의 개설
  * 2021. 06. 12.     박초원				 주/회차 등록
- * 2021. 06. 14.  	  송수미        	 과제 등록
+ * 2021. 06. 14.  	  송수미        	 과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
@@ -164,4 +164,33 @@ public interface LectureProfessorDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public SetTaskVO selectSetTask(int set_task_no);
+	
+	/**
+	 * 과제 수정
+	 * @param setTask
+	 * @return row count > 0 : 성공
+	 */
+	public int updateSetTask(SetTaskVO setTask);
+	
+	/**
+	 * 첨부파일 없는 과제글에 첨부파일 번호 새로 부여
+	 * @param setTask
+	 * @return row count > 0 : 성공
+	 */
+	public int updateAtchNo(SetTaskVO setTask);
+	
+	/**
+	 * 삭제하려고 하는 파일들 저장명 조회
+	 * @param setTask
+	 * @return 데이터가 없으면 null반환
+	 */
+	public List<String> selectSaveNamesForDelete(SetTaskVO setTask);
+	
+	/**
+	 * 첨부파일 삭제
+	 * @param board
+	 * @return row count > 0 : 성공
+	 */
+	public int deleteAttathes(SetTaskVO setTask);
+	
 }

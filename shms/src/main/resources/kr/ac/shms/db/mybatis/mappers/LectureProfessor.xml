@@ -493,4 +493,33 @@
 		WHERE
 		    set_task_no = #{set_task_no, jdbcType=NUMERIC}
 	</select>
+	
+	<update id="updateSetTask" parameterType="SetTaskVO">
+		
+	</update>
+	
+	<update id="updateAtchNo" parameterType="SetTaskVO">
+         UPDATE board
+            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
+          WHERE bo_no = #{set_task_no, jdbcType=NUMERIC}
+	</update>
+	
+	<select id="selectSaveNamesForDelete" parameterType="SetTaskVO" resultType="string">
+		SELECT save_file_nm
+		FROM attach
+		WHERE atch_file_no = ${atch_file_no}
+		AND atch_file_seq IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</select>
+	
+	<delete id="deleteAttathes" parameterType="BoardVO">
+		DELETE FROM attach
+		WHERE atch_file_no = ${atch_file_no}
+		AND atch_file_seq IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</delete>
 </mapper>
