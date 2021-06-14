@@ -467,13 +467,13 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">성적입력일정</a>
+	                          <a href="#">성적입력</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">강의평가일정</a>
+	                          <a href="${cPath }/lms/lectureEvaluation.do">강의평가</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">성적조회일정</a>
+	                          <a href="#">성적조회</a>
 	                      </li>
 	                  </ul>
 	              </li>

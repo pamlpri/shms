@@ -1,10 +1,7 @@
 package kr.ac.shms.lecture.dao;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
@@ -17,6 +14,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 5. 24.      박초원      	       최초작성
+ * 2021. 6. 14. 	 박초원				전체 강의 주/회차별 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -29,4 +27,9 @@ public interface LectureStudentDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public StudentVO student(String id);
+	
+	/**
+	 * 전체 강의 주/회차별 조회
+	 * @param 
+	 */
 }
