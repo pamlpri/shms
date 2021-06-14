@@ -55,7 +55,7 @@
 							<select class="form-select" name="col_code">
 								<option value="">전체</option>
 								<c:forEach items="${collegeList }" var="college">
-									<option value="${college.col_code}" ${selected }>
+									<option value="${college.col_code}" >
 										${college.col_name }
 									</option>
 								</c:forEach>
@@ -68,7 +68,7 @@
 							<select class="form-select" name="sub_code">
 								<option value="">전체</option>
 								<c:forEach items="${subjectList }" var="subject">
-									<option class="${subject.col_code }" value="${subject.sub_code }" ${selected }>
+									<option class="${subject.col_code }" value="${subject.sub_code }" >
 										${subject.sub_name }
 									</option>
 								</c:forEach>
