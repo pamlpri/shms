@@ -53,18 +53,13 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	@Override
-	public int totalCredit(LecScoreVO lecScoreVO) {
-		return commonDAO.selectTotalCredit(lecScoreVO);
+	public List<LecScoreVO> selectSemstrList(LecScoreVO lecScoreVO) {
+		return commonDAO.selectSemstrList(lecScoreVO);
 	}
 
 	@Override
-	public double totalPntVal(LecScoreVO lecScoreVO) {
-		return commonDAO.selectTotalPntVal(lecScoreVO);
-	}
-
-	@Override
-	public double selectTotalAvg(LecScoreVO lecScoreVO) {
-		return commonDAO.selectTotalAvg(lecScoreVO);
+	public List<LecScoreVO> selectStatisticsList(LecScoreVO lecScoreVO) {
+		return commonDAO.selectStatisticsList(lecScoreVO);
 	}
 	
 }

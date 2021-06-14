@@ -152,26 +152,30 @@
 		WHERE stdnt_no = #{stdnt_no}
 		<include refid="periodFrag" />
 	</select>
-	
-	<select id="selectTotalPntVal" parameterType="LecScoreVO" resultType="double">
-		SELECT ROUND(AVG(b.pnt_val), 2) totalPntVal
+
+	<select id="selectStatisticsList" parameterType="LecScoreVO" resultType="LecScoreVO">
+		SELECT a.year, a.semstr, SUM(c.lec_pnt) totalCredit, ROUND(AVG(b.PNT_VAL), 2) totalPntVal, AVG(mid_scre * NVL(d.midterm, 0.4) + final_scre * NVL(d.finals, 0.4) + attend_scre * NVL(d.attend, 0.2) + task_scre * NVL(d.task, 0) + etc_scre * NVL(d.etc, 0)) totalAvg
 		FROM lec_scre a
-		LEFT OUTER JOIN pnt_rank b
-		ON a.pnt_rank_nm = b.pnt_rank_nm
-		WHERE stdnt_no = #{stdnt_no}
-		<include refid="periodFrag" />
-	</select>
-	
-	
-	<select id="selectTotalAvg" parameterType="LecScoreVO" resultType="double">
-		SELECT AVG(mid_scre * NVL(d.midterm, 0.4) + final_scre * NVL(d.finals, 0.4) + attend_scre * NVL(d.attend, 0.2) + task_scre * NVL(d.task, 0) + etc_scre * NVL(d.etc, 0)) totalAvg
-		FROM lec_scre a
+		LEFT OUTER JOIN PNT_RANK b
+		ON a.PNT_RANK_NM = b.PNT_RANK_NM
 		INNER JOIN lecture l
 		ON a.lec_code = l.lec_code
 		LEFT OUTER JOIN lec_score_st d
 		ON a.lec_code = d.lec_code
+		INNER JOIN curriculum c
+		ON l.cur_code = c.cur_code
 		WHERE stdnt_no = #{stdnt_no}
 		<include refid="periodFrag" />
+		GROUP BY year, semstr
+	</select>	
+	
+	<select id="selectSemstrList" parameterType="LecScoreVO" resultType="LecScoreVO">
+		SELECT DISTINCT semstr, year
+		FROM lec_scre
+		WHERE stdnt_no = #{stdnt_no}
+		<if test="year != null and !year.equals('')">
+			AND year = #{year}		
+		</if>
 	</select>
 	
 </mapper>

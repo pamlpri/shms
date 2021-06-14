@@ -49,24 +49,17 @@ public interface CommonService {
 	public List<LecScoreVO> lecYear(String stdnt_no);
 	
 	/**
-	 * 들은 학점 총합
+	 * 총 학점, 평균, 평점
 	 * @param lecScoreVO
 	 * @return
 	 */
-	public int totalCredit(LecScoreVO lecScoreVO);
+	public List<LecScoreVO> selectStatisticsList(LecScoreVO lecScoreVO);
 	
 	/**
-	 * 평균 구하기
+	 * 학생별 학기 구하기
 	 * @param lecScoreVO
 	 * @return
 	 */
-	public double totalPntVal(LecScoreVO lecScoreVO);
-	
-	/**
-	 * 평점 구하기
-	 * @param lecScoreVO
-	 * @return
-	 */
-	public double selectTotalAvg(LecScoreVO lecScoreVO);
+	public List<LecScoreVO> selectSemstrList(LecScoreVO lecScoreVO);
 	
 }

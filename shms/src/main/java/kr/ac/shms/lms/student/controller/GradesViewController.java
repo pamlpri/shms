@@ -66,14 +66,11 @@ public class GradesViewController {
 		List<LecScoreVO> lecScoreList = commonService.lecScoreList(lecScore);
 		model.addAttribute("lecScoreList", lecScoreList);
 		
-		int totalCredit = commonService.totalCredit(lecScore);
-		model.addAttribute("totalCredit", totalCredit);
+		List<LecScoreVO> selectStatisticsList = commonService.selectStatisticsList(lecScore);
+		model.addAttribute("selectStatisticsList", selectStatisticsList);
 		
-		double totalPntVal = commonService.totalPntVal(lecScore);
-		model.addAttribute("totalPntVal", totalPntVal);
-		
-		double selectTotalAvg = commonService.selectTotalAvg(lecScore);
-		model.addAttribute("totalAvg", selectTotalAvg);
+		List<LecScoreVO> selectSemstrList = commonService.selectSemstrList(lecScore);
+		model.addAttribute("selectSemstrList", selectSemstrList);
 		
 		return "lms/grades";
 	}
@@ -91,32 +88,15 @@ public class GradesViewController {
 		return lecScoreList;
 	}
 	
-	@RequestMapping(value="/totalCredit.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE )
+	@RequestMapping(value="/statistics.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE )
 	@ResponseBody
-	public int totalCredit(
+	public List<LecScoreVO> totalCredit(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @ModelAttribute("search") LecScoreVO lecScoreVO
 	) {
 		lecScoreVO.setStdnt_no(user.getUser_id());
-		int totalCredit = commonService.totalCredit(lecScoreVO);
+		List<LecScoreVO> selectStatisticsList = commonService.selectStatisticsList(lecScoreVO);
 		
-		return totalCredit;		
-	}
-	
-	@RequestMapping(value="/average.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE )
-	@ResponseBody
-	public Map<String, Object> average(
-		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, @ModelAttribute("search") LecScoreVO lecScoreVO
-	) {
-		Map<String, Object> map = new HashMap<>();
-		lecScoreVO.setStdnt_no(user.getUser_id());
-		double totalPntVal = commonService.totalPntVal(lecScoreVO);
-		double selectTotalAvg = commonService.selectTotalAvg(lecScoreVO);
-		
-		map.put("totalPntVal", totalPntVal);
-		map.put("selectTotalAvg", selectTotalAvg);
-		
-		return map;		
+		return selectStatisticsList;		
 	}
 }

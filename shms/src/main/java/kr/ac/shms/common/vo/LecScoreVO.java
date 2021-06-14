@@ -21,5 +21,10 @@ public class LecScoreVO {
 	private String pnt_rank_nm;
 	private Integer year;
 	private Integer semstr;
+	
+	
+	// 학기, 평균, 평점
 	private Integer totalCredit;
+	private double totalPntVal;
+	private double totalAvg;
 }
