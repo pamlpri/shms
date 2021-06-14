@@ -35,7 +35,9 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 5. 24.      박초원      	       최초작성
  * 2021. 06. 01.     송수미      	       교수 과제 조회
  * 2021. 06. 08.     송수미      	       교수 강의 개설
+ * 2021. 06. 12.     박초원				 주/회차 등록
  * 2021. 06. 14.   	 송수미              과제 등록
+ * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -251,6 +253,26 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			}
 		}
 		return cnt;
+	}
+
+	@Override
+	public List<LectureVO> selectWeeksList(String lec_code) {
+		return lectureProfessorDAO.selectWeeksList(lec_code);
+	}
+
+	@Override
+	public LectureVO selectWeekDetail(int diary_no) {
+		return lectureProfessorDAO.selectWeekDetail(diary_no);
+	}
+
+	@Override
+	public ServiceResult updateWeek(LectureVO lecture) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureProfessorDAO.updateWeek(lecture);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		return result;
 	}
 	
 //	private int deleteFileProcesses(SetTaskVO setTask) {

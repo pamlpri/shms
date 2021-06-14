@@ -373,4 +373,51 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
+	
+	<select id="selectWeeksList" parameterType="String" resultType="LectureVO">
+		SELECT diary_no,
+		       lec_code,
+		       lec_week,
+		       TO_CHAR(week_bgnde, '""YYYY"년 "MM"월 "DD"일"') week_bgnde,
+       		   TO_CHAR(week_endde, '""YYYY"년 "MM"월 "DD"일"') week_endde,
+		       diary_title,
+		       diary_cont,
+		       week_lec_cl,
+		       ut_lec_link,
+		       rt_lec_link
+		  FROM lec_week_diary
+		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		 ORDER BY diary_no DESC
+	</select>
+	
+	<select id="selectWeekDetail" parameterType="int" resultType="LectureVO">
+		SELECT diary_no,
+		       lec_code,
+		       lec_week,
+		       TO_CHAR(week_bgnde, 'YYYY-MM-DD') week_bgnde,
+		       TO_CHAR(week_endde, 'YYYY-MM-DD') week_endde,
+		       TO_CHAR(week_bgnde, '""YYYY"년 "MM"월 "DD"일"') week_bgnde_char,
+		       TO_CHAR(week_endde, '""YYYY"년 "MM"월 "DD"일"') week_endde_char,
+		       diary_title,
+		       diary_cont,
+		       week_lec_cl,
+		       ut_lec_link,
+		       rt_lec_link
+		  FROM lec_week_diary
+		 WHERE diary_no = #{diary_no, jdbcType=NUMERIC}
+	</select>
+	
+	<update id="updateWeek" parameterType="LectureVO">
+		UPDATE lec_week_diary
+		   SET
+		       week_bgnde = #{week_bgnde, jdbcType=DATE},
+		       week_endde = #{week_endde, jdbcType=DATE},
+		       diary_title = #{diary_title, jdbcType=VARCHAR},
+		       diary_cont = #{diary_cont, jdbcType=VARCHAR},
+		       week_lec_cl = #{week_lec_cl, jdbcType=VARCHAR},
+		       ut_lec_link = #{ut_lec_link, jdbcType=VARCHAR},
+		       rt_lec_link = #{rt_lec_link, jdbcType=VARCHAR}
+		WHERE
+		    diary_no = #{diary_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

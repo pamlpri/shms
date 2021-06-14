@@ -33,7 +33,9 @@
 
   <div class="card attendance">
       <div class="card-body">
-        <form class="table-responsive" action="${cPath }/lecture/weeksInsert.do" method="post" id="weeksForm">
+        <form class="table-responsive" method="post" id="weeksForm">
+          <input type="hidden" name="diary_no" value="${week.diary_no }" />
+        	
           <table class="table table-bordered table-md">
             <tr>
               <th class="align-middle"><span class="red-color">* </span>주차</th>
@@ -42,7 +44,7 @@
               		<c:when test="${not empty insert}">
 		                <select class="form-control im" name="lec_week">
 		                  <option value="">-- 주차선택 --</option>
-		                  <c:forEach var="i" begin="${max + 1}" end="${15}">
+		                  <c:forEach var="i" begin="${max + 1}" end="15">
 		                  	<option value="${i }">${i }주차</option>
 		                  </c:forEach>
 		                </select>
@@ -51,7 +53,13 @@
 	                    </div>
               		</c:when>
               		<c:otherwise>
-<%--               			${lecture.lec_week} --%>
+              			<select class="form-control im" name="lec_week">
+		                  <option value="">-- 주차선택 --</option>
+		                  <c:forEach var="i" begin="1" end="15">
+		                  	<c:set var="selected" value="${week.lec_week eq i ? 'selected' : ''}"></c:set>
+		                  	<option value="${i }" ${selected }>${i }주차</option>
+		                  </c:forEach>
+		                </select>
               		</c:otherwise>
               	</c:choose>
               </td>
@@ -59,7 +67,7 @@
             <tr>
               <th class="align-middle"><span class="red-color">* </span>주차명</th>
               <td class="text-left">
-              	  <input type="text" class="form-control im" name="diary_title">
+              	  <input type="text" class="form-control im" name="diary_title" value="${week.diary_title }">
 	              <div class="invalid-feedback">
 	                필수항목
 	              </div>
@@ -70,9 +78,9 @@
               <td class="text-left">
                 <select class="form-control im" name="week_lec_cl">
                   <option value="">-- 강의종류 --</option>
-                  <option value="DM">대면</option>
-                  <option value="BG">비대면</option>
-                  <option value="SG">비대면 실시간</option>
+                  <option value="DM"  ${week.week_lec_cl eq 'DM' ? 'selected' : ''}>대면</option>
+                  <option value="BG"  ${week.week_lec_cl eq 'BG' ? 'selected' : ''}>비대면</option>
+                  <option value="SG"  ${week.week_lec_cl eq 'SG' ? 'selected' : ''}>비대면 실시간</option>
                 </select>
                 <div class="invalid-feedback">
                    필수항목
@@ -82,7 +90,7 @@
             <tr>
               <th class="align-middle">강의영상</th>
               <td class="text-left">
-              	  <input type="text" class="form-control" name="ut_lec_link">
+              	  <input type="text" class="form-control" name="ut_lec_link" value="${week.ut_lec_link }">
 	              <div class="invalid-feedback">
 	                   필수항목
 	               </div>
@@ -91,7 +99,7 @@
             <tr>
               <th class="align-middle">실시간 강의 주소</th>
               <td class="text-left">
-              	 <input type="text" class="form-control" name="rt_lec_link">
+              	 <input type="text" class="form-control" name="rt_lec_link" value="${week.rt_lec_link }">
               	 <div class="invalid-feedback">
                    필수항목
                  </div>
@@ -103,14 +111,14 @@
                 <div class="row">
                   <div class="col-md-6 text-left">
                     <label for="inputEmail4"><span class="red-color">* </span>시작일</label>
-                    <input type="date" class="form-control im" name="week_bgnde">
+                    <input type="date" class="form-control im" name="week_bgnde" value="${week.week_bgnde }">
                     <div class="invalid-feedback">
                       필수항목
                     </div>
                   </div>
                   <div class="col-md-6 text-left">
                     <label for="inputEmail4"><span class="red-color">* </span>종료일</label>
-                    <input type="date" class="form-control im" name="week_endde">
+                    <input type="date" class="form-control im" name="week_endde" value="${week.week_endde }">
                     <div class="invalid-feedback">
                       필수항목
                     </div>
@@ -121,13 +129,20 @@
             <tr>
               <th class="align-middle">학습내역</th>
               <td class="textArea">
-                <textarea class="form-control" name="diary_cont"></textarea>
+                <textarea class="form-control" name="diary_cont">${week.diary_cont }</textarea>
               </td>
             </tr>
           </table>
           <div class="text-center">
               <a href="${cPath }/lecture/weeks.do" class="btn btn-secondary">취소</a>
-              <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
+              <c:choose>
+           		<c:when test="${not empty insert}">
+	              <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
+           		</c:when>
+           		<c:otherwise>
+	              <button type="button" class="btn btn-primary" id="updateBtn">저장</button>
+           		</c:otherwise>
+              </c:choose>
           </div>
           </form>
         </div>
@@ -135,8 +150,17 @@
     </div>
   
   <script type="text/javascript">
+	let week_lec_cl = $("select[name='week_lec_cl']").val();
+	if(week_lec_cl == "BG"){
+		$("input[name='ut_lec_link']").parents("tr").children("th").prepend('<span class="red-color">* </span>');
+		$("input[name='ut_lec_link']").addClass("im");
+	}else if(week_lec_cl == "SG"){
+		$("input[name='rt_lec_link']").parents("tr").children("th").prepend('<span class="red-color">* </span>');
+		$("input[name='rt_lec_link']").addClass("im");
+	}
+	
     let weeksForm = $("#weeksForm");
-    var frag = false;
+    var frag = true;
 	$("#saveBtn").on("click",function(){
 		let inputs = $(weeksForm).find(":input[name]");
 		
@@ -145,25 +169,48 @@
 			if($(this).val() == ""){
 				if($(this).hasClass("im")){
 					$(this).addClass("is-invalid");
+					frag = false;
 				}
-				frag = false;
-			}else {
-				frag = true;
 			}
 		});
 		
 		if(frag){
+			weeksForm.attr("action", "${cPath }/lecture/weeksInsert.do");
 			weeksForm.submit();
 		}
 	});
 	
-	$(weeksForm).find(":input[name]").on("change", function(){
-		$(this).removeClass("is-invalid");
+	$("#updateBtn").on("click",function(){
+		let inputs = $(weeksForm).find(":input[name]");
 		
+		$(inputs).each(function(idx, input){
+			console.log($(this).val());
+			if($(this).val() == ""){
+				if($(this).hasClass("im")){
+					$(this).addClass("is-invalid");
+					frag = false;
+				}
+			}
+		});
+		
+		if(frag){
+			weeksForm.attr("action", "${cPath }/lecture/weeksUpdate.do");
+			weeksForm.submit();
+		}
 	});
-	
+	  
+	$(weeksForm).on("change",".im", function(){
+		$(this).removeClass("is-invalid");
+		frag = true;
+		console.log(frag);
+	});
+
 	$(weeksForm).find("select[name='week_lec_cl']").on("change", function(){
 		let week_lec_cl = $("select[name='week_lec_cl']").val();
+		$("input[name='ut_lec_link']").parents("tr").find('.red-color').remove();
+		$("input[name='ut_lec_link']").removeClass("im");
+		$("input[name='rt_lec_link']").parents("tr").find('.red-color').remove();
+		$("input[name='rt_lec_link']").removeClass("im");
 		console.log(week_lec_cl);
 
 		if(week_lec_cl == "BG"){
@@ -174,4 +221,5 @@
 			$("input[name='rt_lec_link']").addClass("im");
 		}
 	});
+
   </script>

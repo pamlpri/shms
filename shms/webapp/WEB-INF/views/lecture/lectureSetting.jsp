@@ -43,6 +43,7 @@
               </td>
             <tr>
             </tr>
+            <tr>
               <th class="align-middle">강의교재</th>
               <td class="text-left">
               	<textarea class="form-control" rows="5" cols="1000" name="tchmtr">${lecture.tchmtr }</textarea>
