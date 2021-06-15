@@ -21,6 +21,7 @@ import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.dao.LectureProfessorDAO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 
@@ -39,6 +40,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 12.     박초원				 주/회차 등록
  * 2021. 06. 14.   	 송수미              과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
+ * 2021. 06. 15.	  박초원			 주/회차 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -181,6 +183,16 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	}
 
 	@Override
+	public ServiceResult deleteWeek(int diary_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureProfessorDAO.deleteWeek(diary_no);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		return result;
+	}
+	
+	@Override
 	public int selectWeeksMaxWeek(String lec_code) {
 		int cnt = 0;
 		cnt = lectureProfessorDAO.selectWeeksMaxWeek(lec_code);
@@ -218,16 +230,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	public ServiceResult updateWeek(LectureVO lecture) {
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = lectureProfessorDAO.updateWeek(lecture);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}
-		return result;
-	}
-
-	@Override
-	public ServiceResult deleteWeek(int diary_no) {
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = lectureProfessorDAO.deleteWeek(diary_no);
 		if(cnt > 0) {
 			result = ServiceResult.OK;
 		}
@@ -371,5 +373,9 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		return cnt;
 	}
 
+	@Override
+	public List<TaskSubmitVO> selectTaskSubmitList(Map<String, Object> searchMap) {
+		return lectureProfessorDAO.selectTaskSubmitList(searchMap);
+	}
 	
 }

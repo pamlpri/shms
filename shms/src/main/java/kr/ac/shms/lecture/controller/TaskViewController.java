@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
@@ -23,11 +22,11 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
+ * 2021. 6. 14.      송수미      	       제출된 과제 조회 기능 구현
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
 public class TaskViewController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskViewController.class);
 	
@@ -39,9 +38,12 @@ public class TaskViewController {
 	@RequestMapping("/lecture/task.do")
 	public String task(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			, @SessionAttribute(name="lec_name", required=false) String lec_name
 			, Model model
 		) {
-	
+		
+		
+		
 		return "lecture/task";
 	}	
 }
