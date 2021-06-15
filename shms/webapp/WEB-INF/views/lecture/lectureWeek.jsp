@@ -10,6 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -47,20 +48,31 @@
 	      <div class="card-body">
 	          <div class="row">
 		          <div class="col-12 col-md-9">
-		              <div class="card-body">
 		                  <div class="progress mb-3">
 		                      <div class="progress-bar" role="progressbar" data-width="${week.sugang_req }%" aria-valuenow="${week.sugang_req }" aria-valuemin="0" aria-valuemax="100">${week.sugang_req }%</div>
 		                  </div>
-		                  <p><span>${week.sugang_req }분</span> / 50분</p>
-		              </div>
+		                  <fmt:parseNumber var="min" value="${(week.sugang_len % 3600) / 60}" integerOnly="true" />
+		                  <fmt:parseNumber var="second" value="${week.sugang_len % 60}" integerOnly="true" />
+		                  <fmt:parseNumber var="curMin" value="${((week.sugang_req * week.sugang_len / 100) % 3600) / 60}" integerOnly="true" />
+		                  <fmt:parseNumber var="curSecond" value="${(week.sugang_req * week.sugang_len / 100) % 60}" integerOnly="true" />
+		                  <p><span>${curMin }분 ${curSecond }초</span> / ${min}분 ${second}초</p>
 		          </div>
-		          <div class="col-12 col-md-3">
-		              <div class="card-body">
+		          <c:choose>
+		          	<c:when test="${week.sugang_stat eq 'Y' }">
+			          <div class="col-12 col-md-3">
 		                  <a href="${cPath }/lecture/lectureVideo.do?what=${week.diary_no}" onclick="window.open(this.href, '_blanck', 'width=600, height=400'); return false" class="btn btn-icon icon-left btn-primary video">
 		                      <i class="far fa-edit"></i> 학습하기
 		                  </a>
-		              </div>
-		          </div>
+			          </div>
+		          	</c:when>
+		          	<c:otherwise>
+		          		<div class="col-12 col-md-3">
+		                  <button href="#" class="btn btn-icon icon-left btn-secondary video" disabled style="color : white;">
+		                      <i class="far fa-edit"></i> 학습종료
+		                  </button>
+			          </div>
+		          	</c:otherwise>
+		          </c:choose>
 		      </div>
 	      </div>
       	</c:when>
@@ -72,6 +84,5 @@
       </c:choose>
   	</div>
   </c:forEach>
-  
   <!-- contents end -->
 </div>

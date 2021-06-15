@@ -256,8 +256,9 @@
 		    diary_title,
 		    diary_cont,
 		    week_lec_cl
-		    <if test="ut_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(ut_lec_link)">
+		   <if test="ut_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(ut_lec_link)">
 			    ,ut_lec_link
+			    ,sugang_len
 		    </if>
 		    <if test="rt_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(rt_lec_link)">
 			    ,rt_lec_link
@@ -273,6 +274,7 @@
 		    #{week_lec_cl, jdbcType=VARCHAR}
 		    <if test="ut_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(ut_lec_link)">
 			    ,#{ut_lec_link, jdbcType=VARCHAR}
+			    ,#{sugang_len, jdbcType=NUMERIC}
 		    </if>
 		    <if test="rt_lec_link != null and @org.apache.commons.lang3.StringUtils@isNotBlank(rt_lec_link)">
 			    ,#{rt_lec_link, jdbcType=VARCHAR}

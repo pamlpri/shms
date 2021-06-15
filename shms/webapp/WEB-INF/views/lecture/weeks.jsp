@@ -50,7 +50,7 @@
       	</c:when>
       	<c:when test="${week.week_lec_cl eq 'BG'}">
 	      <div class="card-body">
-	          <a href="${cPath }/lecture/lectureVideo.do?what=${week.diary_no}" onclick="window.open(this.href, '_blanck', 'width=600, height=400'); return false" class="btn btn-icon icon-left btn-primary">
+	          <a href="${cPath }/lecture/weekVideo.do?what=${week.diary_no}" onclick="window.open(this.href, '_blanck', 'width=600, height=400'); return false" class="btn btn-icon icon-left btn-primary">
 	              <i class="fas fa-video"></i> 강의영상
 	          </a>
 	      </div>

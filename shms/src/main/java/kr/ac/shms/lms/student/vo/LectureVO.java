@@ -75,6 +75,8 @@ public class LectureVO {
 	private String stdnt_no;
 	private String sugang_de;
 	private Integer sugang_req;
+	private Integer sugang_len;
+	private String sugang_stat;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
