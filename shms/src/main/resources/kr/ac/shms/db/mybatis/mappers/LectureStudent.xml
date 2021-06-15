@@ -16,9 +16,192 @@
 		        NVL((SELECT sugang_req
 		           FROM ut_lec_sg 
 		          WHERE a.diary_no = diary_no
-		            AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}), 0) sugang_req
+		            AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}), 0) sugang_req,
+		        a.sugang_len,
+		        <![CDATA[
+			        (CASE WHEN week_bgnde <= SYSDATE AND week_endde >= SYSDATE THEN 'Y'
+			         ELSE 'N' END) sugang_stat 
+		        ]]>
 		  FROM  lec_week_diary a
 		  WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
 		  ORDER BY diary_no DESC
+	</select>
+	
+	<select id="selectStudentWeekDetail" parameterType="LectureVO" resultType="LectureVO">
+		SELECT a.diary_no,
+		       a.lec_code,
+		       a.lec_week,
+		       TO_CHAR(week_bgnde, 'YYYY-MM-DD') week_bgnde,
+		       TO_CHAR(week_endde, 'YYYY-MM-DD') week_endde,
+		       TO_CHAR(week_bgnde, '""YYYY"년 "MM"월 "DD"일"') week_bgnde_char,
+		       TO_CHAR(week_endde, '""YYYY"년 "MM"월 "DD"일"') week_endde_char,
+		       a.diary_title,
+		       a.diary_cont,
+		       a.week_lec_cl,
+		       a.ut_lec_link,
+		       a.rt_lec_link,
+		       NVL((SELECT sugang_req
+		              FROM ut_lec_sg 
+		             WHERE a.diary_no = diary_no
+		               AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}), 0) sugang_req
+		  FROM lec_week_diary a
+		 WHERE a.diary_no = #{diary_no, jdbcType=NUMERIC}
+	</select>
+	
+	<insert id="insertLectureWeek" parameterType="LectureVO">
+		MERGE INTO ut_lec_sg A
+		USING(
+		    SELECT NVL(COUNT(*),0) COUNT
+		    FROM ut_lec_sg
+		     WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		       AND diary_no = #{diary_no, jdbcType=NUMERIC}
+		) B
+		ON (B.COUNT > 0)
+		WHEN MATCHED THEN
+		    UPDATE SET sugang_req = #{sugang_req, jdbcType=NUMERIC}
+		     WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		       AND diary_no = #{diary_no, jdbcType=NUMERIC}
+		WHEN NOT MATCHED THEN
+		     INSERT
+		    ( 		
+		        sugang_no,
+		        diary_no,
+		        stdnt_no,
+		        sugang_de,
+		        sugang_req 
+		    ) VALUES (
+		        sugang_seq.nextval,
+		        #{diary_no, jdbcType=NUMERIC},
+		        #{stdnt_no, jdbcType=VARCHAR},
+		        SYSDATE,
+		        #{sugang_req, jdbcType=NUMERIC}
+		    )
+	</insert>
+	
+	<insert id="insertLectureWeekAttend" parameterType="AttendVO">
+		INSERT INTO attendance (
+		    atndan_no,
+		    attend_date,
+		    attend_time,
+		    exit_time,
+		    attend_stat,
+		    lec_code,
+		    stdnt_no
+		) VALUES (
+		    attend_seq.nextval,
+		    SYSDATE,
+		    null,
+		    null,
+		    'Y',
+		    #{lec_code, jdbcType=VARCHAR},
+		    #{stdnt_no, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<resultMap type="SetTaskVO" id="taskListMap" autoMapping="true">
+		<id property="set_task_no" column="set_task_no"/>
+		<collection property="submitList" ofType="TaskSubmitVO" autoMapping="true">
+			<id property="submit_no" column="submit_no"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectTaskList" parameterType="hashMap" resultMap="taskListMap">
+		SELECT
+		    DISTINCT
+		    a.set_task_no,
+		    TO_CHAR(submit_endde, 'YYYY.MM.DD AM HH:MI') submit_endde,
+		    CASE WHEN SYSDATE BETWEEN submit_bgnde AND submit_endde THEN
+		    '진행중'
+		    ELSE
+		    '마감'
+		    END process_at,
+		    task_title,
+		    task_allot,
+		    task_score,
+		    submit_no
+		FROM
+		    set_task a
+		LEFT OUTER JOIN (SELECT set_task_no, submit_no, task_score
+		                   FROM task_submit
+		                  WHERE writer = #{stdnt_no, jdbcType=VARCHAR}
+		                  ) b
+		ON(a.set_task_no = b.set_task_no)
+		WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertTask" parameterType="TaskSubmitVO">
+		<selectKey resultType="int" keyProperty="submit_no" order="BEFORE">
+			SELECT task_sub_seq.nextval
+			FROM dual
+		</selectKey>
+			INSERT INTO task_submit (
+			    submit_no,
+			    set_task_no,
+			    title,
+			    cont,
+			    writer,
+			    submit_dt  
+			    <if test="attachList != null">
+				    ,atch_file_no
+			  	</if>
+			) VALUES (
+			    #{submit_no, jdbcType=NUMERIC},
+			    #{set_task_no, jdbcType=NUMERIC},
+			    #{title, jdbcType=VARCHAR},
+			    #{cont, jdbcType=VARCHAR},
+			    #{writer, jdbcType=VARCHAR},
+			    TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI')
+   				<if test="attachList != null">
+			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
+			    </if>
+			)
+	</insert>
+	
+	<resultMap type="SetTaskVO" id="taskAttachMap" autoMapping="true">
+		<id property="set_task_no" column="set_task_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+		<collection property="taskSubmitList" ofType="TaskSubmitVO" autoMapping="true">
+			<id property="submit_no" column="submit_no"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectSetTask" parameterType="hashMap" resultMap="taskAttachMap">
+		SELECT
+		    set_task_no,
+		    task_reg_de,
+		    TO_CHAR(submit_endde, 'YYYY.MM.DD AM HH:MI') submit_endde,
+		    task_title,
+		    task_cont,
+		    a.atch_file_no,
+		    b.atch_file_seq,
+		    b.file_nm,
+		    (SELECT submit_no FROM task_submit WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC} AND writer = #{stdnt_no, jdbcType=VARCHAR}) submit_no,
+    		(SELECT task_score FROM task_submit WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC} AND writer = #{stdnt_no, jdbcType=VARCHAR}) task_score
+		FROM
+		    set_task a
+		LEFT OUTER JOIN attach b
+		ON(a.atch_file_no = b.atch_file_no)
+		WHERE
+		    set_task_no = #{set_task_no, jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectAttatch" parameterType="AttachVO" resultType="AttachVO"> 
+		SELECT
+			atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+		FROM attach
+		WHERE atch_file_no = #{atch_file_no}
+		AND atch_file_seq = #{atch_file_seq}
 	</select>
 </mapper>
