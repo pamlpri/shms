@@ -12,6 +12,7 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.LecEvlResVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
@@ -188,14 +189,21 @@ public interface LmsCommonService {
 	/**
 	 * 강의 평가 조회
 	 * @param stdnt_no
-	 * @return
+	 * @return 데이터가 없으면 null
 	 */
 	public List<LecScoreVO> selectLecEvlList(String stdnt_no);
 	
 	/**
 	 * 강의평가 유무
 	 * @param stdnt_no
-	 * @return
+	 * @return 데이터가 없으면 null
 	 */
-	public int selectEvlCnt(String stdnt_no);
+	public List<LecScoreVO> selectEvlCheck(String stdnt_no);
+	
+	/**
+	 * 강의평가 등록
+	 * @param lecEvlResVO
+	 * @return ServiceResult
+	 */
+	public ServiceResult insertEvl(LecEvlResVO lecEvlResVO);
 }

@@ -31,4 +31,7 @@ public class LecScoreVO {
 	// 강의평가
 	private String com_code_nm;
 	private String cur_code;
+	
+	// 강의 평가 상태
+	private String status;
 }
