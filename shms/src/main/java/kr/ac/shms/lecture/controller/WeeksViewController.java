@@ -50,7 +50,7 @@ public class WeeksViewController {
 		return "lecture/weeks";
 	}
 	
-	@RequestMapping("/lecture/lectureVideo.do")
+	@RequestMapping("/lecture/weekVideo.do")
 	public String lectureVideo(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		,@RequestParam("what") int diary_no
@@ -59,6 +59,6 @@ public class WeeksViewController {
 		LectureVO week = lectureProfessorService.selectWeekDetail(diary_no);
 		model.addAttribute("week", week);
 		
-		return "/lecture/lectureVideo";
+		return "/lecture/weekVideo";
 	}
 }

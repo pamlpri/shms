@@ -9,6 +9,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<style>
+	.video-wrap {
+		display : none;
+	}
+</style>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -35,7 +40,9 @@
       <div class="card-body">
         <form class="table-responsive" method="post" id="weeksForm">
           <input type="hidden" name="diary_no" value="${week.diary_no }" />
-        	
+       	  <div class="video-wrap mb-4">
+			<div id="player"></div>
+		  </div>
           <table class="table table-bordered table-md">
             <tr>
               <th class="align-middle"><span class="red-color">* </span>주차</th>
@@ -133,6 +140,7 @@
               </td>
             </tr>
           </table>
+          <input type="hidden" name="sugang_len" />
           <div class="text-center">
               <a href="${cPath }/lecture/weeks.do" class="btn btn-secondary">취소</a>
               <c:choose>
@@ -169,7 +177,8 @@
       </div>
     </div>
   </div>
-  
+
+  <script src = "https://www.youtube.com/iframe_api"></script>
   <script type="text/javascript">
 	let week_lec_cl = $("select[name='week_lec_cl']").val();
 	if(week_lec_cl == "BG"){
@@ -230,6 +239,7 @@
 		let week_lec_cl = $("select[name='week_lec_cl']").val();
 		$("input[name='ut_lec_link']").parents("tr").find('.red-color').remove();
 		$("input[name='ut_lec_link']").removeClass("im");
+		$(".video-wrap").css("display", "none");
 		$("input[name='rt_lec_link']").parents("tr").find('.red-color').remove();
 		$("input[name='rt_lec_link']").removeClass("im");
 		console.log(week_lec_cl);
@@ -247,5 +257,127 @@
 		weeksForm.attr("action", "${cPath }/lecture/weeksDelete.do");
 		weeksForm.submit();
 	}
+	
+	var videoId;
+	$("input[name='ut_lec_link']").on("change", function(){
+		videoId = $(this).val();
+		$(".video-wrap").css("display", "block");
+		let videoIds = videoId.split("/");
+		videoId = videoIds[videoIds.length-1];
+		console.log(videoId);
+		loadNewVideo(videoId);
+	});
+	
+	var player;
+	function onYouTubeIframeAPIReady() {
+		let video = videoId;
+		console.log(video);
+		player = new YT.Player('player', {
+			height : '390',
+			width : '640',
+			videoId : '',
+			events : {
+				'onReady' : onPlayerReady,
+				'onStateChange' : onPlayerStateChange,
+				'onPlaybackRateChange' : onPlaybackRateChange,
+				'onApiChange' : onApiChange,
+			}
+		});
+	};
+
+	function onPlaybackRateChange() {
+		// Update playback rate on page
+		update("rate");
+	};
+	function onApiChange(event) {
+		// Update currently availbe APIs
+		console.log("API Change!");
+	};
+	function onPlayerReady() {
+		// Update page after player is ready
+		updateAll();
+		playVideo();
+	}
+
+	function onPlayerStateChange(event) {
+		switch (event.data) {
+		case YT.PlayerState.ENDED:
+			updateAll() // set status for state, ...
+			clearIntervals() // clear all intervals
+			break;
+		case YT.PlayerState.PLAYING:
+			updateAll() // set status for state, ...
+			setIntervals() // set intervals for ...
+			break;
+		case YT.PlayerState.PAUSED:
+			updateAll() // set status for state, ...
+			clearIntervals() // clear all intervals
+			break;
+		case YT.PlayerState.BUFFERING:
+			updateAll() // set status for state, ...
+			clearIntervals() // clear all intervals
+			break;
+		case YT.PlayerState.CUED:
+			updateAll() // set status for state, ...
+			clearIntervals() // clear all intervals
+			break;
+		default:
+			updateAll() // set status for state, ...
+			clearIntervals() // clear all intervals
+			break;
+
+		}
+	};
+	
+	
+	function update(node) {
+		switch (node) {
+		case "duration":
+			$("input[name='sugang_len']").val(parseInt(player.getDuration()));
+			break;
+		}
+	};
+	
+	function updateAll() {
+		for ( var node in nodeList) {
+			update(nodeList[node]);
+		}
+	};
+	
+	// Array to track all HTML nodes
+	var nodeList = [ "duration", "percentLoaded"];
+	function loadNewVideo(videoId){
+	   player.loadVideoById(videoId);
+	 };
+	function cueNewVideo() {
+		player.cueVideoById(document.getElementById("video_idOption").value);
+	};
+	function playVideo() {
+		player.playVideo();
+	};
+	function pauseVideo() {
+		player.pauseVideo();
+	};
+	function stopVideo() {
+		player.stopVideo();
+	};
+	function setRate() {
+		player.setPlaybackRate(document.getElementById("rateOption").value);
+	};
+
+	var activeIntervals = [];
+	function setIntervals() {
+		activeIntervals[0] = setInterval(function() {
+			update("percentLoaded")
+		}, 500);
+		activeIntervals[1] = setInterval(function() {
+			update("currentTime")
+		}, 500);
+	};
+	function clearIntervals() {
+		for ( var interval in activeIntervals) {
+			clearInterval(interval);
+		}
+	};
 
   </script>
