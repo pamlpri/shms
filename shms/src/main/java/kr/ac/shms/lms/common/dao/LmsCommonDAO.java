@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -13,6 +14,7 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.LecEvlResVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
@@ -219,5 +221,12 @@ public interface LmsCommonDAO {
 	 * @param stdnt_no
 	 * @return
 	 */
-	public int selectEvlCnt(String stdnt_no);
+	public int selectEvlCheck(LecScoreVO lecScoreVO);
+	
+	/**
+	 * 강의평가 등록
+	 * @param lecEvlResVO
+	 * @return cnt > 0 성공
+	 */
+	public int insertEvl(LecEvlResVO lecEvlResVO);
 }

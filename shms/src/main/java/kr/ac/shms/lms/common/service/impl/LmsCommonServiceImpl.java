@@ -1,6 +1,8 @@
 package kr.ac.shms.lms.common.service.impl;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +29,7 @@ import kr.ac.shms.lms.common.vo.CourseEducVO;
 import kr.ac.shms.lms.common.vo.DietVO;
 import kr.ac.shms.lms.common.vo.EntschtestDcVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
+import kr.ac.shms.lms.common.vo.LecEvlResVO;
 import kr.ac.shms.lms.common.vo.ReceiverVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
@@ -284,8 +287,33 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	}
 
 	@Override
-	public int selectEvlCnt(String stdnt_no) {
-		return lmsCommonDAO.selectEvlCnt(stdnt_no);
+	public List<LecScoreVO> selectEvlCheck(String stdnt_no) {
+		List<LecScoreVO> lecScoreList = selectLecEvlList(stdnt_no);
+		List<LecScoreVO> lecEvlResList = new ArrayList<>();
+		for(LecScoreVO lecScoreVO : lecScoreList) {
+			LecScoreVO lecScore = new LecScoreVO();
+			lecScore.setStdnt_no(stdnt_no);
+			lecScore.setLec_code(lecScoreVO.getLec_code());
+			
+			if(lmsCommonDAO.selectEvlCheck(lecScore) == 12) {
+				lecScoreVO.setStatus("완료");
+				lecEvlResList.add(lecScoreVO);
+			} else {
+				lecScoreVO.setStatus("미완료");
+				lecEvlResList.add(lecScoreVO);
+			}
+			logger.info("lecEvlResList : {}", lecEvlResList);
+		}
+		return lecEvlResList;
+	}
+
+	@Transactional
+	@Override
+	public ServiceResult insertEvl(LecEvlResVO lecEvlResVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsCommonDAO.insertEvl(lecEvlResVO);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
 	}
 
 	

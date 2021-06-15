@@ -489,9 +489,27 @@
 		AND e.code_grp = 'G06'
 	</select>
 	
-	<select id="selectEvlCnt" parameterType="String" resultType="int">
+	<select id="selectEvlCheck" parameterType="LecScoreVO" resultType="int">
 		SELECT COUNT(*)
-		FROM LEC_EVL_RES
+		FROM
+		    lec_evl_res
 		WHERE stdnt_no = #{stdnt_no}
+		AND lec_code = #{lec_code}
 	</select>
+	
+	<insert id="insertEvl" parameterType="LecEvlResVO">
+		INSERT INTO lec_evl_res (
+		    lec_evl_no,
+		    queitm_no,
+		    stdnt_no,
+		    lec_code,
+		    evl_cont
+		) VALUES (
+		    LEC_EVL_RES_SEQ.NEXTVAL,
+		    #{queitm_no},
+		    #{stdnt_no},
+		    #{lec_code},
+		    #{evl_cont}
+		)
+	</insert>
 </mapper>
