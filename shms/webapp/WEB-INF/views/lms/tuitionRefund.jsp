@@ -7,6 +7,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -32,15 +33,15 @@
                       </tr>
                       <tr>
                           <td class="text-center">학기개시일(개강일자)부터 30일 경과 전</td>
-                          <td class="text-center">수업료의 6분의 5 해당액</td>
+                          <td class="text-center">납부금액의 6분의 5 해당액</td>
                       </tr>
                       <tr>
                           <td class="text-center">학기개시일(개강일자)부터 60일 경과 전</td>
-                          <td class="text-center">수업료의 3분의 2 해당액</td>
+                          <td class="text-center">납부금액의 3분의 2 해당액</td>
                       </tr>
                       <tr>
                           <td class="text-center">학기개시일(개강일자)부터 90일 경과 전</td>
-                          <td class="text-center">수업료의 2분의 1 해당액</td>
+                          <td class="text-center">납부금액의 2분의 1 해당액</td>
                       </tr>
                       <tr>
                           <td class="text-center">학기개시일(개강일자)부터 90일 경과 후	</td>
@@ -107,9 +108,16 @@
                   </tbody>
               </table>
               <div class="text-center" style="margin-top: 40px;">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
-                      환불신청
-                  </button>
+	              <c:if test="${reginfoStat eq '재학'} ">
+	              </c:if>
+	              <c:if test="${empty tuition }">
+	              </c:if>
+	              <c:if test="${reginfoStat  ne '재학'} AND ${not empty tuition }">
+	                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
+	                      환불신청
+	                  </button>
+	              </c:if>
+          
               </div>
           </div>
       </div>
@@ -128,27 +136,28 @@
                       <i data-feather="x"></i>
                   </button>
               </div>
-              <form action="#">
+              <form action="${cPath }/lms/tuitionRefundForm.do">
                   <div class="modal-body">
                       <div class="form-group">
                           <h6>학번</h6>
-                          <input class="form-control form-control-default" type="text" value="S14010001" disabled>
+                          <input class="form-control form-control-default" type="text" value="${tuition.stdnt_no }" disabled>
                       </div>
                       <div class="form-group">
                           <h6>이름</h6>
-                          <input class="form-control form-control-default" type="text" value="강미나" disabled>
+                          <input class="form-control form-control-default" type="text" value="${tuition.name }" disabled>
                       </div>
                       <div class="form-group">
                           <h6>환불금액</h6>
-                          <input class="form-control form-control-default" type="text" value="2,000,000원" disabled/>
+                          <input class="form-control form-control-default" type="text" value="${refundAmt }원" disabled/>
                       </div>
                       <div class="form-group">
                           <h6>신청사유</h6>
                           <fieldset class="form-group">
                               <select class="form-select" id="basicSelect">
-                                  <option>-- 사유선택 --</option>
-                                  <option>자퇴</option>
-                                  <option>제적</option>
+                                  <option value="">-- 사유선택 --</option>
+                                  <c:forEach var="resnList" items="${resnList }">
+                                  		<option value="${resnList.com_code }">${resnList.com_code_nm }</option>
+                                  </c:forEach>
                               </select>
                           </fieldset>
                       </div>
@@ -210,8 +219,7 @@
 		
 		$(".ml-1").on("click", function(){
 			$.ajax({
-				url : "${cPath}/lms/tuitionRefundForm"
-				, data : 
+				url : "${cPath}/lms/tuitionRefundForm.do"
 				, method : "post"
 				, datType : "json"
 				, success : function(res){

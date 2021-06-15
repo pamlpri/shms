@@ -1,6 +1,5 @@
 package kr.ac.shms.lms.student.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +10,9 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
-import kr.ac.shms.lms.student.vo.SugangVO;
+import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
+import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -25,6 +25,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 수정일         수정자        수정내용
  * --------     --------    ----------------------
  * 2021. 6. 12.   김보미        최초작성
+ * 2021. 6. 15.   김보미 		등록금 환불
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -32,7 +33,6 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
 public class TuitionServiceImpl implements TuitionService{
 	@Inject
 	private TuitionDAO tuitionDAO;
-	
 	@Inject
 	private StudentDAO studentDAO;
 	
@@ -43,11 +43,6 @@ public class TuitionServiceImpl implements TuitionService{
 
 	@Override
 	public TuitionVO selectTuitionBill(String stdnt_no) {
-		Map<String, Object> resultMap = new HashMap<>();
-		List<SugangVO> sugangList = studentDAO.selectRegistrationList(stdnt_no);
-		if(sugangList == null) {
-			resultMap.put("", "");
-		}
 		return tuitionDAO.selectTuitionBill(stdnt_no);
 	}
 
@@ -62,9 +57,39 @@ public class TuitionServiceImpl implements TuitionService{
 	}
 
 	@Override
-	public TuitionVO selectRefundTuition(String stdnt_no) {
-		
-		return null;
+	public List<ComCodeVO> selectRefundResn() {
+		return tuitionDAO.selectRefundResn();
 	}
 
+	@Override
+	public String selectRefundAmt(String stdnt_no) {
+		return tuitionDAO.selectRefundAmt(stdnt_no);
+	}
+
+	@Override
+	public void selectRefundMain(Map<String, Object> paramMap) {
+		String stdnt_no = (String) paramMap.get("stdnt_no");
+		TuitionVO tuition = new TuitionVO();
+		tuition = tuitionDAO.selectTuitionReceipt(stdnt_no);
+		List<ComCodeVO> resnList = tuitionDAO.selectRefundResn();
+		String refundAmt = tuitionDAO.selectRefundAmt(stdnt_no);
+		MypageVO info = studentDAO.regInfo(stdnt_no);
+		String reginfoStat = info.getReginfo_stat();
+		
+		paramMap.put("tuition", tuition);
+		paramMap.put("resnList", resnList);
+		paramMap.put("refundAmt", refundAmt);
+		paramMap.put("reginfoStat", reginfoStat);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
