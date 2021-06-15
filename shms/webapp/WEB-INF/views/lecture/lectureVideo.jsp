@@ -17,16 +17,16 @@
   <title>${week.diary_title} 강의영상</title>
   <link rel="stylesheet" href="${cPath }/resources/lecture/dist/css/components.css">
 </head>
-<body onunload="Ev_onbeforeunload()">
+<body onunload="Ev_onbeforeunload();">
 	<div class="video-wrap">
 		<div id="player"></div>
 	</div>
 	<form id="reqForm">
-		<input type="text" name="first_sugang_req" value="${week.sugang_req }" />
+		<input type="hidden" name="first_sugang_req" value="${week.sugang_req }" />
 		<input type="hidden" name="sugang_req" />
 		<input type="hidden" name="diary_no" value="${week.diary_no }" />
-		<input type="text" name="stdnt_no" value="${week.stdnt_no }" />
-		<input type="text" name="lec_code" value="${week.lec_code}" />
+		<input type="hidden" name="stdnt_no" value="${week.stdnt_no }" />
+		<input type="hidden" name="lec_code" value="${week.lec_code}" />
 	</form>
 	<script type="text/javascript" src="${cPath }/resources/lecture/dist/modules/jquery.min.js"></script>
 	<script type="text/javascript" src="${cPath }/resources/lecture/dist/modules/popper.js"></script>
