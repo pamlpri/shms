@@ -169,4 +169,81 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		return lectureStudentDAO.selectAttatch(attachVO);
 	}
 
+	@Override
+	public TaskSubmitVO selectTaskSubmit(int submit_no) {
+		return lectureStudentDAO.selectTaskSubmit(submit_no);
+		
+	}
+
+	@Override
+	public ServiceResult updateTask(TaskSubmitVO taskSubmit) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = 0;
+		
+		TaskSubmitVO savedTask = lectureStudentDAO.selectTaskSubmit(taskSubmit.getSubmit_no());
+		
+		if(savedTask == null) {
+			result = ServiceResult.NOTEXIST;
+		}else {
+			if(savedTask.getAtch_file_no() == null) {
+				lectureStudentDAO.updateAtchNo(taskSubmit);
+			}
+			cnt = lectureStudentDAO.updateTask(taskSubmit);
+			if(cnt > 0) {
+				cnt += processes(taskSubmit);
+				cnt += deleteFileProcesses(taskSubmit);
+				if(cnt > 0) {
+					result = ServiceResult.OK;
+				}
+			}
+		}
+		return result;
+	}
+	
+	private int deleteFileProcesses(TaskSubmitVO taskSubmit) {
+		logger.info("deleteFileProcesses : {}", taskSubmit);
+		FTPClient client = new FTPClient();
+		int cnt = 0;
+		int[] delAttNos = taskSubmit.getDelAttNos();
+		if(delAttNos!=null && delAttNos.length > 0) {
+			List<String> saveNames = lectureStudentDAO.selectSaveNamesForDelete(taskSubmit);
+			logger.info("saveNames : {}", saveNames.size());
+			try {
+				client.connect(ip, port);
+				int reply = client.getReplyCode();
+				logger.info("client Connect : {}", reply);
+				if(FTPReply.isPositiveCompletion(reply)) { // 접속 연결이 됐을 경우 
+					if(client.login(id, pw)) {	// FTP 서버 로그인 성공 했을 경우
+						System.out.println("Login Success");
+						client.setBufferSize(1000);	// 버퍼 사이즈
+						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
+						String dir = "/lecture/" + taskSubmit.getLec_code() + "/taskSubmit";
+
+						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
+						logger.info("isDir : {} || {}",isDirectory, dir);
+						
+						client.setFileType(FTP.BINARY_FILE_TYPE);
+						
+//						이진 데이터 삭제
+						for(String saveName : saveNames) {
+							client.deleteFile(saveName);
+						}
+//						첨부파일의 메타 데이터 삭제
+						lectureStudentDAO.deleteAttathes(taskSubmit);
+						
+						
+						client.logout();
+						client.disconnect();
+					} else {
+						client.disconnect(); // 연결 종료
+					}
+				}
+			} catch(Exception e) {
+				
+			}
+		}
+		return cnt;
+	}	
+
 }

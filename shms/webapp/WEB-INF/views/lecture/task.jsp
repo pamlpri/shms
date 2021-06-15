@@ -63,7 +63,7 @@
 				                  	</a>
 		                  		</c:when>
 		                  		<c:otherwise>
-				                	<a href="${cPath}/lecture/taskUpdate.do?set_task_no=${task.set_task_no}" class="btn btn-primary ${disabled }">제출완료</a>
+				                	<a href="${cPath}/lecture/taskUpdate.do?set_task_no=${task.set_task_no}&submit_no=${task.submitList[0].submit_no}" class="btn btn-primary ${disabled }">제출완료</a>
 		                  		</c:otherwise>
 		                  	</c:choose>
 		                  </td>
