@@ -18,7 +18,7 @@
        <ol class="breadcrumb">
            <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
            <li class="breadcrumb-item"><a href="${cPath }/lms/tuitionList.do">등록금관리</a></li>
-           <li class="breadcrumb-item active" aria-current="page">등록금 영수증</li>
+           <li class="breadcrumb-item active" aria-current="page">등록금 고지서</li>
        </ol>
    </nav>
    

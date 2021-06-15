@@ -2,28 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.shms.lms.student.dao.TuitionDAO">
 	<select id="selectTuitionList" parameterType="String" resultType="TuitionVO">
-		SELECT DISTINCT 
-	       pay_year, 
-	       pay_semstr, 
-	    (SELECT CASE WHEN com_code_nm='휴학' THEN '재학'
-	                 WHEN com_code_nm='복학' THEN '재학'
-	                 ELSE '재학'
-	            END   
-	       FROM tb_com_code
-	      WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
-	        AND com_code = req_cl_code) reg_cl_code,
-	       TO_CHAR(pay_amt, '999,999,999') pay_amt,
-	       TO_CHAR(pay_dt, 'RRRR/MM/DD') pay_dt,
-	       TO_CHAR(d.reg_amt, '999,999,999') reg_amt,
-	       TO_CHAR((pay_amt - reg_amt), '999,999,999') schl
-	  FROM reg_fee_pay a
-	 LEFT OUTER JOIN reginfo_cng b ON(a.stdnt_no=b.stdnt_no)
-	 INNER JOIN student c ON(a.stdnt_no=c.stdnt_no)
-	 INNER JOIN subject d ON(c.sub_code=d.sub_code)
-	 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
-	   AND b.process_stat = 'SI'
-	   AND a.pay_year=b.cng_year
-	 ORDER BY pay_year asc
+		SELECT DISTINCT pay_year,
+		       pay_semstr,
+		       (SELECT reginfo_stat FROM v_stdntinfo WHERE stdnt_no=#{stdnt_no}) reginfo_stat,
+		       TO_CHAR(pay_amt, '999,999,999') pay_amt,
+		       TO_CHAR(pay_dt, 'RRRR/MM/DD') pay_dt,
+		       TO_CHAR(c.reg_amt, '999,999,999') reg_amt,
+		       NVL(TO_CHAR(reciv_amt, '999,999,999'),0) schl
+		  FROM reg_fee_pay a
+		 INNER JOIN student b ON(a.stdnt_no=b.stdnt_no)
+		 INNER JOIN subject c ON(b.sub_code=c.sub_code)
+		 LEFT OUTER JOIN schl_req d ON(a.stdnt_no=d.stdnt_no)
+		 LEFT OUTER JOIN reciv_schl e ON(d.req_no=e.req_no)
+		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		 ORDER BY pay_year asc
 	</select>
 	
 	<select id="selectTuitionBill" parameterType="String" resultType="TuitionVO">
@@ -41,7 +33,7 @@
 		 INNER JOIN reciv_schl d ON(c.req_no=d.req_no)
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND EXTRACT(YEAR FROM c.req_de) =EXTRACT(YEAR FROM SYSDATE)
-<!-- 		   AND a.semstr = (SELECT semstr FROM v_semstr) -->
+		   AND a.semstr = (SELECT semstr FROM v_semstr)
 	</select>
 	<select id="selectTuitionPaySchdule" resultType="ScheduleVO">
 		SELECT title,
@@ -76,7 +68,30 @@
 		   AND pay_semstr = (SELECT semstr FROM V_SEMSTR)
 	</select>
 	
-	<select id="selectRefundTuition" resultType="RefundReqVO">
+	<select id="selectRefundResn" resultType="ComCodeVO">
+		 SELECT com_code_nm,
+		        com_code
+		   FROM tb_com_code
+		  WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
+	</select>
 	
+	<select id="selectRefundAmt" resultType="String" parameterType="String">
+		<![CDATA[
+		SELECT CASE WHEN SYSDATE-startHG <= 30 THEN TO_CHAR(FLOOR(pay_amt*5/6), '999,999,999')
+		            WHEN SYSDATE-startHG > 30 and SYSDATE-startHG <= 60 THEN TO_CHAR(FLOOR(pay_amt*2/3), '999,999,999')
+		            WHEN SYSDATE-startHG > 60 AND SYSDATE-startHG <= 90 THEN TO_CHAR(FLOOR(pay_amt*1/2), '999,999,999')
+		       END AS refund
+		  FROM(
+		SELECT pay_amt,
+		       pay_dt,
+		       (SELECT begin_dt
+		          FROM schedule a
+		         WHERE title = TO_CHAR(EXTRACT(YEAR FROM SYSDATE))||'학년도 '||        
+		            TO_CHAR((SELECT semstr FROM v_semstr))||'학기 등록금 수납 기간') startHG
+		  FROM reg_fee_pay 
+		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND pay_year=EXTRACT(YEAR FROM SYSDATE)
+		   AND pay_semstr=(SELECT semstr FROM v_semstr))
+		   ]]>
 	</select>
 </mapper>

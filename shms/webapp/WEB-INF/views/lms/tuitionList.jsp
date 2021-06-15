@@ -40,7 +40,7 @@
                           	<c:forEach var="tuition" items="${tuitionList }">
                           		<tr>
                                   <td class="text-center">${tuition.pay_year }학년도 ${tuition.pay_semstr }학기</td>
-                                  <td class="text-center">${tuition.reg_cl_code}</td>
+                                  <td class="text-center">${tuition.reginfo_stat}</td>
                                   <td class="text-center">${tuition.reg_amt }</td>
                                   <td class="text-center">${tuition.schl}</td>
                                   <td class="text-center">${tuition.pay_amt }</td>

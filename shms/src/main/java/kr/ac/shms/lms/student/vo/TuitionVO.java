@@ -28,7 +28,7 @@ public class TuitionVO {
 	private Integer pay_year;
 	private Integer pay_semstr;
 	
-	private String reg_cl_code;		// 학적 상태
+	private String reginfo_stat;		// 학적 상태
 	private String reg_amt;		// 학과 수업료
 	private String schl;			// 장학금 
 	
@@ -40,5 +40,8 @@ public class TuitionVO {
 	private String name;		// 학생 이름
 	private Integer month;		
 	private Integer day;
+	
+	private String refund;		// 환불 가능 금액
+	
 	
 }

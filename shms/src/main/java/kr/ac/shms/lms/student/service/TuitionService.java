@@ -1,8 +1,10 @@
 package kr.ac.shms.lms.student.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.shms.lms.student.vo.TuitionVO;
+import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -15,6 +17,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 수정일         수정자        수정내용
  * --------     --------    ----------------------
  * 2021. 6. 12.   김보미        최초작성
+ * 2021. 6. 15.   김보미 		등록금 환불
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -49,9 +52,21 @@ public interface TuitionService {
 	public TuitionVO selectTuitionReceipt(String stdnt_no);
 	
 	/**
-	 * 등록금 환불 신청 내역
+	 * 등록금 환불 신청 사유 조회
+	 * @return
+	 */
+	public List<ComCodeVO> selectRefundResn();
+	
+	/**
+	 * 환불 가능 금액 조회 
 	 * @param stdnt_no
 	 * @return
 	 */
-	public TuitionVO selectRefundTuition(String stdnt_no);
+	public String selectRefundAmt(String stdnt_no);
+	
+	/**
+	 * 등록금 환불 페이지 
+	 * @param paramMap
+	 */
+	public void selectRefundMain(Map<String, Object> paramMap);
 }

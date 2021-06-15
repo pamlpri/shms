@@ -75,12 +75,6 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Override
 	public ServiceResult exit(AttendVO exitInfo) {
-//		AttendVO attendVO = studentDAO.selectAttendInfo(exitInfo);
-//		int lec_pnt = attendVO.getLec_pnt();
-//		int tm = attendVO.getTm();
-//		int lec_fin = lec_pnt + tm;  // 강의 끝나는 시간
-//		String exit_time = attendVO.getExit_time();
-		
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = studentDAO.exit(exitInfo);
 		if(cnt > 0) { result = ServiceResult.OK; }
