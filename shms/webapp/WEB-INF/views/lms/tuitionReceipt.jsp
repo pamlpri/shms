@@ -30,7 +30,7 @@
               <div style="clear: both;"></div>
               <div class="table-responsive" id="pdfDiv">
               <c:choose>
-              		<c:when test="${not empty tution }">
+              		<c:when test="${not empty tuition }">
 		                  <table class="table table-bordered table-md bill" style="border-color: #dfdfdf; overflow: hidden;">
 		                      <tr>
 		                          <th class="text-center" colspan="4">납입고지서[은행용]</th>
