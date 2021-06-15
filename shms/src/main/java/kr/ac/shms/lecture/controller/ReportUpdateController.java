@@ -80,6 +80,10 @@ public class ReportUpdateController {
 			String date = endde.substring(0, endde.indexOf("T"));
 			String time = endde.substring(endde.indexOf("T") + 1);
 			String setEndde = date + " " + time;
+			if(setEndde.length() > 16) {
+				setEndde = setEndde.substring(0, 16);
+			}
+			logger.info(setEndde);
 			setTask.setSubmit_endde(setEndde);
 		}
 		

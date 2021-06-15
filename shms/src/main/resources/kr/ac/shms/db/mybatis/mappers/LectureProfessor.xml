@@ -421,12 +421,7 @@
 		    diary_no = #{diary_no, jdbcType=NUMERIC}
 	</update>
 	
-	<delete id="deleteWeek" parameterType="int">
-		DELETE FROM lec_week_diary
-		 WHERE diary_no = #{diary_no, jdbcType=NUMERIC}
-	</delete>
-	
-		<select id="selectSetTaskList" parameterType="String" resultType="SetTaskVO">
+	<select id="selectSetTaskList" parameterType="String" resultType="SetTaskVO">
 		SELECT
 		    DISTINCT
 		    a.set_task_no,
@@ -500,13 +495,20 @@
 	</select>
 	
 	<update id="updateSetTask" parameterType="SetTaskVO">
-		
+		UPDATE set_task
+		    SET
+		        task_title = #{task_title, jdbcType=VARCHAR},
+		        task_cont = #{task_cont, jdbcType=VARCHAR},
+		        submit_endde = TO_DATE(#{submit_endde, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
+		        task_allot = #{task_allot, jdbcType=NUMERIC}
+		WHERE
+		    set_task_no = #{set_task_no, jdbcType=NUMERIC}
 	</update>
 	
 	<update id="updateAtchNo" parameterType="SetTaskVO">
-         UPDATE board
+         UPDATE set_task
             SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
-          WHERE bo_no = #{set_task_no, jdbcType=NUMERIC}
+          WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}
 	</update>
 	
 	<select id="selectSaveNamesForDelete" parameterType="SetTaskVO" resultType="string">
@@ -519,7 +521,7 @@
 		</foreach>
 	</select>
 	
-	<delete id="deleteAttathes" parameterType="BoardVO">
+	<delete id="deleteAttathes" parameterType="SetTaskVO">
 		DELETE FROM attach
 		WHERE atch_file_no = ${atch_file_no}
 		AND atch_file_seq IN 
@@ -527,4 +529,40 @@
 			#{attNo}
 		</foreach>
 	</delete>
+	
+	<select id="selectTaskSubmitList" parameterType="hashMap" resultType="TaskSubmitVO">
+		WITH stdntList AS
+		(
+		SELECT a.stdnt_no writer,
+		       name,
+		       sub_name
+		  FROM sugang_req a
+		 INNER JOIN student b
+		   ON (a.stdnt_no = b.stdnt_no)
+		 INNER JOIN subject c
+		   ON (b.sub_code = c.sub_code)
+		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		) 
+		SELECT distinct a.writer,
+		       name,
+		       sub_name,
+		       submit_no,
+		       task_score
+		  FROM stdntList a
+		  LEFT OUTER JOIN (SELECT submit_no,
+		                          set_task_no,
+		                          writer,
+		                          submit_dt,
+		                          task_score
+		                     FROM task_submit
+		  WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}) b
+		    ON (a.writer = b.writer)
+		  ORDER BY a.writer
+	</select>
+
+	<delete id="deleteWeek" parameterType="int">
+		DELETE FROM lec_week_diary
+		 WHERE diary_no = #{diary_no, jdbcType=NUMERIC}
+	</delete>	
+	
 </mapper>

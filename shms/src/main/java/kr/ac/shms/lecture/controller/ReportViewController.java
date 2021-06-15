@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TaskSubmitVO;
 
 /**
  * @author 박초원
@@ -68,13 +69,15 @@ public class ReportViewController {
 		
 		/** 서비스 호출 */
 		SetTaskVO setTask = lectureProfessorService.selectSetTaskInfo(search);
-		
+		List<TaskSubmitVO> taskSubmitList = lectureProfessorService.selectTaskSubmitList(search);
 		
 		/** 자료 구성 */
 		model.addAttribute("setTask", setTask);
+		model.addAttribute("taskSubmitList", taskSubmitList);
 		
 		/** 반환 */
 		return "lecture/reportList";
-		
 	}
+	
+	
 }

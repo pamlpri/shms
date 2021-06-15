@@ -37,7 +37,7 @@
   <div class="card attendance">
       <div class="card-body">
         <form id="setTaskForm" class="table-responsive" method="post" enctype="multipart/form-data" >
-          <input type="hidden" value="${setTask.set_task_no}" name="atch_file_no"/>
+          <input type="hidden" value="${setTask.set_task_no}" name="set_task_no"/>
           <input type="hidden" value="${setTask.atch_file_no }" name="atch_file_no"/>
           <table class="table table-bordered table-md report">
             <tr>
@@ -262,18 +262,16 @@ $(function(){
 			let delAttNo = fileSpan.data("attno");
 			console.log(delAttNo);
 			let newInput = $("<input>").attr({
-							"type" : "text"
+							"type" : "hidden"
 							, "name" : "delAttNos"
 						}).val(delAttNo);
 			
 			setTaskForm.append(newInput);
-			fileSpan.hide();
+// 			fileSpan.hide();
 		});
         
        $(document).on("click", "a.btn-check" , function() {
-         if($(".uploadDoc").length>0){
             $(this).closest(".uploadDoc").remove();
-          }
        });
        
     

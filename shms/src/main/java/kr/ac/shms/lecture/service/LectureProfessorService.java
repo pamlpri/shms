@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 
@@ -25,7 +25,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 12.     박초원				 주/회차 등록
  * 2021. 06. 14.     송수미              과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
- * 2021. 06. 15.     박초원				 주/회차 삭제
+ * 2021. 06. 15.	  박초원			 주/회차 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -157,5 +157,11 @@ public interface LectureProfessorService {
 	 */
 	public ServiceResult updateSetTask(SetTaskVO setTask);
 	
+	/**
+	 * 과제 제출 명단 조회
+	 * @param searchMap
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<TaskSubmitVO> selectTaskSubmitList(Map<String, Object> searchMap);
 	
 }

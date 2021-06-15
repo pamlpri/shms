@@ -76,10 +76,6 @@ public class SubNoticeViewController {
 	) {
 		
 		BoardVO board = boardService.selectBoard(bo_no);
-		logger.info("-------------------------------------------");
-		logger.info("board : {}", board.toString());
-		logger.info("attachList : {}", board.getAttachList());
-		logger.info("-------------------------------------------");
 		model.addAttribute("board", board);
 		return  "lms/subjectNoticeView";
 	}

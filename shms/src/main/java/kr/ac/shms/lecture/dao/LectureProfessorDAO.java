@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 
@@ -25,7 +26,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 12.     박초원				 주/회차 등록
  * 2021. 06. 14.  	  송수미        	 과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
- * 2021. 06. 15.     박초원				 주/회차 삭제
+ * 2021. 06. 15.	  박초원			 주/회차 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -111,13 +112,6 @@ public interface LectureProfessorDAO {
 	public int selectWeeksMaxWeek(String lec_code);
 	
 	/**
-	 * 주/회차 삭제
-	 * @param diary_no
-	 * @return int cnt
-	 */
-	public int deleteWeek(int diary_no);
-	
-	/**
 	 * 교수의 과제 등록
 	 * @param setTask
 	 * @return row count > 0 : 성공
@@ -151,6 +145,13 @@ public interface LectureProfessorDAO {
 	 * @return cnt > 0 성공
 	 */
 	public int updateWeek(LectureVO lecture);
+	
+	/**
+	 * 주/회차 삭제
+	 * @param diary_no
+	 * @return int cnt
+	 */
+	public int deleteWeek(int diary_no);
 	
 	/**
 	 * 출제한 과제 목록 조회
@@ -190,7 +191,7 @@ public interface LectureProfessorDAO {
 	/**
 	 * 삭제하려고 하는 파일들 저장명 조회
 	 * @param setTask
-	 * @return 데이터가 없으면 null반환
+	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<String> selectSaveNamesForDelete(SetTaskVO setTask);
 	
@@ -200,5 +201,12 @@ public interface LectureProfessorDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int deleteAttathes(SetTaskVO setTask);
+	
+	/**
+	 * 과제 제출 명단 조회
+	 * @param searchMap
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<TaskSubmitVO> selectTaskSubmitList(Map<String, Object> searchMap);
 	
 }

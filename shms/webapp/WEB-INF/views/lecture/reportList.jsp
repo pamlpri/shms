@@ -4,17 +4,19 @@
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
 * 2021. 6. 14.      송수미        과제 상세 조회 페이지 기능 구현
+* 2021. 6. 15.      송수미        과제 제출 목록 조회, 채점, 점수 수정 기능 구현
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
@@ -67,7 +69,7 @@
           </div>
           <div class="table-responsive table-wrap">
               <table class="table table-striped main-table edit-table" id="report-table">
-                  <thead>                                 
+                  <thead>              
                   <tr>
                       <th class="text-center">이름</th>
                       <th class="text-center">학번</th>
@@ -78,226 +80,30 @@
                   </tr>
                   </thead>
                   <tbody>                                 
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="#" class="btn btn-secondary disabled">미제출</a></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="#" class="btn btn-secondary disabled">미제출</a></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="#" class="btn btn-secondary disabled">미제출</a></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="#" class="btn btn-secondary disabled">미제출</a></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a></td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">송수미</td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center"><a href="#" class="btn btn-secondary disabled">미제출</a></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
+                  	<c:if test="${not empty taskSubmitList }">
+                  		<c:forEach items="${taskSubmitList }" var="taskSubmit">
+		                  <tr>
+		                      <td class="text-center">${taskSubmit.name }</td>
+		                      <td class="text-center">${taskSubmit.writer }</td>
+		                      <td class="text-center">${taskSubmit.sub_name }</td>
+		                      <td class="text-center">
+			                      <c:choose>
+			                      	<c:when test="${not empty taskSubmit.submit_no }">
+				                      	<a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a>
+			                      	</c:when>
+			                      	<c:otherwise>
+			                      		<a href="#" class="btn btn-secondary disabled">미제출</a>
+			                      	</c:otherwise>
+			                      </c:choose>
+		                      </td>
+		                      <td class="text-center">${taskSubmit.task_score }</td>
+		                      <td class="text-center">
+		                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+		                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+		                      </td>
+		                  </tr>
+                  		</c:forEach>
+                  	</c:if>                   
                   </tbody>
               </table>
           </div>
@@ -315,6 +121,7 @@ $(document).ready(function(){
     $(document).on("click", ".add", function(){
         var empty = false;
         var input = $(this).parents("tr").find('input[type="text"]');
+        let score = null;
         input.each(function(){
             if(!$(this).val()){
                 $(this).addClass("error");
@@ -326,14 +133,29 @@ $(document).ready(function(){
         $(this).parents("tr").find(".error").first().focus();
         if(!empty){
             input.each(function(){
-                $(this).parent("td").html($(this).val());
-            });			
+            	score = $(this).val();
+                $(this).parent("td").html(score);
+            });
+//             $.ajax({
+// 				url: "${cPath}/lecture/"
+// 				, data :
+// 				, dataType :
+// 				, success : function(resp){
+					
+// 				}, error : function(xhr, resp, error){
+// 					console.log(xhr);
+// 				}
+//             });
+            
             $(this).parents("tr").find(".add, .edit").toggle();
             $(".add-new").removeAttr("disabled");
         }		
     });
+    
     // Edit row on edit button click
-    $(document).on("click", ".edit", function(){		
+    $(document).on("click", ".edit", function(event){
+    	let aTag = $(this).parents("tr").find("td").eq(3);
+    	if(aTag.text().indexOf("미제출")!=-1) return false;
         $(this).parents("tr").find("td").eq(4).each(function(){
             $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
         });		
