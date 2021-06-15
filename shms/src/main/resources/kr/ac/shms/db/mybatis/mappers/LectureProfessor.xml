@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.ac.shms.lecture.dao.LectureProfessorDAO">
-	<select id="staff" parameterType="String" resultType="kr.ac.shms.common.vo.StaffVO">
+	<select id="staff" parameterType="String" resultType="StaffVO">
 		SELECT
 		    staff_no,
 		    dept_code,
@@ -567,4 +567,87 @@
 		 WHERE diary_no = #{diary_no, jdbcType=NUMERIC}
 	</delete>	
 	
+	<insert id="insertExam" parameterType="ExamVO">
+		<selectKey resultType="int" keyProperty="exam_no" order="BEFORE">
+			SELECT exam_seq.NEXTVAL
+			  FROM DUAL
+		</selectKey>
+		INSERT INTO exam (
+		    exam_no,
+		    test_cl,
+		    lec_code,
+		    exam_begin_dt,
+		    exam_end_dt,
+		    online_at,
+		    exam_type,
+		    ques_cnt,
+		    atch_file_no
+		) VALUES (
+		    #{exam_no},
+		    #{test_cl, jdbcType=VARCHAR},
+		    #{lec_code, jdbcType=VARCHAR},
+		    #{exam_begin_dt, jdbcType=TIMESTAMP},
+		    #{exam_end_dt, jdbcType=TIMESTAMP},
+		    #{online_at, jdbcType=VARCHAR},
+		    #{exam_type, jdbcType=VARCHAR},
+		    #{ques_cnt, jdbcType=NUMERIC},
+		    #{atch_file_no, jdbcType=NUMERIC}
+		)
+	</insert>
+	
+	<insert id="insertQues" parameterType="ExamVO">
+		INSERT ALL
+		<foreach collection="quesList" item="ques" index="idx">
+		INTO exam_ques (
+		    exam_no,
+		    ques_no,
+		    ques_type,
+		    ques_ans,
+		    ques_allot
+		) VALUES (
+		    #{exam_no},
+		    #{ques_no, jdbcType=NUMERIC},
+		    #{ques_type, jdbcType=VARCHAR},
+		    #{ques_ans, jdbcType=VARCHAR},
+		    #{ques_allot, jdbcType=NUMERIC}
+		)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<insert id="insertExamAttaches" parameterType="ExamVO">
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+		SELECT COUNT(*)+1 startAttNo
+		FROM ATTACH
+		WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attachList" item="attatch" index="idx">
+		INTO ATTACH(
+			atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+	    )
+		VALUES (
+			(SELECT MAX(atch_file_no) + 1 FROM attach)
+			, #{startAttNo} + #{idx}
+			, #{attatch.file_path,jdbcType=VARCHAR}
+			, #{attatch.file_nm,jdbcType=VARCHAR}
+			, #{attatch.file_cont_type,jdbcType=VARCHAR}
+			, #{attatch.file_size,jdbcType=NUMERIC}
+			, sysdate
+			, #{sender, jdbcType=VARCHAR}
+			, 'WM'
+			, #{attatch.save_file_nm,jdbcType=VARCHAR}
+		)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
 </mapper>
