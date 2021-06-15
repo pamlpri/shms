@@ -57,8 +57,9 @@
       <div class="card-body">
         <div class="table-responsive">
           <form id="taskForm" class="table-responsive" method="post" enctype="multipart/form-data" >
-	          <input type="hidden" value="${task.submit_no}" name="submit_no"/>
-	          <input type="hidden" value="${task.atch_file_no }" name="atch_file_no"/>
+	          <input type="hidden" value="${setTask.set_task_no}" name="set_task_no"/>
+	          <input type="hidden" value="${taskSubmit.submit_no}" name="submit_no"/>
+	          <input type="hidden" value="${taskSubmit.atch_file_no }" name="atch_file_no"/>
 	          <table class="table table-bordered table-md report">
 	            <tr>
 	              <th>제출여부</th>
@@ -75,7 +76,7 @@
 	            <tr>
 	              <th class="align-middle"><span class="red-color">* </span>제목</th>
 	              <td class="text-left">
-	              	<input type="text" class="form-control im" value="${task.title }" name="title"/>
+	              	<input type="text" class="form-control im" value="${taskSubmit.title }" name="title"/>
    	              	<div class="invalid-feedback">
 	                      	필수항목
                 	</div>
@@ -84,10 +85,7 @@
 	            <tr>
 	              <th class="align-middle"><span class="red-color">* </span>내용</th>
 	              <td class="textArea">
-	                <textarea class="form-control im" rows="5" cols="1000" id="bo_cont" name="cont">${task.cont }</textarea>
-	                <div class="invalid-feedback text-left">
-                    	필수항목
-                	</div>
+	                <textarea class="form-control" rows="5" cols="1000" id="bo_cont" name="cont">${taskSubmit.cont }</textarea>
 	              </td>
 	            </tr>
 	            <tr>
@@ -101,8 +99,8 @@
 	                    <div class="col-sm-offset-1" id="one">
 	                      <div id="uploader" class="row">
 	                      	<c:choose>
-				             	<c:when test="${not empty task.attachList and not(fn:length(task.attachList) eq 0)}">
-									<c:forEach items="${task.attachList }" var="attach">
+				             	<c:when test="${not empty taskSubmit.attachList and not(fn:length(taskSubmit.attachList) eq 0)}">
+									<c:forEach items="${taskSubmit.attachList }" var="attach">
 										<c:if test="${not empty attach.atch_file_seq }">
 					                        <div class="row uploadDoc col-sm-4">
 					                          <div class="col-sm-10">
@@ -155,6 +153,7 @@
     </div>
   <!-- contents end -->
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 <c:if test="${not empty message }">
 <script>
 	$("#default").find(".modal-body p").empty().text("${message}");
@@ -185,26 +184,26 @@ $(function(){
                 reader.onload = function (e) {
                     if (extension == 'pdf'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/179/179483.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "task_submit_files");
                     }
                     else if (extension == 'docx'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/281/281760.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "task_submit_files");
                     }
                     else if (extension == 'rtf'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136539.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "task_submit_files");
                     }
                     else if (extension == 'png'){ $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136523.svg'); 
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "task_submit_files");
                     }
                     else if (extension == 'jpg' || extension == 'jpeg'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136524.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "task_submit_files");
                     }
                   	else if (extension == 'txt'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136538.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "task_submit_files");
                     }
                     else {
                     	//console.log('here=>'+$(input).closest('.uploadDoc').length);
@@ -268,9 +267,8 @@ $(function(){
     var frag = false;
 	$("#submitBtn").on("click", function(){
 		let inputs = $(taskForm).find(":input[name]");
-		
+		console.log(frag);
 		$(inputs).each(function(idx, input){
-			console.log($(this).val());
 			if($(this).hasClass("im")){
 				if($(this).val() == ""){
 					$(this).addClass("is-invalid");
