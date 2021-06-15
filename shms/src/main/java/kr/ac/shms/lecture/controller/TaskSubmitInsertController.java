@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.validator.SetTaskInsertGroup;
+import kr.ac.shms.validator.TaskInsertGroup;
 
 /**
  * @author 박초원
@@ -83,14 +86,40 @@ public class TaskSubmitInsertController {
 	
 	@RequestMapping(value="lecture/taskInsert.do", method=RequestMethod.POST)
 	public String insertTask(
-		@SessionAttribute(name="lec_code", required=false) String lec_code
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @SessionAttribute(name="lec_code", required=false) String lec_code
 		, @SessionAttribute(name="lec_name", required=false) String lec_name
-		, @Validated(SetTaskInsertGroup.class)
-		@ModelAttribute("setTask") SetTaskVO setTask
+		, @Validated(TaskInsertGroup.class)
+		@ModelAttribute("taskSubmit") TaskSubmitVO taskSubmit
 		, Errors errors 
 		, Model model
 		) {
+		
+		/** 파라미터 조회 */
+		taskSubmit.setWriter(user.getUser_id());
+		
+		/** 반환 */
+		boolean valid = !(errors.hasErrors()); 
+		String message = null;
 		String view = null;
+		
+		if(valid) {
+			/** 서비스 호출 */
+			ServiceResult result = lectureStudentService.insertTask(taskSubmit);
+			if(ServiceResult.OK.equals(result)) {
+				view = "redirect:/lecture/task.do";
+			}else {
+				message = "과제 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+				view = "lecture/taskForm";
+			}
+		}else {
+			message = "필수항목 누락";
+			view = "lecture/taskForm";
+		}
+		
+		/** 결과자료 구성 */
+		model.addAttribute("message", message);
+		model.addAttribute("taskSubmit", taskSubmit);
 		
 		return view;
 	}
