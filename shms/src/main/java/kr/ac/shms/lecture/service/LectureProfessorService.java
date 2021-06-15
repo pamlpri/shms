@@ -25,6 +25,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 12.     박초원				 주/회차 등록
  * 2021. 06. 14.     송수미              과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
+ * 2021. 06. 15.     박초원				 주/회차 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -122,6 +123,13 @@ public interface LectureProfessorService {
 	public ServiceResult updateWeek(LectureVO lecture);
 	
 	/**
+	 * 한 회차 삭제
+	 * @param diary_no
+	 * @return cnt > 0 성공
+	 */
+	public ServiceResult deleteWeek(int diary_no);
+	
+	/**
 	 * 출제한 과제 목록 조회
 	 * @param lec_code
 	 * @return 데이터가 없으면 null 반환
@@ -148,5 +156,6 @@ public interface LectureProfessorService {
 	 * @return 존재하지 않는 글, 성공, 실패
 	 */
 	public ServiceResult updateSetTask(SetTaskVO setTask);
+	
 	
 }

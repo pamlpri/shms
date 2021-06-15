@@ -33,5 +33,5 @@ public interface SubjectDAO {
 	 * @param sub_code 학과 코드
 	 * @return 교수 리스트, 없으면 null
 	 */
-	
+	public List<StaffVO> selectProf(String sub_code);
 }

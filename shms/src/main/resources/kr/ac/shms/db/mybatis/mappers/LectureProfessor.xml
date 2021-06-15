@@ -421,6 +421,11 @@
 		    diary_no = #{diary_no, jdbcType=NUMERIC}
 	</update>
 	
+	<delete id="deleteWeek" parameterType="int">
+		DELETE FROM lec_week_diary
+		 WHERE diary_no = #{diary_no, jdbcType=NUMERIC}
+	</delete>
+	
 		<select id="selectSetTaskList" parameterType="String" resultType="SetTaskVO">
 		SELECT
 		    DISTINCT

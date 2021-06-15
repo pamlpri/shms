@@ -225,6 +225,16 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	}
 
 	@Override
+	public ServiceResult deleteWeek(int diary_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureProfessorDAO.deleteWeek(diary_no);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		return result;
+	}
+
+	@Override
 	public List<SetTaskVO> selectSetTaskList(String lec_code) {
 		return lectureProfessorDAO.selectSetTaskList(lec_code);
 	}
@@ -360,5 +370,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		}
 		return cnt;
 	}
+
 	
 }

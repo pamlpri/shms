@@ -141,6 +141,7 @@
            		</c:when>
            		<c:otherwise>
 	              <button type="button" class="btn btn-primary" id="updateBtn">저장</button>
+	              <button id="deleteBtn" class="btn btn-danger" data-confirm-yes="deleteWeek();" data-confirm="게시글 삭제|삭제한 게시글은 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
            		</c:otherwise>
               </c:choose>
           </div>
@@ -148,6 +149,26 @@
         </div>
       </div>
     </div>
+    
+    <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer bg-whitesmoke br">
+          <button type="button"  id="delBtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript">
 	let week_lec_cl = $("select[name='week_lec_cl']").val();
@@ -221,5 +242,10 @@
 			$("input[name='rt_lec_link']").addClass("im");
 		}
 	});
+	
+	let deleteWeek = function(){
+		weeksForm.attr("action", "${cPath }/lecture/weeksDelete.do");
+		weeksForm.submit();
+	}
 
   </script>
