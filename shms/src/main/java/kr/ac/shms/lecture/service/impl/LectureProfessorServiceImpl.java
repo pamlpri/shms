@@ -292,7 +292,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 						System.out.println("Login Success");
 						client.setBufferSize(1000);	// 버퍼 사이즈
 						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
-						String dir = "/lecture" + "/" + setTask.getLec_code() + "/setTask";
+						String dir = "/lecture/" + setTask.getLec_code() + "/setTask";
 						
 //						String dir = "/test"; // 해당 게시판에 따라 dir 이 달라져야함
 						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
