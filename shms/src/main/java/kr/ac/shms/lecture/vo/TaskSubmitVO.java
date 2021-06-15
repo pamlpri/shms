@@ -1,5 +1,14 @@
 package kr.ac.shms.lecture.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.validator.TaskInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +22,8 @@ public class TaskSubmitVO {
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	private Integer submit_no;
 	private Integer set_task_no;
+	
+	@NotBlank(groups=TaskInsertGroup.class)
 	private String title;
 	private String cont;
 	private String writer;		// 학번
@@ -21,4 +32,23 @@ public class TaskSubmitVO {
 	private String submit_dt;
 	private Integer task_score;
 	private Integer atch_file_no;
+	private String lec_code;
+	
+	private int startAttNo;
+	private List<AttachVO> attachList;
+	private MultipartFile[] task_submit_files;
+	public void setTask_submit_files(MultipartFile[] task_submit_files) {
+		System.out.println("task_submit_files : "+ task_submit_files.length);
+		this.task_submit_files = task_submit_files;
+		if(task_submit_files!=null) {
+			List<AttachVO> attatchList = new ArrayList<>();
+			for(MultipartFile file : task_submit_files) {
+				if(file.isEmpty()) continue;
+				attatchList.add(new AttachVO(file));
+			}
+			if(attatchList.size()>0)
+				this.attachList = attatchList;
+		}
+	}
+	private int[] delAttNos;
 }

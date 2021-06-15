@@ -78,7 +78,8 @@ public class SetTaskVO {
 				this.attachList = attatchList;
 		}
 	}
-	private int[] delAttNos;	
+	private int[] delAttNos;
 	
+	private List<TaskSubmitVO> submitList;
 	
 }

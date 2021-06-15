@@ -58,7 +58,7 @@ public class ReportViewController {
 	public String reportList(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, @SessionAttribute(name="lec_name", required=false) String lec_name
-			, @RequestParam("set_task_no") Integer set_task_no
+			, @RequestParam("task") Integer set_task_no
 			, Model model
 		) {
 		
