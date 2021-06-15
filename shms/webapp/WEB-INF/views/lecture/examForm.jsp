@@ -50,7 +50,7 @@
              }
            };
 
-           var myPDF = PDFObject.embed("https://storage.cloud.google.com/shms/exam/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC%EC%8B%A4%EA%B8%B0_%EC%B5%9C%EC%A2%85%EC%A0%90%EA%B2%80_%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC.pdf?authuser=0", "#example1", options);
+           var myPDF = PDFObject.embed("https://storage.cloud.google.com/shms/exam/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC%EC%8B%A4%EA%B8%B0_%EC%B5%9C%EC%A2%85%EC%A0%90%EA%B2%80_%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC.pdf?authuser=1", "#example1", options);
 
            var el = document.querySelector("#results");
            el.setAttribute("class", (myPDF) ? "success" : "fail");

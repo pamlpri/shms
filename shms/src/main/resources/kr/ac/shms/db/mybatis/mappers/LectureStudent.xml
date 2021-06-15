@@ -40,6 +40,7 @@
 		       a.week_lec_cl,
 		       a.ut_lec_link,
 		       a.rt_lec_link,
+		       a.sugang_len,
 		       NVL((SELECT sugang_req
 		              FROM ut_lec_sg 
 		             WHERE a.diary_no = diary_no

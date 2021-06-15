@@ -86,4 +86,3 @@
   </c:forEach>
   <!-- contents end -->
 </div>
-<script>

@@ -20,6 +20,8 @@ import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.dao.LectureProfessorDAO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
+import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -41,6 +43,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 14.   	 송수미              과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * 2021. 06. 15.	  박초원			 주/회차 삭제
+ * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -376,6 +379,83 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	@Override
 	public List<TaskSubmitVO> selectTaskSubmitList(Map<String, Object> searchMap) {
 		return lectureProfessorDAO.selectTaskSubmitList(searchMap);
+	}
+	
+	@Transactional
+	@Override
+	public ServiceResult insertExam(ExamVO exam) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureProfessorDAO.insertExam(exam);
+		
+		if(cnt > 0) {
+			cnt += insertQues(exam);
+//			cnt += examProcesses(exam);
+			
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
+	}
+	
+	private int insertQues(ExamVO exam) {
+		int cnt = 0;
+		List<QuesVO> quesList = exam.getQuesList();
+		if(quesList != null && quesList.size() > 0) {
+			cnt += lectureProfessorDAO.insertQues(exam);
+		}
+		return cnt;
+	}
+
+	private int examProcesses(ExamVO exam) {
+		int cnt = 0;		
+		List<AttachVO> attachList = exam.getAttachList();
+		if(attachList!=null && attachList.size()>0) {
+		
+			FTPClient client = new FTPClient();
+			try {
+				client.connect(ip, port);
+				int reply = client.getReplyCode();
+				logger.info("client Connect : {}", reply);
+				if(FTPReply.isPositiveCompletion(reply)) { // 접속 연결이 됐을 경우 
+					if(client.login(id, pw)) {	// FTP 서버 로그인 성공 했을 경우
+						System.out.println("Login Success");
+						client.setBufferSize(1000);	// 버퍼 사이즈
+						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
+						String dir = "/lecture/" + exam.getExam_no() + "/exam";
+						
+//						String dir = "/test"; // 해당 게시판에 따라 dir 이 달라져야함
+						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
+						for(AttachVO attach : attachList) {
+							attach.setFile_path(dir);
+						}
+						logger.info("isDir : {} || {}",isDirectory, dir);
+						if(!isDirectory) {
+							client.mkd(dir);
+						}
+						client.setFileType(FTP.BINARY_FILE_TYPE);
+						
+						boolean isUpload = false;
+						for(AttachVO attvo : exam.getAttachList()) {
+							isUpload = client.storeFile(attvo.getSave_file_nm(), new ByteArrayInputStream(attvo.getFile().getBytes()));
+							if(!isUpload) {
+								client.logout();
+								break;
+							}
+						}
+						if(isUpload) cnt += lectureProfessorDAO.insertExamAttaches(exam);
+						
+						client.logout();
+						client.disconnect();
+					} else {
+						client.disconnect(); // 연결 종료
+					}
+				}
+			} catch(Exception e) {
+				
+			}
+		}
+		return cnt;
 	}
 	
 }
