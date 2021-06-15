@@ -152,6 +152,32 @@
       </div>
     </div>
   <!-- contents end -->
+ 	<!--Basic Modal -->
+	<div class="modal fade text-left" id="default" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="myModalLabel1"></h5>
+					<button type="button" class="close rounded-pill"
+						data-bs-dismiss="modal" aria-label="Close">
+						<i data-feather="x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="close"
+							data-bs-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">닫기</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 <c:if test="${not empty message }">
@@ -159,7 +185,7 @@
 	$("#default").find(".modal-body p").empty().text("${message}");
 	$("#default").addClass("show").css("display","block");
     $("#close, .modal").on("click", function(){
-	$("#default").removeClass("show").css("display","none");
+		$("#default").removeClass("show").css("display","none");
 	})
 </script>
 </c:if>

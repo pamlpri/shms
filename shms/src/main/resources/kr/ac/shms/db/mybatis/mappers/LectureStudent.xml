@@ -204,4 +204,65 @@
 		WHERE atch_file_no = #{atch_file_no}
 		AND atch_file_seq = #{atch_file_seq}
 	</select>
+	
+	<resultMap type="TaskSubmitVO" id="taskSubmitMap" autoMapping="true">
+		<id property="submit_no" column="submit_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/> 
+			<id property="atch_file_seq" column="atch_file_seq"/> 
+		</collection>
+	</resultMap>
+	<select id="selectTaskSubmit" parameterType="int" resultMap="taskSubmitMap">	
+		SELECT
+		    submit_no,
+		    set_task_no,
+		    title,
+		    cont,
+		    writer,
+		    submit_dt,
+		    task_score,
+		    a.atch_file_no,
+		    b.atch_file_seq,
+		    b.file_nm
+		FROM
+		    task_submit a
+		    LEFT OUTER JOIN attach b
+		    ON(a.atch_file_no = b.atch_file_no)
+		WHERE
+		    submit_no = #{submit_no, jdbcType=NUMERIC}
+	</select>
+
+	<update id="updateAtchNo" parameterType="TaskSubmitVO">
+		UPDATE task_submit
+            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
+          WHERE submit_no = #{submit_no, jdbcType=NUMERIC}	
+	</update>
+	
+	<select id="selectSaveNamesForDelete" parameterType="TaskSubmitVO" resultType="string">
+		SELECT save_file_nm
+		FROM attach
+		WHERE atch_file_no = ${atch_file_no}
+		AND atch_file_seq IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</select>
+	
+	<delete id="deleteAttathes" parameterType="TaskSubmitVO">
+		DELETE FROM attach
+		WHERE atch_file_no = ${atch_file_no}
+		AND atch_file_seq IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</delete>
+	
+	<update id="updateTask" parameterType="TaskSubmitVO">
+		UPDATE task_submit
+		    SET
+		    title = #{title, jdbcType=VARCHAR},
+		    cont = #{cont, jdbcType=NUMERIC}
+		WHERE
+		    submit_no = #{submit_no}
+	</update>	
 </mapper>
