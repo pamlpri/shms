@@ -98,10 +98,45 @@
 		   AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
 	</select>
 	<update id="updateAttendStat" parameterType="AttendVO">
-		UPDATE attendance
-		    SET attend_stat=#{attend_stat, jdbcType=VARCHAR}
-		WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
-		  AND lec_code=#{lec_code, jdbcType=VARCHAR}
-		  AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		<![CDATA[
+		UPDATE attendance 
+	    SET attend_stat = (
+	                SELECT CASE WHEN attend_time > lec_time + 15/(24*60) AND exit_time < end_time + 15/(24*60) AND total_lec_time/2 <  stdnt_atndan_time THEN 'JG'
+	                            WHEN attend_time < lec_time + 15/(24*60) AND (total_lec_time - stdnt_atndan_time) < 15 AND exit_time < end_time + 15/(24*60) THEN 'CS'
+	                            WHEN attend_time < lec_time + 15/(24*60) AND total_lec_time/2 >  stdnt_atndan_time THEN  'JT'
+	                            ELSE 'GS'
+	                            END
+	                  FROM (
+	                        SELECT  
+	                            end_time,               					 
+	                            attend_date, 
+                				lec_time,  
+                				exit_time,
+	                            (end_time - lec_time) * 1440 total_lec_time, 
+	                            ((end_time - lec_time) * 1440 - stdnt_atndan_time) attend_check, 
+	                            attend_time, 
+	                            TRUNC(((exit_time) - attend_time) * 24 * 60, 0) stdnt_atndan_time,
+	                            TRUNC((exit_time - end_time)* 1440) finish_check, 
+	                            (lec_time - attend_time)* 1440 start_check 
+	                      FROM(
+	                    SELECT
+	                        TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD(b.lec_time, 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') lec_time,
+	                        TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD') || ' ' || LPAD((a.lec_pnt + b.lec_time) , 2, '0')||':00:00', 'YYYY/MM/DD HH24:MI:SS') end_time,
+	                        c.attend_time,
+	                        c.exit_time,
+	                        c.attend_date,
+	                        TRUNC(((c.exit_time) - c.attend_time) * 24 * 60, 0) stdnt_atndan_time
+	                      FROM curriculum a
+	                     INNER JOIN lecture b ON (a.cur_code=b.cur_code)
+	                     INNER JOIN attendance c ON (b.lec_code=c.lec_code)
+	                     WHERE c.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+	                       AND c.lec_code=#{lec_code, jdbcType=VARCHAR})
+	                    WHERE TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	                  )    
+	          )
+			WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	  		  AND lec_code=#{lec_code, jdbcType=VARCHAR}
+	  		  AND TO_CHAR(attend_date, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		   ]]>	
 	</update>
 </mapper>

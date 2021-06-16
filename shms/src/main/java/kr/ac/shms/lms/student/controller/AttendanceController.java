@@ -1,13 +1,11 @@
 package kr.ac.shms.lms.student.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import kr.ac.shms.common.enumpkg.MimeType;
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
-import kr.ac.shms.lms.student.vo.LectureVO;
-import kr.ac.shms.subject.service.SubjectService;
 
 /**
  * @author 김보미
@@ -55,15 +47,12 @@ public class AttendanceController {
 	@Inject
 	private StudentService studentService;
 	
-	@Inject
-	private LectureService lectureService;
-	
+	private boolean qrCheck = false;
 	@RequestMapping("/qrGen.do")
 	public String selectQRInfo(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestParam("lec_code") String lec_code
 			, @RequestParam("lec_name") String lec_name
-			, HttpSession session
 			, Model model
 			) {
 		AttendVO qrInfoVO = new AttendVO();
@@ -72,6 +61,7 @@ public class AttendanceController {
 		studentService.selectQRInfo(qrInfoVO);
 		model.addAttribute("qrInfo", qrInfoVO);
 		model.addAttribute("lec_name", lec_name);
+		qrCheck = false;
 		return "lecture/qrgenerator";
 	}
 	
@@ -82,10 +72,10 @@ public class AttendanceController {
 			, Model model
 			) {
 		String[] arr = qrcodeData.split(",");
+		logger.info("arr : {} : {}", arr.length, arr);
 		String stdnt_no = arr[0];
 		String lec_code = arr[1];
 		
-		logger.info("qrcodeData : {}", qrcodeData);
 		AttendVO attendVO = new AttendVO();
 		attendVO.setStdnt_no(stdnt_no);
 		attendVO.setLec_code(lec_code);
@@ -93,57 +83,47 @@ public class AttendanceController {
 		ServiceResult attendResult = studentService.selectCountAttend(attendVO);
 		ServiceResult exitResult = studentService.selectCountExit(attendVO);
 
-		AttendVO attendInfo = new AttendVO();
-		attendInfo.setStdnt_no(stdnt_no);
-		attendInfo.setLec_code(lec_code);
-
-		LectureVO lecture = lectureService.selectLectureDetails(lec_code);
-		logger.info("lecture {}", lecture);
-
 		Map<String, String> resp = new HashMap<>();
 		ServiceResult result = ServiceResult.FAIL;
-		
-		if(ServiceResult.FAIL.equals(attendResult)) {
-			result = studentService.attend(attendInfo);
+		if(ServiceResult.FAIL.equals(attendResult)) { // 입실 저장
+			result = studentService.attend(attendVO);
 			if(ServiceResult.OK.equals(result)) {
-				AttendVO getAttendInfo = new AttendVO();
-				studentService.selectAtndanTime(getAttendInfo);
-				model.addAttribute("attendInfo", attendInfo);
-				model.addAttribute("attend_time", getAttendInfo.getAttend_time());
-				model.addAttribute("lecture", lecture);
 				resp.put("resp", "OK");
-				
 			}else {
 				resp.put("resp", "FAIL");
 			}
-		}else if(ServiceResult.OK.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)){
-			result = studentService.exit(attendInfo);
+		} else if(ServiceResult.OK.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)){ // 
+			result = studentService.exit(attendVO);
 			if(ServiceResult.OK.equals(result)) {
-				AttendVO getAttendInfo = new AttendVO();
-				getAttendInfo.setStdnt_no(stdnt_no);
-				getAttendInfo.setLec_code(lec_code);
-				AttendVO vo = studentService.selectAtndanTime(getAttendInfo);
-				
-				model.addAttribute("attendInfo", attendInfo);
-				model.addAttribute("attend_time", vo.getAttend_time());
-				model.addAttribute("lec_code", lec_code);
-				model.addAttribute("lecture", lecture);
-				resp.put("resp", "OK");
+				AttendVO vo = studentService.selectAtndanTime(attendVO);
+				logger.info("vo : {}", vo);
+				resp.put("attend_time", vo.getAttend_time());
+				resp.put("exit_time", vo.getExit_time());
+				resp.put("lec_code", lec_code);
+				resp.put("respExit", "OK");
 			}else {
-				resp.put("resp", "FAIL");
+				resp.put("respExit", "FAIL");
 			}
 		}
+		qrCheck = true;
 		return resp;
 	}
+	@RequestMapping(value="/qrCheck.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public Map<String, Object> qrCheckAjax() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("qrCheck", qrCheck);
+		return map;
+	}
+	
 	@RequestMapping(value="/qrTimeout.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public String qrTimeoutForAjax(
+	public Map<String, Object> qrTimeoutForAjax(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @RequestBody Map<String, String> atndan
 			, HttpServletResponse resp
 			) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
-		
 		String stdnt_no = user.getUser_id();
 		String lec_code = atndan.get("lec_code");
 		
@@ -151,39 +131,42 @@ public class AttendanceController {
 		atVo.setStdnt_no(stdnt_no);
 		atVo.setLec_code(lec_code);
 		
-		ServiceResult attendResult = studentService.selectCountAttend(atVo);
-		ServiceResult exitResult = studentService.selectCountExit(atVo);
+		ServiceResult attendResult = studentService.selectCountAttend(atVo); 
+		ServiceResult exitResult = studentService.selectCountExit(atVo); 
 		
-		AttendVO attend = new AttendVO();
-		attend.setStdnt_no(stdnt_no);
-		attend.setLec_code(lec_code);
-        String attendTime = studentService.selectAtndanTime(attend).getAttend_time();
-        String exitTime = studentService.selectAtndanTime(attend).getExit_time();
-		
-		
-		if(ServiceResult.OK.equals(attendResult)&& ServiceResult.FAIL.equals(exitResult)) {
-			resultMap.put("result", "exitFAIL");
-		}else if(ServiceResult.FAIL.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)){	// 출석 기록이나 퇴실기록이 없을 때
-			resultMap.put("result", "FAIL");
-			resultMap.put("lec_code", lec_code);
-		}else if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {	// 퇴실기록이 있을 때 
-			resultMap.put("result", "OK");
-			resultMap.put("attendTime", attendTime);
-			resultMap.put("exitTime", exitTime);
-			System.out.println("exitTime : " + exitTime);
-		}else if(ServiceResult.OK.equals(attendResult) ) {	// 이미 출석한 기록이 있을 때
-			resultMap.put("result", "attendOK");
-			resultMap.put("lec_code", lec_code);
-			resultMap.put("attendTime", attendTime);
-			
+        if(ServiceResult.FAIL.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)) { // 입실/퇴실 데이터가 없는 경우
+        	resultMap.put("result", "FAIL");
+        } else if(ServiceResult.OK.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)) { // 입실은 있고 퇴실이 없음
+        	String attendTime = studentService.selectAtndanTime(atVo).getAttend_time();
+        	resultMap.put("attendTime", attendTime);
+        	resultMap.put("result", "exitFAIL");
+        } else if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) { // 입실/퇴실 데이터가 있는 경우
+        	String attendTime = studentService.selectAtndanTime(atVo).getAttend_time();
+        	String exitTime = studentService.selectAtndanTime(atVo).getExit_time();
+        	resultMap.put("attendTime", attendTime);
+        	resultMap.put("exitTime", exitTime);
+        	resultMap.put("result", "OK");
+        }
+		return resultMap;
+	}
+	
+	@RequestMapping(value="/attendanceResult.do", method=RequestMethod.POST)
+	public String attendanceReulst(
+		@RequestParam("attend_time") String attend_time
+		, @RequestParam("exit_time") String exit_time
+		, @RequestParam("lec_name") String lec_name
+		, Model model
+		) {
+		String view = null;
+		if((attend_time != null || !attend_time.isEmpty()) && (exit_time == null || exit_time.isEmpty())) {
+			model.addAttribute("attend_time", attend_time);
+			model.addAttribute("lec_name", lec_name);
+			view = "lecture/qrResult";
+		}else if((attend_time != null || !attend_time.isEmpty()) && (exit_time != null || !exit_time.isEmpty())) {
+			model.addAttribute("exit_time", exit_time);
+			model.addAttribute("lec_name", lec_name);
+			view = "lecture/qrResult";
 		}
-		resp.setContentType(MimeType.JSON.getMime());
-		try(
-			PrintWriter out = resp.getWriter();	
-		){
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.writeValue(out, resultMap);
-		}
-		return null;
+		return view;
 	}
 }
