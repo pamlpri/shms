@@ -1,9 +1,8 @@
 package kr.ac.shms.lecture.controller;
 
-import java.security.Provider.Service;
-
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,8 +34,6 @@ public class ExamProfessorController {
 	private static final Logger logger = LoggerFactory.getLogger(ExamProfessorController.class);
 	@Inject
 	private LectureProfessorService lectureProfessorService;
-	@Inject
-	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/examAdminForm.do")
 	public String examAdminForm(
@@ -52,17 +49,38 @@ public class ExamProfessorController {
 		, @ModelAttribute("exam") ExamVO exam
 		, Model model
 	) {
+		logger.info("exam {}", exam);
+		
+	   String exam_begin_dt = exam.getExam_begin_dt();
+       if(StringUtils.isNotBlank(exam_begin_dt)) 	{
+          String date = exam_begin_dt.substring(0, exam_begin_dt.indexOf("T"));
+          String time = exam_begin_dt.substring(exam_begin_dt.indexOf("T") + 1);
+          String set_exam_begin_dt = date + " " + time;
+          exam.setExam_begin_dt(set_exam_begin_dt);
+       }
+       
+       String exam_end_dt = exam.getExam_end_dt();
+       if(StringUtils.isNotBlank(exam_end_dt)) 	{
+          String date = exam_end_dt.substring(0, exam_end_dt.indexOf("T"));
+          String time = exam_end_dt.substring(exam_end_dt.indexOf("T") + 1);
+          String set_exam_end_dt = date + " " + time;
+          exam.setExam_end_dt(set_exam_end_dt);
+       }
+		
+		exam.setLec_code(lec_code);
+		
 		String view = null;
 		String message = null;
-		exam.setLec_code(lec_code);
 		ServiceResult result = lectureProfessorService.insertExam(exam);
 		if(ServiceResult.OK.equals(result)) {
-			view = "redirect:/lecture/examAdmin.do";
+			view = "lecture/examAdmin";
 		}else {
 			message = "서버 오류입니다.";
 			view = "lecture/examAdminForm";
 		}
-		return "lecture/examAdminForm";	
+		
+		model.addAttribute("message",message);
+		return view;	
 	}
 	
 	@RequestMapping("/lecture/examAdmin.do")
