@@ -19,45 +19,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.vo.AttachVO;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
-import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.validator.SetTaskInsertGroup;
 import kr.ac.shms.validator.TaskInsertGroup;
+import kr.ac.shms.validator.TaskUpdateGroup;
 
 /**
- * @author 박초원
- * @since 2021. 6. 11.
+ * @author 송수미
+ * @since 2021. 6. 15.
  * @version 1.0
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
- * 2021. 6. 11.      박초원      	       최초작성
- * 2021. 6. 15.      송수미      	       학생 과제 상세 조회, 등록 기능 구현
+ * 2021. 6. 15.      송수미      	  최초작성
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Controller
-public class TaskSubmitInsertController {
+public class TaskSubmitUpdateController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskSubmitInsertController.class);
 	
 	@Inject
 	private LectureStudentService lectureStudentService;
-	@Inject
-	private LectureService lectureService;
 	
-	@RequestMapping("/lecture/taskInsert.do")
+	@RequestMapping("/lecture/taskUpdate.do")
 	public String taskForm(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @SessionAttribute(name="lec_code", required=false) String lec_code
 			, @SessionAttribute(name="lec_name", required=false) String lec_name
 			, @RequestParam("set_task_no") int set_task_no
+			, @RequestParam("submit_no") int submit_no
 			, Model model
 		) {
 		/** 검색 조건 */
@@ -67,30 +62,20 @@ public class TaskSubmitInsertController {
 		
 		/** 서비스 호출 */
 		SetTaskVO setTask = lectureStudentService.selectSetTask(search);
+		TaskSubmitVO taskSubmit = lectureStudentService.selectTaskSubmit(submit_no);
 		
 		/** 반환 */
 		model.addAttribute("setTask", setTask);
+		model.addAttribute("taskSubmit", taskSubmit);
 		
 		return "lecture/taskForm";
 	}
 	
-	@RequestMapping(value="/lecture/setTaskDownload.do")
-	public String downloader(
-		@ModelAttribute("attach") AttachVO attach
-		, Model model
-	) {
-		AttachVO attvo = lectureStudentService.download(attach);
-		model.addAttribute("attvo", attvo);		
-		return "downloadView";
-	}
-	
-	@RequestMapping(value="lecture/taskInsert.do", method=RequestMethod.POST)
+	@RequestMapping(value="lecture/taskUpdate.do", method=RequestMethod.POST)
 	public String insertTask(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, @SessionAttribute(name="lec_code", required=false) String lec_code
-		, @SessionAttribute(name="lec_name", required=false) String lec_name
 		, @RequestParam("set_task_no") int set_task_no
-		, @Validated(TaskInsertGroup.class)
+		, @Validated(TaskUpdateGroup.class)
 		@ModelAttribute("taskSubmit") TaskSubmitVO taskSubmit
 		, Errors errors 
 		, Model model
@@ -111,11 +96,11 @@ public class TaskSubmitInsertController {
 		
 		if(valid) {
 			/** 서비스 호출 */
-			ServiceResult result = lectureStudentService.insertTask(taskSubmit);
+			ServiceResult result = lectureStudentService.updateTask(taskSubmit);
 			if(ServiceResult.OK.equals(result)) {
 				view = "redirect:/lecture/task.do";
 			}else {
-				message = "과제 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+				message = "과제 수정에 실패하였습니다. 잠시 후 다시 시도해주세요.";
 				view = "lecture/taskForm";
 			}
 		}else {
@@ -130,5 +115,5 @@ public class TaskSubmitInsertController {
 		model.addAttribute("taskSubmit", taskSubmit);
 		
 		return view;
-	}
+	}	
 }

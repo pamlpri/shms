@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -27,6 +28,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 14.  	  송수미        	 과제 등록, 조회, 수정
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * 2021. 06. 15.	  박초원			 주/회차 삭제
+ * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -209,4 +211,24 @@ public interface LectureProfessorDAO {
 	 */
 	public List<TaskSubmitVO> selectTaskSubmitList(Map<String, Object> searchMap);
 	
+	/**
+	 * 시험 출제
+	 * @param examVO
+	 * @return cnt
+	 */
+	public int insertExam(ExamVO exam);
+	
+	/**
+	 * 첨부파일 등록
+	 * @param ExamVO
+	 * @return row count > 0 성공
+	 */
+	public int insertExamAttaches(ExamVO exam);
+	
+	/**
+	 * 문제 출제
+	 * @param examVO
+	 * @return cnt
+	 */
+	public int insertQues(ExamVO exam);
 }

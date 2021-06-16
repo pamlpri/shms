@@ -91,5 +91,19 @@ public interface LectureStudentService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public AttachVO download(AttachVO attachVO);
+	
+	/**
+	 * 학생이 제출한 과제 조회
+	 * @param submit_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public TaskSubmitVO selectTaskSubmit(int submit_no);
+	
+	/**
+	 * 과제 수정
+	 * @param taskSubmit
+	 * @return 성공, 실패
+	 */
+	public ServiceResult updateTask(TaskSubmitVO taskSubmit);
 
 }

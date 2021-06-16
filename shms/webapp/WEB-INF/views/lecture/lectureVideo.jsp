@@ -34,13 +34,22 @@
 	<script>
 		var player;
 		let videoId = '${week.ut_lec_link}';
+		let start = ${week.sugang_req * week.sugang_len / 100};
+		let startNum = parseInt(start);
 		videoIds = videoId.split("/");
 		videoId = videoIds[videoIds.length-1];
+
 		function onYouTubeIframeAPIReady() {
 			player = new YT.Player('player', {
 				height : '390',
 				width : '640',
 				videoId : videoId,
+				playerVars: {
+				      autoplay: 1, // Auto-play the video on load
+				      controls: 1, // Hide pause/play buttons in player
+				      showinfo: 1, // Hide the video title
+				      start: startNum
+				    },
 				events : {
 					'onReady' : onPlayerReady,
 					'onStateChange' : onPlayerStateChange,
