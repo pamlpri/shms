@@ -1,26 +1,30 @@
 package kr.ac.shms.lms.student.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.service.TuitionService;
-import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
-import kr.ac.shms.main.commuity.vo.ComCodeVO;
+import kr.ac.shms.validator.DMBoardInsertGroup;
+import kr.ac.shms.validator.TuitionRefundReqInsertGroup;
 
 /**
  * @author 박초원
@@ -54,7 +58,7 @@ public class TuitionRefundController {
 		String stdnt_no = user.getUser_id();
 		
 		/** 서비스 호출**********************************************************************************/
-		Map<String, Object> paramMap = new HashMap<>();
+		Map<String, Object> paramMap = new HashMap<>();	
 		paramMap.put("stdnt_no", stdnt_no);
 		tuitionService.selectRefundMain(paramMap);
 		/************************************************************************************************/
@@ -62,17 +66,60 @@ public class TuitionRefundController {
 		/** 자료 구성 ***********************************************************************************/
 		model.addAttribute("tuition", paramMap.get("tuition"));
 		model.addAttribute("resnList", paramMap.get("resnList"));
-		model.addAttribute("refundAmt", paramMap.get("refundAmt"));
+		model.addAttribute("refundVO", paramMap.get("refundVO"));
 		model.addAttribute("reginfoStat", paramMap.get("reginfoStat"));
 		/************************************************************************************************/
 		return "lms/tuitionRefund";
 	}	
 	
-	@RequestMapping(value="/lms/tuitionRefundForm.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public Map<String, Object> sendFormRefund(){
+	@RequestMapping(value="/lms/tuitionRefundForm.do", method=RequestMethod.POST)
+	public String sendFormRefund(
+		@Validated(TuitionRefundReqInsertGroup.class)
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @ModelAttribute("tuition") TuitionVO ttion
+		, @RequestParam("selectResn") String resn
+		, Errors errors
+		, Model model
+		){
+		boolean valid = !errors.hasErrors();
 		
-		return null;
+		String view = null;
+		String message = null;
+		
+		String stdnt_no = user.getUser_id();
+		int refund_amt = Integer.parseInt(ttion.getRefund().replace(",", ""));
+		int pay_dtls_no = ttion.getPay_dtls_no();
+		
+		TuitionVO tuition = new TuitionVO();
+		tuition.setStdnt_no(stdnt_no);
+		tuition.setPay_dtls_no(pay_dtls_no);
+		tuition.setRefund_amt(refund_amt);
+		tuition.setReq_resn(resn);
+		
+		if(valid) {
+			ServiceResult result = tuitionService.insertRefundReq(tuition);
+			if(ServiceResult.OK.equals(result)) {
+				view = "lms/tuitionRefund";
+			}else {
+				message = "환불 신청 실패! 잠시 후에 다시 시도해주세요.";
+				view = "lms/tuitionRefund";
+			}
+		}else {
+			message = "필수항목 누락";
+			view = "tuitionRefund";
+		}
+		model.addAttribute("message", message);
+		
+		
+		/** 서비스 호출**********************************************************************************/
+//		MAP<STRING, OBJECT> PARAMMAP = NEW HASHMAP<>();
+//		PARAMMAP.PUT("STDNT_NO", STNDT_NO);
+		/************************************************************************************************/
+		
+		/** 자료 구성 ***********************************************************************************/
+		
+		/************************************************************************************************/
+		return view;
 	}
 }
 

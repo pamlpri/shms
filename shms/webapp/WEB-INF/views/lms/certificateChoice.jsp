@@ -143,9 +143,6 @@
 		let crtf_kind = $("[name='crtf_kind']").val();
 		let crtf_req_resn = $("[name='crtf_req_resn']").val();
 		let no_of_issue = $("input[type=number]").val();
-		console.log("crtf_kind" + crtf_kind);
-		console.log("crtf_req_resn" + crtf_req_resn);
-		console.log("no_of_issue" + no_of_issue);
 		if(crtf_kind == "" || crtf_req_resn == "" || no_of_issue == ""){
 			$("#default").find(".modal-title").empty().text("필수사항 누락");
 			$("#default").find(".modal-body p").empty().text("모두 선택해야 다음 단계로 진행됩니다.");
@@ -164,7 +161,6 @@
 	
 	$("[name='crtf_kind']").on("change", function(){
 		let selectedKind = $(this).val();
-		console.log(selectedKind);
 		$.ajax({
 			url : "${cPath}/lms/chcekReginfo.do"
 			, data : {"crtf_kind" : selectedKind}
