@@ -26,7 +26,7 @@
       </ol>
   </nav>
 
-  <form action="${cPath }/lecture/examInsert.do" method="post" enctype="multipart/form-data">
+  <form action="${cPath }/lecture/examInsert.do" method="post" enctype="multipart/form-data" id="examForm">
     <section class="section">
       <h2 class="section-title">시험출제</h2>
     </section>
@@ -36,70 +36,91 @@
 	        <div class="table-responsive">
 	          <table class="table table-bordered table-md report">
 	            <tr>
-	              <th class="align-middle">시험분류</th>
+	              <th class="align-middle"><span class="red-color">* </span>시험분류</th>
 	              <td class="text-left">
-	                <select class="form-control col-md-4" name="test_cl">
+	                <select class="form-control col-md-4 im" name="test_cl">
 	                  <option value="">-- 분류선택 --</option>
 	                  <option value="JG">중간고사</option>
 	                  <option value="GM">기말고사</option>
 	                </select>
+	                <div class="invalid-feedback">
+                      필수항목
+                    </div>
 	              </td>
 	            </tr>
 	            <tr>
-	              <th class="align-middle">시험형식</th>
+	              <th class="align-middle"><span class="red-color">* </span>시험형식</th>
 	              <td class="text-left">
-	                <select class="form-control col-md-4" name="online_at">
+	                <select class="form-control col-md-4 im" name="online_at">
 	                  <option value="">-- 형식선택 --</option>
 	                  <option value="Y">온라인시험</option>
 	                  <option value="N">오프라인시험</option>
 	                </select>
+	                <div class="invalid-feedback">
+                      필수항목
+                    </div>
 	              </td>
 	            </tr>
 	            <tr>
-	              <th class="align-middle">시험유형</th>
+	              <th class="align-middle"><span class="red-color">* </span>시험유형</th>
 	              <td class="text-left">
-	                <select class="form-control col-md-4" name="exam_type">
+	                <select class="form-control col-md-4 im" name="exam_type">
 	                  <option value="">-- 유형선택 --</option>
 	                  <option value="GG">객관식</option>
 	                  <option value="DD">주관식 단답형</option>
 	                  <option value="SS">주관식 서술형</option>
 	                  <option value="TH">혼합형</option>
 	                </select>
+	                <div class="invalid-feedback">
+                      필수항목
+                    </div>
 	              </td>
 	            </tr>
 	            <tr>
-	              <th class="align-middle">시험시작</th>
-	              <td>
-	                <input type="datetime-local" class="form-control col-md-4" name="exam_begin_dt">
-	              </td>
-	            </tr>
-	            <tr>
-	              <th class="align-middle">시험종료</th>
-	              <td>
-	                <input type="datetime-local" class="form-control col-md-4" name="exam_end_dt">
-	              </td>
-	            </tr>
-	            <tr>
-	              <th class="align-middle">총 문항수</th>
+	              <th class="align-middle"><span class="red-color">* </span>시험시작</th>
 	              <td class="text-left">
-	                <input type="number" class="form-control col-md-4" name="ques_cnt"/>
+	                <input type="datetime-local" class="form-control col-md-4 im" name="exam_begin_dt">
+	                <div class="invalid-feedback">
+                      필수항목
+                    </div>
 	              </td>
 	            </tr>
 	            <tr>
-	              <th class="align-middle">시험문제(PDF)</th>
+	              <th class="align-middle"><span class="red-color">* </span>시험종료</th>
+	              <td class="text-left">
+	                <input type="datetime-local" class="form-control col-md-4 im" name="exam_end_dt">
+	                <div class="invalid-feedback">
+                      필수항목
+                    </div>
+	              </td>
+	            </tr>
+	            <tr>
+	              <th class="align-middle"><span class="red-color">* </span>총 문항수</th>
+	              <td class="text-left">
+	                <input type="number" class="form-control col-md-4 im" name="ques_cnt"/>
+	                <div class="invalid-feedback">
+                      필수항목
+                    </div>
+	              </td>
+	            </tr>
+	            <tr>
+	              <th class="align-middle"><span class="red-color">* </span>시험문제(PDF)</th>
 	              <td class="text-left">
 	                <div>
 	                  <div class="it">
 	                    <div class="col-sm-offset-1" id="one">
 	                      <div id="uploader" class="row">
-	                        <div class="row uploadDoc col-sm-4">
-	                          <div class="col-sm-10">
+	                        <div class="row uploadDoc col-md-4">
+	                          <div class="col-md-12">
 	                            <div class="fileUpload btn btn-orange">
 	                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
 	                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-	                              <input type="file" class="upload up" id="up" onchange="readURL(this);"/>
+	                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);"/>
 	                            </div><!-- btn-orange -->
 	                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+		                        <div class="invalid-feedback">
+		                         필수항목
+		                        </div>
 	                          </div><!-- col-3 -->
 	                        </div><!-- row -->
 	                      </div><!--uploader-->
@@ -121,7 +142,7 @@
       <div class="card">
         <div class="card-body">
           <div class="text-left excelWrap">
-            <a href="https://storage.cloud.google.com/shms/exam/%EB%8B%B5%EC%95%88_%EC%96%91%EC%8B%9D.xlsx?authuser=1" class="btn btn-warning">답안 양식 다운로드</a>
+            <a href="https://storage.cloud.google.com/shms/exam/%EB%8B%B5%EC%95%88_%EC%96%91%EC%8B%9D.xlsx?authuser=0" class="btn btn-warning">답안 양식 다운로드</a>
             <a href="#" class="btn btn-icon btn-primary"><i class="far fa-file"></i> <input id="excelUpload" type="file" onchange="readExcel();" /> 답안 업로드</a>
           </div>
           <div class="table-responsive">
@@ -141,7 +162,7 @@
                 </tr>
               </thead>
               <tbody>
-
+				
               </tbody>
             </table>
           </div>
@@ -149,14 +170,35 @@
       </div>
       <div class="text-center">
         <a href="${cPath }/lecture/examAdmin.do" class="btn btn-secondary">취소</a>
-        <button type="submit" class="btn btn-primary">저장</button>
+        <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
       </div>
     </form>
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="fire-modal-2" style="display: block; padding-right: 17px;">
+		<div class="modal-dialog modal-md modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-backdrop fade"></div>
   <!-- contents end -->
   </div>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
-
 <script>
+	  $("body").removeClass("modal-open").css("padding-right","0px");
+	  $(".modal-backdrop").removeClass("show").css("display", "none");
+	  $(".modal").removeClass("show").css("display", "none");
+	
  	   var fileTypes = ['pdf'];  //acceptable file types
  	   function readURL(input) {
  	        if (input.files && input.files[0]) {
@@ -168,9 +210,8 @@
  	                reader.onload = function (e) {
  	                    if (extension == 'pdf'){
  	                    	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/179/179483.svg');
- 	                    	$(input).attr("name", "exam_files");
  	                   		$('.docErrs').fadeOut('slow');
- 	                    }
+	                    }
  	                    else {
  	                    	//console.log('here=>'+$(input).closest('.uploadDoc').length);
  	                    	$(input).closest('.uploadDoc').find(".docErr").slideUp('slow');
@@ -230,4 +271,114 @@
         };
         reader.readAsBinaryString(input.files[0]);
       }
+      
+	  
+	  $(".modal .close, .modal").on("click", function(){
+		  $("body").removeClass("modal-open").css("padding-right","0px");
+	      $(".modal-backdrop").removeClass("show").css("display", "none");
+		  $(".modal").removeClass("show").css("display", "none");
+	  });
+	  
+      let examForm = $("#examForm");
+      var frag = [true, true, true, true, true];
+      
+      $("input[type='datetime-local']").on("change", function(){
+ 		 let exam_begin_dt = $("[name='exam_begin_dt']").val(); 
+ 		 let exam_end_dt = $("[name='exam_end_dt']").val();
+ 		 
+ 		 frag[0] = true;
+ 		 if(exam_end_dt != ""  && exam_begin_dt >= exam_end_dt){
+ 			$(".modal-title").text("시험시간 오류");
+ 			$(".modal-body").text("시험시작이 시험종료 시간 보다 크거나 같을 수 없습니다.");
+ 			$("body").addClass("modal-open").css("padding-right", "17px");
+   			$(".modal-backdrop").addClass("show").css("display", "block");
+ 			$(".modal").addClass("show").css("display", "block");
+ 			frag[0] = false;
+ 		 }
+ 	  });
+       
+  	  $("#saveBtn").on("click",function(){
+  		let inputs = $(examForm).find(":input[name]");
+  		
+  		$(inputs).each(function(idx, input){
+  			console.log($(this).val());
+  			if($(this).val() == ""){
+  				if($(this).hasClass("im")){
+  					$(this).addClass("is-invalid");
+  					frag[1] = false;
+  				}
+  			}
+  			
+  			if($("[name='exam_files']")){
+  				if($(this).val() == ""){
+  					$(this).parents(".uploadDoc").find(".invalid-feedback").fadeIn();
+  				}
+  			}
+  		});
+  		
+  		console.log($(".omrExcel").children("tbody").text());
+  		if($(".omrExcel").children("tbody").text().trim() == ""){
+  			$(".modal-title").text("답안 미제출");
+			$(".modal-body").text("답안을 업로드하지 않으면 시험출제가 불가합니다.");
+			$("body").addClass("modal-open").css("padding-right", "17px");
+  			$(".modal-backdrop").addClass("show").css("display", "block");
+			$(".modal").addClass("show").css("display", "block");
+			frag[2] = false;
+  		}
+  		
+  		let tds = $(".omrExcel").children("tbody").find("td");
+  		$(tds).each(function(idx, tdTag){
+  			console.log($(this).text());
+  			if($(this).text() == "undefined"){
+  				$(".modal-title").text("답안 양식 오류");
+  				$(".modal-body").text("공백이거나 값을 찾을 수 없는 항목이 있으면 답안 업로드가 불가합니다.");
+  				$("body").addClass("modal-open").css("padding-right", "17px");
+  	  			$(".modal-backdrop").addClass("show").css("display", "block");
+  				$(".modal").addClass("show").css("display", "block");
+  				frag[3] = false;
+  			}else {
+  				frag[3] = true;	
+  			}
+  		});
+  		
+        var reg = /(.*?)\.(pdf)$/;
+      	if($("[name='exam_files']").val() != null && !$("[name='exam_files']").val().match(reg)) {
+      		$(".modal-title").text("파일 형식 오류");
+			$(".modal-body").text("시험문제는 pdf파일만 제출할 수 있습니다.");
+			$("body").addClass("modal-open").css("padding-right", "17px");
+  			$(".modal-backdrop").addClass("show").css("display", "block");
+			$(".modal").addClass("show").css("display", "block");
+			frag[4] = false;
+    	}else if($("[name='exam_files']").val() != null && $("[name='exam_files']").val().match(reg)){
+    		frag[4] = true;
+    	}
+  		
+      	let count = 0;
+      	for(var i = 0; i < frag.length; i++){
+      		console.log(i+"번쨰" + frag[i]);
+      		if(frag[i]){
+      			count += 1;
+      		}
+      		if(!frag[0]){
+      			$(".modal-title").text("시험시간 오류");
+     			$(".modal-body").text("시험시작이 시험종료 시간 보다 크거나 같을 수 없습니다.");
+     			$("body").addClass("modal-open").css("padding-right", "17px");
+       			$(".modal-backdrop").addClass("show").css("display", "block");
+     			$(".modal").addClass("show").css("display", "block");
+      		}
+      	}
+      	
+  		if(count == 5){
+  			examForm.submit();
+  		}
+  	  });
+  	  
+  	$("[name='exam_files']").on("change", function(){
+  		$(this).parents(".uploadDoc").find(".invalid-feedback").fadeOut();
+  	});
+  	
+  	$(examForm).on("change",".im", function(){
+		$(this).removeClass("is-invalid");
+		frag[1] = true;
+	});
   </script>

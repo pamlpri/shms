@@ -42,13 +42,6 @@ public class ExamVO {
 	
 	private List<QuesVO> quesList;
 	
-	public List<QuesVO> getQuesList() {
-		return quesList;
-	}
-	public void setQuesList(List<QuesVO> quesList) {
-		this.quesList = quesList;
-	}
-	
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] exam_files;

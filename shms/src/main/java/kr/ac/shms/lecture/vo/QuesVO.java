@@ -1,8 +1,11 @@
 package kr.ac.shms.lecture.vo;
 
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 /**
  * @author 박초원
  * @since 2021. 6. 15.
@@ -19,16 +22,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(of= "ques_no")
-public class QuesVO {
+@EqualsAndHashCode(of="ques_no")
+@ToString(exclude="ques_ans")
+public class QuesVO{
 	private Integer exam_no;
 	private Integer ques_no;
 	private String ques_type;
 	private String ques_ans;
 	private Integer ques_allot;
-	
-	public QuesVO(QuesVO quesVO) {
-		super();
-		this.exam_no = quesVO.getQues_no();
-	}
 }
