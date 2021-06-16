@@ -81,6 +81,11 @@ public class TuitionServiceImpl implements TuitionService{
 		paramMap.put("refundAmt", refundAmt);
 		paramMap.put("reginfoStat", reginfoStat);
 	}
+
+	@Override
+	public int selectRecivSchl(String stdnt_no) {
+		return tuitionDAO.selectRecivSchl(stdnt_no);
+	}
 }
 
 

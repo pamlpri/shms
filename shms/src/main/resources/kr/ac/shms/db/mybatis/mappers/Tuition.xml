@@ -4,16 +4,22 @@
 	<select id="selectTuitionList" parameterType="String" resultType="TuitionVO">
 		SELECT DISTINCT pay_year,
 		       pay_semstr,
-		       (SELECT reginfo_stat FROM v_stdntinfo WHERE stdnt_no=#{stdnt_no}) reginfo_stat,
+		         (SELECT CASE WHEN com_code_nm='복학' THEN '재학'
+			                  ELSE '재학'
+			              END   
+			       FROM tb_com_code
+			      WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+			        AND com_code = req_cl_code) req_cl_code,
 		       TO_CHAR(pay_amt, '999,999,999') pay_amt,
 		       TO_CHAR(pay_dt, 'RRRR/MM/DD') pay_dt,
 		       TO_CHAR(c.reg_amt, '999,999,999') reg_amt,
-		       NVL(TO_CHAR(reciv_amt, '999,999,999'),0) schl
+		       TO_CHAR(reg_amt - pay_amt, '999,999,999') reciv_amt
 		  FROM reg_fee_pay a
 		 INNER JOIN student b ON(a.stdnt_no=b.stdnt_no)
 		 INNER JOIN subject c ON(b.sub_code=c.sub_code)
 		 LEFT OUTER JOIN schl_req d ON(a.stdnt_no=d.stdnt_no)
 		 LEFT OUTER JOIN reciv_schl e ON(d.req_no=e.req_no)
+		 LEFT OUTER JOIN reginfo_cng f ON(b.stdnt_no=f.stdnt_no)
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		 ORDER BY pay_year asc
 	</select>
@@ -24,13 +30,11 @@
 		       a.stdnt_no, 
 		       name,
 		       TO_CHAR(b.reg_amt, '999,999,999') reg_amt,
-       		   TO_CHAR(d.reciv_amt, '999,999,999') reciv_amt,
-       		   TO_CHAR((b.reg_amt - d.reciv_amt), '999,999,999') tuition,
-		       EXTRACT(YEAR FROM SYSDATE) year
+		       EXTRACT(YEAR FROM SYSDATE) year,
+		       b.reg_amt regAmt
 		  FROM student a
 		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
 		 INNER JOIN schl_req c ON(a.stdnt_no=c.stdnt_no)
-		 INNER JOIN reciv_schl d ON(c.req_no=d.req_no)
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND EXTRACT(YEAR FROM c.req_de) =EXTRACT(YEAR FROM SYSDATE)
 		   AND a.semstr = (SELECT semstr FROM v_semstr)
@@ -51,17 +55,15 @@
 		       a.stdnt_no,
 		       a.name,
 		       TO_CHAR(b.reg_amt, '999,999,999') reg_amt,
-		       TO_CHAR(d.reciv_amt, '999,999,999') reciv_amt,
-		       TO_CHAR(c.pay_amt, '999,999,999') pay_amt,
 		       c.pay_dt,
 		       EXTRACT(YEAR FROM c.pay_dt) year,
 		       EXTRACT(MONTH FROM c.pay_dt) month,
-		       EXTRACT(DAY FROM c.pay_dt) day
+		       EXTRACT(DAY FROM c.pay_dt) day,
+		       b.reg_amt regAmt
 		  FROM student a
 		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
 		 INNER JOIN reg_fee_pay c ON(a.stdnt_no=c.stdnt_no)
 		 INNER JOIN schl_req c ON(a.stdnt_no=c.stdnt_no)
-		 INNER JOIN reciv_schl d ON(c.req_no=d.req_no)
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND EXTRACT(YEAR FROM c.pay_dt) =EXTRACT(YEAR FROM SYSDATE)
 <!-- 		   AND EXTRACT(YEAR FROM c.pay_dt) = 2020 -->
@@ -93,5 +95,14 @@
 		   AND pay_year=EXTRACT(YEAR FROM SYSDATE)
 		   AND pay_semstr=(SELECT semstr FROM v_semstr))
 		   ]]>
+	</select>
+	<!-- 장학금 수혜 -->
+	<select id="selectRecivSchl" parameterType="String" resultType="int">
+		SELECT NVL(SUM(reciv_amt),0) recivAmt
+		  FROM schl_req a
+		 INNER JOIN reciv_schl b
+		   ON(a.req_no = b.req_no)
+		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND EXTRACT(YEAR FROM reciv_date)=EXTRACT(YEAR FROM SYSDATE)
 	</select>
 </mapper>

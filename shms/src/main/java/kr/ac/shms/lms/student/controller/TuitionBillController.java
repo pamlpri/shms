@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class TuitionBillController {
 	private static final Logger logger = LoggerFactory.getLogger(TuitionBillController.class);
 	
 	@Inject
-	private TuitionService tuitinoService;
+	private TuitionService tuitionService;
 	
 	@Inject
 	private LectureService lectureService;
@@ -49,13 +50,21 @@ public class TuitionBillController {
 	) {
 		String stdnt_no = user.getUser_id();
 		
-		ScheduleVO tuitionPay = tuitinoService.selectTuitionPaySchdule();
-		TuitionVO tuition = tuitinoService.selectTuitionBill(stdnt_no);
+		ScheduleVO tuitionPay = tuitionService.selectTuitionPaySchdule();
+		TuitionVO tuition = tuitionService.selectTuitionBill(stdnt_no);
 		List<SugangLecSTVO> sugangLec = lectureService.selectStudentSugangList(stdnt_no);
+		int recivAmt = tuitionService.selectRecivSchl(stdnt_no);
+		
+		int regAmt = tuition.getRegAmt();
+		int tuitionAmt = regAmt - recivAmt;
+		DecimalFormat dc = new DecimalFormat("###,###,###");
+		String tuAmt = dc.format(tuitionAmt);
 		
 		model.addAttribute("tuition", tuition);
 		model.addAttribute("tuitionPay", tuitionPay);
 		model.addAttribute("sugangLec", sugangLec);
+		model.addAttribute("recivAmt", recivAmt);
+		model.addAttribute("tuAmt", tuAmt);
 		return "lms/tuitionBill";
 	}
 }

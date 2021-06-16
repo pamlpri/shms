@@ -69,4 +69,11 @@ public interface TuitionService {
 	 * @param paramMap
 	 */
 	public void selectRefundMain(Map<String, Object> paramMap);
+	
+	/**
+	 * 수혜장학금조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectRecivSchl(String stdnt_no);
 }
