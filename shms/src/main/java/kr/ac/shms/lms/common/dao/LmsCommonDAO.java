@@ -38,6 +38,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 08		 최희수  	상담 내역 상세 조회
  * 2021. 06. 10		  박초원    비밀번호 변경
  * 2021. 06. 14		최희수	강의평가 조회
+ * 2021. 06. 16		최희수	취업지원 진로교육 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -229,4 +230,17 @@ public interface LmsCommonDAO {
 	 * @return cnt > 0 성공
 	 */
 	public int insertEvl(LecEvlResVO lecEvlResVO);
+	
+	/**
+	 * 진로교육 게시판 리스트 뽑기
+	 * @return
+	 */
+	public List<CourseEducVO> selectAllCourseEducList();
+	
+	/**
+	 * 진로교육 게시글 상세보기
+	 * @param boNo
+	 * @return
+	 */
+	public CourseEducVO selectCourseEduc(int boNo);
 }
