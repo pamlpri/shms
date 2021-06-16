@@ -8,6 +8,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -40,8 +41,8 @@
 	              <td class="text-left">
 	                <select class="form-control col-md-4 im" name="test_cl">
 	                  <option value="">-- 분류선택 --</option>
-	                  <option value="JG">중간고사</option>
-	                  <option value="GM">기말고사</option>
+	                  <option value="JG" ${exam.test_cl eq 'JG'?'selected':'' }>중간고사</option>
+	                  <option value="GM" ${exam.test_cl eq 'GM'?'selected':'' }>기말고사</option>
 	                </select>
 	                <div class="invalid-feedback">
                       필수항목
@@ -53,8 +54,8 @@
 	              <td class="text-left">
 	                <select class="form-control col-md-4 im" name="online_at">
 	                  <option value="">-- 형식선택 --</option>
-	                  <option value="Y">온라인시험</option>
-	                  <option value="N">오프라인시험</option>
+	                  <option value="Y" ${exam.online_at eq 'Y'?'selected':'' }>온라인시험</option>
+	                  <option value="N" ${exam.online_at eq 'N'?'selected':'' }>오프라인시험</option>
 	                </select>
 	                <div class="invalid-feedback">
                       필수항목
@@ -66,10 +67,10 @@
 	              <td class="text-left">
 	                <select class="form-control col-md-4 im" name="exam_type">
 	                  <option value="">-- 유형선택 --</option>
-	                  <option value="GG">객관식</option>
-	                  <option value="DD">주관식 단답형</option>
-	                  <option value="SS">주관식 서술형</option>
-	                  <option value="TH">혼합식</option>
+	                  <option value="GG" ${exam.exam_type eq 'GG'?'selected':'' }>객관식</option>
+	                  <option value="DD" ${exam.exam_type eq 'DD'?'selected':'' }>주관식 단답형</option>
+	                  <option value="SS" ${exam.exam_type eq 'SS'?'selected':'' }>주관식 서술형</option>
+	                  <option value="TH" ${exam.exam_type eq 'TH'?'selected':'' }>혼합식</option>
 	                </select>
 	                <div class="invalid-feedback">
                       필수항목
@@ -79,7 +80,7 @@
 	            <tr>
 	              <th class="align-middle"><span class="red-color">* </span>시험시작</th>
 	              <td class="text-left">
-	                <input type="datetime-local" class="form-control col-md-4 im" name="exam_begin_dt">
+	                <input type="datetime-local" class="form-control col-md-4 im" name="exam_begin_dt" value="${exam.exam_begin_dt }">
 	                <div class="invalid-feedback">
                       필수항목
                     </div>
@@ -88,7 +89,7 @@
 	            <tr>
 	              <th class="align-middle"><span class="red-color">* </span>시험종료</th>
 	              <td class="text-left">
-	                <input type="datetime-local" class="form-control col-md-4 im" name="exam_end_dt">
+	                <input type="datetime-local" class="form-control col-md-4 im" name="exam_end_dt" value="${exam.exam_end_dt }">
 	                <div class="invalid-feedback">
                       필수항목
                     </div>
@@ -97,7 +98,7 @@
 	            <tr>
 	              <th class="align-middle"><span class="red-color">* </span>총 문항수</th>
 	              <td class="text-left">
-	                <input type="number" class="form-control col-md-4 im" name="ques_cnt"/>
+	                <input type="number" class="form-control col-md-4 im" name="ques_cnt" value="${exam.ques_cnt }"/>
 	                <div class="invalid-feedback">
                       필수항목
                     </div>
@@ -115,7 +116,7 @@
 	                            <div class="fileUpload btn btn-orange">
 	                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
 	                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-	                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);"/>
+	                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
 	                            </div><!-- btn-orange -->
 	                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
 		                        <div class="invalid-feedback">
