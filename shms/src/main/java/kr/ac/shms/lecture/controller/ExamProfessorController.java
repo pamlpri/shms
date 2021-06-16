@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.QuesVO;
 
 /**
  * @author 박초원
@@ -107,7 +108,9 @@ public class ExamProfessorController {
 		examVO.setExam_no(exam_no);
 		
 		ExamVO exam = lectureProfessorService.selectExamDetail(examVO);
+		List<ExamVO> studentList = lectureProfessorService.selectExamStudentList(examVO);
 		model.addAttribute("exam", exam);
+		model.addAttribute("studentList", studentList);
 		return "lecture/examAdminList";
 	}
 	
@@ -137,7 +140,9 @@ public class ExamProfessorController {
         	String set_exam_end_dt = date + "T" + time;
         	exam.setExam_end_dt(set_exam_end_dt);
         }
-		
+        
+        List<QuesVO> quesList = lectureProfessorService.selectQuesList(exam_no);
+        exam.setQuesList(quesList);
         model.addAttribute("exam", exam);
         model.addAttribute("update", "update");
 		return "lecture/examAdminForm";

@@ -486,4 +486,14 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	public ExamVO selectExamDetail(ExamVO exam) {
 		return lectureProfessorDAO.selectExamDetail(exam);
 	}
+
+	@Override
+	public List<ExamVO> selectExamStudentList(ExamVO exam) {
+		return lectureProfessorDAO.selectExamStudentList(exam);
+	}
+
+	@Override
+	public List<QuesVO> selectQuesList(int exam_no) {
+		return lectureProfessorDAO.selectQuesList(exam_no);
+	}
 }

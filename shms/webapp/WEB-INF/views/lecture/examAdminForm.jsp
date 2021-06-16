@@ -163,7 +163,22 @@
                 </tr>
               </thead>
               <tbody>
-				
+				  <c:if test="${not empty exam.quesList }">
+				  	<c:forEach items="${exam.quesList }" var="ques">
+				  		<tr>
+				  			<td class='text-center align-middle'>${ques.ques_no}</td>
+				  			<td class='text-center align-middle'>
+				  				<c:choose>
+				  					<c:when test="${ques.ques_type eq 'GG'}">객관식</c:when>
+				  					<c:when test="${ques.ques_type eq 'DD'}">단답형</c:when>
+				  					<c:when test="${ques.ques_type eq 'SS'}">서술형</c:when>
+				  				</c:choose> 
+				  			</td>
+				  			<td class='text-center align-middle'>${ques.ques_ans}</td>
+				  			<td class='text-center align-middle'>${ques.ques_allot}</td>
+				  		</tr>
+				  	</c:forEach>
+				  </c:if>
               </tbody>
             </table>
           </div>

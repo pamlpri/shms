@@ -62,26 +62,24 @@
               	</c:choose>
               </td>
             </tr>
-            <c:choose>
-            	<c:when test="${not empty exam.gg_sum}">
-		            <tr>
-		              <th>객관식</th>
-		              <td class="text-left">${exam.gg_sum }점</td>
-		            </tr>
-            	</c:when>
-            	<c:when test="${not empty exam.dd_sum }">
-		            <tr>
-		              <th>단답형</th>
-		              <td class="text-left">${exam.dd_sum }점</td>
-		            </tr>
-            	</c:when>
-            	<c:when test="${not empty exam.ss_sum }">
-		            <tr>
-		              <th>서술형</th>
-		              <td class="text-left">${exam.ss_sum }점</td>
-		            </tr>
-            	</c:when>
-            </c:choose>
+           	<c:if test="${not empty exam.gg_sum}">
+	            <tr>
+	              <th>객관식</th>
+	              <td class="text-left">${exam.gg_sum }점</td>
+	            </tr>
+           	</c:if>
+           	<c:if test="${not empty exam.dd_sum }">
+	            <tr>
+	              <th>단답형</th>
+	              <td class="text-left">${exam.dd_sum }점</td>
+	            </tr>
+           	</c:if>
+           	<c:if test="${not empty exam.ss_sum }">
+	            <tr>
+	              <th>서술형</th>
+	              <td class="text-left">${exam.ss_sum }점</td>
+	            </tr>
+           	</c:if>
             <tr>
               <th>총점</th>
               <td class="text-left">${exam.ques_sum }점</td>
@@ -108,7 +106,7 @@
 
       <div class="card-body table-scroll" id="table-scroll">
           <div class="text-right excelWrap" style="margin-top: -2%;">
-              <a href="#" class="btn btn-icon btn-primary"><i class="far fa-file"></i> Excel 다운로드</a>
+              <button class="btn btn-icon btn-primary" type="button" onclick="ExamStudentToExcelConverter()"><i class="far fa-file"></i> Excel 다운로드</button>
           </div>
           <div class="table-responsive table-wrap">
               <table class="table table-striped main-table edit-table" id="report-table">
@@ -118,28 +116,48 @@
                       <th class="text-center">학번</th>
                       <th class="text-center">학과</th>
                       <th class="text-center">상태</th>
-                      <th class="text-center">객관식</th>
-                      <th class="text-center">주관식</th>
-                      <th class="text-center">서술형</th>
+                      <c:if test="${not empty exam.gg_sum}">
+	                      <th class="text-center">객관식</th>
+                      </c:if>
+                      <c:if test="${not empty exam.dd_sum }">
+	                      <th class="text-center">주관식</th>
+                      </c:if>
+                      <c:if test="${not empty exam.ss_sum }">
+	                      <th class="text-center">서술형</th>
+                      </c:if>
                       <th class="text-center">총점</th>
                       <th class="text-center">비고</th>
                   </tr>
                   </thead>
-                  <tbody>                                 
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center">20</td>
-                      <td class="text-center">98 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
+                  <tbody>
+                  	<c:forEach items="${studentList }" var="student">
+                  		 <tr>
+	                      <td class="text-center">
+	                      	<a href="${cPath}/lecture/examOMR.do?what=${student.stdnt_no}" class="text-color">${student.name }</a>
+	                      </td>
+	                      <td class="text-center">
+	                      	<a href="${cPath}/lecture/examOMR.do?what=${student.stdnt_no}" class="text-color">${student.stdnt_no }</a>
+	                      </td>
+	                      <td class="text-center">${student.sub_name }</td>
+	                      <td class="text-center">${student.applcn_at }</td>
+	                      <c:if test="${not empty exam.gg_sum}">
+		                      <td class="text-center">${empty student.gg_sum ? '' : student.gg_sum }</td>
+	                      </c:if>
+	                      <c:if test="${not empty exam.dd_sum }">
+		                      <td class="text-center">${empty student.dd_sum ? '' : student.dd_sum }</td>
+	                      </c:if>
+	                      <c:if test="${not empty exam.ss_sum }">
+		                      <td class="text-center">${empty student.ss_sum ? '' : student.ss_sum }</td>
+	                      </c:if>
+	                      <td class="text-center">${empty student.res_score ? 0 : student.res_score } / 100</td>
+	                      <td class="text-center noExl">
+		                      <c:if test="${not empty student.res_score }">
+		                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+		                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+		                      </c:if>
+	                      </td>
+	                  </tr>
+                  	</c:forEach>  
                   </tbody>
               </table>
           </div>
@@ -187,7 +205,7 @@
         
         
         $('#report-table').DataTable({
-        	
+        	"order": [[ 1, "asc" ]]
         });
     });
     </script>
