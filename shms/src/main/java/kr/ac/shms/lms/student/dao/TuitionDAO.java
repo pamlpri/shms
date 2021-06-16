@@ -69,4 +69,11 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public String selectRefundAmt(String stdnt_no);
+	
+	/**
+	 * 수혜장학금조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectRecivSchl(String stdnt_no);
 }

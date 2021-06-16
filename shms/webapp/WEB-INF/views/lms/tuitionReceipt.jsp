@@ -65,8 +65,8 @@
 		                      <tr>
 		                          <th class="text-center">수업료</th>
 		                          <td class="text-center">${tuition.reg_amt }</td>
-		                          <td class="text-center">${tuition.reciv_amt }</td>
-		                          <td class="text-center">${tuition.pay_amt }</td>
+		                          <td class="text-center">${recivAmt }</td>
+		                          <td class="text-center">${tuAmt}</td>
 		                      </tr>
 		                      <tr>
 		                          <td colspan="4" class="text-center">
