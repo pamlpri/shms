@@ -98,44 +98,40 @@
 	                    </div>
 	                    <div class="col-sm-offset-1" id="one">
 	                      <div id="uploader" class="row">
-	                      	<c:choose>
-				             	<c:when test="${not empty taskSubmit.attachList and not(fn:length(taskSubmit.attachList) eq 0)}">
-									<c:forEach items="${taskSubmit.attachList }" var="attach">
-										<c:if test="${not empty attach.atch_file_seq }">
-					                        <div class="row uploadDoc col-sm-4">
-					                          <div class="col-sm-10">
-					                            <div class="fileUpload btn btn-orange">
-					                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
-					                              <span class="upl" id="upload" data-attno="${attach.atch_file_seq }"> ${attach.file_nm }</span>
-					                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
-					                            </div><!-- btn-orange -->
-					                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
-					                          </div><!-- col-3 -->
-					                          <div class="col-sm-2">
-					                          	<a class="btn-check">
-					                            	<i class="fa fa-times"></i>
-					                            </a>
-					                          </div><!-- col-1 -->
-					                        </div><!-- row -->
-										</c:if>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
-			                        <div class="row uploadDoc col-sm-4">
-			                          <div class="col-sm-10">
-			                            <div class="fileUpload btn btn-orange">
-			                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
-			                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-			                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
-			                            </div><!-- btn-orange -->
-			                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
-			                          </div><!-- col-3 -->
-			                          <div class="col-sm-2"><a class="btn-check">
-			                            <i class="fa fa-times"></i></a>
-			                          </div><!-- col-1 -->
-			                        </div><!-- row -->
-								</c:otherwise>
-	                      	</c:choose>
+	                      	<c:if test="${not empty taskSubmit.attachList and not(fn:length(taskSubmit.attachList) eq 0)}">
+								<c:forEach items="${taskSubmit.attachList }" var="attach">
+									<c:if test="${not empty attach.atch_file_seq }">
+				                        <div class="row uploadDoc col-sm-4">
+				                          <div class="col-sm-10">
+				                            <div class="fileUpload btn btn-orange">
+				                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+				                              <span class="upl" id="upload" data-attno="${attach.atch_file_seq }"> ${attach.file_nm }</span>
+				                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
+				                            </div><!-- btn-orange -->
+				                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+				                          </div><!-- col-3 -->
+				                          <div class="col-sm-2">
+				                          	<a class="btn-check">
+				                            	<i class="fa fa-times"></i>
+				                            </a>
+				                          </div><!-- col-1 -->
+				                        </div><!-- row -->
+									</c:if>
+								</c:forEach>
+	                      	</c:if>
+	                        <div class="row uploadDoc col-sm-4">
+	                          <div class="col-sm-10">
+	                            <div class="fileUpload btn btn-orange">
+	                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+	                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
+	                              <input type="file" class="upload up" id="up" onchange="readURL(this);" />
+	                            </div><!-- btn-orange -->
+	                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+	                          </div><!-- col-3 -->
+	                          <div class="col-sm-2"><a class="btn-check">
+	                            <i class="fa fa-times"></i></a>
+	                          </div><!-- col-1 -->
+	                        </div><!-- row -->
 	                      </div><!-- uploader -->
 	                    </div><!-- one -->
 	                  </div><!-- row -->
@@ -276,7 +272,7 @@ $(function(){
 			let delAttNo = fileSpan.data("attno");
 			console.log(delAttNo);
 			let newInput = $("<input>").attr({
-							"type" : "text"
+							"type" : "hidden"
 							, "name" : "delAttNos"
 						}).val(delAttNo);
 			

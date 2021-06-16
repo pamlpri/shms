@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
@@ -100,10 +101,13 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		return lectureStudentDAO.selectTaskList(search);
 	}
 	
+	@Transactional
 	@Override
 	public ServiceResult insertTask(TaskSubmitVO taskSubmit) {
 		ServiceResult result = ServiceResult.FAIL;
+		
 		int cnt = lectureStudentDAO.insertTask(taskSubmit);
+		
 		if(cnt > 0) {
 			cnt += processes(taskSubmit);
 			if(cnt > 0) {
@@ -144,7 +148,8 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 								break;
 							}
 						}
-						logger.info("lectureVO {} ", taskSubmit);
+						logger.info("taskSubmitVO {} ", taskSubmit);
+						logger.info("isUpload :{}", isUpload);
 						if(isUpload) cnt += lectureStudentDAO.insertAttaches(taskSubmit);
 						logger.info("cnt {}" , cnt);
 						client.logout();
@@ -174,7 +179,8 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		return lectureStudentDAO.selectTaskSubmit(submit_no);
 		
 	}
-
+	
+	@Transactional
 	@Override
 	public ServiceResult updateTask(TaskSubmitVO taskSubmit) {
 		ServiceResult result = ServiceResult.FAIL;
