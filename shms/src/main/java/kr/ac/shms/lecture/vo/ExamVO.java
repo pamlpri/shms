@@ -44,7 +44,7 @@ public class ExamVO {
 	private String test_stat;
 	private Integer stdnt_cnt;
 	private Integer exam_cnt;
-	
+
 	private Integer gg_cnt;
 	private Integer dd_cnt;
 	private Integer ss_cnt;
@@ -53,6 +53,9 @@ public class ExamVO {
 	private Integer ss_sum;
 	private Integer ques_sum;
 	private Integer exam_time;
+	
+	private String exam_begin_dt_char;
+	private String exam_end_dt_char;
 	
 	private List<QuesVO> quesList;
 	

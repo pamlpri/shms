@@ -673,10 +673,10 @@
 		SELECT * FROM DUAL
 	</insert>
 	
-	<select id="selectExamList" parameterType="ExamVO" resultType="ExamVO">
+	<select id="selectExamList" parameterType="String" resultType="ExamVO">
 		SELECT exam_no,
 		       test_cl,
-		       (CASE WHEN a.test_cl = 'JG' THEN '중간고사'
+		       (CASE WHEN test_cl = 'JG' THEN '중간고사'
 		        WHEN test_cl = 'GM' THEN '기말고사' END) test_nm,
 		       <![CDATA[
 			       (CASE WHEN exam_begin_dt > SYSDATE THEN '진행전'
@@ -685,6 +685,8 @@
 		       ]]>
 		       exam_begin_dt,
 		       exam_end_dt,
+		       TO_CHAR(exam_begin_dt, 'YYYY.MM.DD AM HH:MI') exam_begin_dt_char,
+       		   TO_CHAR(exam_end_dt, 'YYYY.MM.DD AM HH:MI') exam_end_dt_char,
 		       (SELECT COUNT(a.stdnt_no)
 		          FROM sugang_req a
 		         WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
@@ -694,6 +696,7 @@
 		         WHERE b.exam_no = exam_no) exam_cnt
 		  FROM exam
 		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		 ORDER BY exam_no DESC
 	</select>
 	
 	<select id="selectExamDetail" parameterType="ExamVO" resultType="ExamVO">

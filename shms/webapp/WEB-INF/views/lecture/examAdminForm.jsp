@@ -171,7 +171,6 @@
       <div class="text-center">
         <a href="${cPath }/lecture/examAdmin.do" class="btn btn-secondary">취소</a>
         <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
-        <button type="button" class="btn btn-danger" id="saveBtn">삭제</button>
       </div>
     </form>
 

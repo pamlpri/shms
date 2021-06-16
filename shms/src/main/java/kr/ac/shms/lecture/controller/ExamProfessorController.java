@@ -1,5 +1,7 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
@@ -88,14 +91,23 @@ public class ExamProfessorController {
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
+		List<ExamVO> examList = lectureProfessorService.selectExamList(lec_code);
+		model.addAttribute("examList", examList);
 		return "lecture/examAdmin";
 	}
 	
 	@RequestMapping("/lecture/examAdminList.do")
 	public String examAdminList(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
+		,@RequestParam("what") int exam_no
 		, Model model
 	) {
+		ExamVO examVO = new ExamVO();
+		examVO.setLec_code(lec_code);
+		examVO.setExam_no(exam_no);
+		
+		ExamVO exam = lectureProfessorService.selectExamDetail(examVO);
+		model.addAttribute("exam", exam);
 		return "lecture/examAdminList";
 	}
 	

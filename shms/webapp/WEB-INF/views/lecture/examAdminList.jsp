@@ -9,12 +9,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
   
@@ -110,174 +111,6 @@
                       <td class="text-center">28</td>
                       <td class="text-center">20</td>
                       <td class="text-center">98 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">미응시</td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">0 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center">19</td>
-                      <td class="text-center">97 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">미응시</td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">0 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">미응시</td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center">0 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
-                      <td class="text-center">
-                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><a href="${cPath}/lecture/examOMR.do" class="text-color">송수미</a></td>
-                      <td class="text-center">S1605001</td>
-                      <td class="text-center">행정학과</td>
-                      <td class="text-center">응시</td>
-                      <td class="text-center">50</td>
-                      <td class="text-center">28</td>
-                      <td class="text-center"></td>
-                      <td class="text-center">78 / 100</td>
                       <td class="text-center">
                           <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
                           <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
