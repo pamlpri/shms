@@ -58,7 +58,7 @@ public class ConsultingViewController {
 	) {
 		String userSection = user.getUser_section();
 		String user_id = user.getUser_id();
-		List<ConsultingVO> consultingList = studentService.consltReqList(user_id);
+		List<ConsultingVO> consultingList = studentService.advisorConsltReqList(user_id);
 		model.addAttribute("consultingList", consultingList);
 		model.addAttribute("userSection", userSection);
 		

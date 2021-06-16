@@ -110,8 +110,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<ConsultingVO> consltReqList(String stdnt_no) {
-		return studentDAO.consltReqList(stdnt_no);
+	public List<ConsultingVO> advisorConsltReqList(String stdnt_no) {
+		return studentDAO.advisorConsltReqList(stdnt_no);
 	}
 
 	@Override

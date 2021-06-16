@@ -55,6 +55,8 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 08		최희수	상담 일지 등록, 조회
  * 2021. 06. 10		  박초원    비밀번호 변경
  * 2021. 06. 14		최희수	강의평가 조회
+ * 2021. 06. 16		최희수	취업지원 진로교육 조회
+ * 2021. 06. 16     최희수         취업상담 리스트
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -324,6 +326,11 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public CourseEducVO selectCourseEduc(int boNo) {
 		return lmsCommonDAO.selectCourseEduc(boNo);
+	}
+
+	@Override
+	public List<ConsltDiaryVO> selectConsltReqList(String stdnt_no) {
+		return lmsCommonDAO.selectConsltReqList(stdnt_no);
 	}
 
 	

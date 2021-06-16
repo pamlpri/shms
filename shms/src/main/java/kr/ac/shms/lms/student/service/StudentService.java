@@ -155,7 +155,7 @@ public interface StudentService {
 	 * @param stdnt_no
 	 * @return 데이터가 없으면 null
 	 */
-	public List<ConsultingVO> consltReqList(String stdnt_no);
+	public List<ConsultingVO> advisorConsltReqList(String stdnt_no);
 
 	/**
 	 * 마이페이지 학적 추출

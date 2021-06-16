@@ -1,5 +1,7 @@
 package kr.ac.shms.lms.student.controller;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 
 /**
@@ -25,12 +28,15 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 @Controller
 public class CareerCounselingViewController {
 	private static final Logger logger = LoggerFactory.getLogger(CareerCounselingViewController.class);
+	@Inject
+	private LmsCommonService lmsCommonService;
 	
 	@RequestMapping("/lms/careerCounseling.do")
 	public String careerCounseling(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
+		model.addAttribute("consltReqList",lmsCommonService.selectConsltReqList(user.getUser_id()));
 		return "lms/careerCounseling";
 	}	
 }
