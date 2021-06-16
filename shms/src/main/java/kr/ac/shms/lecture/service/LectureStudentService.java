@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -105,5 +106,12 @@ public interface LectureStudentService {
 	 * @return 성공, 실패
 	 */
 	public ServiceResult updateTask(TaskSubmitVO taskSubmit);
+	
+	/**
+	 * 한 강의에 등록되어 있는 시험 정보 조회
+	 * @param search
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<ExamVO> selectExamList(Map<String, String> search);
 
 }
