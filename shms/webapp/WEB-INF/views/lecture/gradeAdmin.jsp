@@ -51,214 +51,188 @@
                           </tr>
                           </thead>
                           <tbody>                                 
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td class="text-center">송수미</td>
-                              <td class="text-center">S1605001</td>
-                              <td class="text-center">90.25</td>
-                              <td class="text-center">92.25</td>
-                              <td class="text-center">20.25</td>
-                              <td class="text-center">30.25</td>
-                              <td class="text-center">17</td>
-                              <td class="text-center">
-                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
-                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
-                              </td>
-                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
+	                          <tr>
+	                              <td class="text-center align-middle">송수미</td>
+	                              <td class="text-center align-middle">S1605001</td>
+	                              <td class="text-center">90.25</td>
+	                              <td class="text-center">92.25</td>
+	                              <td class="text-center">20.25</td>
+	                              <td class="text-center">30.25</td>
+	                              <td class="text-center">17</td>
+	                              <td class="text-center">
+	                                  <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
+	                                  <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+	                              </td>
+	                          </tr>
                           </tbody>
                       </table>
                       </div>
@@ -300,7 +274,9 @@ $(document).ready(function(){
     // Edit row on edit button click
     $(document).on("click", ".edit", function(){		
         $(this).parents("tr").find("td:not(:last-child)").each(function(){
-            $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+        	if($(this).index() != 0 && $(this).index() != 1){
+	            $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+        	}
         });		
         $(this).parents("tr").find(".add, .edit").toggle();
         $(".add-new").attr("disabled", "disabled");
