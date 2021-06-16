@@ -66,10 +66,11 @@
       </div>
       <div class="card-body table-scroll" id="table-scroll">
           <div class="text-right excelWrap" style="margin-top: -2%;">
-              <a href="#" class="btn btn-icon btn-primary"><i class="far fa-file"></i> Excel 다운로드</a>
+              <button class="btn btn-icon btn-primary" type="button" onclick="ReportToExcelConverter()"><i class="far fa-file"></i> Excel 다운로드</button>
+	
           </div>
           <div class="table-responsive table-wrap">
-              <table class="table table-striped main-table edit-table" id="report-table">
+              <table class="table2excel table table-striped main-table edit-table" id="report-table">
                   <thead>              
                   <tr>
                       <th class="text-center">이름</th>
@@ -98,11 +99,12 @@
 			                      </c:choose>
 		                      </td>
 		                      <td class="text-center">${taskSubmit.task_score }</td>
-		                      <td class="text-center">
+		                      <td class="text-center noExl">
 		                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
 		                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
 		 	  					  <input type="hidden" name="set_task_no" value="${setTask.set_task_no }"/>
 				                  <input type="hidden" name="submit_no" value="${taskSubmit.submit_no }"/>
+				                  <input type="hidden" class="oriScore" value="${taskSubmit.task_score }"/>
 		                      </td>
 		                  </tr>
                   		</c:forEach>
@@ -140,8 +142,11 @@
 	</div>
   <!-- contents end -->
 </div>
+<iframe id="txtArea1" style="display:none"></iframe>
+
 <script>
 $(document).ready(function(){
+	let status = "${setTask.process_at }";
     $('[data-toggle="tooltip"]').tooltip();
     var actions = $("table td:last-child").html();
     // Append table with add row form on add new button click
@@ -151,6 +156,7 @@ $(document).ready(function(){
         var empty = false;
         var input = $(this).parents("tr").find('input[type="text"]');
         let score = null;
+        let oriScore = $(this).parents("tr").find(".oriScore").val();
         let setTaskNo = "${setTask.set_task_no}";
         let taskAllot = "${setTask.task_allot}";
         let submitNo = $(this).siblings("input[name='submit_no']").val();
@@ -179,8 +185,12 @@ $(document).ready(function(){
 	            	}, dataType : "text"
 	            	, success : function(resp){
 			            $(that).parents("tr").find(".add, .edit").toggle();
-	            		$(that).parent("td").html(score);
 			            $(".add-new").removeAttr("disabled");
+			            if(resp.indexOf("완료") != -1){
+		            		$(that).parent("td").html(score);
+			            }else{
+		            		$(that).parent("td").html(oriScore);
+			            }
 			            
 			            $("#default").find(".modal-body p").empty().text(resp);
 			    		$("#default").addClass("show").css("display","block");
@@ -201,10 +211,11 @@ $(document).ready(function(){
     // Edit row on edit button click
     $(document).on("click", ".edit", function(event){
     	let aTag = $(this).parents("tr").find("td").eq(3);
-    	if(aTag.text().indexOf("미제출")!=-1) return false;
+    	if(aTag.text().indexOf("미제출") != -1) return false;
+        if(status.indexOf("진행중") != -1) return false;
         $(this).parents("tr").find("td").eq(4).each(function(){
             $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
-        });		
+        });
         $(this).parents("tr").find(".add, .edit").toggle();
         $(".add-new").attr("disabled", "disabled");
     });
@@ -212,5 +223,6 @@ $(document).ready(function(){
  	$('#report-table').DataTable({
     	
     });
+	
 });
 </script>
