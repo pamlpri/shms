@@ -1,22 +1,14 @@
 package kr.ac.shms.lecture.service.impl;
 
-import java.io.ByteArrayInputStream;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.vo.AttachVO;
-import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lecture.dao.LectureDAO;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.SetTaskVO;

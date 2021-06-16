@@ -266,19 +266,28 @@
 	<select id="selectTaskSubmit" parameterType="int" resultMap="taskSubmitMap">	
 		SELECT
 		    submit_no,
-		    set_task_no,
+		    a.set_task_no,
 		    title,
 		    cont,
 		    writer,
+		    c.name,
+		    d.sub_name,
 		    submit_dt,
 		    task_score,
 		    a.atch_file_no,
 		    b.atch_file_seq,
-		    b.file_nm
+		    b.file_nm,
+        	e.task_allot
 		FROM
 		    task_submit a
 		    LEFT OUTER JOIN attach b
 		    ON(a.atch_file_no = b.atch_file_no)
+		    INNER JOIN student c 
+     		ON(a.writer = c.stdnt_no)
+ 		    INNER JOIN subject d
+		    ON(c.sub_code = d.sub_code)
+		    INNER JOIN set_task e
+		    ON(a.set_task_no = e.set_task_no)		    
 		WHERE
 		    submit_no = #{submit_no, jdbcType=NUMERIC}
 	</select>

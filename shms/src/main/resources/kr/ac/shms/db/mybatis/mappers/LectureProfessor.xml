@@ -672,4 +672,12 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
+		
+	<update id="updateTaskScore" parameterType="TaskSubmitVO">
+		UPDATE task_submit
+		   SET
+		       task_score = #{task_score, jdbcType=NUMERIC}
+		WHERE
+		    submit_no = #{submit_no, jdbcType=NUMERIC}
+	</update>
 </mapper>
