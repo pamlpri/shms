@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
@@ -62,7 +63,7 @@ public class TuitionServiceImpl implements TuitionService{
 	}
 
 	@Override
-	public String selectRefundAmt(String stdnt_no) {
+	public TuitionVO selectRefundAmt(String stdnt_no) {
 		return tuitionDAO.selectRefundAmt(stdnt_no);
 	}
 
@@ -72,13 +73,13 @@ public class TuitionServiceImpl implements TuitionService{
 		TuitionVO tuition = new TuitionVO();
 		tuition = tuitionDAO.selectTuitionReceipt(stdnt_no);
 		List<ComCodeVO> resnList = tuitionDAO.selectRefundResn();
-		String refundAmt = tuitionDAO.selectRefundAmt(stdnt_no);
+		TuitionVO refundVO = tuitionDAO.selectRefundAmt(stdnt_no);
 		MypageVO info = studentDAO.regInfo(stdnt_no);
 		String reginfoStat = info.getReginfo_stat();
 		
 		paramMap.put("tuition", tuition);
 		paramMap.put("resnList", resnList);
-		paramMap.put("refundAmt", refundAmt);
+		paramMap.put("refundVO", refundVO);
 		paramMap.put("reginfoStat", reginfoStat);
 	}
 
@@ -86,15 +87,16 @@ public class TuitionServiceImpl implements TuitionService{
 	public int selectRecivSchl(String stdnt_no) {
 		return tuitionDAO.selectRecivSchl(stdnt_no);
 	}
+
+	@Override
+	public ServiceResult insertRefundReq(TuitionVO tuition) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.insertRefundReq(tuition);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-

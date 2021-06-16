@@ -59,7 +59,9 @@
 		       EXTRACT(YEAR FROM c.pay_dt) year,
 		       EXTRACT(MONTH FROM c.pay_dt) month,
 		       EXTRACT(DAY FROM c.pay_dt) day,
-		       b.reg_amt regAmt
+		       b.reg_amt regAmt,
+		       pay_amt,
+		       pay_dtls_no
 		  FROM student a
 		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
 		 INNER JOIN reg_fee_pay c ON(a.stdnt_no=c.stdnt_no)
@@ -77,9 +79,10 @@
 		  WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
 	</select>
 	
-	<select id="selectRefundAmt" resultType="String" parameterType="String">
+	<select id="selectRefundAmt" resultType="TuitionVO" parameterType="String">
 		<![CDATA[
-		SELECT CASE WHEN SYSDATE-startHG <= 30 THEN TO_CHAR(FLOOR(pay_amt*5/6), '999,999,999')
+		SELECT pay_dtls_no,
+		       CASE WHEN SYSDATE-startHG <= 30 THEN TO_CHAR(FLOOR(pay_amt*5/6), '999,999,999')
 		            WHEN SYSDATE-startHG > 30 and SYSDATE-startHG <= 60 THEN TO_CHAR(FLOOR(pay_amt*2/3), '999,999,999')
 		            WHEN SYSDATE-startHG > 60 AND SYSDATE-startHG <= 90 THEN TO_CHAR(FLOOR(pay_amt*1/2), '999,999,999')
 		       END AS refund
@@ -89,7 +92,8 @@
 		       (SELECT begin_dt
 		          FROM schedule a
 		         WHERE title = TO_CHAR(EXTRACT(YEAR FROM SYSDATE))||'학년도 '||        
-		            TO_CHAR((SELECT semstr FROM v_semstr))||'학기 등록금 수납 기간') startHG
+		            TO_CHAR((SELECT semstr FROM v_semstr))||'학기 등록금 수납 기간') startHG,
+		       pay_dtls_no
 		  FROM reg_fee_pay 
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND pay_year=EXTRACT(YEAR FROM SYSDATE)
@@ -105,4 +109,25 @@
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND EXTRACT(YEAR FROM reciv_date)=EXTRACT(YEAR FROM SYSDATE)
 	</select>
+	<insert id="insertRefundReq" parameterType="TuitionVO">
+		INSERT INTO reg_fee_re (
+				    req_no,
+				    pay_dtls_no,
+				    req_dt,
+				    req_resn,
+				    refund_amt,
+				    process_stat,
+				    refuse_resn,
+				    refund_dt
+			) VALUES (
+			    REG_RE_SEQ.NEXTVAL,
+			    #{pay_dtls_no, jdbcType=NUMERIC},
+			    SYSDATE,
+			    #{req_resn, jdbcType=VARCHAR},
+			    #{refund_amt, jdbcType=NUMERIC},
+			    DEFAULT,
+			    NULL,
+			    NULL,
+			)
+	</insert>
 </mapper>

@@ -108,14 +108,14 @@
                   </tbody>
               </table>
               <div class="text-center" style="margin-top: 40px;">
-	              <c:if test="${reginfoStat eq '재학'} ">
-	              </c:if>
-	              <c:if test="${empty tuition }">
-	              </c:if>
-	              <c:if test="${reginfoStat  eq '재학'} AND ${not empty tuition }">
+	              <c:if test="${not empty tuition.pay_amt && reginfoStat ne '재학' }">
 	                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
 	                      환불신청
 	                  </button>
+	              </c:if>
+	              <c:if test="${reginfoStat eq '재학'} ">
+	              </c:if>
+	              <c:if test="${empty tuition }">
 	              </c:if>
           
               </div>
@@ -136,7 +136,11 @@
                       <i data-feather="x"></i>
                   </button>
               </div>
-              <form action="${cPath }/lms/tuitionRefundForm.do">
+              <form action="${cPath }/lms/tuitionRefundForm.do" id="refundForm" method="post">
+	              <input type="text" name="pay_dtls_no" value="${refundVO.pay_dtls_no }">
+	              <input type="text" name="stdnt_no" value="${tuition.stdnt_no }">
+	              <input type="text" name="refund" value="${refundVO.refund }">
+	              
                   <div class="modal-body">
                       <div class="form-group">
                           <h6>학번</h6>
@@ -148,12 +152,12 @@
                       </div>
                       <div class="form-group">
                           <h6>환불금액</h6>
-                          <input class="form-control form-control-default" type="text" value="${refundAmt }원" disabled/>
+                          <input class="form-control form-control-default" type="text" value="${refundVO.refund }원" disabled/>
                       </div>
                       <div class="form-group">
                           <h6>신청사유</h6>
                           <fieldset class="form-group">
-                              <select class="form-select" id="basicSelect">
+                              <select class="form-select" id="basicSelect" name="selectResn">
                                   <option value="">-- 사유선택 --</option>
                                   <c:forEach var="resnList" items="${resnList }">
                                   		<option value="${resnList.com_code }">${resnList.com_code_nm }</option>
@@ -170,7 +174,7 @@
                           <i class="bx bx-x d-block d-sm-none"></i>
                           <span class="d-none d-sm-block">닫기</span>
                       </button>
-                      <button type="button" class="btn btn-primary ml-1"
+                      <button type="submit" class="btn btn-primary ml-1"
                           data-bs-dismiss="modal">
                           <i class="bx bx-check d-block d-sm-none"></i>
                           <span class="d-none d-sm-block">저장</span>
@@ -211,25 +215,36 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="valiModal" tabindex="-1" aria-labelledby="valiModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="valiModalBody">
+        <c:if test="${not empty message }">
+        	${message }
+        	<script type="text/javascript">
+        		$("#valiModal").modal();
+        	</script>
+		</c:if>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- contents end -->
 </div>
 <script type="text/javascript">
 	$(function(){
-		let 
-		
 		$(".ml-1").on("click", function(){
-			$.ajax({
-				url : "${cPath}/lms/tuitionRefundForm.do"
-				, method : "post"
-				, datType : "json"
-				, success : function(res){
-					
-				}, error : function(error, xhr, msg){
-					console.log(xhr);
-					console.log(error);
-					console.log(msg);
-				} 
-			});
+			$("#refundForm").submit();
 		});
 	});
 

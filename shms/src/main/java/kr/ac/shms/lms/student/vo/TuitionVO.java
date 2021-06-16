@@ -1,7 +1,11 @@
 package kr.ac.shms.lms.student.vo;
 
+import javax.validation.constraints.NotNull;
+
+import kr.ac.shms.validator.TuitionRefundReqInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -20,8 +24,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of="pay_dtls_no")
 public class TuitionVO {
+	
+	@NotNull(groups=TuitionRefundReqInsertGroup.class)
 	private Integer pay_dtls_no;
+	@NotNull(groups=TuitionRefundReqInsertGroup.class)
 	private String stdnt_no;
 	private String pay_amt;
 	private String pay_dt;
@@ -45,6 +53,10 @@ public class TuitionVO {
 	
 	private String refund;		// 환불 가능 금액
 	private String recivAmt;
+	@NotNull(groups=TuitionRefundReqInsertGroup.class)
+	private Integer refund_amt;
+	@NotNull(groups=TuitionRefundReqInsertGroup.class, message="필수항목")
+	private String req_resn;
 	
 	
 }
