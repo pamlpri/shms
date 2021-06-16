@@ -62,6 +62,10 @@ public class ExamVO {
 	private String exam_begin_dt_char;
 	private String exam_end_dt_char;
 	
+	private String sub_name;
+	private String name;
+	private Integer res_score;
+	
 	private List<QuesVO> quesList;
 	private List<StudentVO> stdntList;	// 시험 응시하는 학생 명단
 	

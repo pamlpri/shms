@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -247,6 +248,20 @@ public interface LectureProfessorDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public ExamVO selectExamDetail(ExamVO exam);
+	
+	/**
+	 * 하나의 시험을 응시하는 학생에 대한 정보 조회
+	 * @param examVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<ExamVO> selectExamStudentList(ExamVO exam);
+	
+	/**
+	 * 하나의 시험의 답안지 조회
+	 * @param exam_no
+	 * @return cnt
+	 */
+	public List<QuesVO> selectQuesList(int exam_no);
 	
 	/**
 	 * 학생이 제출한 과제 성적 입력

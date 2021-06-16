@@ -40,14 +40,30 @@
 	<script src="${cPath }/resources/lecture/dist/js/jquery.table2excel.min.js"></script>
 	<script>
 	function ReportToExcelConverter() {
-		$("#report-table").table2excel({
+		$('<table>').append(
+           $("#report-table").DataTable().$('tr').clone()
+        ).table2excel({
 			exclude: ".noExl"
 			, name: "Excel Document Name",
-			filename: "report" +'.xls', //확장자를 여기서 붙여줘야한다. 
+			filename: "report" +'.xls',
 			fileext: ".xls", 
 			exclude_img: true, 
 			exclude_links: true,
 			exclude_inputs: true 
 		}); 
 	}; 
+	
+	function ExamStudentToExcelConverter(){
+		$('<table>').append(
+           $("#report-table").DataTable().$('tr').clone()
+        ).table2excel({
+        	exclude: ".noExl"
+   			, name: "Excel Document Name",
+   			filename: "exam" +'.xls', 
+   			fileext: ".xls", 
+   			exclude_img: true, 
+   			exclude_links: true,
+   			exclude_inputs: true
+        });
+	}
 	</script>

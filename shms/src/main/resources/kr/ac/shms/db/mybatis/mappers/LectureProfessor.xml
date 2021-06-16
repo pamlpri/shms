@@ -698,7 +698,14 @@
 		 ORDER BY exam_no DESC
 	</select>
 	
-	<select id="selectExamDetail" parameterType="ExamVO" resultType="ExamVO">
+	<resultMap type="ExamVO" id="examMap" autoMapping="true">
+		<id property="exam_no" column="exam_no"/> 
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectExamDetail" parameterType="ExamVO" resultMap="examMap">
 		 SELECT exam_no,
 		        lec_code,
 		        test_cl,
@@ -728,19 +735,75 @@
        		    TO_CHAR(exam_end_dt, 'YYYY.MM.DD AM HH:MI') exam_end_dt_char,
 		        exam_begin_dt,
 		        exam_end_dt,
-		        atch_file_no,
-		        (SELECT COUNT(a.stdnt_no)
-		           FROM sugang_req a
-		          WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		        (SELECT COUNT(b.stdnt_no)
+		           FROM sugang_req b
+		          WHERE b.lec_code = #{lec_code, jdbcType=VARCHAR}
 		            AND lec_code = a.lec_code) stdnt_cnt,
 		        (SELECT COUNT(b.exam_no)
 		           FROM take_exam b
-		          WHERE b.exam_no = exam_no) exam_cnt
-		   FROM exam 
+		          WHERE b.exam_no = a.exam_no) exam_cnt,
+		        a.atch_file_no,
+	   		    b.atch_file_seq,
+			    b.file_nm
+		   FROM exam a
+		  		LEFT OUTER JOIN attach b ON(a.atch_file_no = b.atch_file_no)
 		  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
 		    AND exam_no = #{exam_no, jdbcType=NUMERIC}
 	</select>
 		
+	<select id="selectExamStudentList" parameterType="ExamVO" resultType="ExamVO">
+		SELECT a.exam_no,
+		       a.lec_code,
+		       b.stdnt_no,
+		       d.name,
+		       (SELECT sub_name
+		          FROM subject
+		         WHERE d.sub_code = sub_code) sub_name,
+		       c.applcn_no,
+		       DECODE(c.applcn_no, null, '미응시', '응시') applcn_at,
+		       (SELECT SUM(ques_allot)
+		          FROM v_selectquesscore
+		         WHERE stdnt_no = b.stdnt_no
+		           AND exam_no = #{exam_no, jdbcType=NUMERIC}
+		           AND ques_type = 'GG'
+		           AND ans_at = 'Y') gg_sum,
+		       (SELECT SUM(ques_allot)
+		          FROM v_selectquesscore
+		         WHERE stdnt_no = b.stdnt_no
+		           AND exam_no = #{exam_no, jdbcType=NUMERIC}
+		           AND ques_type = 'DD'
+		           AND ans_at = 'Y') dd_sum,
+		        (SELECT SUM(ques_allot)
+		          FROM v_selectquesscore
+		         WHERE stdnt_no = b.stdnt_no
+		           AND exam_no = #{exam_no, jdbcType=NUMERIC}
+		           AND ques_type = 'SS'
+		           AND ans_at = 'Y') ss_sum,
+		        c.res_score
+		  FROM exam a
+		  CROSS JOIN (SELECT stdnt_no
+		                     FROM sugang_req
+		                    WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		                      AND sugang_at = 'Y') b
+		  LEFT OUTER JOIN take_exam c
+		    ON (a.exam_no = c.exam_no AND b.stdnt_no = c.stdnt_no)
+		  INNER JOIN student d ON(b.stdnt_no = d.stdnt_no)
+		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND a.exam_no = #{exam_no, jdbcType=NUMERIC}
+		 ORDER BY b.stdnt_no ASC
+	</select>
+	
+	<select id="selectQuesList" parameterType="int" resultType="QuesVO">
+		SELECT exam_no,
+		       ques_no,
+		       ques_type,
+		       ques_ans,
+		       ques_allot
+		  FROM exam_ques
+		 WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+		 ORDER BY ques_no ASC
+	</select>
+	
 	<update id="updateTaskScore" parameterType="TaskSubmitVO">
 		UPDATE task_submit
 		   SET
@@ -748,4 +811,5 @@
 		WHERE
 		    submit_no = #{submit_no, jdbcType=NUMERIC}
 	</update>
+	
 </mapper>
