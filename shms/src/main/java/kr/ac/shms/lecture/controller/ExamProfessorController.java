@@ -111,6 +111,38 @@ public class ExamProfessorController {
 		return "lecture/examAdminList";
 	}
 	
+	@RequestMapping("/lecture/examUpdate.do")
+	public String examUpdateForm(
+		@SessionAttribute(name="lec_code", required=false) String lec_code
+		,@RequestParam("what") int exam_no
+		, Model model
+	) {
+		ExamVO examVO = new ExamVO();
+		examVO.setLec_code(lec_code);
+		examVO.setExam_no(exam_no);
+		ExamVO exam = lectureProfessorService.selectExamDetail(examVO);
+		
+		String exam_begin_dt = exam.getExam_begin_dt();
+        if(StringUtils.isNotBlank(exam_begin_dt)) {
+        	String date = exam_begin_dt.substring(0, exam_begin_dt.indexOf(" "));
+        	String time = exam_begin_dt.substring(exam_begin_dt.indexOf(" ") + 1);
+        	String set_exam_begin_dt = date + "T" + time;
+        	exam.setExam_begin_dt(set_exam_begin_dt);
+        }
+        
+        String exam_end_dt = exam.getExam_end_dt();
+        if(StringUtils.isNotBlank(exam_begin_dt)) {
+        	String date = exam_end_dt.substring(0, exam_end_dt.indexOf(" "));
+        	String time = exam_end_dt.substring(exam_end_dt.indexOf(" ") + 1);
+        	String set_exam_end_dt = date + "T" + time;
+        	exam.setExam_end_dt(set_exam_end_dt);
+        }
+		
+        model.addAttribute("exam", exam);
+        model.addAttribute("update", "update");
+		return "lecture/examAdminForm";
+	}
+	
 	@RequestMapping("/lecture/examOMR.do")
 	public String examOMR(
 			@SessionAttribute(name="lec_code", required=false) String lec_code

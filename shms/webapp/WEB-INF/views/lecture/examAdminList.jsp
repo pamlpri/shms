@@ -31,52 +31,76 @@
       <div class="card-body">
         <div class="table-responsive">
           <div class="text-right excelWrap">
-            <a href="examAdminForm.html" class="btn btn-icon btn-primary"><i class="fas fa-pen"></i> 시험수정</a>
+            <a href="${cPath }/lecture/examUpdate.do?what=${exam.exam_no}" class="btn btn-icon btn-primary"><i class="fas fa-pen"></i> 시험수정</a>
           </div>
           <table class="table table-bordered table-md">
+          	<colgroup>
+          		<col width="20%" />
+          		<col width="80%" />
+          	</colgroup>
             <tr>
               <th>시험분류</th>
-              <td class="text-left">2학기 중간고사</td>
+              <td class="text-left">${exam.test_nm }</td>
             </tr>
             <tr>
               <th>시험형식</th>
-              <td class="text-left">온라인 시험</td>
+              <td class="text-left">
+              	<c:choose>
+              		<c:when test="${exam.online_at eq 'Y'}">온라인</c:when>
+              		<c:when test="${exam.online_at eq 'N'}">오프라인</c:when>
+              	</c:choose>
+              </td>
             </tr>
             <tr>
               <th>시험유형</th>
-              <td class="text-left">혼합식</td>
+              <td class="text-left">
+              	<c:choose>
+              		<c:when test="${exam.exam_type eq 'TH'}">혼합식</c:when>
+              		<c:when test="${exam.exam_type eq 'GG'}">객관식</c:when>
+              		<c:when test="${exam.exam_type eq 'DD'}">주관식 단답형</c:when>
+              		<c:when test="${exam.exam_type eq 'SS'}">주관식 서술형</c:when>
+              	</c:choose>
+              </td>
             </tr>
-            <tr>
-              <th>객관식</th>
-              <td class="text-left">50점</td>
-            </tr>
-            <tr>
-              <th>단답형</th>
-              <td class="text-left">30점</td>
-            </tr>
-            <tr>
-              <th>서술형</th>
-              <td class="text-left">20점</td>
-            </tr>
+            <c:choose>
+            	<c:when test="${not empty exam.gg_sum}">
+		            <tr>
+		              <th>객관식</th>
+		              <td class="text-left">${exam.gg_sum }점</td>
+		            </tr>
+            	</c:when>
+            	<c:when test="${not empty exam.dd_sum }">
+		            <tr>
+		              <th>단답형</th>
+		              <td class="text-left">${exam.dd_sum }점</td>
+		            </tr>
+            	</c:when>
+            	<c:when test="${not empty exam.ss_sum }">
+		            <tr>
+		              <th>서술형</th>
+		              <td class="text-left">${exam.ss_sum }점</td>
+		            </tr>
+            	</c:when>
+            </c:choose>
             <tr>
               <th>총점</th>
-              <td class="text-left">100점</td>
+              <td class="text-left">${exam.ques_sum }점</td>
             </tr>
             <tr>
               <th>시험시작</th>
-              <td class="text-left">2021.05.05 오후 12:00</td>
+              <td class="text-left">${exam.exam_begin_dt_char }</td>
             </tr>
             <tr>
               <th>시험종료</th>
-              <td class="text-left">2021.05.05 오후 13:00</td>
+              <td class="text-left">${exam.exam_end_dt_char }</td>
             </tr>
             <tr>
               <th>시험시간</th>
-              <td class="text-left">60분</td>
+              <td class="text-left">${exam.exam_time }분</td>
             </tr>
             <tr>
               <th>응시</th>
-              <td class="text-left">12 / 15</td>
+              <td class="text-left">${exam.exam_cnt } / ${exam.stdnt_cnt }</td>
             </tr>
           </table>
         </div>
