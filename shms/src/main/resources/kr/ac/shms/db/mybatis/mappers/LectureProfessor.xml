@@ -580,18 +580,22 @@
 		    exam_end_dt,
 		    online_at,
 		    exam_type,
-		    ques_cnt,
-		    atch_file_no
+		    ques_cnt
+		    <if test="attachList != null">
+			    ,atch_file_no
+		  	</if>
 		) VALUES (
 		    #{exam_no},
 		    #{test_cl, jdbcType=VARCHAR},
 		    #{lec_code, jdbcType=VARCHAR},
-		    #{exam_begin_dt, jdbcType=TIMESTAMP},
-		    #{exam_end_dt, jdbcType=TIMESTAMP},
+		    TO_DATE(#{exam_begin_dt, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
+		    TO_DATE(#{exam_end_dt, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
 		    #{online_at, jdbcType=VARCHAR},
 		    #{exam_type, jdbcType=VARCHAR},
-		    #{ques_cnt, jdbcType=NUMERIC},
-		    #{atch_file_no, jdbcType=NUMERIC}
+		    #{ques_cnt, jdbcType=NUMERIC}
+		    <if test="attachList != null">
+		    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
+		    </if>
 		)
 	</insert>
 	
@@ -606,10 +610,10 @@
 		    ques_allot
 		) VALUES (
 		    #{exam_no},
-		    #{ques_no, jdbcType=NUMERIC},
-		    #{ques_type, jdbcType=VARCHAR},
-		    #{ques_ans, jdbcType=VARCHAR},
-		    #{ques_allot, jdbcType=NUMERIC}
+		    #{ques.ques_no, jdbcType=NUMERIC},
+		    #{ques.ques_type, jdbcType=VARCHAR},
+		    #{ques.ques_ans, jdbcType=VARCHAR},
+		    #{ques.ques_allot, jdbcType=NUMERIC}
 		)
 		</foreach>
 		SELECT * FROM DUAL
@@ -617,36 +621,54 @@
 	
 	<insert id="insertExamAttaches" parameterType="ExamVO">
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
-		SELECT COUNT(*)+1 startAttNo
-		FROM ATTACH
-		WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+			SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
+			FROM ATTACH
+		<choose>
+			<when test="atch_file_no != null and !atch_file_no.equals('')">
+				WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
+			</when>
+			<otherwise>
+				WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+			</otherwise>
+		</choose>
 		</selectKey>
 		INSERT ALL
 		<foreach collection="attachList" item="attatch" index="idx">
-		INTO ATTACH(
-			atch_file_no,
-		    atch_file_seq,
-		    file_path,
-		    file_nm,
-		    file_cont_type,
-		    file_size,
-		    reg_date,
-		    reg_user_id,
-		    biz_type,
-		    save_file_nm
-	    )
-		VALUES (
-			(SELECT MAX(atch_file_no) + 1 FROM attach)
-			, #{startAttNo} + #{idx}
-			, #{attatch.file_path,jdbcType=VARCHAR}
-			, #{attatch.file_nm,jdbcType=VARCHAR}
-			, #{attatch.file_cont_type,jdbcType=VARCHAR}
-			, #{attatch.file_size,jdbcType=NUMERIC}
-			, sysdate
-			, #{sender, jdbcType=VARCHAR}
-			, 'WM'
-			, #{attatch.save_file_nm,jdbcType=VARCHAR}
-		)
+			INTO ATTACH(
+				atch_file_no,
+			    atch_file_seq,
+			    file_path,
+			    file_nm,
+			    file_cont_type,
+			    file_size,
+			    reg_date,
+			    reg_user_id,
+			    biz_type,
+			    save_file_nm
+		    )
+			VALUES (
+			<choose>
+				<when test="atch_file_no != null and !atch_file_no.equals('')">
+					#{atch_file_no, jdbcType=NUMERIC}
+				</when>
+				<otherwise>
+					(SELECT MAX(atch_file_no) + 1 FROM attach)
+				</otherwise>
+			</choose>
+				, #{startAttNo} + #{idx}
+				, #{attatch.file_path,jdbcType=VARCHAR}
+				, #{attatch.file_nm,jdbcType=VARCHAR}
+				, #{attatch.file_cont_type,jdbcType=VARCHAR}
+				, #{attatch.file_size,jdbcType=NUMERIC}
+				, SYSDATE
+				, (SELECT name 
+					FROM curriculum a 
+					INNER JOIN staff b  
+					ON(a.staff_no = b.staff_no)
+					WHERE cur_code = SUBSTR(#{lec_code}, 1, 8))
+				, 'GC'
+				, #{attatch.save_file_nm,jdbcType=VARCHAR}
+			)
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>

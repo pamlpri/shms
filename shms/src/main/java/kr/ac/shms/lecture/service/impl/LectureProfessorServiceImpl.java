@@ -389,8 +389,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		
 		if(cnt > 0) {
 			cnt += insertQues(exam);
-//			cnt += examProcesses(exam);
-			
+			cnt += examProcesses(exam);
 			if(cnt > 0) {
 				result = ServiceResult.OK;
 			}
@@ -417,14 +416,13 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 				client.connect(ip, port);
 				int reply = client.getReplyCode();
 				logger.info("client Connect : {}", reply);
-				if(FTPReply.isPositiveCompletion(reply)) { // 접속 연결이 됐을 경우 
-					if(client.login(id, pw)) {	// FTP 서버 로그인 성공 했을 경우
-						System.out.println("Login Success");
-						client.setBufferSize(1000);	// 버퍼 사이즈
-						client.enterLocalPassiveMode();	// 공유기를 상대로 파일 전송하기 위해 패시브 모드로 지정해줘야함
+				if(FTPReply.isPositiveCompletion(reply)) { 
+					if(client.login(id, pw)) {	
+						client.setBufferSize(1000);	
+						client.enterLocalPassiveMode();	
+						
 						String dir = "/lecture/" + exam.getExam_no() + "/exam";
 						
-//						String dir = "/test"; // 해당 게시판에 따라 dir 이 달라져야함
 						boolean isDirectory = client.changeWorkingDirectory(dir);	// 파일 경로 지정
 						for(AttachVO attach : attachList) {
 							attach.setFile_path(dir);
