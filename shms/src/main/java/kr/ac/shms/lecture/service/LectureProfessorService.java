@@ -28,6 +28,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 14.	  박초원			 주/회차 조회, 수정
  * 2021. 06. 15.	  박초원			 주/회차 삭제
  * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
+ * 2021. 06. 16.      송수미 			 교수 - 학생이 제출한 과제 성적 입력
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -166,11 +167,17 @@ public interface LectureProfessorService {
 	 */
 	public List<TaskSubmitVO> selectTaskSubmitList(Map<String, Object> searchMap);
 	
-
 	/**
 	 * 시험 출제
 	 * @param examVO
 	 * @return cnt
 	 */
 	public ServiceResult insertExam(ExamVO exam);
+	
+	/**
+	 * 학생이 제출한 과제 성적 입력
+	 * @param taskSubmit
+	 * @return 성공, 실패
+	 */
+	public ServiceResult updateTaskScore(TaskSubmitVO taskSubmit);
 }

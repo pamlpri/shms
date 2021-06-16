@@ -167,13 +167,13 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 <c:if test="${not empty message }">
-<script>
-	$("#default").find(".modal-body p").empty().text("${message}");
-	$("#default").addClass("show").css("display","block");
-    $("#close, .modal").on("click", function(){
-	$("#default").removeClass("show").css("display","none");
-	})
-</script>
+	<script>
+		$("#default").find(".modal-body p").empty().text("${message}");
+		$("#default").addClass("show").css("display","block");
+	    $("#close, .modal").on("click", function(){
+			$("#default").removeClass("show").css("display","none");
+		})
+	</script>
 </c:if>
   
 <script src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>

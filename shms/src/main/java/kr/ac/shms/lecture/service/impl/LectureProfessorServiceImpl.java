@@ -19,6 +19,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.dao.LectureProfessorDAO;
+import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
@@ -53,6 +54,8 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorServiceImpl.class);	
 	@Inject
 	private LectureProfessorDAO lectureProfessorDAO;
+	@Inject
+	private LectureStudentDAO lectureStudentDAO;
 	
 	@Value("#{appInfo['ip']}")
 	private String ip;
@@ -455,5 +458,21 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		}
 		return cnt;
 	}
-	
+
+	@Override
+	public ServiceResult updateTaskScore(TaskSubmitVO taskSubmit) {
+		TaskSubmitVO savedTask = lectureStudentDAO.selectTaskSubmit(taskSubmit.getSubmit_no());
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = 0;
+		
+		if(savedTask == null) {
+			result = ServiceResult.NOTEXIST;
+		}else {
+			cnt = lectureProfessorDAO.updateTaskScore(taskSubmit);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
+	}
 }
