@@ -188,10 +188,6 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		int cnt = 0;
 		
 		TaskSubmitVO savedTask = lectureStudentDAO.selectTaskSubmit(taskSubmit.getSubmit_no());
-		logger.info("******************************************************");
-		logger.info("saved :{}", savedTask);
-		logger.info("saved :{}", savedTask.getAtch_file_no());
-		logger.info("******************************************************");
 		
 		if(savedTask == null) {
 			result = ServiceResult.NOTEXIST;
