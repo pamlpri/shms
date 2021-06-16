@@ -26,6 +26,7 @@ import kr.ac.shms.lecture.vo.ExamVO;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
+ * 2021. 6. 16.      박초원			 교수 시험,문제 조회, 수정, 삭제
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
