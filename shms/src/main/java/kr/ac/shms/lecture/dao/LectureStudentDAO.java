@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -135,4 +136,11 @@ public interface LectureStudentDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int deleteAttathes(TaskSubmitVO taskSubmit);
+	
+	/**
+	 * 한 강의에 등록되어 있는 시험 정보 조회
+	 * @param search
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<ExamVO> selectExamList(Map<String, String> search);
 }

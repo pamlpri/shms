@@ -19,6 +19,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureStudentService;
+import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -250,6 +251,11 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 			}
 		}
 		return cnt;
+	}
+
+	@Override
+	public List<ExamVO> selectExamList(Map<String, String> search) {
+		return lectureStudentDAO.selectExamList(search);
 	}	
 
 }

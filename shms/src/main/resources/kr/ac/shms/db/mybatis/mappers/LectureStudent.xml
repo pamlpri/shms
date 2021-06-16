@@ -324,5 +324,37 @@
 		    cont = #{cont, jdbcType=NUMERIC}
 		WHERE
 		    submit_no = #{submit_no}
-	</update>	
+	</update>
+	
+	<select id="selectExamList" parameterType="hashMap" resultType="ExamVO">
+		SELECT a.exam_no,
+		       test_cl,
+		       req_semstr||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
+		       CASE WHEN SYSDATE BETWEEN exam_begin_dt AND exam_end_dt THEN
+		       '진행중'
+		       ELSE 
+		       '마감' 
+		       END test_stat,
+		       a.lec_code,
+		       exam_begin_dt,
+		       exam_end_dt,
+		       TO_CHAR(exam_begin_dt, 'YYYY.MM.DD AM HH:MI') exam_begin_dt_char,
+		       TO_CHAR(exam_end_dt, 'YYYY.MM.DD AM HH:MI') exam_end_dt_char,
+		       online_at,
+		       exam_type,
+		       ques_cnt,
+		       a.atch_file_no,
+		       b.stdnt_no,
+		       c.applcn_no,
+		       DECODE(c.applcn_no, null, '미응시', '응시') applcn_at
+		  FROM exam a
+		  CROSS JOIN (SELECT stdnt_no, req_semstr
+		                     FROM sugang_req
+		                    WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		                      AND sugang_at = 'Y') b
+		  LEFT OUTER JOIN take_exam c
+		    ON (a.exam_no = c.exam_no AND b.stdnt_no = c.stdnt_no)
+		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND b.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	</select>	
 </mapper>
