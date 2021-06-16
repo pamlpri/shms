@@ -206,4 +206,17 @@ public interface LmsCommonService {
 	 * @return ServiceResult
 	 */
 	public ServiceResult insertEvl(LecEvlResVO lecEvlResVO);
+	
+	/**
+	 * 진로교육 게시판 리스트 뽑기
+	 * @return
+	 */
+	public List<CourseEducVO> selectAllCourseEducList();
+	
+	/**
+	 * 진로교육 게시글 상세보기
+	 * @param boNo
+	 * @return
+	 */
+	public CourseEducVO selectCourseEduc(int boNo);
 }

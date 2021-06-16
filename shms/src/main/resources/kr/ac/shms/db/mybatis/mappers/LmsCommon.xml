@@ -55,10 +55,8 @@
 			 BETWEEN TO_CHAR(begin_dt, 'YYYY/MM/DD HH24:MI:SS') AND TO_CHAR(end_dt, 'YYYY/MM/DD HH24:MI:SS')
 	</select>
 	
-	<select id="selectCourseEducList" resultType="CourseEducVO">
-		SELECT *
-		  FROM(
-			SELECT
+	<sql id="educList">
+		SELECT
 			    (SELECT COUNT(educ_no) FROM course_educ)
 			      - (ROW_NUMBER () OVER(ORDER BY educ_reg_date DESC)) + 1 p_bo_no,
 			    (ROW_NUMBER () OVER(ORDER BY educ_reg_date DESC)) rn,
@@ -68,10 +66,10 @@
 			    instrctr_nm,
 			    instrctr_com,
 			    a.lecrum_no,
-			    c.building_nm||' '||b.lecrum_nm||'호' lecrum_info,
+			    c.building_nm||' '||b.lecrum_nm lecrum_info,
 			    educ_nmpr,
 			    educ_target,
-			        TO_CHAR(educ_reg_date, 'YYYY.MM.DD HH24:MI') educ_reg_date,
+		        TO_CHAR(educ_reg_date, 'YYYY.MM.DD HH24:MI') educ_reg_date,
 			    TO_CHAR(educ_bgnde, 'YYYY.MM.DD HH24:MI') educ_bgnde,
 			    TO_CHAR(educ_endde, 'YYYY.MM.DD HH24:MI') educ_endde,
 			    TO_CHAR(educ_bgnde, 'YYYY.MM.DD') educ_date,
@@ -82,6 +80,11 @@
 			    ON(a.lecrum_no = b.lecrum_no)
 			    INNER JOIN building c
 			    ON(b.building_no = c.building_no)
+	</sql>
+	<select id="selectCourseEducList" resultType="CourseEducVO">
+		SELECT *
+		  FROM(
+			<include refid="educList" />
 			<![CDATA[
 			WHERE SYSDATE <= educ_bgnde
 			)
@@ -512,4 +515,13 @@
 		    #{evl_cont}
 		)
 	</insert>
+	
+	<select id="selectAllCourseEducList" resultType="CourseEducVO">
+		<include refid="educList" />
+	</select>
+	
+	<select id="selectCourseEduc" parameterType="int" resultType="CourseEducVO">
+		<include refid="educList" />
+		WHERE educ_no = #{educ_no}
+	</select>
 </mapper>

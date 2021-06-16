@@ -3,11 +3,13 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 16.		최희수	진로교육 게시판
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
 	<!-- contents start -->
 	<nav aria-label="breadcrumb">
@@ -34,140 +36,36 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
-	                    <tr>
-	                        <td class="text-center">1</td>
-	                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do" class="text-color">자신있게 말하는 법</a></td>
-	                        <td class="text-center">김영미(고용노동부)</td>
-	                        <td class="text-center">150명</td>
-	                        <td class="text-center">1학년</td>
-	                        <td class="text-center">경영관 101호</td>
-	                        <td class="text-center">2021.05.21 PM 10:00</td>
-	                    </tr>
+	                	<c:choose>
+	                		<c:when test="${not empty courseEducList }">
+	                			<c:forEach items="${courseEducList }" var="courseEduc" varStatus="i">
+	                				<tr>
+				                        <td class="text-center">${i.index + 1 }</td>
+				                        <td class="text-center"><a href="${cPath}/lms/careerEducationView.do?bo_no=${courseEduc.educ_no }" class="text-color">${courseEduc.educ_title }</a></td>
+				                        <td class="text-center">${courseEduc.instrctr_nm }(${courseEduc.instrctr_com })</td>
+				                        <td class="text-center">${courseEduc.educ_nmpr }명</td>
+				                        <td class="text-center">${courseEduc.educ_target }학년</td>
+				                        <td class="text-center">${courseEduc.lecrum_info }</td>
+				                        <td class="text-center">${courseEduc.educ_bgnde }</td>
+				                    </tr>
+	                			</c:forEach>
+	                		</c:when>
+	                		<c:otherwise>
+	                			<tr>
+	                				<td class="text-center" colspan="7"></td>
+	                			</tr>
+	                		</c:otherwise>
+	                	</c:choose>
 	                </tbody>
 	            </table>
 	            <!-- 취업장학과 한테만 보이는 버튼 -->
-	            <div class="breadcrumb breadcrumb-right">
-	                <a href="${cPath}/lms/careerEducationForm.do" type="button" class="btn btn-primary" >
-	                    <i class="fas fa-edit"></i> 글쓰기
-	                </a>
-	            </div>
+	            <c:if test="${user.user[1] eq 'CJ' }">
+		            <div class="breadcrumb breadcrumb-right">
+		                <a href="${cPath}/lms/careerEducationForm.do" type="button" class="btn btn-primary" >
+		                    <i class="fas fa-edit"></i> 글쓰기
+		                </a>
+		            </div>
+	            </c:if>
 	        </div>
 	    </div>
 	</section>

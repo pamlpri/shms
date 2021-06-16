@@ -316,5 +316,15 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		return result;
 	}
 
+	@Override
+	public List<CourseEducVO> selectAllCourseEducList() {
+		return lmsCommonDAO.selectAllCourseEducList();
+	}
+
+	@Override
+	public CourseEducVO selectCourseEduc(int boNo) {
+		return lmsCommonDAO.selectCourseEduc(boNo);
+	}
+
 	
 }

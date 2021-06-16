@@ -3,11 +3,13 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 16.		최희수	진로교육 게시글 보기
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -24,52 +26,43 @@
               <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                   <tr>
                       <th class="align-middle text-center">교육명</th>
-                      <td colspan="3">자신있게 말하는 법</td>
+                      <td colspan="3">${courseEduc.educ_title }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">강사명</th>
-                      <td>김혜나</td>
+                      <td>${courseEduc.instrctr_nm }</td>
                       <th class="align-middle text-center">소속</th>
-                      <td>고용노동부</td>
+                      <td>${courseEduc.instrctr_com }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">장소</th>
-                      <td>경영학관 101호</td>
+                      <td>${courseEduc.lecrum_info }</td>
                       <th class="align-middle text-center">일시</th>
-                      <td>2021.05.20 PM 04:00</td>
+                      <td>${courseEduc.educ_reg_date }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">인원</th>
-                      <td>150명</td>
+                      <td>${courseEduc.educ_nmpr }명</td>
                       <th class="align-middle text-center">대상</th>
-                      <td>1학년</td>
+                      <td>${courseEduc.educ_target }학년</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">교육내용</th>
                       <td colspan="3">
-                          Lorem Ipsum is simply dummy text of the printing and 
-                          typesetting industry. Lorem Ipsum has been the industry's
-                          standard dummy text ever since the 1500s, when an unknown 
-                          printer took a galley of type and scrambled it to make 
-                          a type specimen book. It has survived not only five centuries,
-                          but also the leap into electronic typesetting, 
-                          remaining essentially unchanged. It was popularised 
-                          in the 1960s with the release of Letraset sheets 
-                          containing Lorem Ipsum passages, and more recently with 
-                          desktop publishing software like Aldus PageMaker including 
-                          versions of Lorem Ipsum.
+                          ${courseEduc.educ_cont }
                       </td>
                   </tr>
               </table>
               <div class="text-center">
                   <a href="${cPath }/lms/careerEducation.do" class="btn btn-primary">목록으로</a>
-                  <!-- 취업장학과만 보이는 버튼 -->
-                  <a href="${cPath }/lms/careerEducationForm.do" class="btn btn-primary">수정</a>
-                  <button type="button" class="btn btn-danger block" data-bs-toggle="modal"
-                      data-bs-target="#default">
-                      삭제
-                  </button>
-              </div>
+					<!-- 취업장학과만 보이는 버튼 -->
+					<c:if test="${user.user[1] eq 'CJ' }">
+						<a href="${cPath }/lms/careerEducationForm.do"
+							class="btn btn-primary">수정</a>
+						<button type="button" class="btn btn-danger block"
+							data-bs-toggle="modal" data-bs-target="#default">삭제</button>
+					</c:if>
+				</div>
 
               <!--Basic Modal -->
               <div class="modal fade text-left" id="default" tabindex="-1" role="dialog"
