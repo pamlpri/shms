@@ -672,6 +672,71 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</insert>
+	
+	<select id="selectExamList" parameterType="ExamVO" resultType="ExamVO">
+		SELECT exam_no,
+		       test_cl,
+		       (CASE WHEN a.test_cl = 'JG' THEN '중간고사'
+		        WHEN test_cl = 'GM' THEN '기말고사' END) test_nm,
+		       <![CDATA[
+			       (CASE WHEN exam_begin_dt > SYSDATE THEN '진행전'
+			        WHEN exam_begin_dt <= SYSDATE AND SYSDATE <= exam_end_dt THEN '진행중'
+			        WHEN exam_end_dt < SYSDATE THEN '마감' END) test_stat,
+		       ]]>
+		       exam_begin_dt,
+		       exam_end_dt,
+		       (SELECT COUNT(a.stdnt_no)
+		          FROM sugang_req a
+		         WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		           AND lec_code = a.lec_code) stdnt_cnt,
+		       (SELECT COUNT(b.exam_no)
+		          FROM take_exam b
+		         WHERE b.exam_no = exam_no) exam_cnt
+		  FROM exam
+		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectExamDetail" parameterType="ExamVO" resultType="ExamVO">
+		 SELECT exam_no,
+		        lec_code,
+		        test_cl,
+		        (CASE WHEN test_cl = 'JG' THEN '중간고사'
+		         WHEN test_cl = 'GM' THEN '기말고사' END) test_nm,
+		        online_at,
+		        exam_type,
+		        (SELECT SUM(ques_allot)
+		           FROM exam_ques
+		          WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+		            AND ques_type = 'GG') gg_sum,
+		        (SELECT SUM(ques_allot)
+		           FROM exam_ques
+		          WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+		            AND ques_type = 'DD') dd_sum,
+		        (SELECT SUM(ques_allot)
+		           FROM exam_ques
+		          WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+		            AND ques_type = 'SS') ss_sum,
+		        (SELECT SUM(ques_allot)
+		           FROM exam_ques
+		          WHERE exam_no = #{exam_no, jdbcType=NUMERIC}) ques_sum,
+		        (SELECT COUNT(ques_no)
+		           FROM exam_ques
+		          WHERE exam_no = #{exam_no, jdbcType=NUMERIC}) ques_cnt,
+		        ROUND((exam_end_dt - exam_begin_dt) * 24 * 60, 2) exam_time,
+		        exam_begin_dt,
+		        exam_end_dt,
+		        atch_file_no,
+		        (SELECT COUNT(a.stdnt_no)
+		           FROM sugang_req a
+		          WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		            AND lec_code = a.lec_code) stdnt_cnt,
+		        (SELECT COUNT(b.exam_no)
+		           FROM take_exam b
+		          WHERE b.exam_no = exam_no) exam_cnt
+		   FROM exam 
+		  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		    AND exam_no = #{exam_no, jdbcType=NUMERIC}
+	</select>
 		
 	<update id="updateTaskScore" parameterType="TaskSubmitVO">
 		UPDATE task_submit

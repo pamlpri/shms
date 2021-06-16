@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 16. 	    박초원        조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -16,6 +17,14 @@
       <h1>대학생활의 이해</h1>
     </div>
   </section>
+  
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code }&lec_name=${lec_name}">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">학습활동</a></li>
+          <li class="breadcrumb-item active" aria-current="page">시험관리</li>
+      </ol>
+  </nav>
 
   <div class="card attendance">
       <div class="card-body">
@@ -25,12 +34,16 @@
           </div>
           <table class="table table-bordered table-md">
             <tr>
-              <th>제목</th>
+              <th>시험분류</th>
               <td class="text-left">2학기 중간고사</td>
             </tr>
             <tr>
-              <th>시험형태</th>
+              <th>시험형식</th>
               <td class="text-left">온라인 시험</td>
+            </tr>
+            <tr>
+              <th>시험유형</th>
+              <td class="text-left">혼합식</td>
             </tr>
             <tr>
               <th>객관식</th>
@@ -49,11 +62,11 @@
               <td class="text-left">100점</td>
             </tr>
             <tr>
-              <th>시작시간</th>
+              <th>시험시작</th>
               <td class="text-left">2021.05.05 오후 12:00</td>
             </tr>
             <tr>
-              <th>종료시간</th>
+              <th>시험종료</th>
               <td class="text-left">2021.05.05 오후 13:00</td>
             </tr>
             <tr>
@@ -306,8 +319,10 @@
         });
         // Edit row on edit button click
         $(document).on("click", ".edit", function(){		
-            $(this).parents("tr").find("td").eq(6).each(function(){
-                $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+            $(this).parents("tr").find("td:not(:last-child)").each(function(){
+            	if($(this).index() != 0 && $(this).index() != 1 && $(this).index() != 2 && $(this).index() != 3 && $(this).index() != 7){
+	                $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+            	}
             });		
             $(this).parents("tr").find(".add, .edit").toggle();
             $(".add-new").attr("disabled", "disabled");

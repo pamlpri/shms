@@ -69,7 +69,7 @@
 	                  <option value="GG">객관식</option>
 	                  <option value="DD">주관식 단답형</option>
 	                  <option value="SS">주관식 서술형</option>
-	                  <option value="TH">혼합형</option>
+	                  <option value="TH">혼합식</option>
 	                </select>
 	                <div class="invalid-feedback">
                       필수항목
@@ -171,6 +171,7 @@
       <div class="text-center">
         <a href="${cPath }/lecture/examAdmin.do" class="btn btn-secondary">취소</a>
         <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
+        <button type="button" class="btn btn-danger" id="saveBtn">삭제</button>
       </div>
     </form>
 

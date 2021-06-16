@@ -30,6 +30,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 15.	  박초원			 주/회차 삭제
  * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
  * 2021. 06. 16.      송수미 			 교수 학생이 제출한 과제 성적 입력
+ * 2021. 06. 16.      박초원			 교수 시험,문제 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -232,6 +233,20 @@ public interface LectureProfessorDAO {
 	 * @return cnt
 	 */
 	public int insertQues(ExamVO exam);
+	
+	/**
+	 * 시험 목록 조회
+	 * @param examVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<ExamVO> selectExamList(ExamVO exam);
+	
+	/**
+	 * 하나의 시험 상세 조회
+	 * @param examVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public ExamVO selectExamDetail(ExamVO exam);
 	
 	/**
 	 * 학생이 제출한 과제 성적 입력
