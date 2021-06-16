@@ -143,18 +143,38 @@
 						, dataType: "html"
 						, data : {"qrcodedata" : qrcodedata }
 						, success : function(resp) {
-							if(resp.resp == "OK"){
-								location.reload();
-							}else{
-								location.reload();
+							let data = JSON.parse(resp);
+							let sendData = {
+								"lec_code" : data.lec_code
+								, "attend_time": data.attend_time
+								, "exit_time": data.exit_time
 							}
+							if(data.respExit == "OK"){
+								console.log("???");
+								$.ajax({
+									url: "${cPath}/lecture/updateAttendanceStat.do"
+									, method : "POST"
+									, data : sendData
+									, success : function(res) {
+										if(res.result == "OK") {
+											location.reload();											
+										}
+									}
+									, error : function(error, xhr, msg){
+										console.log(xhr);
+										console.log(error);
+										console.log(msg);
+									}
+								});
+							}
+							location.reload();
 						}, error : function(xhr, error, msg) {
 							console.log(xhr);
 							console.log(error);
 							console.log(msg);
 							location.reload();
 						}
-					})
+					});
 					
 					return;
 				}

@@ -23,10 +23,8 @@
   </div>
 </div>
 <form id="submitForm" action="${cPath }/lecture/attendanceResult.do" method="post">
-	<input type="hidden" name="stdnt_no"/>
-	<input type="hidden" name="lec_code" />
-	<input type="hidden" name="attend_time"/>
-	<input type="hidden" name="exit_time"/>
+	<input type="text" name="attend_time" value="" />
+	<input type="text" name="exit_time" value="" />
 	<input type="hidden" name="lec_name" value="${lec_name}"/>
 </form>
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
@@ -45,54 +43,48 @@
 	});
 </script>
 <script type="text/javascript" >
-	$(function(){
-		var timeleft = 5;
-		var downloadTimer = setInterval(function(){
-		  if(timeleft <= 0){
-		    clearInterval(downloadTimer);
-		    document.getElementById("countdown").innerHTML = "";
-		  } else {
-		    document.getElementById("countdown").innerHTML = timeleft + " 초 후 자동으로 강의홈으로 이동합니다.";
-		  }
-		  timeleft -= 1;
-		}, 1000);
-
-		var atndan = {
-			stndt_no : "${qrInfo.stdnt_no}"
-			, lec_code : "${qrInfo.lec_code}"
-		}
-		setInterval(function(){
+	$(function(){		
+		timer = setInterval(function(){
 			$.ajax({
-				url : "${cPath}/lecture/qrTimeout.do"
-				, data : JSON.stringify(atndan)
-				, method : "post"
-				, contentType: 'application/json'
-				, dataType : "json"
-				, success : function(res){
-	                $("input[name='attend_time']").val(res.attendTime);
-	                $("input[name='exit_time']").val(res.exitTime);
-	                
-					if(res.result == "attendOK"){
-						setInterval(function(){$("#submitForm").submit();}, 1000);
-	// 					setInterval(function(){location.href="${cPath }/lecture/attendanceResult.do"}, 1000);
-	
-					}else if(res.result == "FAIL"){
-						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
-					}else if(res.result == "OK"){
-						setInterval(function(){$("#submitForm").submit();}, 1000);
-					}else if(res.result == "exitFAIL"){
-						setInterval(function(){location.href="${cPath }/lecture/index.do?lec_code=${qrInfo.lec_code}&lec_name=${lec_name}";}, 5000);
+				url:"${cPath }/lecture/qrCheck.do"
+				, success : function(resp) {
+					console.log(resp);
+					if(resp.qrCheck == true) {
+						qrTimeout();
+						stopTimer();
 					}
 				}
-				, error : function(error, xhr, msg){
-					console.log(xhr);
-					console.log(error);
-					console.log(msg);
-				}
-			});	
-			
+			});
 		}, 1000);
 	});
+	function stopTimer(){
+	    clearInterval(timer);
+	}
+
+	var atndan = {
+		stndt_no : "${qrInfo.stdnt_no}"
+		, lec_code : "${qrInfo.lec_code}"
+	}
+	function qrTimeout() {
+		$.ajax({
+			url : "${cPath}/lecture/qrTimeout.do"
+			, data : JSON.stringify(atndan)
+			, method : "post"
+			, contentType: 'application/json'
+			, dataType : "json"
+			, success : function(res){
+                $("input[name='attend_time']").val(res.attendTime);
+                $("input[name='exit_time']").val(res.exitTime);
+                
+                $("#submitForm").submit();
+			}
+			, error : function(error, xhr, msg){
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});	
+	}
 </script>
 
 </HTML>
