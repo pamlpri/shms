@@ -123,9 +123,9 @@ public class ConsultingViewController {
 	public String consultingSing(
 			@ModelAttribute("consultingVO") ConsultingVO consultingVO
 			, @RequestParam("update") String update
+			, @RequestParam(value="consultingKind", required=false) String consultingKind
 		) {
-		logger.info("consultingVo : {}", consultingVO);
-		logger.info("update {}", update);
+		logger.info("consultingKind : {}", consultingKind);
 		ServiceResult result = null;
 		if("insert".equals(update)) {
 			result = studentService.consultingInsert(consultingVO);
@@ -134,7 +134,11 @@ public class ConsultingViewController {
 		}
 		String view = null;
 		if(ServiceResult.OK.equals(result)) {
-			view = "redirect:/lms/consultingList.do";
+			if(consultingKind.equals("career")) {
+				view = "redirect:/lms/careerCounseling.do";
+			} else if(consultingKind.equals("professor")) {
+				view = "redirect:/lms/consultingList.do";
+			}
 		}
 		return view;
 	}

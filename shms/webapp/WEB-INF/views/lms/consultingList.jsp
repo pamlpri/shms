@@ -129,6 +129,7 @@
 				</div>
 				<form action="${cPath }/lms/consultingSign.do" id="consultingForm" method="post">
 					<input type="hidden" name="update" value="" />
+					<input type="hidden" name="consultingKind" value="" />
 					<input type="hidden" name="staff_no" value="" />
 					<input type="hidden" name="req_no" value="" />
 					<input type="hidden" name="stdnt_no" value="${user.user[0] }" />
@@ -161,7 +162,7 @@
 						<div class="form-group">
 							<h6>상담사유</h6>
 							<textarea class="form-control cont" placeholder="상담을 신청하는 사유를 적어주세요."
-								id="floatingTextarea" name="req_cont"></textarea>
+								id="floatingTextarea" name="req_cont" value=""></textarea>
 						</div>
 						<div class="form-group">
 							<h6>상담희망일시</h6>
@@ -331,7 +332,7 @@
         $("#insertBtn").on("click", function() {
         	$("#inlineForm").find("input[name]").val("");
         	$("#inlineForm").find("select").val("");
-        	$("#inlineForm").find("textArea").text("");
+        	$("#inlineForm").find("textArea").empty();
         	let stdntNo = $(".inputBox").children("input[name='stdnt_no']").val();
         	let staffName = $(".inputBox").children("input[name='staff_name']").val();
         	let staffNo = $(".inputBox").children("input[name='staff_no']").val();
@@ -339,6 +340,7 @@
         	$("#inlineForm").find("input[name='staff_name']").val(staffName);
         	$("#inlineForm").find("input[name='staff_no']").val(staffNo);
         	$("#consultingForm").children("input[name='update']").val("insert");
+        	$("#consultingForm").children("input[name='consultingKind']").val("professor");
       		$("#deleteBtn").css("display", "none");
         });
         
@@ -352,7 +354,10 @@
    				}
     			, dataType: "json"
     			, success: function(res) {
-    				if(res == "OK") { href.location = "${cPath}/lms/consultingList.do"; }    					
+    				console.log(res);
+    				if(res == "OK") { 
+    					location.href = "${cPath}/lms/consultingList.do"; 
+    				}    					
     			}
     			, error: function(xhr, error, msg) {
     				console.log(xhr);
