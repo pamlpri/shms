@@ -10,12 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
+import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 
@@ -40,6 +43,8 @@ public class ReportViewController {
 	private LectureProfessorService lectureProfessorService;
 	@Inject
 	private LectureService lectureService;
+	@Inject
+	private LectureStudentService lectureStudentService;
 	
 	@RequestMapping("/lecture/report.do")
 	public String report(
@@ -58,7 +63,7 @@ public class ReportViewController {
 	public String reportList(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, @SessionAttribute(name="lec_name", required=false) String lec_name
-			, @RequestParam("task") Integer set_task_no
+			, @RequestParam("set_task_no") Integer set_task_no
 			, Model model
 		) {
 		
@@ -77,6 +82,33 @@ public class ReportViewController {
 		
 		/** 반환 */
 		return "lecture/reportList";
+	}
+	
+	@RequestMapping("/lecture/reportView.do")
+	public String taskView(
+			@SessionAttribute(name="lec_code", required=false) String lec_code
+			, @SessionAttribute(name="lec_name", required=false) String lec_name
+			, @RequestParam("submit_no") Integer submit_no
+			, Model model
+		) {
+		/** 서비스 호출 */
+		TaskSubmitVO taskSubmit = lectureStudentService.selectTaskSubmit(submit_no);
+		
+		/** 자료 구성 */
+		model.addAttribute("taskSubmit", taskSubmit);
+		
+		/** 반환 */
+		return "lecture/taskView";
+	}
+	
+	@RequestMapping(value="/lecture/taskSubmitDownload.do")
+	public String downloader(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = lectureStudentService.download(attach);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
 	}
 	
 	

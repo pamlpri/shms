@@ -36,6 +36,7 @@ public class TaskSubmitVO {
 	private String name; 		// 이름
 	private String sub_name;	// 학과명
 	private String submit_dt;
+	private Integer task_allot;
 	private Integer task_score;
 	private Integer atch_file_no;
 	private String lec_code;

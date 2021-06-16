@@ -4,7 +4,8 @@
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
 * 2021. 6. 14.      송수미        과제 상세 조회 페이지 기능 구현
-* 2021. 6. 15.      송수미        과제 제출 목록 조회, 채점, 점수 수정 기능 구현
+* 2021. 6. 15.      송수미        과제 제출 목록 조회
+* 2021. 6. 16.      송수미       제출  과제  채점, 점수 수정 기능 구현
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -89,7 +90,7 @@
 		                      <td class="text-center">
 			                      <c:choose>
 			                      	<c:when test="${not empty taskSubmit.submit_no }">
-				                      	<a href="${cPath}/lecture/reportView.do" class="btn btn-success">제출완료</a>
+				                      	<a href="${cPath}/lecture/reportView.do?submit_no=${taskSubmit.submit_no}" class="btn btn-success">제출완료</a>
 			                      	</c:when>
 			                      	<c:otherwise>
 			                      		<a href="#" class="btn btn-secondary disabled">미제출</a>
@@ -100,6 +101,8 @@
 		                      <td class="text-center">
 		                          <a class="add" title="Add" data-toggle="tooltip"><i class="fas fa-save">&#xE03B;</i></a>
 		                          <a class="edit" title="Edit" data-toggle="tooltip"><i class="fas fa-pen">&#xE254;</i></a>
+		 	  					  <input type="hidden" name="set_task_no" value="${setTask.set_task_no }"/>
+				                  <input type="hidden" name="submit_no" value="${taskSubmit.submit_no }"/>
 		                      </td>
 		                  </tr>
                   		</c:forEach>
@@ -109,6 +112,32 @@
           </div>
       </div>
   </div>
+  <!--Basic Modal -->
+  <div class="modal fade text-left" id="default" tabindex="-1"
+	  role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel1"></h5>
+				<button type="button" class="close rounded-pill"
+					data-bs-dismiss="modal" aria-label="Close">
+					<i data-feather="x"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="close"
+						data-bs-dismiss="modal">
+					<i class="bx bx-x d-block d-sm-none"></i> <span
+						class="d-none d-sm-block">닫기</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	</div>
   <!-- contents end -->
 </div>
 <script>
@@ -122,6 +151,9 @@ $(document).ready(function(){
         var empty = false;
         var input = $(this).parents("tr").find('input[type="text"]');
         let score = null;
+        let setTaskNo = "${setTask.set_task_no}";
+        let taskAllot = "${setTask.task_allot}";
+        let submitNo = $(this).siblings("input[name='submit_no']").val();
         input.each(function(){
             if(!$(this).val()){
                 $(this).addClass("error");
@@ -131,26 +163,40 @@ $(document).ready(function(){
             }
         });
         $(this).parents("tr").find(".error").first().focus();
+        
         if(!empty){
             input.each(function(){
+            	let that = $(this);
             	score = $(this).val();
-                $(this).parent("td").html(score);
+	            $.ajax({
+	            	url: "${cPath}/lecture/taskScore.do"
+	            	, method : "post"
+	            	, data : {
+	            		taskAllot : taskAllot
+	            		, setTaskNo : setTaskNo
+	            		, score : score
+	            		, submitNo : submitNo
+	            	}, dataType : "text"
+	            	, success : function(resp){
+			            $(that).parents("tr").find(".add, .edit").toggle();
+	            		$(that).parent("td").html(score);
+			            $(".add-new").removeAttr("disabled");
+			            
+			            $("#default").find(".modal-body p").empty().text(resp);
+			    		$("#default").addClass("show").css("display","block");
+	            	}, error : function(xhr, resp, error){
+	            		console.log(xhr);
+	            	}
+	            });
             });
-//             $.ajax({
-// 				url: "${cPath}/lecture/"
-// 				, data :
-// 				, dataType :
-// 				, success : function(resp){
-					
-// 				}, error : function(xhr, resp, error){
-// 					console.log(xhr);
-// 				}
-//             });
             
-            $(this).parents("tr").find(".add, .edit").toggle();
-            $(".add-new").removeAttr("disabled");
+            
         }		
     });
+    
+    $("#close, .modal").on("click", function(){
+		$("#default").removeClass("show").css("display","none");
+	})
     
     // Edit row on edit button click
     $(document).on("click", ".edit", function(event){
