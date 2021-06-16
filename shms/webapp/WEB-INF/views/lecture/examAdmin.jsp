@@ -9,6 +9,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -45,22 +47,16 @@
           </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>4</td>
-                <td><a class="text-color" href="${cPath }/lecture/examAdminList.do">2학기 기말고사</a></td>
-                <td>진행중</td>
-                <td>2020.05.05 오전 11:00</td>
-                <td>2021.05.01 오후 1:00</td>
-                <td>12 / 15</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td><a class="text-color" href="${cPath }/lecture/examAdminList.do">2학기 중간고사</a></td>
-              <td>마감</td>
-              <td>2020.05.05 오전 11:00</td>
-              <td>2021.05.01 오후 1:00</td>
-              <td>12 / 15</td>
-          </tr>
+        	<c:forEach items="${examList }" var="exam" varStatus="i">
+	       		<tr>
+	                <td>${fn:length(examList) - i.index }</td>
+	                <td><a class="text-color" href="${cPath }/lecture/examAdminList.do?what=${exam.exam_no}">${exam.test_nm }</a></td>
+	                <td>${exam.test_stat }</td>
+	                <td>${exam.exam_begin_dt_char }</td>
+	                <td>${exam.exam_end_dt_char }</td>
+	                <td>${exam.exam_cnt} / ${exam.stdnt_cnt }</td>
+	            </tr>
+        	</c:forEach>
         </tbody>
       </table>
   </div>

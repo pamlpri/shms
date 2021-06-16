@@ -478,8 +478,8 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	}
 
 	@Override
-	public List<ExamVO> selectExamList(ExamVO exam) {
-		return lectureProfessorDAO.selectExamList(exam);
+	public List<ExamVO> selectExamList(String lec_code) {
+		return lectureProfessorDAO.selectExamList(lec_code);
 	}
 
 	@Override

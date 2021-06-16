@@ -180,7 +180,7 @@ public interface LectureProfessorService {
 	 * @param examVO
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public List<ExamVO> selectExamList(ExamVO exam);
+	public List<ExamVO> selectExamList(String lec_code);
 	
 	/**
 	 * 하나의 시험 상세 조회
