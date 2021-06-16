@@ -157,6 +157,56 @@
 			    </if>
 			)
 	</insert>
+
+	<insert id="insertAttaches" parameterType="TaskSubmitVO">
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+			SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
+			FROM ATTACH
+			<choose>
+				<when test="atch_file_no != null and !atch_file_no.equals('')">
+					WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
+				</when>
+				<otherwise>
+					WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+				</otherwise>
+			</choose>		
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attachList" item="attatch" index="idx">
+			INTO ATTACH(
+				atch_file_no,
+			    atch_file_seq,
+			    file_path,
+			    file_nm,
+			    file_cont_type,
+			    file_size,
+			    reg_date,
+			    reg_user_id,
+			    biz_type,
+			    save_file_nm
+		    )
+			VALUES (
+			<choose>
+				<when test="atch_file_no != null and !atch_file_no.equals('')">
+					#{atch_file_no, jdbcType=NUMERIC}
+				</when>
+				<otherwise>
+					(SELECT MAX(atch_file_no) + 1 FROM attach)
+				</otherwise>
+			</choose>
+				, #{startAttNo} + #{idx}
+				, #{attatch.file_path,jdbcType=VARCHAR}
+				, #{attatch.file_nm,jdbcType=VARCHAR}
+				, #{attatch.file_cont_type,jdbcType=VARCHAR}
+				, #{attatch.file_size,jdbcType=NUMERIC}
+				, sysdate
+				, #{writer, jdbcType=VARCHAR}
+				, 'GJ'
+				, #{attatch.save_file_nm,jdbcType=VARCHAR}
+			)
+		</foreach>
+			SELECT * FROM DUAL	
+	</insert>
 	
 	<resultMap type="SetTaskVO" id="taskAttachMap" autoMapping="true">
 		<id property="set_task_no" column="set_task_no"/>

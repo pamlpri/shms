@@ -98,6 +98,7 @@ public class TaskSubmitInsertController {
 		
 		/** 파라미터 조회 */
 		taskSubmit.setWriter(user.getUser_id());
+		taskSubmit.setLec_code(lec_code);
 		
 		/** 검색 조건 */
 		Map<String, Object> search = new HashMap<>();
