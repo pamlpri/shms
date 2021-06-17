@@ -128,6 +128,7 @@
 		                  ) b
 		ON(a.set_task_no = b.set_task_no)
 		WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		ORDER BY submit_endde desc
 	</select>
 	
 	<insert id="insertTask" parameterType="TaskSubmitVO">
@@ -277,5 +278,18 @@
 		       online_at
 		  FROM exam
 		 WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectExamQues" parameterType="int" resultType="QuesVO">
+		SELECT
+		    exam_no,
+		    ques_no,
+		    ques_type,
+		    ques_ans,
+		    ques_allot
+		FROM
+		    exam_ques
+		WHERE
+		    exam_no = #{exam_no, jdbcType=NUMERIC}
 	</select>
 </mapper>

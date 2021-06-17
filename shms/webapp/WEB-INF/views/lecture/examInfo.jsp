@@ -74,7 +74,7 @@
             &nbsp;&nbsp;- 시간이 되어도 버튼이 나타나지 않을 경우 페이지를 새로고침해보시기 바랍니다.
         </p>
         <div class="text-center">
-            <a href="${cPath }/lecture/examForm.do" class="btn btn-primary">시험시작</a>
+            <a href="${cPath }/lecture/examForm.do?exam_no=${exam.exam_no}" class="btn btn-primary">시험시작</a>
         </div>
       </div>
     </div>

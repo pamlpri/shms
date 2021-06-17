@@ -9,20 +9,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-     <h1>대학생활의 이해</h1>
+     <h1>${lec_name }</h1>
    </div>
  </section>
 
  <!-- contents start -->
  <nav aria-label="breadcrumb">
      <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a href="#">Home</a></li>
-         <li class="breadcrumb-item"><a href="#">학습활동</a></li>
+         <li class="breadcrumb-item"><a class="examSubmitBtn" href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
+         <li class="breadcrumb-item"><a class="examSubmitBtn" href="${cPath }/lecture/weeks.do">학습활동</a></li>
          <li class="breadcrumb-item active" aria-current="page">시험응시</li>
      </ol>
  </nav>
@@ -67,240 +68,53 @@
          </div>
          <div class="card-body">
            <form id="answerWrap">
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>1. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no1" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no1" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no1" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no1" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>2. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no2" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no2" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no2" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no2" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>3. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no3" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no3" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no3" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no3" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>4. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no4" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no4" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no4" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no4" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>5. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no5" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no5" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no5" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no5" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>6. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no6" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no6" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no6" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no6" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>7. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no7" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no7" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no7" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no7" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>8. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no8" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no8" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no8" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no8" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>9. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no9" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no9" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no9" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no9" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>10. </h6>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no10" value="1">
-                   <label class="form-check-label">1</label>
-               </div>
-               <div class="form-check form-check-inline">
-                   <input class="form-check-input" type="radio" name="no10" value="2">
-                   <label class="form-check-label">2</label>
-               </div>
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no10" value="3">
-                 <label class="form-check-label">3</label>
-               </div>  
-               <div class="form-check form-check-inline">
-                 <input class="form-check-input" type="radio" name="no10" value="4">
-                 <label class="form-check-label">4</label>
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>11. </h6>
-               </div>
-               <div class="form-group">
-                 <input type="text" class="form-control">
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>12. </h6>
-               </div>
-               <div class="form-group">
-                 <input type="text" class="form-control">
-               </div>
-             </div>
-             <div class="answer">
-               <div class="form-check form-check-inline">
-                 <h6>13. </h6>
-               </div>
-               <div class="form-group">
-                 <textarea class="form-textarea"></textarea>
-               </div>
-             </div>
+           	<c:forEach items="${quesList }" var="ques" varStatus="idx">
+           		<c:choose>
+           			<c:when test="${ques.ques_type eq 'GG' }">
+			            <div class="answer">
+			              <div class="form-check form-check-inline">
+			                <h6>${idx.count } </h6>
+			              </div>
+			              <div class="form-check form-check-inline">
+			                  <input class="form-check-input" type="radio" name="no1" value="1">
+			                  <label class="form-check-label">1</label>
+			              </div>
+			              <div class="form-check form-check-inline">
+			                  <input class="form-check-input" type="radio" name="no1" value="2">
+			                  <label class="form-check-label">2</label>
+			              </div>
+			              <div class="form-check form-check-inline">
+			                <input class="form-check-input" type="radio" name="no1" value="3">
+			                <label class="form-check-label">3</label>
+			              </div>  
+			              <div class="form-check form-check-inline">
+			                <input class="form-check-input" type="radio" name="no1" value="4">
+			                <label class="form-check-label">4</label>
+			              </div>
+			            </div>
+           			</c:when>
+           			<c:when test="${ques.ques_type eq 'DD' }">
+			            <div class="answer">
+			              <div class="form-check form-check-inline">
+			                <h6>${idx.count }</h6>
+			              </div>
+			              <div class="form-group">
+			                <input type="text" class="form-control">
+			              </div>
+			            </div>
+           			</c:when>
+           			<c:otherwise>
+			            <div class="answer">
+			              <div class="form-check form-check-inline">
+			                <h6>${idx.count }</h6>
+			              </div>
+			              <div class="form-group">
+			                <textarea class="form-textarea"></textarea>
+			              </div>
+			            </div>
+           			</c:otherwise>
+           		</c:choose>
+           	</c:forEach>
            </form>
            <div id="timer">
              <p>
@@ -337,3 +151,9 @@
  </div>
  <!-- contents end -->
 </div>
+<script>
+let timerId = setInterval(() => alert('째깍'), 2000);
+
+//5초 후에 정지
+setTimeout(() => { clearInterval(timerId); alert('정지'); }, 5000);
+</script>
