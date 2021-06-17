@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.shms.common.controller.IndexController;
 import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.PagingVO;
@@ -45,6 +47,9 @@ public class NoticeViewController {
 	
 	@Inject
 	private BoardService boardService;
+	
+	@Inject
+	private CommonAttachService commonAttachService; 
 	
 	private void listSetting(
 			int currentPage
@@ -79,7 +84,7 @@ public class NoticeViewController {
 			, Model model
 			) {
 		BoardVO board = boardService.selectBoard(bo_no);
-		board.setAttachList(boardService.attachList(bo_no));
+		board.setAttachList(commonAttachService.attachList(bo_no));
 		
 		model.addAttribute("board", board);
 		
@@ -163,7 +168,7 @@ public class NoticeViewController {
 		@ModelAttribute("board") AttachVO attachVO
 		, Model model
 	) {
-		AttachVO attvo = boardService.download(attachVO);
+		AttachVO attvo = commonAttachService.download(attachVO, "viewer");
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";
 	}

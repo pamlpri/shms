@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.common.vo.PagingVO;
 
 /**
@@ -98,26 +99,6 @@ public interface BoardService {
 	 */
 	public ServiceResult deleteBoard(BoardVO board);
 
-	/**
-	 * 해당 게시글의 첨부파일 전체 출력
-	 * @param bo_no
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public List<AttachVO> attachList(int bo_no);
-	
-	/**
-	 * 해당 게시글의 첨부파일 순번 출력
-	 * @param atch_file_no
-	 * @return row count > 0 성공
-	 */
-	public int atch_file_seqCount(int atch_file_no);
-	
-	/**
-	 * 첨부파일 다운로드
-	 * @param attachVO
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public AttachVO download(AttachVO attachVO);
 	
 	/**
 	 * 특정조건에 만족하는 답변하지 않은 질문의 수 조회
@@ -159,4 +140,5 @@ public interface BoardService {
 	 * @return ServiceResult
 	 */
 	public ServiceResult subQnaBoardAnsDelete(int bo_no);
+
 }

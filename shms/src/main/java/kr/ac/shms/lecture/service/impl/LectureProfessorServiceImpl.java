@@ -334,7 +334,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			}
 		}
 		return cnt;
-	}	
+	}
 	
 	private int deleteFileProcesses(SetTaskVO setTask) {
 		logger.info("deleteFileProcesses : {}", setTask);

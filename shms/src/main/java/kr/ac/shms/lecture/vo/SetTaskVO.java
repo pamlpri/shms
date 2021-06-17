@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.validator.SetTaskInsertGroup;
 import kr.ac.shms.validator.SetTaskUpdateGroup;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of="set_task_no")
-public class SetTaskVO {
+public class SetTaskVO implements IAttachVO{
 	private Integer p_bo_no;	// 페이지 상의 번호(DB 저장X)
 	
 	@NotNull(groups= {SetTaskUpdateGroup.class})

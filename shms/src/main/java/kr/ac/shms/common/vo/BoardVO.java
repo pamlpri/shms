@@ -45,7 +45,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode(of="bo_no")
 @ToString(exclude="bo_cont")
-public class BoardVO implements Serializable{
+public class BoardVO implements Serializable, IAttachVO{
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	
 	@NotNull(groups= {BoardUpdateGroup.class, BoardDeleteGroup.class}, message="필수 항목")
@@ -84,8 +84,7 @@ public class BoardVO implements Serializable{
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] bo_files;
-	public void setBo_files(MultipartFile[] bo_files) {
-		System.out.println("bo_files : "+ bo_files.length);
+	public void setCommon_files(MultipartFile[] bo_files) {
 		this.bo_files = bo_files;
 		if(bo_files!=null) {
 			List<AttachVO> attatchList = new ArrayList<>();

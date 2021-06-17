@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.common.dao.CommonAttachDAO">
+	<select id="attachList" parameterType="int" resultType="AttachVO">
+      SELECT
+          A.atch_file_no,
+          atch_file_seq,
+          file_path,
+          file_nm,
+          file_cont_type,
+          file_size,
+          reg_date,
+          reg_user_id,
+          biz_type,
+          save_file_nm
+      FROM
+          attach A
+      RIGHT OUTER JOIN BOARD B
+      ON (A.ATCH_FILE_NO = B.ATCH_FILE_NO)
+      WHERE B.BO_NO = #{bo_no}
+    </select>	
+	   
+	<insert id="insertAttatches" parameterType="kr.ac.shms.common.vo.IAttachVO">
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+		SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
+		FROM ATTACH
+		<choose>
+			<when test="atch_file_no != null and !atch_file_no.equals('')">
+				WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
+			</when>
+			<otherwise>
+				WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+			</otherwise>
+		</choose>
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attachList" item="attatch" index="idx">
+		INTO ATTACH(
+			atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+	    )
+		VALUES (
+		<choose>
+			<when test="atch_file_no != null and !atch_file_no.equals('')">
+				#{atch_file_no, jdbcType=NUMERIC}
+			</when>
+			<otherwise>
+				(SELECT MAX(atch_file_no) + 1 FROM attach)
+			</otherwise>
+		</choose>
+			, #{startAttNo} + #{idx}
+			, #{attatch.file_path,jdbcType=VARCHAR}
+			, #{attatch.file_nm,jdbcType=VARCHAR}
+			, #{attatch.file_cont_type,jdbcType=VARCHAR}
+			, #{attatch.file_size,jdbcType=NUMERIC}
+			, sysdate
+			, #{bo_writer, jdbcType=VARCHAR}
+			, 'TG'
+			, #{attatch.save_file_nm,jdbcType=VARCHAR}
+		)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<select id="selectAttatch" parameterType="AttachVO" resultType="AttachVO">
+		SELECT
+			atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+		FROM attach
+		WHERE atch_file_no = #{atch_file_no}
+		AND atch_file_seq = #{atch_file_seq}
+	</select>
+	
+	<delete id="deleteAttathes" parameterType="kr.ac.shms.common.vo.IAttachVO">
+		DELETE FROM ATTACH
+		WHERE ATCH_FILE_NO = ${atch_file_no}
+		AND ATCH_FILE_SEQ IN 
+		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+			#{attNo}
+		</foreach>
+	</delete>
+	
+	<select id="selectSaveNamesForDelete" parameterType="kr.ac.shms.common.vo.IAttachVO" resultType="string">
+		SELECT SAVE_FILE_NM
+		FROM ATTACH
+		WHERE ATCH_FILE_NO = ${atch_file_no}
+		AND ATCH_FILE_SEQ IN 
+	<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
+		#{attNo}
+	</foreach>
+	</select>
+	
+	<update id="updateAtchNo" parameterType="BoardVO">
+         UPDATE board
+            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
+          WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
+	</update>
+	
+	<select id="atch_file_seqCount" resultType="int">
+		SELECT COUNT(*)+1
+		FROM ATTACH
+		WHERE atch_file_no = #{atch_file_no}	
+	</select>
+</mapper>
