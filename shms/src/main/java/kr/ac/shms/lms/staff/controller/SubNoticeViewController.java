@@ -89,7 +89,7 @@ public class SubNoticeViewController {
 		@ModelAttribute("attach") AttachVO attach
 		, Model model
 	) {
-		AttachVO attvo = commonAttachService.download(attach, "viewer");
+		AttachVO attvo = commonAttachService.download(attach, null);
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";
 	}

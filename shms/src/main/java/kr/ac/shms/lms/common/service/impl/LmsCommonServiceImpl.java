@@ -1,16 +1,11 @@
 package kr.ac.shms.lms.common.service.impl;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -34,7 +29,6 @@ import kr.ac.shms.lms.common.vo.ReceiverVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
-import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
@@ -67,6 +61,9 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	
 	@Inject
 	private LmsCommonDAO lmsCommonDAO;
+	
+	@Inject
+	private CommonAttachServiceImpl commonAttachServiceImpl; 
 	
 	@Value("#{appInfo['ip']}")
 	private String ip;
@@ -150,7 +147,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		int cnt = lmsCommonDAO.insertWebmail(webmailVO);
 		if(cnt > 0) {
 			cnt += receiver(webmailVO);
-			cnt += processes(webmailVO);
+			cnt += commonAttachServiceImpl.processes(webmailVO, "/mail");
 			if(cnt > 0) {
 				result = ServiceResult.OK;
 			}
@@ -158,7 +155,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		return result;
 	}
 	
-	private int receiver(WebmailVO webmailVO) {
+	public int receiver(WebmailVO webmailVO) {
 		int cnt = 0;
 		List<ReceiverVO> receiverList = webmailVO.getReceiverList();
 		if(receiverList != null && receiverList.size() > 0) {
@@ -168,56 +165,6 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		return cnt;
 	}
 
-	private int processes(WebmailVO webmailVO) {
-		int cnt = 0;
-		List<AttachVO> attachList = webmailVO.getAttachList();
-	
-		if(attachList != null && attachList.size() > 0) {
-			FTPClient client = new FTPClient();
-			try {
-				client.connect(ip, port);
-				int reply = client.getReplyCode();
-				logger.info("client Connect : {}", reply);
-				if(FTPReply.isPositiveCompletion(reply)) {
-					if(client.login(id, pw)) {
-						client.setBufferSize(1000);
-						client.enterLocalPassiveMode();
-						
-						String dir = "/mail";
-						boolean isDirectory = client.changeWorkingDirectory(dir);
-						for(AttachVO attach : attachList) {
-							attach.setFile_path(dir);
-						}
-						logger.info("isDir : {} || {}", isDirectory, dir);
-						if(!isDirectory) {
-							client.mkd(dir);
-						}
-						client.setFileType(FTP.BINARY_FILE_TYPE);
-						
-						boolean isUpload = false;
-						for(AttachVO attach : webmailVO.getAttachList()) {
-							isUpload = client.storeFile(attach.getSave_file_nm(), new ByteArrayInputStream(attach.getFile().getBytes()));
-							if(!isUpload) {
-								client.logout();
-								break;
-							}
-						}
-						logger.info("webmailVO {} ", webmailVO);
-						if(isUpload) cnt += lmsCommonDAO.insertAttatches(webmailVO);
-						logger.info("cnt {}" , cnt);
-						
-						client.logout();
-						client.disconnect();
-					}else {
-						client.disconnect();
-					}
-				}
-			}catch(Exception e) {
-				
-			}
-		}
-		return cnt;
-	}
 	
 	@Override
 	public WebmailVO selectWebmail(Map<String, Object> search) {

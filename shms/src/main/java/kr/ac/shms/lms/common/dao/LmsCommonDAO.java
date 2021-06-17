@@ -143,13 +143,6 @@ public interface LmsCommonDAO {
 	public int insertRreceiver(WebmailVO webmailVO);
 	
 	/**
-	 * 첨부파일 등록
-	 * @param webmailVO
-	 * @return row count > 0 성공
-	 */
-	public int insertAttatches(WebmailVO webmailVO);
-	
-	/**
 	 * 하나의 웹메일의 상세 정보를 조회
 	 * @param send_no
 	 * @return 웹메일의 상세 정보

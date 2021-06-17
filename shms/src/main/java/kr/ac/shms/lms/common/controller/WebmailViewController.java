@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -56,6 +57,9 @@ public class WebmailViewController {
 	
 	@Inject
 	private LmsCommonService lmsCommonService;
+	
+	@Inject
+	private CommonAttachService commonAttachService; 
 	
 	@Inject
 	private BoardService boardService;
@@ -198,7 +202,7 @@ public class WebmailViewController {
 		@ModelAttribute("attach") AttachVO attach
 		, Model model
 	) {
-		AttachVO attvo = boardService.download(attach);
+		AttachVO attvo = commonAttachService.download(attach, null);
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";
 	}
