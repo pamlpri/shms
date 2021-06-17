@@ -356,5 +356,17 @@
 		    ON (a.exam_no = c.exam_no AND b.stdnt_no = c.stdnt_no)
 		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
 		   AND b.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		 ORDER BY exam_end_dt desc
 	</select>	
+	
+	<select id="selectExamInfo" parameterType="int" resultType="ExamVO">
+		SELECT exam_no,
+		       (SELECT estbl_semstr FROM lecture WHERE lec_code='L160201901')||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
+		       ROUND((exam_end_dt - exam_begin_dt) * 24 * 60, 2) exam_time,
+		       TO_CHAR(exam_begin_dt, 'YYYY.MM.DD AM HH:MI') exam_begin_dt_char,
+		       TO_CHAR(exam_end_dt, 'YYYY.MM.DD AM HH:MI') exam_end_dt_char,
+		       online_at
+		  FROM exam
+		 WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+	</select>
 </mapper>

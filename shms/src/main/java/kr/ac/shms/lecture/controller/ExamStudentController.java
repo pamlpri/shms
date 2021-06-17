@@ -12,6 +12,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -68,8 +70,12 @@ public class ExamStudentController {
 	@RequestMapping("/lecture/examInfo.do")
 	public String examInfo(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
+		, @RequestParam("exam_no") int exam_no
 		, Model model
 	) {
+		ExamVO exam = lectureStudentService.selectExamInfo(exam_no);
+		
+		model.addAttribute("exam", exam);
 		return "lecture/examInfo";
 	}
 	
