@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,9 +79,16 @@ public class DownloadView extends AbstractView {
 				} else {
 					byte[] bytes = fileName.getBytes();
 					fileName = new String(bytes, "ISO-8859-1");
-					resp.setHeader("Content-Disposition", "attatchment;filename=\""+fileName+"\"");
-					resp.setHeader("Content-Length", attach.getFile_size()+"");
-					resp.setContentType("application/octet-stream");
+					logger.info("use_type {}",attach.getUse_type());
+					if(StringUtils.isNotBlank(attach.getUse_type())) {
+						resp.setHeader("Content-Disposition", "inline;filename=\""+fileName+"\"");
+						resp.setHeader("Content-Length", attach.getFile_size()+"");
+						resp.setContentType("application/pdf");
+					}else {
+						resp.setHeader("Content-Disposition", "attatchment;filename=\""+fileName+"\"");
+						resp.setHeader("Content-Length", attach.getFile_size()+"");
+						resp.setContentType("application/octet-stream");
+					}
 					isSuccess = client.retrieveFile(attach.getSave_file_nm(), resp.getOutputStream());
 					if(isSuccess) {
 						logger.info("download Success");

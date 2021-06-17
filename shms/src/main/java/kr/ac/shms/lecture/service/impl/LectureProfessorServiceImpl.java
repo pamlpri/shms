@@ -46,6 +46,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 15.	  박초원			 주/회차 삭제
  * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
  * 2021. 06. 16.      박초원			 교수 시험,문제 조회
+ * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -333,7 +334,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			}
 		}
 		return cnt;
-	}	
+	}
 	
 	private int deleteFileProcesses(SetTaskVO setTask) {
 		logger.info("deleteFileProcesses : {}", setTask);

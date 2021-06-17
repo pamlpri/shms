@@ -48,7 +48,7 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailTo"  type="text" class="form-control bg-transparent" placeholder=" 수신자"  disabled>
+								<input id="mailTo"  type="text" class="form-control bg-transparent" placeholder=" 수신자"  disabled readonly>
 								<input type="hidden" name="receiver" />
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"
@@ -62,7 +62,7 @@
 								<span class="input-group-text" id="basic-addon1">
 									<i class="bi bi-search"></i>
 								</span>
-								<input id="mailCc" type="text"  idx="" class="form-control bg-transparent" placeholder=" 참조자" disabled >
+								<input id="mailCc" type="text"  idx="" class="form-control bg-transparent" placeholder=" 참조자" disabled readonly>
 								<input type="hidden" name="receiverCC" />
 								<!-- Button trigger for scrolling content modal -->
 								<button type="button" class="btn btn-outline-primary mailBtn"

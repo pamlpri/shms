@@ -39,6 +39,7 @@ public class AttachVO implements Serializable{
 	private String reg_user_id;
 	private String biz_type;
 	private String save_file_nm;
+	private String use_type;
 	
 	private transient MultipartFile file;
 	public AttachVO(MultipartFile file) {

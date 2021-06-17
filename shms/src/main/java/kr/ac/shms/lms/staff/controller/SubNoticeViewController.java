@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.shms.common.dao.BoardDAO;
 import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -46,6 +47,9 @@ public class SubNoticeViewController {
 	
 	@Inject
 	private BoardService boardService;
+	
+	@Inject
+	private CommonAttachService commonAttachService; 
 	
 	@RequestMapping("/lms/subjectNoticeList.do")
 	public String subjectNoticeList(
@@ -85,7 +89,7 @@ public class SubNoticeViewController {
 		@ModelAttribute("attach") AttachVO attach
 		, Model model
 	) {
-		AttachVO attvo = boardService.download(attach);
+		AttachVO attvo = commonAttachService.download(attach, "viewer");
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";
 	}

@@ -31,6 +31,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
  * 2021. 06. 16.      송수미 			 교수 - 학생이 제출한 과제 성적 입력
  * 2021. 06. 16.      박초원			 교수 시험,문제 조회
+ * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */

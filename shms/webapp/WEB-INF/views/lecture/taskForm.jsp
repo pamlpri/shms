@@ -31,9 +31,9 @@
 
   <section class="section">
       <h2 class="section-title">${setTask.task_title }</h2>
-      <p class="text-left"> 
+      <div class="text-left task_cont_box">
 		${setTask.task_cont }
-      </p>
+      </div>
       <c:if test="${not empty setTask.attachList }">
 	      <div class="board_downloader" style="margin-bottom : 3%;">
 	        <ul class="downloader">

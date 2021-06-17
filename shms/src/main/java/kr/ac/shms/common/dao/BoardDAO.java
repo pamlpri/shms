@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.common.vo.PagingVO;
 
 /**
@@ -99,20 +100,20 @@ public interface BoardDAO {
 	 */
 	public int incrementHit(int bo_no);
 	
-	/**
-	 * 해당 게시글의 첨부파일 전체 출력
-	 * @param bo_no
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public List<AttachVO> attachList(int bo_no);
-	
-	/**
-	 * 하나의 첨부파일 출력
-	 * @param attachVO
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public AttachVO selectAttatch(AttachVO attachVO);
-	
+//	/**
+//	 * 해당 게시글의 첨부파일 전체 출력
+//	 * @param bo_no
+//	 * @return 데이터가 없으면 null 반환
+//	 */
+//	public List<AttachVO> attachList(int bo_no);
+//	
+//	/**
+//	 * 하나의 첨부파일 출력
+//	 * @param attachVO
+//	 * @return 데이터가 없으면 null 반환
+//	 */
+//	public AttachVO selectAttatch(AttachVO attachVO);
+//	
 	/**
 	 * 첨부파일 등록
 	 * @param board
@@ -127,12 +128,12 @@ public interface BoardDAO {
 	 */
 	public int deleteAttathes(BoardVO board);
 	
-	/**
-	 * 해당 게시글의 첨부파일 순번 출력
-	 * @param atch_file_no
-	 * @return row count > 0 성공
-	 */
-	public int atch_file_seqCount(int atch_file_no);
+//	/**
+//	 * 해당 게시글의 첨부파일 순번 출력
+//	 * @param atch_file_no
+//	 * @return row count > 0 성공
+//	 */
+//	public int atch_file_seqCount(int atch_file_no);
 	
 	/**
 	 * 
@@ -182,10 +183,4 @@ public interface BoardDAO {
 	 */
 	public int subQnaBoardAnsDelete(int bo_no);
 	
-	/**
-	 * 첨부파일 없는 게시글 수정할 때 첨부파일 추가 시, 첨부파일 번호 새로 부여
-	 * @param board  
-	 * @return row count > 0 성공
-	 */
-	public int updateAtchNo(BoardVO board);
 }
