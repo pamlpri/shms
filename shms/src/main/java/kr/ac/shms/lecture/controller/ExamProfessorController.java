@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 
 /**
  * @author 박초원
@@ -40,6 +44,9 @@ public class ExamProfessorController {
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	
+	@Inject
+	private CommonAttachService commonAttachService; 
+	
 	@RequestMapping("/lecture/examAdminForm.do")
 	public String examAdminForm(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
@@ -51,6 +58,7 @@ public class ExamProfessorController {
 	@RequestMapping("/lecture/examInsert.do")
 	public String examInsert(
 		@SessionAttribute(name="lec_code", required=false) String lec_code
+		,@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @ModelAttribute("exam") ExamVO exam
 		, Model model
 	) {
@@ -73,6 +81,8 @@ public class ExamProfessorController {
        }
 		
 		exam.setLec_code(lec_code);
+		exam.setBiz_type("SH");
+		exam.setBo_writer(user.getUser_id());
 		
 		String view = null;
 		String message = null;
@@ -147,6 +157,16 @@ public class ExamProfessorController {
         model.addAttribute("exam", exam);
         model.addAttribute("update", "update");
 		return "lecture/examAdminForm";
+	}
+	
+	@RequestMapping("/lecture/examDownload.do")
+	public String examDownload(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = commonAttachService.download(attach, null);
+		model.addAttribute("attvo", attvo);
+		return "downloadView";
 	}
 	
 	@RequestMapping("/lecture/examOMR.do")

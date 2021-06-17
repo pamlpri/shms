@@ -111,17 +111,12 @@
 		              <td class="text-left">
 		              	<c:forEach items="${exam.attachList }" var="attach">
 		              		<c:if test="${not empty attach.atch_file_seq }">
-			              		<div class="row form-control col-md-4">
-					                <div class="col-md-3">
-					                	<c:url value="/lecture/examDownload.do" var="downloadURL">
-					                		<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
-					                		<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
-					                	</c:url>
-					                	<a href="${downloadURL }" class="text-color">${attach.file_nm}</a>
-					                </div>
-					                <div>
-					                	<span class="delBtn btn btn-danger">-</span>
-					                </div>
+			              		<div class="fileArea ml-2">
+				                	<c:url value="/lecture/examDownload.do" var="downloadURL">
+				                		<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
+				                		<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
+				                	</c:url>
+				                	<a href="${downloadURL }" class="text-color mr-2">${attach.file_nm}</a>
 			              		</div>
 		              		</c:if>
 		              	</c:forEach>
@@ -142,7 +137,7 @@
 			                            <div class="fileUpload btn btn-orange">
 			                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
 			                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-			                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
+			                              <input type="file" name="common_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
 			                            </div><!-- btn-orange -->
 			                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
 				                        <div class="invalid-feedback">
@@ -170,7 +165,7 @@
 				                            <div class="fileUpload btn btn-orange">
 				                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
 				                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-				                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
+				                              <input type="file" name="common_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
 				                            </div><!-- btn-orange -->
 				                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
 					                        <div class="invalid-feedback">
@@ -188,7 +183,7 @@
 	            </c:choose>
 	            </table>
 	            <c:if test="${not empty update }">
-		            <p>※ 시험문제를 수정하여 재업로드하거나 삭제버튼을 누르면 원본파일이 삭제됩니다. 단, 수정파일이 업로드할 수 없는 파일이거나 업로드가 제대로 이루어지지 않았다면 원본파일은 그대로 보존됩니다.</p>
+		            <p>※ 시험문제를 수정하여 재업로드하면 원본파일이 삭제됩니다. 단, 수정파일이 업로드할 수 없는 파일이거나 업로드가 제대로 이루어지지 않았다면 원본파일은 그대로 보존됩니다.</p>
 	            </c:if>
 	        </div>
         </div>
@@ -245,7 +240,14 @@
       </div>
       <div class="text-center">
         <a href="${cPath }/lecture/examAdmin.do" class="btn btn-secondary">취소</a>
-        <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
+        <c:choose>
+        	<c:when test="${not empty update }">
+		        <button type="button" class="btn btn-primary actionBtn" id="updateBtn">저장</button>
+        	</c:when>
+        	<c:otherwise>
+		        <button type="button" class="btn btn-primary actionBtn" id="saveBtn">저장</button>
+        	</c:otherwise>
+        </c:choose>
       </div>
     </form>
 
@@ -372,7 +374,7 @@
  		 }
  	  });
        
-  	  $("#saveBtn").on("click",function(){
+  	  $(".actionBtn").on("click",function(){
   		let inputs = $(examForm).find(":input[name]");
   		
   		$(inputs).each(function(idx, input){
@@ -384,7 +386,7 @@
   				}
   			}
   			
-  			if($("[name='exam_files']")){
+  			if($("[name='common_files']")){
   				if($(this).val() == ""){
   					$(this).parents(".uploadDoc").find(".invalid-feedback").fadeIn();
   				}
@@ -417,14 +419,14 @@
   		});
   		
         var reg = /(.*?)\.(pdf)$/;
-      	if($("[name='exam_files']").val() != null && !$("[name='exam_files']").val().match(reg)) {
-      		$(".modal-title").text("파일 형식 오류");
-			$(".modal-body").text("시험문제는 pdf파일만 제출할 수 있습니다.");
+      	if($("[name='common_files']").val() != null && !$("[name='common_files']").val().match(reg)) {
+      		$(".modal-title").text("파일오류");
+			$(".modal-body").text("시험문제는 pdf파일로 제출해야 합니다.");
 			$("body").addClass("modal-open").css("padding-right", "17px");
   			$(".modal-backdrop").addClass("show").css("display", "block");
 			$(".modal").addClass("show").css("display", "block");
 			frag[4] = false;
-    	}else if($("[name='exam_files']").val() != null && $("[name='exam_files']").val().match(reg)){
+    	}else if($("[name='common_files']").val() != null && $("[name='common_files']").val().match(reg)){
     		frag[4] = true;
     	}
   		
@@ -448,7 +450,7 @@
   		}
   	  });
   	  
-  	$("[name='exam_files']").on("change", function(){
+  	$("[name='common_files']").on("change", function(){
   		$(this).parents(".uploadDoc").find(".invalid-feedback").fadeOut();
   	});
   	
@@ -456,4 +458,8 @@
 		$(this).removeClass("is-invalid");
 		frag[1] = true;
 	});
+  	
+  	$("#updateBtn").on("click", function(){
+  		
+  	});
   </script>
