@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -83,4 +84,18 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public int insertRefundReq(TuitionVO tuition);
+	
+	/**
+	 * 등록금 환불 신청 내역 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<RefundReqVO> selectRefundReqList(String stdnt_no);
+	
+	/**
+	 * 환불신청내역이 있는지 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectRefundCount(String stdnt_no);
 }

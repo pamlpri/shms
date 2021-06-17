@@ -105,7 +105,6 @@
            </div>
        </div>
        
-       <!-- 삭제확인 -->
 		<!--Basic Modal -->
 		<div class="modal fade text-left" id="default" tabindex="-1"
 			role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">

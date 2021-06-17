@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -85,5 +86,17 @@ public interface TuitionService {
 	 */
 	public void selectRefundMain(Map<String, Object> paramMap);
 	
+	/**
+	 * 등록금 환불 신청 내역 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<RefundReqVO> selectRefundReqList(String stdnt_no);
 	
+	/**
+	 * 환불신청내역이 있는지 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public ServiceResult selectRefundCount(String stdnt_no);
 }
