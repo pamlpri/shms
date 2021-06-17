@@ -197,7 +197,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p class="text-center" id="inputText">
+                <p id="inputText">
                 </p>
             </div>
             <div class="modal-footer">

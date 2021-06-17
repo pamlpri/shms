@@ -13,6 +13,7 @@ import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.RefundReqVO;
+import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -127,5 +128,10 @@ public class TuitionServiceImpl implements TuitionService{
 			result = ServiceResult.FAIL;
 		}
 		return result;
+	}
+
+	@Override
+	public List<ScholarShipVO> selectRecivSchlList(String stdnt_no) {
+		return tuitionDAO.selectRecivSchlList(stdnt_no);
 	}
 }
