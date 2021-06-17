@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
-import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.validator.SetTaskInsertGroup;
 import kr.ac.shms.validator.TaskInsertGroup;
 
 /**
@@ -50,7 +48,7 @@ public class TaskSubmitInsertController {
 	@Inject
 	private LectureStudentService lectureStudentService;
 	@Inject
-	private LectureService lectureService;
+	private CommonAttachService commonAttachService; 
 	
 	@RequestMapping("/lecture/taskInsert.do")
 	public String taskForm(
@@ -73,17 +71,7 @@ public class TaskSubmitInsertController {
 		
 		return "lecture/taskForm";
 	}
-	
-	@RequestMapping(value="/lecture/setTaskDownload.do")
-	public String downloader(
-		@ModelAttribute("attach") AttachVO attach
-		, Model model
-	) {
-		AttachVO attvo = lectureStudentService.download(attach);
-		model.addAttribute("attvo", attvo);		
-		return "downloadView";
-	}
-	
+
 	@RequestMapping(value="lecture/taskInsert.do", method=RequestMethod.POST)
 	public String insertTask(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -99,6 +87,8 @@ public class TaskSubmitInsertController {
 		/** 파라미터 조회 */
 		taskSubmit.setWriter(user.getUser_id());
 		taskSubmit.setLec_code(lec_code);
+		taskSubmit.setBo_writer(user.getUser_id());
+		taskSubmit.setBiz_type("GJ");
 		
 		/** 검색 조건 */
 		Map<String, Object> search = new HashMap<>();
@@ -132,4 +122,15 @@ public class TaskSubmitInsertController {
 		
 		return view;
 	}
+	
+	@RequestMapping(value="/lecture/setTaskDownload.do")
+	public String downloader(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = commonAttachService.download(attach, null);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
+	}
+	
 }

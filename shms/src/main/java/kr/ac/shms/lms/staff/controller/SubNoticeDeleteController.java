@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 
 /**
  * @author 송수미
@@ -37,7 +39,8 @@ public class SubNoticeDeleteController {
 	
 	@RequestMapping(value="/lms/subjectNoticeDelete.do", method=RequestMethod.POST)
 	public String subjectNoticeDelete(
-			@ModelAttribute("board") BoardVO board
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @ModelAttribute("board") BoardVO board
 			, RedirectAttributes session
 			) {
 		

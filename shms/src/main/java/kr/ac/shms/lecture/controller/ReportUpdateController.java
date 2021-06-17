@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,6 +20,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 
 /**
  * @author 박초원
@@ -66,7 +68,8 @@ public class ReportUpdateController {
 	
 	@RequestMapping(value="/lecture/reportUpdate.do", method=RequestMethod.POST)
 	public String reportUpdate(
-			@SessionAttribute(name="lec_code", required=false) String lec_code
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @SessionAttribute(name="lec_code", required=false) String lec_code
 			, @Validated
 			@ModelAttribute("setTask") SetTaskVO setTask
 			, Errors errors
@@ -86,6 +89,8 @@ public class ReportUpdateController {
 			logger.info(setEndde);
 			setTask.setSubmit_endde(setEndde);
 		}
+		setTask.setBo_writer(user.getUser_id());
+		setTask.setBiz_type("GC");
 		
 		/** 파라미터 검증 */
 		boolean valid = !(errors.hasErrors());

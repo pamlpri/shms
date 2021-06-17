@@ -157,56 +157,6 @@
 			    </if>
 			)
 	</insert>
-
-	<insert id="insertAttaches" parameterType="TaskSubmitVO">
-		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
-			SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
-			FROM ATTACH
-			<choose>
-				<when test="atch_file_no != null and !atch_file_no.equals('')">
-					WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
-				</when>
-				<otherwise>
-					WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
-				</otherwise>
-			</choose>		
-		</selectKey>
-		INSERT ALL
-		<foreach collection="attachList" item="attatch" index="idx">
-			INTO ATTACH(
-				atch_file_no,
-			    atch_file_seq,
-			    file_path,
-			    file_nm,
-			    file_cont_type,
-			    file_size,
-			    reg_date,
-			    reg_user_id,
-			    biz_type,
-			    save_file_nm
-		    )
-			VALUES (
-			<choose>
-				<when test="atch_file_no != null and !atch_file_no.equals('')">
-					#{atch_file_no, jdbcType=NUMERIC}
-				</when>
-				<otherwise>
-					(SELECT MAX(atch_file_no) + 1 FROM attach)
-				</otherwise>
-			</choose>
-				, #{startAttNo} + #{idx}
-				, #{attatch.file_path,jdbcType=VARCHAR}
-				, #{attatch.file_nm,jdbcType=VARCHAR}
-				, #{attatch.file_cont_type,jdbcType=VARCHAR}
-				, #{attatch.file_size,jdbcType=NUMERIC}
-				, sysdate
-				, #{writer, jdbcType=VARCHAR}
-				, 'GJ'
-				, #{attatch.save_file_nm,jdbcType=VARCHAR}
-			)
-		</foreach>
-			SELECT * FROM DUAL	
-	</insert>
 	
 	<resultMap type="SetTaskVO" id="taskAttachMap" autoMapping="true">
 		<id property="set_task_no" column="set_task_no"/>
@@ -239,22 +189,6 @@
 		    set_task_no = #{set_task_no, jdbcType=NUMERIC}
 	</select>
 	
-	<select id="selectAttatch" parameterType="AttachVO" resultType="AttachVO"> 
-		SELECT
-			atch_file_no,
-		    atch_file_seq,
-		    file_path,
-		    file_nm,
-		    file_cont_type,
-		    file_size,
-		    reg_date,
-		    reg_user_id,
-		    biz_type,
-		    save_file_nm
-		FROM attach
-		WHERE atch_file_no = #{atch_file_no}
-		AND atch_file_seq = #{atch_file_seq}
-	</select>
 	
 	<resultMap type="TaskSubmitVO" id="taskSubmitMap" autoMapping="true">
 		<id property="submit_no" column="submit_no"/>
@@ -292,31 +226,6 @@
 		    submit_no = #{submit_no, jdbcType=NUMERIC}
 	</select>
 
-	<update id="updateAtchNo" parameterType="TaskSubmitVO">
-		UPDATE task_submit
-            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
-          WHERE submit_no = #{submit_no, jdbcType=NUMERIC}	
-	</update>
-	
-	<select id="selectSaveNamesForDelete" parameterType="TaskSubmitVO" resultType="string">
-		SELECT save_file_nm
-		FROM attach
-		WHERE atch_file_no = ${atch_file_no}
-		AND atch_file_seq IN 
-		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
-			#{attNo}
-		</foreach>
-	</select>
-	
-	<delete id="deleteAttathes" parameterType="TaskSubmitVO">
-		DELETE FROM attach
-		WHERE atch_file_no = ${atch_file_no}
-		AND atch_file_seq IN 
-		<foreach collection="delAttNos" item="attNo" open="(" close=")" separator=",">
-			#{attNo}
-		</foreach>
-	</delete>
-	
 	<update id="updateTask" parameterType="TaskSubmitVO">
 		UPDATE task_submit
 		    SET

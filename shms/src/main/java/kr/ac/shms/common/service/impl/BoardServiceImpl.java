@@ -1,15 +1,11 @@
 package kr.ac.shms.common.service.impl;
 
-import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +17,7 @@ import kr.ac.shms.common.dao.BoardDAO;
 import kr.ac.shms.common.dao.CommonAttachDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
-import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.PagingVO;
 
@@ -60,7 +56,7 @@ public class BoardServiceImpl implements BoardService{
 	private CommonAttachDAO commonAttachDAO; 
 	
 	@Inject
-	private CommonAttachServiceImpl commonAttachServiceImpl; 
+	private CommonAttachService commonAttachService; 
 	
 	@Value("#{appInfo['ip']}")
 	private String ip;
@@ -138,7 +134,7 @@ public class BoardServiceImpl implements BoardService{
 		int cnt = boardDAO.insertBoard(board);
 		
 		if(cnt > 0) {
-			cnt += commonAttachServiceImpl.processes(board, "/" + board.getBo_kind() + "board");
+			cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
 			
 			if(cnt > 0) {
 				result = ServiceResult.OK;
@@ -170,10 +166,10 @@ public class BoardServiceImpl implements BoardService{
 				}
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
-					cnt += commonAttachServiceImpl.processes(board, "/" + board.getBo_kind() + "board");
+					cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
 					logger.info("peocesses cnt{}", cnt);
 					logger.info("board {}", board);
-					cnt += commonAttachServiceImpl.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+					cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
 					if(cnt > 0) {
 						result = ServiceResult.OK;
 					}
@@ -194,7 +190,7 @@ public class BoardServiceImpl implements BoardService{
 		}else {
 			int cnt = boardDAO.deleteBoard(board);
 			if(cnt > 0) {
-				cnt += commonAttachServiceImpl.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+				cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
 				if(cnt > 0) {
 					result = ServiceResult.OK;
 				}
