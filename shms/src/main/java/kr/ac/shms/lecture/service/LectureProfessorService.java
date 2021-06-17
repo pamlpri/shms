@@ -206,6 +206,13 @@ public interface LectureProfessorService {
 	public List<QuesVO> selectQuesList(int exam_no);
 	
 	/**
+	 * 시험 수정
+	 * @param examVO
+	 * @return cnt
+	 */
+	public ServiceResult updateExam(ExamVO exam);
+	
+	/**
 	 * 학생이 제출한 과제 성적 입력
 	 * @param taskSubmit
 	 * @return 성공, 실패

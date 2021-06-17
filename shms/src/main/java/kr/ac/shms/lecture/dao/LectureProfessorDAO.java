@@ -221,6 +221,20 @@ public interface LectureProfessorDAO {
 	 * @return cnt
 	 */
 	public List<QuesVO> selectQuesList(int exam_no);
+	
+	/**
+	 * 시험 수정
+	 * @param examVO
+	 * @return cnt
+	 */
+	public int updateExam(ExamVO exam);
+	
+	/**
+	 * 답안 수정
+	 * @param examVO
+	 * @return cnt
+	 */
+	public int updateQues(int exam_no);
 
 	/**
 	 * 학생이 제출한 과제 성적 입력
