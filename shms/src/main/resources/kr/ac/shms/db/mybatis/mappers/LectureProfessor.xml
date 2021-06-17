@@ -642,6 +642,22 @@
 		 ORDER BY ques_no ASC
 	</select>
 	
+	<update id="updateExam" parameterType="ExamVO">
+		UPDATE exam
+		   SET  test_cl = #{test_cl, jdbcType=VARCHAR},
+		        exam_begin_dt = TO_DATE(#{exam_begin_dt, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
+		        exam_end_dt = TO_DATE(#{exam_end_dt, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
+		        online_at = #{online_at, jdbcType=VARCHAR},
+		        exam_type = #{exam_type, jdbcType=VARCHAR},
+		        ques_cnt = #{ques_cnt, jdbcType=NUMERIC}
+		WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+	</update>
+	
+	<delete id="updateQues" parameterType="int">
+		DELETE FROM exam_ques
+		 WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+	</delete>
+	
 	<update id="updateTaskScore" parameterType="TaskSubmitVO">
 		UPDATE task_submit
 		   SET

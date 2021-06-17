@@ -74,6 +74,7 @@ public class TaskSubmitUpdateController {
 	@RequestMapping(value="lecture/taskUpdate.do", method=RequestMethod.POST)
 	public String insertTask(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @SessionAttribute(name="lec_code", required=false) String lec_code
 		, @RequestParam("set_task_no") int set_task_no
 		, @Validated(TaskUpdateGroup.class)
 		@ModelAttribute("taskSubmit") TaskSubmitVO taskSubmit
@@ -83,6 +84,7 @@ public class TaskSubmitUpdateController {
 		
 		/** 파라미터 조회 */
 		taskSubmit.setWriter(user.getUser_id());
+		taskSubmit.setLec_code(lec_code);
 		taskSubmit.setBo_writer(user.getUser_id());
 		taskSubmit.setBiz_type("GJ");
 		

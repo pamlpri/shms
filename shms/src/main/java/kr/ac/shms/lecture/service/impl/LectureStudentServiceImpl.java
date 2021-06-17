@@ -17,6 +17,7 @@ import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -167,6 +168,11 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 	@Override
 	public ExamVO selectExamInfo(int exam_no) {
 		return lectureStudentDAO.selectExamInfo(exam_no);
+	}
+
+	@Override
+	public List<QuesVO> selectExamQues(int exam_no) {
+		return lectureStudentDAO.selectExamQues(exam_no);
 	}	
 
 }

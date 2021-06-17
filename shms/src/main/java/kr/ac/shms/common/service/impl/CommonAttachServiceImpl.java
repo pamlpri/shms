@@ -82,7 +82,9 @@ public class CommonAttachServiceImpl implements CommonAttachService {
 						
 						boolean isUpload = false;
 						for(AttachVO attvo : iattachVO.getAttachList()) {
+							logger.info("attvo {}", attvo);
 							isUpload = client.storeFile(attvo.getSave_file_nm(), new ByteArrayInputStream(attvo.getFile().getBytes()));
+							logger.info("isUpload {}", isUpload);
 							if(!isUpload) {
 								client.logout();
 								break;
