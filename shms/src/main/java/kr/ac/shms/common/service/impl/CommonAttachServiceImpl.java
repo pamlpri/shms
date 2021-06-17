@@ -53,6 +53,7 @@ public class CommonAttachServiceImpl implements CommonAttachService {
 		return attach;
 	}
 	
+	@Override
 	public int processes(IAttachVO iattachVO, String dir) {
 		int cnt = 0;		
 		List<AttachVO> attachList = iattachVO.getAttachList();
@@ -87,6 +88,7 @@ public class CommonAttachServiceImpl implements CommonAttachService {
 								break;
 							}
 						}
+						logger.info("isUpload : {}", isUpload);
 						if(isUpload) cnt += commonAttachDAO.insertAttatches(iattachVO);
 						
 						client.logout();
@@ -102,6 +104,7 @@ public class CommonAttachServiceImpl implements CommonAttachService {
 		return cnt;
 	}
 	
+	@Override
 	public int deleteFileProcesses(IAttachVO iattachVO, String dir) {
 		logger.info("deleteFileProcesses : {}", iattachVO);
 		FTPClient client = new FTPClient();

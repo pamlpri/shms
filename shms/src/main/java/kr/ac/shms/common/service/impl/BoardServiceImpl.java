@@ -171,6 +171,8 @@ public class BoardServiceImpl implements BoardService{
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
 					cnt += commonAttachServiceImpl.processes(board, "/" + board.getBo_kind() + "board");
+					logger.info("peocesses cnt{}", cnt);
+					logger.info("board {}", board);
 					cnt += commonAttachServiceImpl.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
 					if(cnt > 0) {
 						result = ServiceResult.OK;

@@ -83,7 +83,7 @@
 						</h6>
 						<div class="form-inline fileArea row">
 							<p class="fileBox col-lg-6">
-								<input class="form-control" type="file" name="mail_files">
+								<input class="form-control" type="file" name="common_files">
 								<span class="plusBtn btn btn-secondary">+</span>
 							</p>
 						</div>
@@ -258,7 +258,7 @@
 //         });
         
    		var source = '<p class="fileBox col-lg-6">'
-					+ '<input class="form-control" type="file" name="mail_files">'
+					+ '<input class="form-control" type="file" name="common_files">'
 					+ '<span class="plusBtn btn btn-secondary">+</span>'
 					+ '<span class="delBtn btn btn-danger">-</span>'
 				    + '</p>';

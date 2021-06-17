@@ -80,15 +80,16 @@ public class BoardVO implements Serializable, IAttachVO{
 	private Integer atch_file_no;
 	private String bo_name;		// 학사공지, 장학공지
 	private String inqry_kind_name;	// 편의시설문의, 학사일정문의, 장학금문의
+	private String biz_type;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
-	private MultipartFile[] bo_files;
-	public void setCommon_files(MultipartFile[] bo_files) {
-		this.bo_files = bo_files;
-		if(bo_files!=null) {
+	private MultipartFile[] common_files;
+	public void setCommon_files(MultipartFile[] common_files) {
+		this.common_files = common_files;
+		if(common_files!=null) {
 			List<AttachVO> attatchList = new ArrayList<>();
-			for(MultipartFile file : bo_files) {
+			for(MultipartFile file : common_files) {
 				if(file.isEmpty()) continue;
 				attatchList.add(new AttachVO(file));
 			}
