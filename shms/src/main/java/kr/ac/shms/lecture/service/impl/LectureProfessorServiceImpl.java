@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.dao.CommonAttachDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.dao.LectureProfessorDAO;
@@ -58,7 +59,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	@Inject
 	private CommonAttachDAO commonAttachDAO; 
 	@Inject
-	private CommonAttachServiceImpl commonAttachServiceImpl; 
+	private CommonAttachService commonAttachService; 
 	
 	@Value("#{appInfo['ip']}")
 	private String ip;
@@ -104,7 +105,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		
 		if(cnt > 0) {
 			cnt += lectureProfessorDAO.insertLectureDetails(lecture);
-			cnt += commonAttachServiceImpl.processes(lecture, "/lecture/" + lecture.getLec_code() + "/plan" );
+			cnt += commonAttachService.processes(lecture, "/lecture/" + lecture.getLec_code() + "/plan" );
 			if(cnt > 2) {
 				result = ServiceResult.OK;
 			}
@@ -165,7 +166,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		int cnt = lectureProfessorDAO.insertSetTask(setTask);
 		
 		if(cnt > 0) {
-			cnt += commonAttachServiceImpl.processes(setTask, "/lecture/" + setTask.getLec_code() + "/setTask");
+			cnt += commonAttachService.processes(setTask, "/lecture/" + setTask.getLec_code() + "/setTask");
 			
 			if(cnt > 0) {
 				result = ServiceResult.OK; 
@@ -225,8 +226,8 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 			}
 			cnt = lectureProfessorDAO.updateSetTask(setTask);
 			if(cnt > 0) {
-				cnt += commonAttachServiceImpl.processes(setTask, "/lecture/" + setTask.getLec_code() + "/setTask");
-				cnt += commonAttachServiceImpl.deleteFileProcesses(setTask, "/lecture/" + setTask.getLec_code() + "/setTask");
+				cnt += commonAttachService.processes(setTask, "/lecture/" + setTask.getLec_code() + "/setTask");
+				cnt += commonAttachService.deleteFileProcesses(setTask, "/lecture/" + setTask.getLec_code() + "/setTask");
 				if(cnt > 0) {
 					result = ServiceResult.OK;
 				}
@@ -248,7 +249,7 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		
 		if(cnt > 0) {
 			cnt += insertQues(exam);
-			cnt +=commonAttachServiceImpl.processes(exam, "/lecture/" + exam.getLec_code() + "/exam" + exam.getExam_no());
+			cnt += commonAttachService.processes(exam, "/lecture/" + exam.getLec_code() + "/exam");
 			if(cnt > 0) {
 				result = ServiceResult.OK;
 			}
@@ -300,5 +301,42 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	@Override
 	public List<QuesVO> selectQuesList(int exam_no) {
 		return lectureProfessorDAO.selectQuesList(exam_no);
+	}
+
+	@Transactional
+	@Override
+	public ServiceResult updateExam(ExamVO exam) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = 0;
+		
+		ExamVO examVO = lectureProfessorDAO.selectExamDetail(exam);
+		if(examVO == null) {
+			result = ServiceResult.NOTEXIST;
+		}else {
+			cnt = lectureProfessorDAO.updateExam(exam);
+			if(cnt > 0) {
+				cnt += updateQues(exam);
+				if(cnt > 0) {
+					cnt += insertQues(exam);
+					if(cnt > 0) {
+						cnt += commonAttachService.deleteFileProcesses(exam, "/lecture/" + exam.getLec_code() + "/exam");
+						cnt += commonAttachService.processes(exam, "/lecture/" + exam.getLec_code() + "/exam");
+						if(cnt > 0) {
+							result = ServiceResult.OK;
+						}
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	public int updateQues(ExamVO exam) {
+		int cnt = 0;
+		int exam_no = exam.getExam_no();
+		cnt += lectureProfessorDAO.updateQues(exam_no);
+		
+		return cnt;
 	}
 }

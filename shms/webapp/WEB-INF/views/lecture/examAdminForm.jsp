@@ -28,7 +28,9 @@
       </ol>
   </nav>
 
-  <form action="${cPath }/lecture/examInsert.do" method="post" enctype="multipart/form-data" id="examForm">
+  <form method="post" enctype="multipart/form-data" id="examForm">
+  	<input type="hidden" value="${exam.exam_no }" name="exam_no" />
+  	<input type="hidden" value="${exam.atch_file_no }" name="atch_file_no" />
     <section class="section">
       <h2 class="section-title">시험출제</h2>
     </section>
@@ -110,15 +112,13 @@
 		              <th class="align-middle">시험문제(PDF)<br/>원본파일</th>
 		              <td class="text-left">
 		              	<c:forEach items="${exam.attachList }" var="attach">
-		              		<c:if test="${not empty attach.atch_file_seq }">
-			              		<div class="fileArea ml-2">
-				                	<c:url value="/lecture/examDownload.do" var="downloadURL">
-				                		<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
-				                		<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
-				                	</c:url>
-				                	<a href="${downloadURL }" class="text-color mr-2">${attach.file_nm}</a>
-			              		</div>
-		              		</c:if>
+		              		<div class="fileArea ml-2">
+			                	<c:url value="/lecture/examDownload.do" var="downloadURL">
+			                		<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
+			                		<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
+			                	</c:url>
+			                	<a href="${downloadURL }" data-attno="${attach.atch_file_seq }" class="text-color mr-2 oriFile">${attach.file_nm}</a>
+		              		</div>
 		              	</c:forEach>
 		              </td>
 		            </tr>
@@ -374,7 +374,9 @@
  		 }
  	  });
        
-  	  $(".actionBtn").on("click",function(){
+  	  $(".actionBtn").on("click",function(){ 
+  		let btnType = $(this).attr("id");
+  		console.log(btnType);
   		let inputs = $(examForm).find(":input[name]");
   		
   		$(inputs).each(function(idx, input){
@@ -418,17 +420,45 @@
   			}
   		});
   		
-        var reg = /(.*?)\.(pdf)$/;
-      	if($("[name='common_files']").val() != null && !$("[name='common_files']").val().match(reg)) {
-      		$(".modal-title").text("파일오류");
-			$(".modal-body").text("시험문제는 pdf파일로 제출해야 합니다.");
-			$("body").addClass("modal-open").css("padding-right", "17px");
-  			$(".modal-backdrop").addClass("show").css("display", "block");
-			$(".modal").addClass("show").css("display", "block");
-			frag[4] = false;
-    	}else if($("[name='common_files']").val() != null && $("[name='common_files']").val().match(reg)){
-    		frag[4] = true;
-    	}
+  		
+  		if(btnType == "saveBtn"){
+	        var reg = /(.*?)\.(pdf)$/;
+	      	if($("[name='common_files']").val() != null && !$("[name='common_files']").val().match(reg)) {
+	      		$(".modal-title").text("파일오류");
+				$(".modal-body").text("시험문제는 pdf파일로 제출해야 합니다.");
+				$("body").addClass("modal-open").css("padding-right", "17px");
+	  			$(".modal-backdrop").addClass("show").css("display", "block");
+				$(".modal").addClass("show").css("display", "block");
+				frag[4] = false;
+	    	}else if($("[name='common_files']").val() != null && $("[name='common_files']").val().match(reg)){
+	    		frag[4] = true;
+	    	}
+  		}else {
+  			var reg = /(.*?)\.(pdf)$/;
+	      	if(!$("[name='common_files']").val().match(reg)) {
+	      		$(".modal-title").text("파일오류");
+				$(".modal-body").text("시험문제는 pdf파일로 제출해야 합니다.");
+				$("body").addClass("modal-open").css("padding-right", "17px");
+	  			$(".modal-backdrop").addClass("show").css("display", "block");
+				$(".modal").addClass("show").css("display", "block");
+				frag[4] = false;
+	    	}else if($("[name='common_files']").val().match(reg)){
+	    		frag[4] = true;
+	    	}
+  		}
+  		
+  		if(btnType == "updateBtn"){
+  			if($("[name='common_Files']").val() != ""){
+  				let delAttNo = $(".oriFile").data("attno");
+  				console.log("delAttno !!!!!!!!!!!!!!! :" +delAttNo);
+  				let newInput = $("<input>").attr({
+  					"type" : "hidden"
+  					, "name" : "delAttNos"
+  				}).val(delAttNo);
+  				
+  				examForm.append(newInput);
+  			}
+  		}
   		
       	let count = 0;
       	for(var i = 0; i < frag.length; i++){
@@ -445,7 +475,11 @@
       		}
       	}
       	
-  		if(count == 5){
+  		if(btnType== "saveBtn" && count == 5){
+  			$(examForm).attr("action", "${cPath }/lecture/examInsert.do");
+  			examForm.submit();
+  		}else if(btnType == "updateBtn" && (count == 5 || count == 4)){
+  			$(examForm).attr("action", "${cPath }/lecture/examUpdate.do");
   			examForm.submit();
   		}
   	  });
@@ -458,8 +492,4 @@
 		$(this).removeClass("is-invalid");
 		frag[1] = true;
 	});
-  	
-  	$("#updateBtn").on("click", function(){
-  		
-  	});
   </script>
