@@ -60,10 +60,9 @@ public class LectureOpenController {
 		String user_id = user.getUser_id();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
 		
-		model.addAttribute("staff", staffVO);
-		
 		List<LectureVO> lectures = lectureProfService.selectLecListForOpen(user_id);
 		
+		model.addAttribute("staff", staffVO);
 		model.addAttribute("lectures", lectures);
 		
 		return "lms/lectureOpen";
@@ -91,10 +90,11 @@ public class LectureOpenController {
 	){
 		
 		boolean valid = !errors.hasErrors();
+		lectureVO.setBo_writer(user.getUser_id());
+		lectureVO.setBiz_type("GG");
 		
 		lectureList(user, model);
 		
-		logger.info("lectureVO : {}", lectureVO);
 		String view = null;
 		String message = null;
 		double midterm = 0;

@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.validator.SetTaskInsertGroup;
 
 /**
@@ -39,8 +40,6 @@ public class ReportInsertController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportInsertController.class);
 	@Inject
 	private LectureProfessorService lectureProfessorService;
-	@Inject
-	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/reportInsert.do")
 	public String reportForm(
@@ -55,7 +54,8 @@ public class ReportInsertController {
 	
 	@RequestMapping(value="/lecture/reportInsert.do", method=RequestMethod.POST)
 	public String insertReport(
-			@SessionAttribute(name="lec_code", required=false) String lec_code
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @SessionAttribute(name="lec_code", required=false) String lec_code
 			, @SessionAttribute(name="lec_name", required=false) String lec_name
 			, @Validated(SetTaskInsertGroup.class)
 			@ModelAttribute("setTask") SetTaskVO setTask
@@ -72,11 +72,14 @@ public class ReportInsertController {
 			String setEndde = date + " " + time;
 			setTask.setSubmit_endde(setEndde);
 		}
+		setTask.setBo_writer(user.getUser_id());
+		setTask.setBiz_type("GC");
 		
 		/** 파라미터 검증 */
 		boolean valid = !(errors.hasErrors()); 
 		String message = null;
 		String view = null;
+		
 		
 		if(valid) {
 			if(setTask.getTask_allot() < 0 || setTask.getTask_allot() > 100) {

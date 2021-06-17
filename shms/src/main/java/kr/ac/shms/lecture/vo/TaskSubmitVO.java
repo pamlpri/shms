@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.validator.TaskInsertGroup;
 import kr.ac.shms.validator.TaskUpdateGroup;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of="submit_no")
-public class TaskSubmitVO {
+public class TaskSubmitVO implements IAttachVO{
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	@NotNull(groups= {TaskUpdateGroup.class})
 	@Min(value=1, groups= {TaskUpdateGroup.class})
@@ -40,16 +41,18 @@ public class TaskSubmitVO {
 	private Integer task_score;
 	private Integer atch_file_no;
 	private String lec_code;
+	private String bo_writer;
+	private String biz_type;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
-	private MultipartFile[] task_submit_files;
-	public void setTask_submit_files(MultipartFile[] task_submit_files) {
-		System.out.println("task_submit_files : "+ task_submit_files.length);
-		this.task_submit_files = task_submit_files;
-		if(task_submit_files!=null) {
+	private MultipartFile[] common_files;
+	public void setCommon_files(MultipartFile[] common_files) {
+		System.out.println("task_submit_files : "+ common_files.length);
+		this.common_files = common_files;
+		if(common_files!=null) {
 			List<AttachVO> attatchList = new ArrayList<>();
-			for(MultipartFile file : task_submit_files) {
+			for(MultipartFile file : common_files) {
 				if(file.isEmpty()) continue;
 				attatchList.add(new AttachVO(file));
 			}

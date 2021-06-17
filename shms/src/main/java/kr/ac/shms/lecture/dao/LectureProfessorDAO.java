@@ -89,14 +89,6 @@ public interface LectureProfessorDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int insertLectureDetails(SugangVO lecture);
-	
-	/**
-	 * 첨부파일 등록
-	 * @param lecture
-	 * @return row count > 0 성공
-	 */
-	public int insertAttaches(SugangVO lecture);
-	
 	/**
 	 * 강의 세부 정보 변경
 	 * @param lecture
@@ -124,13 +116,6 @@ public interface LectureProfessorDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int insertSetTask(SetTaskVO setTask);
-
-	/**
-	 * 과제 첨부파일 등록
-	 * @param setTask
-	 * @return row count > 0 : 성공
-	 */
-	public int insertTaskAttaches(SetTaskVO setTask);
 	
 	/**
 	 * 주/회차 조회
@@ -189,27 +174,6 @@ public interface LectureProfessorDAO {
 	public int updateSetTask(SetTaskVO setTask);
 	
 	/**
-	 * 첨부파일 없는 과제글에 첨부파일 번호 새로 부여
-	 * @param setTask
-	 * @return row count > 0 : 성공
-	 */
-	public int updateAtchNo(SetTaskVO setTask);
-	
-	/**
-	 * 삭제하려고 하는 파일들 저장명 조회
-	 * @param setTask
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public List<String> selectSaveNamesForDelete(SetTaskVO setTask);
-	
-	/**
-	 * 첨부파일 삭제
-	 * @param board
-	 * @return row count > 0 : 성공
-	 */
-	public int deleteAttathes(SetTaskVO setTask);
-	
-	/**
 	 * 과제 제출 명단 조회
 	 * @param searchMap
 	 * @return 데이터가 없으면 null 반환
@@ -222,14 +186,7 @@ public interface LectureProfessorDAO {
 	 * @return cnt
 	 */
 	public int insertExam(ExamVO exam);
-	
-	/**
-	 * 첨부파일 등록
-	 * @param ExamVO
-	 * @return row count > 0 성공
-	 */
-	public int insertExamAttaches(ExamVO exam);
-	
+
 	/**
 	 * 문제 출제
 	 * @param examVO
@@ -264,14 +221,7 @@ public interface LectureProfessorDAO {
 	 * @return cnt
 	 */
 	public List<QuesVO> selectQuesList(int exam_no);
-	
-	/**
-	 * 시험문제 다운로드
-	 * @param attachVO
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public AttachVO selectExamAttach(AttachVO attach);
-	
+
 	/**
 	 * 학생이 제출한 과제 성적 입력
 	 * @param taskSubmit

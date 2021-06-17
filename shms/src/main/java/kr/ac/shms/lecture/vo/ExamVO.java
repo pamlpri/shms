@@ -1,11 +1,13 @@
 package kr.ac.shms.lecture.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of= "exam_no")
-public class ExamVO {
+public class ExamVO implements Serializable, IAttachVO {
 	private Integer exam_no;
 	private String test_cl;
 	private String lec_code;
@@ -65,18 +67,20 @@ public class ExamVO {
 	private String sub_name;
 	private String name;
 	private Integer res_score;
+	private String bo_writer;
+	private String biz_type;
 	
 	private List<QuesVO> quesList;
 	private List<StudentVO> stdntList;	// 시험 응시하는 학생 명단
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
-	private MultipartFile[] exam_files;
-	public void setExam_files(MultipartFile[] exam_files) {
-		this.exam_files = exam_files;
-		if(exam_files != null) {
+	private MultipartFile[] common_files;
+	public void setCommon_files(MultipartFile[] common_files) {
+		this.common_files = common_files;
+		if(common_files != null) {
 			List<AttachVO> attachList = new ArrayList<>();
-			for(MultipartFile file : exam_files) {
+			for(MultipartFile file : common_files) {
 				if(file.isEmpty()) continue;
 				attachList.add(new AttachVO(file));
 			}

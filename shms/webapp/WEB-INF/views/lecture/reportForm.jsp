@@ -196,26 +196,26 @@ $(function(){
                 reader.onload = function (e) {
                     if (extension == 'pdf'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/179/179483.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "common_files");
                     }
                     else if (extension == 'docx'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/281/281760.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "common_files");
                     }
                     else if (extension == 'rtf'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136539.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "common_files");
                     }
                     else if (extension == 'png'){ $(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136523.svg'); 
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "common_files");
                     }
                     else if (extension == 'jpg' || extension == 'jpeg'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136524.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "common_files");
                     }
                   	else if (extension == 'txt'){
                     	$(input).closest('.fileUpload').find(".icon").attr('src','https://image.flaticon.com/icons/svg/136/136538.svg');
-                    	$(input).attr("name", "set_task_files");
+                    	$(input).attr("name", "common_files");
                     }
                     else {
                     	//console.log('here=>'+$(input).closest('.uploadDoc').length);

@@ -88,13 +88,6 @@ public interface LectureStudentService {
 	public SetTaskVO selectSetTask(Map<String, Object> search);
 	
 	/**
-	 * 첨부파일 다운로드
-	 * @param attachVO
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public AttachVO download(AttachVO attachVO);
-	
-	/**
 	 * 학생이 제출한 과제 조회
 	 * @param submit_no
 	 * @return 데이터가 없으면 null 반환

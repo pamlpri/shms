@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -48,8 +46,6 @@ public class TaskViewController {
 	
 	@Inject
 	private LectureStudentService lectureStudentService;
-	@Inject
-	private LectureService lectureService;
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	
