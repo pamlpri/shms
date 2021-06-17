@@ -196,4 +196,18 @@
 		   AND staff_no IS NULL
 		 ORDER BY req_de desc
 	</select>
+	
+	<select id="selectStudent" parameterType="String" resultType="StudentVO">
+		SELECT stdnt_no,
+		       name,
+		       sub_name,
+		       grade,
+		       a.tel_no,
+		       CASE WHEN webmail IS NOT NULL THEN webmail
+		            WHEN webmail IS NULL THEN email
+		            END AS webmail
+		  FROM v_stdntinfo a
+		 INNER JOIN subject b ON(a.sub_code=b.sub_code) 
+		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+	</select>
 </mapper>

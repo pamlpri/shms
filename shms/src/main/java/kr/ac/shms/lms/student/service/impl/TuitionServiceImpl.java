@@ -14,6 +14,7 @@ import kr.ac.shms.lms.student.service.TuitionService;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
+import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -70,33 +71,6 @@ public class TuitionServiceImpl implements TuitionService{
 	}
 
 	@Override
-	public void selectRefundMain(Map<String, Object> paramMap) {
-		String stdnt_no = (String) paramMap.get("stdnt_no");
-		TuitionVO tuition = new TuitionVO();
-		tuition = tuitionDAO.selectTuitionReceipt(stdnt_no);
-		List<ComCodeVO> resnList = tuitionDAO.selectRefundResn();
-		TuitionVO refundVO = tuitionDAO.selectRefundAmt(stdnt_no);
-		MypageVO info = studentDAO.regInfo(stdnt_no);
-		String reginfoStat = info.getReginfo_stat();
-		List<RefundReqVO> refundList = tuitionDAO.selectRefundReqList(stdnt_no);
-		
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = tuitionDAO.selectRefundCount(stdnt_no);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}else {
-			result = ServiceResult.FAIL;
-		}
-		
-		paramMap.put("tuition", tuition);
-		paramMap.put("resnList", resnList);
-		paramMap.put("refundVO", refundVO);
-		paramMap.put("reginfoStat", reginfoStat);
-		paramMap.put("refundList", refundList);
-		paramMap.put("result", result);
-	}
-
-	@Override
 	public int selectRecivSchl(String stdnt_no) {
 		return tuitionDAO.selectRecivSchl(stdnt_no);
 	}
@@ -138,5 +112,48 @@ public class TuitionServiceImpl implements TuitionService{
 	@Override
 	public List<ScholarShipVO> selectSchlReqList(String stdnt_no) {
 		return tuitionDAO.selectSchlReqList(stdnt_no);
+	}
+
+	@Override
+	public StudentVO selectStudent(String stdnt_no) {
+		return tuitionDAO.selectStudent(stdnt_no);
+	}
+
+	/******************************************************************************/
+	@Override
+	public void selectRefundMain(Map<String, Object> paramMap) {
+		String stdnt_no = (String) paramMap.get("stdnt_no");
+		TuitionVO tuition = new TuitionVO();
+		tuition = tuitionDAO.selectTuitionReceipt(stdnt_no);
+		List<ComCodeVO> resnList = tuitionDAO.selectRefundResn();
+		TuitionVO refundVO = tuitionDAO.selectRefundAmt(stdnt_no);
+		MypageVO info = studentDAO.regInfo(stdnt_no);
+		String reginfoStat = info.getReginfo_stat();
+		List<RefundReqVO> refundList = tuitionDAO.selectRefundReqList(stdnt_no);
+		
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.selectRefundCount(stdnt_no);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		
+		paramMap.put("tuition", tuition);
+		paramMap.put("resnList", resnList);
+		paramMap.put("refundVO", refundVO);
+		paramMap.put("reginfoStat", reginfoStat);
+		paramMap.put("refundList", refundList);
+		paramMap.put("result", result);
+	}
+	
+
+	@Override
+	public void SchlReqForm(Map<String, Object> paramMap) {
+		String stdnt_no = (String) paramMap.get("stdnt_no");
+		StudentVO student = new StudentVO();
+		student = tuitionDAO.selectStudent(stdnt_no);
+		
+		paramMap.put("student", student);
 	}
 }
