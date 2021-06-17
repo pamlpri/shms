@@ -25,4 +25,5 @@ public class ScholarShipVO {
 	private Integer reciv_year;		// 수혜년도
 	private Integer semstr;		// 학기
 	private String schlship_nm;		// 장학금 명
+	private Integer rownum;
 }
