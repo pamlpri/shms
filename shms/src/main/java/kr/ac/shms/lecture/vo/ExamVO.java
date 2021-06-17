@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of= "exam_no")
-public class ExamVO implements Serializable, IAttachVO {
+public class ExamVO implements Serializable, IAttachVO{
 	private Integer exam_no;
 	private String test_cl;
 	private String lec_code;
