@@ -24,17 +24,17 @@
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
 		SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
 		FROM ATTACH
-		<choose>
-			<when test="atch_file_no != null and !atch_file_no.equals('')">
-				WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
-			</when>
-			<otherwise>
-				WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
-			</otherwise>
-		</choose>
+			<choose>
+				<when test="atch_file_no != null and !atch_file_no.equals('')">
+					WHERE atch_file_no = #{atch_file_no, jdbcType=NUMERIC}
+				</when>
+				<otherwise>
+					WHERE atch_file_no = (SELECT MAX(atch_file_no) + 1 FROM attach)
+				</otherwise>
+			</choose>
 		</selectKey>
 		INSERT ALL
-		<foreach collection="attachList" item="attatch" index="idx">
+		<foreach collection="attachList" item="attach" index="idx">
 		INTO ATTACH(
 			atch_file_no,
 		    atch_file_seq,
@@ -57,14 +57,21 @@
 			</otherwise>
 		</choose>
 			, #{startAttNo} + #{idx}
-			, #{attatch.file_path,jdbcType=VARCHAR}
-			, #{attatch.file_nm,jdbcType=VARCHAR}
-			, #{attatch.file_cont_type,jdbcType=VARCHAR}
-			, #{attatch.file_size,jdbcType=NUMERIC}
+			, #{attach.file_path,jdbcType=VARCHAR}
+			, #{attach.file_nm,jdbcType=VARCHAR}
+			, #{attach.file_cont_type,jdbcType=VARCHAR}
+			, #{attach.file_size,jdbcType=NUMERIC}
 			, sysdate
 			, #{bo_writer, jdbcType=VARCHAR}
-			, 'TG'
-			, #{attatch.save_file_nm,jdbcType=VARCHAR}
+			<choose>
+				<when test="@org.apache.commons.lang3.StringUtils@isBlank(biz_type)">
+					'TG'
+				</when>
+				<otherwise>
+					, #{biz_type, jdbcType=VARCHAR}
+				</otherwise>
+			</choose>
+			, #{attach.save_file_nm,jdbcType=VARCHAR}
 		)
 		</foreach>
 		SELECT * FROM DUAL

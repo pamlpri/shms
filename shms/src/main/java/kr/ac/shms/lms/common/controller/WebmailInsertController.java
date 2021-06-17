@@ -137,7 +137,8 @@ public class WebmailInsertController {
 	
 	@RequestMapping(value="/lms/compose.do", method=RequestMethod.POST)
 	public String compose(
-		@RequestParam("receiver") String receiver
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam("receiver") String receiver
 		, @RequestParam("receiverCC") String receiverCC
 		, @ModelAttribute("webmail") WebmailVO webmailVO
 		, Model model
@@ -168,6 +169,9 @@ public class WebmailInsertController {
 		if(receiverList != null && receiverList.size() > 0) {
 			webmailVO.setReceiverList(receiverList);
 		}
+		
+		webmailVO.setBo_writer(user.getUser_id());
+		webmailVO.setBiz_type("WM");
 		
 		String view = null;
 		String message = null;

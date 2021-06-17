@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -63,7 +63,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	private LmsCommonDAO lmsCommonDAO;
 	
 	@Inject
-	private CommonAttachServiceImpl commonAttachServiceImpl; 
+	private CommonAttachService commonAttachService; 
 	
 	@Value("#{appInfo['ip']}")
 	private String ip;
@@ -147,7 +147,9 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		int cnt = lmsCommonDAO.insertWebmail(webmailVO);
 		if(cnt > 0) {
 			cnt += receiver(webmailVO);
-			cnt += commonAttachServiceImpl.processes(webmailVO, "/mail");
+			cnt += commonAttachService.processes(webmailVO, "/mail");
+			logger.info("webmailVO {}",webmailVO);
+			logger.info("webmailVO cnt {}",cnt);
 			if(cnt > 0) {
 				result = ServiceResult.OK;
 			}

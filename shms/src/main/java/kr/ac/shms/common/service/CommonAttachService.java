@@ -3,6 +3,7 @@ package kr.ac.shms.common.service;
 import java.util.List;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.IAttachVO;
 
 public interface CommonAttachService {
 	/**
@@ -26,4 +27,19 @@ public interface CommonAttachService {
 	 */
 	public int atch_file_seqCount(int atch_file_no);
 	
+	/**
+	 * 첨부파일 등록 처리
+	 * @param iattachVO
+	 * @param dir
+	 * @return 등록된 처리 수
+	 */
+	public int processes(IAttachVO iattachVO, String dir);
+	
+	/**
+	 * 첨부파일 삭제 처리
+	 * @param iattachVO
+	 * @param dir
+	 * @return 삭제 처리된 수
+	 */
+	public int deleteFileProcesses(IAttachVO iattachVO, String dir);
 }
