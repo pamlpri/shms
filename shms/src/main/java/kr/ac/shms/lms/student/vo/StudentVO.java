@@ -37,4 +37,5 @@ public class StudentVO {
 	
 	// 학생 비밀번호 변경 때문에 필요
 	private String aa;
+	
 }

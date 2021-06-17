@@ -1,6 +1,8 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -53,6 +55,18 @@ public class ScholarshipCampusViewController {
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
+
 		return "lms/scholarshipCampusView";
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

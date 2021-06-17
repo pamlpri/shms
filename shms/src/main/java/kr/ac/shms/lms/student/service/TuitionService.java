@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
+import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -115,4 +116,18 @@ public interface TuitionService {
 	 * @return
 	 */
 	public List<ScholarShipVO> selectSchlReqList(String stdnt_no);
+	
+	/**
+	 * 장학금 신청한 학생 정보 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public StudentVO selectStudent(String stdnt_no);
+	
+	
+	/**
+	 * 장학금 신청폼 구성
+	 * @param paramMap
+	 */
+	public void SchlReqForm(Map<String, Object> paramMap);
 }

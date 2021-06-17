@@ -83,8 +83,6 @@ public class TuitionRefundController {
 		, Errors errors
 		, Model model
 		){
-		System.out.println("*********************");
-		logger.info("resn {}", ttion.getReq_resn());
 		boolean valid = !errors.hasErrors();
 		
 		String view = null;
