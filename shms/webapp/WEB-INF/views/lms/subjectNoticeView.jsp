@@ -44,7 +44,7 @@
                   </tr>
                   <tr>
                       <th class="align-middle text-center">내용</th>
-                      <td colspan="5">
+                      <td class="minH" colspan="5">
                       	${board.bo_cont }
                       </td>
                   </tr>

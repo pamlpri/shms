@@ -30,6 +30,7 @@ import kr.ac.shms.lecture.vo.QuesVO;
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
  * 2021. 6. 16.      박초원			 교수 시험,문제 조회
+ * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */

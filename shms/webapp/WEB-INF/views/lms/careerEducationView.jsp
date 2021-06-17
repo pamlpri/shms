@@ -48,7 +48,7 @@
                   </tr>
                   <tr>
                       <th class="align-middle text-center">교육내용</th>
-                      <td colspan="3">
+                      <td class="minH" colspan="3">
                           ${courseEduc.educ_cont }
                       </td>
                   </tr>

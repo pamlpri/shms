@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -104,33 +105,91 @@
                     </div>
 	              </td>
 	            </tr>
-	            <tr>
-	              <th class="align-middle"><span class="red-color">* </span>시험문제(PDF)</th>
-	              <td class="text-left">
-	                <div>
-	                  <div class="it">
-	                    <div class="col-sm-offset-1" id="one">
-	                      <div id="uploader" class="row">
-	                        <div class="row uploadDoc col-md-4">
-	                          <div class="col-md-12">
-	                            <div class="fileUpload btn btn-orange">
-	                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
-	                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
-	                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
-	                            </div><!-- btn-orange -->
-	                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
-		                        <div class="invalid-feedback">
-		                         필수항목
-		                        </div>
-	                          </div><!-- col-3 -->
-	                        </div><!-- row -->
-	                      </div><!--uploader-->
-	                    </div><!--one-->
-	                  </div><!-- row -->
-	                </div><!-- container -->
-	              </td>
-	              </tr>
+	            <c:if test="${not empty update }">
+		            <tr>
+		              <th class="align-middle">시험문제(PDF)<br/>원본파일</th>
+		              <td class="text-left">
+		              	<c:forEach items="${exam.attachList }" var="attach">
+		              		<c:if test="${not empty attach.atch_file_seq }">
+			              		<div class="row form-control col-md-4">
+					                <div class="col-md-3">
+					                	<c:url value="/lecture/examDownload.do" var="downloadURL">
+					                		<c:param name="atch_file_no" value="${attach.atch_file_no }"/>
+					                		<c:param name="atch_file_seq" value="${attach.atch_file_seq }"/>
+					                	</c:url>
+					                	<a href="${downloadURL }" class="text-color">${attach.file_nm}</a>
+					                </div>
+					                <div>
+					                	<span class="delBtn btn btn-danger">-</span>
+					                </div>
+			              		</div>
+		              		</c:if>
+		              	</c:forEach>
+		              </td>
+		            </tr>
+	            </c:if>
+	            <c:choose>
+	            	<c:when test="${not empty update }">
+	            		<tr>
+			              <th class="align-middle">시험문제(PDF)<br/>수정파일</th>
+			              <td class="text-left">
+			                <div>
+			                  <div class="it">
+			                    <div class="col-sm-offset-1" id="one">
+			                      <div id="uploader" class="row">
+			                        <div class="row uploadDoc col-md-4">
+			                          <div class="col-md-12">
+			                            <div class="fileUpload btn btn-orange">
+			                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+			                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
+			                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
+			                            </div><!-- btn-orange -->
+			                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+				                        <div class="invalid-feedback">
+				                         필수항목
+				                        </div>
+			                          </div><!-- col-3 -->
+			                        </div><!-- row -->
+			                      </div><!--uploader-->
+			                    </div><!--one-->
+			                  </div><!-- row -->
+			                </div><!-- container -->
+			              </td>
+	              		</tr>
+	            	</c:when>
+	            	<c:otherwise>
+			            <tr>
+			              <th class="align-middle"><span class="red-color">* </span>시험문제(PDF)</th>
+				              <td class="text-left">
+				                <div>
+				                  <div class="it">
+				                    <div class="col-sm-offset-1" id="one">
+				                      <div id="uploader" class="row">
+				                        <div class="row uploadDoc col-md-4">
+				                          <div class="col-md-12">
+				                            <div class="fileUpload btn btn-orange">
+				                              <img src="https://image.flaticon.com/icons/svg/136/136549.svg" class="icon">
+				                              <span class="upl" id="upload"> 클릭하여 파일업로드</span>
+				                              <input type="file" name="exam_files" class="upload up" id="up" onchange="readURL(this);" value=""/>
+				                            </div><!-- btn-orange -->
+				                            <div class="docErrs" >업로드할 수 없는 파일입니다.</div><!-- error -->
+					                        <div class="invalid-feedback">
+					                         필수항목
+					                        </div>
+				                          </div><!-- col-3 -->
+				                        </div><!-- row -->
+				                      </div><!--uploader-->
+				                    </div><!--one-->
+				                  </div><!-- row -->
+				                </div><!-- container -->
+				              </td>
+			              </tr>
+	            	</c:otherwise>
+	            </c:choose>
 	            </table>
+	            <c:if test="${not empty update }">
+		            <p>※ 시험문제를 수정하여 재업로드하거나 삭제버튼을 누르면 원본파일이 삭제됩니다. 단, 수정파일이 업로드할 수 없는 파일이거나 업로드가 제대로 이루어지지 않았다면 원본파일은 그대로 보존됩니다.</p>
+	            </c:if>
 	        </div>
         </div>
       </div>

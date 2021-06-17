@@ -31,7 +31,11 @@
       <div class="card-body">
         <div class="table-responsive">
           <div class="text-right excelWrap">
-            <a href="${cPath }/lecture/examUpdate.do?what=${exam.exam_no}" class="btn btn-icon btn-primary"><i class="fas fa-pen"></i> 시험수정</a>
+          	<c:choose>
+          		<c:when test="${exam.test_stat ne '마감' }">
+		            <a href="${cPath }/lecture/examUpdate.do?what=${exam.exam_no}" class="btn btn-icon btn-primary"><i class="fas fa-pen"></i> 시험수정</a>
+          		</c:when>
+          	</c:choose>
           </div>
           <table class="table table-bordered table-md">
           	<colgroup>

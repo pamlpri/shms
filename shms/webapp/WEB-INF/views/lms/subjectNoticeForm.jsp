@@ -51,7 +51,7 @@
                      	<form:errors path="bo_cont" element="span" cssClass="error" />
                    	</th>
                      <td colspan="3">
-                         <textarea class="form-control" rows="5" cols="100" name="bo_cont" id="bo_cont">${board.bo_cont}</textarea>
+                         <textarea class="form-control" rows="5" cols="1000" name="bo_cont" id="bo_cont">${board.bo_cont}</textarea>
                      </td>
                  </tr>
              </table>
@@ -116,7 +116,8 @@
 <script type="text/javascript" src="${cPath }/resources/main/js/ckeditor/ckeditor.js"></script>
 <script>
     CKEDITOR.replace("bo_cont", {
-		filebrowserUploadUrl : '${cPath}/lms/boardFiles.do'
+		filebrowserUploadUrl : '${cPath}/lms/boardFiles.do',
+		height: 400
 	});
 </script>
 <c:if test="${not empty message }">
