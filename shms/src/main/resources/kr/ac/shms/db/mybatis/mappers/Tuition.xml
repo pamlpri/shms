@@ -151,16 +151,31 @@
 	</select>
 	
 	<select id="selectRefundCount" parameterType="String" resultType="int">
-	SELECT COUNT(*)
-	  FROM reg_fee_re
-	 WHERE pay_dtls_no = (
-	               		SELECT pay_dtls_no
-		                  FROM reg_fee_pay
-		                 WHERE TO_CHAR(pay_dt, 'yyyy') = TO_CHAR(SYSDATE, 'yyyy')
-		                   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
-		                   AND pay_semstr = (SELECT semstr
-		                                       FROM student
-		                                      WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR})
-		                    )
+		SELECT COUNT(*)
+		  FROM reg_fee_re
+		 WHERE pay_dtls_no = (
+		               		SELECT pay_dtls_no
+			                  FROM reg_fee_pay
+			                 WHERE TO_CHAR(pay_dt, 'yyyy') = TO_CHAR(SYSDATE, 'yyyy')
+			                   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+			                   AND pay_semstr = (SELECT semstr
+			                                       FROM student
+			                                      WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR})
+			                    )
+	</select>
+	
+	<select id="selectRecivSchlList" parameterType="String" resultType="ScholarShipVO">
+		SELECT EXTRACT(YEAR FROM reciv_date) reciv_year,
+		       c.semstr,
+		       d.schlship_nm,
+		       TO_CHAR(reciv_amt, '999,999,999') recivAmt,
+		       TO_CHAR(reciv_date, 'RRRR.MM.DD') reciv_date
+		  FROM reciv_schl a
+		 INNER JOIN schl_req b ON(a.req_no=b.req_no)
+		 INNER JOIN student c ON(b.stdnt_no=c.stdnt_no)
+		 INNER JOIN schlship d ON(b.schlship_no=d.schlship_no)
+		 WHERE c.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND process_stat='SI'
+		   AND c.semstr=(SELECT semstr FROM v_semstr)
 	</select>
 </mapper>
