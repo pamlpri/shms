@@ -24,7 +24,7 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
-          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">강의실홈</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">학습활동</a></li>
           <li class="breadcrumb-item active" aria-current="page">시험응시</li>
       </ol>
   </nav>
@@ -58,9 +58,9 @@
 				                  	<a href="#" class="btn btn-primary disabled">응시불가</a>
 		                  		</c:when>
 		                  		<c:when test="${empty exam.applcn_no }">
-			                      <a href="${cPath }/lecture/examInfo.do" class="btn btn-outline-primary">
-			                      	응&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;시
-			                      </a>
+				                    <a href="${cPath }/lecture/examInfo.do?exam_no=${exam.exam_no }" class="btn btn-outline-primary">
+				                    	응&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;시
+				                    </a>
 		                  		</c:when>
 		                  		<c:otherwise>
 				                  	<a href="#" class="btn btn-primary disabled">응시불가</a>
@@ -82,3 +82,5 @@
   <!-- contents end -->
   </div>
 </div>
+<script>
+</script>

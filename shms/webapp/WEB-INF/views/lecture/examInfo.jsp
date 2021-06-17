@@ -3,25 +3,27 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 17.      송수미        시험 안내 페이지 구현
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">강의실홈</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">학습활동</a></li>
           <li class="breadcrumb-item active" aria-current="page">시험응시</li>
       </ol>
   </nav>
@@ -35,23 +37,23 @@
           <table class="table table-bordered table-md">
             <tr>
               <th>제목</th>
-              <td class="text-left">2학기 중간고사</td>
+              <td class="text-left">${exam.test_nm }</td>
             </tr>
             <tr>
               <th>시험형태</th>
-              <td class="text-left">온라인 시험</td>
+              <td class="text-left">${exam.online_at eq 'Y'? '온라인 시험': '오프라인 시험'}</td>
             </tr>
             <tr>
               <th>시작시간</th>
-              <td class="text-left">2021.05.05 오후 12:00</td>
+              <td class="text-left">${exam.exam_begin_dt_char }</td>
             </tr>
             <tr>
               <th>종료시간</th>
-              <td class="text-left">2021.05.05 오후 13:00</td>
+              <td class="text-left">${exam.exam_end_dt_char }</td>
             </tr>
             <tr>
               <th>시험시간</th>
-              <td class="text-left">60분</td>
+              <td class="text-left">${exam.exam_time }분</td>
             </tr>
           </table>
         </div>
