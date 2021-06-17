@@ -107,4 +107,11 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public List<ScholarShipVO> selectRecivSchlList(String stdnt_no);
+	
+	/**
+	 * 장학금 신청 내역 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<ScholarShipVO> selectSchlReqList(String stdnt_no);
 }

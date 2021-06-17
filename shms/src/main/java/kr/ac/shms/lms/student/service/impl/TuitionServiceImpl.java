@@ -134,4 +134,9 @@ public class TuitionServiceImpl implements TuitionService{
 	public List<ScholarShipVO> selectRecivSchlList(String stdnt_no) {
 		return tuitionDAO.selectRecivSchlList(stdnt_no);
 	}
+
+	@Override
+	public List<ScholarShipVO> selectSchlReqList(String stdnt_no) {
+		return tuitionDAO.selectSchlReqList(stdnt_no);
+	}
 }
