@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 
 /**
@@ -82,9 +83,13 @@ public class ExamStudentController {
 	@RequestMapping("/lecture/examForm.do")
 	public String examForm(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			, @RequestParam("exam_no") int exam_no
 			, Model model
 		) {
-	
+		
+		List<QuesVO> quesList = lectureStudentService.selectExamQues(exam_no);
+		model.addAttribute("quesList", quesList);
+		
 		return "lecture/examForm";
 	}
 	

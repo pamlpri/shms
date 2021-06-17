@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -116,4 +117,11 @@ public interface LectureStudentDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public ExamVO selectExamInfo(int exam_no);
+	
+	/**
+	 * 한 시험 정답 정보
+	 * @param exam_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<QuesVO> selectExamQues(int exam_no);
 }
