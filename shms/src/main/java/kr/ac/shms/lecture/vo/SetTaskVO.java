@@ -66,7 +66,7 @@ public class SetTaskVO implements IAttachVO{
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] set_task_files;
-	public void setSet_task_files(MultipartFile[] set_task_files) {
+	public void setCommon_files(MultipartFile[] set_task_files) {
 		System.out.println("set_task_files : "+ set_task_files.length);
 		this.set_task_files = set_task_files;
 		if(set_task_files!=null) {

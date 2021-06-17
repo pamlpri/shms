@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +33,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode(of="send_no")
 @ToString(exclude="cont")
-public class WebmailVO {
+public class WebmailVO implements IAttachVO{
 	private Integer send_no;
 	private String title;
 	private String cont;
@@ -53,7 +54,7 @@ public class WebmailVO {
 	private int startAttNo;
 	private List<AttachVO> attachList;
 	private MultipartFile[] mail_files;
-	public void setMail_files(MultipartFile[] mail_files) {
+	public void setCommon_files(MultipartFile[] mail_files) {
 		this.mail_files = mail_files;
 		if(mail_files != null) {
 			List<AttachVO> attachList = new ArrayList<>();

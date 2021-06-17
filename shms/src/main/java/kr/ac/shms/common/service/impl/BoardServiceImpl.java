@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.dao.BoardDAO;
 import kr.ac.shms.common.dao.CommonAttachDAO;
@@ -122,7 +123,8 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.incrementHit(bo_no);
 		return boardDAO.selectBoard(bo_no);
 	}
-
+	
+	@Transactional
 	@Override
 	public ServiceResult insertBoard(BoardVO board) {
 		String bo_pass = board.getBo_password();
