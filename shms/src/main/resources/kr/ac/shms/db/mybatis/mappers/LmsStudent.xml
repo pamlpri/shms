@@ -366,5 +366,99 @@
 		SET USER_PASSWORD = #{user_password}
 		WHERE USER_ID = #{user_id}
 	</update>
+	
+	<select id="selectEditReqList" parameterType="String" resultType="EditReqVO">
+		SELECT
+		    edit_req_no,
+		    req_title,
+		    TO_CHAR(req_de, 'YYYY-MM-DD') req_de,
+		    stdnt_no,
+		    req_cont,
+		    a.process_stat,
+		    b.com_code_nm,
+		    edit_date,
+		    refuse_resn,
+		    atch_file_no
+		FROM
+		    edit_req a
+		INNER JOIN tb_com_code b
+		ON a.process_stat = b.com_code
+		WHERE stdnt_no = #{stdnt_no}
+		AND b.code_grp = 'G10'
+	</select>
+	
+	<insert id="insertEditReq" parameterType="EditReqVO">
+		INSERT INTO edit_req (
+		    edit_req_no,
+		    req_title,
+		    req_de,
+		    stdnt_no,
+		    req_cont,
+		    process_stat
+		    <if test="attachList != null">
+			    ,atch_file_no
+		  	</if>
+		) VALUES (
+		    EDIT_REQ_SEQ.NEXTVAL,
+		    #{req_title},
+		    SYSDATE,
+		    #{stdnt_no},
+		    #{req_cont},
+		    'DG'
+		    <if test="attachList != null">
+		    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
+		    </if>
+		)
+	</insert>
+		
+	<resultMap type="EditReqVO" id="editReq" autoMapping="true">
+		<id property="edit_req_no" column="edit_req_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectEditReq" parameterType="int" resultMap="editReq">
+		SELECT
+		    edit_req_no,
+		    req_title,
+		    req_de,
+		    stdnt_no,
+		    req_cont,
+		    process_stat,
+		    edit_date,
+		    refuse_resn,
+		    a.atch_file_no,
+		    atch_file_seq,
+		    file_path,
+		    file_nm,
+		    file_cont_type,
+		    file_size,
+		    reg_date,
+		    reg_user_id,
+		    biz_type,
+		    save_file_nm
+		FROM
+		    edit_req a
+		LEFT OUTER JOIN attach b
+		ON a.atch_file_no = b.atch_file_no
+		WHERE edit_req_no = #{edit_req_no}
+	</select>
+	
+	<update id="updateEditReq" parameterType="EditReqVO">
+		UPDATE edit_req
+		    SET
+		        req_title = #{req_title},
+		        req_cont = #{req_cont}
+		WHERE
+		    edit_req_no = #{edit_req_no}
+	</update>
+	
+	<delete id="deleteEditReq" parameterType="EditReqVO">
+		DELETE FROM edit_req
+		WHERE
+		    edit_req_no = #{edit_req_no}
+		
+	</delete>
 </mapper>
 

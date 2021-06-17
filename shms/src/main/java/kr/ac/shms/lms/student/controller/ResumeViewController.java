@@ -1,5 +1,7 @@
 package kr.ac.shms.lms.student.controller;
 
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.controller.AbsenceViewController;
+import kr.ac.shms.lms.student.service.StudentService;
 
 /**
  * @author 박초원
@@ -26,12 +29,15 @@ import kr.ac.shms.lms.student.controller.AbsenceViewController;
 @Controller
 public class ResumeViewController {
 	private static final Logger logger = LoggerFactory.getLogger(ResumeViewController.class);
+	@Inject
+	private StudentService studentService;
 	
 	@RequestMapping("/lms/resume.do")
 	public String resume(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
+		model.addAttribute("editReqList", studentService.selectEditReqList(user.getUser_id()));
 		return "lms/resume";
 	}	
 }

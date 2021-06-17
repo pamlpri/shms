@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -17,6 +19,7 @@ import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.EditReqVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
@@ -43,6 +46,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  8.   박초원       수강신청 추가
  * 2021. 6.  9.   최희수	  학과 학생들 출력
  * 2021. 6. 10.	  김보미		입실, 퇴실 카운트
+ * 2021. 6. 17.   최희수       이력서/자기소개서 첨삭
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -54,6 +58,9 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Inject
 	private StudentDAO studentDAO;	
+	
+	@Inject
+	private CommonAttachService commonAttachService;
 	
 	@Override
 	public StudentVO student(String id) {
@@ -343,6 +350,54 @@ public class StudentServiceImpl implements StudentService{
 		paramMap.put("cartList", cartList);
 		paramMap.put("sugangReqIndexInfo", sugangReqIndexInfo);
 		
+	}
+
+	@Override
+	public List<EditReqVO> selectEditReqList(String stdnt_no) {
+		return studentDAO.selectEditReqList(stdnt_no);
+	}
+
+	@Transactional
+	@Override
+	public ServiceResult insertEditReq(EditReqVO editReq) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.insertEditReq(editReq);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public EditReqVO selectEditReq(int edit_req_no) {
+		return studentDAO.selectEditReq(edit_req_no);
+	}
+
+	@Override
+	public ServiceResult deleteEditReq(EditReqVO editReq) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = studentDAO.deleteEditReq(editReq);
+		if(cnt > 0) { 
+			if(cnt > 0) {
+				cnt += commonAttachService.deleteFileProcesses(editReq, "/resume");
+				if(cnt > 0) {
+					result = ServiceResult.OK;
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult updateEditReq(EditReqVO editReq) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = studentDAO.updateEditReq(editReq);
+		if(cnt > 0) { 
+			cnt += commonAttachService.processes(editReq, "/resume");
+			cnt += commonAttachService.deleteFileProcesses(editReq, "/resume");
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
 	}
 	
 }

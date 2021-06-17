@@ -8,6 +8,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
  <!-- contents start -->
  <nav aria-label="breadcrumb">
@@ -32,44 +33,52 @@
                      </tr>
                  </thead>
                  <tbody>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자기소개서 첨삭 부탁드립니다!</td>
-                         <td class="text-center">2021.05.25</td>
-                         <td class="text-center"><a href="${cPath}/lms/resumeView.do" class="badge bg-success white-color">완료</a></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자기소개서 첨삭 부탁드립니다!</td>
-                         <td class="text-center">2021.05.25</td>
-                         <th class="text-center">
-                             <button type="button" class="btn badge bg-danger block failBtn"
-                                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                             반려
-                             </button>
-                         </th>
-                     </tr>
-                     <tr>
-                         <td class="text-center">3</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자기소개서 첨삭 부탁드립니다!</td>
-                         <td class="text-center">2021.05.25</td>
-                         <th class="text-center"><a href="${cPath}/lms/resumeForm.do" class="badge bg-info">대기</a></th>
-                     </tr>
-                     <tr>
-                         <td class="text-center">4</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자기소개서 첨삭 부탁드립니다!</td>
-                         <td class="text-center">2021.05.25</td>
-                         <td class="text-center"><a href="${cPath}/lms/resumeView.do" class="badge bg-primary white-color">승인</a></td>
-                     </tr>
+                 	<c:choose>
+                 		<c:when test="${not empty editReqList }">
+                 			<c:forEach items="${editReqList }" var="editReq" varStatus="i">
+                 				<tr>
+			                         <td class="text-center">${i.index + 1 }</td>
+			                         <td class="text-center">${editReq.edit_req_no }</td>
+			                         <td class="text-center">${editReq.req_title }</td>
+			                         <td class="text-center">${editReq.req_de }</td>
+		                         	 <c:choose>
+			                         	<c:when test="${editReq.com_code_nm eq '완료' }">
+			                         		<td class="text-center">
+					                    		<a href="${cPath}/lms/resumeView.do" class="badge bg-success white-color">완료</a>
+					                    	</td>
+			                         	</c:when>
+			                         	<c:when test="${editReq.com_code_nm eq '대기' }">
+			                         		<th class="text-center">
+			                         			<a href="${cPath}/lms/resumeForm.do?bo_no=${editReq.edit_req_no}" class="badge bg-info">대기</a>
+			                         		</th>
+			                         	</c:when>
+			                         	<c:when test="${editReq.com_code_nm eq '반려' }">
+			                         		<th class="text-center">
+					                             <button type="button" class="btn badge bg-danger block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+					                             	반려
+					                             </button>
+					                         </th>
+			                         	</c:when>
+			                         	<c:when test="${editReq.com_code_nm eq '승인'}">
+			                         		<td class="text-center">
+			                         			<a href="${cPath}/lms/resumeView.do" class="badge bg-primary white-color">승인</a>
+			                         		</td>
+			                         	</c:when>
+		                             </c:choose>
+			                     </tr>
+                 			</c:forEach>
+                 		</c:when>
+                 		<c:otherwise>
+                 			<tr>
+                 				<td class="text-center" colspan="5">데이터가 없음</td>
+                 			</tr>
+                 		</c:otherwise>
+                 	</c:choose>
                  </tbody>
              </table>
              <div class="breadcrumb breadcrumb-right mt-3">
-                 <a href="${cPath}/lms/resumeForm.do" class="btn btn-primary">
-                     첨삭신청
+                 <a href="${cPath}/lms/resumeForm.do?state=insert" class="btn btn-primary">
+                    	 첨삭신청
                  </a>
              </div>
          </div>

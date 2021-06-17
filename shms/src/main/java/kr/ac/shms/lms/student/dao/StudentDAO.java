@@ -10,6 +10,7 @@ import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.EditReqVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.MypageVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
@@ -38,6 +39,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  7.   박초원       장바구니 조회, 등록, 삭제
  * 2021. 6.  8.   박초원       수강신청 추가
  * 2021. 6.  9.   최희수	  학과 학생들 출력
+ * 2021. 6. 17.   최희수       이력서/자기소개서 첨삭
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -307,4 +309,39 @@ public interface StudentDAO {
      * @return 
      */
     public int updateAttendStat(AttendVO attendVO);
+    
+    /**
+     * 이력서/자소서 첨삭 리스트 출력
+     * @param stdnt_no
+     * @return
+     */
+    public List<EditReqVO> selectEditReqList(String stdnt_no);
+    
+    /**
+     * 이력서/자소서 등록
+     * @param editReq
+     * @return cnt > 0 성공
+     */
+    public int insertEditReq(EditReqVO editReq);
+    
+    /**
+     * 이력서/자소서 상세 조회
+     * @param bo_no
+     * @return
+     */
+    public EditReqVO selectEditReq(int edit_req_no);
+    
+    /**
+     * 이력서/자소서 삭제
+     * @param editReq
+     * @return cnt > 0 성공
+     */
+    public int deleteEditReq(EditReqVO editReq);
+    
+    /**
+     * 이력서/자소서 수정
+     * @param editReq
+     * @return cnt > 0 성공
+     */
+    public int updateEditReq(EditReqVO editReq);
 }
