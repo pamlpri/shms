@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <div class="page-content">
   <!-- contents start -->
   <nav aria-label="breadcrumb">
@@ -57,6 +58,8 @@
       <div class="card">
           <div class="card-body">
               <table class="table table-striped" id="table1">
+               <c:choose>
+               	<c:when test="${not empty refundList }">
                   <thead>
                       <tr>
                           <th class="text-center">신청번호</th>
@@ -68,47 +71,40 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                          <td class="text-center">2345</td>
-                          <td class="text-center">자퇴</td>
-                          <td class="text-center">2,500,000원</td>
-                          <td class="text-center">2021.05.02</td>
-                          <td class="text-center">2021.05.07</td>
-                          <td class="text-center"><span class="badge bg-success">완료</span></td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2345</td>
-                          <td class="text-center">자퇴</td>
-                          <td class="text-center">2,500,000원</td>
-                          <td class="text-center">2021.05.02</td>
-                          <td class="text-center"></td>
-                          <td class="text-center">
+                  		<c:forEach var="refundList" items="${refundList }">
+	                      <tr>
+	                          <td class="text-center">${refundList.req_no }</td>
+	                          <td class="text-center">${refundList.req_resn }</td>
+	                          <td class="text-center">${refundList.refund }원</td>
+	                          <td class="text-center">${refundList.req_dt }</td>
+	                          <td class="text-center">${refundList.refund_dt }</td>
+	                          <c:if test="${refundList.process_stat eq '대기' }">
+		                          <td class="text-center"><span class="badge bg-success">${refundList.process_stat }</span></td>
+	                          </c:if>
+	                          <c:if test="${refundList.process_stat eq '반려' }">
+	                          	  <td class="text-center">
+	                          	  <input type="hidden" value="${refundList.refuse_resn }" name="refuse_resn">
                               <button type="button" class="btn badge bg-danger block failBtn"
                                   data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                              반려
+     							${refundList.process_stat }
                               </button>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2345</td>
-                          <td class="text-center">자퇴</td>
-                          <td class="text-center">2,500,000원</td>
-                          <td class="text-center">2021.05.02</td>
-                          <td class="text-center"></td>
-                          <td class="text-center"><span class="badge bg-primary">승인</span></td>
-                      </tr>
-                      <tr>
-                          <td class="text-center">2345</td>
-                          <td class="text-center">자퇴</td>
-                          <td class="text-center">2,500,000원</td>
-                          <td class="text-center">2021.05.02</td>
-                          <td class="text-center"></td>
-                          <td class="text-center"><span class="badge bg-info">대기</span></td>
-                      </tr>
+	                          </c:if>
+	                          <c:if test="${refundList.process_stat eq '승인' }">
+	                          	<td class="text-center"><span class="badge bg-success">${refundList.process_stat }</span></td>
+	                          </c:if>
+	                      </tr>
+                  		</c:forEach>
+                  	</c:when>
+                  	<c:otherwise>
+                  		<tr>
+                  			<td class="text-center">등록금 환불 신청 내역이 존재하지 않습니다.</td>
+                  		</tr>
+                  	</c:otherwise>
+                  </c:choose>
                   </tbody>
               </table>
               <div class="text-center" style="margin-top: 40px;">
-	              <c:if test="${not empty tuition.pay_amt && reginfoStat ne '재학' }">
+	              <c:if test="${not empty tuition.pay_amt && reginfoStat ne '재학' && result ne 'OK'}">
 	                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
 	                      환불신청
 	                  </button>
@@ -137,9 +133,9 @@
                   </button>
               </div>
               <form action="${cPath }/lms/tuitionRefundForm.do" id="refundForm" method="post">
-	              <input type="text" name="pay_dtls_no" value="${refundVO.pay_dtls_no }">
-	              <input type="text" name="stdnt_no" value="${tuition.stdnt_no }">
-	              <input type="text" name="refund" value="${refundVO.refund }">
+	              <input type="hidden" name="pay_dtls_no" value="${refundVO.pay_dtls_no }">
+	              <input type="hidden" name="stdnt_no" value="${tuition.stdnt_no }">
+	              <input type="hidden" name="refund" value="${refundVO.refund }">
 	              
                   <div class="modal-body">
                       <div class="form-group">
@@ -157,7 +153,7 @@
                       <div class="form-group">
                           <h6>신청사유</h6>
                           <fieldset class="form-group">
-                              <select class="form-select" id="basicSelect" name="selectResn">
+                              <select class="form-select" id="basicSelect" name="req_resn">
                                   <option value="">-- 사유선택 --</option>
                                   <c:forEach var="resnList" items="${resnList }">
                                   		<option value="${resnList.com_code }">${resnList.com_code_nm }</option>
@@ -174,7 +170,7 @@
                           <i class="bx bx-x d-block d-sm-none"></i>
                           <span class="d-none d-sm-block">닫기</span>
                       </button>
-                      <button type="submit" class="btn btn-primary ml-1"
+                      <button type="submit" class="btn btn-primary ml-1" 
                           data-bs-dismiss="modal">
                           <i class="bx bx-check d-block d-sm-none"></i>
                           <span class="d-none d-sm-block">저장</span>
@@ -201,8 +197,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>
-                    자퇴 취소로 인한 환불 취소
+                <p class="text-center" id="inputText">
                 </p>
             </div>
             <div class="modal-footer">
@@ -215,37 +210,74 @@
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="valiModal" tabindex="-1" aria-labelledby="valiModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="valiModalBody">
-        <c:if test="${not empty message }">
-        	${message }
-        	<script type="text/javascript">
-        		$("#valiModal").modal();
-        	</script>
-		</c:if>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+<!--Basic Modal -->
+<div class="modal fade text-left" id="default" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel1"></h5>
+				<button type="button" class="close rounded-pill"
+					data-bs-dismiss="modal" aria-label="Close">
+					<i data-feather="x"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>
+					
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" id="close"
+						data-bs-dismiss="modal">
+					<i class="bx bx-x d-block d-sm-none"></i> <span
+						class="d-none d-sm-block">닫기</span>
+				</button>
+			</div>
+		</div>
+	</div>
 </div>
     <!-- contents end -->
 </div>
 <script type="text/javascript">
-	$(function(){
-		$(".ml-1").on("click", function(){
+	$(".ml-1").on("click", function(){
+		let req_resn = $("[name='req_resn']").val();
+		if(req_resn == ""){
+			$("#default").find(".modal-title").empty().text("필수사항 누락");
+			$("#default").find(".modal-body p").empty().text("신청사유를 선택하세요.");
+			$("#default").addClass("show").css("display","block");
+		}else{
 			$("#refundForm").submit();
-		});
-	});
+			$(".ml-1").prop("disabled", true);
+		}
+	})
+	
+		$("#close").on("click", function(){
+			$("#default").removeClass("show").css("display","none");
+		})
+
+		
+	$(".failBtn").on("click", function(){
+		let refuse_resn = $("[name='refuse_resn']").val();
+		document.getElementById("inputText").innerText=refuse_resn;
+	})
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

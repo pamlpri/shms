@@ -125,9 +125,42 @@
 			    SYSDATE,
 			    #{req_resn, jdbcType=VARCHAR},
 			    #{refund_amt, jdbcType=NUMERIC},
-			    DEFAULT,
+			    'DG',
 			    NULL,
-			    NULL,
+			    NULL
 			)
 	</insert>
+	
+	<select id="selectRefundReqList" parameterType="String" resultType="RefundReqVO">
+		SELECT req_no,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
+		           AND com_code = req_resn) req_resn,
+		       TO_CHAR(refund_amt, '999,999,999') refund,
+		       TO_CHAR(req_dt, 'RRRR.MM.DD') req_dt,
+		       TO_CHAR(refund_dt, 'RRRR.MM.DD') refund_dt,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		           AND com_code = process_stat) process_stat,
+		        refuse_resn
+		  FROM reg_fee_re a
+		 INNER JOIN reg_fee_pay b ON(a.pay_dtls_no=b.pay_dtls_no)
+		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectRefundCount" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	  FROM reg_fee_re
+	 WHERE pay_dtls_no = (
+	               		SELECT pay_dtls_no
+		                  FROM reg_fee_pay
+		                 WHERE TO_CHAR(pay_dt, 'yyyy') = TO_CHAR(SYSDATE, 'yyyy')
+		                   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		                   AND pay_semstr = (SELECT semstr
+		                                       FROM student
+		                                      WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR})
+		                    )
+	</select>
 </mapper>

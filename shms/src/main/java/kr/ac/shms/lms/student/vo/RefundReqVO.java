@@ -2,6 +2,7 @@ package kr.ac.shms.lms.student.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of="pay_dtls_no")
 public class RefundReqVO {
 	private Integer req_no;
 	private Integer pay_dtls_no;
@@ -29,4 +31,6 @@ public class RefundReqVO {
 	private String process_stat;
 	private String refuse_resn;
 	private String refund_dt;
+
+	private String refund;
 }

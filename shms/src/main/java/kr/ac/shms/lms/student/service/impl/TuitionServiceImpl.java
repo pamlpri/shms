@@ -12,6 +12,7 @@ import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
 import kr.ac.shms.lms.student.vo.MypageVO;
+import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -76,11 +77,22 @@ public class TuitionServiceImpl implements TuitionService{
 		TuitionVO refundVO = tuitionDAO.selectRefundAmt(stdnt_no);
 		MypageVO info = studentDAO.regInfo(stdnt_no);
 		String reginfoStat = info.getReginfo_stat();
+		List<RefundReqVO> refundList = tuitionDAO.selectRefundReqList(stdnt_no);
+		
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.selectRefundCount(stdnt_no);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
 		
 		paramMap.put("tuition", tuition);
 		paramMap.put("resnList", resnList);
 		paramMap.put("refundVO", refundVO);
 		paramMap.put("reginfoStat", reginfoStat);
+		paramMap.put("refundList", refundList);
+		paramMap.put("result", result);
 	}
 
 	@Override
@@ -92,6 +104,23 @@ public class TuitionServiceImpl implements TuitionService{
 	public ServiceResult insertRefundReq(TuitionVO tuition) {
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = tuitionDAO.insertRefundReq(tuition);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+	@Override
+	public List<RefundReqVO> selectRefundReqList(String stdnt_no) {
+		return tuitionDAO.selectRefundReqList(stdnt_no);
+	}
+
+	@Override
+	public ServiceResult selectRefundCount(String stdnt_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.selectRefundCount(stdnt_no);
 		if(cnt > 0) {
 			result = ServiceResult.OK;
 		}else {

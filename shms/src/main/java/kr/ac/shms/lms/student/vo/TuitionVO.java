@@ -57,6 +57,4 @@ public class TuitionVO {
 	private Integer refund_amt;
 	@NotNull(groups=TuitionRefundReqInsertGroup.class, message="필수항목")
 	private String req_resn;
-	
-	
 }

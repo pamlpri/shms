@@ -68,7 +68,10 @@ public class TuitionRefundController {
 		model.addAttribute("resnList", paramMap.get("resnList"));
 		model.addAttribute("refundVO", paramMap.get("refundVO"));
 		model.addAttribute("reginfoStat", paramMap.get("reginfoStat"));
+		model.addAttribute("refundList", paramMap.get("refundList"));
+		model.addAttribute("result", paramMap.get("result"));
 		/************************************************************************************************/
+		
 		return "lms/tuitionRefund";
 	}	
 	
@@ -77,29 +80,31 @@ public class TuitionRefundController {
 		@Validated(TuitionRefundReqInsertGroup.class)
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @ModelAttribute("tuition") TuitionVO ttion
-		, @RequestParam("selectResn") String resn
 		, Errors errors
 		, Model model
 		){
+		System.out.println("*********************");
+		logger.info("resn {}", ttion.getReq_resn());
 		boolean valid = !errors.hasErrors();
 		
 		String view = null;
 		String message = null;
 		
 		String stdnt_no = user.getUser_id();
-		int refund_amt = Integer.parseInt(ttion.getRefund().replace(",", ""));
+		int refund_amt = Integer.parseInt(ttion.getRefund().replace(",", "").trim());
 		int pay_dtls_no = ttion.getPay_dtls_no();
+		String req_resn = ttion.getReq_resn();
 		
 		TuitionVO tuition = new TuitionVO();
 		tuition.setStdnt_no(stdnt_no);
 		tuition.setPay_dtls_no(pay_dtls_no);
 		tuition.setRefund_amt(refund_amt);
-		tuition.setReq_resn(resn);
+		tuition.setReq_resn(req_resn);
 		
 		if(valid) {
 			ServiceResult result = tuitionService.insertRefundReq(tuition);
 			if(ServiceResult.OK.equals(result)) {
-				view = "lms/tuitionRefund";
+				view = "redirect:/lms/tuitionRefund.do";
 			}else {
 				message = "환불 신청 실패! 잠시 후에 다시 시도해주세요.";
 				view = "lms/tuitionRefund";
@@ -110,15 +115,6 @@ public class TuitionRefundController {
 		}
 		model.addAttribute("message", message);
 		
-		
-		/** 서비스 호출**********************************************************************************/
-//		MAP<STRING, OBJECT> PARAMMAP = NEW HASHMAP<>();
-//		PARAMMAP.PUT("STDNT_NO", STNDT_NO);
-		/************************************************************************************************/
-		
-		/** 자료 구성 ***********************************************************************************/
-		
-		/************************************************************************************************/
 		return view;
 	}
 }
