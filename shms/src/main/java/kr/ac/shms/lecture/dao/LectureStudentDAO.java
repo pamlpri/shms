@@ -83,25 +83,11 @@ public interface LectureStudentDAO {
 	public int insertTask(TaskSubmitVO taskSubmit);
 	
 	/**
-	 * 첨부파일 등록
-	 * @param taskSubmit
-	 * @return row count > 0 성공
-	 */
-	public int insertAttaches(TaskSubmitVO taskSubmit);
-	
-	/**
 	 * 하나의 과제 상세 조회
 	 * @param search
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public SetTaskVO selectSetTask(Map<String, Object> search);
-	
-	/**
-	 * 하나의 첨부파일 출력
-	 * @param attachVO
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public AttachVO selectAttatch(AttachVO attachVO);
 	
 	/**
 	 * 학생이 제출한 과제 조회
@@ -116,27 +102,6 @@ public interface LectureStudentDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int updateTask(TaskSubmitVO taskSubmit);
-	
-	/**
-	 * 첨부파일 없는 과제글에 첨부파일 번호 새로 부여
-	 * @param setTask
-	 * @return row count > 0 : 성공
-	 */
-	public int updateAtchNo(TaskSubmitVO taskSubmit);
-	
-	/**
-	 * 삭제하려고 하는 파일들 저장명 조회
-	 * @param setTask
-	 * @return 데이터가 없으면 null 반환
-	 */
-	public List<String> selectSaveNamesForDelete(TaskSubmitVO taskSubmit);
-	
-	/**
-	 * 첨부파일 삭제
-	 * @param board
-	 * @return row count > 0 : 성공
-	 */
-	public int deleteAttathes(TaskSubmitVO taskSubmit);
 	
 	/**
 	 * 한 강의에 등록되어 있는 시험 정보 조회

@@ -33,7 +33,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of= "exam_no")
+<<<<<<< HEAD
 public class ExamVO implements Serializable, IAttachVO{
+=======
+public class ExamVO implements Serializable, IAttachVO {
+>>>>>>> 64b7a84e51de7cb7471e5d86db42d51a6f0846eb
 	private Integer exam_no;
 	private String test_cl;
 	private String lec_code;
@@ -67,6 +71,8 @@ public class ExamVO implements Serializable, IAttachVO{
 	private String sub_name;
 	private String name;
 	private Integer res_score;
+	private String bo_writer;
+	private String biz_type;
 	
 	private String bo_writer;
 	private String biz_type;

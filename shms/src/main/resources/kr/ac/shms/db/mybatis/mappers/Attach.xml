@@ -65,7 +65,7 @@
 			, #{bo_writer, jdbcType=VARCHAR}
 			<choose>
 				<when test="@org.apache.commons.lang3.StringUtils@isBlank(biz_type)">
-					'TG'
+					,'TG'
 				</when>
 				<otherwise>
 					, #{biz_type, jdbcType=VARCHAR}

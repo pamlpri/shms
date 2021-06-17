@@ -62,16 +62,18 @@ public class SetTaskVO implements IAttachVO{
 	private Integer grade_cnt;	// 채점한 과제 수 
 	private Integer submit_cnt;	// 과제 제출한 학생 수
 	private Integer total_cnt;	// 내 강의 듣는 수강생 수
+	private String bo_writer;
+	private String biz_type;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
-	private MultipartFile[] set_task_files;
-	public void setCommon_files(MultipartFile[] set_task_files) {
-		System.out.println("set_task_files : "+ set_task_files.length);
-		this.set_task_files = set_task_files;
-		if(set_task_files!=null) {
+	private MultipartFile[] common_files;
+	public void setCommon_files(MultipartFile[] common_files) {
+		System.out.println("set_task_files : "+ common_files.length);
+		this.common_files = common_files;
+		if(common_files!=null) {
 			List<AttachVO> attatchList = new ArrayList<>();
-			for(MultipartFile file : set_task_files) {
+			for(MultipartFile file : common_files) {
 				if(file.isEmpty()) continue;
 				attatchList.add(new AttachVO(file));
 			}

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.lms.student.vo.RefundReqVO;
+import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.lms.student.vo.TuitionVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
@@ -21,6 +22,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * --------     --------    ----------------------
  * 2021. 6. 12.   김보미        최초작성
  * 2021. 6. 15.   김보미 		등록금 환불
+ * 2021. 6. 17.   김보미		장학금 조회
  * Copyright (c) 2021 by DDIT All right reserved
  *      </pre>
  */
@@ -98,4 +100,18 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public int selectRefundCount(String stdnt_no);
+	
+	/**
+	 * 수혜 장학금 내역 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<ScholarShipVO> selectRecivSchlList(String stdnt_no);
+	
+	/**
+	 * 장학금 신청 내역 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public List<ScholarShipVO> selectSchlReqList(String stdnt_no);
 }

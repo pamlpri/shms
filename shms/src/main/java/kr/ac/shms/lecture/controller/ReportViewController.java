@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -42,9 +42,9 @@ public class ReportViewController {
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	@Inject
-	private LectureService lectureService;
-	@Inject
 	private LectureStudentService lectureStudentService;
+	@Inject
+	private CommonAttachService commonAttachService; 
 	
 	@RequestMapping("/lecture/report.do")
 	public String report(
@@ -106,7 +106,7 @@ public class ReportViewController {
 		@ModelAttribute("attach") AttachVO attach
 		, Model model
 	) {
-		AttachVO attvo = lectureStudentService.download(attach);
+		AttachVO attvo = commonAttachService.download(attach, null);
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";
 	}

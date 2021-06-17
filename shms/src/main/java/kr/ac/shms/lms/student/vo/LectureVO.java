@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.validator.LectureInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of="lec_code")
-public class LectureVO {
+public class LectureVO implements IAttachVO {
 	private String lec_code;
 	private String lec_name;
 	private String cur_code;
@@ -77,15 +78,17 @@ public class LectureVO {
 	private Integer sugang_req;
 	private Integer sugang_len;
 	private String sugang_stat;
+	private String bo_writer;
+	private String biz_type;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
-	private MultipartFile[] lecture_files;
-	public void setLecture_files(MultipartFile[] lecture_files) {
-		this.lecture_files = lecture_files;
-		if(lecture_files != null) {
+	private MultipartFile[] common_files;
+	public void setCommon_files(MultipartFile[] common_files) {
+		this.common_files = common_files;
+		if(common_files != null) {
 			List<AttachVO> attachList = new ArrayList<>();
-			for(MultipartFile file : lecture_files) {
+			for(MultipartFile file : common_files) {
 				if(file.isEmpty()) continue;
 				attachList.add(new AttachVO(file));
 			}
