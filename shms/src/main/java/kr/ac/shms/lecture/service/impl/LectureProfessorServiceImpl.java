@@ -23,6 +23,7 @@ import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 
@@ -338,5 +339,10 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		cnt += lectureProfessorDAO.updateQues(exam_no);
 		
 		return cnt;
+	}
+
+	@Override
+	public List<AttendVO> selectAttendStudentList(String lec_code) {
+		return lectureProfessorDAO.selectAttendStudentList(lec_code);
 	}
 }

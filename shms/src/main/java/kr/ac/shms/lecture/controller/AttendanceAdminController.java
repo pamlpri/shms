@@ -1,5 +1,7 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
+import kr.ac.shms.lms.student.vo.AttendVO;
 
 /**
  * @author 박초원
@@ -28,8 +31,8 @@ import kr.ac.shms.lecture.service.LectureService;
  */
 @Controller
 @SessionAttributes("lec_code")
-public class AttendanceAdminViewController {
-	private static final Logger logger = LoggerFactory.getLogger(AttendanceAdminViewController.class);
+public class AttendanceAdminController {
+	private static final Logger logger = LoggerFactory.getLogger(AttendanceAdminController.class);
 	@Inject
 	private LectureProfessorService lectureProfessorService;
 	@Inject
@@ -40,7 +43,8 @@ public class AttendanceAdminViewController {
 			@SessionAttribute(name="lec_code", required=false) String lec_code
 			, Model model
 		) {
+		List<AttendVO> attendList = lectureProfessorService.selectAttendStudentList(lec_code);
+		model.addAttribute("attendList", attendList);
 		return "lecture/attendanceAdmin";
-		
 	}
 }

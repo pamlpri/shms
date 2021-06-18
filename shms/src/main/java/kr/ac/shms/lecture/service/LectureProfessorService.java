@@ -9,6 +9,7 @@ import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 
@@ -218,4 +219,11 @@ public interface LectureProfessorService {
 	 * @return 성공, 실패
 	 */
 	public ServiceResult updateTaskScore(TaskSubmitVO taskSubmit);
+
+	/**
+	 * 주차별 학생의 출석현황 조회
+	 * @param lec_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<AttendVO> selectAttendStudentList(String lec_code);
 }
