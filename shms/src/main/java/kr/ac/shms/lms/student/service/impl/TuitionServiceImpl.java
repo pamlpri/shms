@@ -5,13 +5,12 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
-import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
@@ -145,15 +144,42 @@ public class TuitionServiceImpl implements TuitionService{
 	}
 	
 	@Override
-	public List<String> selectAttachList(int req_no) {
+	public List<AttachVO> selectAttachList(int req_no) {
 		return tuitionDAO.selectAttachList(req_no);
 	}
-	
 
 	@Override
 	public ScholarShipVO selectSchlReqStudent(ScholarShipVO schl) {
 		return tuitionDAO.selectSchlReqStudent(schl);
 	}
+
+	@Override
+	public ServiceResult updateSchl(ScholarShipVO schl) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.updateSchl(schl);
+		if(cnt > 0) { 
+			cnt += commonAttachService.processes(schl , "/scholarship");
+			cnt += commonAttachService.deleteFileProcesses(schl, "/scholarship");
+			if(cnt > 0) {
+				result = ServiceResult.OK; 
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult deleteSchl(ScholarShipVO schl) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.deleteSchl(schl);
+		if(cnt > 0) { 
+			cnt += commonAttachService.deleteFileProcesses(schl, "/scholarship");
+			if(cnt > 0) {
+				result = ServiceResult.OK; 
+			}
+		}
+		return result;
+	}
+	
 	/******************************************************************************/
 	@Override
 	public void selectRefundMain(Map<String, Object> paramMap) {
@@ -188,10 +214,12 @@ public class TuitionServiceImpl implements TuitionService{
 		String stdnt_no = (String) paramMap.get("stdnt_no");
 		Integer req_no = (Integer) paramMap.get("req_no");
 		ScholarShipVO schl = new ScholarShipVO();
+		List<AttachVO> attList = null;
 		if(req_no != null) {
 			schl.setStdnt_no(stdnt_no);
 			schl.setReq_no(req_no);
 			schl = tuitionDAO.selectSchlReqStudent(schl);
+			attList = tuitionDAO.selectAttachList(req_no);
 		}
 		
 		StudentVO student = new StudentVO();
@@ -199,6 +227,6 @@ public class TuitionServiceImpl implements TuitionService{
 		
 		paramMap.put("student", student);
 		paramMap.put("schl", schl);
+		paramMap.put("attList", attList);
 	}
-
 }

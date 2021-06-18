@@ -67,7 +67,7 @@
 										<th class="text-center align-middle">제출 서류<br />원본파일
 										</th>
 										<td colspan="3" class="text-left"><c:forEach
-												items="${editReq.attachList }" var="attach">
+												items="${attList }" var="attach">
 												<div class="ml-2 fileArea">
 													<c:url value="/lms/resumeDownload.do" var="downloadURL">
 														<c:param name="atch_file_no" value="${attach.atch_file_no }" />
@@ -75,7 +75,7 @@
 															value="${attach.atch_file_seq }" />
 													</c:url>
 													<p class="fileBox col-lg-6">
-														<a href="${downloadURL }" class="text-color"
+														<a href="${downloadURL }" class="text-color 
 															data-attno="${attach.atch_file_seq }">${attach.file_nm}</a>
 														<span class="delBtn btn btn-danger">-</span>
 													</p>
@@ -89,12 +89,25 @@
                      <h6 class="m-b-20">
 						<i class="fa fa-paperclip m-r-5 f-s-18"></i> 증명서류제출
 					</h6>
-					<div class="form-inline fileArea row">
-						<p class="fileBox col-lg-6">
-							<input class="form-control" type="file" name="common_files">
-							<span class="plusBtn btn btn-secondary">+</span>
-						</p>
-					</div>
+					<c:choose>
+						<c:when test="${not empty schl.req_no }">
+							<div class="form-inline fileArea row">
+								<p class="fileBox col-lg-6">
+									<input class="form-control" type="file" name="common_files" >
+									<span class="plusBtn btn btn-secondary">+</span>
+								</p>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="form-inline fileArea row">
+								<p class="fileBox col-lg-6">
+									<input class="form-control" type="file" name="common_files">
+									<span class="plusBtn btn btn-secondary">+</span>
+								</p>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					
                      <div class="text-center mt-3">
                          <a href="${cPath }/lms/scholarshipCampus.do" class="btn btn-light-secondary">취소</a>
                          <button id="saveBtn" class="btn btn-primary" type="button">저장</button>
@@ -126,7 +139,7 @@
              </div>
              <div class="modal-body">
              	<form id="deleteForm" action="${cPath }/lms/deleteSchl.do" method="post">
-             		<input type="hidden" name="req_no" value="" />
+             		<input type="hidden" name="req_no" value="${schl.req_no }" />
 	                 <p>
 	                     삭제한 게시글은 복원이 불가합니다.<br/>
 	                     삭제하시겠습니까?
@@ -139,7 +152,7 @@
                      <span class="d-none d-sm-block">닫기</span>
                  </button>
                  <button type="button" class="btn btn-primary ml-1"
-                     data-bs-dismiss="modal">
+                     data-bs-dismiss="modal"  id="delBtn">
                      <i class="bx bx-check d-block d-sm-none"></i>
                      <span class="d-none d-sm-block">삭제</span>
                  </button>
@@ -193,4 +206,8 @@
 			}
 		}
 	});
+	
+	$("#delBtn").on("click", function(){
+		$("#deleteForm").submit();
+	})
 </script>

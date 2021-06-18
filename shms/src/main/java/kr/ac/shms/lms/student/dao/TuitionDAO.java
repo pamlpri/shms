@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
@@ -131,11 +132,11 @@ public interface TuitionDAO {
 	public int insertSchl(ScholarShipVO schl);
 	
 	/**
-	 * 파일 이름만 조회
+	 * 파일 조회
 	 * @param atch_file_no
 	 * @return
 	 */
-	public List<String> selectAttachList(int req_no); 
+	public List<AttachVO> selectAttachList(int req_no); 
 	
 	/**
 	 * 신청 상세 정보 조회
@@ -143,4 +144,18 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public ScholarShipVO selectSchlReqStudent(ScholarShipVO schl);
+	
+	/**
+	 * 신청 정보 수정
+	 * @param req_no
+	 * @return
+	 */
+	public int updateSchl(ScholarShipVO schl);
+	
+	/**
+	 * 신청 정보 삭제
+	 * @param req_no
+	 * @return
+	 */
+	public int deleteSchl(ScholarShipVO schl);
 }
