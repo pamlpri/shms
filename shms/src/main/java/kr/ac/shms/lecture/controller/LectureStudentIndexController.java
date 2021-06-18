@@ -1,8 +1,6 @@
 package kr.ac.shms.lecture.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,13 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 
@@ -48,9 +44,6 @@ public class LectureStudentIndexController {
 	@Inject
 	private LectureService lectureService;
 	
-	@Inject
-	private StudentService studentService;
-	
 	@RequestMapping("/lecture/index.do")
 	public String lectureDetailsST(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -63,8 +56,8 @@ public class LectureStudentIndexController {
 		AttendVO attend = new AttendVO();
 		attend.setStdnt_no(stdnt_no);
 		attend.setLec_code(lec_code);
-		AttendVO attVO = studentService.selectAtndanTime(attend);
-		
+		AttendVO attVO = lectureStudentService.selectAtndanTime(attend);
+			
 		
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		model.addAttribute("lecture", lectureDetails);

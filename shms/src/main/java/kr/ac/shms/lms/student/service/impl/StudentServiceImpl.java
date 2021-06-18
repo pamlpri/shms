@@ -68,34 +68,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public AttendVO selectQRInfo(AttendVO attendInfo) {
-		return studentDAO.selectQRInfo(attendInfo);
-	}
-
-	@Override
-	public ServiceResult attend(AttendVO attendInfo) {
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = studentDAO.attend(attendInfo);
-		if(cnt > 0) { result = ServiceResult.OK; }
-		return result;
-	}
-	
-	@Override
-	public ServiceResult exit(AttendVO exitInfo) {
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = studentDAO.exit(exitInfo);
-		if(cnt > 0) { result = ServiceResult.OK; }
-		return result;
-	}
-	
-	@Override
 	public Map<String, String> bookLoanCnt(String stdnt_no) {
 		return studentDAO.bookLoanCnt(stdnt_no);
-	}
-
-	@Override
-	public AttendVO selectAtndanTime(AttendVO attendVO) {
-		return studentDAO.selectAtndanTime(attendVO);
 	}
 
 	@Override
@@ -272,30 +246,6 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public ServiceResult selectCountAttend(AttendVO attendVO) {
-		ServiceResult result = ServiceResult.FAIL; 
-		int cnt = studentDAO.selectCountAttend(attendVO);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}else {
-			result = ServiceResult.FAIL;
-		}
-		return result;
-	}
-
-	@Override
-	public ServiceResult selectCountExit(AttendVO attendVO) {
-		ServiceResult result = ServiceResult.FAIL; 
-		int cnt = studentDAO.selectCountExit(attendVO);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}else {
-			result = ServiceResult.FAIL;
-		}
-		return result;
-	}
-
-	@Override
 	public List<StudentVO> passwordUpdate() {
 		return studentDAO.passwordUpdate();
 	}
@@ -303,23 +253,6 @@ public class StudentServiceImpl implements StudentService{
 	@Override
 	public int passUpdate(UserLoginVO userLogin) {
 		return studentDAO.passUpdate(userLogin);
-	}
-
-	@Override
-	public ServiceResult updateAttendStat(AttendVO attendVO) {
-		ServiceResult result = ServiceResult.FAIL;
-		int cnt = studentDAO.updateAttendStat(attendVO);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
-		}else {
-			result = ServiceResult.FAIL;
-		}
-		return result;
-	}
-
-	@Override
-	public AttendVO selectAttendInfo(AttendVO studentInfo) {
-		return studentDAO.selectAttendInfo(studentInfo);
 	}
 
 	@Override
