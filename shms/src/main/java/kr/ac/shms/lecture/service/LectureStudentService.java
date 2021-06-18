@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
-import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TakeExamVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -178,4 +178,11 @@ public interface LectureStudentService {
      * @return 
      */
     public ServiceResult updateAttendStat(AttendVO attendVO);
+    
+    /**
+     * 학생의 시험 응시 정보를 insert
+     * @param takeExam
+     * @return 성공, 실패
+     */
+    public ServiceResult insertTakeExam(TakeExamVO takeExam);
 }

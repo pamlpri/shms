@@ -3,7 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
-* 2021. 6. 17.      송수미        시험 응시 기능 구현
+* 2021. 6. 18.      송수미        시험 응시 기능 구현
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -40,6 +40,10 @@
            <div id="example1" style="margin-top : 0;"></div>
          </div>
          <!-- pdf 뷰어 -->
+		<c:url value="/lecture/examViewer.do" var="downloadURL">
+			<c:param name="atch_file_no" value="${exam.attachList[0].atch_file_no }"/>
+			<c:param name="atch_file_seq" value="${exam.attachList[0].atch_file_seq }"/>
+		</c:url>
          <script src="${cPath }/resources/lecture/dist/js/pdfobject.js"></script>
          <script>
            var options = {
@@ -52,7 +56,7 @@
              }
            };
 
-           var myPDF = PDFObject.embed("https://storage.cloud.google.com/shms/exam/%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EA%B8%B0%EC%82%AC%EC%8B%A4%EA%B8%B0_%EC%B5%9C%EC%A2%85%EC%A0%90%EA%B2%80_%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC.pdf?authuser=1", "#example1", options);
+           var myPDF = PDFObject.embed("https://localhost${downloadURL}", "#example1", options);
 
            var el = document.querySelector("#results");
            el.setAttribute("class", (myPDF) ? "success" : "fail");
@@ -67,59 +71,61 @@
            <h4>답안지</h4>
          </div>
          <div class="card-body">
-           <form id="answerWrap">
-           	<c:forEach items="${quesList }" var="ques" varStatus="idx">
-           		<c:choose>
-           			<c:when test="${ques.ques_type eq 'GG' }">
-			            <div class="answer">
-			              <div class="form-check form-check-inline">
-			                <h6>${idx.count } </h6>
-			              </div>
-			              <div class="form-check form-check-inline">
-			                  <input class="form-check-input" type="radio" name="no1" value="1">
-			                  <label class="form-check-label">1</label>
-			              </div>
-			              <div class="form-check form-check-inline">
-			                  <input class="form-check-input" type="radio" name="no1" value="2">
-			                  <label class="form-check-label">2</label>
-			              </div>
-			              <div class="form-check form-check-inline">
-			                <input class="form-check-input" type="radio" name="no1" value="3">
-			                <label class="form-check-label">3</label>
-			              </div>  
-			              <div class="form-check form-check-inline">
-			                <input class="form-check-input" type="radio" name="no1" value="4">
-			                <label class="form-check-label">4</label>
-			              </div>
-			            </div>
-           			</c:when>
-           			<c:when test="${ques.ques_type eq 'DD' }">
-			            <div class="answer">
-			              <div class="form-check form-check-inline">
-			                <h6>${idx.count }</h6>
-			              </div>
-			              <div class="form-group">
-			                <input type="text" class="form-control">
-			              </div>
-			            </div>
-           			</c:when>
-           			<c:otherwise>
-			            <div class="answer">
-			              <div class="form-check form-check-inline">
-			                <h6>${idx.count }</h6>
-			              </div>
-			              <div class="form-group">
-			                <textarea class="form-textarea"></textarea>
-			              </div>
-			            </div>
-           			</c:otherwise>
-           		</c:choose>
-           	</c:forEach>
+           <form id="answerWrap" method="post">
+           		<input type="hidden" name="exam_no" value="${exam.exam_no }"/>
+	           	<c:forEach items="${quesList }" var="ques" varStatus="idx">
+	           		<input type="hidden" name="dtlsList[${idx.index }].ques_no" value="${ques.ques_no }"/>
+	           		<c:choose>
+	           			<c:when test="${ques.ques_type eq 'GG' }">
+				            <div class="answer">
+				              <div class="form-check form-check-inline">
+				                <h6>${idx.count } </h6>
+				              </div>
+				              <div class="form-check form-check-inline">
+				                  <input class="form-check-input" type="radio" value="1" name="dtlsList[${idx.index }].submit_ans">
+				                  <label class="form-check-label">1</label>
+				              </div>
+				              <div class="form-check form-check-inline">
+				                  <input class="form-check-input" type="radio" value="2" name="dtlsList[${idx.index }].submit_ans">
+				                  <label class="form-check-label">2</label>
+				              </div>
+				              <div class="form-check form-check-inline">
+				                <input class="form-check-input" type="radio" value="3"  name="dtlsList[${idx.index }].submit_ans">
+				                <label class="form-check-label">3</label>
+				              </div>  
+				              <div class="form-check form-check-inline">
+				                <input class="form-check-input" type="radio" value="4" name="dtlsList[${idx.index }].submit_ans">
+				                <label class="form-check-label">4</label>
+				              </div>
+				            </div>
+	           			</c:when>
+	           			<c:when test="${ques.ques_type eq 'DD' }">
+				            <div class="answer">
+				              <div class="form-check form-check-inline">
+				                <h6>${idx.count }</h6>
+				              </div>
+				              <div class="form-group">
+				                <input type="text" class="form-control" name="dtlsList[${idx.index }].submit_ans" />
+				              </div>
+				            </div>
+	           			</c:when>
+	           			<c:otherwise>
+				            <div class="answer">
+				              <div class="form-check form-check-inline">
+				                <h6>${idx.count }</h6>
+				              </div>
+				              <div class="form-group">
+				                <textarea class="form-textarea" name="dtlsList[${idx.index }].submit_ans"></textarea>
+				              </div>
+				            </div>
+	           			</c:otherwise>
+	           		</c:choose>
+	           	</c:forEach>
            </form>
            <div id="timer">
              <p>
-               <strong>종료시간 : </strong>2020년 1월 2일 오후 12:00<br/>
-               <strong>남은시간 : </strong>48분 52초
+               <strong>종료시간 : </strong>${exam.exam_end_dt_char }<br/>
+               <strong>남은시간 : </strong><span id="remainTime"></span>
              </p>
            </div>
            <div class="text-right">
@@ -144,16 +150,58 @@
        </div>
        <div class="modal-footer bg-whitesmoke br">
          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-         <button type="button" class="btn btn-primary" onclick="location.href='${cPath}/lecture/exam.do'">제출</button>
+         <button type="button" id="saveBtn" class="btn btn-primary">제출</button>
        </div>
      </div>
    </div>
  </div>
  <!-- contents end -->
 </div>
-<script>
-let timerId = setInterval(() => alert('째깍'), 2000);
 
-//5초 후에 정지
-setTimeout(() => { clearInterval(timerId); alert('정지'); }, 5000);
+<script type="text/javascript">
+let endTime = "${exam.exam_end_dt}";
+window.onload = function(){
+	endTime = endTime.replace(" ", "T");
+	StartClock();
+};
+
+$("#saveBtn").on("click", function(){
+	$("#answerWrap").submit();
+});
+
+function PrintTime() {
+	let end = new Date(endTime);   
+    let today = new Date();
+    let remainTime = end - today;
+    let hour = Math.floor(remainTime / 1000 / 60 / 60);
+    let minute = Math.floor((remainTime - (hour * 1000 * 60 * 60)) / 1000 / 60);
+    let second = Math.floor((remainTime - (hour * 1000 * 60 * 60) - (minute * 1000 * 60)) / 1000);
+    $("#remainTime").html(pad(hour, 2) + " : " + pad(minute, 2) + " : " + pad(second, 2));
+}
+
+// 중지를 위해 ID 보관
+var timerId = null;
+
+// 시계 시작
+function StartClock() {
+    PrintTime();
+    timerId = setInterval(PrintTime, 1000);
+}
+
+// 시계 중지
+function StopClock() {
+    if(timerId != null) {
+        clearInterval(timerId);
+    }
+}
+
+function pad(n, width) {
+	  n = n + '';
+	  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+
 </script>
+
+
+
+
