@@ -39,16 +39,16 @@
                   	<c:when test="${not empty schlReqList }">
                   		<c:forEach var="schlReqList" items="${schlReqList }">
 	                      <tr>
-	                          <td class="text-center">${schlReqList.rownum }</td>
+	                          <td class="text-center">${schlReqList.rn }</td>
 	                          <td class="text-center">${schlReqList.req_no }</td>
 	                          <td class="text-center">${schlReqList.schlship_nm }</td>
 	                          <td class="text-center">${schlReqList.req_de }</td>
 	                          <td class="text-center">${schlReqList.papers_submit_at }</td>
 	                          	<c:if test="${schlReqList.process_stat eq '완료' }">
-			                    	<td class="text-center"><a href="${cPath }/lms/scholarshipCampusView.do" class="badge bg-success white-color">지급완료</a></td>
+			                    	<td class="text-center"><a href="${cPath }/lms/scholarshipCampusView.do?req_no=${schlReqList.req_no }" class="badge bg-success white-color">지급완료</a></td>
 	                          	</c:if>
 	                          	<c:if test="${schlReqList.process_stat eq '대기' }">
-			                    	<td class="text-center"><a href="${cPath }/lms/scholarshipCampusForm.do" class="badge bg-info white-color">신청대기</a></td>
+			                    	<td class="text-center"><a href="${cPath }/lms/scholarshipCampusForm.do?req_no=${schlReqList.req_no }" class="badge bg-info white-color">신청대기</a></td>
 	                          	</c:if>
 	                          	<c:if test="${schlReqList.process_stat eq '반려' }">
 			                    	<th class="text-center">
@@ -59,7 +59,7 @@
 		                          	</th>
 	                          	</c:if>
 	                          	<c:if test="${schlReqList.process_stat eq '승인' }">
-			                    	<th class="text-center"><a href="${cPath }/lms/scholarshipCampusView.do" class="badge bg-primary white-color">신청승인</a></th>
+			                    	<th class="text-center"><a href="${cPath }/lms/scholarshipCampusView.do?req_no=${schlReqList.req_no }" class="badge bg-primary white-color">신청승인</a></th>
 	                          	</c:if>
 	                      </tr>
                   		</c:forEach>

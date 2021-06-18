@@ -179,7 +179,7 @@
 		   AND c.semstr=(SELECT semstr FROM v_semstr)
 	</select>
 	<select id="selectSchlReqList" parameterType="String" resultType="ScholarShipVO">
-		SELECT ROWNUM, 
+		SELECT ROW_NUMBER() OVER(ORDER BY req_de desc) rn, 
 		       req_no,
 		       SUBSTR(b.schlship_nm, 0, INSTR(b.schlship_nm, ' ', 1)) schlship_nm,
 		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
@@ -194,7 +194,6 @@
 		 INNER JOIN schlship b ON(a.schlship_no=b.schlship_no)
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND staff_no IS NULL
-		 ORDER BY req_de desc
 	</select>
 	
 	<select id="selectStudent" parameterType="String" resultType="StudentVO">
@@ -203,11 +202,76 @@
 		       sub_name,
 		       grade,
 		       a.tel_no,
+		       a.tel_no,
 		       CASE WHEN webmail IS NOT NULL THEN webmail
 		            WHEN webmail IS NULL THEN email
 		            END AS webmail
 		  FROM v_stdntinfo a
 		 INNER JOIN subject b ON(a.sub_code=b.sub_code) 
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insertSchl" parameterType="ScholarShipVO">
+	INSERT INTO schl_req (
+		    req_no,
+		    stdnt_no,
+		    req_de,
+		    req_resn,
+		    process_stat,
+		    papers_submit_at,
+		    refuse_resn,
+		    schlship_no,
+		    staff_no
+		    <if test="attachList != null">
+		    	,atch_file_no
+		    </if>
+		) VALUES (
+		    SCHL_REQ_SEQ.NEXTVAL,
+		    #{bo_writer, jdbcType=VARCHAR},
+		    SYSDATE,
+		    NULL,
+		    'DG'
+		    <if test="attachList != null">
+		    , 'Y',
+		    </if>
+		    <if test="attachList == null">
+		    , 'N',
+		    </if>
+		    NULL,
+		    #{schlship_no, jdbcType=NUMERIC},
+		    NULL
+		    <if test="attachList != null">
+		    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
+		    </if>
+		)
+	</insert>
+	
+	<resultMap type="ScholarShipVO" id="schl" autoMapping="true">
+		<id property="req_no" column="req_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectAttachList" resultType="String" parameterType="int">
+		SELECT file_nm
+		  FROM attach a 
+		 WHERE atch_file_no=(SELECT atch_file_no FROM schl_req WHERE req_no=#{req_no, jdbcType=NUMERIC})
+	</select>
+	<select id="selectSchlReqStudent" parameterType="ScholarShipVO" resultType="ScholarShipVO">
+		SELECT a.req_no,
+		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+		       SUBSTR(b.schlship_nm, 0, INSTR(b.schlship_nm, ' ', 1)) schlship_nm,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		           AND com_code = process_stat) process_stat,
+		        TO_CHAR(reciv_date, 'RRRR.MM.DD') reciv_date
+		  FROM schl_req a
+		 INNER JOIN schlship b ON(a.schlship_no=b.schlship_no)
+		  LEFT OUTER JOIN reciv_schl d ON(a.req_no=d.req_no)
+		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND a.req_no = #{req_no, jdbcType=NUMERIC}
 	</select>
 </mapper>

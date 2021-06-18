@@ -5,9 +5,13 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
@@ -30,6 +34,8 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * --------     --------    ----------------------
  * 2021. 6. 12.   김보미        최초작성
  * 2021. 6. 15.   김보미 		등록금 환불
+ * 2021. 6. 17.   김보미		장학금 조회
+ * 2021. 6. 18.   김보미		장학금 신청 등록
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -39,6 +45,9 @@ public class TuitionServiceImpl implements TuitionService{
 	private TuitionDAO tuitionDAO;
 	@Inject
 	private StudentDAO studentDAO;
+	
+	@Inject
+	private CommonAttachService commonAttachService;
 	
 	@Override
 	public List<TuitionVO> selectTuitionList(String stdnt_no) {
@@ -75,6 +84,7 @@ public class TuitionServiceImpl implements TuitionService{
 		return tuitionDAO.selectRecivSchl(stdnt_no);
 	}
 
+	@Transactional
 	@Override
 	public ServiceResult insertRefundReq(TuitionVO tuition) {
 		ServiceResult result = ServiceResult.FAIL;
@@ -118,7 +128,32 @@ public class TuitionServiceImpl implements TuitionService{
 	public StudentVO selectStudent(String stdnt_no) {
 		return tuitionDAO.selectStudent(stdnt_no);
 	}
+	
+	@Transactional
+	@Override
+	public ServiceResult insertSchl(ScholarShipVO schl) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.insertSchl(schl);
+		
+		if(cnt > 0) { 
+			cnt = commonAttachService.processes(schl, "/scholarship");
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public List<String> selectAttachList(int req_no) {
+		return tuitionDAO.selectAttachList(req_no);
+	}
+	
 
+	@Override
+	public ScholarShipVO selectSchlReqStudent(ScholarShipVO schl) {
+		return tuitionDAO.selectSchlReqStudent(schl);
+	}
 	/******************************************************************************/
 	@Override
 	public void selectRefundMain(Map<String, Object> paramMap) {
@@ -151,9 +186,19 @@ public class TuitionServiceImpl implements TuitionService{
 	@Override
 	public void SchlReqForm(Map<String, Object> paramMap) {
 		String stdnt_no = (String) paramMap.get("stdnt_no");
+		Integer req_no = (Integer) paramMap.get("req_no");
+		ScholarShipVO schl = new ScholarShipVO();
+		if(req_no != null) {
+			schl.setStdnt_no(stdnt_no);
+			schl.setReq_no(req_no);
+			schl = tuitionDAO.selectSchlReqStudent(schl);
+		}
+		
 		StudentVO student = new StudentVO();
 		student = tuitionDAO.selectStudent(stdnt_no);
 		
 		paramMap.put("student", student);
+		paramMap.put("schl", schl);
 	}
+
 }

@@ -1,13 +1,15 @@
 <%--
 * [[개정이력(Modification Information)]]
-* 수정일                 수정자      수정내용
+* 수정일       수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 11. 박초원      최초작성
+* 2021. 6. 18. 김보미      조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
  <!-- contents start -->
  <nav aria-label="breadcrumb">
@@ -23,7 +25,7 @@
          <div class="card inputTable">
              <div class="card-body">
                  <p>※ 증명서류 미제출자는 교내 장학금 선발에서 제외됩니다.</p>
-                 <form id="schlForm" action="${cPath }/lms/insertSchlForm.do" method="post">
+                 <form id="schlForm" enctype="multipart/form-data" method="post">
                      <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                          <tr>
                              <th class="align-middle text-center">학번</th>
@@ -39,9 +41,7 @@
                          </tr>
                          <tr>
                              <th class="align-middle text-center">전화번호</th>
-                             <td class="align-middle">
-                                 <input type="tel" name="tel_no" class="form-control" id="phone_check"/>
-                             </td>
+                             <td class="align-middle">${student.tel_no }</td>
                              <th class="align-middle text-center">웹메일</th>
                              <td class="align-middle">${student.webmail }</td>
                          </tr>
@@ -52,15 +52,38 @@
                                      <div class="col-md-4">
                                          <select class="form-select float-right" name="schlship_no">
                                              <option value="">-- 장학금종류 --</option>
-                                             <option value="5">외국어</option>
-                                             <option value="6">기사</option>
-                                             <option value="7">산업기사</option>
-                                             <option value="8">국가유공자</option>
+                                             <option value="5" ${schl.schlship_nm eq '외국어 '?'selected':'' }>외국어</option>
+                                             <option value="6" ${schl.schlship_nm eq '기사 '?'selected':'' }>기사</option>
+                                             <option value="7" ${schl.schlship_nm eq '산업기사 '?'selected':'' }>산업기사</option>
+                                             <option value="8" ${schl.schlship_nm eq '국가유공자 '?'selected':'' }>국가유공자</option>
                                          </select>
                                      </div>
                                  </div>
                              </td>
                          </tr>
+                         <c:choose>
+                         	<c:when test="${not empty schl.req_no }">
+		                         <tr>
+										<th class="text-center align-middle">제출 서류<br />원본파일
+										</th>
+										<td colspan="3" class="text-left"><c:forEach
+												items="${editReq.attachList }" var="attach">
+												<div class="ml-2 fileArea">
+													<c:url value="/lms/resumeDownload.do" var="downloadURL">
+														<c:param name="atch_file_no" value="${attach.atch_file_no }" />
+														<c:param name="atch_file_seq"
+															value="${attach.atch_file_seq }" />
+													</c:url>
+													<p class="fileBox col-lg-6">
+														<a href="${downloadURL }" class="text-color"
+															data-attno="${attach.atch_file_seq }">${attach.file_nm}</a>
+														<span class="delBtn btn btn-danger">-</span>
+													</p>
+												</div>
+											</c:forEach></td>
+									</tr>
+                         	</c:when>
+                         </c:choose>
                      </table>
                      
                      <h6 class="m-b-20">
@@ -68,18 +91,20 @@
 					</h6>
 					<div class="form-inline fileArea row">
 						<p class="fileBox col-lg-6">
-							<input class="form-control" type="file" name="mail_files">
+							<input class="form-control" type="file" name="common_files">
 							<span class="plusBtn btn btn-secondary">+</span>
 						</p>
 					</div>
                      <div class="text-center mt-3">
                          <a href="${cPath }/lms/scholarshipCampus.do" class="btn btn-light-secondary">취소</a>
+                         <button id="saveBtn" class="btn btn-primary" type="button">저장</button>
                          <!-- update시에만 보이는 버튼-->
-                         <button class="btn btn-primary" type="button" id="schlSubmit">저장</button>
-                         <button type="button" class="btn btn-danger block" data-bs-toggle="modal"
-                         data-bs-target="#default">
-                         삭제
-                     </button>
+                         <c:if test="${not empty schl.req_no }">
+							<input type="hidden" name="state" value="update" />                         	
+	                        <button type="button" class="btn btn-danger block" data-bs-toggle="modal" 
+	                         	data-bs-target="#default">삭제
+	                     	</button>
+                         </c:if>
                      </div>
                  </form>
              </div>
@@ -100,10 +125,13 @@
                  </button>
              </div>
              <div class="modal-body">
-                 <p>
-                     삭제한 게시글은 복원이 불가합니다.<br/>
-                     삭제하시겠습니까?
-                 </p>
+             	<form id="deleteForm" action="${cPath }/lms/deleteSchl.do" method="post">
+             		<input type="hidden" name="req_no" value="" />
+	                 <p>
+	                     삭제한 게시글은 복원이 불가합니다.<br/>
+	                     삭제하시겠습니까?
+	                 </p>
+             	</form>
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn  btn-secondary" data-bs-dismiss="modal">
@@ -119,13 +147,12 @@
          </div>
      </div>
  </div>
-
  <!-- contents end -->
 </div>
 
 <script>
 	var source = '<p class="fileBox col-lg-6">'
-		+ '<input class="form-control" type="file" name="mail_files">'
+		+ '<input class="form-control" type="file" name="common_files">'
 		+ '<span class="plusBtn btn btn-secondary">+</span>'
 		+ '<span class="delBtn btn btn-danger">-</span>'
 	    + '</p>';
@@ -138,27 +165,32 @@
 		$(this).parent("p").remove();
 	});
 	
-	$("#schlSubmit").on("click", function(){
-		var phonevalue = $('input[name=tel_no]').val();
-	
+	$("#saveBtn").on("click", function(){
+		let schlForm = $("#schlForm");
+		let state = $("[name='state']").val();
+		let files = $("[name='common_files']").val();
+		console.log(files);
 		// 형식
-		var reghp = /^\d{3}\d{3,4}\d{4}$/;
 		let schlship_no = $("[name='schlship_no']").val();
-		console.log(schlship_no);
-		console.log(phonevalue);
 		
-		if (!reghp.test(phonevalue) && schlship_no == null && schlship_no == "") {
+		if (schlship_no == "" && files.length == 0) {
 			alert("둘다 아니야!");
-		} else if(reghp.test(phonevalue) || schlship_no == null || schlship_no == ""){
+		} else if(schlship_no == "" && files.length != 0){
 			alert("선택안함");
-		} else if(!reghp.test(phonevalue) && schlship_no != null && schlship_no == ""){
-			alert("번호 확인!");
+		} else if(schlship_no != "" && files.length == 0){
+			alert("첨부파일 확인!");
 		} else {
-			$("#schlForm").submit();
+			if(state == 'update'){
+				let action = "${cPath}/lms/updateSchl.do";
+				schlForm.attr("action", action);
+				schlForm.attr("method", "post");	
+				schlForm.submit();
+			}else{
+				let action = "${cPath}/lms/insertSchl.do";
+				schlForm.attr("action", action);
+				schlForm.attr("method", "post");
+				schlForm.submit();
+			}
 		}
-		
 	});
 </script>
-
-
-

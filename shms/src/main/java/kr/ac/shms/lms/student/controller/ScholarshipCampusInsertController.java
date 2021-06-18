@@ -1,6 +1,7 @@
 package kr.ac.shms.lms.student.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -10,12 +11,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.TuitionService;
+import kr.ac.shms.lms.student.vo.ScholarShipVO;
+import kr.ac.shms.lms.student.vo.StudentVO;
 
 /**
  * @author 박초원
@@ -37,10 +46,15 @@ public class ScholarshipCampusInsertController {
 	
 	@Inject
 	private TuitionService tuitionService;
+
+	@Inject
+	private CommonAttachServiceImpl commonAttachServiceImpl; 
 	
 	@RequestMapping("/lms/scholarshipCampusForm.do")
 	public String scholarshipCampusForm(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam(value="req_no", required=false) Integer req_no
+		, @RequestParam(value="req_no", required=false) String state
 		, Model model
 	) {
 		String stdnt_no = user.getUser_id();
@@ -48,22 +62,58 @@ public class ScholarshipCampusInsertController {
 		/** 서비스 호출 **************************************************************/
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("stdnt_no", stdnt_no);
+		paramMap.put("req_no", req_no);
 		tuitionService.SchlReqForm(paramMap);
 		/*****************************************************************************/
 		
 		/** 자료 구성 ****************************************************************/
 		model.addAttribute("student", paramMap.get("student"));
+		model.addAttribute("schl", paramMap.get("schl"));
 		/*****************************************************************************/
+		
+		System.out.println("**************************************");
+		logger.info("schl {}", paramMap.get("schl"));
 		
 		return "lms/scholarshipCampusForm";
 	}	
 	
-	@RequestMapping(value="lms/insertSchlForm.do", method=RequestMethod.POST)
-	public String insertSchlForm(
+	@RequestMapping(value="lms/insertSchl.do", method=RequestMethod.POST)
+	public String insertSchl(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, @RequestParam("schlship_no") int schlship_no
+		, @RequestPart("common_files") MultipartFile common_files
+		, @ModelAttribute("schl") ScholarShipVO schl
+		) {
+		String stdnt_no = user.getUser_id();
+		schl.setBo_writer(stdnt_no);
+		schl.setBiz_type("JS");
+		
+		ServiceResult result = tuitionService.insertSchl(schl);
+
+		String view = null;
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/scholarshipCampus.do";
+		}
+		
+		return view;
+	}
+	
+	@RequestMapping(value="lms/updateSchl.do", method=RequestMethod.POST)
+	public String updateSchl(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user	
+		, @RequestParam("req_no") int req_no
+		, Model model
 		) {
 		
+		return "redirect:/lms/scholarshipCampus.do";
+		
+		
+	}
+	
+	@RequestMapping(value="lms/deleteSchl.do", method=RequestMethod.POST)
+	public String deleteSchl() {
 		return null;
 	}
+	
+
+	
 }
