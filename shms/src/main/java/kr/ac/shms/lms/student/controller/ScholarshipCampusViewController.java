@@ -1,8 +1,6 @@
 package kr.ac.shms.lms.student.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.TuitionService;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
@@ -65,7 +63,7 @@ public class ScholarshipCampusViewController {
 		schl.setStdnt_no(stdnt_no);
 		schl.setReq_no(req_no);
 		schl = tuitionService.selectSchlReqStudent(schl);
-		List<String> attList = tuitionService.selectAttachList(req_no);
+		List<AttachVO> attList = tuitionService.selectAttachList(req_no);
 		
 		model.addAttribute("student", student);
 		model.addAttribute("schl", schl);

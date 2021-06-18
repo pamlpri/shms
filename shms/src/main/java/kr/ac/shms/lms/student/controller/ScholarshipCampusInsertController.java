@@ -23,6 +23,7 @@ import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.TuitionService;
+import kr.ac.shms.lms.student.vo.EditReqVO;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
@@ -69,6 +70,7 @@ public class ScholarshipCampusInsertController {
 		/** 자료 구성 ****************************************************************/
 		model.addAttribute("student", paramMap.get("student"));
 		model.addAttribute("schl", paramMap.get("schl"));
+		model.addAttribute("attList", paramMap.get("attList"));
 		/*****************************************************************************/
 		
 		System.out.println("**************************************");
@@ -99,19 +101,24 @@ public class ScholarshipCampusInsertController {
 	
 	@RequestMapping(value="lms/updateSchl.do", method=RequestMethod.POST)
 	public String updateSchl(
-		@AuthenticationPrincipal(expression="realUser") UserLoginVO user	
-		, @RequestParam("req_no") int req_no
-		, Model model
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestPart("common_files") MultipartFile common_files
+		,  @ModelAttribute("schl") ScholarShipVO schl
 		) {
 		
 		return "redirect:/lms/scholarshipCampus.do";
-		
-		
 	}
 	
 	@RequestMapping(value="lms/deleteSchl.do", method=RequestMethod.POST)
-	public String deleteSchl() {
-		return null;
+	public String deleteSchl(
+		@ModelAttribute("schl") ScholarShipVO schl	
+		) {
+		ServiceResult result = tuitionService.deleteSchl(schl);
+		String view = null;
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/scholarshipCampus.do";
+		}
+		return view;
 	}
 	
 

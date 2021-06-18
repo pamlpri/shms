@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
@@ -133,6 +134,21 @@ public interface TuitionService {
 	 * @return
 	 */
 	public ScholarShipVO selectSchlReqStudent(ScholarShipVO schl);
+	
+	/**
+	 * 신청 정보 수정
+	 * @param req_no
+	 * @return
+	 */
+	public ServiceResult updateSchl(ScholarShipVO schl);
+	
+	/**
+	 * 신청 정보 삭제
+	 * @param req_no
+	 * @return
+	 */
+	public ServiceResult deleteSchl(ScholarShipVO schl);
+	
 	/*************************************************************************************************/
 	
 	/**
@@ -152,5 +168,5 @@ public interface TuitionService {
 	 * @param atch_file_no
 	 * @return
 	 */
-	public List<String> selectAttachList(int req_no); 
+	public List<AttachVO> selectAttachList(int req_no); 
 }

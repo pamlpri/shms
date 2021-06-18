@@ -181,7 +181,7 @@
 	<select id="selectSchlReqList" parameterType="String" resultType="ScholarShipVO">
 		SELECT ROW_NUMBER() OVER(ORDER BY req_de desc) rn, 
 		       req_no,
-		       SUBSTR(b.schlship_nm, 0, INSTR(b.schlship_nm, ' ', 1)) schlship_nm,
+		       TRIM(SUBSTR(b.schlship_nm, 0, INSTR(b.schlship_nm, ' ', 1))) schlship_nm,
 		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
 		       CASE WHEN papers_submit_at='Y' THEN '제출완료'
 		            ELSE '미제출'
@@ -254,8 +254,10 @@
 		</collection>
 	</resultMap>
 	
-	<select id="selectAttachList" resultType="String" parameterType="int">
-		SELECT file_nm
+	<select id="selectAttachList" resultType="AttachVO" parameterType="int">
+		SELECT file_nm,
+		       atch_file_no,
+		       atch_file_seq
 		  FROM attach a 
 		 WHERE atch_file_no=(SELECT atch_file_no FROM schl_req WHERE req_no=#{req_no, jdbcType=NUMERIC})
 	</select>
@@ -274,4 +276,10 @@
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND a.req_no = #{req_no, jdbcType=NUMERIC}
 	</select>
+	
+	<delete id="deleteSchl" parameterType="ScholarShipVO">
+		DELETE 
+		  FROM schl_req
+		  WHERE req_no = #{req_no, jdbcType=NUMERIC}
+	</delete>
 </mapper>
