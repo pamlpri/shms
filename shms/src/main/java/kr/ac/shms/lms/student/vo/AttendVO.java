@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
 public class AttendVO {
 	private Integer atndan_no;
 	private String lec_code;
+	private String lec_name;
 	private String attend_date;		// 출석날짜
 	private String attend_time;		// 입실 시간
 	private String exit_time;		// 퇴실 시간
@@ -65,6 +66,11 @@ public class AttendVO {
 	private Integer jg_cnt;
 	private Integer jt_cnt;
 	private Integer gs_cnt;
+	private Integer attend_per;
+	
+	private String lec_term;
+	private String dayotw_nm;
+	private String lec_time;
 }
 
 

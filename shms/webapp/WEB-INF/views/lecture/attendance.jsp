@@ -3,29 +3,36 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 18.      박초원       학생 출석현황 페이지 조회 및 출석상태 수정 
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Main Content -->
  <div class="main-content">
    <section class="section">
      <div class="section-header">
-		<h1>${lec_name}</h1>
+		<h1>${lec_name }</h1>
 	 </div>
    </section>
 
    <!-- contents start -->
    <nav aria-label="breadcrumb">
-     <ol class="breadcrumb">
-       <li class="breadcrumb-item"><a href="#">Home</a></li>
-       <li class="breadcrumb-item"><a href="#">강의실홈</a></li>
-       <li class="breadcrumb-item active" aria-current="page">출석관리</li>
-     </ol>
-   </nav>
-   
-   'ST' eq user.user[1]
+    <ol class="breadcrumb">
+      <c:choose>
+      	<c:when test="${'ST' eq user.user[1]}">
+			<li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
+		</c:when>
+		<c:otherwise>
+      		<li class="breadcrumb-item"><a href="${cPath }/lecture/index.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
+		</c:otherwise>
+      </c:choose>
+      <li class="breadcrumb-item"><a href="${cPath }/lecture/lectureInfo.do">강의실홈</a></li>
+      <li class="breadcrumb-item active" aria-current="page">출석관리</li>
+    </ol>
+  </nav>
    
    <div class="card attendance">
      <div class="card-body">
@@ -37,15 +44,15 @@
            </tr>
            <tr>
              <th>강의기간</th>
-             <td colspan="4">2020.11.16 ~ 2021.06.29</td>
+             <td colspan="4">${attend.lec_term }</td>
            </tr>
            <tr>
              <th>강의시간</th>
-             <td colspan="4">월 (10:00 ~ 11:00)</td>
+             <td colspan="4">${attend.dayotw_nm } (${attend.lec_time }:00 ~ ${attend.end_time }:00)</td>
            </tr>
            <tr>
              <th>학생명</th>
-             <td colspan="4">최희수</td>
+             <td colspan="4">${attend.name }</td>
            </tr>
            <tr>
              <th>출석일</th>
@@ -55,11 +62,11 @@
              <th>출석률(일수)</th>
            </tr>
            <tr>
-           	 <td>155일</td>
-             <td>155일</td>
-             <td>118일</td>
-             <td>2일</td>
-             <td>76.1%</td>
+           	 <td>${attend.cs_cnt }일</td>
+             <td>${attend.jg_cnt }일</td>
+             <td>${attend.jt_cnt }일</td>
+             <td>${attend.gs_cnt }일</td>
+             <td>${attend.attend_per }%</td>
            </tr>
          </table>
        </div>
@@ -77,8 +84,9 @@
              <th>출석시간</th>
              <th>퇴실시간</th>
              <th>출결상태</th>
-             <!-- 교수한테만 -->
-             <th>비고</th>
+             <c:if test="${user.user[1] eq 'PR' }">
+	             <th>비고</th>
+             </c:if>
            </tr>
            <tr>
              <td>1주차</td>

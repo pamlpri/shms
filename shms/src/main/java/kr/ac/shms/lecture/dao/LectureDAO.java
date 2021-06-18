@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 
@@ -21,6 +22,7 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * 2021. 5. 29.   김보미         교수 강의 목록 
  * 2021. 5. 31.   송수미         학생 과제,강의 정보 출력
  * 2021. 6. 02.   김보미         수강 완료 강의 목록 출력
+ * 2021. 6. 18.   박초원		 학생 출석현황 페이지 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -68,5 +70,17 @@ public interface LectureDAO {
 	 */
 	public List<SugangLecSTVO> selectCompleteSugangList(String stdnt_no);
 	
-
+	/**
+	 * 한 학생에 대한 출석현황 강의정보 조회
+	 * @param AttendVO
+	 * @return AttendVO
+	 */
+	public AttendVO selectAttendLecture(AttendVO attend);
+	
+	/**
+	 * 한 학생에 대한 출석현황 조회
+	 * @param AttendVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<AttendVO> selectAttendDetail(AttendVO attend);
 }

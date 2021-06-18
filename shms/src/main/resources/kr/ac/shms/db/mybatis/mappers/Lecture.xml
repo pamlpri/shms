@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lecture.dao.LectureDAO">
+	<select id="selectAttendLecture" parameterType="AttendVO" resultType="AttendVO">
+		SELECT DISTINCT a.stdnt_no,
+		       c.name,
+		       DECODE((SELECT DISTINCT req_semstr FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR}), 1, 
+		                (SELECT DISTINCT req_year FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR})||'.03.02 ~ '||(SELECT DISTINCT req_year FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR})||'.07.31',
+		                (SELECT DISTINCT req_year FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR})||'.08.01 ~ '||(SELECT DISTINCT req_year FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR})||'.01.31')
+		                lec_term,
+		       (SELECT SUBSTR(com_code_nm, 1, 1)
+		          FROM tb_com_code
+		         WHERE code_grp = 'G19'
+		           AND d.dayotw = com_code ) dayotw_nm,
+		       LPAD(d.lec_time, 2, 0) lec_time,
+		       LPAD((SELECT d.lec_time + lec_pnt
+		          FROM curriculum 
+		         WHERE cur_code = d.cur_code), 2, 0) end_time,
+		       (SELECT lec_pnt
+		          FROM curriculum
+		         WHERE d.cur_code = cur_code) lec_pnt,
+		       (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'CS'
+		           AND stdnt_no = a.stdnt_no) cs_cnt,
+		       (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'GS'
+		           AND stdnt_no = a.stdnt_no) gs_cnt,
+		        (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'JT'
+		           AND stdnt_no = a.stdnt_no) jt_cnt,
+		        (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'JG'
+		           AND stdnt_no = a.stdnt_no) jg_cnt,
+		        ROUND((SELECT DISTINCT COUNT(stdnt_no)
+		                      FROM v_lecweek
+		                     WHERE NOT (attend_stat = 'GS')
+		                       AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}) / 15 * 100, 2) attend_per
+		  FROM attendance a
+		       INNER JOIN v_lecweek_attend b ON(a.lec_code = b.lec_code AND a.stdnt_no = b.stdnt_no)
+		       INNER JOIN student c ON(a.stdnt_no = c.stdnt_no)
+		       RIGHT OUTER JOIN lecture d ON(a.lec_code = d.lec_code)
+		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND a.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectAttendDetail" parameterType="AttendVO" resultType="AttendVO">
+		SELECT DISTINCT atndan_no,
+		       attend_stat,
+		       lec_week,
+		       attend_date,
+		       TO_CHAR(attend_time, 'HH24:MI') attend_time_char,
+		       TO_CHAR(exit_time, 'HH24:MI') exit_time_char,
+		       attend_time,
+		       exit_time
+		  FROM v_lecweek 
+		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	</select>
+</mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureService;
+import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
 
 /**
@@ -30,14 +31,14 @@ import kr.ac.shms.lms.student.vo.AttendVO;
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
 public class AttendanceAdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceAdminController.class);
 	@Inject
 	private LectureProfessorService lectureProfessorService;
-	@Inject
-	private LectureService lectureService;
 	
+	@Inject
+	private LectureStudentService lectureStudentService;
+
 	@RequestMapping("/lecture/attendanceAdmin.do")
 	public String attendanceAdmin(
 			@SessionAttribute(name="lec_code", required=false) String lec_code

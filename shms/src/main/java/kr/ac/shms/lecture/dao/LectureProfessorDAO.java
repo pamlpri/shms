@@ -246,7 +246,7 @@ public interface LectureProfessorDAO {
 	public int updateTaskScore(TaskSubmitVO taskSubmit);
 	
 	/**
-	 * 주차별 학생의 출석현황 조회
+	 * 주차별 수강학생들의 출석현황 조회
 	 * @param lec_code
 	 * @return 데이터가 없으면 null 반환
 	 */
