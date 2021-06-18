@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div class="page-content">
 <!-- contents start -->
 <nav aria-label="breadcrumb">
@@ -33,127 +35,32 @@
                         <div class="col-lg-9" id="seat1">
                             <!-- seat 출력 -->
                           <div class="text-center front"><strong>출입문</strong></div>
+                          <c:set var="i" value="0" />
+                          <c:set var="j" value="10" />
+                          <c:set var="flag" value="false" />
                           <table class="seatTable">
-                              <tr>
-                                  <td class="rent">1</td>
-                                  <td>2</td>
-                                  <td>3</td>
-                                  <td>4</td>
-                                  <td>5</td>
-                                  <td>6</td>
-                                  <td>7</td>
-                                  <td>8</td>
-                                  <td>9</td>
-                                  <td>10</td>
-                              </tr>
-                              <tr>
-                                  <td>11</td>
-                                  <td>12</td>
-                                  <td>13</td>
-                                  <td class="rent">14</td>
-                                  <td>15</td>
-                                  <td class="rent">16</td>
-                                  <td>17</td>
-                                  <td>18</td>
-                                  <td>19</td>
-                                  <td>20</td>
-                              </tr>
-                              <tr>
-                                  <td class="rent">21</td>
-                                  <td>22</td>
-                                  <td>23</td>
-                                  <td>24</td>
-                                  <td>25</td>
-                                  <td>26</td>
-                                  <td>27</td>
-                                  <td>28</td>
-                                  <td>29</td>
-                                  <td>30</td>
-                              </tr>
-                              <tr>
-                                  <td>31</td>
-                                  <td>32</td>
-                                  <td>33</td>
-                                  <td class="rent">34</td>
-                                  <td>35</td>
-                                  <td class="rent">36</td>
-                                  <td>37</td>
-                                  <td>38</td>
-                                  <td>39</td>
-                                  <td>40</td>
-                              </tr>
-                              <tr>
-                                  <td class="rent">41</td>
-                                  <td>42</td>
-                                  <td>43</td>
-                                  <td>44</td>
-                                  <td>45</td>
-                                  <td>46</td>
-                                  <td>47</td>
-                                  <td>48</td>
-                                  <td>49</td>
-                                  <td>50</td>
-                              </tr>
-                              <tr>
-                                  <td>51</td>
-                                  <td>52</td>
-                                  <td>53</td>
-                                  <td class="rent">54</td>
-                                  <td>55</td>
-                                  <td class="rent">56</td>
-                                  <td>57</td>
-                                  <td>58</td>
-                                  <td>59</td>
-                                  <td>60</td>
-                              </tr>
-                              <tr>
-                                  <td>61</td>
-                                  <td>62</td>
-                                  <td>63</td>
-                                  <td>64</td>
-                                  <td class="rent">65</td>
-                                  <td>66</td>
-                                  <td>67</td>
-                                  <td>68</td>
-                                  <td>69</td>
-                                  <td>60</td>
-                              </tr>
-                              <tr>
-                                  <td>71</td>
-                                  <td>72</td>
-                                  <td>73</td>
-                                  <td>74</td>
-                                  <td>75</td>
-                                  <td>76</td>
-                                  <td>77</td>
-                                  <td>78</td>
-                                  <td>79</td>
-                                  <td>80</td>
-                              </tr>
-                              <tr>
-                                  <td>81</td>
-                                  <td>82</td>
-                                  <td>83</td>
-                                  <td>84</td>
-                                  <td>85</td>
-                                  <td>86</td>
-                                  <td>87</td>
-                                  <td>88</td>
-                                  <td>89</td>
-                                  <td>90</td>
-                              </tr>
-                              <tr>
-                                  <td>91</td>
-                                  <td>92</td>
-                                  <td>93</td>
-                                  <td>94</td>
-                                  <td>95</td>
-                                  <td>96</td>
-                                  <td>97</td>
-                                  <td>98</td>
-                                  <td>99</td>
-                                  <td>100</td>
-                              </tr>
+                          	<c:forEach items="${facilityList }" var="facility">
+                          		<c:if test="${facility.detail_no eq 101}">
+                          			<c:set var="flag" value="true" />
+                          		</c:if>
+                          		<c:if test="${not flag }">
+	                          		<c:if test="${i % j == 0 }">
+	                          			<tr>
+	                          		</c:if>
+	                       			<c:choose>
+	                         			<c:when test="${facility.rsv_posbl_at eq 'N' }">
+	                         				<td class="rent">${facility.detail_no }</td>
+	                         			</c:when>
+	                         			<c:otherwise>
+	                         				<td>${facility.detail_no }</td>
+	                         			</c:otherwise>
+	                         		</c:choose>
+	                        		<c:if test="${i % j == j-1 }">
+		                          		</tr>
+	                        		</c:if>
+	                        		<c:set var="i" value="${i+1}" />                          		
+                          		</c:if>
+                          	</c:forEach>
                           </table>
                       </div>
                       <div class="col-lg-3 choiceWrap">
@@ -161,11 +68,13 @@
                           <form class="choiceBox">
                               <h5>열람실 예약</h5>
                               <ul class="seatInfo">
-                                  <li><strong>학번 </strong>S10101001</li>
-                                  <li><strong>이름 </strong>박초원</li>
+                                  <li><strong>학번 </strong>${student.stdnt_no }</li>
+                                  <li><strong>이름 </strong>${student.name }</li>
                                   <li><strong>열람실 </strong>1열람실</li>
                                   <li><strong>좌석 </strong> <span class="seatNum"></span></li>
-                                  <li><strong>예약일 </strong>2021.05.28</li>
+                                  <c:set var="now" value="<%=new java.util.Date() %>" />
+                                  <fmt:formatDate value="${now }" var="today"/>
+                                  <li><strong>예약일 </strong>${today }</li>
                               </ul>
                               <div>
                                   <button type="button" class="btn btn-primary block rentBtn" style="width: 100%;"
@@ -196,127 +105,34 @@
                       <div class="col-lg-9" id="seat1">
                           <!-- seat 출력 -->
                           <div class="text-center front"><strong>출입문</strong></div>
+                          <c:set var="a" value="100" />
+                          <c:set var="b" value="10" />
+                          <c:set var="flag_b" value="false" />
                           <table class="seatTable">
-                              <tr>
-                                  <td class="rent">A1</td>
-                                  <td>A2</td>
-                                  <td>A3</td>
-                                  <td>A4</td>
-                                  <td>A5</td>
-                                  <td>A6</td>
-                                  <td>A7</td>
-                                  <td>A8</td>
-                                  <td>A9</td>
-                                  <td>A10</td>
-                              </tr>
-                              <tr>
-                                  <td>11</td>
-                                  <td>12</td>
-                                  <td>13</td>
-                                  <td class="rent">14</td>
-                                  <td>15</td>
-                                  <td class="rent">16</td>
-                                  <td>17</td>
-                                  <td>18</td>
-                                  <td>19</td>
-                                  <td>20</td>
-                              </tr>
-                              <tr>
-                                  <td class="rent">21</td>
-                                  <td>22</td>
-                                  <td>23</td>
-                                  <td>24</td>
-                                  <td>25</td>
-                                  <td>26</td>
-                                  <td>27</td>
-                                  <td>28</td>
-                                  <td>29</td>
-                                  <td>30</td>
-                              </tr>
-                              <tr>
-                                  <td>31</td>
-                                  <td>32</td>
-                                  <td>33</td>
-                                  <td class="rent">34</td>
-                                  <td>35</td>
-                                  <td class="rent">36</td>
-                                  <td>37</td>
-                                  <td>38</td>
-                                  <td>39</td>
-                                  <td>40</td>
-                              </tr>
-                              <tr>
-                                  <td class="rent">41</td>
-                                  <td>42</td>
-                                  <td>43</td>
-                                  <td>44</td>
-                                  <td>45</td>
-                                  <td>46</td>
-                                  <td>47</td>
-                                  <td>48</td>
-                                  <td>49</td>
-                                  <td>50</td>
-                              </tr>
-                              <tr>
-                                  <td>51</td>
-                                  <td>52</td>
-                                  <td>53</td>
-                                  <td class="rent">54</td>
-                                  <td>55</td>
-                                  <td class="rent">56</td>
-                                  <td>57</td>
-                                  <td>58</td>
-                                  <td>59</td>
-                                  <td>60</td>
-                              </tr>
-                              <tr>
-                                  <td>61</td>
-                                  <td>62</td>
-                                  <td>63</td>
-                                  <td>64</td>
-                                  <td class="rent">65</td>
-                                  <td>66</td>
-                                  <td>67</td>
-                                  <td>68</td>
-                                  <td>69</td>
-                                  <td>60</td>
-                              </tr>
-                              <tr>
-                                  <td>71</td>
-                                  <td>72</td>
-                                  <td>73</td>
-                                  <td>74</td>
-                                  <td>75</td>
-                                  <td>76</td>
-                                  <td>77</td>
-                                  <td>78</td>
-                                  <td>79</td>
-                                  <td>80</td>
-                              </tr>
-                              <tr>
-                                  <td>81</td>
-                                  <td>82</td>
-                                  <td>83</td>
-                                  <td>84</td>
-                                  <td>85</td>
-                                  <td>86</td>
-                                  <td>87</td>
-                                  <td>88</td>
-                                  <td>89</td>
-                                  <td>90</td>
-                              </tr>
-                              <tr>
-                                  <td>91</td>
-                                  <td>92</td>
-                                  <td>93</td>
-                                  <td>94</td>
-                                  <td>95</td>
-                                  <td>96</td>
-                                  <td>97</td>
-                                  <td>98</td>
-                                  <td>99</td>
-                                  <td>100</td>
-                              </tr>
+                          	<c:forEach items="${facilityList }" var="facility" varStatus="cnt">
+                          		<c:if test="${cnt.index >= 100 }">
+                          			<c:if test="${facility.detail_no eq 201}">
+	                       				<c:set var="flag_b" value="true" />
+	                          		</c:if>
+	                          		<c:if test="${not flag_b }">
+		                          		<c:if test="${a % b == 0 }">
+		                          			<tr>
+		                          		</c:if>
+		                       			<c:choose>
+		                         			<c:when test="${facility.rsv_posbl_at eq 'N' }">
+		                         				<td class="rent">${facility.detail_no }</td>
+		                         			</c:when>
+		                         			<c:otherwise>
+		                         				<td>${facility.detail_no }</td>
+		                         			</c:otherwise>
+		                         		</c:choose>
+		                        		<c:if test="${a % b == b-1 }">
+			                          		</tr>
+		                        		</c:if>
+		                        		<c:set var="a" value="${a+1}" />                          		
+	                          		</c:if>	
+                          		</c:if>
+                          	</c:forEach>
                           </table>
                       </div>
                       <div class="col-lg-3 choiceWrap">
@@ -324,11 +140,13 @@
                           <form class="choiceBox">
                               <h5>열람실 예약</h5>
                               <ul class="seatInfo">
-                                  <li><strong>학번 </strong>S10101001</li>
-                                  <li><strong>이름 </strong>박초원</li>
+                                  <li><strong>학번 </strong>${student.stdnt_no }</li>
+                                  <li><strong>이름 </strong>${student.name }</li>
                                   <li><strong>열람실 </strong>2열람실</li>
                                   <li><strong>좌석 </strong> <span class="seatNum"></span></li>
-                                  <li><strong>예약일 </strong>2021.05.28</li>
+                                  <c:set var="now" value="<%=new java.util.Date() %>" />
+                                  <fmt:formatDate value="${now }" var="today"/>
+                                  <li><strong>예약일 </strong>${today }</li>
                               </ul>
                               <div>
                                   <button type="button" class="btn btn-primary block rentBtn" style="width: 100%;"
@@ -362,6 +180,7 @@
                                   <div class="col-lg-4">
                                       <!-- 예약한 좌석이 있을때 -->
                                       <div class="roomQr" id="roomQrBlock">
+                                      		<!-- QR 자리 -->
                                           <img src="${cPath}/resources/lms/assets/images/qr.jpg" />
                                           <p class="text-center">입구에 비치된 카메라에<br/>QR코드 인식 후 입실해야 합니다.</p>
                                       </div>
@@ -382,30 +201,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">1231415</td>
-                                                    <td class="text-center">1열람실 38번</td>
-                                                    <td class="text-center">2021.05.25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">1231415</td>
-                                                    <td class="text-center">1열람실 38번</td>
-                                                    <td class="text-center">2021.05.25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">1231415</td>
-                                                    <td class="text-center">1열람실 38번</td>
-                                                    <td class="text-center">2021.05.25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">1</td>
-                                                    <td class="text-center">1231415</td>
-                                                    <td class="text-center">1열람실 38번</td>
-                                                    <td class="text-center">2021.05.25</td>
-                                                </tr>
+                                            	<c:choose>
+                                            		<c:when test="${not empty facilityRcvList }">
+		                                            	<c:forEach items="${facilityRcvList }" var="facilityRcv" varStatus="i">
+		                                            		<tr>
+			                                                    <td class="text-center">${i.index +1 }</td>
+			                                                    <td class="text-center">${facilityRcv.rsv_no }</td>
+			                                                    <td class="text-center">
+			                                                    	<c:choose>
+			                                                    		<c:when test="${facilityRcv.facility_no <= 100 }">
+			                                                    			1열람실 ${facilityRcv.detail_no }번
+			                                                    		</c:when>
+			                                                    		<c:otherwise>
+			                                                    			2열람실 ${facilityRcv.detail_no }번
+			                                                    		</c:otherwise>
+			                                                    	</c:choose>
+				                                                </td>
+			                                                    <td class="text-center">${facilityRcv.rsv_dt }</td>
+			                                                </tr>
+		                                            	</c:forEach>                                            		
+                                            		</c:when>
+                                            		<c:otherwise>
+                                            			<tr>
+                                            				<td class="text-center" colspan="4">도서관 열람실 예약 내역이 없습니다.</td>
+                                            			</tr>
+                                            		</c:otherwise>
+                                            	</c:choose>
                                             </tbody>
                                         </table>
                                     </div>
@@ -415,10 +236,9 @@
                     </section>
                 </div>
             </div>
-           
         </div>
     </div>
-</section>    
+</section>
 
 <!-- 모달 -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -453,6 +273,7 @@
 </div>
 <!-- contents end -->
 </div>
+<input type="text" name="facility_no" value="" />
 <script>
     $(function(){
         $(".seat").find("table").on("click", "td", function(){
@@ -461,6 +282,7 @@
             var num = $(this).text();
 
             $(".choiceWrap").find(".seatNum").text(num + "번");
+            $("input[name='facility_no']").val(num);
         });
 
         $(".tabBtn").on("click", function(){
@@ -474,9 +296,24 @@
                 $(".choiceBox").reset();
             }else {
                 $("#exampleModalCenter").addClass("show");
+                let facility_no = $("input[name='facility_no']").val();
+                $.ajax({
+                	url: "${cPath}/lms/readingroomInsert.do"
+                	, method: "post"
+                	, data: {"facility_no" : facility_no}
+                	, success : function(res) {
+                		console.log(res);
+                	}
+                	, error : function(xhr, error, msg) {
+                		console.log(xhr);
+                		console.log(error);
+                		console.log(msg);
+                	}
+                });
             }
         });
     });
+    
 </script>
 <script src="${cPath }/resources/lms/assets/vendors/simple-datatables/simple-datatables.js"></script>
 <script>

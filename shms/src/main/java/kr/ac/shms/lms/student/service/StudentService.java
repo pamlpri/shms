@@ -6,8 +6,10 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
+import kr.ac.shms.lms.student.vo.BookVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.EditReqVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -35,6 +37,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6.  9.   최희수	  학과 학생들 출력
  * 2021. 6. 10.	  김보미		입실, 퇴실 카운트
  * 2021. 6. 17.   최희수       이력서/자기소개서 첨삭
+ * 2021. 6. 18.	  최희수 		편의시설 - 도서관, 열람실예약, 스터디룸 예약
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */	
@@ -275,4 +278,37 @@ public interface StudentService {
      * @return ServiceResult
      */
     public ServiceResult updateEditReq(EditReqVO editReq);
+    
+    /**
+     * 도서 목록 전체 조회
+     * @return
+     */
+    public List<BookVO> selectBookList();
+    
+    /**
+     * 대출 도서 목록 조회
+     * @param stdnt_no
+     * @return
+     */
+    public List<BookVO> selectBookLoanList(String stdnt_no);
+    
+    /**
+     * 열람실 목록 조회
+     * @return
+     */
+    public List<FacilityRsvVO> selectFacilityList();
+    
+    /**
+     * 도서관 열람실 예약 내역 조회
+     * @param stdnt_no
+     * @return
+     */
+    public List<FacilityRsvVO> selectFacilityRsvList(String stdnt_no);
+    
+    /**
+     * 열람실 예약
+     * @param facilityRsv
+     * @return ServiceResult
+     */
+    public ServiceResult insertFacilityRsv(FacilityRsvVO facilityRsv);
 }

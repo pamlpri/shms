@@ -26,7 +26,7 @@
 					<form method="post" enctype="multipart/form-data" id="submitForm">
 						<input type="hidden" name="stdnt_no" value="${mypage.stdnt_no }" />
 						<input type="hidden" name="edit_req_no"
-							value="${editReq.edit_req_no }" /> <input type="text"
+							value="${editReq.edit_req_no }" /> <input type="hidden"
 							name="atch_file_no" value="${editReq.atch_file_no }" />
 						<table class="table table-bordered table-md"
 							style="border-color: #dfdfdf;">
