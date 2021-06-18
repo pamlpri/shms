@@ -1,4 +1,4 @@
-package kr.ac.shms.lms.student.controller;
+package kr.ac.shms.lecture.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
@@ -45,7 +46,7 @@ public class AttendanceController {
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceController.class);
 	
 	@Inject
-	private StudentService studentService;
+	private LectureStudentService lectureStudentService;
 	
 	private boolean qrCheck = false;
 	@RequestMapping("/qrGen.do")
@@ -58,7 +59,7 @@ public class AttendanceController {
 		AttendVO qrInfoVO = new AttendVO();
 		qrInfoVO.setLec_code(lec_code);
 		qrInfoVO.setStdnt_no(user.getUser_id());
-		studentService.selectQRInfo(qrInfoVO);
+		lectureStudentService.selectQRInfo(qrInfoVO);
 		model.addAttribute("qrInfo", qrInfoVO);
 		model.addAttribute("lec_name", lec_name);
 		qrCheck = false;
@@ -80,22 +81,22 @@ public class AttendanceController {
 		attendVO.setStdnt_no(stdnt_no);
 		attendVO.setLec_code(lec_code);
 		
-		ServiceResult attendResult = studentService.selectCountAttend(attendVO);
-		ServiceResult exitResult = studentService.selectCountExit(attendVO);
+		ServiceResult attendResult = lectureStudentService.selectCountAttend(attendVO);
+		ServiceResult exitResult = lectureStudentService.selectCountExit(attendVO);
 
 		Map<String, String> resp = new HashMap<>();
 		ServiceResult result = ServiceResult.FAIL;
 		if(ServiceResult.FAIL.equals(attendResult)) { // 입실 저장
-			result = studentService.attend(attendVO);
+			result = lectureStudentService.attend(attendVO);
 			if(ServiceResult.OK.equals(result)) {
 				resp.put("resp", "OK");
 			}else {
 				resp.put("resp", "FAIL");
 			}
 		} else if(ServiceResult.OK.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)){ // 
-			result = studentService.exit(attendVO);
+			result = lectureStudentService.exit(attendVO);
 			if(ServiceResult.OK.equals(result)) {
-				AttendVO vo = studentService.selectAtndanTime(attendVO);
+				AttendVO vo = lectureStudentService.selectAtndanTime(attendVO);
 				logger.info("vo : {}", vo);
 				resp.put("attend_time", vo.getAttend_time());
 				resp.put("exit_time", vo.getExit_time());
@@ -131,18 +132,18 @@ public class AttendanceController {
 		atVo.setStdnt_no(stdnt_no);
 		atVo.setLec_code(lec_code);
 		
-		ServiceResult attendResult = studentService.selectCountAttend(atVo); 
-		ServiceResult exitResult = studentService.selectCountExit(atVo); 
+		ServiceResult attendResult = lectureStudentService.selectCountAttend(atVo); 
+		ServiceResult exitResult = lectureStudentService.selectCountExit(atVo); 
 		
         if(ServiceResult.FAIL.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)) { // 입실/퇴실 데이터가 없는 경우
         	resultMap.put("result", "FAIL");
         } else if(ServiceResult.OK.equals(attendResult) && ServiceResult.FAIL.equals(exitResult)) { // 입실은 있고 퇴실이 없음
-        	String attendTime = studentService.selectAtndanTime(atVo).getAttend_time();
+        	String attendTime = lectureStudentService.selectAtndanTime(atVo).getAttend_time();
         	resultMap.put("attendTime", attendTime);
         	resultMap.put("result", "exitFAIL");
         } else if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) { // 입실/퇴실 데이터가 있는 경우
-        	String attendTime = studentService.selectAtndanTime(atVo).getAttend_time();
-        	String exitTime = studentService.selectAtndanTime(atVo).getExit_time();
+        	String attendTime = lectureStudentService.selectAtndanTime(atVo).getAttend_time();
+        	String exitTime = lectureStudentService.selectAtndanTime(atVo).getExit_time();
         	resultMap.put("attendTime", attendTime);
         	resultMap.put("exitTime", exitTime);
         	resultMap.put("result", "OK");
@@ -168,5 +169,37 @@ public class AttendanceController {
 			view = "lecture/qrResult";
 		}
 		return view;
+	}
+	
+	@RequestMapping(value="/updateAttendanceStat.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public Map<String, Object> attendanceStatUpdate(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam("lec_code") String lec_code
+		, @RequestParam("attend_time") String attend_time
+		, @RequestParam("exit_time") String exit_time
+		, Model model
+		) {
+		String stdnt_no = user.getUser_id();
+		AttendVO atVo = new AttendVO();
+		atVo.setStdnt_no(stdnt_no);
+		atVo.setLec_code(lec_code);
+		
+		ServiceResult attendResult = lectureStudentService.selectCountAttend(atVo);
+		ServiceResult exitResult = lectureStudentService.selectCountExit(atVo);
+		
+		// 출석 상태 update하기
+		AttendVO vo = lectureStudentService.selectAttendInfo(atVo);
+		Map<String, Object> result = new HashMap<>();
+		if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
+			ServiceResult updateResult = ServiceResult.FAIL;
+			if(ServiceResult.OK.equals(attendResult) && ServiceResult.OK.equals(exitResult)) {
+				updateResult = lectureStudentService.updateAttendStat(atVo);
+				if(ServiceResult.OK.equals(updateResult)) {
+					result.put("result", "OK");
+				}
+			}
+		}
+		return result;
 	}
 }

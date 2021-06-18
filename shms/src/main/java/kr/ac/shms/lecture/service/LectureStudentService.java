@@ -27,6 +27,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 2021. 6. 15.      박초원			    비대면 강의 진도율
  * 2021. 6. 15. 	 송수미	      학생 과제 목록 조회, 과제 등록, 수정
  * 2021. 6. 17. 	 송수미	      시험 정보 조회, 시험 응시
+ * 2021. 6. 18.      김보미    출석 관련 이동
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -122,6 +123,59 @@ public interface LectureStudentService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<QuesVO> selectExamQues(int exam_no);
+	
+	/**
+	 * 데이터 계산을 위해 정보 추출
+	 * @param studentInfo 학번, 강의코드
+	 * @return attendVO
+	 */
+	public AttendVO selectAttendInfo(AttendVO studentInfo);
+	
+	/**
+	 * 입실시간, 퇴실시간 추출
+	 * @param attendVO 학번, 강의 코드
+	 * @return 입실시간
+	 */
+	public AttendVO selectAtndanTime(AttendVO attendVO);
+	/**
+	 * qr코드에 넣을 정보 추출
+	 * @param attendInfo 학번, 강의코드
+	 * @return 학번, 강의코드
+	 */
+	
+	public AttendVO selectQRInfo(AttendVO attendInfo);
+	/**
+	 * 출석(입실)정보를 insert
+	 * @param attendInfo 학번, 강의코드
+	 * @return ServiceResult 
+	 */
+	public ServiceResult attend(AttendVO attendInfo);
+	
+	/**
+	 * 출석(퇴실)정보를 update
+	 * @param exitInfo 학번, 강의코드
+	 * @return ServiceResult
+	 */
+	public ServiceResult exit(AttendVO exitInfo);
+    
+    /**
+     * 입실 카운트
+     * @param attendVO
+     * @return
+     */
+    public ServiceResult selectCountAttend(AttendVO attendVO);
+    
+    /**
+     * 퇴실 카운트
+     * @param attendVO
+     * @return
+     */
+    public ServiceResult selectCountExit(AttendVO attendVO);
 
-
+    /**
+     * 출석상태 업데이트 
+     * @param attendVO
+     * @return 
+     */
+    public ServiceResult updateAttendStat(AttendVO attendVO);
 }

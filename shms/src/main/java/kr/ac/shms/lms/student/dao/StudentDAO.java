@@ -45,46 +45,13 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  */
 @Repository
 public interface StudentDAO {
-	/**
-	 * 입실시간 추출
-	 * @param attendVO 학번, 강의 코드
-	 * @return 입실시간
-	 */
-	public AttendVO selectAtndanTime(AttendVO attendVO);
-	
-	/**
-	 * 데이터 계산을 위해 정보 추출
-	 * @param studentInfo 학번, 강의코드
-	 * @return attendVO
-	 */
-	public AttendVO selectAttendInfo(AttendVO studentInfo);
+
 	/**
 	 * 한 학생에 대한 정보 추출
 	 * @param id
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public StudentVO student(String id);
-	
-	/**
-	 * qr코드에 넣을 정보 추출
-	 * @param attendInfo 학번, 강의코드
-	 * @return 학번, 강의코드
-	 */
-	public AttendVO selectQRInfo(AttendVO attendInfo);
-	
-	/**
-	 * 출석(입실)정보를 insert
-	 * @param attendInfo 학번, 강의코드
-	 * @return ServiceResult 
-	 */
-	public int attend(AttendVO attendInfo);
-	
-	/**
-	 * 출석(퇴실)정보를 update
-	 * @param exitInfo 학번, 강의코드
-	 * @return ServiceResult
-	 */
-	public int exit(AttendVO exitInfo);
 	
 	/**
 	 * 학생의 도서 대출에 대한 정보 추출
@@ -285,30 +252,11 @@ public interface StudentDAO {
      * @return 데이터가 없으면 null
      */
     public List<MypageVO> studentSubList(String sub_code);
-    /**
-     * 입실 카운트
-     * @param attendVO
-     * @return
-     */
-    public int selectCountAttend(AttendVO attendVO);
-    
-    /**
-     * 퇴실 카운트
-     * @param attendVO
-     * @return
-     */
-    public int selectCountExit(AttendVO attendVO);
+
     
     public List<StudentVO> passwordUpdate();
     
     public int passUpdate(UserLoginVO userLogin);
-    
-    /**
-     * 출석상태 업데이트 
-     * @param attendVO
-     * @return 
-     */
-    public int updateAttendStat(AttendVO attendVO);
     
     /**
      * 이력서/자소서 첨삭 리스트 출력

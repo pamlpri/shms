@@ -38,6 +38,7 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 2021. 6. 15.      박초원			    비대면 강의 진도율, 출석
  * 2021. 6. 15. 	 송수미	      학생 과제 목록 조회, 과제 등록, 수정, 시험 목록 조회
  * 2021. 6. 17. 	 송수미	      시험 정보 조회, 시험 응시
+ * 2021. 6. 18.      김보미    출석 관련 이동
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -174,5 +175,72 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 	public List<QuesVO> selectExamQues(int exam_no) {
 		return lectureStudentDAO.selectExamQues(exam_no);
 	}	
+	@Override
+	public AttendVO selectQRInfo(AttendVO attendInfo) {
+		return lectureStudentDAO.selectQRInfo(attendInfo);
+	}
+
+	@Override
+	public ServiceResult attend(AttendVO attendInfo) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureStudentDAO.attend(attendInfo);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+	
+	@Override
+	public ServiceResult exit(AttendVO exitInfo) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureStudentDAO.exit(exitInfo);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+		
+	@Override
+	public AttendVO selectAtndanTime(AttendVO attendVO) {
+		return lectureStudentDAO.selectAtndanTime(attendVO);
+	}
+
+	@Override
+	public AttendVO selectAttendInfo(AttendVO studentInfo) {
+		return lectureStudentDAO.selectAttendInfo(studentInfo);
+	}
+
+	@Override
+	public ServiceResult selectCountAttend(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = lectureStudentDAO.selectCountAttend(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult selectCountExit(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = lectureStudentDAO.selectCountExit(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult updateAttendStat(AttendVO attendVO) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lectureStudentDAO.updateAttendStat(attendVO);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
+
 
 }
