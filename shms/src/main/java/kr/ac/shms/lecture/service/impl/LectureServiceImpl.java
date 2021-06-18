@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import kr.ac.shms.lecture.dao.LectureDAO;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
 /**
@@ -27,6 +28,7 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * 2021. 5. 29.   김보미         교수 강의 목록 
  * 2021. 5. 31.   송수미         학생 과제, 강의 목록 
  * 2021. 6. 02.   김보미         수강 완료 강의 목록 출력
+ * 2021. 6. 18.   박초원		 학생 출석현황 페이지 강의 기본정보 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -74,6 +76,16 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public List<SugangLecSTVO> selectCompleteSugangList(String stdnt_no) {
 		return lectureDAO.selectCompleteSugangList(stdnt_no);
+	}
+
+	@Override
+	public AttendVO selectAttendLecture(AttendVO attend) {
+		return lectureDAO.selectAttendLecture(attend);
+	}
+
+	@Override
+	public List<AttendVO> selectAttendDetail(AttendVO attend) {
+		return lectureDAO.selectAttendDetail(attend);
 	}
 
 }

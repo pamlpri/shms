@@ -96,7 +96,7 @@ public class ExamProfessorController {
 		}
 		
 		model.addAttribute("message",message);
-		model.addAttribute(exam);
+		model.addAttribute("exam", exam);
 		return view;	
 	}
 	
@@ -209,7 +209,7 @@ public class ExamProfessorController {
 			view = "lecture/examAdminForm";
 		}
 		
-		model.addAttribute(exam);
+		model.addAttribute("exam",exam);
 		model.addAttribute("message",message);
 		return view;
 	}
