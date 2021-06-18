@@ -19,6 +19,8 @@ import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TakeExamDtlsVO;
+import kr.ac.shms.lecture.vo.TakeExamVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -239,6 +241,46 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		}else {
 			result = ServiceResult.FAIL;
 		}
+		return result;
+	}
+	
+	@Transactional
+	@Override
+	public ServiceResult insertTakeExam(TakeExamVO takeExam) {
+		// 시험 정보 저장 TakeExam
+		int cnt = 0;
+		ServiceResult result = ServiceResult.FAIL;
+		cnt += lectureStudentDAO.insertTakeExam(takeExam);
+		
+		// 시험 문제 정보 불러오기
+		List<QuesVO> quesList = lectureStudentDAO.selectExamQues(takeExam.getExam_no());
+		ExamVO exam = lectureStudentDAO.selectExamInfo(takeExam.getExam_no());
+		logger.info("=============================================================================");
+		logger.info("quesList : {}" , quesList.toString());
+		logger.info("=============================================================================");
+		int score = 0;
+		
+		// 시험 상세 정보 저장
+		List<TakeExamDtlsVO> dtlsList = takeExam.getDtlsList();
+		for(int i = 0; i < dtlsList.size(); i++) {
+			if("GG".equals(quesList.get(i).getQues_type())) {
+				boolean ansChk = (dtlsList.get(i).getSubmit_ans()==quesList.get(i).getQues_ans());
+				if(ansChk) {
+					dtlsList.get(i).setAns_at("Y");
+					score += quesList.get(i).getQues_allot();
+				}else {
+					dtlsList.get(i).setAns_at("N");
+				}
+			}
+			// INSERT TakeExamDtls
+			cnt += lectureStudentDAO.insertTakeExamDtls(takeExam);
+			
+		}
+		// UPDATE TakeExam - 점수
+		if("TH".equals(exam.getExam_type())) lectureStudentDAO.updateTakeExamScore(score);
+		
+		if(cnt > 0) result = ServiceResult.OK;
+		
 		return result;
 	}
 

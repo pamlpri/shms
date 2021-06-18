@@ -269,15 +269,35 @@
 		 ORDER BY exam_end_dt desc
 	</select>	
 	
-	<select id="selectExamInfo" parameterType="int" resultType="ExamVO">
-		SELECT exam_no,
-		       (SELECT estbl_semstr FROM lecture WHERE lec_code='L160201901')||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
-		       ROUND((exam_end_dt - exam_begin_dt) * 24 * 60, 2) exam_time,
-		       TO_CHAR(exam_begin_dt, 'YYYY.MM.DD AM HH:MI') exam_begin_dt_char,
-		       TO_CHAR(exam_end_dt, 'YYYY.MM.DD AM HH:MI') exam_end_dt_char,
-		       online_at
-		  FROM exam
-		 WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
+	<resultMap type="ExamVO" id="examInfoMap" autoMapping="true">
+		<id property="exam_no" column="exam_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectExamInfo" parameterType="int" resultMap="examInfoMap">
+		SELECT
+		    exam_no,
+		    test_cl,
+		    lec_code,
+		    exam_begin_dt,
+		    exam_end_dt,
+		    (SELECT estbl_semstr FROM lecture WHERE lec_code='L160201901')||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
+		    ROUND((exam_end_dt - exam_begin_dt) * 24 * 60, 2) exam_time,
+		    TO_CHAR(exam_begin_dt, 'YYYY.MM.DD AM HH:MI') exam_begin_dt_char,
+		    TO_CHAR(exam_end_dt, 'YYYY.MM.DD AM HH:MI') exam_end_dt_char,
+		    online_at,
+		    exam_type,
+		    ques_cnt,
+		    a.atch_file_no,
+		    b.atch_file_seq,
+		    b.file_nm
+		FROM
+		    exam a
+		INNER JOIN attach b
+		ON(a.atch_file_no = b.atch_file_no)
+		WHERE exam_no = #{exam_no, jdbcType=NUMERIC}
 	</select>
 	
 	<select id="selectExamQues" parameterType="int" resultType="QuesVO">
@@ -292,4 +312,60 @@
 		WHERE
 		    exam_no = #{exam_no, jdbcType=NUMERIC}
 	</select>
+	
+	<insert id="insertTakeExam" parameterType="kr.ac.shms.lecture.vo.TakeExamVO">
+		INSERT INTO take_exam (
+		    applcn_no,
+		    exam_no,
+		    applcn_dt,
+		    res_score,
+		    lec_code,
+		    stdnt_no
+		) VALUES (
+		    take_exam_seq.nextval,
+		    #{exam_no, jdbcType=NUMERIC},
+		    TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI'),
+		    null,
+		    #{lec_code, jdbcType=VARCHAR},
+		    #{stdnt_no, jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertTakeExamDtls" parameterType="kr.ac.shms.lecture.vo.TakeExamVO">
+		<selectKey resultType="int" keyProperty="applcn_no" order="BEFORE">
+			SELECT take_exam_seq.currval
+			FROM dual
+		</selectKey>
+			INSERT ALL
+			<foreach collection="dtlsList" item="dtls" index="idx">
+				INTO take_exam_dtls (
+				    dtls_no,
+				    applcn_no,
+				    exam_no,
+				    ques_no,
+				    submit_ans,
+				    ans_at
+				) VALUES (
+				    take_exam_dtls_seq.nextval,
+				    #{applcn_no, jdbcType=NUMERIC},
+				    #{exam_no, jdbcType=NUMERIC},
+				    #{dtls.ques_no, jdbcType=NUMERIC},
+				    #{dtls.submit_ans, jdbcType=CLOB},
+				    #{dtls.ans_at, jdbcType=VARCHAR}
+				)
+			</foreach>
+			SELECT * FROM DUAL
+	</insert>
+	
+	<update id="updateTakeExamScore" parameterType="int">
+	<selectKey resultType="int" keyProperty="applcn_no" order="BEFORE">
+		SELECT take_exam_seq.currval
+		FROM dual
+	</selectKey>
+		UPDATE take_exam
+		   SET
+		       res_score = #{score, jdbcType=NUMERIC}
+		WHERE
+		    applcn_no = #{applcn_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

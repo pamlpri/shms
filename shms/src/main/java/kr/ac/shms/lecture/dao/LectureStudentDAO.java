@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
+import kr.ac.shms.lecture.vo.TakeExamVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -27,8 +27,9 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 2021. 6. 14. 	 박초원				전체 강의 주/회차별 조회
  * 2021. 6. 15.      박초원			    비대면 강의 진도율, 출석
  * 2021. 6. 15. 	 송수미	      학생 과제 목록 조회, 과제 등록, 수정
- * 2021. 6. 17. 	 송수미	      시험 정보 조회, 시험 응시
+ * 2021. 6. 17. 	 송수미	      시험 정보 조회
  * 2021. 6. 18.      김보미    출석 관련 이동
+ * 2021. 6. 17. 	 송수미	      시험 응시
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -170,14 +171,35 @@ public interface LectureStudentDAO {
     /**
      * 퇴실 카운트
      * @param attendVO
-     * @return
+     * @return 
      */
     public int selectCountExit(AttendVO attendVO);
     
     /**
      * 출석상태 업데이트 
      * @param attendVO
-     * @return 
+     * @return row count > 0 : 성공
      */
     public int updateAttendStat(AttendVO attendVO);
+    
+    /**
+     * 시험 응시 정보 등록
+     * @param takeExam
+     * @return row count > 0 : 성공
+     */
+    public int insertTakeExam(TakeExamVO takeExam);
+    
+    /**
+     * 시험 응시 문제 정보 등록
+     * @param takeExam
+     * @return row count > 0 : 성공
+     */
+    public int insertTakeExamDtls(TakeExamVO takeExam);
+    
+    /**
+     * 시험 점수 등록
+     * @param score
+     * @return row count > 0 : 성공
+     */
+    public int updateTakeExamScore(int score);
 }
