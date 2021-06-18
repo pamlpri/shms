@@ -64,25 +64,4 @@ public class TuitionVO {
 	@NotNull(groups=TuitionRefundReqInsertGroup.class, message="필수항목")
 	private String req_resn;
 	
-	private Integer atch_file_no;
-	
-	private String bo_writer;
-	private String biz_type;	
-	private int startAttNo;
-	private List<AttachVO> attachList;
-	private MultipartFile[] common_files;
-	public void setCommon_files(MultipartFile[] common_files) {
-		this.common_files = common_files;
-		if(common_files != null) {
-			List<AttachVO> attachList = new ArrayList<>();
-			for(MultipartFile file : common_files) {
-				if(file.isEmpty()) continue;
-				attachList.add(new AttachVO(file));
-			}
-			if(attachList.size() > 0){
-				this.attachList = attachList;
-			}
-		}
-	}
-	private int[] delAttNos;
 }

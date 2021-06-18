@@ -8,6 +8,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
  <!-- contents start -->
  <nav aria-label="breadcrumb">
@@ -25,34 +26,36 @@
                  <tr>
                      <th rowspan="2" class="align-middle text-center">신청대상</th>
                      <th class="align-middle text-center">학번</th>
-                     <td>S1401001</td>
+                     <td>${student.stdnt_no }</td>
                      <th class="align-middle text-center">이름</th>
-                     <td>강미나</td>
+                     <td>${student.name }</td>
                  </tr>
                  <tr>
                      <th class="align-middle text-center">전화번호</th>
-                     <td>010-2344-1234</td>
+                     <td>${student.tel_no }</td>
                      <th class="align-middle text-center">웹메일</th>
-                     <td>asdgasdg@shms.ac</td>
+                     <td>${student.webmail }</td>
                  </tr>
                  <tr>
                      <th rowspan="3" class="align-middle text-center">신청상세</th>
                      <th class="align-middle text-center">신청번호</th>
-                     <td>12345</td>
+                     <td>${schl.req_no }</td>
                      <th class="align-middle text-center">신청일자</th>
-                     <td>2020.05.01</td>
+                     <td>${schl.req_de }</td>
                  </tr>
                  <tr>
                      <th class="align-middle text-center">신청종류</th>
-                     <td>국가유공자</td>
+                     <td>${schl.schlship_nm }</td>
                      <th class="align-middle text-center">제출서류</th>
-                     <td>국가유공자_증명서.pdf</td>
+                     <c:forEach var="attList" items="attList">
+	                     <td>${file_nm }</td>
+                     </c:forEach>
                  </tr>
                  <tr>
                      <th class="align-middle text-center">처리상태</th>
-                     <td>지급완료</td>
+                     <td>${schl.process_stat }</td>
                      <th class="align-middle text-center">지급일</th>
-                     <td>2021.05.02</td>
+                     <td>${schl.reciv_date }</td>
                  </tr>
              </table>
              <div class="text-center">

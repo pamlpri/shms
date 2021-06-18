@@ -23,6 +23,7 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 6. 12.   김보미        최초작성
  * 2021. 6. 15.   김보미 		등록금 환불
  * 2021. 6. 17.   김보미		장학금 조회
+ * 2021. 6. 18.   김보미		장학금 신청 등록
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -83,11 +84,6 @@ public interface TuitionService {
 	 */
 	
 	public ServiceResult insertRefundReq(TuitionVO tuition);
-	/**
-	 * 등록금 환불 페이지 
-	 * @param paramMap
-	 */
-	public void selectRefundMain(Map<String, Object> paramMap);
 	
 	/**
 	 * 등록금 환불 신청 내역 조회
@@ -124,10 +120,37 @@ public interface TuitionService {
 	 */
 	public StudentVO selectStudent(String stdnt_no);
 	
+	/**
+	 * 장학금 신청 내역 등록
+	 * @param schl
+	 * @return
+	 */
+	public ServiceResult insertSchl(ScholarShipVO schl);
+	
+	/**
+	 * 신청 상세 정보 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public ScholarShipVO selectSchlReqStudent(ScholarShipVO schl);
+	/*************************************************************************************************/
+	
+	/**
+	 * 등록금 환불 페이지 
+	 * @param paramMap
+	 */
+	public void selectRefundMain(Map<String, Object> paramMap);
 	
 	/**
 	 * 장학금 신청폼 구성
 	 * @param paramMap
 	 */
 	public void SchlReqForm(Map<String, Object> paramMap);
+	
+	/**
+	 * 파일 이름만 조회
+	 * @param atch_file_no
+	 * @return
+	 */
+	public List<String> selectAttachList(int req_no); 
 }

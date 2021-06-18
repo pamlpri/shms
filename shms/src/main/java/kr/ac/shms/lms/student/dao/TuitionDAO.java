@@ -24,12 +24,12 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 6. 12.   김보미        최초작성
  * 2021. 6. 15.   김보미 		등록금 환불
  * 2021. 6. 17.   김보미		장학금 조회
+ * 2021. 6. 18.   김보미		장학금 신청 등록
  * Copyright (c) 2021 by DDIT All right reserved
  *      </pre>
  */
 @Repository
 public interface TuitionDAO {
-
 	/**
 	 * 학생이 지불한 등록금 내역 조회
 	 * 
@@ -122,4 +122,25 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public StudentVO selectStudent(String stdnt_no);
+	
+	/**
+	 * 장학금 신청 내역 등록
+	 * @param schl
+	 * @return
+	 */
+	public int insertSchl(ScholarShipVO schl);
+	
+	/**
+	 * 파일 이름만 조회
+	 * @param atch_file_no
+	 * @return
+	 */
+	public List<String> selectAttachList(int req_no); 
+	
+	/**
+	 * 신청 상세 정보 조회
+	 * @param stdnt_no
+	 * @return
+	 */
+	public ScholarShipVO selectSchlReqStudent(ScholarShipVO schl);
 }
