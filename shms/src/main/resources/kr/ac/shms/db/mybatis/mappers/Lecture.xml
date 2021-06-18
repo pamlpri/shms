@@ -59,5 +59,6 @@
 		  FROM v_lecweek 
 		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
 		   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		 ORDER BY lec_week ASC
 	</select>
 </mapper>
