@@ -79,10 +79,11 @@
    <div class="card attendance">
      <div class="card-body">
        <div class="table-responsive">
-       	 <p>※ 출석시간, 퇴실시간은 대면 강의만 조회할 수 있습니다.</p>
+       	 <p>※ 비대면 강의는 출석시간, 퇴실시간을 조회할 수 없습니다.</p>
          <table class="table table-bordered table-md attendance">
            <tr>
              <th>주차</th>
+             <th>강의분류</th>
              <th>일자</th>
              <th>출석시간</th>
              <th>퇴실시간</th>
@@ -94,6 +95,13 @@
            <c:forEach items="${attendList }" var="attnd">
 	           <tr>
 	             <td>${attnd.lec_week }주차</td>
+	             <td>
+	             	<c:choose>
+	             		<c:when test="${attnd.week_lec_cl eq 'DM' }">대면</c:when>
+	             		<c:when test="${attnd.week_lec_cl eq 'BG' }">비대면</c:when>
+	             		<c:when test="${attnd.week_lec_cl eq 'SG' }">실시간</c:when>
+	             	</c:choose>
+	             </td>
 	             <fmt:parseDate var="dataFmt" pattern="yyyy-MM-dd HH:mm:ss.SSS" value="${attnd.attend_date }"/>
 	             <fmt:formatDate var="dataTempParse" pattern="yyyy-MM-dd" value="${dataFmt}"/>
 	             <td>${dataTempParse }</td>

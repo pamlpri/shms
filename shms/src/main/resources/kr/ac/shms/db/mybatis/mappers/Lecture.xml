@@ -45,19 +45,22 @@
 		       RIGHT OUTER JOIN lecture d ON(a.lec_code = d.lec_code)
 		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
 		   AND a.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		 ORDER BY stdnt_no ASC
 	</select>
 	
 	<select id="selectAttendDetail" parameterType="AttendVO" resultType="AttendVO">
 		SELECT DISTINCT atndan_no,
 		       attend_stat,
-		       lec_week,
+		       a.lec_week,
 		       attend_date,
 		       TO_CHAR(attend_time, 'HH24:MI') attend_time_char,
 		       TO_CHAR(exit_time, 'HH24:MI') exit_time_char,
 		       attend_time,
-		       exit_time
-		  FROM v_lecweek 
-		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		       exit_time,
+		       week_lec_cl
+		  FROM v_lecweek a
+		       INNER JOIN lec_week_diary b ON(a.lec_code = b.lec_code and a.lec_week = b.lec_week)
+		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
 		   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 		 ORDER BY lec_week ASC
 	</select>

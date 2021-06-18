@@ -75,6 +75,7 @@ public class AttendVO {
 	private Integer lec_week;
 	private String attend_time_char;
 	private String exit_time_char;
+	private String week_lec_cl;
 }
 
 

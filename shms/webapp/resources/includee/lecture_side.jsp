@@ -45,7 +45,7 @@
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-home"></i> <span>강의실 홈</span></a>
             <ul class="dropdown-menu">
               <li><a href="${cPath }/lecture/lectureInfo.do">강의정보</a></li> 
-              <li><a href="${cPath }/lecture/attendance.do">출석관리</a></li> 
+              <li><a href="${cPath }/lecture/attendance.do?what=${user.user[0]}">출석관리</a></li> 
               <li><a href="${cPath }/lecture/grade.do">성적관리</a></li> 
             </ul>
           </li>

@@ -12,15 +12,14 @@
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
-			<h1>${lecture.lec_name}</h1>
+			<h1>${lec_name}</h1>
 		</div>
 	</section>
 
 	<div class="row" id="lectureIcon">
-	<c:choose>
-		<c:when test="${empty attend.exit_time }">
+		<c:if test="${empty attend.exit_time }">
 			<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-				<a href="${cPath }/lecture/qrGen.do?lec_code=${lec_code}&lec_name=${lecture.lec_name}" class="card card-statistic-1"
+				<a href="${cPath }/lecture/qrGen.do?lec_code=${lec_code}&lec_name=${lec_name}" class="card card-statistic-1"
 					style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
 					<div class="card-icon bg-warning">
 						<i class="far fa-calendar-check"></i>
@@ -33,13 +32,9 @@
 					</div>
 				</a>
 			</div>
-		</c:when>
-		<c:otherwise>
-		</c:otherwise>
-	</c:choose>
+		</c:if>
 		<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-			<a href="noticeLecture.html" class="card card-statistic-1"
-				style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
+			<a href="noticeLecture.html" class="card card-statistic-1" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
 				<div class="card-icon bg-danger">
 					<i class="fas fa-bell"></i>
 				</div>
@@ -79,7 +74,6 @@
 			</div>
 			<div class="card-body">
 				<p>${lecture.summary}<p>
-				
 			</div>
 		</div>
 		<div class="card" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
@@ -98,11 +92,17 @@
 		<h2 class="section-title">이번주강의</h2>
 	</section>
 
-	<div class="card" id="curWeek"
-		style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
+	<div class="card" id="curWeek" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
 		<div class="card-body p-0">
-			<h6>${lecture.lec_week }주차 [${lecture.week_bgnde} - ${lecture.week_endde}] :  ${lecture.diary_title }</h6>
-				<a class="text-color text-deco-none" href="lecture.html"> ${lecture.diary_cont }</a>
+			<c:choose>
+				<c:when test="${not empty lecture.diary_title}">
+					<h6>${lecture.lec_week }주차 [${lecture.week_bgnde} - ${lecture.week_endde}] :  ${lecture.diary_title }</h6>
+					<a class="text-color text-deco-none" href="${cPath }/lecture/lectureWeek.do"> ${lecture.diary_cont }</a>
+				</c:when>
+				<c:otherwise>
+					<p>이번주 강의가 없습니다.<p>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 </div>
