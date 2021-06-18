@@ -83,15 +83,15 @@
 			                              	<c:when test="${attend[week] eq 'CS'}">
 			                              		<td class="text-center">O </td>
 			                              	</c:when>
-			                              	<c:when test="${attend[week] eq 'JG' and 'JT'}">
-			                              		<td class="text-center">▲</td>
+			                              	<c:when test="${attend[week] eq 'JG' or attend[week] eq 'JT'}">
+			                              		<td class="text-center wee">&#9650;</td>
 			                              	</c:when>
 			                              	<c:when test="${attend[week] eq 'GS'}">
 			                              		<td class="text-center">X</td>
 			                              	</c:when>
-			                              	<c:when test="${empty attend[week]}">
-			                              		<td class="text-center"> </td>
-			                              	</c:when>
+			                              	<c:otherwise>
+			                              		<td class="text-center">　</td>
+			                              	</c:otherwise>
 			                              </c:choose>
 		                              </c:forEach>
 		                              <td class="text-center">${attend.cs_cnt }</td>

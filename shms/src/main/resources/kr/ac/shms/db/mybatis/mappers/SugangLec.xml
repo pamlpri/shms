@@ -58,6 +58,7 @@
 	       AND estbl_year >= EXTRACT(YEAR FROM SYSDATE)
 	   	   AND estbl_semstr = (SELECT semstr FROM v_semstr)
 	</select>
+	
 	<select id="selectLectureDetails" parameterType="String" resultType="LectureVO">
 		SELECT a.lec_code, 
 		       d.lec_name, 
@@ -86,6 +87,7 @@
 <!-- 	         AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE) -->
 <!-- 		   AND a.estbl_year='2013' -->
 	</select>
+	
 	<select id="selectProfessorSugangList" parameterType="String" resultType="SugangLecPRVO">
 	SELECT name,
 	       staff_no,
