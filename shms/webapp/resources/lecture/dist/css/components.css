@@ -2424,3 +2424,8 @@ margin-right: -1px;
 .task_cont_box p:last-of-type {
 	margin-bottom : 1rem!important;
 }
+
+#sample-login .card-body form {
+    max-height: 600px!important;
+    overflow: auto;
+}

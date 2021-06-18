@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -28,9 +29,8 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  * </pre>
  */
 @Controller
-@SessionAttributes("lec_code")
-public class AttendanceViewController {
-	private static final Logger logger = LoggerFactory.getLogger(AttendanceViewController.class);
+public class AttendanceCommonController {
+	private static final Logger logger = LoggerFactory.getLogger(AttendanceCommonController.class);
 	
 	@Inject
 	private LectureProfessorService lectureProfessorService;
@@ -42,6 +42,7 @@ public class AttendanceViewController {
 	@RequestMapping("/lecture/attendance.do")
 	public String attendance(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			, @RequestParam("what") String stdnt_no
 			, Model model
 			) {
 		

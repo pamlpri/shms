@@ -218,8 +218,12 @@
               </thead>
               <tbody>
 				  <c:if test="${not empty exam.quesList }">
-				  	<c:forEach items="${exam.quesList }" var="ques">
+				  	<c:forEach items="${exam.quesList }" var="ques" varStatus="i">
 				  		<tr>
+					  		<input type='hidden' name='quesList[${i.index }].ques_no' value='${ques.ques_no}'/>
+			                <input type='hidden' name='quesList[${i.index }].ques_type' value='${ques.ques_type}'/>
+			                <input type='hidden' name='quesList[${i.index }].ques_ans' value='${ques.ques_ans}'/>
+			                <input type='hidden' name='quesList[${i.index }].ques_allot' value='${ques.ques_allot}'/>
 				  			<td class='text-center align-middle'>${ques.ques_no}</td>
 				  			<td class='text-center align-middle'>
 				  				<c:choose>
@@ -326,7 +330,7 @@
             let data = reader.result;
             let workBook = XLSX.read(data, { type: 'binary' });
             let rows = XLSX.utils.sheet_to_json(workBook.Sheets["Sheet1"]);
-            console.log(JSON.stringify(rows));
+//             console.log(JSON.stringify(rows));
             for(var i = 0; i < rows.length; i++){
               var obj = rows[i];
       		  if(obj.문항코드 != ""){
@@ -395,7 +399,7 @@
   			}
   		});
   		
-  		console.log($(".omrExcel").children("tbody").text());
+//   		console.log($(".omrExcel").children("tbody").text());
   		if($(".omrExcel").children("tbody").text().trim() == ""){
   			$(".modal-title").text("답안 미제출");
 			$(".modal-body").text("답안을 업로드하지 않으면 시험출제가 불가합니다.");
@@ -407,7 +411,7 @@
   		
   		let tds = $(".omrExcel").children("tbody").find("td");
   		$(tds).each(function(idx, tdTag){
-  			console.log($(this).text());
+//   			console.log($(this).text());
   			if($(this).text() == "undefined"){
   				$(".modal-title").text("답안 양식 오류");
   				$(".modal-body").text("공백이거나 값을 찾을 수 없는 항목이 있으면 답안 업로드가 불가합니다.");
@@ -435,22 +439,27 @@
 	    	}
   		}else {
   			var reg = /(.*?)\.(pdf)$/;
-	      	if(!$("[name='common_files']").val().match(reg)) {
-	      		$(".modal-title").text("파일오류");
-				$(".modal-body").text("시험문제는 pdf파일로 제출해야 합니다.");
-				$("body").addClass("modal-open").css("padding-right", "17px");
-	  			$(".modal-backdrop").addClass("show").css("display", "block");
-				$(".modal").addClass("show").css("display", "block");
-				frag[4] = false;
-	    	}else if($("[name='common_files']").val().match(reg)){
-	    		frag[4] = true;
-	    	}
+	      	if($("[name='common_Files']").val() != "" && $("[name='common_Files']").val() != null){
+	      		if(!$("[name='common_files']").val().match(reg)){
+		      		$(".modal-title").text("파일오류");
+					$(".modal-body").text("시험문제는 pdf파일로 제출해야 합니다.");
+					$("body").addClass("modal-open").css("padding-right", "17px");
+		  			$(".modal-backdrop").addClass("show").css("display", "block");
+					$(".modal").addClass("show").css("display", "block");
+					frag[4] = false;
+		    	}else if($("[name='common_files']").val().match(reg)){
+		    		frag[4] = true;
+		    	}
+  	  		}else {
+  	  			frag[4] = true;
+  	  		}
   		}
   		
   		if(btnType == "updateBtn"){
-  			if($("[name='common_Files']").val() != ""){
+  			if($("[name='common_Files']").val() != "" && $("[name='common_Files']").val() != null){
+  				console.log($("[name='common_files']").val());
   				let delAttNo = $(".oriFile").data("attno");
-  				console.log("delAttno !!!!!!!!!!!!!!! :" +delAttNo);
+  				console.log("delAttNo" + delAttNo);
   				let newInput = $("<input>").attr({
   					"type" : "hidden"
   					, "name" : "delAttNos"

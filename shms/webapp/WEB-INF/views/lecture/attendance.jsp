@@ -12,7 +12,7 @@
  <div class="main-content">
    <section class="section">
      <div class="section-header">
-		<h1>${lecture.lec_name}</h1>
+		<h1>${lec_name}</h1>
 	 </div>
    </section>
 
@@ -25,33 +25,37 @@
      </ol>
    </nav>
    
+   'ST' eq user.user[1]
+   
    <div class="card attendance">
      <div class="card-body">
        <div class="table-responsive">
          <table class="table table-bordered table-md">
            <tr>
              <th>강의명</th>
-             <td colspan="3">대학생활의 이해</td>
+             <td colspan="4">${lec_name }</td>
            </tr>
            <tr>
              <th>강의기간</th>
-             <td colspan="3">2020.11.16 ~ 2021.06.29</td>
+             <td colspan="4">2020.11.16 ~ 2021.06.29</td>
            </tr>
            <tr>
              <th>강의시간</th>
-             <td colspan="3">월 (10:00 ~ 11:00)</td>
+             <td colspan="4">월 (10:00 ~ 11:00)</td>
            </tr>
            <tr>
              <th>학생명</th>
-             <td colspan="3">최희수</td>
+             <td colspan="4">최희수</td>
            </tr>
            <tr>
-             <th>총 강의일수</th>
              <th>출석일</th>
+             <th>지각일</th>
+             <th>조퇴일</th>
              <th>결석일</th>
              <th>출석률(일수)</th>
            </tr>
            <tr>
+           	 <td>155일</td>
              <td>155일</td>
              <td>118일</td>
              <td>2일</td>
@@ -65,6 +69,7 @@
    <div class="card attendance">
      <div class="card-body">
        <div class="table-responsive">
+       	 <p>※ 출석시간, 퇴실시간은 대면 강의만 조회할 수 있습니다.</p>
          <table class="table table-bordered table-md attendance">
            <tr>
              <th>주차</th>

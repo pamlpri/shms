@@ -11,6 +11,7 @@ import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
+import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
 
@@ -34,6 +35,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 16.      송수미 			 교수 학생이 제출한 과제 성적 입력
  * 2021. 06. 16.      박초원			 교수 시험,문제 조회
  * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
+ * 2021. 06. 18.      박초원			 교수 강의 학생 주차별 출석조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -242,4 +244,11 @@ public interface LectureProfessorDAO {
 	 * @return row count > 0 : 성공
 	 */
 	public int updateTaskScore(TaskSubmitVO taskSubmit);
+	
+	/**
+	 * 주차별 학생의 출석현황 조회
+	 * @param lec_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<AttendVO> selectAttendStudentList(String lec_code);
 }

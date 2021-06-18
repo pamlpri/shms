@@ -666,4 +666,46 @@
 		    submit_no = #{submit_no, jdbcType=NUMERIC}
 	</update>
 	
+	<select id="selectAttendStudentList" parameterType="AttendVO" resultType="AttendVO">
+		SELECT DISTINCT a.stdnt_no,
+		       c.name,
+		       (SELECT sub_name
+		          FROM subject
+		         WHERE sub_code = c.sub_code) sub_name,
+		       b.week1,
+		       b.week2,
+		       b.week3,
+		       b.week4,
+		       b.week5,
+		       b.week6,
+		       b.week7,
+		       b.week8,
+		       b.week9,
+		       b.week10,
+		       b.week11,
+		       b.week12,
+		       b.week13,
+		       b.week14,
+		       b.week15,
+		       (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'CS'
+		           AND stdnt_no = a.stdnt_no) cs_cnt,
+		       (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'GS'
+		           AND stdnt_no = a.stdnt_no) gs_cnt,
+		        (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'JT'
+		           AND stdnt_no = a.stdnt_no) jt_cnt,
+		        (SELECT COUNT(stdnt_no)
+		          FROM v_lecweek
+		         WHERE attend_stat = 'JG'
+		           AND stdnt_no = a.stdnt_no) jg_cnt
+		  FROM attendance a
+		       INNER JOIN v_lecweek_attend b ON(a.lec_code = b.lec_code AND a.stdnt_no = b.stdnt_no)
+		       INNER JOIN student c ON(a.stdnt_no = c.stdnt_no)
+		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+	</select>
 </mapper>

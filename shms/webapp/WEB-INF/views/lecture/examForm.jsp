@@ -29,7 +29,7 @@
  </nav>
  
  <div class="row">
-     <div class="col-12 col-sm-0 col-lg-9">
+     <div class="col-12 col-sm-0 col-lg-8">
        <div class="card">
          <div class="card-header">
            <h4>시험문제</h4>
@@ -61,7 +61,7 @@
          </div>
        </div>
      </div>
-     <div class="col-12 col-sm-6 col-lg-3">
+     <div class="col-12 col-sm-6 col-lg-4">
        <div class="card" id="sample-login">
          <div class="card-header">
            <h4>답안지</h4>

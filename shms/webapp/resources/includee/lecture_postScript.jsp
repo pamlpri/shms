@@ -66,4 +66,18 @@
    			exclude_inputs: true
         });
 	}
+	
+	function AttendStudentToExcelConverter(){
+		$('<table>').append(
+           $("#attendance-table").DataTable().$('tr').clone()
+        ).table2excel({
+        	exclude: ".noExl"
+   			, name: "Excel Document Name",
+   			filename: "exam" +'.xls', 
+   			fileext: ".xls", 
+   			exclude_img: true, 
+   			exclude_links: true,
+   			exclude_inputs: true
+        });
+	}
 	</script>
