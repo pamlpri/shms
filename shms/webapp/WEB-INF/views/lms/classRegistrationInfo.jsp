@@ -75,9 +75,9 @@
 					<a href="${cPath }/lms/classRegistration.do" class="btn btn-primary btn-lg">수강신청</a>
 				</div>
 				<!-- Button trigger for primary themes modal -->
-				<button type="button" class="btn btn-outline-primary"
-					data-bs-toggle="modal" data-bs-target="#primary"
-					data-bs-backdrop="false">대기순번 있을때 모달창 예시모달</button>
+<!-- 				<BUTTON TYPE="BUTTON" CLASS="BTN BTN-OUTLINE-PRIMARY" -->
+<!-- 					DATA-BS-TOGGLE="MODAL" DATA-BS-TARGET="#PRIMARY" -->
+<!-- 					DATA-BS-BACKDROP="FALSE">대기순번 있을때 모달창 예시모달</BUTTON> -->
 
 				<!--primary theme Modal -->
 				<div class="modal fade text-left" id="primary" tabindex="-1"
