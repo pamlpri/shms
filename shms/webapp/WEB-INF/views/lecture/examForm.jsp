@@ -20,13 +20,6 @@
  </section>
 
  <!-- contents start -->
- <nav aria-label="breadcrumb">
-     <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a class="examSubmitBtn" href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
-         <li class="breadcrumb-item"><a class="examSubmitBtn" href="${cPath }/lecture/weeks.do">학습활동</a></li>
-         <li class="breadcrumb-item active" aria-current="page">시험응시</li>
-     </ol>
- </nav>
  
  <div class="row">
      <div class="col-12 col-sm-0 col-lg-8">
