@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -42,8 +43,23 @@
                                 <h4 class="mt-4"><i class="fa fa-thumbs-down text-danger"></i> Bad Request</h4>
                                 <p>Your Request resulted in an error.</p>
                                 <form class="mt-5 mb-5">
-                                    
-                                    <div class="text-center mb-4 mt-4"><a href="index.html" class="btn btn-primary">Go to Homepage</a>
+                                	<div>
+                                    <a href="javascript:window.history.back();" class="btn btn-primary">Go to Homepage</a>                                    	
+<%--                                     	<c:choose> --%>
+<%-- 	                                    	<c:when test="${user != null }"> --%>
+<%-- 	                                    		<c:choose> --%>
+<%-- 	                                    			<c:when test="${user.user[1] eq 'ST' }"> --%>
+<%-- 	                                    				<a href="${cPath}/lms/index.do" class="btn btn-primary">Go to Homepage</a> --%>
+<%-- 	                                    			</c:when> --%>
+<%-- 	                                    			<c:otherwise> --%>
+<%-- 	                                    				<a href="${cPath}/lms/main.do" class="btn btn-primary">Go to Homepage</a> --%>
+<%-- 	                                    			</c:otherwise> --%>
+<%-- 	                                    		</c:choose> --%>
+<%-- 	                                    	</c:when> --%>
+<%-- 	                                    	<c:otherwise> --%>
+<!-- 			                                    <a href="javascript:window.history.back();" class="btn btn-primary">Go to Homepage</a>                                    	 -->
+<%-- 	                                    	</c:otherwise> --%>
+<%--                                     	</c:choose> --%>
                                     </div>
                                 </form>
                                 <div class="text-center">
