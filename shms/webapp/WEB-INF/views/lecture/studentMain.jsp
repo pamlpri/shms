@@ -19,7 +19,7 @@
 	<div class="row" id="lectureIcon">
 		<c:if test="${empty attend.exit_time }">
 			<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-				<a href="${cPath }/lecture/qrGen.do?lec_code=${lec_code}&lec_name=${lec_name}" class="card card-statistic-1"
+				<a href="${cPath }/lecture/qrGen.do" class="card card-statistic-1"
 					style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
 					<div class="card-icon bg-warning">
 						<i class="far fa-calendar-check"></i>

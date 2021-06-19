@@ -551,6 +551,7 @@
 		ON a.facility_no = b.facility_no
 		WHERE stdnt_no = #{stdnt_no}
 	</select>
+	
 	<insert id="insertFacilityRsv" parameterType="FacilityRsvVO">
 		INSERT INTO facility_rsv (
 		    rsv_no,
