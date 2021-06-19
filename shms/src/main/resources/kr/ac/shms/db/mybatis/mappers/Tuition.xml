@@ -246,13 +246,6 @@
 		)
 	</insert>
 	
-	<resultMap type="ScholarShipVO" id="schl" autoMapping="true">
-		<id property="req_no" column="req_no"/>
-		<collection property="attachList" ofType="AttachVO" autoMapping="true">
-			<id property="atch_file_no" column="atch_file_no"/>
-			<id property="atch_file_seq" column="atch_file_seq"/>
-		</collection>
-	</resultMap>
 	
 	<select id="selectAttachList" resultType="AttachVO" parameterType="int">
 		SELECT file_nm,
@@ -261,7 +254,15 @@
 		  FROM attach a 
 		 WHERE atch_file_no=(SELECT atch_file_no FROM schl_req WHERE req_no=#{req_no, jdbcType=NUMERIC})
 	</select>
-	<select id="selectSchlReqStudent" parameterType="ScholarShipVO" resultType="ScholarShipVO">
+	
+	<resultMap type="ScholarShipVO" id="schl" autoMapping="true">
+		<id property="req_no" column="req_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectSchlReqStudent" parameterType="ScholarShipVO" resultMap="schl">
 		SELECT a.req_no,
 		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
 		       SUBSTR(b.schlship_nm, 0, INSTR(b.schlship_nm, ' ', 1)) schlship_nm,
@@ -269,10 +270,21 @@
 		          FROM tb_com_code
 		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
 		           AND com_code = process_stat) process_stat,
-		        TO_CHAR(reciv_date, 'RRRR.MM.DD') reciv_date
+		        TO_CHAR(reciv_date, 'RRRR.MM.DD') reciv_date,
+                a.atch_file_no,
+                atch_file_seq,
+                file_path,
+                file_nm,
+                file_cont_type,
+                file_size,
+                reg_date,
+                reg_user_id,
+                biz_type,
+                save_file_nm
 		  FROM schl_req a
 		 INNER JOIN schlship b ON(a.schlship_no=b.schlship_no)
 		  LEFT OUTER JOIN reciv_schl d ON(a.req_no=d.req_no)
+          LEFT OUTER JOIN attach e ON(a.atch_file_no=e.atch_file_no) 
 		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND a.req_no = #{req_no, jdbcType=NUMERIC}
 	</select>
