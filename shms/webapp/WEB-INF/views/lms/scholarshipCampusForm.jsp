@@ -67,7 +67,7 @@
 										<th class="text-center align-middle">제출 서류<br />원본파일
 										</th>
 										<td colspan="3" class="text-left"><c:forEach
-												items="${attList }" var="attach">
+												items="${schl.attachList }" var="attach">
 												<div class="ml-2 fileArea">
 													<c:url value="/lms/resumeDownload.do" var="downloadURL">
 														<c:param name="atch_file_no" value="${attach.atch_file_no }" />
@@ -140,8 +140,16 @@
              <div class="modal-body">
              	<form id="deleteForm" action="${cPath }/lms/deleteSchl.do" method="post">
              		<input type="hidden" name="req_no" value="${schl.req_no }" />
+             		<c:if test="${not empty  schl}">
+             			<input type="text" name="atch_file_no" value="${schl.atch_file_no  }"/>
+             			<c:forEach items="${schl.attachList }" var="attach">
+			             <div>${attach.atch_file_seq }</div>
+	             			<input type="hidden" name="delAttNos" value="${attach.atch_file_seq }"/>
+	             			
+             			</c:forEach>
+             		</c:if>
 	                 <p>
-	                     삭제한 게시글은 복원이 불가합니다.<br/>
+	                     삭제한 신청글은 복원이 불가합니다.<br/>
 	                     삭제하시겠습니까?
 	                 </p>
              	</form>
@@ -151,7 +159,7 @@
                      <i class="bx bx-x d-block d-sm-none"></i>
                      <span class="d-none d-sm-block">닫기</span>
                  </button>
-                 <button type="button" class="btn btn-primary ml-1"
+                 <button id="realDelBtn" type="button" class="btn btn-primary ml-1"
                      data-bs-dismiss="modal"  id="delBtn">
                      <i class="bx bx-check d-block d-sm-none"></i>
                      <span class="d-none d-sm-block">삭제</span>
@@ -207,7 +215,21 @@
 		}
 	});
 	
-	$("#delBtn").on("click", function(){
+	$(".delBtn").on("click", function() {
+		let fileSpan = $(this).prev("a");
+		let delAttNo = fileSpan.data("attno");
+		console.log("delAttNo : " + delAttNo);
+		let newInput = $("<input>").attr({
+			"type" : "text",
+			"name" : "delAttNos"
+		}).val(delAttNo);
+
+		submitForm.append(newInput);
+		fileSpan.hide();
+	});
+	
+	
+	$("#realDelBtn").on("click", function(){
 		$("#deleteForm").submit();
 	})
 </script>
