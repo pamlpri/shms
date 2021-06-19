@@ -264,7 +264,8 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		List<TakeExamDtlsVO> dtlsList = takeExam.getDtlsList();
 		for(int i = 0; i < dtlsList.size(); i++) {
 			if("GG".equals(quesList.get(i).getQues_type())) {
-				boolean ansChk = (dtlsList.get(i).getSubmit_ans()==quesList.get(i).getQues_ans());
+				boolean ansChk = (dtlsList.get(i).getSubmit_ans() != null && 
+									dtlsList.get(i).getSubmit_ans() == quesList.get(i).getQues_ans());
 				if(ansChk) {
 					dtlsList.get(i).setAns_at("Y");
 					score += quesList.get(i).getQues_allot();
@@ -272,10 +273,9 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 					dtlsList.get(i).setAns_at("N");
 				}
 			}
-			// INSERT TakeExamDtls
-			cnt += lectureStudentDAO.insertTakeExamDtls(takeExam);
-			
 		}
+		// INSERT TakeExamDtls
+		cnt += lectureStudentDAO.insertTakeExamDtls(takeExam);
 		// UPDATE TakeExam - 점수
 		if("TH".equals(exam.getExam_type())) lectureStudentDAO.updateTakeExamScore(score);
 		

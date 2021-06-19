@@ -314,58 +314,58 @@
 	</select>
 	
 	<insert id="insertTakeExam" parameterType="kr.ac.shms.lecture.vo.TakeExamVO">
-		INSERT INTO take_exam (
-		    applcn_no,
-		    exam_no,
-		    applcn_dt,
-		    res_score,
-		    lec_code,
-		    stdnt_no
-		) VALUES (
-		    take_exam_seq.nextval,
-		    #{exam_no, jdbcType=NUMERIC},
-		    TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI'),
-		    null,
-		    #{lec_code, jdbcType=VARCHAR},
-		    #{stdnt_no, jdbcType=VARCHAR}
-		)
+		<selectKey resultType="int" keyProperty="applcn_no" order="BEFORE">
+			SELECT take_exam_seq.nextval
+			  FROM dual
+		</selectKey>
+			INSERT INTO take_exam (
+			    applcn_no,
+			    exam_no,
+			    applcn_dt,
+			    res_score,
+			    lec_code,
+			    stdnt_no
+			) VALUES (
+			    #{applcn_no, jdbcType=NUMERIC},
+			    #{exam_no, jdbcType=NUMERIC},
+			    TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI'),
+			    null,
+			    #{lec_code, jdbcType=VARCHAR},
+			    #{stdnt_no, jdbcType=VARCHAR}
+			)
 	</insert>
 	
 	<insert id="insertTakeExamDtls" parameterType="kr.ac.shms.lecture.vo.TakeExamVO">
-		<selectKey resultType="int" keyProperty="applcn_no" order="BEFORE">
-			SELECT take_exam_seq.currval
-			FROM dual
+		<selectKey resultType="int" keyProperty="startDtlsNo" order="BEFORE">
+			SELECT NVL(MAX(dtls_no), 0) + 1 startDtlsNo
+			  FROM take_exam_dtls
 		</selectKey>
-			INSERT ALL
-			<foreach collection="dtlsList" item="dtls" index="idx">
-				INTO take_exam_dtls (
-				    dtls_no,
-				    applcn_no,
-				    exam_no,
-				    ques_no,
-				    submit_ans,
-				    ans_at
-				) VALUES (
-				    take_exam_dtls_seq.nextval,
-				    #{applcn_no, jdbcType=NUMERIC},
-				    #{exam_no, jdbcType=NUMERIC},
-				    #{dtls.ques_no, jdbcType=NUMERIC},
-				    #{dtls.submit_ans, jdbcType=CLOB},
-				    #{dtls.ans_at, jdbcType=VARCHAR}
-				)
-			</foreach>
-			SELECT * FROM DUAL
+		INSERT ALL
+		<foreach collection="dtlsList" item="dtls" index="idx">
+			INTO take_exam_dtls (
+			    dtls_no,
+			    applcn_no,
+			    exam_no,
+			    ques_no,
+			    submit_ans,
+			    ans_at
+			) VALUES (
+			    #{startDtlsNo, jdbcType=NUMERIC} + #{idx},
+			    (SELECT MAX(applcn_no) FROM take_exam),
+			    #{exam_no, jdbcType=NUMERIC},
+			    #{dtls.ques_no, jdbcType=NUMERIC},
+			    #{dtls.submit_ans, jdbcType=CLOB},
+			    #{dtls.ans_at, jdbcType=VARCHAR}
+			)
+		</foreach>
+		SELECT * FROM DUAL
 	</insert>
 	
 	<update id="updateTakeExamScore" parameterType="int">
-	<selectKey resultType="int" keyProperty="applcn_no" order="BEFORE">
-		SELECT take_exam_seq.currval
-		FROM dual
-	</selectKey>
 		UPDATE take_exam
 		   SET
 		       res_score = #{score, jdbcType=NUMERIC}
 		WHERE
-		    applcn_no = #{applcn_no, jdbcType=NUMERIC}
+		    applcn_no = (SELECT MAX(applcn_no) applcn_no FROM take_exam)
 	</update>
 </mapper>
