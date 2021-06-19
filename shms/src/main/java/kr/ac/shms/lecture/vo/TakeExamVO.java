@@ -32,4 +32,5 @@ public class TakeExamVO {
 	private Integer res_score;
 	private String stdnt_no;
 	private List<TakeExamDtlsVO> dtlsList;
+	private Integer startDtlsNo;
 }

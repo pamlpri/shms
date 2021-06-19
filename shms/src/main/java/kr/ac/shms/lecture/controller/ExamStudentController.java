@@ -48,8 +48,6 @@ public class ExamStudentController {
 	@Inject
 	private LectureStudentService lectureStudentService;
 	@Inject
-	private LectureService lectureService;
-	@Inject
 	private CommonAttachService commonAttachService;
 	
 	@RequestMapping("/lecture/exam.do")
@@ -97,7 +95,7 @@ public class ExamStudentController {
 		List<QuesVO> quesList = lectureStudentService.selectExamQues(exam_no);
 		model.addAttribute("quesList", quesList);
 		model.addAttribute("exam", exam);
-		return "lecture/examForm";
+		return "/lecture/examForm";
 	}
 	
 	@RequestMapping("/lecture/examViewer.do")
