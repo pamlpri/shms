@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureStudentService;
@@ -52,8 +53,8 @@ public class AttendanceController {
 	@RequestMapping("/qrGen.do")
 	public String selectQRInfo(
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-			, @RequestParam("lec_code") String lec_code
-			, @RequestParam("lec_name") String lec_name
+			, @SessionAttribute(name="lec_code", required=false) String lec_code
+			, @SessionAttribute(name="lec_name", required=false) String lec_name
 			, Model model
 			) {
 		AttendVO qrInfoVO = new AttendVO();

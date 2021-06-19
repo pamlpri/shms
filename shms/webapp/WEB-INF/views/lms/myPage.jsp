@@ -406,7 +406,7 @@
 		console.log(user_password);
 		console.log(confirm_password);
 		
-		var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+		var regExpPw = /(?=.*\d{1,16})(?=.*[~`!@#$%\^&*()-+=]{1,16})(?=.*[a-zA-Z]{2,50})$/;
 		
 		if(user_password != confirm_password){
 			$("#default").find(".modal-title").empty().text("비밀번호 오류");
