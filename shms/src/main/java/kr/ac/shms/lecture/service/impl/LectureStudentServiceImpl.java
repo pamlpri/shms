@@ -255,17 +255,18 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		// 시험 문제 정보 불러오기
 		List<QuesVO> quesList = lectureStudentDAO.selectExamQues(takeExam.getExam_no());
 		ExamVO exam = lectureStudentDAO.selectExamInfo(takeExam.getExam_no());
-		logger.info("=============================================================================");
-		logger.info("quesList : {}" , quesList.toString());
-		logger.info("=============================================================================");
 		int score = 0;
 		
 		// 시험 상세 정보 저장
 		List<TakeExamDtlsVO> dtlsList = takeExam.getDtlsList();
 		for(int i = 0; i < dtlsList.size(); i++) {
 			if("GG".equals(quesList.get(i).getQues_type())) {
-				boolean ansChk = (dtlsList.get(i).getSubmit_ans() != null && 
-									dtlsList.get(i).getSubmit_ans() == quesList.get(i).getQues_ans());
+				boolean ansChk = false;
+				
+				if(dtlsList.get(i).getSubmit_ans() != null) {
+					ansChk = dtlsList.get(i).getSubmit_ans().equals(quesList.get(i).getQues_ans());
+				}
+				
 				if(ansChk) {
 					dtlsList.get(i).setAns_at("Y");
 					score += quesList.get(i).getQues_allot();
@@ -277,7 +278,7 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		// INSERT TakeExamDtls
 		cnt += lectureStudentDAO.insertTakeExamDtls(takeExam);
 		// UPDATE TakeExam - 점수
-		if("TH".equals(exam.getExam_type())) lectureStudentDAO.updateTakeExamScore(score);
+		if("GG".equals(exam.getExam_type())) lectureStudentDAO.updateTakeExamScore(score);
 		
 		if(cnt > 0) result = ServiceResult.OK;
 		
