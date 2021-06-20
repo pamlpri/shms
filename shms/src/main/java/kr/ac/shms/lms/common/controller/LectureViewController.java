@@ -9,10 +9,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 
 /**
  * @author 박초원
@@ -28,6 +30,7 @@ import kr.ac.shms.lms.student.vo.SugangLecSTVO;
  * 2021. 5. 28.  김보미			파일명 변경(lectureViewController->LectureViewController)
  * 2021. 5. 28.  김보미			수강중인 강의 목록 출력
  * 2021. 5. 29.  김보미         교수, 학생 구분 코드
+ * 2021. 6. 20.  송수미         교수 전체 강의 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -60,4 +63,19 @@ public class LectureViewController {
 		}
 		return "lms/lecture";
 	}
+	
+	@RequestMapping("/lms/lectureAllList.do")
+	public String lectureAllList(
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, Model model
+		) {
+		String staff_no = user.getUser_id();
+		List<SugangVO> lecListPR = lectureService.selectAllLecList(staff_no);
+		
+		model.addAttribute("key", "key");
+		model.addAttribute("lecListPR", lecListPR);
+		
+		return "lms/lecture";
+	}
+	
 }

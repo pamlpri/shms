@@ -121,7 +121,7 @@
 											<c:forEach items="${ggList }" var="ggBoard">
 												<tr>
 													<td scope="row">${ggBoard.p_bo_no }</td>
-													<td scope="row"><a class="text-light-black" href="${cPath }/lecture/noticeLecture.do?bo_no=${ggBoard.bo_no}">${ggBoard.bo_title }</a></td>
+													<td scope="row"><a class="text-light-black" href="${cPath }/lecture/noticeView.do?bo_no=${ggBoard.bo_no}">${ggBoard.bo_title }</a></td>
 													<td scope="row">${ggBoard.bo_writer }</td>
 													<td scope="row">${ggBoard.bo_write_de }</td>
 												</tr>
@@ -160,7 +160,7 @@
 												<c:forEach items="${taskList }" var="task">
 													<tr>
 														<td class="col-auto"><a class="text-light-black"
-															href="#">${task.task_title }</a></td>
+															href="${cPath }/lecture/reportList.do?set_task_no=${task.set_task_no}">${task.task_title }</a></td>
 														<td class="col-5">
 															<p class=" mb-0">${task.submit_cnt } / ${task.total_cnt }</p>
 														</td>

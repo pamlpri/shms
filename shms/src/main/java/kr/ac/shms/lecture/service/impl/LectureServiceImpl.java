@@ -15,6 +15,7 @@ import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 /**
  * @author 김보미
  * @since 2021. 5. 28.
@@ -86,6 +87,11 @@ public class LectureServiceImpl implements LectureService{
 	@Override
 	public List<AttendVO> selectAttendDetail(AttendVO attend) {
 		return lectureDAO.selectAttendDetail(attend);
+	}
+
+	@Override
+	public List<SugangVO> selectAllLecList(String staff_no) {
+		return lectureDAO.selectAllLecList(staff_no);
 	}
 
 }

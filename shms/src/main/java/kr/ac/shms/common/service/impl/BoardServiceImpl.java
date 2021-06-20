@@ -134,7 +134,11 @@ public class BoardServiceImpl implements BoardService{
 		int cnt = boardDAO.insertBoard(board);
 		
 		if(cnt > 0) {
-			cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
+			if("GG".equals(board.getBo_kind())){
+				cnt += commonAttachService.processes(board, "/" + board.getLec_code() + "/GGboard");
+			}else {
+				cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
+			}
 			
 			if(cnt > 0) {
 				result = ServiceResult.OK;
@@ -166,10 +170,18 @@ public class BoardServiceImpl implements BoardService{
 				}
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
-					cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
-					logger.info("peocesses cnt{}", cnt);
-					logger.info("board {}", board);
-					cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+					if("GG".equals(board.getBo_kind())){
+						cnt += commonAttachService.processes(board, "/" + board.getLec_code() + "/GGboard");
+						logger.info("peocesses cnt{}", cnt);
+						logger.info("board {}", board);
+						cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getLec_code() + "/GGboard");
+					}else {
+						cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
+						logger.info("peocesses cnt{}", cnt);
+						logger.info("board {}", board);
+						cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+					}
+					
 					if(cnt > 0) {
 						result = ServiceResult.OK;
 					}
@@ -190,7 +202,12 @@ public class BoardServiceImpl implements BoardService{
 		}else {
 			int cnt = boardDAO.deleteBoard(board);
 			if(cnt > 0) {
-				cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+				if("GG".equals(board.getBo_kind())){
+					cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getLec_code() + "/GGboard");
+				}else {
+					cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+				}
+				
 				if(cnt > 0) {
 					result = ServiceResult.OK;
 				}

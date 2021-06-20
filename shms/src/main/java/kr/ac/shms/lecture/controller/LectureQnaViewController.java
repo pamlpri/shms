@@ -30,7 +30,7 @@ import kr.ac.shms.lecture.service.LectureStudentService;
 @Controller
 @SessionAttributes("lec_code")
 public class LectureQnaViewController {
-	private static final Logger logger = LoggerFactory.getLogger(LectureNoticeViewController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LectureNoticeController.class);
 	
 	@Inject
 	private LectureProfessorService lectureProfessorService;
