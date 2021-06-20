@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.shms.lms.student.dao.StudentDAO">
+	<insert id="insertDrop" parameterType="RegInfoCngVO">
+		INSERT INTO reginfo_cng (
+			    cng_req_no,
+			    stdnt_no,
+			    req_de,
+			    process_stat,
+			    proc_date,
+			    refuse_resn,
+			    atch_file_no,
+			    req_cl_code,
+			    req_resn_code,
+			    cng_bgnde,
+			    cng_endde,
+			    cng_year,
+			    cng_semstr
+			) VALUES (
+			    REQ_CNG_SEQ.NEXTVAL,
+			    #{bo_writer, jdbcType=VARCHAR},
+			    SYSDATE,
+			    'DG',
+			    NULL,
+			    NULL,
+			    <if test="attachList != null">
+		    	(SELECT MAX(atch_file_no) + 1 FROM attach),
+		    	</if>
+			    'JT',
+			    #{req_resn_code, jdbcType=VARCHAR},
+			    NULL,
+			    NULL,
+			    NULL,
+			    NULL,
+			    NULL
+			)
+	</insert>
+
+</mapper>

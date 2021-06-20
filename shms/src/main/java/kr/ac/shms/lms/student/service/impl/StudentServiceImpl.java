@@ -50,6 +50,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6. 10.	  김보미		입실, 퇴실 카운트
  * 2021. 6. 17.   최희수       이력서/자기소개서 첨삭
  * 2021. 6. 18.	  최희수 		편의시설 - 도서관, 열람실예약, 스터디룸 예약
+ * 2021. 6. 20.	  김보미 		자퇴신청등록
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -361,6 +362,17 @@ public class StudentServiceImpl implements StudentService{
 		ServiceResult result = ServiceResult.FAIL;
 		int cnt = studentDAO.insertFacilityRsv(facilityRsv);
 		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ServiceResult insertDrop(RegInfoCngVO reginfoCng) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.insertDrop(reginfoCng);
+		if(cnt > 0) {
+			cnt = commonAttachService.processes(reginfoCng, "/reginfoCng");
+			result = ServiceResult.OK;
+		}
 		return result;
 	}
 	

@@ -55,7 +55,7 @@ public class ScholarshipCampusInsertController {
 	public String scholarshipCampusForm(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @RequestParam(value="req_no", required=false) Integer req_no
-		, @RequestParam(value="req_no", required=false) String state
+		, @RequestParam(value="state", required=false) String state
 		, Model model
 	) {
 		String stdnt_no = user.getUser_id();
