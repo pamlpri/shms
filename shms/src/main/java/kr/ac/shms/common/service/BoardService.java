@@ -132,7 +132,7 @@ public interface BoardService {
 	 * @param boardVO
 	 * @return ServiceResult
 	 */
-	public ServiceResult subQnaBoardAnsUpdate(BoardVO boardVO);
+	public ServiceResult qnaBoardAnsUpdate(BoardVO boardVO);
 	
 	/**
 	 * 학과 문의 게시글 삭제

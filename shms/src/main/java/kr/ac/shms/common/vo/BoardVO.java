@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.ac.shms.validator.AnsBoardUpdateGroup;
 import kr.ac.shms.validator.BoardDeleteGroup;
 import kr.ac.shms.validator.BoardInsertGroup;
 import kr.ac.shms.validator.BoardUpdateGroup;
@@ -50,8 +51,8 @@ import lombok.ToString;
 public class BoardVO implements Serializable, IAttachVO{
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	
-	@NotNull(groups= {GMBoardUpdateGroup.class, BoardUpdateGroup.class, BoardDeleteGroup.class}, message="필수 항목")
-	@Min(value=1, groups={GMBoardUpdateGroup.class, BoardUpdateGroup.class, BoardDeleteGroup.class})
+	@NotNull(groups= {AnsBoardUpdateGroup.class, GMBoardUpdateGroup.class, BoardUpdateGroup.class, BoardDeleteGroup.class}, message="필수 항목")
+	@Min(value=1, groups={AnsBoardUpdateGroup.class, GMBoardUpdateGroup.class, BoardUpdateGroup.class, BoardDeleteGroup.class})
 	private Integer bo_no;		// 게시글 식별 번호
 	
 	private String bo_kind;		// DG, JG,..(공통코드값)
@@ -64,12 +65,14 @@ public class BoardVO implements Serializable, IAttachVO{
 	
 	@NotBlank(groups= {DMBoardInsertGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_writer;
+	private String bo_writer_nm;
 	private String bo_write_de;
 	
 	@NotBlank(groups= {GMBoardUpdateGroup.class, GMBoardInsertGroup.class, DMBoardInsertGroup.class, DMBoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_password;
 	
 	private String bo_secret_at;
+	@NotBlank(groups= {AnsBoardUpdateGroup.class})
 	private String bo_ans;
 	private Integer bo_hit;
 	private String sub_code;
@@ -78,6 +81,7 @@ public class BoardVO implements Serializable, IAttachVO{
 	private String univ_inqry_kind;	// PM, JM
 	private String lec_code;
 	private String ans_writer;
+	private String ans_writer_nm;
 	private String ans_de;
 	private Integer atch_file_no;
 	private String bo_name;		// 학사공지, 장학공지
