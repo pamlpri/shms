@@ -136,45 +136,64 @@
  					outputData.innerHTML = code.data;
 					
 					var qrcodedata = $("#outputData").text();
-					
-					$.ajax({
-						url:"${cPath}/lecture/qrScanner.do"
-						, method: "post"
-						, dataType: "html"
-						, data : {"qrcodedata" : qrcodedata }
-						, success : function(resp) {
-							let data = JSON.parse(resp);
-							let sendData = {
-								"lec_code" : data.lec_code
-								, "attend_time": data.attend_time
-								, "exit_time": data.exit_time
+					result = qrcodedata.split(',');
+					if(result[1] == 'readingroom') {
+						$.ajax({
+							url:"${cPath}/lms/readingRoomAttendance.do"
+							, method: "post"
+							, data: {stdnt_no : result[0]}
+							, success: function(res) {
+								if(res == "OK") {
+									location.reload();
+								}
 							}
-							if(data.respExit == "OK"){
-								console.log("???");
-								$.ajax({
-									url: "${cPath}/lecture/updateAttendanceStat.do"
-									, method : "POST"
-									, data : sendData
-									, success : function(res) {
-										if(res.result == "OK") {
-											location.reload();											
+							, error : function(xhr, error, msg) {
+								console.log(xhr);
+								console.log(error);
+								console.log(msg);
+								location.reload();
+							}
+						})					
+					} else {
+						$.ajax({
+							url:"${cPath}/lecture/qrScanner.do"
+							, method: "post"
+							, dataType: "html"
+							, data : {"qrcodedata" : qrcodedata }
+							, success : function(resp) {
+								let data = JSON.parse(resp);
+								let sendData = {
+									"lec_code" : data.lec_code
+									, "attend_time": data.attend_time
+									, "exit_time": data.exit_time
+								}
+								if(data.respExit == "OK"){
+									console.log("???");
+									$.ajax({
+										url: "${cPath}/lecture/updateAttendanceStat.do"
+										, method : "POST"
+										, data : sendData
+										, success : function(res) {
+											if(res.result == "OK") {
+												location.reload();											
+											}
 										}
-									}
-									, error : function(error, xhr, msg){
-										console.log(xhr);
-										console.log(error);
-										console.log(msg);
-									}
-								});
+										, error : function(error, xhr, msg){
+											console.log(xhr);
+											console.log(error);
+											console.log(msg);
+										}
+									});
+								}
+								location.reload();
+							}, error : function(xhr, error, msg) {
+								console.log(xhr);
+								console.log(error);
+								console.log(msg);
+								location.reload();
 							}
-							location.reload();
-						}, error : function(xhr, error, msg) {
-							console.log(xhr);
-							console.log(error);
-							console.log(msg);
-							location.reload();
-						}
-					});
+						});
+					}
 					
 					return;
 				}

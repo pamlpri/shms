@@ -528,7 +528,7 @@
 		WHERE stdnt_no = #{stdnt_no}
 	</select>
 	
-	<select id="" >
+	<select id="selectFacilityRsv" parameterType="String" resultType="FacilityRsvVO">
 		SELECT  rsv_no,
 		        a.facility_no,
 		        rsv_dt,
@@ -538,32 +538,58 @@
 		        real_end_dt,
 		        stdnt_no,
 		        b.detail_no,
-		        b.rsv_posbl_at,
-		    (
-		        SELECT DECODE(count(stdnt_no), 0, 'Y', 'N') facilityCnt 
-		        FROM
-		            facility_rsv 
-		        WHERE stdnt_no = #{stdnt_no}
-		        AND rsv_dt = TO_CHAR(SYSDATE, 'yyyy-mm-dd')
-		    ) facilityCnt
+		        b.rsv_posbl_at
 		FROM facility_rsv a
 		INNER JOIN facility b
 		ON a.facility_no = b.facility_no
 		WHERE stdnt_no = #{stdnt_no}
+		AND TO_CHAR(rsv_dt, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'yyyy-mm-dd')
 	</select>
 	
 	<insert id="insertFacilityRsv" parameterType="FacilityRsvVO">
 		INSERT INTO facility_rsv (
-		    rsv_no,
-		    facility_no,
-		    rsv_dt,    
-		    stdnt_no
+				    rsv_no,
+				    facility_no,
+				    rsv_dt,
+		            use_begin_dt,
+		            use_end_dt,
+				    stdnt_no
 		) VALUES (
 		    FACILITY_RSV_SEQ.NEXTVAL,
 		    #{facility_no},
 		    SYSDATE,
+		    SYSDATE,
+		    TO_DATE(TO_CHAR(SYSDATE+1,'YYYY-MM-DD')|| ' ' || '00:00:00', 'YYYY-MM-DD HH24:MI:SS'),
 		    #{stdnt_no}
 		)
 	</insert>
+	
+	<update id="updateFacility" parameterType="int">
+		UPDATE facility
+		    SET
+		        rsv_posbl_at = 'N'
+		WHERE
+		    facility_no = #{facility_no}
+	</update>
+	
+	<update id="updateBgdt" parameterType="String">
+		UPDATE facility_rsv
+		SET real_bg_dt = SYSDATE
+		WHERE stdnt_no = #{stdnt_no}
+		AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') = TO_CHAR(rsv_dt, 'YYYY-MM-DD')
+	</update>
+	
+	<update id="updateEnddt" parameterType="String">
+		UPDATE facility_rsv
+		SET real_end_dt = SYSDATE
+		WHERE stdnt_no = #{stdnt_no}
+		AND TO_CHAR(SYSDATE, 'YYYY-MM-DD') = TO_CHAR(rsv_dt, 'YYYY-MM-DD')
+	</update>
+	
+	<select id="updateRsvPosblAt" parameterType="map" statementType="CALLABLE">
+    	{
+    		CALL p_facilityupdate(#{updatecount,mode=OUT,jdbcType=NUMERIC,javaType=java.lang.Integer})
+    	}
+    </select>
 </mapper>
 

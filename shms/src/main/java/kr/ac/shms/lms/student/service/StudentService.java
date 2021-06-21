@@ -334,4 +334,31 @@ public interface StudentService {
      */
     public RegInfoCngVO selectReginfoCng(RegInfoCngVO cng); 
     
+    /**
+     * 도서관 예약 가능 유무
+     * @param stdnt_no
+     * @return
+     */
+    public FacilityRsvVO selectFacilityRsv(String stdnt_no);
+    
+    /**
+     * 열람식 예약 한 뒤 상태 변화
+     * @param facility_no
+     * @return ServiceResult
+     */
+    public ServiceResult updateFacility(int facility_no);
+    
+    /**
+     * 열람실 입실 QR
+     * @param facilityRsvVO
+     * @return
+     */
+    public ServiceResult updateBgdt(String stdnt_no);
+    
+    /**
+     * 열람실 퇴실 QR
+     * @param facilityRsvVO
+     * @return
+     */
+    public ServiceResult updateEnddt(String stdnt_no);
 }

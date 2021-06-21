@@ -386,4 +386,33 @@ public class StudentServiceImpl implements StudentService{
 		return studentDAO.selectReginfoCng(cng);
 	}
 	
+	@Override
+	public FacilityRsvVO selectFacilityRsv(String stdnt_no) {
+		return studentDAO.selectFacilityRsv(stdnt_no);
+	}
+
+	@Override
+	public ServiceResult updateFacility(int facility_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.updateFacility(facility_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ServiceResult updateBgdt(String stdnt_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.updateBgdt(stdnt_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public ServiceResult updateEnddt(String stdnt_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = studentDAO.updateEnddt(stdnt_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+	
 }

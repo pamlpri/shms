@@ -1,12 +1,15 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
 
@@ -41,6 +45,7 @@ public class ReadingroomViewController {
 	private static final Logger logger = LoggerFactory.getLogger(ReadingroomViewController.class);
 	@Inject
 	private StudentService studentService;
+
 	
 	@RequestMapping("/readingroom.do")
 	public String readingroom(
@@ -54,6 +59,13 @@ public class ReadingroomViewController {
 		List<FacilityRsvVO> facilityRcvList = studentService.selectFacilityRsvList(user.getUser_id());
 		model.addAttribute("facilityRcvList", facilityRcvList);
 		
+		FacilityRsvVO facilityRsv = studentService.selectFacilityRsv(user.getUser_id());
+		if(facilityRsv != null) {
+			model.addAttribute("exist", "notNull");	
+		} else {
+			model.addAttribute("exist", "null");
+		}
+		
 		return "lms/readingroom";
 	}	
 	
@@ -63,7 +75,37 @@ public class ReadingroomViewController {
 			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 			, @ModelAttribute("facilityRsvVO") FacilityRsvVO facilityRsv
 		) {
-		facilityRsv.setStdnt_no(user.getUser_id());
-		return studentService.insertFacilityRsv(facilityRsv);
+		FacilityRsvVO facility = studentService.selectFacilityRsv(user.getUser_id());
+		ServiceResult result = ServiceResult.FAIL;
+		if(facility == null) {
+			facilityRsv.setStdnt_no(user.getUser_id());
+			logger.info("facilityRsv : {}", facilityRsv);
+			result = studentService.insertFacilityRsv(facilityRsv);
+		}
+		if(ServiceResult.OK.equals(result)) {
+			result = studentService.updateFacility(facilityRsv.getFacility_no());
+			if(ServiceResult.OK.equals(result)) {
+				result = ServiceResult.OK;				
+			}
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/readingRoomAttendance.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ServiceResult updateReadingroom(
+		@ModelAttribute("facilityRsvVO") FacilityRsvVO facilityRsv
+	) {
+		ServiceResult result = ServiceResult.FAIL;
+		FacilityRsvVO facility = studentService.selectFacilityRsv(facilityRsv.getStdnt_no());
+		String realBgDt = facility.getReal_bg_dt();
+		if(facility != null) {
+			if(realBgDt == null || realBgDt.isEmpty()) {
+				result = studentService.updateBgdt(facilityRsv.getStdnt_no());
+			} else {
+				result = studentService.updateEnddt(facilityRsv.getStdnt_no());
+			}
+		}
+		return result;
 	}
 }

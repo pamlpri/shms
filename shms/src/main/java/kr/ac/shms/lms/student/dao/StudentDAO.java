@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
@@ -349,5 +350,39 @@ public interface StudentDAO {
      * @return
      */
     public RegInfoCngVO selectReginfoCng(RegInfoCngVO cng); 
+    
+    /**
+     * 도서관 예약 가능 유무
+     * @param stdnt_no
+     * @return
+     */
+    public FacilityRsvVO selectFacilityRsv(String stdnt_no);
+    
+    /**
+     * 열람식 예약 한 뒤 상태 변화
+     * @param facility_no
+     * @return cnt > 0 성공
+     */
+    public int updateFacility(int facility_no);
+    
+    /**
+     * 열람실 입실 QR
+     * @param facilityRsvVO
+     * @return
+     */
+    public int updateBgdt(String stdnt_no);
+    
+    /**
+     * 열람실 퇴실 QR
+     * @param facilityRsvVO
+     * @return
+     */
+    public int updateEnddt(String stdnt_no);
+    
+    /**
+     * 도서관 열람실 매일 자정에 예약 초기화
+     * @param map
+     */
+    public void updateRsvPosblAt(Map<String, Object> pMap);
     
 }

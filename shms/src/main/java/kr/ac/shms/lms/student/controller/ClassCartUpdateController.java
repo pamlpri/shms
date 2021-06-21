@@ -39,4 +39,12 @@ public class ClassCartUpdateController {
 //		Integer updatecount = (Integer) pMap.get("updatecount");
 //		logger.info("스케쥴러가 동작했고, {} 건이 수강신청 되었음.", updatecount);
 //	}
+//	
+//	@Scheduled(cron = "0 * * * * *")
+//	public void realUpdate() {
+//		Map<String, Object> pMap = new HashMap<>();
+//		studentDAO.updateRsvPosblAt(pMap);
+//		Integer updatecount = (Integer) pMap.get("updatecount");
+//		logger.info("스케쥴러가 동작했고, {} 건이  열람실 리셋 되었음.", updatecount);
+//	}
 }
