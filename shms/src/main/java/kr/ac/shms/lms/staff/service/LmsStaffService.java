@@ -3,6 +3,7 @@ package kr.ac.shms.lms.staff.service;
 import java.util.List;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -10,6 +11,7 @@ import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.main.commuity.vo.ComCodeVO;
 
 public interface LmsStaffService {
 	/**
@@ -87,4 +89,16 @@ public interface LmsStaffService {
 	 */
     public List<StaffVO> passwordUpdate();    
     public int passUpdate(UserLoginVO userLogin);
+    
+    /**
+     * 학적변동 신청 테이블 리스트 조회
+     * @return
+     */
+    public List<RegInfoCngVO> selectReginfoCngStudentList();
+    
+    /**
+     * 학적 변동 공통코드 조회
+     * @return
+     */
+    public List<ComCodeVO> selectReqClCode();
 }

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -15,6 +16,7 @@ import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.main.commuity.vo.ComCodeVO;
 
 @Service
 public class LmsStaffServiceImpl implements LmsStaffService {
@@ -92,6 +94,14 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	public int passUpdate(UserLoginVO userLogin) {
 		return lmsStaffDAO.passUpdate(userLogin);
 	}
-	
-	
+
+	@Override
+	public List<RegInfoCngVO> selectReginfoCngStudentList() {
+		return lmsStaffDAO.selectReginfoCngStudentList();
+	}
+
+	@Override
+	public List<ComCodeVO> selectReqClCode() {
+		return lmsStaffDAO.selectReqClCode();
+	}
 }

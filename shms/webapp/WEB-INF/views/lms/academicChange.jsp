@@ -8,6 +8,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
  <nav aria-label="breadcrumb">
      <ol class="breadcrumb">
@@ -31,13 +32,13 @@
                                  </div>
                                  <div class="col-md-9">
                                      <fieldset class="form-group">
-                                         <select class="form-select">
-                                             <option>전체</option>
-                                             <option>인문대학</option>
-                                             <option>경상대학</option>
-                                             <option>공과대학</option>
-                                             <option>보건대학</option>
-                                             <option>사회과학대학</option>
+                                         <select class="form-select" name="col_code">
+                                             <option value="">전체</option>
+                                             <c:forEach items="${collegeList }" var="college">
+	                                             <option value="college.col_code">
+	                                             	${college.col_name }
+	                                             </option>
+                                             </c:forEach>
                                          </select>
                                      </fieldset>
                                  </div>
@@ -48,27 +49,13 @@
                                  </div>
                                  <div class="col-md-9">
                                      <fieldset class="form-group">
-                                         <select class="form-select">
-                                             <option>전체</option>
-                                             <option>러시아학과</option>
-                                             <option>국어국문학과</option>
-                                             <option>독일어문학과</option>
-                                             <option>영문학과</option>
-                                             <option>항공학과</option>
-                                             <option>행정학과</option>
-                                             <option>경영학과</option>
-                                             <option>간호학과</option>
-                                             <option>안경광학과</option>
-                                             <option>전체</option>
-                                             <option>러시아학과</option>
-                                             <option>국어국문학과</option>
-                                             <option>독일어문학과</option>
-                                             <option>영문학과</option>
-                                             <option>항공학과</option>
-                                             <option>행정학과</option>
-                                             <option>경영학과</option>
-                                             <option>간호학과</option>
-                                             <option>안경광학과</option>
+                                         <select class="form-select" name="sub_code">
+                                             <option value="">전체</option>
+                                             <c:forEach items="${subjectList }" var="subject">
+	                                             <option value="${subject.sub_code }">
+	                                             	${subject.sub_name }
+	                                             </option>
+                                             </c:forEach>
                                          </select>
                                      </fieldset>
                                  </div>
@@ -79,14 +66,11 @@
                                  </div>
                                  <div class="col-md-9">
                                      <fieldset class="form-group">
-                                         <select class="form-select">
-                                             <option>전체</option>
-                                             <option>휴학</option>
-                                             <option>복학</option>
-                                             <option>학사학위취득유예</option>
-                                             <option>조기졸업</option>
-                                             <option>자퇴</option>
-                                             <option>전과</option>
+                                         <select class="form-select" name="req_cl_code">
+                                         	<option>전체</option>
+                                         	<c:forEach items="${comcodeList }" var="comcode">
+                                            	<option value="${comcode.com_code }">${comcode.com_code_nm }</option>
+                                         	</c:forEach>
                                          </select>
                                      </fieldset>
                                  </div>

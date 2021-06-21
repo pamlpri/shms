@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.main.commuity.vo.ComCodeVO;
 @Repository
 public interface LmsStaffDAO {
 	/**
@@ -87,5 +89,16 @@ public interface LmsStaffDAO {
 	 */
     public List<StaffVO> passwordUpdate();    
     public int passUpdate(UserLoginVO userLogin);
-	
+    
+    /**
+     * 학적변동 신청 테이블 리스트 조회
+     * @return
+     */
+    public List<RegInfoCngVO> selectReginfoCngStudentList();
+    
+    /**
+     * 학적 변동 공통코드 조회
+     * @return
+     */
+    public List<ComCodeVO> selectReqClCode();
 }
