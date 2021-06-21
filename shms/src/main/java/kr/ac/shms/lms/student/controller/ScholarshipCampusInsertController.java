@@ -73,9 +73,6 @@ public class ScholarshipCampusInsertController {
 		model.addAttribute("attList", paramMap.get("attList"));
 		/*****************************************************************************/
 		
-		System.out.println("**************************************");
-		logger.info("schl {}", paramMap.get("schl"));
-		
 		return "lms/scholarshipCampusForm";
 	}	
 	
@@ -113,6 +110,8 @@ public class ScholarshipCampusInsertController {
 	public String deleteSchl(
 		@ModelAttribute("schl") ScholarShipVO schl	
 		) {
+		System.out.println("*********************");
+		logger.info("schl {}", schl);
 		ServiceResult result = tuitionService.deleteSchl(schl);
 		String view = null;
 		if(ServiceResult.OK.equals(result)) {

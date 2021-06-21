@@ -7,6 +7,7 @@ import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.lms.student.vo.SugangLecSTVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 
 /**
  * @author 김보미
@@ -81,5 +82,12 @@ public interface LectureService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<AttendVO> selectAttendDetail(AttendVO attend);
+	
+	/**
+	 * 한 교수에 대한 전체 강의 목록 조회
+	 * @param staff_no
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<SugangVO> selectAllLecList(String staff_no);
 
 }
