@@ -91,4 +91,6 @@ public interface LectureDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<SugangVO> selectAllLecList(String staff_no);
+	
+
 }

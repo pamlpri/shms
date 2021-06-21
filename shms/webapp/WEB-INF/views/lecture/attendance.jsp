@@ -11,7 +11,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!-- Main Content -->
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/izitoast/css/iziToast.min.css">
+
  <div class="main-content">
    <section class="section">
      <div class="section-header">
@@ -65,11 +67,11 @@
            </tr>
            <tr>
            	 <td>15일</td>
-           	 <td>${attend.cs_cnt }일</td>
-             <td>${attend.jg_cnt }일</td>
-             <td>${attend.jt_cnt }일</td>
-             <td>${attend.gs_cnt }일</td>
-             <td>${attend.attend_per }%</td>
+           	 <td class="cs_cnt">${attend.cs_cnt }일</td>
+             <td class="jg_cnt">${attend.jg_cnt }일</td>
+             <td class="jt_cnt">${attend.jt_cnt }일</td>
+             <td class="gs_cnt">${attend.gs_cnt }일</td>
+             <td class="per">${attend.attend_per }%</td>
            </tr>
          </table>
        </div>
@@ -93,7 +95,7 @@
              </c:if>
            </tr>
            <c:forEach items="${attendList }" var="attnd">
-	           <tr>
+	           <tr class="${attnd.atndan_no }">
 	             <td>${attnd.lec_week }주차</td>
 	             <td>
 	             	<c:choose>
@@ -108,25 +110,25 @@
 	             <td>${empty attnd.attend_time_char ? '-':attnd.attend_time_char }</td>
 	             <td>${empty attnd.exit_time_char ? '-':attnd.exit_time_char }</td>
 	             <c:choose>
-	             	<c:when test="${attnd.attend_stat eq 'CS'}"><td>출석</td></c:when>
-	             	<c:when test="${attnd.attend_stat eq 'JG'}"><td>지각</td></c:when>
-	             	<c:when test="${attnd.attend_stat eq 'JT'}"><td>조퇴</td></c:when>
-	             	<c:when test="${attnd.attend_stat eq 'GS'}"><td>결석</td></c:when>
+	             	<c:when test="${attnd.attend_stat eq 'CS'}"><td class="attend_stat">출석</td></c:when>
+	             	<c:when test="${attnd.attend_stat eq 'JG'}"><td class="attend_stat">지각</td></c:when>
+	             	<c:when test="${attnd.attend_stat eq 'JT'}"><td class="attend_stat">조퇴</td></c:when>
+	             	<c:when test="${attnd.attend_stat eq 'GS'}"><td class="attend_stat">결석</td></c:when>
 	             </c:choose>
-	             <c:if test="${user.user[1] eq 'PR' }">
+	             <c:if test="${user.user[1] eq 'PR'}">
 	             	 <c:choose>
 	             	 	<c:when test="${attnd.attend_stat eq 'GS'}">
 	             	 		<td>
-	             	 			<a href="#" class="btn btn btn-primary">출석인정</a>
-		             	 		<a href="#" class="btn btn btn-danger">지각</a>
-		             	 		<a href="#" class="btn btn btn-warning">조퇴</a>
+	             	 			<button class="btn btn-primary updateBtn" data-type="CS">출석인정</button>
+		             	 		<button class="btn btn-danger updateBtn" data-type="JG">지각</button>
+		             	 		<button class="btn btn-warning updateBtn"  data-type="JT">조퇴</button>
 	             	 		</td>
 	             	 	</c:when>
 	             	 	<c:otherwise>
 	             	 		<td>
-	             	 			<a href="#" class="btn btn-secondary" style="background-color: #6c757d;">출석취소</a>
-	             	 			<a href="#" class="btn btn btn-danger">지각</a>
-		             	 		<a href="#" class="btn btn btn-warning">조퇴</a>
+	             	 			<button class="btn btn-secondary updateBtn" style="background-color: #6c757d;" data-type="GS">출석취소</button>
+	             	 			<button class="btn btn-danger updateBtn"  data-type="JG">지각</button>
+		             	 		<button class="btn btn-warning updateBtn" data-type="JT">조퇴</button>
 	             	 		</td>
 	             	 	</c:otherwise>
 	             	 </c:choose>
@@ -139,3 +141,86 @@
    </div>
    <!-- contents end -->
  </div>
+<!-- JS Libraies -->
+<script src="${cPath }/resources/lecture/dist/modules/izitoast/js/iziToast.min.js"></script>
+<!-- Page Specific JS File -->
+<script src="${cPath }/resources/lecture/dist/js/page/modules-toastr.js"></script>
+<script>
+	$(".attendance").on("click", ".updateBtn", function(){
+		let type = $(this).data("type");
+		let atndan_no = $(this).parents("tr").attr("class");
+		let obj = $(this);
+		
+		let cs_cnt = parseInt($(".cs_cnt").text());
+		let gs_cnt = parseInt($(".gs_cnt").text());
+		let jg_cnt = parseInt($(".jg_cnt").text());
+		let jt_cnt = parseInt($(".jt_cnt").text());
+		let per = parseInt($("per").text());
+		
+		let stat = $(this).parents("tr").children(".attend_stat").text(); 
+		
+		$.ajax({
+			url : "${cPath}/lecture/attendanceUpdate.do"
+			, data : {
+				atndan_no : atndan_no,
+				attend_stat : type
+			}
+			,method : "post"
+			,dataType : "json"
+			,success : function(resp){
+				if(resp.result == "OK"){
+					if(type == "CS") {
+// 						$(obj).removeClass("btn-primary").addClass("btn-light-secondary").text("출석취소").data("type", "GS");
+						$(obj).parents("tr").children(".attend_stat").text("출석");	
+						$(obj).parent("td").prepend($("<button>").addClass("btn btn-secondary updateBtn").text("출석취소").data("type", "GS").css("background-color","#6c757d"));
+						$(obj).remove();
+						$(".cs_cnt").text(cs_cnt + 1 + "일");
+						$(".gs_cnt").text(gs_cnt - 1 + "일");
+						let per = ((cs_cnt + 1) / 15 * 100);
+						$(".per").text(Math.floor(per) + "%");
+					}else if(type == "GS"){
+						$(obj).parents("tr").children(".attend_stat").text("결석");	
+						$(obj).parent("td").prepend($("<button>").addClass("btn btn-primary updateBtn").text("출석인정").data("type", "CS").css("background-color","#6777ef"));
+						$(obj).remove();
+						$(".cs_cnt").text(cs_cnt - 1);
+						$(".gs_cnt").text(gs_cnt + 1);
+						let per = ((cs_cnt - 1) / 15 * 100);
+						$(".per").text(Math.floor(per) + "%");
+					}else if(type == "JG"){
+						if(stat == "지각"){
+							$(obj") 
+						}else{
+							$(obj).parents("tr").children(".attend_stat").text("지각");
+							$(".jg_cnt").text(jg_cnt + 1 + "일");
+							if((jg_cnt + 1) % 3 == 0){
+								$(".cs_cnt").text(cs_cnt - 1 + "일");
+								$(".gs_cnt").text(gs_cnt + 1 + "일");
+								let per = ((cs_cnt - 1) / 15 * 100);
+								$(".per").text(Math.floor(per) + "%");
+							}
+						}
+					}else {
+						$(obj).parents("tr").children(".attend_stat").text("조퇴");
+						$(".jt_cnt").text(jt_cnt + 1 + "일");
+						if((jt_cnt + 1) % 3 == 0){
+							$(".cs_cnt").text(cs_cnt - 1 + "일");
+							$(".gs_cnt").text(gs_cnt + 1 + "일");
+							let per = ((cs_cnt - 1) / 15 * 100);
+							$(".per").text(Math.floor(per) + "%");
+						}
+					}
+				}else {
+					iziToast.error({
+					    title: '서버오류',
+					    message: '잠시뒤에 다시 시도해주세요.',
+					    position: 'bottomCenter' 
+				    });
+				}
+			},error : function(xhr, error, msg){ 
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});
+	});
+</script>

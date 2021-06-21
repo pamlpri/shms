@@ -149,7 +149,7 @@
            		</c:when>
            		<c:otherwise>
 	              <button type="button" class="btn btn-primary" id="updateBtn">저장</button>
-	              <button id="deleteBtn" class="btn btn-danger" data-confirm-yes="deleteWeek();" data-confirm="게시글 삭제|삭제한 게시글은 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
+	              <button id="deleteBtn" class="btn btn-danger" data-confirm-yes="deleteWeek();" data-confirm="주/회차 삭제|삭제한 회차는 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
            		</c:otherwise>
               </c:choose>
           </div>

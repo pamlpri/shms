@@ -41,7 +41,6 @@
                       <table class="table table-striped main-table" id="attendance-table">
                           <thead>                                 
 	                          <tr>
-	                              <th class="text-center">No.</th>
 	                              <th class="text-center">이름</th>
 	                              <th class="text-center">학번</th>
 	                              <th class="text-center">학과</th>
@@ -69,7 +68,6 @@
                           <tbody>
                           	  <c:forEach items="${attendList }" var="attend" varStatus="i">
 		                          <tr>
-		                              <td class="text-center">${i.count }</td>
 		                              <td class="text-center">
 		                                  <a class="text-color" href="${cPath}/lecture/attendance.do?what=${attend.stdnt_no}">${attend.name }</a>
 		                              </td>
@@ -115,9 +113,10 @@
 $(document).ready(function() {
     $('#attendance-table').DataTable({
     	"columnDefs": [ {
-	   		"targets": [4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22],
+	   		"targets": [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
 	   		"orderable": false
    		}]
+    	,"order": [[ 1, "asc" ]]
     });
 } );
 </script>

@@ -10,18 +10,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
+	name="viewport">
+<title>${lec_name }</title>
+
+ <!-- General CSS Files -->
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/fontawesome/css/all.min.css">
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/jqvmap/dist/jqvmap.min.css">
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/weather-icon/css/weather-icons.min.css">
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/weather-icon/css/weather-icons-wind.min.css">
+  
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/datatables/datatables.min.css">
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/css/style.css">
+  <link rel="stylesheet" href="${cPath }/resources/lecture/dist/css/components.css">
+ 
+  <script type="text/javascript" src="${cPath }/resources/lecture/dist/modules/jquery.min.js"></script>
+  <script type="text/javascript" src="${cPath }/resources/lecture/dist/modules/popper.js"></script>
+</head>
+
+<body  onload="noBack();"     onpageshow="if (event.persisted) noBack();" onunload="">
 <!-- Main Content -->
-<div class="main-content">
+<div class="main-content" style="padding-left: 0px; padding-top: 0px; padding-right: 0px; ">
   <section class="section">
-    <div class="section-header">
+    <div class="section-header"  style="background-color : #6777ef;">
       <!-- 강의명 -->
-     <h1>${lec_name }</h1>
+     <h1 style="color : white;">${lec_name }</h1>
    </div>
  </section>
-
- <!-- contents start -->
  
- <div class="row">
+ <div class="row" style="padding: 0 30px;">
      <div class="col-12 col-sm-0 col-lg-8">
        <div class="card">
          <div class="card-header">
@@ -64,7 +94,16 @@
            <h4>답안지</h4>
          </div>
          <div class="card-body">
-           <form id="answerWrap" method="post">
+         	<div id="timer">
+             <p>
+               <strong>종료시간 : </strong>${exam.exam_end_dt_char }<br/>
+               <strong>남은시간 : </strong><span id="remainTime"></span>
+             </p>
+           </div>
+           <div class="text-left mb-4">
+             <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="far fa-edit"></i> 답안지제출</button>
+           </div>
+           <form id="answerWrap" method="post" class="mt-3">
            		<input type="hidden" name="exam_no" value="${exam.exam_no }"/>
 	           	<c:forEach items="${quesList }" var="ques" varStatus="idx">
 	           		<input type="hidden" name="dtlsList[${idx.index }].ques_no" value="${ques.ques_no }"/>
@@ -115,15 +154,6 @@
 	           		</c:choose>
 	           	</c:forEach>
            </form>
-           <div id="timer">
-             <p>
-               <strong>종료시간 : </strong>${exam.exam_end_dt_char }<br/>
-               <strong>남은시간 : </strong><span id="remainTime"></span>
-             </p>
-           </div>
-           <div class="text-right">
-             <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="far fa-edit"></i> 답안지제출</button>
-           </div>
          </div>
        </div>
      </div>
@@ -150,7 +180,37 @@
  </div>
  <!-- contents end -->
 </div>
+</body>
+<!-- General JS Scripts -->
+	<script src="${cPath }/resources/lecture/dist/modules/jquery.min.js" type="text/javascript"></script>
+  	<script src="${cPath }/resources/lecture/dist/modules/popper.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/tooltip.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/nicescroll/jquery.nicescroll.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/moment.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/js/stisla.js" type="text/javascript"></script>
 
+	<!-- JS Libraies -->
+	<script src="${cPath }/resources/lecture/dist/modules/simple-weather/jquery.simpleWeather.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/chart.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jqvmap/dist/jquery.vmap.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jqvmap/dist/maps/jquery.vmap.world.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/chocolat/dist/js/jquery.chocolat.min.js" type="text/javascript"></script>
+	
+	<!-- JS Libraies -->
+	<script src="${cPath }/resources/lecture/dist/modules/datatables/datatables.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/datatables/Select-1.2.4/js/dataTables.select.min.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/modules/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+	
+	<!-- Page Specific JS File -->
+	<script src="${cPath }/resources/lecture/dist/js/page/modules-datatables.js" type="text/javascript"></script>
+
+	<!-- Template JS File -->
+	<script src="${cPath }/resources/lecture/dist/js/scripts.js" type="text/javascript"></script>
+	<script src="${cPath }/resources/lecture/dist/js/custom.js" type="text/javascript"></script>
+	
+	<script src="${cPath }/resources/lecture/dist/js/jquery.table2excel.min.js"></script>
 <script type="text/javascript">
 let endTime = "${exam.exam_end_dt}";
 window.onload = function(){
@@ -192,6 +252,33 @@ function pad(n, width) {
 	  n = n + '';
 	  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }
+
+// $(window).bind("beforeunload", function (event){
+//     if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+//       alert("뒤로감");
+//     }
+// }
+
+history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+};
+</script>
+
+<script>
+function noEvent() {
+	if (event.keyCode == 116) {
+		event.keyCode= 2;
+		return false;
+	}
+		else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
+	{
+		return false;
+	}
+}
+document.onkeydown = noEvent;
+	
+
 
 </script>
 

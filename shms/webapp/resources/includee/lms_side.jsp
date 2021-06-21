@@ -433,7 +433,7 @@
 	                          <a href="#">학적조회</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">학적변동</a>
+	                          <a href="${cPath }/lms/academicChange.do">학적변동</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">등록금납부</a>
@@ -622,18 +622,24 @@
 	                      <span>장학금 지원</span>
 	                  </a>
 	                  <ul class="submenu ">
-	                      <li class="submenu-item ">
-	                          <a href="#">성적장학금</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">자격증 취득 장학금</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">어학 장학금</a>
-	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">교수 추천 장학금</a>
-	                      </li>
+	                     <li class="submenu-item">
+                              <a href="academicScholarship.html">성적장학금</a>
+                          </li>
+                          <li class="submenu-item ">
+                              <a href="recommendScholarship.html">교수 추천 장학금</a>
+                          </li>
+                          <li class="submenu-item ">
+                              <a href="${cPath }/lms/certificateScholarship.do">자격증 취득 장학금</a>
+                          </li>
+                          <li class="submenu-item ">
+                              <a href="languageScholarship.html">어학 장학금</a>
+                          </li>
+                          <li class="submenu-item ">
+                              <a href="nationalScholarship.html">국가유공자 장학금</a>
+                          </li>
+                          <li class="submenu-item ">
+                              <a href="governmentScholarship.html">학생자치기구 장학금</a>
+                          </li>
 	                  </ul>
 	              </li>
               </c:if>

@@ -2,7 +2,7 @@
 * [[개정이력(Modification Information)]]
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 21.      박초원        최초작성
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -49,6 +49,7 @@
                       <td>지도교수확인서.pdf</td>
                   </tr>
                   <tr>
+                  	 <!-- 각 변동 사항에 따라 변해야하는 항목 ex) 휴학은 휴학일과 복학 예정일 -->
                       <th class="align-middle text-center">신청사유</th>
                       <td>건강문제</td>
                       <th class="align-middle text-center">자퇴일</th>
@@ -60,10 +61,24 @@
                       <th class="align-middle text-center">처리일</th>
                       <td>2021.05.02</td>
                   </tr>
+                  <!-- 대기상태일때만 노출 -->
                   <tr>
-              </table>
+                        <th class="align-middle text-center">반려사유</th>
+                        <td colspan="4">
+                            <textarea class="form-control" rows="3" id="returnResult"></textarea>
+                            <span id="returnWarning"></span>
+                        </td>
+                    </tr>
+                </table>
+                <!-- 대기상태일때만 노출 -->
+               <div class="text-center">
+                   <button type="button" class="btn btn-light-secondary" id="returnBtn">반려</button>
+                   <button type="button" class="btn btn-primary">승인</button>
+               </div>
               <div class="text-center">
-                  <a href="${cPath }/lms/drop.do" class="btn btn-primary">목록으로</a>
+                  <a href="${cPath }/lms/academicChange.do" class="btn btn-primary">목록으로</a>
+                  <!-- 학적과 변동 처리 -> 완료전 승인상태일때만 노출-->
+                  <button class="btn btn-danger" type="button" id="completeBtn">학적변동</button>
               </div>
           </div>
       </div>
