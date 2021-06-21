@@ -64,6 +64,11 @@
 	                      </tr>
                   		</c:forEach>
                   	</c:when>
+                  	<c:otherwise>
+                 		<tr>
+                 			<td class="text-center">장학금신청 내역이 존재하지 않습니다.</td>
+                 		</tr>
+                 	</c:otherwise>
                   </c:choose>
                   </tbody>
               </table>

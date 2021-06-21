@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.student.dao.StudentDAO;
 import kr.ac.shms.lms.student.dao.TuitionDAO;
 import kr.ac.shms.lms.student.service.TuitionService;
@@ -213,6 +214,8 @@ public class TuitionServiceImpl implements TuitionService{
 	public void SchlReqForm(Map<String, Object> paramMap) {
 		String stdnt_no = (String) paramMap.get("stdnt_no");
 		Integer req_no = (Integer) paramMap.get("req_no");
+		Integer cng_req_no = (Integer) paramMap.get("cng_req_no");
+		
 		ScholarShipVO schl = new ScholarShipVO();
 		List<AttachVO> attList = null;
 		if(req_no != null) {
@@ -222,9 +225,17 @@ public class TuitionServiceImpl implements TuitionService{
 			attList = tuitionDAO.selectAttachList(req_no);
 		}
 		
+		RegInfoCngVO cng = new RegInfoCngVO();
+		if(cng_req_no != null) {
+			cng.setStdnt_no(stdnt_no);
+			cng.setCng_req_no(cng_req_no);
+			cng = studentDAO.selectReginfoCng(cng);
+		}
+		
 		StudentVO student = new StudentVO();
 		student = tuitionDAO.selectStudent(stdnt_no);
 		
+		paramMap.put("cng", cng);
 		paramMap.put("student", student);
 		paramMap.put("schl", schl);
 		paramMap.put("attList", attList);

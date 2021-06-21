@@ -1,13 +1,20 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.service.StudentService;
 
 /**
  * @author 박초원
@@ -25,12 +32,18 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 @Controller
 public class DropViewController {
 	private static final Logger logger = LoggerFactory.getLogger(DropViewController.class);
+	@Inject
+	private StudentService studentService;
 	
 	@RequestMapping("/lms/drop.do")
 	public String drop(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
+		String stdnt_no = user.getUser_id();
+		List<RegInfoCngVO> dropList = studentService.selectRegInfoCngStudentList(stdnt_no);
+		
+		 model.addAttribute("dropList", dropList);
 		return "lms/drop";
 	}	
 	

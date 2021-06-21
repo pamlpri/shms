@@ -246,7 +246,6 @@
 		)
 	</insert>
 	
-	
 	<select id="selectAttachList" resultType="AttachVO" parameterType="int">
 		SELECT file_nm,
 		       atch_file_no,

@@ -38,6 +38,7 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
  * 2021. 6. 10.	  김보미		입실, 퇴실 카운트
  * 2021. 6. 17.   최희수       이력서/자기소개서 첨삭
  * 2021. 6. 18.	  최희수 		편의시설 - 도서관, 열람실예약, 스터디룸 예약
+ * 2021. 6. 20.	  김보미 		자퇴신청등록
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */	
@@ -311,4 +312,26 @@ public interface StudentService {
      * @return ServiceResult
      */
     public ServiceResult insertFacilityRsv(FacilityRsvVO facilityRsv);
+    
+    /**
+     * 자퇴 신청 등록
+     * @param reginfoCng
+     * @return 
+     */
+    public ServiceResult insertDrop(RegInfoCngVO reginfoCng); 
+    
+    /**
+     * 학생의 자퇴신청 내역 조회
+     * @param stdnt_no
+     * @return
+     */
+    public  List<RegInfoCngVO> selectRegInfoCngStudentList(String stdnt_no);
+    
+    /**
+     * 해당 자퇴신청 내역 조회
+     * @param cng
+     * @return
+     */
+    public RegInfoCngVO selectReginfoCng(RegInfoCngVO cng); 
+    
 }
