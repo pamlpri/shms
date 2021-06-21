@@ -62,7 +62,7 @@ public class LectureStudentIndexController {
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
 		model.addAttribute("lecture", lectureDetails);
 		model.addAttribute("lec_code", lec_code);
-		 model.addAttribute("lec_name", lec_name);
+		model.addAttribute("lec_name", lec_name);
 		model.addAttribute("attend", attVO);
 		
 		return "lecture/main";

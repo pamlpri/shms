@@ -718,7 +718,16 @@
 		        (SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'JG'
-		           AND stdnt_no = a.stdnt_no) jg_cnt
+		           AND stdnt_no = a.stdnt_no) jg_cnt,
+		        (SELECT grade
+                   FROM student
+                  WHERE stdnt_no = a.stdnt_no) grade,
+                (SELECT estbl_semstr
+                   FROM lecture
+                  WHERE lec_code = a.lec_code) semstr,
+                (SELECT estbl_year
+                   FROM lecture
+                  WHERE lec_code = a.lec_Code) year
 		  FROM attendance a
 		       INNER JOIN v_lecweek_attend b ON(a.lec_code = b.lec_code AND a.stdnt_no = b.stdnt_no)
 		       INNER JOIN student c ON(a.stdnt_no = c.stdnt_no)
@@ -732,4 +741,38 @@
 		WHERE
 		    atndan_no = #{atndan_no, jdbcType=NUMERIC}
 	</update>
+	
+	<insert id="insertAttendGrade" parameterType="AttendVO">
+		INSERT ALL
+		<foreach collection="attendList" item="attend" index="idx">
+		INTO lec_scre (
+		    scre_no,
+		    grade,
+		    semstr,
+		    year,
+		    stdnt_no,
+		    pnt_rank_nm,
+		    mid_scre,
+		    final_scre,
+		    attend_scre,
+		    task_scre,
+		    etc_scre,
+		    lec_code
+		) VALUES (
+		    lec_scre_seq.nextval,
+		    #{grade, jdbcType=NUMERIC},
+		    #{semstr, jdbcType=NUMERIC},
+		    #{year, jdbcType=NUMERIC},
+		    #{stdnt_no, jdbcType=VARCHAR},
+		    null,
+		    null,
+		    null,
+		    ,
+		    null,
+		    null,
+		    #{lec_code, jdbcType=VARCHAR}
+		)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
 </mapper>

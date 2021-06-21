@@ -83,10 +83,10 @@
                </td>
            </tr>
           </table>
-          <div class="text-center">
-              <a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}" class="btn btn-secondary">취소</a>
-              <button type="submit" class="btn btn-primary">저장</button>
-          </div>
+         <div class="text-center">
+             <a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}" class="btn btn-secondary">취소</a>
+             <button type="submit" class="btn btn-primary">저장</button>
+         </div>
         </form>
       </div>
     </div>

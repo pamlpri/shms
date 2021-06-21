@@ -1,5 +1,7 @@
 package kr.ac.shms.lms.student.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -76,6 +78,8 @@ public class AttendVO {
 	private String attend_time_char;
 	private String exit_time_char;
 	private String week_lec_cl;
+	
+	private List<AttendVO> attendList;
 }
 
 

@@ -41,7 +41,7 @@
   <script type="text/javascript" src="${cPath }/resources/lecture/dist/modules/popper.js"></script>
 </head>
 
-<body  onload="noBack();"     onpageshow="if (event.persisted) noBack();" onunload="">
+<body styl="overflow-x : hiddent">
 <!-- Main Content -->
 <div class="main-content" style="padding-left: 0px; padding-top: 0px; padding-right: 0px; ">
   <section class="section">

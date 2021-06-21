@@ -46,7 +46,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 15.      박초원 			 교수 시험,문제 출제
  * 2021. 06. 16.      박초원			 교수 시험,문제 조회
  * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
- * 2021. 6. 21.       박초원 		 교수 학생 출석수정
+ * 2021. 6. 21.       박초원 		 교수 학생 출석수정,  출석 성적부 반영
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -352,6 +352,18 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		ServiceResult result = ServiceResult.FAIL;
 		
 		int cnt = lectureProfessorDAO.updateStudentAttend(attend);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public ServiceResult insertAttendGrade(AttendVO attend) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = lectureProfessorDAO.insertAttendGrade(attend);
 		if(cnt > 0) {
 			result = ServiceResult.OK;
 		}

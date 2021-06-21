@@ -26,6 +26,7 @@
        <div class="card inputTable">
            <div class="card-body">
                <div class="text-right float-right" style="margin-bottom: 2%">
+               	   <button class="btn btn-success">등록금납부</button>
                    <a href="#" class="btn btn-icon btn-primary savePdf"><i class="far fa-file"></i> PDF 다운로드</a>
                </div>
                <div style="clear: both;"></div>
