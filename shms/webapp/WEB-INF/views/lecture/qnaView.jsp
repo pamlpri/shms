@@ -10,6 +10,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+   .card-body > p {
+      margin-bottom : -4px;
+   }
+</style>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
@@ -37,14 +42,32 @@
           <p>
             ${board.bo_cont }
           </p>
-          <c:if test="${not empty board.bo_ans }">
+          <c:choose>
+          	<c:when test="${not empty board.bo_ans }">
+	          <hr>
 	          <div class="noticeAns">
 	              <p class="userAns">${board.ans_writer }<span>${board.ans_de }</span></p>
 	              <p class="contAns">
 	                ${board.bo_ans }
 	              </p>
 	          </div>
-          </c:if>
+          	</c:when>
+          	<c:otherwise>
+				<!-- 교수만 보이게 -->
+				<c:if test="${'PR' eq user.user[1] }">
+		          <hr>
+		        	<div>
+		            	<p class="userAns">${user.user[2]}</p>
+		            	<div class="textArea">
+		            		<form action="${cPath }/lecture/qnaAnsUpdate.do" id="ansForm">
+		            			<input type="hidden" name="bo_no" value="${board.bo_no }"/>
+		              			<textarea class="form-control" rows="5" cols="800" id="bo_ans" name="bo_ans">${board.bo_ans }</textarea>
+		            		</form>
+		            	</div>
+		          	</div>
+				</c:if>
+          	</c:otherwise>
+          </c:choose>
         </div>
         <div class="card-footer bg-whitesmoke">
           <div id="noticeBtnBox" class="text-right">
@@ -53,6 +76,9 @@
             <c:if test="${board.bo_writer eq user_id }">
 	            <a id="updateBtn" class="btn btn-icon icon-left btn-primary" href="${cPath }/lecture/qnaUpdate.do?bo_no=${board.bo_no}">수정</a>
 	            <button id="deleteBtn" class="btn btn-danger" data-confirm-yes="deleteBoard();" data-confirm="게시글 삭제|삭제한 게시글은 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
+            </c:if>
+            <c:if test="${'PR' eq user.user[1]}">
+	            <a id="saveBtn" class="btn btn-icon icon-left btn-primary" href="#">답변등록</a>
             </c:if>
           </div>
         </div>
@@ -90,7 +116,16 @@
 	</script>
 </c:if>
 <script>
+	$(function(){
+	    CKEDITOR.replace("bo_ans", {
+	        filebrowserImageUploadUrl : ''
+	 	 });		
+	});
 	let deleteBoard = function(){
 		location.href = "${cPath}/lecture/qnaDelete.do?bo_no=${board.bo_no}"; 
 	}
+	
+	$("#saveBtn").on("click", function(){
+		$("#ansForm").submit();
+	})
 </script>

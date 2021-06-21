@@ -53,9 +53,10 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 			cookie.setMaxAge(60*60*24);
 			response.addCookie(cookie);
 		}
-		String userInfo[] = new String[2];
+		String userInfo[] = new String[3];
 		userInfo[0] = vo.getUser_id();
 		userInfo[1] = vo.getAuth_grp_code();
+		userInfo[2] = vo.getUser_name();
 		
 		Map<String, String[]> userMap = new HashMap<>();
 		userMap.put("user", userInfo);

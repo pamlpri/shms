@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.validator.AnsBoardUpdateGroup;
 import kr.ac.shms.validator.BoardDeleteGroup;
 import kr.ac.shms.validator.GMBoardInsertGroup;
 import kr.ac.shms.validator.GMBoardUpdateGroup;
@@ -295,6 +297,39 @@ public class LectureQnaController {
 		}else {
 			message = "존재하지 않는 게시글입니다.";
 			view = "redirect:/lecture/qna.do";
+		}
+		session.addFlashAttribute("message", message);
+		
+		return view;
+	}
+	
+	@RequestMapping("/lecture/qnaAnsUpdate.do")
+	public String ansUpdate(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @Validated(AnsBoardUpdateGroup.class)
+		@ModelAttribute("board") BoardVO board
+		, BindingResult errors
+		, RedirectAttributes session
+		) {
+		board.setAns_writer(user.getUser_id());
+		String message = null;
+		String view = null;
+		boolean valid = !errors.hasErrors();
+		
+		if(valid) {
+			ServiceResult result = boardService.qnaBoardAnsUpdate(board);
+			
+			if(ServiceResult.OK.equals(result)) {
+				view = "redirect:/lecture/qna.do";
+			}else {
+				message = "답변 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+//				view = "redirect:/lecture/qna.do";
+				view = "redirect:/lecture/qnaView.do?bo_no=" + board.getBo_no();
+			}
+		}else {
+			message = "내용을 입력해주세요.";
+			view = "redirect:/lecture/qnaView.do?bo_no=" + board.getBo_no();
+//			view = "redirect:/lecture/qna.do";
 		}
 		session.addFlashAttribute("message", message);
 		

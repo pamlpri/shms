@@ -77,15 +77,6 @@
               <textarea class="form-control" rows="5" cols="1000" id="bo_cont" name="bo_cont">${board.bo_cont }</textarea>
             </td>
           </tr>
-			<!-- 교수만 보이게 -->
-		 <c:if test="${'PR' eq user.user[1] }">
-          <tr>
-            <th class="align-middle">답변</th>
-            <td class="textArea">
-              <textarea class="form-control" rows="5" cols="800" id="bo_ans"></textarea>
-            </td>
-          </tr>
-		 </c:if>
         </table>
         <div class="text-center">
             <a href="${cPath }/lecture/qna.do" class="btn btn-secondary">취소</a>

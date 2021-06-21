@@ -71,7 +71,7 @@ public class SubQnaViewController {
 		@ModelAttribute("board") BoardVO boardVO
 	) {
 		logger.info("board : {} ", boardVO);
-		ServiceResult result = boardService.subQnaBoardAnsUpdate(boardVO);
+		ServiceResult result = boardService.qnaBoardAnsUpdate(boardVO);
 		String view = null;
 		if(ServiceResult.OK.equals(result)) {
 			view = "redirect:/lms/subjectQnaList.do";

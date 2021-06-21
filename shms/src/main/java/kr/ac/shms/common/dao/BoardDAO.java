@@ -160,7 +160,7 @@ public interface BoardDAO {
 	 * @param boardVO
 	 * @return cnt > 0 성공
 	 */
-	public int subQnaBoardAnsUpdate(BoardVO boardVO);
+	public int qnaBoardAnsUpdate(BoardVO boardVO);
 	
 	/**
 	 * 학과 문의 게시글 삭제

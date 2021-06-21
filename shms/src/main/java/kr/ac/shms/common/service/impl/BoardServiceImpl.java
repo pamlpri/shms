@@ -257,9 +257,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ServiceResult subQnaBoardAnsUpdate(BoardVO boardVO) {
+	public ServiceResult qnaBoardAnsUpdate(BoardVO boardVO) {
 		ServiceResult result = ServiceResult.FAIL;
-		int cnt = boardDAO.subQnaBoardAnsUpdate(boardVO);
+		int cnt = boardDAO.qnaBoardAnsUpdate(boardVO);
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
 	}

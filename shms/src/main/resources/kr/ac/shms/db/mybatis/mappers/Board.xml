@@ -431,11 +431,12 @@
 		AND bo_no = #{bo_no}
 	</select>
 	
-	<update id="subQnaBoardAnsUpdate" parameterType="BoardVO">
+	<update id="qnaBoardAnsUpdate" parameterType="BoardVO">
 		UPDATE board
-		    SET bo_ans = #{bo_ans}
-		WHERE bo_kind = 'HM'
-		AND bo_no = #{bo_no}
+		    SET bo_ans = #{bo_ans},
+		    	ans_writer = #{ans_writer, jdbcType=VARCHAR},
+		    	ans_de = TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI')
+		WHERE bo_no = #{bo_no}
 	</update>
 	
 	<delete id="subQnaBoardAnsDelete" parameterType="int">
