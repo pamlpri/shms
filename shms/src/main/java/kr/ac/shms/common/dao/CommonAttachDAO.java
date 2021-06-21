@@ -56,5 +56,5 @@ public interface CommonAttachDAO {
 	 * @param atch_file_no
 	 * @return row count > 0 성공
 	 */
-	public int atch_file_seqCount(int atch_file_no);
+	public int selectAtchFileSeqCount(int atch_file_no);
 }

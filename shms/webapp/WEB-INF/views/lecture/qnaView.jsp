@@ -3,25 +3,27 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 21.      송수미        문의 게시글 조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item"><a href="#">강의개요</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/notice.do">강의개요</a></li>
           <li class="breadcrumb-item active" aria-current="page">강의 Q&A</li>
       </ol>
   </nav>
@@ -29,25 +31,29 @@
   <section class="section">
       <div class="card">
         <div class="card-header">
-          <h4 class="nontice-title">강의에 대해 문의합니다!<span class="notice-date">2020.05.20</span></h4>
+          <h4 class="nontice-title">${board.bo_title }<span class="notice-date">${board.bo_write_de }</span></h4>
         </div>
         <div class="card-body">
           <p>
-            서블릿 컨테이너가 하는일이 무엇인가요??
+            ${board.bo_cont }
           </p>
-          <div class="noticeAns">
-              <p class="userAns">하재관<span>2020.05.03</span></p>
-              <p class="contAns">
-                서블릿 컨테이너란???
-              </p>
-          </div>
+          <c:if test="${not empty board.bo_ans }">
+	          <div class="noticeAns">
+	              <p class="userAns">${board.ans_writer }<span>${board.ans_de }</span></p>
+	              <p class="contAns">
+	                ${board.bo_ans }
+	              </p>
+	          </div>
+          </c:if>
         </div>
         <div class="card-footer bg-whitesmoke">
           <div id="noticeBtnBox" class="text-right">
             <a id="listBtn" class="btn btn-icon icon-left btn-primary" href="${cPath }/lecture/qna.do">목록으로</a>
             <!--학생한테만 보이는 버튼-->
-            <a id="updateBtn" class="btn btn-icon icon-left btn-primary" href="${cPath }/lecture/qnaForm.do">수정</a>
-            <button id="deleteBtn" class="btn btn-danger" data-confirm="게시글 삭제|삭제한 게시글은 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
+            <c:if test="${board.bo_writer eq user_id }">
+	            <a id="updateBtn" class="btn btn-icon icon-left btn-primary" href="${cPath }/lecture/qnaUpdate.do?bo_no=${board.bo_no}">수정</a>
+	            <button id="deleteBtn" class="btn btn-danger" data-confirm-yes="deleteBoard();" data-confirm="게시글 삭제|삭제한 게시글은 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
+            </c:if>
           </div>
         </div>
       </div>
@@ -73,3 +79,18 @@
     </div>
   </div>
   <!-- contents end -->
+</div>
+<c:if test="${not empty message }">
+	<script>
+		$("#default").find(".modal-body p").empty().text("${message}");
+		$("#default").addClass("show").css("display","block");
+	    $("#close, .modal").on("click", function(){
+			$("#default").removeClass("show").css("display","none");
+		})
+	</script>
+</c:if>
+<script>
+	let deleteBoard = function(){
+		location.href = "${cPath}/lecture/qnaDelete.do?bo_no=${board.bo_no}"; 
+	}
+</script>

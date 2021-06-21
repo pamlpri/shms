@@ -41,7 +41,7 @@ public class CommonAttachServiceImpl implements CommonAttachService {
 	
 	@Override
 	public int atch_file_seqCount(int atch_file_no) {
-		return commonAttachDAO.atch_file_seqCount(atch_file_no);
+		return commonAttachDAO.selectAtchFileSeqCount(atch_file_no);
 	}
 	
 	@Override

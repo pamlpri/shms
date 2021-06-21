@@ -53,7 +53,7 @@ public class SubNoticeDeleteController {
 			view = "redirect:/lms/subjectNoticeList.do";
 		}else if(ServiceResult.NOTEXIST.equals(result)){
 			message = "존재하지 않는 게시글입니다.";
-			view = "redirect:/lms/subjectNoticeView.do?bo_no=" + board.getBo_no();
+			view = "redirect:/lms/subjectNoticeList.do";
 		}else {
 			message = "게시글 삭제에 실패하였습니다. 잠시 후 다시 시도해주세요";
 			view = "redirect:/lms/subjectNoticeView.do?bo_no=" + board.getBo_no();

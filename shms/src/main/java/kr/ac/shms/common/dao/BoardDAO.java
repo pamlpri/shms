@@ -100,20 +100,6 @@ public interface BoardDAO {
 	 */
 	public int incrementHit(int bo_no);
 	
-//	/**
-//	 * 해당 게시글의 첨부파일 전체 출력
-//	 * @param bo_no
-//	 * @return 데이터가 없으면 null 반환
-//	 */
-//	public List<AttachVO> attachList(int bo_no);
-//	
-//	/**
-//	 * 하나의 첨부파일 출력
-//	 * @param attachVO
-//	 * @return 데이터가 없으면 null 반환
-//	 */
-//	public AttachVO selectAttatch(AttachVO attachVO);
-//	
 	/**
 	 * 첨부파일 등록
 	 * @param board
@@ -182,5 +168,12 @@ public interface BoardDAO {
 	 * @return cnt > 0 성공
 	 */
 	public int subQnaBoardAnsDelete(int bo_no);
+	
+	/**
+	 * 삭제 작업 후 첨부파일이 더 이상 없을 때 atch_file_no를 null로 바꿔줌
+	 * @param bo_no
+	 * @return row count > 0 : 성공
+	 */
+	public int updateAtchFileNoNull(int bo_no);
 	
 }

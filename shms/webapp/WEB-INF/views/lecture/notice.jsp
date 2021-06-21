@@ -62,7 +62,7 @@
                           			</c:forEach>
                           		</c:when>
                           		<c:otherwise>
-                          			<tr>
+                          			<tr class="text-center">
                           				<td colspan="5">현재 표시 가능한 공지사항이 없습니다.</td>
                           			</tr>
                           		</c:otherwise>

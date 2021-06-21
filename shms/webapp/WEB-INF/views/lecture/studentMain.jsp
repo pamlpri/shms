@@ -34,7 +34,7 @@
 			</div>
 		</c:if>
 		<div class="col-lg-3 col-md-6 col-sm-6 col-12">
-			<a href="noticeLecture.html" class="card card-statistic-1" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
+			<a href="${cPath }/lecture/notice.do" class="card card-statistic-1" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
 				<div class="card-icon bg-danger">
 					<i class="fas fa-bell"></i>
 				</div>
