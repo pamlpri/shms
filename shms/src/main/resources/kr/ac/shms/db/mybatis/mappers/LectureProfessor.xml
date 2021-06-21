@@ -687,14 +687,30 @@
 		       b.week13,
 		       b.week14,
 		       b.week15,
-		       (SELECT COUNT(stdnt_no)
+		       ((SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
-		         WHERE attend_stat = 'CS'
-		           AND stdnt_no = a.stdnt_no) cs_cnt,
-		       (SELECT COUNT(stdnt_no)
+		         WHERE NOT (attend_stat = 'GS')
+		           AND stdnt_no = a.stdnt_no) - TRUNC(((SELECT COUNT(stdnt_no)
+		                                          FROM v_lecweek
+		                                         WHERE attend_stat = 'JG'
+		                                           AND lec_code = a.lec_code
+		                                           AND stdnt_no = a.stdnt_no) / 3)) - TRUNC(((SELECT COUNT(stdnt_no)
+		                                                                              FROM v_lecweek
+		                                                                             WHERE attend_stat = 'JT'
+		                                                                               AND lec_code = a.lec_code
+		                                                                               AND stdnt_no = a.stdnt_no) / 3))) cs_cnt,
+		       ((SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'GS'
-		           AND stdnt_no = a.stdnt_no) gs_cnt,
+		           AND stdnt_no = a.stdnt_no) + TRUNC(((SELECT COUNT(stdnt_no)
+		                                          FROM v_lecweek
+		                                         WHERE attend_stat = 'JG'
+		                                           AND lec_code = a.lec_code
+		                                           AND stdnt_no = a.stdnt_no) / 3)) + TRUNC(((SELECT COUNT(stdnt_no)
+		                                                                              FROM v_lecweek
+		                                                                             WHERE attend_stat = 'JT'
+		                                                                               AND lec_code = a.lec_code
+		                                                                               AND stdnt_no = a.stdnt_no) / 3))) gs_cnt,
 		        (SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'JT'
@@ -708,4 +724,12 @@
 		       INNER JOIN student c ON(a.stdnt_no = c.stdnt_no)
 		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
 	</select>
+	
+	<update id="updateStudentAttend" parameterType="AttendVO">
+		UPDATE attendance
+		    SET
+		        attend_stat = #{attend_stat, jdbcType=VARCHAR}
+		WHERE
+		    atndan_no = #{atndan_no, jdbcType=NUMERIC}
+	</update>
 </mapper>
