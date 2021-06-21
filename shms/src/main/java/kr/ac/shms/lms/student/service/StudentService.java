@@ -319,4 +319,19 @@ public interface StudentService {
      * @return 
      */
     public ServiceResult insertDrop(RegInfoCngVO reginfoCng); 
+    
+    /**
+     * 학생의 자퇴신청 내역 조회
+     * @param stdnt_no
+     * @return
+     */
+    public  List<RegInfoCngVO> selectRegInfoCngStudentList(String stdnt_no);
+    
+    /**
+     * 해당 자퇴신청 내역 조회
+     * @param cng
+     * @return
+     */
+    public RegInfoCngVO selectReginfoCng(RegInfoCngVO cng); 
+    
 }

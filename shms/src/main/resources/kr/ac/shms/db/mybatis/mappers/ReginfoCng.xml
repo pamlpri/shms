@@ -9,7 +9,9 @@
 			    process_stat,
 			    proc_date,
 			    refuse_resn,
-			    atch_file_no,
+			    <if test="attachList != null">
+		    		atch_file_no,
+		    	</if>
 			    req_cl_code,
 			    req_resn_code,
 			    cng_bgnde,
@@ -17,7 +19,7 @@
 			    cng_year,
 			    cng_semstr
 			) VALUES (
-			    REQ_CNG_SEQ.NEXTVAL,
+			    REG_CNG_SEQ.NEXTVAL,
 			    #{bo_writer, jdbcType=VARCHAR},
 			    SYSDATE,
 			    'DG',
@@ -31,9 +33,61 @@
 			    NULL,
 			    NULL,
 			    NULL,
-			    NULL,
 			    NULL
 			)
 	</insert>
-
+	
+	<select id="selectRegInfoCngStudentList" parameterType="String" resultType="RegInfoCngVO">
+		SELECT ROW_NUMBER() OVER(ORDER BY req_de desc) rn, 
+		       cng_req_no,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
+		           AND com_code = req_resn_code) req_resn_code,
+		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+		       CASE WHEN atch_file_no IS NOT NULL THEN '제출완료'
+		            ELSE '미제출'
+		            END AS papers_submit_at,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		           AND com_code = process_stat) process_stat
+		  FROM reginfo_cng
+		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND req_cl_code='JT'
+	</select>
+	
+	<resultMap type="RegInfoCngVO" id="cng" autoMapping="true">
+		<id property="cng_req_no" column="cng_req_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectReginfoCng" parameterType="RegInfoCngVO" resultMap="cng">
+		SELECT a.cng_req_no,
+		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		           AND com_code = process_stat) process_stat,
+		        TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
+		        req_resn_code,
+		        a.atch_file_no,
+		        atch_file_seq,
+		        file_path,
+		        file_nm,
+		        file_cont_type,
+		        file_size,
+		        reg_date,
+		        reg_user_id,
+		        biz_type,
+		        save_file_nm
+		  FROM reginfo_cng a
+		  LEFT OUTER JOIN attach b ON(a.atch_file_no=b.atch_file_no) 
+		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
+		   AND a.cng_req_no=${cng_req_no}
+	</select>
+	
 </mapper>

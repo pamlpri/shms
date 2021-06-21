@@ -375,5 +375,15 @@ public class StudentServiceImpl implements StudentService{
 		}
 		return result;
 	}
+
+	@Override
+	public  List<RegInfoCngVO> selectRegInfoCngStudentList(String stdnt_no) {
+		return studentDAO.selectRegInfoCngStudentList(stdnt_no);
+	}
+
+	@Override
+	public RegInfoCngVO selectReginfoCng(RegInfoCngVO cng) {
+		return studentDAO.selectReginfoCng(cng);
+	}
 	
 }

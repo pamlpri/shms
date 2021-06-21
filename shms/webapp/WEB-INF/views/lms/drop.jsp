@@ -8,6 +8,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
  <!-- contents start -->
  <nav aria-label="breadcrumb">
@@ -22,6 +23,8 @@
      <div class="card">
          <div class="card-body">
              <table class="table table-striped" id="table1">
+               <c:choose>
+               	<c:when test="${not empty dropList }">
                  <thead>
                      <tr>
                          <th class="text-center">No.</th>
@@ -33,43 +36,36 @@
                      </tr>
                  </thead>
                  <tbody>
-                     <tr>
-                         <td class="text-center">1</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자퇴</td>
-                         <td class="text-center">2021.05.25</td>
-                         <td class="text-center">제출완료</td>
-                         <td class="text-center"><a href="${cPath}/lms/dropView.do" class="badge bg-success white-color">완료</a></td>
-                     </tr>
-                     <tr>
-                         <td class="text-center">2</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자퇴</td>
-                         <td class="text-center">2021.05.25</td>
-                         <td class="text-center">제출완료</td>
-                         <th class="text-center">
-                             <button type="button" class="btn badge bg-danger block failBtn"
-                                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                 반려
-                             </button>
-                         </th>
-                     </tr>
-                     <tr>
-                         <td class="text-center">3</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자퇴</td>
-                         <td class="text-center">2021.05.25</td>
-                         <td class="text-center">제출완료</td>
-                         <th class="text-center"><a href="${cPath}/lms/dropView.do" class="badge bg-primary white-color">승인</a></th>
-                     </tr>
-                     <tr>
-                         <td class="text-center">4</td>
-                         <td class="text-center">2345</td>
-                         <td class="text-center">자퇴</td>
-                         <td class="text-center">2021.05.25</td>
-                         <td class="text-center">제출완료</td>
-                         <td class="text-center"><a href="${cPath}/lms/dropForm.do" class="badge bg-info white-color">대기</a></td>
-                     </tr>
+                 		<c:forEach items="${dropList }" var="dropList">
+		                     <tr>
+		                         <td class="text-center">${dropList.rn }</td>
+		                         <td class="text-center">${dropList.cng_req_no }</td>
+		                         <td class="text-center">자퇴</td>
+		                         <td class="text-center">${dropList.req_de }</td>
+		                         <td class="text-center">${dropList.papers_submit_at }</td>
+		                         	<c:if test="${dropList.process_stat eq '대기' }">
+				                         <td class="text-center"><a href="${cPath}/lms/dropForm.do?cng_req_no=${dropList.cng_req_no}" class="badge bg-info white-color">대기</a></td>
+		                         	</c:if>
+		                         	<c:if test="${dropList.process_stat eq '완료' }">
+				                         <td class="text-center"><a href="${cPath}/lms/dropView.do" class="badge bg-success white-color">완료</a></td>
+		                         	</c:if>
+		                         	<c:if test="${dropList.process_stat eq '반려' }">
+				                          <th class="text-center">
+				                             <button type="button" class="btn badge bg-danger block failBtn"
+				                                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+				                                 반려
+				                             </button>
+				                         </th>
+		                         	</c:if>
+		                     </tr>
+                 		</c:forEach>
+                 	</c:when>
+                 	<c:otherwise>
+                 		<tr>
+                 			<td class="text-center">자퇴 신청 내역이 존재하지 않습니다.</td>
+                 		</tr>
+                 	</c:otherwise>
+                 </c:choose>
                  </tbody>
              </table>
              <div class="breadcrumb breadcrumb-right">

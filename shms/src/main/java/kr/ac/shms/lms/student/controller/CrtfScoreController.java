@@ -1,5 +1,7 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.ac.shms.common.service.CommonService;
+import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.CertificateService;
 import kr.ac.shms.lms.student.vo.CertificateReqVO;
@@ -29,6 +33,9 @@ public class CrtfScoreController {
 	@Inject
 	private CertificateService certificateService;
 	
+	@Inject
+	private CommonService commonService;
+	
 	@RequestMapping("/lms/scoreCertificate.do")
 	public String scoreCertificate(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
@@ -39,6 +46,16 @@ public class CrtfScoreController {
 		crtf.setReq_no(req_no);
 		crtf.setStdnt_no(user.getUser_id());
 		crtf = certificateService.selectCrtfPrint(crtf);
+		
+		LecScoreVO lecScore = new LecScoreVO();
+		lecScore.setStdnt_no(user.getUser_id());
+		
+		List<LecScoreVO> lecScoreList = commonService.lecScoreList(lecScore);
+		model.addAttribute("lecScoreList", lecScoreList);
+		
+		List<LecScoreVO> selectSemstrList = commonService.selectSemstrList(lecScore);
+		model.addAttribute("selectSemstrList", selectSemstrList);
+		
 		model.addAttribute("crtf", crtf);
 		
 		return "lms/certificate/score";

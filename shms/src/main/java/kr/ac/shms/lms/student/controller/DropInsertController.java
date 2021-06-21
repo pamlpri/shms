@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,6 +49,7 @@ public class DropInsertController {
 	@RequestMapping("/lms/dropForm.do")
 	public String dropForm(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam(value="cng_req_no", required=false) Integer cng_req_no
 		, Model model
 	) {
 		String stdnt_no = user.getUser_id();
@@ -55,11 +57,13 @@ public class DropInsertController {
 		/** 서비스 호출 **************************************************************/
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("stdnt_no", stdnt_no);
+		paramMap.put("cng_req_no", cng_req_no);
 		tuitionService.SchlReqForm(paramMap);
 		/*****************************************************************************/
 		
 		/** 자료 구성 ****************************************************************/
 		model.addAttribute("student", paramMap.get("student"));
+		model.addAttribute("cng", paramMap.get("cng"));
 		/*****************************************************************************/
 		
 		return "lms/dropForm";

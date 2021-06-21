@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of="cng_req_no")
 public class RegInfoCngVO implements IAttachVO{
 	private Integer p_bo_no;	// 페이지 출력용 번호 (DB X)
+	private Integer rn;
 	
 	private Integer cng_req_no;
 	private String req_cl_code;
@@ -35,6 +36,8 @@ public class RegInfoCngVO implements IAttachVO{
 	private String req_resn_code_name;
 	private String cng_bgnde;
 	private String cng_endde;
+	
+	private String papers_submit_at;	// 파일제출 상태 표시
 	
 	private String bo_writer;
 	private String biz_type;	
