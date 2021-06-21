@@ -15,6 +15,8 @@ import kr.ac.shms.validator.BoardInsertGroup;
 import kr.ac.shms.validator.BoardUpdateGroup;
 import kr.ac.shms.validator.DMBoardInsertGroup;
 import kr.ac.shms.validator.DMBoardUpdateGroup;
+import kr.ac.shms.validator.GMBoardInsertGroup;
+import kr.ac.shms.validator.GMBoardUpdateGroup;
 import kr.ac.shms.validator.HMBoardInsertGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,23 +50,23 @@ import lombok.ToString;
 public class BoardVO implements Serializable, IAttachVO{
 	private Integer p_bo_no;	// 페이지 상의 게시글 번호(DB 저장X)
 	
-	@NotNull(groups= {BoardUpdateGroup.class, BoardDeleteGroup.class}, message="필수 항목")
-	@Min(value=1, groups={BoardUpdateGroup.class, BoardDeleteGroup.class})
+	@NotNull(groups= {GMBoardUpdateGroup.class, BoardUpdateGroup.class, BoardDeleteGroup.class}, message="필수 항목")
+	@Min(value=1, groups={GMBoardUpdateGroup.class, BoardUpdateGroup.class, BoardDeleteGroup.class})
 	private Integer bo_no;		// 게시글 식별 번호
 	
 	private String bo_kind;		// DG, JG,..(공통코드값)
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
+	@NotBlank(groups= {GMBoardUpdateGroup.class, GMBoardInsertGroup.class, DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_title;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
+	@NotBlank(groups= {GMBoardUpdateGroup.class, GMBoardInsertGroup.class, DMBoardInsertGroup.class, DMBoardUpdateGroup.class, BoardInsertGroup.class, BoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_cont;
 	
 	@NotBlank(groups= {DMBoardInsertGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_writer;
 	private String bo_write_de;
 	
-	@NotBlank(groups= {DMBoardInsertGroup.class, DMBoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
+	@NotBlank(groups= {GMBoardUpdateGroup.class, GMBoardInsertGroup.class, DMBoardInsertGroup.class, DMBoardUpdateGroup.class, HMBoardInsertGroup.class}, message="필수 항목")
 	private String bo_password;
 	
 	private String bo_secret_at;

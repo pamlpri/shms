@@ -135,7 +135,7 @@ public class BoardServiceImpl implements BoardService{
 		
 		if(cnt > 0) {
 			if("GG".equals(board.getBo_kind())){
-				cnt += commonAttachService.processes(board, "/" + board.getLec_code() + "/GGboard");
+				cnt += commonAttachService.processes(board, "/lecture/" + board.getLec_code() + "/GGboard");
 			}else {
 				cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
 			}
@@ -146,7 +146,8 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return result;
 	}
-
+	
+	@Transactional
 	@Override
 	public ServiceResult updateBoard(BoardVO board) {
 		ServiceResult result = ServiceResult.FAIL;
@@ -171,15 +172,20 @@ public class BoardServiceImpl implements BoardService{
 				cnt = boardDAO.updateBoard(board);
 				if(cnt > 0) {
 					if("GG".equals(board.getBo_kind())){
-						cnt += commonAttachService.processes(board, "/" + board.getLec_code() + "/GGboard");
-						logger.info("peocesses cnt{}", cnt);
-						logger.info("board {}", board);
-						cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getLec_code() + "/GGboard");
+						cnt += commonAttachService.processes(board, "/lecture/" + board.getLec_code() + "/GGboard");
+						cnt += commonAttachService.deleteFileProcesses(board, "/lecture/" + board.getLec_code() + "/GGboard");
 					}else {
 						cnt += commonAttachService.processes(board, "/" + board.getBo_kind() + "board");
-						logger.info("peocesses cnt{}", cnt);
-						logger.info("board {}", board);
 						cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+					}
+					
+					if(cnt > 1) {
+						int atch_flie_no = board.getAtch_file_no();
+						int seqCnt = commonAttachDAO.selectAtchFileSeqCount(atch_flie_no);
+						
+						if(seqCnt == 1) {
+							cnt += boardDAO.updateAtchFileNoNull(board.getBo_no());
+						}
 					}
 					
 					if(cnt > 0) {
@@ -191,7 +197,8 @@ public class BoardServiceImpl implements BoardService{
 		
 		return result;
 	}
-
+	
+	@Transactional
 	@Override
 	public ServiceResult deleteBoard(BoardVO board) {
 		BoardVO savedBoard = boardDAO.selectBoard(board.getBo_no());
@@ -203,9 +210,18 @@ public class BoardServiceImpl implements BoardService{
 			int cnt = boardDAO.deleteBoard(board);
 			if(cnt > 0) {
 				if("GG".equals(board.getBo_kind())){
-					cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getLec_code() + "/GGboard");
+					cnt += commonAttachService.deleteFileProcesses(board, "/lecture/" + board.getLec_code() + "/GGboard");
 				}else {
 					cnt += commonAttachService.deleteFileProcesses(board, "/" + board.getBo_kind() + "board");
+				}
+				
+				if(cnt > 1) {
+					int atch_flie_no = board.getAtch_file_no();
+					int seqCnt = commonAttachDAO.selectAtchFileSeqCount(atch_flie_no);
+					
+					if(seqCnt == 1) {
+						cnt += boardDAO.updateAtchFileNoNull(board.getBo_no());
+					}
 				}
 				
 				if(cnt > 0) {

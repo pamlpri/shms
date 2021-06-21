@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
-import kr.ac.shms.lecture.service.LectureProfessorService;
-import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.validator.BoardInsertGroup;
 
@@ -48,10 +47,6 @@ public class LectureNoticeController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureNoticeController.class);
 	
 	@Inject
-	private LectureProfessorService lectureProfessorService;
-	@Inject
-	private LectureService lectureService;
-	@Inject
 	private BoardService boardService;
 	@Inject
 	private CommonAttachService commonAttachService;
@@ -61,9 +56,8 @@ public class LectureNoticeController {
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
-		String bo_kind = boardService.selectBoKind("강의공지");
 		Map<String, String> searchMap = new HashMap<>();
-		searchMap.put("bo_kind", bo_kind);
+		searchMap.put("bo_kind", "GG");
 		searchMap.put("lec_code", lec_code);
 		
 		List<BoardVO> boardList = boardService.selectAllBoardList(searchMap);
@@ -108,8 +102,7 @@ public class LectureNoticeController {
 		/** 파라미터 조회 */
 		board.setLec_code(lec_code);
 		board.setBo_writer(user.getUser_name());
-		String bo_kind = boardService.selectBoKind("강의공지");
-		board.setBo_kind(bo_kind);
+		board.setBo_kind("GG");
 		
 		/** 파라미터 검증 */
 		boolean valid = !(errors.hasErrors());
@@ -120,9 +113,10 @@ public class LectureNoticeController {
 			ServiceResult result = boardService.insertBoard(board);
 			
 			if(ServiceResult.OK.equals(result)) {
-				view = "redirect:/lecture/notice.do?lec_code=" + lec_code;
+				view = "redirect:/lecture/notice.do";
 			}else {
-				
+				message = "게시글 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+				view = "lecture/noticeForm";
 			}
 		}else {
 			message = "필수항목 누락";
@@ -167,6 +161,10 @@ public class LectureNoticeController {
 			, Errors errors 
 			, Model model
 			) {
+		/** 파라미터 조회 */
+		board.setBo_kind("GG");
+		board.setLec_code(lec_code);
+		board.setBo_writer(user.getUser_name());
 		
 		/** 파라미터 검증 */
 		boolean valid = !(errors.hasErrors());
@@ -179,7 +177,8 @@ public class LectureNoticeController {
 			if(ServiceResult.OK.equals(result)) {
 				view = "redirect:/lecture/notice.do?lec_code=" + lec_code;
 			}else {
-				
+				message = "게시글 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
+				view = "lecture/noticeForm";				
 			}
 		}else {
 			message = "필수항목 누락";
@@ -189,6 +188,33 @@ public class LectureNoticeController {
 		model.addAttribute("message", message);
 		model.addAttribute("board", board);
 
+		return view;
+	}
+	
+	@RequestMapping(value="/lecture/noticeDelete.do", method=RequestMethod.POST)
+	public String noticeDelete(
+		@ModelAttribute("board") BoardVO board
+		, @SessionAttribute(name="lec_code", required=false) String lec_code
+		, RedirectAttributes session
+		) {
+		board.setLec_code(lec_code);
+		board.setBo_kind("GG");
+		
+		ServiceResult result = ServiceResult.FAIL;
+		String message = null;
+		String view = null;
+		result = boardService.deleteBoard(board);
+		
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lecture/notice.do";
+		}else if(ServiceResult.NOTEXIST.equals(result)){
+			view = "redirect:/lecture/notice.do";
+		}else {
+			message = "게시글 삭제에 실패하였습니다. 잠시 후 다시 시도해주세요";
+			view = "redirect:/lms/subjectNoticeView.do?bo_no=" + board.getBo_no();
+		}
+		
+		session.addFlashAttribute("message", message);
 		return view;
 	}
 }

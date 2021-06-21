@@ -119,7 +119,7 @@
           WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
 	</update>
 	
-	<select id="atch_file_seqCount" resultType="int">
+	<select id="selectAtchFileSeqCount" resultType="int">
 		SELECT COUNT(*)+1
 		FROM ATTACH
 		WHERE atch_file_no = #{atch_file_no}	

@@ -101,7 +101,7 @@
 	<sql id="selectFrag">
 			bo_no,
 			bo_kind,
-			DECODE(bo_secret_at, 'Y', '비밀글', bo_title) bo_title,
+			bo_title,
 			bo_cont,
 			bo_writer,
 			TO_CHAR(bo_write_de, 'YYYY.MM.DD') bo_write_de, 
@@ -223,7 +223,7 @@
 			    #{bo_title, jdbcType=VARCHAR},
 			    #{bo_cont, jdbcType=VARCHAR},
 			    #{bo_writer, jdbcType=VARCHAR},
-			    SYSDATE,
+			    TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI'),	
 			    #{bo_password, jdbcType=VARCHAR},
 			    #{bo_secret_at, jdbcType=VARCHAR},
 			    0,
@@ -241,7 +241,14 @@
 		   SET
 		    bo_title = #{bo_title, jdbcType=VARCHAR},
 		    bo_cont = #{bo_cont, jdbcType=VARCHAR},
-		    bo_secret_at = #{bo_secret_at, jdbcType=VARCHAR}
+		    <choose>
+		    	<when test="@org.apache.commons.lang3.StringUtils@isBlank(bo_secret_at)">
+				    bo_secret_at = 'N'
+		    	</when>
+		    	<otherwise>
+				    bo_secret_at = #{bo_secret_at, jdbcType=VARCHAR}
+		    	</otherwise>
+		    </choose>
 		WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
 	</update>
 
@@ -436,5 +443,11 @@
 		WHERE bo_kind = 'HM'
 		AND bo_no = #{bo_no}
 	</delete>
+	
+	<update id="updateAtchFileNoNull" parameterType="int">
+		UPDATE board
+		  SET atch_file_no = null
+		 WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
+	</update>
 	
 </mapper>
