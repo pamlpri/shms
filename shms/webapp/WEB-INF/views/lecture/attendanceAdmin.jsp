@@ -32,76 +32,81 @@
           <div class="row">
               <div class="col-12">
                   <div class="card">
-                  <div class="card-body table-scroll" id="table-scroll">
-                    <div class="table-responsive table-wrap">
-                      <div class="text-right excelWrap">
-                          <a href="#" class="btn btn-warning">성적부 반영</a>
-                          <button class="btn btn-icon btn-primary" type="button" onclick="AttendStudentToExcelConverter()"><i class="far fa-file"></i> Excel 다운로드</button>
-                      </div>
-                      <table class="table table-striped main-table" id="attendance-table">
-                          <thead>                                 
-	                          <tr>
-	                              <th class="text-center">이름</th>
-	                              <th class="text-center">학번</th>
-	                              <th class="text-center">학과</th>
-	                              <th class="text-center">1주</th>
-	                              <th class="text-center">2주</th>
-	                              <th class="text-center">3주</th>
-	                              <th class="text-center">4주</th>
-	                              <th class="text-center">5주</th>
-	                              <th class="text-center">6주</th>
-	                              <th class="text-center">7주</th>
-	                              <th class="text-center">8주</th>
-	                              <th class="text-center">9주</th>
-	                              <th class="text-center">10주</th>
-	                              <th class="text-center">11주</th>
-	                              <th class="text-center">12주</th>
-	                              <th class="text-center">13주</th>
-	                              <th class="text-center">14주</th>
-	                              <th class="text-center">15주</th>
-	                              <th class="text-center">출석</th>
-	                              <th class="text-center">지각</th>
-	                              <th class="text-center">조퇴</th>
-	                              <th class="text-center">결석</th>
-	                          </tr>
-                          </thead>
-                          <tbody>
-                          	  <c:forEach items="${attendList }" var="attend" varStatus="i">
+	                  <form class="card-body table-scroll" id="table-scroll" action="${cPath }/lecture/attendGrade.do">
+	                    <div class="table-responsive table-wrap">
+	                      <div class="text-right excelWrap">
+	                          <button type="button" class="btn btn-warning" id="gradeBtn">성적부 반영</button>
+	                          <button class="btn btn-icon btn-primary" type="button" onclick="AttendStudentToExcelConverter()"><i class="far fa-file"></i> Excel 다운로드</button>
+	                      </div>
+	                      <table class="table table-striped main-table" id="attendance-table">
+	                          <thead>                                 
 		                          <tr>
-		                              <td class="text-center">
-		                                  <a class="text-color" href="${cPath}/lecture/attendance.do?what=${attend.stdnt_no}">${attend.name }</a>
-		                              </td>
-		                              <td class="text-center">
-		                              	 <a class="text-color" href="${cPath}/lecture/attendance.do?what=${attend.stdnt_no}">${attend.stdnt_no }</a>
-		                              </td>
-		                              <td class="text-center">${attend.sub_name }</td>
-		                              <c:forEach varStatus="idx" begin="1" end="15">
-			                              <c:set var="week" value="week${idx.count}" />
-			                              <c:choose>
-			                              	<c:when test="${attend[week] eq 'CS'}">
-			                              		<td class="text-center">O </td>
-			                              	</c:when>
-			                              	<c:when test="${attend[week] eq 'JG' or attend[week] eq 'JT'}">
-			                              		<td class="text-center wee">&#9650;</td>
-			                              	</c:when>
-			                              	<c:when test="${attend[week] eq 'GS'}">
-			                              		<td class="text-center">X</td>
-			                              	</c:when>
-			                              	<c:otherwise>
-			                              		<td class="text-center">　</td>
-			                              	</c:otherwise>
-			                              </c:choose>
-		                              </c:forEach>
-		                              <td class="text-center">${attend.cs_cnt }</td>
-		                              <td class="text-center">${attend.jg_cnt }</td>
-		                              <td class="text-center">${attend.jt_cnt }</td>
-		                              <td class="text-center">${attend.gs_cnt }</td>
+		                              <th class="text-center">이름</th>
+		                              <th class="text-center">학번</th>
+		                              <th class="text-center">학과</th>
+		                              <th class="text-center">1주</th>
+		                              <th class="text-center">2주</th>
+		                              <th class="text-center">3주</th>
+		                              <th class="text-center">4주</th>
+		                              <th class="text-center">5주</th>
+		                              <th class="text-center">6주</th>
+		                              <th class="text-center">7주</th>
+		                              <th class="text-center">8주</th>
+		                              <th class="text-center">9주</th>
+		                              <th class="text-center">10주</th>
+		                              <th class="text-center">11주</th>
+		                              <th class="text-center">12주</th>
+		                              <th class="text-center">13주</th>
+		                              <th class="text-center">14주</th>
+		                              <th class="text-center">15주</th>
+		                              <th class="text-center">출석</th>
+		                              <th class="text-center">지각</th>
+		                              <th class="text-center">조퇴</th>
+		                              <th class="text-center">결석</th>
 		                          </tr>
-                          	  </c:forEach>                        
-                          </tbody>
-                      </table>
-                      </div>
-                  </div>
+	                          </thead>
+	                          <tbody>
+	                          	  <c:forEach items="${attendList }" var="attend" varStatus="i">
+			                          <tr>
+		                          	  	  <input type="hidden" name="attendList[${i.index }].grade" value="${attend.grade}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }]semstr" value="${attend.semstr}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }]year" value="${attend.year}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }]stdnt_no" value="${attend.stdnt_no}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }]stdnt_no" value="${lec_code}"/>
+			                              <td class="text-center">
+			                                  <a class="text-color" href="${cPath}/lecture/attendance.do?what=${attend.stdnt_no}">${attend.name }</a>
+			                              </td>
+			                              <td class="text-center">
+			                              	 <a class="text-color" href="${cPath}/lecture/attendance.do?what=${attend.stdnt_no}">${attend.stdnt_no }</a>
+			                              </td>
+			                              <td class="text-center">${attend.sub_name }</td>
+			                              <c:forEach varStatus="idx" begin="1" end="15">
+				                              <c:set var="week" value="week${idx.count}" />
+				                              <c:choose>
+				                              	<c:when test="${attend[week] eq 'CS'}">
+				                              		<td class="text-center">O </td>
+				                              	</c:when>
+				                              	<c:when test="${attend[week] eq 'JG' or attend[week] eq 'JT'}">
+				                              		<td class="text-center wee">&#9650;</td>
+				                              	</c:when>
+				                              	<c:when test="${attend[week] eq 'GS'}">
+				                              		<td class="text-center">X</td>
+				                              	</c:when>
+				                              	<c:otherwise>
+				                              		<td class="text-center">　</td>
+				                              	</c:otherwise>
+				                              </c:choose>
+			                              </c:forEach>
+			                              <td class="text-center">${attend.cs_cnt }</td>
+			                              <td class="text-center">${attend.jg_cnt }</td>
+			                              <td class="text-center">${attend.jt_cnt }</td>
+			                              <td class="text-center">${attend.gs_cnt }</td>
+			                          </tr>
+	                          	  </c:forEach>                        
+	                          </tbody>
+	                      </table>
+                      	</div>
+	                 </form>
                   </div>
               </div>
           </div>

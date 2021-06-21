@@ -25,6 +25,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
+import kr.ac.shms.lms.student.vo.SugangVO;
 
 /**
  * @author 박초원
@@ -36,7 +37,7 @@ import kr.ac.shms.lms.student.vo.AttendVO;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
- * 2021. 6. 21.      박초원				 교수 학생 출석수정
+ * 2021. 6. 21.      박초원				 교수 학생 출석수정,  출석 성적부 반영
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -64,6 +65,38 @@ public class AttendanceAdminController {
 	) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
 		ServiceResult result = lectureProfessorService.updateStudentAttend(attend);
+		
+		switch(result) {
+		case PKDUPLICATED:
+			resultMap.put("result", ServiceResult.PKDUPLICATED);
+			break;
+		case OK:
+			resultMap.put("result", ServiceResult.OK);
+			break;
+		case FAIL:
+			resultMap.put("result", ServiceResult.FAIL);
+			break;
+		}
+		
+		resp.setContentType(MimeType.JSON.getMime());
+		try(
+			PrintWriter out = resp.getWriter();	
+		){
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(out, resultMap);
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value="/lecture/attendGrade.do", method=RequestMethod.POST)
+	public String attend(
+		@ModelAttribute("attend") AttendVO attend
+		,HttpServletResponse resp
+		,Model model
+	) throws IOException {
+		Map<String, Object> resultMap = new HashMap<>();
+		ServiceResult result = lectureProfessorService.insertAttendGrade(attend);
 		
 		switch(result) {
 		case PKDUPLICATED:

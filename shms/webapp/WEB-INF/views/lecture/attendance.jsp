@@ -120,15 +120,11 @@
 	             	 	<c:when test="${attnd.attend_stat eq 'GS'}">
 	             	 		<td>
 	             	 			<button class="btn btn-primary updateBtn" data-type="CS">출석인정</button>
-		             	 		<button class="btn btn-danger updateBtn" data-type="JG">지각</button>
-		             	 		<button class="btn btn-warning updateBtn"  data-type="JT">조퇴</button>
 	             	 		</td>
 	             	 	</c:when>
 	             	 	<c:otherwise>
 	             	 		<td>
 	             	 			<button class="btn btn-secondary updateBtn" style="background-color: #6c757d;" data-type="GS">출석취소</button>
-	             	 			<button class="btn btn-danger updateBtn"  data-type="JG">지각</button>
-		             	 		<button class="btn btn-warning updateBtn" data-type="JT">조퇴</button>
 	             	 		</td>
 	             	 	</c:otherwise>
 	             	 </c:choose>
@@ -170,7 +166,6 @@
 			,success : function(resp){
 				if(resp.result == "OK"){
 					if(type == "CS") {
-// 						$(obj).removeClass("btn-primary").addClass("btn-light-secondary").text("출석취소").data("type", "GS");
 						$(obj).parents("tr").children(".attend_stat").text("출석");	
 						$(obj).parent("td").prepend($("<button>").addClass("btn btn-secondary updateBtn").text("출석취소").data("type", "GS").css("background-color","#6c757d"));
 						$(obj).remove();
@@ -182,39 +177,11 @@
 						$(obj).parents("tr").children(".attend_stat").text("결석");	
 						$(obj).parent("td").prepend($("<button>").addClass("btn btn-primary updateBtn").text("출석인정").data("type", "CS").css("background-color","#6777ef"));
 						$(obj).remove();
-						$(".cs_cnt").text(cs_cnt - 1);
-						$(".gs_cnt").text(gs_cnt + 1);
+						$(".cs_cnt").text(cs_cnt - 1 + "일");
+						$(".gs_cnt").text(gs_cnt + 1 + "일");
 						let per = ((cs_cnt - 1) / 15 * 100);
 						$(".per").text(Math.floor(per) + "%");
-					}else if(type == "JG"){
-						if(stat == "지각"){
-							$(obj") 
-						}else{
-							$(obj).parents("tr").children(".attend_stat").text("지각");
-							$(".jg_cnt").text(jg_cnt + 1 + "일");
-							if((jg_cnt + 1) % 3 == 0){
-								$(".cs_cnt").text(cs_cnt - 1 + "일");
-								$(".gs_cnt").text(gs_cnt + 1 + "일");
-								let per = ((cs_cnt - 1) / 15 * 100);
-								$(".per").text(Math.floor(per) + "%");
-							}
-						}
-					}else {
-						$(obj).parents("tr").children(".attend_stat").text("조퇴");
-						$(".jt_cnt").text(jt_cnt + 1 + "일");
-						if((jt_cnt + 1) % 3 == 0){
-							$(".cs_cnt").text(cs_cnt - 1 + "일");
-							$(".gs_cnt").text(gs_cnt + 1 + "일");
-							let per = ((cs_cnt - 1) / 15 * 100);
-							$(".per").text(Math.floor(per) + "%");
-						}
 					}
-				}else {
-					iziToast.error({
-					    title: '서버오류',
-					    message: '잠시뒤에 다시 시도해주세요.',
-					    position: 'bottomCenter' 
-				    });
 				}
 			},error : function(xhr, error, msg){ 
 				console.log(xhr);
@@ -222,5 +189,15 @@
 				console.log(msg);
 			}
 		});
+		
+		function jg(){
+			console.log("호출됨");
+			iziToast.error({
+			    toastOnce: true ,
+			    title: '오류',
+			    message: '이미 지각처리 된 항목입니다.',
+			    position: 'bottomCenter'
+		    });
+		}
 	});
 </script>
