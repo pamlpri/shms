@@ -150,6 +150,9 @@
 			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(sub_code)">
 				AND a.sub_code = #{sub_code, jdbcType=VARCHAR}
 			</if>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(lec_code)">
+				AND a.lec_code = #{lec_code, jdbcType=VARCHAR}
+			</if>
 		ORDER BY bo_write_de desc
 	</select>
 	
@@ -248,25 +251,6 @@
 			    bo_no = #{bo_no, jdbcType=NUMERIC}
 	</delete>	
 	
-	<select id="attachList" parameterType="int" resultType="AttachVO">
-		SELECT
-		    A.atch_file_no,
-		    atch_file_seq,
-		    file_path,
-		    file_nm,
-		    file_cont_type,
-		    file_size,
-		    reg_date,
-		    reg_user_id,
-		    biz_type,
-		    save_file_nm
-		FROM
-		    attach A
-		RIGHT OUTER JOIN BOARD B
-		ON (A.ATCH_FILE_NO = B.ATCH_FILE_NO)
-		WHERE B.BO_NO = #{bo_no}
-	</select>
-	
 	<insert id="insertAttatches" parameterType="BoardVO">
 		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
 		SELECT NVL(MAX(atch_file_seq), 0) + 1 startAttNo
@@ -317,12 +301,6 @@
 		SELECT * FROM DUAL
 	</insert>
 	
-	<select id="atch_file_seqCount" resultType="int">
-		SELECT COUNT(*)+1
-		FROM ATTACH
-		WHERE atch_file_no = #{atch_file_no}	
-	</select>
-	
 	<select id="selectSaveNamesForDelete" parameterType="BoardVO" resultType="string">
 		SELECT SAVE_FILE_NM
 		FROM ATTACH
@@ -341,23 +319,6 @@
 			#{attNo}
 		</foreach>
 	</delete>
-	
-	<select id="selectAttatch" parameterType="AttachVO" resultType="AttachVO">
-		SELECT
-			atch_file_no,
-		    atch_file_seq,
-		    file_path,
-		    file_nm,
-		    file_cont_type,
-		    file_size,
-		    reg_date,
-		    reg_user_id,
-		    biz_type,
-		    save_file_nm
-		FROM attach
-		WHERE atch_file_no = #{atch_file_no}
-		AND atch_file_seq = #{atch_file_seq}
-	</select>
 	
 	<select id="selectQnaCnt" parameterType="hashMap" resultType="int">
 		SELECT COUNT(*) cnt
@@ -476,9 +437,4 @@
 		AND bo_no = #{bo_no}
 	</delete>
 	
-	<update id="updateAtchNo" parameterType="BoardVO">
-         UPDATE board
-            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
-          WHERE bo_no = #{bo_no, jdbcType=NUMERIC}
-	</update>
 </mapper>

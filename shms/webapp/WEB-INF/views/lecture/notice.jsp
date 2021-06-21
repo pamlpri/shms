@@ -3,24 +3,26 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 20.      송수미        강의 공지사항 목록 조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
   <!-- contents start -->
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code}&lec_name=${lec_name}">Home</a></li>
           <li class="breadcrumb-item"><a href="#">강의개요</a></li>
           <li class="breadcrumb-item active" aria-current="page">공지사항</li>
       </ol>
@@ -44,192 +46,32 @@
                               <th class="text-center">조회수</th>
                           </tr>
                           </thead>
-                          <tbody>                                 
-                          <tr>
-                              <td class="text-center">20</td>
-                              <td class="text-center">
-                                <a class="text-color" href="qnaLecturePass.html">공지 입니다 20</a>
-                              </td>
-                              <td class="text-center">2020.05.03</td>
-                              <td class="text-center">하재관</td>
-                              <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">19</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 19</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">18</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 18</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">17</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 17</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">16</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 16</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">15</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 15</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">14</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 14</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">13</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 13</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">12</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 12</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">11</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 11</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">10</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 10</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">9</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 9</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">8</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 8</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">7</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 7</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">6</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 6</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">5</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 5</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">4</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 4</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">최희연</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">3</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 3</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">2</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 2</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
-                          <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">
-                              <a class="text-color" href="${cPath}/lecture/noticeView.do">강의공지 입니다 1</a>
-                            </td>
-                            <td class="text-center">2020.05.03</td>
-                            <td class="text-center">하재관</td>
-                            <td class="text-center">100</td>
-                          </tr>
+                          <tbody>
+                          	<c:choose>
+                          		<c:when test="${not empty boardList }">
+                          			<c:forEach items="${boardList }" var="board" varStatus="idx">
+				                          <tr>
+				                              <td class="text-center">${idx.count }</td>
+				                              <td class="text-center">
+				                                <a class="text-color" href="${cPath}/lecture/noticeView.do?bo_no=${board.bo_no}">${board.bo_title }</a>
+				                              </td>
+				                              <td class="text-center">${board.bo_write_de }</td>
+				                              <td class="text-center">${board.bo_writer }</td>
+				                              <td class="text-center">${board.bo_hit }</td>
+				                          </tr>
+                          			</c:forEach>
+                          		</c:when>
+                          		<c:otherwise>
+                          			<tr>
+                          				<td colspan="5">현재 표시 가능한 공지사항이 없습니다.</td>
+                          			</tr>
+                          		</c:otherwise>
+                          	</c:choose>                                 
                           </tbody>
                       </table>
                       <!-- 교수한테만 보여야 하는 버튼 -->
                       <div class="text-right" style="margin-top: 3%;">
-                        <a href="${cPath }/lecture/noticeForm.do" class="btn btn-icon icon-left btn-primary">
+                        <a href="${cPath }/lecture/noticeInsert.do" class="btn btn-icon icon-left btn-primary">
                           <i class="far fa-edit"></i> 글쓰기
                         </a>
                       </div>

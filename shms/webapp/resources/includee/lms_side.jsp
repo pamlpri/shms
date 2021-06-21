@@ -254,10 +254,10 @@
 	                  
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">진행중인 강의</a>
+	                          <a href="${cPath }/lms/lectureList.do">진행중인 강의</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="${cPath }/lms/lectureList.do">전체강의</a>
+	                          <a href="${cPath }/lms/lectureAllList.do">전체강의</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="${cPath }/lms/evaluationView.do">강의평가</a>

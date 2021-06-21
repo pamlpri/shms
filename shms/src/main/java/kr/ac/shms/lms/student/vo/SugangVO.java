@@ -74,6 +74,7 @@ public class SugangVO implements IAttachVO {
 	
 	//vo생성
 	private String lec_cl_nm;
+	private String lecrum;
 	private String name;
 	private String sub_name;
 	private String col_code;

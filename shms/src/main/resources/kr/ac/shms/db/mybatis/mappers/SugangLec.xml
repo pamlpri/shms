@@ -245,4 +245,39 @@
 	   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR} 
 	   AND req_year NOT IN EXTRACT(YEAR FROM SYSDATE)
 	</select>
+	
+	<select id="selectAllLecList" parameterType="String" resultType="SugangVO">
+		SELECT name,
+		       staff_no,
+		       lec_name,
+		       lec_pnt,
+		       lec_atnlc,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'LEC_CL')
+		           AND com_code = lec_cl) lec_cl,
+		       lec_code,
+		       lecrum,
+		       estbl_year,
+		       estbl_semstr
+		  FROM (
+		        SELECT DISTINCT a.name, 
+		               a.staff_no, 
+		               b.lec_name, 
+		               b.lec_pnt,
+		               b.lec_atnlc,
+		               c.lec_code,
+		               c.lec_cl,
+		               f.building_nm||' '||e.lecrum_nm lecrum,
+		               c.estbl_year,
+		               c.estbl_semstr
+		          FROM staff a
+		         INNER JOIN curriculum b ON (a.staff_no=b.staff_no)
+		         INNER JOIN lecture c ON (b.cur_code=c.cur_code)
+		         RIGHT OUTER JOIN lecrum_ttable d ON (c.lec_code = d.lec_code)
+		         RIGHT OUTER JOIN lecrum e ON (d.lecrum_no = e.lecrum_no)
+		        RIGHT OUTER JOIN building f ON (f.building_no = e.building_no)
+		       )
+		 WHERE staff_no=#{staff_no, jdbcType=VARCHAR}
+	</select>
 </mapper>
