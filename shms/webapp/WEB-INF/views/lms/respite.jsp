@@ -28,6 +28,7 @@
                           <th class="text-center">신청번호</th>
                           <th class="text-center">신청종류</th>
                           <th class="text-center">신청일</th>
+                          <th class="text-center">유예종료일</th>
                           <th class="text-center">신청사유</th>
                           <th class="text-center">서류제출</th>
                           <th class="text-center">처리상태</th>

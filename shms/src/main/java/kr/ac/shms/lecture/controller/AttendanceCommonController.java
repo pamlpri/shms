@@ -36,12 +36,6 @@ public class AttendanceCommonController {
 	private static final Logger logger = LoggerFactory.getLogger(AttendanceCommonController.class);
 	
 	@Inject
-	private LectureProfessorService lectureProfessorService;
-	
-	@Inject
-	private LectureStudentService lectureStudentService; 
-	
-	@Inject
 	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/attendance.do")

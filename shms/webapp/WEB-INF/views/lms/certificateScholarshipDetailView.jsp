@@ -2,7 +2,7 @@
 * [[개정이력(Modification Information)]]
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
-* 2021. 6. 11.      박초원        최초작성
+* 2021. 6. 21.      박초원        최초작성
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -13,8 +13,8 @@
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">HOME</a></li>
-          <li class="breadcrumb-item"><a href="#">변동사항</a></li>
-          <li class="breadcrumb-item active" aria-current="page">자퇴신청</li>
+          <li class="breadcrumb-item"><a href="#">장학금 지원</a></li>
+          <li class="breadcrumb-item active" aria-current="page">국가유공자 장학금</li>
       </ol>
   </nav>
   
@@ -36,7 +36,7 @@
                       <td>asdgasdg@shms.ac</td>
                   </tr>
                   <tr>
-                      <th rowspan="4" class="align-middle text-center">신청상세</th>
+                      <th rowspan="5" class="align-middle text-center">신청상세</th>
                       <th class="align-middle text-center">신청번호</th>
                       <td>12345</td>
                       <th class="align-middle text-center">신청일자</th>
@@ -44,29 +44,33 @@
                   </tr>
                   <tr>
                       <th class="align-middle text-center">신청종류</th>
-                      <td>자퇴</td>
+                      <td>국가유공자 장학금</td>
                       <th class="align-middle text-center">제출서류</th>
-                      <td>지도교수확인서.pdf</td>
-                  </tr>
-                  <tr>
-                      <th class="align-middle text-center">신청사유</th>
-                      <td>건강문제</td>
-                      <th class="align-middle text-center">자퇴일</th>
-                      <td>2022.03.02</td>
+                      <td>
+                          <ul class="attat">
+                              <li><a href="#" class="text-color">국가유공자.pdf</a></li>
+                              <li><a href="#" class="text-color">가족관계증명서.pdf</a></li>
+                          </ul>
+                      </td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">처리상태</th>
-                      <td>완료</td>
-                      <th class="align-middle text-center">처리일</th>
+                      <td>지급완료</td>
+                      <th class="align-middle text-center">지급일</th>
                       <td>2021.05.02</td>
                   </tr>
                   <tr>
+                      <th class="align-middle text-center">계좌은행</th>
+                      <td>농헙</td>
+                      <th class="align-middle text-center">계좌번호</th>
+                      <td>453016-23-105302</td>
+                  </tr>
               </table>
               <div class="text-center">
-                  <a href="${cPath }/lms/drop.do" class="btn btn-primary">목록으로</a>
+                  <a href="nationalScholarship.html" class="btn btn-primary">목록으로</a>
               </div>
           </div>
       </div>
-    </div>
+  </div>
   <!-- contents end -->
 </div>
