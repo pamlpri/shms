@@ -591,5 +591,6 @@
     		CALL p_facilityupdate(#{updatecount,mode=OUT,jdbcType=NUMERIC,javaType=java.lang.Integer})
     	}
     </select>
+    
 </mapper>
 

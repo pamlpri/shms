@@ -7,6 +7,7 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -258,18 +259,16 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 </style>
 </head>
 <body>
-<button type="button" class="btn btn-primary" id="savePdf" >PDF 저장</button>
+<button type="button" class="btn btn-primary" id="savePdf" style='margin-left : 25%;' >PDF 저장</button>
 <div id="pdfDiv">
 <P CLASS=HStyle0 STYLE='text-align: center;'>
 <TABLE border="1" cellspacing="0" cellpadding="0"
-	style='border-collapse: collapse; border: none;'>
+	style='border-collapse: collapse; border: none; margin-left : 25%;'>
 	<TR>
-		<TD width="748" height="1025" valign="middle"
+		<TD width="900" height="1025" valign="middle"
 			style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 			<P CLASS=HStyle0 STYLE='text-align: center;'>
-				<SPAN
-					STYLE='font-size: 28.0pt; font-family: "굴림"; line-height: 160%;'>성
-					적 증 명 서</SPAN>
+				<SPAN STYLE='font-size: 28.0pt; font-family: "굴림"; line-height: 160%;'>성 적 증 명 서</SPAN>
 			<TABLE border="1" cellspacing="0" cellpadding="0"
 				style='border-collapse: collapse; border: none;'>
 				<CAPTION align="top">
@@ -279,40 +278,37 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 					<TD colspan="4" width="170" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;번
-								:</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;번:</SPAN>
 						</P>
 					</TD>
 					<TD colspan="2" width="82" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.stdnt_no}</SPAN>
 						</P>
 					</TD>
 					<TD colspan="5" width="169" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								학 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>대&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;학:</SPAN>
 						</P>
 					</TD>
 					<TD colspan="2" width="82" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.col_name}</SPAN>
 						</P>
 					</TD>
 					<TD colspan="4" width="154" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>졸&nbsp; 업&nbsp; 년&nbsp;
-								월&nbsp; 일 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>졸&nbsp;&nbsp;업&nbsp;&nbsp;년&nbsp;&nbsp;월&nbsp;&nbsp;일 :</SPAN>
 						</P>
 					</TD>
 					<TD colspan="2" width="75" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.grdtn_de }</SPAN>
 						</P>
 					</TD>
 				</TR>
@@ -320,62 +316,51 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 					<TD colspan="4" width="170" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								명 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명 :</SPAN>
 						</P>
 					</TD>
 					<TD colspan="2" width="82" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.name }</SPAN>
 						</P>
 					</TD>
 					<TD colspan="5" width="169" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								공 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;공 :</SPAN>
 						</P>
 					</TD>
 					<TD colspan="2" width="82" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.sub_name }</SPAN>
 						</P>
 					</TD>
 					<TD colspan="4" width="154" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								위&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 명 :</SPAN>
-						</P>
 					</TD>
 					<TD colspan="2" width="75" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
 					</TD>
 				</TR>
 				<TR>
 					<TD colspan="4" width="170" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>생&nbsp;&nbsp;
-								년&nbsp;&nbsp; 월&nbsp;&nbsp; 일 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>생&nbsp;&nbsp;&nbsp;년&nbsp;&nbsp;&nbsp;월&nbsp;&nbsp;&nbsp;&nbsp; 일 :</SPAN>
 						</P>
 					</TD>
 					<TD colspan="2" width="82" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.regno }</SPAN>
 						</P>
 					</TD>
 					<TD colspan="5" width="169" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 공 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;공 :</SPAN>
 						</P>
 					</TD>
 					<TD colspan="8" width="312" height="17" valign="middle"
@@ -389,21 +374,17 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 					<TD colspan="4" width="170" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>입 학&nbsp; 년&nbsp;
-								월&nbsp; 일 :</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>입&nbsp;&nbsp; 학&nbsp;&nbsp; 년&nbsp;&nbsp;월&nbsp; 일 :</SPAN>
 						</P>
 					</TD>
 					<TD colspan="6" width="248" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
 						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+							<SPAN STYLE='font-family: "굴림";'>${crtf.entsch_de }</SPAN>
 						</P>
 					</TD>
 					<TD colspan="5" width="162" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: right;'>
-							<SPAN STYLE='font-family: "굴림";'>학위등록번호 :</SPAN>
-						</P>
 					</TD>
 					<TD colspan="4" width="154" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
@@ -463,164 +444,90 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 							<SPAN STYLE='font-family: "굴림";'>성적</SPAN>
 						</P>
 					</TD>
-					<TD width="41" height="38" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>이수<BR>구분
-							</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="113" height="38" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>이수과목명</SPAN>
-						</P>
-					</TD>
-					<TD width="37" height="38" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>학점</SPAN>
-						</P>
-					</TD>
-					<TD width="37" height="38" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>성적</SPAN>
-						</P>
-					</TD>
+					<td></td>
 				</TR>
-				<TR>
-					<TD colspan="6" width="252" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>2015 년도 1학기</SPAN>
-						</P>
-					</TD>
-					<TD colspan="7" width="252" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>년도 학기</SPAN>
-						</P>
-					</TD>
-					<TD colspan="6" width="229" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>교필</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="128" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>체육</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="5" width="169" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="117" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>취득학점 계 :</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="113" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>교필</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="128" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>국어</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="5" width="169" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="117" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>평 점 평 균 :</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="113" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0 STYLE='text-align: center;'>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
+					<c:choose>
+					<c:when test="${not empty  lecScoreList}">
+						<c:forEach items="${selectSemstrList }" var="selectSemstrList">
+							<TR>
+								<TD colspan="6" width="252" height="17" valign="middle"
+									style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+									<P CLASS=HStyle0 STYLE='text-align: center;'>
+										<SPAN STYLE='font-family: "굴림";'>${selectSemstrList.year }년도 ${selectSemstrList.semstr }학기</SPAN>
+									</P>
+								</TD>
+								<TD colspan="7" width="252" height="17" valign="middle"
+									style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+									<P CLASS=HStyle0 STYLE='text-align: center;'>
+										<SPAN STYLE='font-family: "굴림";'>년도 학기</SPAN>
+									</P>
+								</TD>
+								<TD colspan="6" width="229" height="17" valign="middle"
+									style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+									<P CLASS=HStyle0 STYLE='text-align: center;'>
+										<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+									</P>
+								</TD>
+								<TR>
+									<TD width="41" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>교필</SPAN>
+										</P>
+									</TD>
+									<TD colspan="3" width="128" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>체육</SPAN>
+										</P>
+									</TD>
+									<TD width="41" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+										</P>
+									</TD>
+									<TD width="41" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+										</P>
+									</TD>
+									<TD colspan="5" width="169" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+										</P>
+									</TD>
+									<TD width="41" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+										</P>
+									</TD>
+									<TD width="41" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0>
+											<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+										</P>
+									</TD>
+									<TD colspan="3" width="117" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0 STYLE='text-align: center;'>
+											<SPAN STYLE='font-family: "굴림";'>취득학점 계 :</SPAN>
+										</P>
+									</TD>
+									<TD colspan="3" width="113" height="17" valign="middle"
+										style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
+										<P CLASS=HStyle0 STYLE='text-align: center;'>
+											<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
+										</P>
+									</TD>
+								</TR>
+							</TR>
+						</c:forEach>
+					</c:when>
+				</c:choose>
 				<TR>
 					<TD width="41" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
@@ -1516,138 +1423,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 						</P>
 					</TD>
 				</TR>
-				<TR>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="128" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="5" width="169" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="128" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="5" width="169" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
-				<TR>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="3" width="128" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD colspan="5" width="169" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-					<TD width="41" height="17" valign="middle"
-						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
-						<P CLASS=HStyle0>
-							<SPAN STYLE='font-family: "굴림";'>&nbsp;</SPAN>
-						</P>
-					</TD>
-				</TR>
+			
 				<TR>
 					<TD colspan="2" width="81" height="17" valign="middle"
 						style='border-left: solid #000000 0.4pt; border-right: solid #000000 0.4pt; border-top: solid #000000 0.4pt; border-bottom: solid #000000 0.4pt; padding: 1.4pt 5.1pt 1.4pt 5.1pt'>
@@ -2114,6 +1890,9 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 						</P>
 					</TD>
 				</TR>
+				<tr>
+					
+				</tr>
 			</TABLE>
 			</P>
 			<P CLASS=HStyle0 STYLE='text-align: center;'>

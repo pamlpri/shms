@@ -194,4 +194,33 @@
 		WHERE USER_ID = #{user_id}
 	</update>
 	
+	<select id="selectReginfoCngStudentList" resultType="RegInfoCngVO">
+		SELECT cng_req_no,
+		       d.col_name,
+		       c.sub_name,
+		       a.stdnt_no,
+		       name,
+		       TO_CHAR(a.req_de, 'RRRR.MM.DD') req_de,
+		       TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
+		      (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+		           AND com_code = req_cl_code) req_cl_code,
+		      (SELECT com_code_nm
+		         FROM tb_com_code
+		        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		          AND com_code = process_stat) process_stat
+		  FROM reginfo_cng a
+		 INNER JOIN v_stdntinfo b ON(a.stdnt_no=b.stdnt_no)
+		 INNER JOIN subject c ON(b.sub_code=c.sub_code)
+		 INNER JOIN college d ON(c.col_code=d.col_code)
+		 ORDER BY req_de desc
+	</select>
+	
+	<select id="selectReqClCode" resultType="ComCodeVO">
+		SELECT com_code_nm,
+		       com_code
+		  FROM tb_com_code
+		 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+	</select>
 </mapper>
