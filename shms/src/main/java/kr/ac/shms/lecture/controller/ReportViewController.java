@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import kr.ac.shms.common.dao.BoardDAO;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
@@ -61,13 +62,12 @@ public class ReportViewController {
 	
 	@RequestMapping("/lecture/reportList.do")
 	public String reportList(
-			@SessionAttribute(name="lec_code", required=false) String lec_code
-			, @SessionAttribute(name="lec_name", required=false) String lec_name
+			@SessionAttribute(name="lec_name", required=false) String lec_name
 			, @RequestParam("set_task_no") Integer set_task_no
 			, Model model
 		) {
-		
 		/** 파라미터 조회 */
+		String lec_code = getLecCode(set_task_no);
 		Map<String, Object> search = new HashMap<>();
 		search.put("set_task_no", set_task_no);
 		search.put("lec_code", lec_code);
@@ -82,6 +82,10 @@ public class ReportViewController {
 		
 		/** 반환 */
 		return "lecture/reportList";
+	}
+	
+	public String getLecCode(int set_task_no) {
+		return lectureProfessorService.selectLecCodeForTask(set_task_no);
 	}
 	
 	@RequestMapping("/lecture/reportView.do")

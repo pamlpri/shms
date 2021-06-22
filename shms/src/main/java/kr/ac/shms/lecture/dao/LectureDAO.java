@@ -92,5 +92,12 @@ public interface LectureDAO {
 	 */
 	public List<SugangVO> selectAllLecList(String staff_no);
 	
+	/**
+	 * 한 강의의 이번주 주차 일정 조회
+	 * @param lec_code 강의 코드
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public LectureVO selectLecDiary(String lec_code);
+	
 
 }

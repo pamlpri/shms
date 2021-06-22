@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 5. 24.      박초원        최초작성
+* 2021. 6. 22.      송수미        강의공지, 강의 문의 수 조회
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -26,7 +27,7 @@
 						<div class="card-header">
 							<h4>공지사항</h4>
 						</div>
-						<div class="card-body">42</div>
+						<div class="card-body">${ggCnt }</div>
 					</div>
 				</a>
 			</div>
@@ -40,7 +41,7 @@
 						<div class="card-header">
 							<h4>강의 Q&A</h4>
 						</div>
-						<div class="card-body">10</div>
+						<div class="card-body">${gmCnt }</div>
 					</div>
 				</a>
 			</div>
@@ -74,14 +75,18 @@
 	<section class="section">
 		<h2 class="section-title">이번주강의</h2>
 	</section>
-	
-	<c:if test="${not empty lecture.lec_week }">
-		<div class="card" id="curWeek"
-			style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
-			<div class="card-body p-0">
-				<h6>${lecture.lec_week }주차 [${lecture.week_bgnde} - ${lecture.week_endde}] :  ${lecture.diary_title }</h6>
-				<a class="text-color text-deco-none" href="lecture.html"> ${lecture.diary_cont }</a>
-			</div>
+
+	<div class="card" id="curWeek" style="box-shadow: 0 4px 8px rgb(0 0 0/ 12%);">
+		<div class="card-body p-0">
+			<c:choose>
+				<c:when test="${not empty lectureDiary.diary_title}">
+					<h6>${lectureDiary.lec_week }주차 [${lectureDiary.week_bgnde_char} - ${lectureDiary.week_endde_char}] : [${lectureDiary.week_lec_cl_nm}] ${lectureDiary.diary_title }</h6>
+					<a class="text-color text-deco-none" href="${cPath }/lecture/lectureWeek.do">${lectureDiary.diary_cont }</a>
+				</c:when>
+				<c:otherwise>
+					<p>이번주 강의가 없습니다.<p>
+				</c:otherwise>
+			</c:choose>
 		</div>
-	</c:if>
+	</div>
 </div>

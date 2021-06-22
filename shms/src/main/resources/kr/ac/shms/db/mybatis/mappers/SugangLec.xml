@@ -60,8 +60,8 @@
 	</select>
 	
 	<select id="selectLectureDetails" parameterType="String" resultType="LectureVO">
-		SELECT a.lec_code, 
-		       d.lec_name, 
+        SELECT a.lec_code, 
+		       c.lec_name, 
 		       a.summary, 
 		       tchmtr,
 		       adi_tchmtr,
@@ -69,20 +69,11 @@
                NVL(b.finals, 0) * 100 finals, 
                NVL(b.attend, 0) * 100 attend, 
                NVL(b.task, 0) * 100 task, 
-		       NVL(b.etc, 0) * 100 etc,
-		       c.lec_week, 
-		       TO_CHAR(c.week_bgnde, 'MM')||'월 '||TO_CHAR(c.week_bgnde, 'DD')||'일' week_bgnde, 
-		       TO_CHAR(c.week_endde, 'MM')||'월 '||TO_CHAR(c.week_endde, 'DD')||'일' week_endde, 
-		       c.diary_title,
-		       c.diary_cont
+		       NVL(b.etc, 0) * 100 etc
 	      FROM lecture a
-	     LEFT OUTER JOIN lec_score_st b ON (a.lec_code=b.lec_code)<!-- INNER JOIN으로 수정해야함 -->
-	     LEFT OUTER JOIN lec_week_diary c ON (b.lec_code=c.lec_code)
-	     INNER JOIN curriculum d ON (a.cur_code=d.cur_code)
+	     LEFT OUTER JOIN lec_score_st b ON (a.lec_code=b.lec_code)<!-- INNER JOIN으로 수정해야 함 -->
+	     INNER JOIN curriculum c ON (a.cur_code=c.cur_code)
 	     WHERE a.lec_code= #{lec_code, jdbcType=VARCHAR}
-           AND (week_bgnde = (SELECT MAX(week_bgnde) FROM lec_week_diary WHERE lec_code = #{lec_code, jdbcType=VARCHAR})
-                or 
-                week_bgnde is null)
 <!-- 	       AND c.lec_week = TO_CHAR(SYSDATE,'W') -->
 <!-- 	         AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE) -->
 <!-- 		   AND a.estbl_year='2013' -->
@@ -279,5 +270,27 @@
 		        RIGHT OUTER JOIN building f ON (f.building_no = e.building_no)
 		       )
 		 WHERE staff_no=#{staff_no, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectLecDiary" parameterType="String" resultType="LectureVO">
+		SELECT
+		    diary_no,
+		    lec_code,
+		    lec_week,
+		    week_bgnde,
+		    week_endde,
+		    TO_CHAR(week_bgnde, 'MM')||'월 '||TO_CHAR(week_bgnde, 'DD')||'일' week_bgnde_char,
+		    TO_CHAR(week_endde, 'MM')||'월 '||TO_CHAR(week_endde, 'DD')||'일' week_endde_char,
+		    diary_title,
+		    diary_cont,
+		    week_lec_cl,
+		    com_code_nm week_lec_cl_nm
+		FROM
+		    lec_week_diary a
+		INNER JOIN tb_com_code b
+		ON(a.week_lec_cl = b.com_code)
+		WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+		  AND code_grp = 'G13'
+		  AND SYSDATE BETWEEN week_bgnde AND week_endde
 	</select>
 </mapper>

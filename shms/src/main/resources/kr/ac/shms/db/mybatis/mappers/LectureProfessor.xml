@@ -97,6 +97,7 @@
 		   AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
 		   AND estbl_semstr = (SELECT semstr FROM v_semstr)
 		   AND TO_NUMBER(dayotw) = (SELECT TO_CHAR(SYSDATE, 'D') FROM DUAL)
+		 ORDER BY lec_full_time
 	</select>
 	
 	<select id="selectLecListForOpen" parameterType="String" resultType="LectureVO">
@@ -793,4 +794,10 @@
             </foreach>
         END;
 	</insert>
+	
+	<select id="selectLecCodeForTask" parameterType="int" resultType="String">
+		SELECT lec_code 
+		  FROM set_task 
+		 WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}
+	</select>
 </mapper>

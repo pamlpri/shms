@@ -93,6 +93,9 @@
 		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
 		   AND sub_code = #{searchMap.sub_code, jdbcType=VARCHAR}
 		 </if>
+		 <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_code)">
+		   AND lec_code = #{searchMap.lec_code, jdbcType=VARCHAR}
+		 </if>
 		<trim prefix="AND">
 			<include refid="searchFrag"/>
 		</trim>
@@ -223,7 +226,7 @@
 			    #{bo_title, jdbcType=VARCHAR},
 			    #{bo_cont, jdbcType=VARCHAR},
 			    #{bo_writer, jdbcType=VARCHAR},
-			    TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI'),	
+			    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI'),	
 			    #{bo_password, jdbcType=VARCHAR},
 			    #{bo_secret_at, jdbcType=VARCHAR},
 			    0,
