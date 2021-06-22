@@ -361,7 +361,7 @@
 	    SELECT A.*, ROW_NUMBER () OVER (ORDER BY bo_write_de DESC) rn
 	        FROM (
 	            SELECT 
-	                (SELECT COUNT(*) FROM board WHERE bo_kind = #{searchMap.bo_kind} AND sub_code=#{searchMap.sub_code, jdbcType=VARCHAR}) p_bo_no,
+	                (SELECT COUNT(*) FROM board WHERE bo_kind = #{searchMap.bo_kind, jdbcType=VARCHAR} AND sub_code=#{searchMap.sub_code, jdbcType=VARCHAR}) - ((ROW_NUMBER () OVER (ORDER BY bo_write_de DESC)))+ 1 p_bo_no,
 	                bo_no,
 	                bo_kind,
 	                DECODE(bo_secret_at, 'Y', '비밀글', bo_title) bo_title,
