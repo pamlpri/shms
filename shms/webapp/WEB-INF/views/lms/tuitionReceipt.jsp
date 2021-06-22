@@ -33,7 +33,7 @@
               		<c:when test="${not empty tuition }">
 		                  <table class="table table-bordered table-md bill" style="border-color: #dfdfdf; overflow: hidden;">
 		                      <tr>
-		                          <th class="text-center" colspan="4">납입고지서[은행용]</th>
+		                          <th class="text-center" colspan="4">납입영수증[보관용]</th>
 		                      </tr>
 		                      <tr>
 		                          <th class="text-center" colspan="4">${tuition.year }학년도 납입금</th>
