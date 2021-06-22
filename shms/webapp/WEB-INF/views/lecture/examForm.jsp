@@ -97,7 +97,8 @@
          	<div id="timer">
              <p>
                <strong>종료시간 : </strong>${exam.exam_end_dt_char }<br/>
-               <strong>남은시간 : </strong><span id="remainTime"></span>
+               <strong>남은시간 : </strong><span id="remainTime"></span><br/>
+               <span class="red-color">종료시간이 되면 자동으로 답안이 제출되며, 재응시가 불가능합니다.</span>
              </p>
            </div>
            <div class="text-left mb-4">
@@ -159,6 +160,7 @@
      </div>
  </div>
 
+ <!-- 시험 제출 경고 모달 -->
  <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
    <div class="modal-dialog" role="document">
      <div class="modal-content">
@@ -174,6 +176,22 @@
        <div class="modal-footer bg-whitesmoke br">
          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
          <button type="button" id="saveBtn" class="btn btn-primary">제출</button>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- 시험 종료 시간 알림 모달 -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="timeOutModal">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title"><i class="fas fa-info-circle"></i> 시간 안내 </h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <p>시험 종료 5분 남았습니다. <br/>종료시간이 되면 자동으로 답안이 제출되며 재응시가 불가능합니다.</p>
        </div>
      </div>
    </div>
@@ -212,52 +230,48 @@
 	
 	<script src="${cPath }/resources/lecture/dist/js/jquery.table2excel.min.js"></script>
 <script type="text/javascript">
+
+$("#saveBtn").on("click", function(){
+	$("#answerWrap").submit();
+});
+
+/* 시험 시간 표시, 종료시간되면 자동 제출 */
 let endTime = "${exam.exam_end_dt}";
 window.onload = function(){
 	endTime = endTime.replace(" ", "T");
 	StartClock();
 };
 
-$("#saveBtn").on("click", function(){
-	$("#answerWrap").submit();
-});
-
 function PrintTime() {
 	let end = new Date(endTime);   
     let today = new Date();
     let remainTime = end - today;
+    if(remainTime <= 0){
+		$("#answerWrap").submit();
+    }
     let hour = Math.floor(remainTime / 1000 / 60 / 60);
     let minute = Math.floor((remainTime - (hour * 1000 * 60 * 60)) / 1000 / 60);
     let second = Math.floor((remainTime - (hour * 1000 * 60 * 60) - (minute * 1000 * 60)) / 1000);
     $("#remainTime").html(pad(hour, 2) + " : " + pad(minute, 2) + " : " + pad(second, 2));
+    if(minute == 5 && second == 0){
+		$("#timeOutModal").addClass("show").css("display","block");
+    }
+    
+    $(".close, .modal").on("click", function(){
+		$("#timeOutModal").removeClass("show").css("display","none");
+	})
+    
 }
 
-// 중지를 위해 ID 보관
-var timerId = null;
-
-// 시계 시작
 function StartClock() {
     PrintTime();
-    timerId = setInterval(PrintTime, 1000);
-}
-
-// 시계 중지
-function StopClock() {
-    if(timerId != null) {
-        clearInterval(timerId);
-    }
+    setInterval(PrintTime, 1000);
 }
 
 function pad(n, width) {
 	  n = n + '';
 	  return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
 }
-
-// $(window).bind("beforeunload", function (event){
-//     if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-//       alert("뒤로감");
-//     }
-// }
 
 history.pushState(null, null, location.href);
     window.onpopstate = function () {
@@ -268,10 +282,10 @@ history.pushState(null, null, location.href);
 <script>
 function noEvent() {
 	if (event.keyCode == 116) {
-		event.keyCode= 2;
+		event.keyCode = 2;
 		return false;
 	}
-		else if(event.ctrlKey && (event.keyCode==78 || event.keyCode == 82))
+		else if(event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82))
 	{
 		return false;
 	}
