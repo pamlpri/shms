@@ -39,6 +39,8 @@ public class RegInfoCngVO implements IAttachVO{
 	
 	private String papers_submit_at;	// 파일제출 상태 표시
 	
+	private String col_name;		// 단과대
+	
 	private String bo_writer;
 	private String biz_type;	
 	private int startAttNo;

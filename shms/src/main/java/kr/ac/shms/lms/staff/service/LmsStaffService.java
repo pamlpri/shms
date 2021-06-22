@@ -1,8 +1,10 @@
 package kr.ac.shms.lms.staff.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
@@ -10,7 +12,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
-import kr.ac.shms.lms.student.vo.StudentVO;
+import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 
 public interface LmsStaffService {
@@ -94,11 +96,38 @@ public interface LmsStaffService {
      * 학적변동 신청 테이블 리스트 조회
      * @return
      */
-    public List<RegInfoCngVO> selectReginfoCngStudentList();
+    public List<RegInfoCngVO> selectReginfoCngStudentList(PagingVO<RegInfoCngVO> pagingVO);
     
     /**
      * 학적 변동 공통코드 조회
      * @return
      */
     public List<ComCodeVO> selectReqClCode();
+    
+    /**
+     * 학적변동 신청 글 개수 조회
+     * @param pagingVO
+     * @return
+     */
+    public int selectReginfoCngCount(PagingVO<RegInfoCngVO> pagingVO);
+    
+    /**
+     * 기사/산업기사 자격증 장학금 신청 목록조회
+     * @return
+     */
+    public List<ScholarShipVO> selectGisaSchlReqList();
+    
+    /**
+     * 기사/산업기사 자격증 장학금 신청 내역 조회
+     * @param req_no
+     * @return
+     */
+    public ScholarShipVO selectGisaSchlReq(int req_no);
+    
+    /**
+     * 장학금 상태 업데이트
+     * @param schl
+     * @return
+     */
+    public ServiceResult updateSchlStatus(ScholarShipVO schl);
 }
