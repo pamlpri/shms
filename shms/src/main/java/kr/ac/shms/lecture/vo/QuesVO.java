@@ -28,4 +28,11 @@ public class QuesVO{
 	private String ques_type;
 	private String ques_ans;
 	private Integer ques_allot;
+	private String ans_at;
+	private Integer applcn_no;
+	private String submit_ans;
+	
+	private String sub_name;
+	private String name;
+	private String stdnt_no;
 }
