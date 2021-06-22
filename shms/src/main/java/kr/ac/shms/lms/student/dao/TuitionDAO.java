@@ -158,4 +158,18 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public int deleteSchl(ScholarShipVO schl);
+	
+	/**
+	 * 등록금 등록
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int insertTuitionPayment(String stdnt_no);
+	
+	/**
+	 * 등록금 제출 유무
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectTuitionCnt(String stdnt_no);
 }

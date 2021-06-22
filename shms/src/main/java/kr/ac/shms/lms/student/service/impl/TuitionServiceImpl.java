@@ -240,4 +240,17 @@ public class TuitionServiceImpl implements TuitionService{
 		paramMap.put("schl", schl);
 		paramMap.put("attList", attList);
 	}
+
+	@Override
+	public ServiceResult insertTuitionPayment(String stdnt_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = tuitionDAO.insertTuitionPayment(stdnt_no);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
+	}
+
+	@Override
+	public int selectTuitionCnt(String stdnt_no) {
+		return tuitionDAO.selectTuitionCnt(stdnt_no);
+	}
 }

@@ -25,19 +25,19 @@
 	</select>
 	
 	<select id="selectTuitionBill" parameterType="String" resultType="TuitionVO">
-		SELECT DISTINCT b.sub_name,
-		       grade, 
-		       a.stdnt_no, 
-		       name,
-		       TO_CHAR(b.reg_amt, '999,999,999') reg_amt,
-		       EXTRACT(YEAR FROM SYSDATE) year,
-		       b.reg_amt regAmt
-		  FROM student a
-		 INNER JOIN subject b ON(a.sub_code=b.sub_code)
-		 INNER JOIN schl_req c ON(a.stdnt_no=c.stdnt_no)
-		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
-		   AND EXTRACT(YEAR FROM c.req_de) =EXTRACT(YEAR FROM SYSDATE)
-		   AND a.semstr = (SELECT semstr FROM v_semstr)
+		SELECT DISTINCT a.stdnt_no, 
+				       grade, 
+				       name,
+				       b.sub_name,
+				       TO_CHAR(b.reg_amt, 'FM999,999,999') reg_amt,
+				       b.reg_amt regAmt,
+				       EXTRACT(YEAR FROM SYSDATE) year
+				  FROM student a
+				 INNER JOIN subject b ON(a.sub_code=b.sub_code)
+				 INNER JOIN sugang_req c ON(a.stdnt_no=c.stdnt_no)
+				 WHERE a.stdnt_no= #{stdnt_no}
+				   AND req_year=EXTRACT(YEAR FROM SYSDATE)
+				   AND req_semstr = (SELECT semstr FROM v_semstr)
 	</select>
 	<select id="selectTuitionPaySchdule" resultType="ScheduleVO">
 		SELECT title,
@@ -293,4 +293,44 @@
 		  FROM schl_req
 		  WHERE req_no = #{req_no, jdbcType=NUMERIC}
 	</delete>
+	
+	<insert id="insertTuitionPayment" parameterType="String">
+		INSERT INTO reg_fee_pay (
+				    pay_dtls_no,
+				    stdnt_no,
+				    pay_amt,
+				    pay_dt,
+				    pay_year,
+				    pay_semstr
+		) VALUES (
+		    REG_PAY_SEQ.NEXTVAL,
+		    #{stdnt_no},
+		    (
+		        SELECT DISTINCT c.REG_AMT
+		        FROM
+		            reg_fee_pay a
+		        LEFT OUTER JOIN student b
+		        ON a.STDNT_NO = b.STDNT_NO
+		        INNER JOIN subject c
+		        ON b.sub_code = c.sub_code
+		        WHERE a.stdnt_no = #{stdnt_no}
+		    ),
+		    SYSDATE,
+		    TO_CHAR(SYSDATE, 'YYYY'),
+		    (
+		        SELECT semstr 
+		        FROM v_semstr
+		    )
+		)
+	</insert>
+	
+	<select id="selectTuitionCnt" parameterType="String" resultType="int">
+		SELECT
+		    count(*) cnt
+		FROM
+		    reg_fee_pay
+		WHERE stdnt_no = #{stdnt_no}
+		AND TO_CHAR(SYSDATE, 'YYYY') = pay_year
+		AND (SELECT semstr FROM v_semstr) = pay_semstr
+	</select>
 </mapper>

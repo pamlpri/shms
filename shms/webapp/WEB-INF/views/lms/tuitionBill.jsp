@@ -26,7 +26,9 @@
        <div class="card inputTable">
            <div class="card-body">
                <div class="text-right float-right" style="margin-bottom: 2%">
-               	   <button class="btn btn-success">등록금납부</button>
+               	   <c:if test="${tuitionCnt == 0 }">
+	               	   <button class="btn btn-success tuitionBtn">등록금납부</button>               	   
+               	   </c:if>
                    <a href="#" class="btn btn-icon btn-primary savePdf"><i class="far fa-file"></i> PDF 다운로드</a>
                </div>
                <div style="clear: both;"></div>
@@ -106,6 +108,7 @@
    </section>
    <!-- contents end -->
 </div>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
 $(document).ready(function() {
 	$('.savePdf').click(function() { // pdf저장 button id
@@ -140,5 +143,39 @@ $(document).ready(function() {
 // 		    window.open(doc.output('bloburl'), '_blank')
 		});
 	});
-})
+});
+
+$(".tuitionBtn").on("click", function() {
+	IMP.init('imp42009297');
+
+	IMP.request_pay({
+	    pg : 'chai', // version 1.1.0부터 지원.
+	    pay_method : 'vbank',
+	    merchant_uid : 'merchant_' + new Date().getTime(),
+	    name : '등록금',
+	    amount : 14000, //판매 가격
+	    buyer_email : '${studnet.email}',
+	    buyer_name : '${studnet.name}',
+	    buyer_tel : '${studnet.tel_no}',
+	    buyer_addr : '${studnet.addr1} ${studnet.addr2}',
+	    buyer_postcode : '${studnet.zipcode}'
+	}, function(rsp) {
+	    if ( rsp.success ) {
+	     	$.ajax({
+		 		url:"${cPath}/lms/tuitionPayment.do"
+		 		, method: "post"
+		 		, success : function(resp) {
+		 			if(resp == "OK") {
+		 				location.href='${cPath}/lms/tuitionReceipt.do';
+		 			}
+		 		}
+		 		, error : function(xhr, error, msg) {
+		 			console.log(xhr);
+		 			console.log(error);
+		 			console.log(msg);
+		 		}
+		 	});
+	    }
+	});
+});
 </script>

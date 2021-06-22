@@ -169,4 +169,18 @@ public interface TuitionService {
 	 * @return
 	 */
 	public List<AttachVO> selectAttachList(int req_no); 
+	
+	/**
+	 * 등록금 등록
+	 * @param stdnt_no
+	 * @return
+	 */
+	public ServiceResult insertTuitionPayment(String stdnt_no);
+	
+	/**
+	 * 등록금 제출 유무
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectTuitionCnt(String stdnt_no);
 }

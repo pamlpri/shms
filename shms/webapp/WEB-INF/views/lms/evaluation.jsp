@@ -213,12 +213,7 @@
                                       <td class="text-center align-middle"><input type="radio" name="eval10" class="form-check-input" value="1" /></td>
                                   </tr>
                                   <tr>
-                                      <th class="text-center align-middle" colspan="2">합계</th>
-                                      <th class="text-center align-middle">10</th>
-                                      <th class="text-center align-middle">10</th>
-                                      <th class="text-center align-middle">10</th>
-                                      <th class="text-center align-middle">10</th>
-                                      <th class="text-center align-middle">10</th>
+                                      <th class="text-center align-middle" colspan="7">서술</th>
                                   </tr>
                                   <tr>
                                       <th class="text-center align-middle">1</th>

@@ -270,9 +270,12 @@
 	                      <span>학적관리</span>
 	                  </a>
 	                  <ul class="submenu ">
-	                      <li class="submenu-item ">
-	                          <a href="#">학적조회</a>
-	                      </li>
+	                      <li class="sidebar-item">
+			                  <a href="${cPath }/lms/academicList.do" class="sidebar-link">
+			                      <i class="bi bi-person-badge-fill"></i>
+			                      <span>학적조회</span>
+			                  </a>
+			              </li>
 	                      <li class="submenu-item ">
 	                          <a href="${cPath }/lms/consultingAdmin.do">상담내역</a>
 	                      </li>
@@ -429,9 +432,12 @@
 	                      <li class="submenu-item ">
 	                          <a href="#">학생등록</a>
 	                      </li>
-	                      <li class="submenu-item ">
-	                          <a href="#">학적조회</a>
-	                      </li>
+	                      <li class="sidebar-item">
+			                  <a href="${cPath }/lms/academicList.do" class="sidebar-link">
+			                      <i class="bi bi-person-badge-fill"></i>
+			                      <span>학적조회</span>
+			                  </a>
+	              		  </li>
 	                      <li class="submenu-item ">
 	                          <a href="${cPath }/lms/academicChange.do">학적변동</a>
 	                      </li>
