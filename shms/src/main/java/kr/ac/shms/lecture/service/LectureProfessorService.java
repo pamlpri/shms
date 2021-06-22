@@ -241,4 +241,11 @@ public interface LectureProfessorService {
 	 * @return cnt
 	 */
 	public ServiceResult insertAttendGrade(AttendVO attend);
+	
+	/**
+	 * 과제 번호 넣으면 강의 코드 반환
+	 * @param set_task_no 과제 번호
+	 * @return lec_code 강의 코드
+	 */
+	public String selectLecCodeForTask(int set_task_no);
 }

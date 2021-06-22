@@ -176,15 +176,17 @@
 									<tbody>
 										<c:choose>
 											<c:when test="${not empty profsList }">
-												<c:forEach items="${profsList }" var="prof">
-													<tr>
-														<td class="col-4">${prof.name }</td>
-														<td class="col-auto">
-															<p class=" mb-0">
-																<a class="text-light-black" href="#">${prof.webmail }</a>
-															</p>
-														</td>
-													</tr>
+												<c:forEach items="${profsList }" var="prof" varStatus="idx">
+													<c:if test="${idx.count < 5 }">
+														<tr>
+															<td class="col-4">${prof.name }</td>
+															<td class="col-auto">
+																<p class=" mb-0">
+																	<a class="text-light-black" href="#">${prof.webmail }</a>
+																</p>
+															</td>
+														</tr>
+													</c:if>
 												</c:forEach>
 											</c:when>
 											<c:otherwise>
@@ -232,21 +234,28 @@
 					<p class="dateToday">${diet.diet_date }</p>
 				</div>
 				<div class="card-body">
-					<ul id="todayDiet">
-						<li>${diet.diet_menu1 }</li>
-						<li>${diet.diet_menu2 }</li>
-						<li>${diet.diet_menu3 }</li>
-						<li>${diet.diet_menu4 }</li>
-						<c:if test="${not empty diet.diet_menu5 }">
-							<li>${diet.diet_menu5 }</li>
-						</c:if>
-						<c:if test="${not empty diet.diet_menu6 }">
-							<li>${diet.diet_menu6 }</li>
-						</c:if>
-						<c:if test="${not empty diet.diet_menu7 }">
-							<li>${diet.diet_menu7 }</li>
-						</c:if>
-					</ul>
+					<c:choose>
+						<c:when test="${not empty diet }">
+							<ul id="todayDiet">
+								<li>${diet.diet_menu1 }</li>
+								<li>${diet.diet_menu2 }</li>
+								<li>${diet.diet_menu3 }</li>
+								<li>${diet.diet_menu4 }</li>
+								<c:if test="${not empty diet.diet_menu5 }">
+									<li>${diet.diet_menu5 }</li>
+								</c:if>
+								<c:if test="${not empty diet.diet_menu6 }">
+									<li>${diet.diet_menu6 }</li>
+								</c:if>
+								<c:if test="${not empty diet.diet_menu7 }">
+									<li>${diet.diet_menu7 }</li>
+								</c:if>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<p>오늘의 식단 정보가 존재하지 않습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

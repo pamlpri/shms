@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.common.controller.IndexController;
 import kr.ac.shms.common.service.BoardService;
@@ -41,6 +42,7 @@ import kr.ac.shms.common.vo.PagingVO;
 
 @Controller
 @RequestMapping("/main/community")
+@SessionAttributes({"lec_code", "lec_name"})
 public class NoticeViewController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);

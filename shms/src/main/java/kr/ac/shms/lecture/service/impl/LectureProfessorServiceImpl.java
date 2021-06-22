@@ -370,4 +370,10 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		
 		return result;
 	}
+
+	@Override
+	public String selectLecCodeForTask(int set_task_no) {
+		return lectureProfessorDAO.selectLecCodeForTask(set_task_no);
+	}
+	
 }

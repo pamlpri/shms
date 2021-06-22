@@ -2,7 +2,6 @@ package kr.ac.shms.lecture.service;
 
 import java.util.List;
 
-import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.student.vo.AttendVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
@@ -89,5 +88,12 @@ public interface LectureService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<SugangVO> selectAllLecList(String staff_no);
+
+	/**
+	 * 한 강의의 이번주 주차 일정 조회
+	 * @param lec_code 강의 코드
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public LectureVO selectLecDiary(String lec_code);
 
 }

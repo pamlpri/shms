@@ -94,4 +94,9 @@ public class LectureServiceImpl implements LectureService{
 		return lectureDAO.selectAllLecList(staff_no);
 	}
 
+	@Override
+	public LectureVO selectLecDiary(String lec_code) {
+		return lectureDAO.selectLecDiary(lec_code);
+	}
+
 }

@@ -238,9 +238,6 @@
 				</div>
 				<div class="card-body">
 					<div id="datepicker"></div>
-<!-- 					<form> -->
-<!--                     	<input type="text" value="" id="date"/> -->
-<!--                     </form> -->
 					<jsp:useBean id="today" class="java.util.Date" />
 						<fmt:formatDate var="now" value="${today}" pattern="yyyy년 MM월 dd일" />
 					<p class="dateToday">
@@ -263,21 +260,28 @@
 					<p class="dateToday">${diet.diet_date }</p>
 				</div>
 				<div class="card-body">
-					<ul id="todayDiet">
-						<li>${diet.diet_menu1 }</li>
-						<li>${diet.diet_menu2 }</li>
-						<li>${diet.diet_menu3 }</li>
-						<li>${diet.diet_menu4 }</li>
-						<c:if test="${not empty diet.diet_menu5 }">
-							<li>${diet.diet_menu5 }</li>
-						</c:if>
-						<c:if test="${not empty diet.diet_menu6 }">
-							<li>${diet.diet_menu6 }</li>
-						</c:if>
-						<c:if test="${not empty diet.diet_menu7 }">
-							<li>${diet.diet_menu7 }</li>
-						</c:if>
-					</ul>
+					<c:choose>
+						<c:when test="${not empty diet }">
+							<ul id="todayDiet">
+								<li>${diet.diet_menu1 }</li>
+								<li>${diet.diet_menu2 }</li>
+								<li>${diet.diet_menu3 }</li>
+								<li>${diet.diet_menu4 }</li>
+								<c:if test="${not empty diet.diet_menu5 }">
+									<li>${diet.diet_menu5 }</li>
+								</c:if>
+								<c:if test="${not empty diet.diet_menu6 }">
+									<li>${diet.diet_menu6 }</li>
+								</c:if>
+								<c:if test="${not empty diet.diet_menu7 }">
+									<li>${diet.diet_menu7 }</li>
+								</c:if>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<p>오늘의 식단 정보가 존재하지 않습니다.</p>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
