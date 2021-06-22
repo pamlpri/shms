@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,9 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.ac.shms.common.enumpkg.MimeType;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
-import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.student.vo.AttendVO;
-import kr.ac.shms.lms.student.vo.SugangVO;
 
 /**
  * @author 박초원
@@ -89,9 +90,10 @@ public class AttendanceAdminController {
 		return null;
 	}
 	
-	@RequestMapping(value="/lecture/attendGrade.do", method=RequestMethod.POST)
+    @RequestMapping(value="/lecture/attendGrade.do", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
 	public String attend(
-		@ModelAttribute("attend") AttendVO attend
+	     @RequestBody AttendVO attend
 		,HttpServletResponse resp
 		,Model model
 	) throws IOException {

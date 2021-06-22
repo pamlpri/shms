@@ -742,37 +742,55 @@
 		    atndan_no = #{atndan_no, jdbcType=NUMERIC}
 	</update>
 	
-	<insert id="insertAttendGrade" parameterType="AttendVO">
-		INSERT ALL
-		<foreach collection="attendList" item="attend" index="idx">
-		INTO lec_scre (
-		    scre_no,
-		    grade,
-		    semstr,
-		    year,
-		    stdnt_no,
-		    pnt_rank_nm,
-		    mid_scre,
-		    final_scre,
-		    attend_scre,
-		    task_scre,
-		    etc_scre,
-		    lec_code
-		) VALUES (
-		    lec_scre_seq.nextval,
-		    #{grade, jdbcType=NUMERIC},
-		    #{semstr, jdbcType=NUMERIC},
-		    #{year, jdbcType=NUMERIC},
-		    #{stdnt_no, jdbcType=VARCHAR},
-		    null,
-		    null,
-		    null,
-		    ,
-		    null,
-		    null,
-		    #{lec_code, jdbcType=VARCHAR}
-		)
-		</foreach>
-		SELECT * FROM DUAL
+	<insert id="insertAttendGrade" parameterType="AttendVO" >
+        <selectKey order="BEFORE" resultType="int" keyProperty="scre_no">
+			SELECT lec_scre_seq.nextval scre_no
+			  FROM dual
+		</selectKey>
+		BEGIN
+        <foreach  collection="attendList" item="attend" open="" close="" index="idx">
+        MERGE INTO lec_scre A
+			USING(
+			    SELECT COUNT(stdnt_no) cnt
+			    FROM lec_scre
+			     WHERE stdnt_no = #{attend.stdnt_no, jdbcType=VARCHAR}
+			       AND lec_code = #{attend.lec_code, jdbcType=VARCHAR} 
+			) B
+			ON (B.cnt > 0)
+			WHEN MATCHED THEN
+			    UPDATE SET attend_scre = ROUND(#{attend.cs_cnt, jdbcType=NUMERIC} / 15 * 100, 2)
+			    WHERE stdnt_no = #{attend.stdnt_no, jdbcType=VARCHAR}
+			       AND lec_code = #{attend.lec_code, jdbcType=VARCHAR}
+			WHEN NOT MATCHED THEN
+			     INSERT
+			    ( 		
+			            scre_no,
+			                    grade,
+			                    semstr,
+			                    year,
+			                    stdnt_no,
+			                    pnt_rank_nm,
+			                    mid_scre,
+			                    final_scre,
+			                    attend_scre,
+			                    task_scre,
+			                    etc_scre,
+			                    lec_code 
+			    ) VALUES (
+			            #{scre_no} + #{idx},
+					    #{attend.grade, jdbcType=NUMERIC},
+					    #{attend.semstr, jdbcType=NUMERIC},
+					    #{attend.year, jdbcType=NUMERIC},
+					    #{attend.stdnt_no, jdbcType=VARCHAR},
+					    null,
+					    null,
+					    null,
+					    ROUND(#{attend.cs_cnt, jdbcType=NUMERIC} / 15 * 100, 2),
+					    null,
+					    null,
+					    #{attend.lec_code, jdbcType=VARCHAR}
+			    );
+            </foreach>
+        END;
 	</insert>
 </mapper>
