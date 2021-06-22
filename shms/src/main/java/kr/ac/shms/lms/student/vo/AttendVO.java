@@ -79,6 +79,12 @@ public class AttendVO {
 	private String exit_time_char;
 	private String week_lec_cl;
 	
+	private Integer grade;
+	private Integer year;
+	private Integer semstr;
+	
+	private Integer scre_no;
+	
 	private List<AttendVO> attendList;
 }
 

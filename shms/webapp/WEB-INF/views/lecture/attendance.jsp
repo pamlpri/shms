@@ -189,15 +189,5 @@
 				console.log(msg);
 			}
 		});
-		
-		function jg(){
-			console.log("호출됨");
-			iziToast.error({
-			    toastOnce: true ,
-			    title: '오류',
-			    message: '이미 지각처리 된 항목입니다.',
-			    position: 'bottomCenter'
-		    });
-		}
 	});
 </script>

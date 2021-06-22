@@ -32,7 +32,7 @@
           <div class="row">
               <div class="col-12">
                   <div class="card">
-	                  <form class="card-body table-scroll" id="table-scroll" action="${cPath }/lecture/attendGrade.do">
+	                  <form class="card-body table-scroll" id="table-scroll">
 	                    <div class="table-responsive table-wrap">
 	                      <div class="text-right excelWrap">
 	                          <button type="button" class="btn btn-warning" id="gradeBtn">성적부 반영</button>
@@ -69,10 +69,11 @@
 	                          	  <c:forEach items="${attendList }" var="attend" varStatus="i">
 			                          <tr>
 		                          	  	  <input type="hidden" name="attendList[${i.index }].grade" value="${attend.grade}"/>
-		                          	  	  <input type="hidden" name="attendList[${i.index }]semstr" value="${attend.semstr}"/>
-		                          	  	  <input type="hidden" name="attendList[${i.index }]year" value="${attend.year}"/>
-		                          	  	  <input type="hidden" name="attendList[${i.index }]stdnt_no" value="${attend.stdnt_no}"/>
-		                          	  	  <input type="hidden" name="attendList[${i.index }]stdnt_no" value="${lec_code}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }].semstr" value="${attend.semstr}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }].year" value="${attend.year}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }].stdnt_no" value="${attend.stdnt_no}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }].lec_code" value="${lec_code}"/>
+		                          	  	  <input type="hidden" name="attendList[${i.index }].cs_cnt" value="${attend.cs_cnt}"/>
 			                              <td class="text-center">
 			                                  <a class="text-color" href="${cPath}/lecture/attendance.do?what=${attend.stdnt_no}">${attend.name }</a>
 			                              </td>
@@ -124,4 +125,45 @@ $(document).ready(function() {
     	,"order": [[ 1, "asc" ]]
     });
 } );
+
+$("#gradeBtn").on("click", function(){
+	let table = $('<table>').append($("#attendance-table").DataTable().$('tr').clone()).attr("class", "allTable").css("display", "none");
+	$("body").append(table);
+	let len = $(table).find("tr").length;
+	
+	var toData = new Object();
+	var dataList = new Array();
+	for(var i = 0; i < len; i++){
+		var data = new Object();
+		data["grade"] = $(".allTable").find("input[name='attendList["+ i +"].grade']").val();
+		data["semstr"] = $(".allTable").find("input[name='attendList["+ i +"].semstr']").val();
+		data["year"] = $(".allTable").find("input[name='attendList["+ i +"].year']").val();
+		data["stdnt_no"] = $(".allTable").find("input[name='attendList["+ i +"].stdnt_no']").val();
+		data["lec_code"] = $(".allTable").find("input[name='attendList["+ i +"].lec_code']").val();
+		data["cs_cnt"] = $(".allTable").find("input[name='attendList["+ i +"].cs_cnt']").val();
+		dataList.push(data);
+	}
+	toData["attendList"] = dataList;
+	console.log(toData);
+	
+	$.ajax({
+		method : "post"
+		, url : "${cPath }/lecture/attendGrade.do"
+		, data : JSON.stringify(toData)
+		, dataType : "json"
+		, contentType : "application/json"
+		, success : function(resp){
+			console.log(resp)
+			if(resp.result == "OK"){
+				alert("성공");
+			}else {
+				alert("실패");
+			}
+		},error : function(xhr, error, msg){ 
+			console.log(xhr);
+			console.log(error);
+			console.log(msg);
+		}
+	});
+});
 </script>
