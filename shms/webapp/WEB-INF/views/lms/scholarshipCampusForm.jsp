@@ -52,10 +52,10 @@
                                      <div class="col-md-4">
                                          <select class="form-select float-right" name="schlship_no">
                                              <option value="">-- 장학금종류 --</option>
-                                             <option value="5" ${schl.schlship_nm eq '외국어 '?'selected':'' }>외국어</option>
-                                             <option value="6" ${schl.schlship_nm eq '기사 '?'selected':'' }>기사</option>
-                                             <option value="7" ${schl.schlship_nm eq '산업기사 '?'selected':'' }>산업기사</option>
-                                             <option value="8" ${schl.schlship_nm eq '국가유공자 '?'selected':'' }>국가유공자</option>
+                                             <option value="6" ${schl.schlship_nm eq '외국어 '?'selected':'' }>외국어</option>
+                                             <option value="7" ${schl.schlship_nm eq '기사 '?'selected':'' }>기사</option>
+                                             <option value="8" ${schl.schlship_nm eq '산업기사 '?'selected':'' }>산업기사</option>
+                                             <option value="5" ${schl.schlship_nm eq '국가유공자 '?'selected':'' }>국가유공자</option>
                                          </select>
                                      </div>
                                  </div>
@@ -141,7 +141,7 @@
              	<form id="deleteForm" action="${cPath }/lms/deleteSchl.do" method="post">
              		<input type="hidden" name="req_no" value="${schl.req_no }" />
              		<c:if test="${not empty  schl}">
-             			<input type="text" name="atch_file_no" value="${schl.atch_file_no  }"/>
+             			<input type="hidden" name="atch_file_no" value="${schl.atch_file_no  }"/>
              			<c:forEach items="${schl.attachList }" var="attach">
 			             <div>${attach.atch_file_seq }</div>
 	             			<input type="hidden" name="delAttNos" value="${attach.atch_file_seq }"/>

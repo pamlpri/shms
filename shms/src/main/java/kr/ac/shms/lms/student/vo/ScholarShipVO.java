@@ -48,6 +48,11 @@ public class ScholarShipVO implements IAttachVO{
 	private String schlship_nm;		// 장학금 명
 	private Integer rn;
 	private String file_nm;
+	private String name;
+	private String benefit;
+	private String proc_date;
+	private String tel_no;
+	private String webmail;
 	
 	private Integer atch_file_no;
 	

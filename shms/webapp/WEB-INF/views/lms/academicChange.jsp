@@ -52,7 +52,7 @@
                                          <select class="form-select" name="sub_code">
                                              <option value="">전체</option>
                                              <c:forEach items="${subjectList }" var="subject">
-	                                             <option value="${subject.sub_code }">
+	                                             <option class="${subject_col_code }" value="${subject.sub_code }">
 	                                             	${subject.sub_name }
 	                                             </option>
                                              </c:forEach>
@@ -110,85 +110,51 @@
                          </tr>
                      </thead>
                      <tbody>
-                         <tr>
-                             <td class="text-center">23456</td>
-                             <td class="text-center">사회과학대학</td>
-                             <td class="text-center">경영학과</td>
-                             <td class="text-center">S1013230</td>
-                             <td class="text-center">김윤지</td>
-                             <td class="text-center">2020.04.02</td>
-                             <td class="text-center">2020.05.02</td>
-                             <td class="text-center">휴학</td>
-                             <td class="text-center">
-                                 <!-- 해당 변동사항의 view로 이동해야함 -->
-                                 <a href="${cPath }/lms/academicChangeView.do" class="badge bg-success white-color">완료</a>
-                             </td>
-                         </tr>
-                         <tr>
-                             <td class="text-center">23456</td>
-                             <td class="text-center">사회과학대학</td>
-                             <td class="text-center">경영학과</td>
-                             <td class="text-center">S1013230</td>
-                             <td class="text-center">김윤지</td>
-                             <td class="text-center">2020.04.02</td>
-                             <td class="text-center">2020.05.02</td>
-                             <td class="text-center">휴학</td>
-                             <td class="text-center">
-                                 <!-- 해당 변동사항의 view로 이동해야함 -->
-                                 <button type="button" class="btn badge bg-danger block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-                                     반려
-                                 </button>
-                             </td>
-                         </tr>
-                         <tr>
-                             <td class="text-center">23456</td>
-                             <td class="text-center">사회과학대학</td>
-                             <td class="text-center">경영학과</td>
-                             <td class="text-center">S1013230</td>
-                             <td class="text-center">김윤지</td>
-                             <td class="text-center">2020.04.02</td>
-                             <td class="text-center">2020.05.02</td>
-                             <td class="text-center">휴학</td>
-                             <td class="text-center">
-                                 <!-- 해당 변동사항의 view로 이동해야함 학적변동 버튼을 누를 수 있음 -> 상태 완료로 변경됨 -->
-                                 <a href="${cPath }/lms/academicChangeView.do" class="badge bg-primary white-color">승인</a>
-                             </td>
-                         </tr>
-                         <tr>
-                             <td class="text-center">23456</td>
-                             <td class="text-center">사회과학대학</td>
-                             <td class="text-center">경영학과</td>
-                             <td class="text-center">S1013230</td>
-                             <td class="text-center">김윤지</td>
-                             <td class="text-center">2020.04.02</td>
-                             <td class="text-center">2020.05.02</td>
-                             <td class="text-center">휴학</td>
-                             <!-- 해당 변동사항의 view로 이동해야함 -->
-                             <td class="text-center">
-                                 <a href="${cPath }/lms/academicChangeView.do" class="badge bg-info white-color">
-                                     대기
-                                 </a>
-                             </td>
-                         </tr>
+                     <c:choose>
+                     	<c:when test="${not empty cngList}">
+                     		<c:forEach items="${cngList }" var="cngList">
+	                        	<tr>
+		                             <td class="text-center">${cngList.cng_req_no }</td>
+		                             <td class="text-center">${cngList.col_name }</td>
+		                             <td class="text-center">${cngList.sub_name }</td>
+		                             <td class="text-center">${cngList.stdnt_no }</td>
+		                             <td class="text-center">${cngList.stdnt_name }</td>
+		                             <td class="text-center">${cngList.req_de }</td>
+		                             <td class="text-center">${cngList.proc_date }</td>
+		                             <td class="text-center">${cngList.req_cl_code }</td>
+		                             <td class="text-center">
+		                             	<c:if test="${cngList.process_stat eq '완료' }">
+			                                <a href="${cPath }/lms/academicChangeView.do" class="badge bg-success white-color">완료</a>
+		                             	</c:if>
+		                             	<c:if test="${cngList.process_stat eq '반려' }">
+			                             	<button type="button" class="btn badge bg-danger block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+		                                     반려
+		                                 	</button>
+		                             	</c:if>
+		                             	<c:if test="${cngList.process_stat eq '승인' }">
+		                             		<a href="${cPath }/lms/academicChangeView.do" class="badge bg-primary white-color">승인</a>
+		                             	</c:if>
+		                             	<c:if test="${cngList.process_stat eq '대기' }">
+			                             	<a href="${cPath }/lms/academicChangeView.do" class="badge bg-info white-color">
+			                                     대기
+			                                </a>
+		                             	</c:if>
+		                             </td>
+	                          	</tr>
+                     		</c:forEach>
+                     	</c:when>
+                     	<c:otherwise>
+                     		<tr>
+                     			<td colspan="9" class="text-center">신청내역이 존재하지 않습니다.</td>
+                     		</tr>
+                     	</c:otherwise>
+                     </c:choose>
                      </tbody>
                  </table>
-                 <nav aria-label="Page navigation example" class="pagenationNav">
-                     <ul class="pagination pagination-primary">
-                         <li class="page-item">
-                             <a class="page-link" href="#">
-                                 <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span>
-                             </a>
-                         </li>
-                         <li class="page-item"><a class="page-link" href="#">1</a></li>
-                         <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                         <li class="page-item"><a class="page-link" href="#">3</a></li>
-                         <li class="page-item">
-                             <a class="page-link" href="#">
-                                 <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
-                             </a>
-                         </li>
-                     </ul>
-                 </nav>
+                 <br>
+                 <div id="pagingArea" class="d-flex justify-content-center">
+						${pagingVO.pagingHTMLBS }
+				</div>
              </div>
          </div>
      </div>
@@ -226,3 +192,32 @@
  <!-- contents end -->
 </div>
 </div>
+<script type="text/javascript">
+
+	let subjectTag = $("[name='sub_code']");
+	$("[name='col_code']").on("change", function(){
+		let selectedCode = $(this).val();
+		subjectTag.val("");
+		if(selectedCode){
+			subjectTag.find("option").hide();
+			subjectTag.find("option."+selectedCode).show();
+		}else{
+			subjectTag.find("option").show();
+		}
+		subjectTag.find("option:first").show();
+	});
+	
+	let listBody = $("#listBody");
+	let searchForm = $("#searchForm").on("change", ":input[name]", function(){
+		searchForm.submit();
+	}).ajaxForm({
+		dataType : "json",
+		success : function(res){
+			listBody.empty();
+			
+		}, error : function(xhr, resp, error){
+			console.log(xhr);
+		}
+	});
+	searchForm.submit();
+</script>

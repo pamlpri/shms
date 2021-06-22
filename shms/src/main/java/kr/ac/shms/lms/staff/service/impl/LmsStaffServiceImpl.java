@@ -1,12 +1,14 @@
 package kr.ac.shms.lms.staff.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
@@ -16,6 +18,7 @@ import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.ScholarShipVO;
 import kr.ac.shms.main.commuity.vo.ComCodeVO;
 
 @Service
@@ -96,12 +99,35 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	}
 
 	@Override
-	public List<RegInfoCngVO> selectReginfoCngStudentList() {
-		return lmsStaffDAO.selectReginfoCngStudentList();
+	public List<RegInfoCngVO> selectReginfoCngStudentList(PagingVO<RegInfoCngVO> pagingVO) {
+		return lmsStaffDAO.selectReginfoCngStudentList(pagingVO);
 	}
 
 	@Override
 	public List<ComCodeVO> selectReqClCode() {
 		return lmsStaffDAO.selectReqClCode();
+	}
+
+	@Override
+	public int selectReginfoCngCount(PagingVO<RegInfoCngVO> pagingVO) {
+		return lmsStaffDAO.selectReginfoCngCount(pagingVO);
+	}
+
+	@Override
+	public List<ScholarShipVO> selectGisaSchlReqList() {
+		return lmsStaffDAO.selectGisaSchlReqList();
+	}
+
+	@Override
+	public ScholarShipVO selectGisaSchlReq(int req_no) {
+		return lmsStaffDAO.selectGisaSchlReq(req_no);
+	}
+
+	@Override
+	public ServiceResult updateSchlStatus(ScholarShipVO schl) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsStaffDAO.updateSchlStatus(schl);
+		if(cnt > 0) { result = ServiceResult.OK; }
+		return result;
 	}
 }
