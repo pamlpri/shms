@@ -44,8 +44,10 @@ public class TuitionReceiptController {
 		String stdnt_no = user.getUser_id();
 		TuitionVO tuition = tuitionService.selectTuitionReceipt(stdnt_no);
 		int recivAmt = tuitionService.selectRecivSchl(stdnt_no);
-		
-		int regAmt = tuition.getRegAmt();
+		int regAmt = 0;
+		if(tuition != null) {
+			regAmt = tuition.getRegAmt();
+		}
 		int tuitionAmt = regAmt - recivAmt;
 		DecimalFormat dc = new DecimalFormat("###,###,###");
 		String tuAmt = dc.format(tuitionAmt);
