@@ -32,15 +32,19 @@ public class GradeVO implements Serializable{
 	private Integer semstr;
 	private Integer year;
 	private String stdnt_no;
-	private Integer mid_scre;
-	private Integer final_scre;
-	private Integer attend_scre;
-	private Integer task_scre;
-	private Integer etc_scre;
+	private Double mid_scre;
+	private Double final_scre;
+	private Double attend_scre;
+	private Double task_scre;
+	private Double etc_scre;
 	private String lec_code;
+	private Integer rank;
+	private Integer stdnt_cnt;
+	private Double stdnt_svg;
 	
 	private String name;
 	private String sub_name;
+	private String scre_type;
 	
 	private List<GradeVO> gradeList;
 }

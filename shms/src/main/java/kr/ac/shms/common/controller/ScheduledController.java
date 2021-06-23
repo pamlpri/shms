@@ -1,4 +1,4 @@
-package kr.ac.shms.lms.student.controller;
+package kr.ac.shms.common.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,15 +19,17 @@ import kr.ac.shms.lms.student.dao.StudentDAO;
  * @see javax.servlet.http.HttpServlet
  * <pre>
  * [[개정이력(Modification Information)]]
- * 수정일                  수정자               수정내용
+ * 수정일           수정자        수정내용
  * --------     --------    ----------------------
- * 2021. 6. 8.      박초원      	       최초작성
+ * 2021. 6. 8.      박초원        장바구니 자동 수강신청
+ * 2021. 6. 20.     최희수		  도서관 열람실 예약 리셋
+ * 2021. 6. 24.     박초원		  qr 출석 자동 결석처리	
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
 @Component
-public class ClassCartUpdateController {
-	private static final Logger logger = LoggerFactory.getLogger(ClassCartUpdateController.class);
+public class ScheduledController {
+	private static final Logger logger = LoggerFactory.getLogger(ScheduledController.class);
 
 	@Inject
 	private StudentDAO studentDAO;
