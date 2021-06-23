@@ -36,6 +36,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
  * 2021. 6. 11.      박초원      	       최초작성
  * 2021. 6. 16.      박초원			 교수 시험,문제 조회
  * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
+ * 2021. 6. 22. 	  박초원			 서술형, 단답형 채점, 성적 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -228,8 +229,36 @@ public class ExamProfessorController {
 	@RequestMapping("/lecture/examOMR.do")
 	public String examOMR(
 			@SessionAttribute(name="lec_code", required=false) String lec_code
+			,@RequestParam("exam_no") int exam_no
+			,@RequestParam("stdnt_no") String stdnt_no
 			, Model model
 		) {
+		ExamVO exam = new ExamVO();
+		exam.setLec_code(lec_code);
+		exam.setExam_no(exam_no);
+		exam.setStdnt_no(stdnt_no);
+		List<QuesVO> quesList = lectureProfessorService.selectStudentOMR(exam);
+		model.addAttribute("quesList", quesList);
 		return "lecture/examOMR";
+	}
+	
+	@RequestMapping("/lecture/examGradeUpdate.do")
+	public String examGradeUpdate(
+		@ModelAttribute("exam") ExamVO exam
+		,Model model
+	) {
+		String view = null;
+		String message = null;
+		
+		ServiceResult result = lectureProfessorService.updateExamGrade(exam);
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lecture/examAdminList.do?what=" + exam.getExam_no();
+		}else {
+			message = "서버 오류입니다.";
+			view = "lecture/examOMR.do?exam_no=" + exam.getExam_no() +"&stdnt_no=" + exam.getStdnt_no();
+		}
+		
+		model.addAttribute("message", message);
+		return view;
 	}
 }

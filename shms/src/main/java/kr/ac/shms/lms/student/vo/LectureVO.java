@@ -67,6 +67,7 @@ public class LectureVO implements IAttachVO {
 	
 	private Integer diary_no;
 	private String week_lec_cl;
+	private String week_lec_cl_nm;
 	private String ut_lec_link;
 	private String rt_lec_link;
 	private String week_bgnde_char;

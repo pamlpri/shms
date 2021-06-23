@@ -4,6 +4,7 @@
 * ----------  ---------  -----------------
 * 2021. 6. 11.      박초원        최초작성
 * 2021. 6. 16. 	    박초원        조회
+2021. 6. 22. 	  박초원			 서술형, 단답형 채점, 성적 수정
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -136,12 +137,28 @@
                   <tbody>
                   	<c:forEach items="${studentList }" var="student">
                   		 <tr>
-	                      <td class="text-center">
-	                      	<a href="${cPath}/lecture/examOMR.do?what=${student.stdnt_no}" class="text-color">${student.name }</a>
-	                      </td>
-	                      <td class="text-center">
-	                      	<a href="${cPath}/lecture/examOMR.do?what=${student.stdnt_no}" class="text-color">${student.stdnt_no }</a>
-	                      </td>
+	                	  <c:choose>
+	                	  	<c:when test="${empty exam.dd_sum and empty exam.ss_sum}">
+	                	  		<td class="text-center">${student.name }</td>
+	                	  		<td class="text-center">${student.stdnt_no }</td>
+	                	  	</c:when>
+	                	  	<c:when test="${student.applcn_at eq '미응시'  }">
+	                	  		<td class="text-center">${student.name }</td>
+	                	  		<td class="text-center">${student.stdnt_no }</td>
+	                	  	</c:when>
+	                	  	<c:otherwise>
+	                  		 <c:url value="/lecture/examOMR.do" var="omrUrl">
+		                		<c:param name="exam_no" value="${student.exam_no}"/>
+		                		<c:param name="stdnt_no" value="${student.stdnt_no}"/>
+		                	 </c:url>
+		                      <td class="text-center">
+		                      	<a href="${omrUrl}" class="text-color">${student.name }</a>
+		                      </td>
+		                      <td class="text-center">
+		                      	<a href="${omrUrl}" class="text-color">${student.stdnt_no }</a>
+		                      </td>
+	                	  	</c:otherwise>
+	                	  </c:choose>
 	                      <td class="text-center">${student.sub_name }</td>
 	                      <td class="text-center">${student.applcn_at }</td>
 	                      <c:if test="${not empty exam.gg_sum}">
@@ -199,7 +216,7 @@
         // Edit row on edit button click
         $(document).on("click", ".edit", function(){		
             $(this).parents("tr").find("td:not(:last-child)").each(function(){
-            	if($(this).index() != 0 && $(this).index() != 1 && $(this).index() != 2 && $(this).index() != 3 && $(this).index() != 7){
+            	if($(this).index() != 0 && $(this).index() != 1 && $(this).index() != 2 && $(this).index() != 3 && $(this).index() != 5 && $(this).index() != 7){
 	                $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
             	}
             });		

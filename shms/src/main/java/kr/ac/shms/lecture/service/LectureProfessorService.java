@@ -34,6 +34,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 16.      박초원			 교수 시험,문제 조회
  * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
  * 2021. 6. 21.       박초원 		 교수 학생 출석수정,  출석 성적부 반영
+ * 2021. 6. 22. 	  박초원			 서술형, 단답형 채점, 성적 수정
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -241,4 +242,25 @@ public interface LectureProfessorService {
 	 * @return cnt
 	 */
 	public ServiceResult insertAttendGrade(AttendVO attend);
+	
+	/**
+	 * 과제 번호 넣으면 강의 코드 반환
+	 * @param set_task_no 과제 번호
+	 * @return lec_code 강의 코드
+	 */
+	public String selectLecCodeForTask(int set_task_no);
+	
+	/**
+	 * 한 학생의 주관식 답안 조회
+	 * @param examVO
+	 * @return examVO
+	 */
+	public List<QuesVO> selectStudentOMR(ExamVO exam);
+	
+	/**
+	 * 한 학생의 주관식 정답여부 업데이트
+	 * @param examVO
+	 * @return cnt
+	 */
+	public ServiceResult updateExamGrade(ExamVO exam);
 }

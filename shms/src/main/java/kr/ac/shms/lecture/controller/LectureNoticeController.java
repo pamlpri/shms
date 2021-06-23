@@ -103,6 +103,7 @@ public class LectureNoticeController {
 		board.setLec_code(lec_code);
 		board.setBo_writer(user.getUser_name());
 		board.setBo_kind("GG");
+		logger.info("board : {}", board.toString());
 		
 		/** 파라미터 검증 */
 		boolean valid = !(errors.hasErrors());

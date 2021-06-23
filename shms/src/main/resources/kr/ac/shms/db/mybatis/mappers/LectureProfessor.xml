@@ -97,6 +97,7 @@
 		   AND a.estbl_year = EXTRACT(YEAR FROM SYSDATE)
 		   AND estbl_semstr = (SELECT semstr FROM v_semstr)
 		   AND TO_NUMBER(dayotw) = (SELECT TO_CHAR(SYSDATE, 'D') FROM DUAL)
+		 ORDER BY lec_full_time
 	</select>
 	
 	<select id="selectLecListForOpen" parameterType="String" resultType="LectureVO">
@@ -507,7 +508,7 @@
 	</insert>
 	
 	<select id="selectExamList" parameterType="String" resultType="ExamVO">
-		SELECT exam_no,
+		SELECT a.exam_no,
 		       test_cl,
 		       (SELECT DISTINCT req_semstr FROM sugang_req WHERE lec_code = 'L160201901')||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
 		       <![CDATA[
@@ -523,10 +524,10 @@
 		          FROM sugang_req a
 		         WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
 		           AND lec_code = a.lec_code) stdnt_cnt,
-		       (SELECT COUNT(b.exam_no)
+		       (SELECT COUNT(a.exam_no)
 		          FROM take_exam b
-		         WHERE b.exam_no = exam_no) exam_cnt
-		  FROM exam
+		         WHERE b.exam_no = a.exam_no) exam_cnt
+		  FROM exam a
 		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
 		 ORDER BY exam_no DESC
 	</select>
@@ -793,4 +794,46 @@
             </foreach>
         END;
 	</insert>
+	
+	<select id="selectLecCodeForTask" parameterType="int" resultType="String">
+		SELECT lec_code 
+		  FROM set_task 
+		 WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}
+	</select>
+	
+	<select id="selectStudentOMR" parameterType="ExamVO" resultType="QuesVO">
+		SELECT a.exam_no,
+		       b.stdnt_no,
+		       d.name,
+		       (SELECT sub_name
+		          FROM subject
+		         WHERE d.sub_code = sub_code) sub_name,
+		       e.ques_no,
+		       e.submit_ans,
+		       e.applcn_no
+		 FROM exam a
+				  CROSS JOIN (SELECT stdnt_no
+				                     FROM sugang_req
+				                    WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
+				                      AND sugang_at = 'Y') b
+				  LEFT OUTER JOIN take_exam c ON (a.exam_no = c.exam_no AND b.stdnt_no = c.stdnt_no)
+				  INNER JOIN student d ON(b.stdnt_no = d.stdnt_no)
+		          LEFT OUTER JOIN take_exam_dtls e ON(a.exam_no = c.exam_no AND c.applcn_no = e.applcn_no)
+		          INNER JOIN exam_ques f ON(e.ques_no = f.ques_no AND a.exam_no = f.exam_no)
+				 WHERE a.lec_code =  #{lec_code, jdbcType=VARCHAR}
+				   AND a.exam_no =  #{exam_no, jdbcType=NUMERIC}
+		           AND b.stdnt_no =  #{stdnt_no, jdbcType=VARCHAR}
+		           AND NOT (f.ques_type = 'GG')
+	</select>
+	
+	<update id="updateExamGrade" parameterType="ExamVO">
+		BEGIN
+		<foreach collection="quesList" item="ques">
+	        UPDATE take_exam_dtls SET ans_at = #{ques.ans_at}
+	        	<where>
+	        		applcn_no = #{ques.applcn_no}  AND ques_no = #{ques.ques_no};
+	        	</where>
+    	</foreach>
+    	END;
+	</update>
 </mapper>

@@ -1,5 +1,8 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -40,9 +46,10 @@ public class LectureStudentIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureStudentIndexController.class);
 	@Inject
 	private LectureStudentService lectureStudentService;
-	
 	@Inject
 	private LectureService lectureService;
+	@Inject
+	private BoardService boardService;
 	
 	@RequestMapping("/lecture/index.do")
 	public String lectureDetailsST(
@@ -51,6 +58,17 @@ public class LectureStudentIndexController {
 			, @RequestParam("lec_name") String lec_name
 			, Model model
 			) {
+		PagingVO<BoardVO> pagingVO = new PagingVO<>();
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("bo_kind", "GG");
+		searchMap.put("lec_code", lec_code);
+		pagingVO.setSearchMap(searchMap);
+		int ggCnt = boardService.selectBoardCount(pagingVO);
+		
+		searchMap.put("bo_kind", "GM");
+		pagingVO.setSearchMap(searchMap);
+		int gmCnt = boardService.selectBoardCount(pagingVO);
+		
 		String stdnt_no = user.getUser_id();
 		
 		AttendVO attend = new AttendVO();
@@ -60,11 +78,16 @@ public class LectureStudentIndexController {
 			
 		
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
+		LectureVO lectureDiary = lectureService.selectLecDiary(lec_code);
+		
 		model.addAttribute("lecture", lectureDetails);
+		model.addAttribute("lectureDiary", lectureDiary);
 		model.addAttribute("lec_code", lec_code);
 		model.addAttribute("lec_name", lec_name);
 		model.addAttribute("attend", attVO);
-		
+        model.addAttribute("ggCnt", ggCnt);
+        model.addAttribute("gmCnt", gmCnt);
+        
 		return "lecture/main";
 	}
 }

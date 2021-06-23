@@ -195,26 +195,31 @@
 	</update>
 	
 	<select id="selectReginfoCngStudentList" resultType="RegInfoCngVO">
-		SELECT cng_req_no,
-		       d.col_name,
-		       c.sub_name,
-		       a.stdnt_no,
-		       name,
-		       TO_CHAR(a.req_de, 'RRRR.MM.DD') req_de,
-		       TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
-		      (SELECT com_code_nm
-		          FROM tb_com_code
-		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
-		           AND com_code = req_cl_code) req_cl_code,
-		      (SELECT com_code_nm
-		         FROM tb_com_code
-		        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
-		          AND com_code = process_stat) process_stat
-		  FROM reginfo_cng a
-		 INNER JOIN v_stdntinfo b ON(a.stdnt_no=b.stdnt_no)
-		 INNER JOIN subject c ON(b.sub_code=c.sub_code)
-		 INNER JOIN college d ON(c.col_code=d.col_code)
-		 ORDER BY req_de desc
+		SELECT *
+		  FROM 
+		(SELECT A.*, ROW_NUMBER () OVER(ORDER BY req_de DESC) rn
+		   FROM (SELECT cng_req_no,
+		                d.col_name,
+		                c.sub_name,
+		                a.stdnt_no,
+		                name stdnt_name,
+		                TO_CHAR(a.req_de, 'RRRR.MM.DD') req_de,
+		                TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
+		               (SELECT com_code_nm
+		                  FROM tb_com_code
+		                 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+		                   AND com_code = req_cl_code) req_cl_code,
+		              (SELECT com_code_nm
+		                 FROM tb_com_code
+		                WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		                  AND com_code = process_stat) process_stat
+		          FROM reginfo_cng a
+		         INNER JOIN v_stdntinfo b ON(a.stdnt_no=b.stdnt_no)
+		         INNER JOIN subject c ON(b.sub_code=c.sub_code)
+		         INNER JOIN college d ON(c.col_code=d.col_code)
+		         ORDER BY req_de desc) A
+		  )
+		 WHERE rn BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 	<select id="selectReqClCode" resultType="ComCodeVO">
@@ -223,4 +228,106 @@
 		  FROM tb_com_code
 		 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
 	</select>
+	
+	<sql id="searchFrag">
+		<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+			<choose>
+				<when test="searchMap.searchType eq 'title'">
+					INSTR(bo_title, #{searchMap.searchWord}) > 0
+				</when>
+				<when test="searchMap.searchType eq 'content'">
+					INSTR(bo_cont, #{searchMap.searchWord}) > 0
+				</when>
+				<when test="searchMap.searchType eq 'writer'">
+					INSTR(bo_writer, #{searchMap.searchWord}) > 0
+				</when>
+				<otherwise>
+					INSTR(bo_title, #{searchMap.searchWord}) > 0
+					OR 
+					INSTR(bo_cont, #{searchMap.searchWord}) > 0
+					<if test="searchMap.bo_kind eq 'DM'">
+						OR INSTR(bo_writer, #{searchMap.searchWord}) > 0 
+					</if>
+				</otherwise>
+			</choose>
+		</if>
+	</sql>
+	
+	<select id="selectReginfoCngCount" parameterType="PagingVO" resultType="int">
+		SELECT COUNT(*)
+  		  FROM reginfo_cng
+	</select>
+	
+	<select id="selectGisaSchlReqList" resultType="ScholarShipVO">
+		SELECT *
+		  FROM (
+		    (SELECT A.*, ROW_NUMBER () OVER(ORDER BY req_de DESC) rn
+		      FROM
+		            (SELECT req_no,
+		                   b.schlship_nm,
+		                   c.name,
+		                   TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+		                   CASE WHEN papers_submit_at='Y' THEN '제출'
+		                        ELSE '미제출'
+		                   END AS papers_submit_at,
+		                   TO_CHAR(b.benefit, 'FM999,999,999') benefit,
+		                   TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
+		                   (SELECT com_code_nm
+		                             FROM tb_com_code
+		                            WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		                              AND com_code = process_stat) process_stat,
+		                   refuse_resn
+		              FROM schl_req a
+		             INNER JOIN schlship b ON(a.schlship_no=b.schlship_no) 
+		             INNER JOIN student c ON(a.stdnt_no=c.stdnt_no)
+		             WHERE a.schlship_no=7 or a.schlship_no=8) A
+		            )
+		        )
+	</select>
+	<resultMap type="ScholarShipVO" id="schl" autoMapping="true">
+		<id property="req_no" column="req_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectGisaSchlReq" parameterType="int" resultMap="schl">
+		SELECT a.stdnt_no,
+		       name,
+		       tel_no,
+		       CASE WHEN webmail IS NOT NULL THEN webmail
+		            WHEN webmail IS NULL THEN email
+		            END AS webmail,
+		       req_no,
+		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+		       schlship_nm,
+		       b.atch_file_no,
+		       atch_file_seq,
+		       file_path,
+		       file_nm,
+		       file_cont_type,
+		       file_size,
+		       reg_date,
+		       reg_user_id,
+		       biz_type,
+		       save_file_nm
+		  FROM student a
+		 INNER JOIN schl_req b ON(a.stdnt_no=b.stdnt_no) 
+		 INNER JOIN schlship c ON(b.schlship_no=c.schlship_no)
+		 LEFT OUTER JOIN attach d ON(b.atch_file_no=d.atch_file_no)
+		 WHERE req_no=${req_no, jdbcType=NUMERIC}
+	</select>
+	
+	<update id="updateSchlStatus" parameterType="ScholarShipVO">
+		UPDATE schl_req
+		   SET process_stat=#{process_stat, jdbcType=VARCHAR}
+		   <if test="process_stat eq 'BR'">
+			   ,refuse_resn=#{refuse_resn, jdbcType=VARCHAR}
+		   </if>
+		 WHERE req_no=#{req_no, jdbcType=NUMERIC}
+	</update>
+	
+	
+	
 </mapper>

@@ -1,5 +1,8 @@
 package kr.ac.shms.lecture.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import kr.ac.shms.lecture.service.LectureProfessorService;
+import kr.ac.shms.common.service.BoardService;
+import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lms.student.vo.LectureVO;
 
@@ -36,9 +41,10 @@ import kr.ac.shms.lms.student.vo.LectureVO;
 public class LectureProfessorIndexController {
 	private static final Logger logger = LoggerFactory.getLogger(LectureProfessorIndexController.class);
 	@Inject
-	private LectureProfessorService lectureProfessorService;
-	@Inject
 	private LectureService lectureService;
+	@Inject
+	private BoardService boardService;
+	
 	
 	@RequestMapping("/lecture/main.do")
 	public String lectureDetailsPR(
@@ -46,10 +52,26 @@ public class LectureProfessorIndexController {
 			, @RequestParam("lec_name") String lec_name
 			, Model model
 			) {
+		PagingVO<BoardVO> pagingVO = new PagingVO<>();
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("bo_kind", "GG");
+		searchMap.put("lec_code", lec_code);
+		pagingVO.setSearchMap(searchMap);
+		int ggCnt = boardService.selectBoardCount(pagingVO);
+		
+		searchMap.put("bo_kind", "GM");
+		pagingVO.setSearchMap(searchMap);
+		int gmCnt = boardService.selectBoardCount(pagingVO);
+		
 		LectureVO lectureDetails = lectureService.selectLectureDetails(lec_code);
+		LectureVO lectureDiary = lectureService.selectLecDiary(lec_code);
+		
         model.addAttribute("lecture", lectureDetails);
+        model.addAttribute("lectureDiary", lectureDiary);
         model.addAttribute("lec_code", lec_code);
         model.addAttribute("lec_name", lec_name);
+        model.addAttribute("ggCnt", ggCnt);
+        model.addAttribute("gmCnt", gmCnt);
         
 		return "lecture/main";
 		

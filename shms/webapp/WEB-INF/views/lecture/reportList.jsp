@@ -221,7 +221,7 @@ $(document).ready(function(){
     });
     
  	$('#report-table').DataTable({
-    	
+ 		 "order": [[ 1, "asc" ]]
     });
 	
 });
