@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
-import kr.ac.shms.validator.TaskInsertGroup;
 import kr.ac.shms.validator.TaskUpdateGroup;
 
 /**
@@ -40,11 +41,14 @@ import kr.ac.shms.validator.TaskUpdateGroup;
  * </pre>
  */
 @Controller
+@SessionAttributes({"lec_code", "lec_name"})
 public class TaskSubmitUpdateController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskSubmitInsertController.class);
 	
 	@Inject
 	private LectureStudentService lectureStudentService;
+	@Inject
+	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/taskUpdate.do")
 	public String taskForm(
@@ -59,6 +63,7 @@ public class TaskSubmitUpdateController {
 		Map<String, Object> search = new HashMap<>();
 		search.put("set_task_no", set_task_no);
 		search.put("stdnt_no", user.getUser_id());
+		getLecCode(set_task_no, model);
 		
 		/** 서비스 호출 */
 		SetTaskVO setTask = lectureStudentService.selectSetTask(search);
@@ -92,6 +97,7 @@ public class TaskSubmitUpdateController {
 		Map<String, Object> search = new HashMap<>();
 		search.put("set_task_no", set_task_no);
 		search.put("stdnt_no", user.getUser_id());
+		getLecCode(set_task_no, model);
 		
 		/** 반환 */
 		boolean valid = !(errors.hasErrors()); 
@@ -120,4 +126,17 @@ public class TaskSubmitUpdateController {
 		
 		return view;
 	}	
+	
+	public String getLecCode(
+			int set_task_no
+			, Model model
+			) {
+			SetTaskVO setTask = lectureService.selectLecCodeForTask(set_task_no);
+			String lec_code = setTask.getLec_code();
+			String lec_name = setTask.getLec_name();
+			
+			model.addAttribute("lec_code", lec_code);
+			model.addAttribute("lec_name", lec_name);
+			return lec_code; 
+		}
 }

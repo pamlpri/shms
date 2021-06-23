@@ -99,4 +99,10 @@ public class LectureServiceImpl implements LectureService{
 		return lectureDAO.selectLecDiary(lec_code);
 	}
 
+	@Override
+	public SetTaskVO selectLecCodeForTask(int set_task_no) {
+		return lectureDAO.selectLecCodeForTask(set_task_no);
+	}
+
+
 }

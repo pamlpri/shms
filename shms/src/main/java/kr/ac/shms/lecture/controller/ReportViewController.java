@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import kr.ac.shms.common.dao.BoardDAO;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -38,6 +39,7 @@ import kr.ac.shms.lecture.vo.TaskSubmitVO;
  * </pre>
  */
 @Controller
+@SessionAttributes({"lec_code", "lec_name"})
 public class ReportViewController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportViewController.class);
 	@Inject
@@ -45,7 +47,9 @@ public class ReportViewController {
 	@Inject
 	private LectureStudentService lectureStudentService;
 	@Inject
-	private CommonAttachService commonAttachService; 
+	private CommonAttachService commonAttachService;
+	@Inject
+	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/report.do")
 	public String report(
@@ -67,7 +71,7 @@ public class ReportViewController {
 			, Model model
 		) {
 		/** 파라미터 조회 */
-		String lec_code = getLecCode(set_task_no);
+		String lec_code = getLecCode(set_task_no, model);
 		Map<String, Object> search = new HashMap<>();
 		search.put("set_task_no", set_task_no);
 		search.put("lec_code", lec_code);
@@ -84,8 +88,17 @@ public class ReportViewController {
 		return "lecture/reportList";
 	}
 	
-	public String getLecCode(int set_task_no) {
-		return lectureProfessorService.selectLecCodeForTask(set_task_no);
+	public String getLecCode(
+		int set_task_no
+		, Model model
+		) {
+		SetTaskVO setTask = lectureService.selectLecCodeForTask(set_task_no);
+		String lec_code = setTask.getLec_code();
+		String lec_name = setTask.getLec_name();
+		
+		model.addAttribute("lec_code", lec_code);
+		model.addAttribute("lec_name", lec_name);
+		return lec_code; 
 	}
 	
 	@RequestMapping("/lecture/reportView.do")

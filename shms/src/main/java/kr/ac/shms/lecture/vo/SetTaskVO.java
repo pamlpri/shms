@@ -45,6 +45,7 @@ public class SetTaskVO implements IAttachVO{
 	@Min(value=1, groups= {SetTaskUpdateGroup.class})
 	private Integer set_task_no;
 	private String lec_code;
+	private String lec_name;
 	private String task_reg_de;
 	private String submit_bgnde;
 	private String submit_endde;
@@ -64,6 +65,7 @@ public class SetTaskVO implements IAttachVO{
 	private Integer total_cnt;	// 내 강의 듣는 수강생 수
 	private String bo_writer;
 	private String biz_type;
+	private Integer submit_no;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;

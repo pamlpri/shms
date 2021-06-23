@@ -95,5 +95,11 @@ public interface LectureService {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public LectureVO selectLecDiary(String lec_code);
-
+	
+	/**
+	 * 과제 번호 넣으면 강의 코드 반환
+	 * @param set_task_no 과제 번호
+	 * @return lec_code, lec_name
+	 */
+	public SetTaskVO selectLecCodeForTask(int set_task_no);
 }

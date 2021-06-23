@@ -799,12 +799,6 @@
 		    )
 	</insert>
 	
-	<select id="selectLecCodeForTask" parameterType="int" resultType="String">
-		SELECT lec_code 
-		  FROM set_task 
-		 WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}
-	</select>
-	
 	<select id="selectStudentOMR" parameterType="ExamVO" resultType="QuesVO">
 		SELECT a.exam_no,
 		       b.stdnt_no,
