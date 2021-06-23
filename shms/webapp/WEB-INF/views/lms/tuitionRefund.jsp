@@ -104,16 +104,11 @@
                   </tbody>
               </table>
               <div class="text-center" style="margin-top: 40px;">
-	              <c:if test="${not empty tuition.pay_amt && reginfoStat ne '재학' && result ne 'OK'}">
+	              <c:if test="${not empty tuition.pay_amt && reginfoStat eq '자퇴' || reginfoStat eq '제적'}">
 	                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inlineForm" style="margin-top: -1%;">
 	                      환불신청
 	                  </button>
 	              </c:if>
-	              <c:if test="${reginfoStat eq '재학'} ">
-	              </c:if>
-	              <c:if test="${empty tuition }">
-	              </c:if>
-          
               </div>
           </div>
       </div>

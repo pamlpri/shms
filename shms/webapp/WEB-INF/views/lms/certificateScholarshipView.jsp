@@ -58,7 +58,17 @@
                                      <c:choose>
 	                                     <c:when test="${not empty schl.attachList }">
 		                                     <c:forEach items="${schl.attachList }" var="attList">
-		                                         <li><a href="#" class="text-color">${attList.file_nm }</a></li>
+		                                     	<div class="ml-2 fileArea">
+												<c:url value="/lms/schlDownload.do" var="downloadURL">
+													<c:param name="atch_file_no" value="${attList.atch_file_no }" />
+													<c:param name="atch_file_seq"
+														value="${attList.atch_file_seq }" />
+												</c:url>
+												<p class="fileBox col-lg-6">
+													<a href="${downloadURL }" class="text-color"
+														data-attno="${attList.atch_file_seq }">${attList.file_nm}</a>
+												</p>
+											</div>
 		                                     </c:forEach>
 	                                     </c:when>
 	                                     <c:otherwise>

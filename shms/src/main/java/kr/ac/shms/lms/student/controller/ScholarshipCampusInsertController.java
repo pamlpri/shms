@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.TuitionService;
 import kr.ac.shms.lms.student.vo.EditReqVO;
@@ -50,6 +51,7 @@ public class ScholarshipCampusInsertController {
 
 	@Inject
 	private CommonAttachServiceImpl commonAttachServiceImpl; 
+	
 	
 	@RequestMapping("/lms/scholarshipCampusForm.do")
 	public String scholarshipCampusForm(
@@ -119,7 +121,13 @@ public class ScholarshipCampusInsertController {
 		}
 		return view;
 	}
-	
-
-	
+	@RequestMapping(value="/lms/schlCampusDownload.do")
+	public String downloader(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = commonAttachServiceImpl.download(attach, null);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
+	}
 }
