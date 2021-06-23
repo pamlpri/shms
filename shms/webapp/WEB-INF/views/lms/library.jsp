@@ -13,59 +13,8 @@
  </nav>
  
  <section class="section">
-     <div class="card">
-         <div class="card-body">
-             <!-- 도서내역 -->
-             <table class="table table-striped" id="table1">
-                 <thead>
-                     <tr>
-                         <th class="text-center">도서번호</th>
-                         <th class="text-center">ISBN</th>
-                         <th class="text-center">도서명</th>
-                         <th class="text-center">저자명</th>
-                         <th class="text-center">출판사명</th>
-                         <th class="text-center">상태</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                 	<c:choose>
-                 		<c:when test="${not empty bookList }">
-                 			<c:forEach items="${bookList }" var="book">
-                 				<tr>
-			                         <td class="text-center">${book.book_code }</td>
-			                         <td class="text-center">${book.book_isbn }</td>
-			                         <td class="align-middle text-center">
-			                             <p class="over align-middle">${book.book_name }</p>
-			                         </td>
-			                         <td class="align-middle text-center">
-			                             <p class="over2 align-middle">${book.book_authr }</p>
-			                         </td>
-			                         <td class="text-center">키</td>
-			                         <td class="text-center">
-			                         	<c:choose>
-			                         		<c:when test="${book.book_stat_nm eq '대출가능'}">
-			                         			<span class="badge bg-primary">${book.book_stat_nm }</span>
-			                         		</c:when>
-			                         		<c:otherwise>
-			                         			<span class="badge bg-danger">${book.book_stat_nm }</span>
-			                         		</c:otherwise>
-			                         	</c:choose>
-			                         </td>
-		                     	</tr>
-                 			</c:forEach>
-                 		</c:when>
-                 		<c:otherwise>
-                 			<tr>
-                 				<td class="text-center" colspan="6">데이터가 없습니다.</td>
-                 			</tr>
-                 		</c:otherwise>
-                 	</c:choose>
-                 </tbody>
-             </table>
-         </div>
-     </div>
-
-     <h4 class="h4Title"><i class="fas fa-book"></i> 대출내역</h4>
+ 
+ 		<h4 class="h4Title"><i class="fas fa-book"></i> 대출내역</h4>
      <div class="card">
          <div class="card-body">
              <div class="table-responsive  myLibray">
@@ -166,6 +115,59 @@
                 </div>
             </div>
         </div>
+     <div class="card">
+         <div class="card-body">
+             <!-- 도서내역 -->
+             <table class="table table-striped" id="table1">
+                 <thead>
+                     <tr>
+                         <th class="text-center">도서번호</th>
+                         <th class="text-center">ISBN</th>
+                         <th class="text-center">도서명</th>
+                         <th class="text-center">저자명</th>
+                         <th class="text-center">출판사명</th>
+                         <th class="text-center">상태</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                 	<c:choose>
+                 		<c:when test="${not empty bookList }">
+                 			<c:forEach items="${bookList }" var="book">
+                 				<tr>
+			                         <td class="text-center">${book.book_code }</td>
+			                         <td class="text-center">${book.book_isbn }</td>
+			                         <td class="align-middle text-center">
+			                             <p class="over align-middle">${book.book_name }</p>
+			                         </td>
+			                         <td class="align-middle text-center">
+			                             <p class="over2 align-middle">${book.book_authr }</p>
+			                         </td>
+			                         <td class="text-center">키</td>
+			                         <td class="text-center">
+			                         	<c:choose>
+			                         		<c:when test="${book.book_stat_nm eq '대출가능'}">
+			                         			<span class="badge bg-primary">${book.book_stat_nm }</span>
+			                         		</c:when>
+			                         		<c:otherwise>
+			                         			<span class="badge bg-danger">${book.book_stat_nm }</span>
+			                         		</c:otherwise>
+			                         	</c:choose>
+			                         </td>
+		                     	</tr>
+                 			</c:forEach>
+                 		</c:when>
+                 		<c:otherwise>
+                 			<tr>
+                 				<td class="text-center" colspan="6">데이터가 없습니다.</td>
+                 			</tr>
+                 		</c:otherwise>
+                 	</c:choose>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+
+     
     </section>    
 </div>
 <script src="${cPath }/resources/lms/assets/vendors/simple-datatables/simple-datatables.js"></script>
