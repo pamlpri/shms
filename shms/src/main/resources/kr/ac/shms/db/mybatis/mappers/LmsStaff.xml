@@ -336,6 +336,56 @@
 		 WHERE req_no=#{req_no, jdbcType=NUMERIC}
 	</update>
 	
+	<sql id="academicSearchFrag">
+		<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+			INSTR(col_name, #{searchMap.col_name}) > 0
+			OR
+			INSTR(sub_code, #{searchMap.sub_code}) > 0
+			OR 
+			INSTR(searchWord, #{searchMap.searchWord}) > 0
+		</if>
+	</sql>
+	<select id="selectAcademicRegistrationList" parameterType="PagingVO" resultType="AcademicRegistrationVO">
+		SELECT *
+		    FROM (
+		    SELECT A.*, ROWNUM rn
+		        FROM (
+		            SELECT  
+		               B.col_code, 
+                       B.sub_code,
+	                   B.sub_name,
+	                   B.col_name,
+	                   stdnt_no, 
+	                   name,
+	                   regno1,
+	                   decode(gen, 'F', '여자','남자') gen,
+	                   grade,
+	                   semstr,
+	                   reginfo_stat,
+	                   TO_CHAR(entsch_de, 'YYYY.MM.DD') entsch_de
+		            FROM v_stdntinfo A
+	              LEFT OUTER JOIN (
+	                SELECT A.col_code, sub_code, sub_name, B.col_name
+	                FROM subject A
+	                INNER JOIN college B ON (A.col_code = B.col_code)
+	              ) B
+	              ON A.sub_code = B.sub_code
+		        ) A
+		      <include refid="academicSearchFrag"/>
+	          ORDER BY A.sub_name
+		    )
+		WHERE rn BETWEEN #{startRow} AND #{endRow}
+	</select>
 	
+	<select id="selectAcademicRegistrationCount" resultType="int">
+		SELECT COUNT(*)
+		FROM v_stdntinfo A
+		LEFT OUTER JOIN (
+		  SELECT A.col_code, sub_code, sub_name, B.col_name
+		  FROM subject A
+		  INNER JOIN college B ON (A.col_code = B.col_code)
+		) B
+		ON A.sub_code = B.sub_code
+	</select>
 	
 </mapper>

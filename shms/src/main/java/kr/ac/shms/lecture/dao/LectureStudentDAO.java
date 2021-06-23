@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.GradeVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TakeExamVO;
@@ -23,13 +24,14 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * [[개정이력(Modification Information)]]
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
- * 2021. 5. 24.      박초원      	       최초작성
- * 2021. 6. 14. 	 박초원				전체 강의 주/회차별 조회
- * 2021. 6. 15.      박초원			    비대면 강의 진도율, 출석
- * 2021. 6. 15. 	 송수미	      학생 과제 목록 조회, 과제 등록, 수정
+ * 2021. 5. 24.      박초원      최초작성
+ * 2021. 6. 14. 	 박초원		전체 강의 주/회차별 조회
+ * 2021. 6. 15.      박초원		비대면 강의 진도율, 출석
+ * 2021. 6. 15. 	 송수미	    학생 과제 목록 조회, 과제 등록, 수정
  * 2021. 6. 17. 	 송수미	      시험 정보 조회
- * 2021. 6. 18.      김보미    출석 관련 이동
+ * 2021. 6. 18.      김보미     QR 출석 관련 이동
  * 2021. 6. 17. 	 송수미	      시험 응시
+ * 2021. 6. 23.      박초원		강의사이트 성적관리
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -202,4 +204,32 @@ public interface LectureStudentDAO {
      * @return row count > 0 : 성공
      */
     public int updateTakeExamScore(int score);
+    
+    /**
+     * 한 학생에 대한 중간고사 성적 조회
+     * @param GradeVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public GradeVO selectMidScore(GradeVO grade);
+    
+    /**
+     * 한 학생에 대한 기말고사 성적 조회
+     * @param GradeVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public GradeVO selectFinalScore(GradeVO grade);
+    
+    /**
+     * 한 학생에 대한 출석 성적 조회
+     * @param GradeVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public GradeVO selectAttendScore(GradeVO grade);
+    
+    /**
+     * 한 학생에 대한 과제 성적 조회
+     * @param GradeVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public GradeVO selectTaskScore(GradeVO grade);
 }

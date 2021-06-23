@@ -368,4 +368,116 @@
 		WHERE
 		    applcn_no = (SELECT MAX(applcn_no) applcn_no FROM take_exam)
 	</update>
+	
+	<select id="selectMidScore" parameterType="GradeVO" resultType="GradeVO">
+		SELECT mid_scre,
+		       '중간고사' scre_type,
+		       (SELECT pnt_rank_nm
+		          FROM pnt_rank
+		         WHERE mid_scre BETWEEN min_score and max_score) pnt_rank_nm,
+		       (SELECT a.rank
+		          FROM (SELECT stdnt_no,
+		                       RANK() OVER (ORDER BY mid_scre DESC) rank
+		                  FROM lec_scre
+		                 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a
+		          WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}) rank,
+		        (SELECT COUNT(lec_code)
+		           FROM lec_scre
+		          WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) stdnt_cnt,
+		        (SELECT ROUND(a.sum / b.stdnt_cnt,2)
+		           FROM (SELECT SUM(mid_scre) sum
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a,
+		                 (SELECT COUNT(lec_code) stdnt_cnt
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) b) stdnt_svg
+		  FROM lec_scre
+		 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND mid_scre IS NOT NULL
+	</select>
+	
+	<select id="selectFinalScore" parameterType="GradeVO" resultType="GradeVO">
+		SELECT final_scre,
+		       '기말고사' scre_type,
+		       (SELECT pnt_rank_nm
+		          FROM pnt_rank
+		         WHERE final_scre BETWEEN min_score and max_score) pnt_rank_nm,
+		       (SELECT a.rank
+		          FROM (SELECT stdnt_no,
+		                       RANK() OVER (ORDER BY final_scre DESC) rank
+		                  FROM lec_scre
+		                 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a
+		          WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}) rank,
+		        (SELECT COUNT(lec_code)
+		           FROM lec_scre
+		          WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) stdnt_cnt,
+		        (SELECT ROUND(a.sum / b.stdnt_cnt,2)
+		           FROM (SELECT SUM(final_scre) sum
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a,
+		                 (SELECT COUNT(lec_code) stdnt_cnt
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) b) stdnt_svg
+		  FROM lec_scre
+		 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND final_scre IS NOT NULL
+	</select>
+	
+	<select id="selectTaskScore" parameterType="GradeVO" resultType="GradeVO">
+		SELECT task_scre,
+		       '과제' scre_type,
+		       (SELECT pnt_rank_nm
+		          FROM pnt_rank
+		         WHERE task_scre BETWEEN min_score and max_score) pnt_rank_nm,
+		       (SELECT a.rank
+		          FROM (SELECT stdnt_no,
+		                       RANK() OVER (ORDER BY task_scre DESC) rank
+		                  FROM lec_scre
+		                 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a
+		          WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}) rank,
+		        (SELECT COUNT(lec_code)
+		           FROM lec_scre
+		          WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) stdnt_cnt,
+		        (SELECT ROUND(a.sum / b.stdnt_cnt,2)
+		           FROM (SELECT SUM(task_scre) sum
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a,
+		                 (SELECT COUNT(lec_code) stdnt_cnt
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) b) stdnt_svg
+		  FROM lec_scre
+		 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND task_scre IS NOT NULL
+	</select>
+	
+	<select id="selectAttendScore" parameterType="GradeVO" resultType="GradeVO">
+		SELECT attend_scre,
+		       '출석' scre_type,
+		       (SELECT pnt_rank_nm
+		          FROM pnt_rank
+		         WHERE attend_scre BETWEEN min_score and max_score) pnt_rank_nm,
+		       (SELECT a.rank
+		          FROM (SELECT stdnt_no,
+		                       RANK() OVER (ORDER BY attend_scre DESC) rank
+		                  FROM lec_scre
+		                 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a
+		          WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}) rank,
+		        (SELECT COUNT(lec_code)
+		           FROM lec_scre
+		          WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) stdnt_cnt,
+		        (SELECT ROUND(a.sum / b.stdnt_cnt,2)
+		           FROM (SELECT SUM(attend_scre) sum
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) a,
+		                 (SELECT COUNT(lec_code) stdnt_cnt
+		                   FROM lec_scre
+		                  WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) b) stdnt_svg
+		  FROM lec_scre
+		 WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND attend_scre IS NOT NULL
+	</select>
 </mapper>

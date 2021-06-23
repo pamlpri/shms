@@ -17,6 +17,7 @@ import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.GradeVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TakeExamDtlsVO;
@@ -40,7 +41,8 @@ import kr.ac.shms.lms.student.vo.StudentVO;
  * 2021. 6. 15.      박초원			    비대면 강의 진도율, 출석
  * 2021. 6. 15. 	 송수미	      학생 과제 목록 조회, 과제 등록, 수정, 시험 목록 조회
  * 2021. 6. 17. 	 송수미	      시험 정보 조회, 시험 응시
- * 2021. 6. 18.      김보미    출석 관련 이동
+ * 2021. 6. 18.      김보미    QR 출석 관련 이동
+ * 2021. 6. 23.      박초원		강의사이트 성적관리
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -292,6 +294,26 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		if(cnt > 0) result = ServiceResult.OK;
 		
 		return result;
+	}
+
+	@Override
+	public GradeVO selectMidScore(GradeVO grade) {
+		return lectureStudentDAO.selectMidScore(grade);
+	}
+
+	@Override
+	public GradeVO selectFinalScore(GradeVO grade) {
+		return lectureStudentDAO.selectFinalScore(grade);
+	}
+
+	@Override
+	public GradeVO selectAttendScore(GradeVO grade) {
+		return lectureStudentDAO.selectAttendScore(grade);
+	}
+
+	@Override
+	public GradeVO selectTaskScore(GradeVO grade) {
+		return lectureStudentDAO.selectTaskScore(grade);
 	}
 
 

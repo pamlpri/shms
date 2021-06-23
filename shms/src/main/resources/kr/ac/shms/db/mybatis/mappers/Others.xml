@@ -31,4 +31,11 @@
 		   		</if>
 		   </where>
 	</select>
+	
+	<select id="selectAcademicStatusList" resultType="hashMap">
+		SELECT com_code "com_code",
+		       com_code_nm "com_code_nm"
+		FROM TB_COM_CODE
+		WHERE code_grp = 'g30'
+	</select>
 </mapper>

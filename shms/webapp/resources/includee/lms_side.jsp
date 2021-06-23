@@ -427,7 +427,7 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">학생등록</a>
+	                          <a href="${cPath }/lms/studentRegister.do">학생등록</a>
 	                      </li>
 	                      <li class="submenu-item">
 			                  <a href="${cPath }/lms/academicDetailList.do">학적조회</a>

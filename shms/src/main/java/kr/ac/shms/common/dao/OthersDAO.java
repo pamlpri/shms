@@ -34,4 +34,10 @@ public interface OthersDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<SubjectVO> selectSubjectList(String col_code);
+	
+	/**
+	 * 학적상태 조회
+	 * @return
+	 */
+	public List<Map<String, Object>> selectAcademicStatusList();
 }

@@ -13,6 +13,7 @@ import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.RegInfoCngVO;
+import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -245,8 +246,8 @@ public class StudentServiceImpl implements StudentService{
 	}
 	
 	@Override
-	public List<MypageVO> studentSubList(String sub_code) {
-		return studentDAO.studentSubList(sub_code);
+	public List<MypageVO> studentSubList(StaffVO staffVO) {
+		return studentDAO.studentSubList(staffVO);
 	}
 
 	@Override

@@ -43,7 +43,7 @@
                           <td class="text-center">${status.index + 1 }</td>
                           <td class="text-center">사회복지학과</td>
                           <td class="text-center">
-                              <a href="${cPath}/lms/academicView.do" class="text-color">${student.stdnt_no }</a>
+                              <a href="${cPath}/lms/academicView.do?stdnt_no=${student.stdnt_no }" class="text-color">${student.stdnt_no }</a>
                           </td>
                           <td class="text-center">
                               <a href="${cPath}/lms/academicView.do?stdnt_no=${student.stdnt_no }" class="text-color">${student.name }</a>
