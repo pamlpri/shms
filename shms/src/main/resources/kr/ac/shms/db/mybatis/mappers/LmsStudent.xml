@@ -314,35 +314,36 @@
    		   AND a.sugang_at = 'Y'
 	</select>
 	
-	<select id="studentSubList" parameterType="String" resultType="MyPageVO">
-		SELECT
-		    st.stdnt_no,
-            st.sub_code,
-            su.sub_name,
-            st.entsch_de,
-            st.grdtn_de,
-            st.empmnt_at,
-            st.grade,
-            st.name,
-            st.tel_no,
-            st.regno1,
-            st.regno2,
-            st.gen,
-            st.zipcode,
-            st.addr1,
-            st.addr2,
-            st.email,
-            st.webmail,
-            st.account,
-            st.bank_name,
-            st.photo_path,
-            st.semstr,
-            st.reginfo_stat
-            
-        FROM v_stdntinfo st
-        INNER JOIN subject su
-        ON st.sub_code = su.sub_code
-        WHERE st.sub_code = #{sub_code}
+	<select id="studentSubList" parameterType="StaffVO" resultType="MyPageVO">
+		SELECT  st.stdnt_no,
+		        st.sub_code,
+		        su.sub_name,
+		        st.entsch_de,
+		        st.grdtn_de,
+		        st.empmnt_at,
+		        st.grade,
+		        st.name,
+		        st.tel_no,
+		        st.regno1,
+		        st.regno2,
+		        st.gen,
+		        st.zipcode,
+		        st.addr1,
+		        st.addr2,
+		        st.email,
+		        st.webmail,
+		        st.account,
+		        st.bank_name,
+		        st.photo_path,
+		        st.semstr,
+		        st.reginfo_stat
+	    FROM v_stdntinfo st
+	    INNER JOIN subject su
+	    ON st.sub_code = su.sub_code
+	    <if test="sub_code != null">
+		    WHERE st.sub_code = #{sub_code}	    
+	    </if>
+	    ORDER BY sub_name
 	</select> 
 	
 	<select id="passwordUpdate" resultType="StudentVO">

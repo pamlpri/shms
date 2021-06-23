@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
+import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -237,10 +238,10 @@ public interface StudentService {
     
     /**
      * 해당 학과에 포함된 학생들만 추출
-     * @param sub_code
+     * @param staffVO
      * @return 데이터가 없으면 null
      */
-    public List<MypageVO> studentSubList(String sub_code);
+    public List<MypageVO> studentSubList(StaffVO staffVO);
 
     public List<StudentVO> passwordUpdate();
     

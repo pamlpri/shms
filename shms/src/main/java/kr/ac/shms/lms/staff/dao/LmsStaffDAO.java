@@ -9,6 +9,7 @@ import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
@@ -130,4 +131,18 @@ public interface LmsStaffDAO {
      * @return
      */
     public int updateSchlStatus(ScholarShipVO schl);
+    
+    /**
+     * 학적과 학적 조회
+     * @param pagingVO
+     * @return
+     */
+    public List<AcademicRegistrationVO> selectAcademicRegistrationList(PagingVO<AcademicRegistrationVO> pagingVO);
+    
+    /**
+     * 학적과 학적조회 글 개수 조회
+     * @param pagingVO
+     * @return
+     */
+    public int selectAcademicRegistrationCount(PagingVO<AcademicRegistrationVO> pagingVO);
 }

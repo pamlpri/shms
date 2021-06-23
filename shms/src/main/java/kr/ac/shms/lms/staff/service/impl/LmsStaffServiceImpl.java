@@ -15,6 +15,7 @@ import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
+import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
@@ -129,5 +130,15 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 		int cnt = lmsStaffDAO.updateSchlStatus(schl);
 		if(cnt > 0) { result = ServiceResult.OK; }
 		return result;
+	}
+
+	@Override
+	public List<AcademicRegistrationVO> selectAcademicRegistrationList(PagingVO<AcademicRegistrationVO> pagingVO) {
+		return lmsStaffDAO.selectAcademicRegistrationList(pagingVO);
+	}
+
+	@Override
+	public int selectAcademicRegistrationCount(PagingVO<AcademicRegistrationVO> pagingVO) {
+		return lmsStaffDAO.selectAcademicRegistrationCount(pagingVO);
 	}
 }

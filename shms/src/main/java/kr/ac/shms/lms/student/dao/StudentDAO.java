@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.RegInfoCngVO;
+import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.vo.FacilityRsvVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -255,7 +256,7 @@ public interface StudentDAO {
      * @param sub_code
      * @return 데이터가 없으면 null
      */
-    public List<MypageVO> studentSubList(String sub_code);
+    public List<MypageVO> studentSubList(StaffVO staffVO);
 
     
     public List<StudentVO> passwordUpdate();
