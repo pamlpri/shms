@@ -25,9 +25,11 @@
 							<c:when test="${not empty lecListST}">
 								<thead>
 									<tr>
-										<th class="text-center">학년</th>
+										<th class="text-center">연도</th>
+										<th class="text-center">학기</th>
 										<th class="text-center">강의명</th>
 										<th class="text-center">교수</th>
+										<th class="text-center">학년</th>
 										<th class="text-center">학점</th>
 										<th class="text-center">분류</th>
 										<th class="text-center">강의실</th>
@@ -36,9 +38,11 @@
 								<tbody>
 								<c:forEach items="${lecListST }" var="lecListST">
 									<tr>
-										<td class="text-center">${lecListST.grade }</td>
+										<td class="text-center">${lecListST.estbl_year }</td>
+										<td class="text-center">${lecListST.estbl_semstr }</td>
 										<td class="text-center"><a class="text-color" href="${cPath }/lecture/index.do?lec_code=${lecListST.lec_code}&lec_name=${lecListST.lec_name}">${lecListST.lec_name }</a></td>
 										<td class="text-center">${lecListST.prof_name }</td>
+										<td class="text-center">${lecListST.grade }</td>
 										<td class="text-center">${lecListST.lec_pnt }</td>
 										<td class="text-center">${lecListST.lec_cl}</td>
 										<td class="text-center">${lecListST.lecrum }</td>

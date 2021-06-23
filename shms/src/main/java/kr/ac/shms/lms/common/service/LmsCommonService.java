@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.CurriculumVO;
 import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -16,7 +17,6 @@ import kr.ac.shms.lms.common.vo.LecEvlResVO;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
-import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
@@ -235,4 +235,31 @@ public interface LmsCommonService {
 	 * @return
 	 */
 	public ServiceResult selectLectureEvaluationCheck(String stdnt_no);
+
+	/**
+	 * 검색 조건에 맞는 강의 조회
+	 * @param curr 검색 조건
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<CurriculumVO> selectCurrInfo(CurriculumVO curr);
+	
+	/**
+	 * 검색 조건에 맞는 교수 정보 조회
+	 * @param user 검색 조건
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<UserVO> selectProfSearch(UserVO user);
+	
+	/**
+	 * 올해 연도, 학기 정보, 강의 분류 정보 조회
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<CurriculumVO> selectCurIndexInfo();
+	
+	/**
+	 * 커리큘럼 등록
+	 * @param curriculum
+	 * @return 성공, 실패
+	 */
+	public ServiceResult insertCurriculum(CurriculumVO curriculum);
 }

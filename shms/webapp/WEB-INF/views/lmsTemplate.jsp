@@ -32,6 +32,8 @@
     <tiles:insertAttribute name="lmsPostScript"/>
 <script type="text/javascript">
 	$(function(){
+		let lecCl = "${lecCl}";
+		let flag = true;
 		var param = document.location.href.split("/");
 		url = param[param.length-1].split(".")[0];
 		console.log(url);
@@ -41,12 +43,20 @@
 			let aHref = $(this).attr("href");
 			if(aHref.includes(url)){
 				console.log(aHref);
-				if($(this).attr("class") == "sideboar-link"){
+				if($(this).attr("class") == "sidebar-link"){
 					$(this).parent(".sidebar-item").addClass("active");
 				}else{
-					$(this).parent(".submenu-item").addClass("active");
-					$(this).parents(".submenu").addClass("active");
-					$(this).parents(".sidebar-item").addClass("active");
+					if(lecCl != null && lecCl != "" && ((aHref).split("=")[1] != lecCl)){
+						flag = false;
+					}else{
+						flag = true;
+					}
+					
+					if(flag){
+						$(this).parent(".submenu-item").addClass("active");
+						$(this).parents(".submenu").addClass("active");
+						$(this).parents(".sidebar-item").addClass("active");
+					}
 				}
 			}
 		});

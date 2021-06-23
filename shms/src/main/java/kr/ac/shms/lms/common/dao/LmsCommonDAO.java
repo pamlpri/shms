@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.vo.CurriculumVO;
 import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -216,7 +216,7 @@ public interface LmsCommonDAO {
 	 * @param stdnt_no
 	 * @return
 	 */
-	public LecScoreVO selectEvlCheck(LecScoreVO lecScoreVO);
+	public int selectEvlCheck(LecScoreVO lecScoreVO);
 	
 	/**
 	 * 강의평가 등록
@@ -244,7 +244,7 @@ public interface LmsCommonDAO {
 	 * @return
 	 */
 	public List<ConsltDiaryVO> selectConsltReqList(String stdnt_no);
-	
+		
 	/**
 	 * 강의평가 진행된 수강중인 강의 수
 	 * @param stdnt_no
@@ -258,4 +258,32 @@ public interface LmsCommonDAO {
 	 * @return
 	 */
 	public int selectLectureCnt(String stdnt_no);
+
+	/**
+	 * 검색 조건에 맞는 강의 조회
+	 * @param curr 검색 조건
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<CurriculumVO> selectCurrInfo(CurriculumVO curr);
+	
+	/**
+	 * 검색 조건에 맞는 교수 정보 조회
+	 * @param user 검색 조건
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<UserVO> selectProfSearch(UserVO user);
+	
+	/**
+	 * 올해 연도, 학기 정보, 강의 분류 정보 조회
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<CurriculumVO> selectCurIndexInfo();
+	
+	/**
+	 * 커리큘럼 등록
+	 * @param curriculum
+	 * @return 성공, 실패
+	 */
+	public int insertCurriculum(CurriculumVO curriculum);
+	
 }

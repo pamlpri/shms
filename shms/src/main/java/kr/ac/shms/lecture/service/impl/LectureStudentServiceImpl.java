@@ -259,12 +259,20 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		
 		// 시험 상세 정보 저장
 		List<TakeExamDtlsVO> dtlsList = takeExam.getDtlsList();
+		String submitAns = null;
+		String quesAns = null;
+		boolean ansChk = false;
+		
 		for(int i = 0; i < dtlsList.size(); i++) {
-			if("GG".equals(quesList.get(i).getQues_type())) {
-				boolean ansChk = false;
+			ansChk = false;
+			if(!("SS".equals(quesList.get(i).getQues_type()))) {
+				submitAns = dtlsList.get(i).getSubmit_ans();
+				quesAns = quesList.get(i).getQues_ans();
 				
-				if(dtlsList.get(i).getSubmit_ans() != null) {
-					ansChk = dtlsList.get(i).getSubmit_ans().equals(quesList.get(i).getQues_ans());
+				if(submitAns != null) {
+					submitAns = submitAns.trim().replaceAll(" ", "");
+					quesAns = quesAns.trim().replaceAll(" ", "");
+					ansChk = submitAns.equals(quesAns);
 				}
 				
 				if(ansChk) {
@@ -277,8 +285,9 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 		}
 		// INSERT TakeExamDtls
 		cnt += lectureStudentDAO.insertTakeExamDtls(takeExam);
+		
 		// UPDATE TakeExam - 점수
-		if("GG".equals(exam.getExam_type())) lectureStudentDAO.updateTakeExamScore(score);
+		cnt += lectureStudentDAO.updateTakeExamScore(score);
 		
 		if(cnt > 0) result = ServiceResult.OK;
 		

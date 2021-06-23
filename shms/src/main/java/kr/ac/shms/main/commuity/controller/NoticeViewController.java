@@ -170,7 +170,7 @@ public class NoticeViewController {
 		@ModelAttribute("board") AttachVO attachVO
 		, Model model
 	) {
-		AttachVO attvo = commonAttachService.download(attachVO, "viewer");
+		AttachVO attvo = commonAttachService.download(attachVO, null);
 		model.addAttribute("attvo", attvo);		
 		return "downloadView";
 	}

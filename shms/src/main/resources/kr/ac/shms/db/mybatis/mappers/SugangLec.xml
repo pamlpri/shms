@@ -103,7 +103,8 @@
 	               c.lec_cl,
 	               f.building_nm||' '||e.lecrum_nm lecrum,
 	               c.estbl_year,
-	               c.estbl_semstr
+	               c.estbl_semstr,
+	               c.summary
 	          FROM staff a
 	         INNER JOIN curriculum b ON (a.staff_no=b.staff_no)
 	         INNER JOIN lecture c ON (b.cur_code=c.cur_code)
@@ -114,6 +115,7 @@
 	 WHERE staff_no=#{staff_no, jdbcType=VARCHAR}
 	   AND estbl_year = EXTRACT(YEAR FROM SYSDATE)
 	   AND estbl_semstr = (SELECT semstr FROM v_semstr)
+	   AND summary IS NOT NULL
 	</select>
 	
 	<sql id="myLecFrag">
@@ -124,7 +126,7 @@
 	     AND req_semstr = (SELECT semstr FROM student WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
 	</sql>
 	
-	<select id="selectTask" parameterType="String" resultType="kr.ac.shms.lecture.vo.SetTaskVO">
+	<select id="selectTask" parameterType="String" resultType="SetTaskVO">
 		SELECT 
 		    a.p_bo_no,
 		    a.set_task_no,

@@ -3,6 +3,7 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 23.      박초원        최초작성
+* 2021. 6. 23.      송수미        커리큘럼 조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -11,9 +12,9 @@
 <div class="page-content">
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">HOME</a></li>
-          <li class="breadcrumb-item"><a href="#">강의관리</a></li>
-          <li class="breadcrumb-item active" aria-current="page">전공강의</li>
+          <li class="breadcrumb-item"><a href="${cPath }/lms/main.do">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lms/curriculum.do?key=major">강의관리</a></li>
+          <li class="breadcrumb-item active" aria-current="page">${key eq 'major'? '전공강의' : '교양강의' }</li>
       </ol>
   </nav>
 
@@ -129,10 +130,10 @@
                       <tbody>
                           <tr>
                               <td class="text-center">
-                                  <a href="${cPath}/lms/majorView.do" class="text-color">223445</a>
+                                  <a href="${cPath}/lms/curriculumView.do" class="text-color">223445</a>
                               </td>
                               <td class="text-center">
-                                  <a href="${cPath}/lms/majorView.do" class="text-color">대학생활의 이해란 무엇인가?</a>
+                                  <a href="${cPath}/lms/curriculumView.do" class="text-color">대학생활의 이해란 무엇인가?</a>
                               </td>
                               <td class="text-center">경영학과</td>
                               <td class="text-center">김윤지</td>
@@ -146,10 +147,10 @@
                           </tr>
                           <tr>
                               <td class="text-center">
-                                  <a href="${cPath}/lms/majorView.do" class="text-color">223445</a>
+                                  <a href="${cPath}/lms/curriculumView.do" class="text-color">223445</a>
                               </td>
                               <td class="text-center">
-                                  <a href="${cPath}/lms/majorView.do" class="text-color">대학생활의 이해란 무엇인가?</a>
+                                  <a href="${cPath}/lms/curriculumView.do" class="text-color">대학생활의 이해란 무엇인가?</a>
                               </td>
                               <td class="text-center">경영학과</td>
                               <td class="text-center">김윤지</td>
@@ -300,8 +301,8 @@
                       </tbody>
                   </table>
                   <div class="float-right mt-3">
-                      <a href="${cPath }/lms/majorForm.do" class="btn btn-primary">
-                          <i class="fas fa-chalkboard"></i> 강의생성
+                      <a href="${cPath }/lms/curriculumInsert.do" class="btn btn-primary">
+                          <i class="fas fa-chalkboard"></i>&nbsp; 커리큘럼 생성
                       </a>
                   </div>
                   <nav aria-label="Page navigation example" class="pagenationNav">

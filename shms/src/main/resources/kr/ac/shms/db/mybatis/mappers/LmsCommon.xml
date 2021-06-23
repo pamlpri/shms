@@ -573,4 +573,102 @@
 		AND REQ_SEMSTR = 1
 		AND SUGANG_AT = 'Y'
 	</select>
+	
+		<select id="selectCurrInfo" parameterType="kr.ac.shms.common.vo.CurriculumVO" resultType="kr.ac.shms.common.vo.CurriculumVO">
+		SELECT lec_name, cur_code, s.name
+		  FROM curriculum c
+		  LEFT OUTER JOIN staff s
+		  ON(c.staff_no = s.staff_no)
+		  LEFT OUTER JOIN subject sub
+		  ON(c.sub_code = sub.sub_code)
+		  <trim prefix="WHERE">
+			  <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+			  	<choose>
+			  		<when test="searchMap.searchType eq 'sub_name'">
+			  			INSTR(sub.sub_name, #{searchWord, jdbcType=VARCHAR}) > 0
+			  		</when>
+			  		<when test="searchMap.searchType eq 'lec_name'">
+			  			INSTR(c.lec_name, #{searchWord, jdbcType=VARCHAR}) > 0	
+			  		</when>
+			  		<when test="searchMap.searchType eq 'name'">
+			  			INSTR(s.name, #{searchWord, jdbcType=VARCHAR}) > 0	
+			  		</when>
+			  		<otherwise>
+			  			INSTR(sub.sub_name, #{searchWord, jdbcType=VARCHAR}) > 0
+			  			OR
+			  			INSTR(c.lec_name, #{searchWord, jdbcType=VARCHAR}) > 0
+			  			OR	
+			  			INSTR(s.name, #{searchWord, jdbcType=VARCHAR}) > 0	
+			  		</otherwise>
+			  	</choose>
+			  </if>
+		  </trim>
+	</select>
+	
+	<select id="selectProfSearch" parameterType="UserVO" resultType="UserVO">
+		SELECT st.staff_no,
+		       name, 
+		       sub_name
+		  FROM staff st
+		  INNER JOIN subject sub
+		    ON(st.sub_code = sub.sub_code)
+		 WHERE prof_at = 'Y'
+		<trim prefix="AND(" suffix=")">
+			<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+				<choose>
+					<when test="searchMap.searchType eq 'sub_name'">
+						INSTR(sub_name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+					</when>
+					<when test="searchMap.searchType eq 'name'">
+						INSTR(name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+					</when>
+					<otherwise>
+						INSTR(sub_name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+						OR
+						INSTR(name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+					</otherwise>
+				</choose>
+			</if>
+		</trim>
+	</select>
+	
+	<select id="selectCurIndexInfo" resultType="CurriculumVO">
+		SELECT com_code lec_cl,
+		       com_code_nm lec_cl_nm,
+		       EXTRACT(YEAR FROM SYSDATE) year
+		  FROM tb_com_code 
+		 WHERE code_grp = 'G06'
+	</select>
+	
+	<insert id="insertCurriculum" parameterType="CurriculumVO">
+		<selectKey resultType="string" keyProperty="cur_code" order="BEFORE">
+			SELECT 'L'||SUBSTR(#{estbl_year, jdbcType=NUMERIC}, 3)||#{lec_cl, jdbcType=VARCHAR}||LPAD(NVL(MAX(SUBSTR(cur_code, 6)), 0) + 1, 3, '0') cur_code
+			  FROM curriculum
+			 WHERE estbl_year = #{estbl_year, jdbcType=NUMERIC}
+			   AND lec_cl = #{lec_cl, jdbcType=VARCHAR}
+		</selectKey>
+		 INSERT INTO curriculum (
+		    cur_code,
+		    lec_name,
+		    lec_cl,
+		    lec_pnt,
+		    lec_cpacity,
+		    lec_atnlc,
+		    estbl_year,
+		    posbl_semstr,
+		    sub_code,
+		    staff_no
+		) VALUES (
+		    #{cur_code, jdbcType=VARCHAR},
+		    #{lec_name, jdbcType=VARCHAR},
+		    #{lec_cl, jdbcType=VARCHAR},
+		    #{lec_pnt, jdbcType=NUMERIC},
+		    #{lec_cpacity, jdbcType=NUMERIC},
+		    #{lec_atnlc, jdbcType=NUMERIC},
+		    #{estbl_year, jdbcType=NUMERIC},
+		    #{posbl_semstr, jdbcType=NUMERIC},
+		    #{sub_code, jdbcType=VARCHAR},
+		    #{staff_no, jdbcType=VARCHAR}
+		)
+	</insert>
 </mapper>
