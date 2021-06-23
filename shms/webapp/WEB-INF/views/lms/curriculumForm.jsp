@@ -35,7 +35,7 @@
 	                            <th class="align-middle text-center align-middle">담당 교수명</th>
 	                            <td class="text-center">
 	                                <div class="input-group">
-	                                    <input type="text" class="form-control bg-transparent" readonly id="profName" name="name" value="${curriculum.name }"/>
+	                                    <input type="text" class="profInputs form-control bg-transparent" readonly id="profName" name="name" value="${curriculum.name }"/>
 	                                    <!-- Button trigger for scrolling content modal -->
 	                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"  data-bs-target="#exampleModalScrollable" style="border: 1px solid #dce7f1;">
 	                                        검색
@@ -43,7 +43,9 @@
 	                                </div>
 	                            </td>
 	                            <th class="text-center align-middle">교수 사번</th>
-	                            <td class="text-center"><input name="staff_no" id="profNo" readonly type="text" class="form-control" value="${curriculum.staff_no }"></td> 
+	                            <td class="text-center">
+	                            	<input name="staff_no" id="profNo" readonly type="text" class="profInputs form-control" value="${curriculum.staff_no }">
+	                            </td> 
 	                        </tr>
 	                    </table>
 	                </div>
@@ -64,8 +66,8 @@
 	                            <td class="text-center">
 	                            	<select class="form-select" name="posbl_semstr">
 	                            		<option value="">전체</option>
-	                            		<option value="1">1학기</option>
-	                            		<option value="2">2학기</option>
+	                            		<option value="1" ${curriculum.posbl_semstr eq '1' ? 'selected' : '' }>1학기</option>
+	                            		<option value="2" ${curriculum.posbl_semstr eq '2' ? 'selected' : '' }>2학기</option>
 	                            	</select>
 	                            </td> 
 	                        </tr>
@@ -75,7 +77,7 @@
 	                                <select class="form-select float-right" name="lec_cl">
 	                                    <option value="">-- 분류선택 --</option>
 	                                    <c:forEach items="${indexInfoList }" var="indexInfo">
-		                                    <option value="${indexInfo.lec_cl }">${indexInfo.lec_cl_nm }</option>
+		                                    <option value="${indexInfo.lec_cl }" ${curriculum.lec_cl eq indexInfo.lec_cl ? 'selected' : ''}>${indexInfo.lec_cl_nm }</option>
 	                                    </c:forEach>
 	                                </select>
 	                            </td> 
@@ -84,7 +86,7 @@
 									<select class="form-select" name="lec_atnlc">
 										<option value="">전체</option>
 										<c:forEach begin="1" end="4" var="grade">
-											<option value="${grade }">${grade }학년</option>
+											<option value="${grade }" ${curriculum.lec_atnlc eq grade ? 'selected' : '' }>${grade }학년</option>
 										</c:forEach>
 									</select>
 	                            </td>
@@ -105,7 +107,7 @@
 									<select class="form-select" name="col_code">
 										<option value="">-- 단과선택 --</option>
 										<c:forEach items="${collegeList }" var="college">
-											<option value="${college.col_code}" ${selected }>
+											<option value="${college.col_code}" ${curriculum.col_code eq college.col_code ? 'selected' : '' }>
 												${college.col_name }
 											</option>
 										</c:forEach>
@@ -116,7 +118,7 @@
 									<select class="form-select" name="sub_code">
 										<option value="">-- 학과선택 --</option>
 										<c:forEach items="${subjectList }" var="subject">
-											<option class="${subject.col_code }" value="${subject.sub_code }" ${selected }>
+											<option class="${subject.col_code }" value="${subject.sub_code }" ${curriculum.sub_code eq subject.sub_code ? 'selected' : '' }>
 												${subject.sub_name }
 											</option>
 										</c:forEach>
@@ -219,13 +221,19 @@
 	<script>
 		$("#default").find(".modal-body p").empty().text("${message}");
 		$("#default").addClass("show").css("display","block");
-	    $("#close, .modal").on("click", function(){
-			$("#default").removeClass("show").css("display","none");
-		})
 	</script>
 </c:if>
 <script>
 $(function(){
+	$(".profInputs").on("click", function(){
+		$("#default").find(".modal-body p").empty().text("검색버튼을 눌러 교수 목록을 검색해주세요.");
+		$("#default").addClass("show").css("display","block");
+	});
+	
+    $("#close, .modal").on("click", function(){
+		$("#default").removeClass("show").css("display","none");
+	})
+	
 	let searchUI = $("#searchUI");
 	
     searchUI.find("[name='searchType']").val("${searchMap.searchType }");

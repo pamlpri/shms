@@ -53,6 +53,7 @@ public class CurriculumVO {
 	private String name;	// 강사명
 	private Integer year;
 	private Integer semstr;
+	private String col_code;
 	
 	Map<String, Object> searchMap;
 }	
