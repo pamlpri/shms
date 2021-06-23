@@ -6,11 +6,14 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.service.CommonService;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.student.service.TuitionService;
@@ -37,6 +40,9 @@ public class CertificateScholarshipController {
 	
 	@Inject
 	private TuitionService tuitionService;
+	
+	@Inject
+	private CommonAttachService commonAttachService;
 	
 	@RequestMapping("/lms/certificateScholarship.do")
 	public String certificateScholarship(
@@ -85,5 +91,15 @@ public class CertificateScholarshipController {
 		}
 		
 		return view;
+	}
+	
+	@RequestMapping(value="/lms/schlDownload.do")
+	public String downloader(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = commonAttachService.download(attach, null);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
 	}
 }

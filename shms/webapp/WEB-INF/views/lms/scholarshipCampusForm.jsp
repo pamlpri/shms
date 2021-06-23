@@ -69,7 +69,7 @@
 										<td colspan="3" class="text-left"><c:forEach
 												items="${schl.attachList }" var="attach">
 												<div class="ml-2 fileArea">
-													<c:url value="/lms/resumeDownload.do" var="downloadURL">
+													<c:url value="/lms/schlCampusDownload.do" var="downloadURL">
 														<c:param name="atch_file_no" value="${attach.atch_file_no }" />
 														<c:param name="atch_file_seq"
 															value="${attach.atch_file_seq }" />
