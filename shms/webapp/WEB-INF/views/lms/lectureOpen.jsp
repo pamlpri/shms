@@ -169,7 +169,7 @@
                           </div>
                       </div>
                       <div class="text-center m-t-15">
-                          <a href="lectureList.html" class="btn btn-light-secondary">취소</a>
+                          <a href="${cPath}/lms/lectureAllList.do" class="btn btn-light-secondary">취소</a>
                           <button id="saveBtn" class="btn btn-primary" type="submit">저장</button>
                       </div>
                     </form>

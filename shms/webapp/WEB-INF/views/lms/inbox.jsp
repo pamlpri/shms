@@ -267,14 +267,6 @@
 							 + '			</span>'
 							 + '		</div>'
 							 + '	</div>' 
-							 + '	<div class="mail-message">'
-							 + '		<p class="list-group-item-text truncate mb-0">' + webmail.cont + '</p>'
-							 + '		<div class="mail-meta-item">'
-							 + '			<span class="float-right">'
-						     + '				<span class="bullet bullet-success bullet-sm"></span>'
-						     + '			</span>'
-							 + '		</div>'
-				             + '	</div>'
 						     + '	</a>'
 							 + '</li>';
 							 

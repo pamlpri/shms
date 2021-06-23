@@ -276,8 +276,8 @@
 			) VALUES (
 			    #{set_task_no},
 			    #{lec_code, jdbcType=VARCHAR},
-			    TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI'),
-			    TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI'),
+                TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI'),
+                TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI'),
 			    TO_DATE(#{submit_endde, jdbcType=DATE}, 'YYYY/MM/DD HH24:MI'),
 			    #{task_title, jdbcType=VARCHAR},
 			    #{task_cont, jdbcType=VARCHAR},

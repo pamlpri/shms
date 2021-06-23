@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.vo.CurriculumVO;
 import kr.ac.shms.common.vo.LecScoreVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
@@ -246,7 +247,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 			lecScore.setStdnt_no(stdnt_no);
 			lecScore.setLec_code(lecScoreVO.getLec_code());
 			
-			if(lmsCommonDAO.selectEvlCheck(lecScore) != null) {
+			if(lmsCommonDAO.selectEvlCheck(lecScore) != 12) {
 				lecScoreVO.setStatus("완료");
 				lecEvlResList.add(lecScoreVO);
 			} else {
@@ -293,5 +294,28 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		return result;
 	}
 
+	@Override
+	public List<CurriculumVO> selectCurrInfo(CurriculumVO curr) {
+		return lmsCommonDAO.selectCurrInfo(curr);
+	}
+
+	@Override
+	public List<UserVO> selectProfSearch(UserVO user) {
+		return lmsCommonDAO.selectProfSearch(user);
+	}
+
+	@Override
+	public List<CurriculumVO> selectCurIndexInfo() {
+		return lmsCommonDAO.selectCurIndexInfo();
+	}
 	
+	@Override
+	public ServiceResult insertCurriculum(CurriculumVO curriculum) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = lmsCommonDAO.insertCurriculum(curriculum);
+		if(cnt > 0) result = ServiceResult.OK;
+		
+		return result;
+	}
 }

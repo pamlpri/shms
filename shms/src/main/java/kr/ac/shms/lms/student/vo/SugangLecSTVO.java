@@ -31,6 +31,7 @@ public class SugangLecSTVO {
 	private String lec_name; 
 	private String lec_cl;
 	private Integer semstr;
+	private Integer estbl_year;
 	private Integer estbl_semstr;
 	private String lecrum;
 	private String com_code_nm;

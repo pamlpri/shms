@@ -28,6 +28,7 @@ public class UserVO {
 	private String photo_path;
 	private String sub_name;
 	private String dept_nm;
+	private String staff_no;
 	
 	private List<UserVO> userList;
 	private Map<String, Object> searchMap;

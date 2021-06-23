@@ -152,7 +152,7 @@
 			    #{title, jdbcType=VARCHAR},
 			    #{cont, jdbcType=VARCHAR},
 			    #{writer, jdbcType=VARCHAR},
-			    TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI')
+			    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI'),
    				<if test="attachList != null">
 			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
 			    </if>
@@ -313,7 +313,7 @@
 		    exam_no = #{exam_no, jdbcType=NUMERIC}
 	</select>
 	
-	<insert id="insertTakeExam" parameterType="kr.ac.shms.lecture.vo.TakeExamVO">
+	<insert id="insertTakeExam" parameterType="TakeExamVO">
 		<selectKey resultType="int" keyProperty="applcn_no" order="BEFORE">
 			SELECT take_exam_seq.nextval
 			  FROM dual
@@ -328,14 +328,14 @@
 			) VALUES (
 			    #{applcn_no, jdbcType=NUMERIC},
 			    #{exam_no, jdbcType=NUMERIC},
-			    TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI'),
+			    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI'),
 			    null,
 			    #{lec_code, jdbcType=VARCHAR},
 			    #{stdnt_no, jdbcType=VARCHAR}
 			)
 	</insert>
 	
-	<insert id="insertTakeExamDtls" parameterType="kr.ac.shms.lecture.vo.TakeExamVO">
+	<insert id="insertTakeExamDtls" parameterType="TakeExamVO">
 		<selectKey resultType="int" keyProperty="startDtlsNo" order="BEFORE">
 			SELECT NVL(MAX(dtls_no), 0) + 1 startDtlsNo
 			  FROM take_exam_dtls
