@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,11 +63,11 @@ public class EvaluationViewController {
 	
 	@RequestMapping(value="/insertEvaluation.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public String insertEvaluation(
+	public Map<String, String> insertEvaluation(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @RequestBody Map<Object, Object> evalData
 	) {
-		String res = null;
+		Map<String, String> res = new HashMap<>();
 		for(int i=1; i<evalData.size(); i++) {
 			LecEvlResVO lecEvlResVO = new LecEvlResVO();
 			String name = "eval"+(i);
@@ -77,12 +78,11 @@ public class EvaluationViewController {
 			
 			ServiceResult result =  lmsCommonService.insertEvl(lecEvlResVO);
 			if(ServiceResult.OK.equals(result)) {
-				res = "Ok";
+				res.put("res", "OK");
 			} else {
-				res = "Fail";
+				res.put("res", "Fail");
 			}
 		}
-		
 		return res;
 	}
 }

@@ -246,7 +246,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 			lecScore.setStdnt_no(stdnt_no);
 			lecScore.setLec_code(lecScoreVO.getLec_code());
 			
-			if(lmsCommonDAO.selectEvlCheck(lecScore) == 12) {
+			if(lmsCommonDAO.selectEvlCheck(lecScore) != null) {
 				lecScoreVO.setStatus("완료");
 				lecEvlResList.add(lecScoreVO);
 			} else {
@@ -280,6 +280,17 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public List<ConsltDiaryVO> selectConsltReqList(String stdnt_no) {
 		return lmsCommonDAO.selectConsltReqList(stdnt_no);
+	}
+
+	@Override
+	public ServiceResult selectLectureEvaluationCheck(String stdnt_no) {
+		ServiceResult result = ServiceResult.FAIL;
+		int lectureEvaluationCnt = lmsCommonDAO.selectLectureEvaluationCnt(stdnt_no);
+		int lectureCnt = lmsCommonDAO.selectLectureCnt(stdnt_no);
+		if(lectureEvaluationCnt == lectureCnt) {
+			result = ServiceResult.OK;
+		}
+		return result;
 	}
 
 	

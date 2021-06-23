@@ -492,8 +492,8 @@
 		AND e.code_grp = 'G06'
 	</select>
 	
-	<select id="selectEvlCheck" parameterType="LecScoreVO" resultType="int">
-		SELECT COUNT(*)
+	<select id="selectEvlCheck" parameterType="LecScoreVO" resultType="LecScoreVO">
+		SELECT DISTINCT lec_code
 		FROM
 		    lec_evl_res
 		WHERE stdnt_no = #{stdnt_no}
@@ -552,5 +552,25 @@
 		  AND c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
 		  AND stdnt_no = #{stdnt_no}
           AND d.staff_no LIKE 'E%'
+	</select>
+	
+	<select id="selectLectureEvaluationCnt" parameterType="String" resultType="int">
+		SELECT COUNT(DISTINCT A.LEC_CODE) CNT
+		FROM LEC_EVL_RES A
+		INNER JOIN SUGANG_REQ B
+		ON A.LEC_CODE = B.LEC_CODE
+		WHERE A.STDNT_NO = #{stdnt_no}
+		AND REQ_YEAR = TO_CHAR(SYSDATE,'YYYY')
+		AND REQ_SEMSTR = 1
+		AND SUGANG_AT = 'Y'
+	</select>
+	
+	<select id="selectLectureCnt" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		FROM SUGANG_REQ
+		WHERE STDNT_NO = #{stdnt_no}
+		AND REQ_YEAR = TO_CHAR(SYSDATE,'YYYY')
+		AND REQ_SEMSTR = 1
+		AND SUGANG_AT = 'Y'
 	</select>
 </mapper>

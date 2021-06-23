@@ -1,10 +1,13 @@
 package kr.ac.shms.common.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.dao.CommonDAO;
@@ -28,7 +31,7 @@ import kr.ac.shms.common.vo.RegInfoCngVO;
  */
 @Service
 public class CommonServiceImpl implements CommonService {
-	
+	private static final Logger logger = LoggerFactory.getLogger(CommonServiceImpl.class);
 	@Inject
 	private CommonDAO commonDAO;
 	
@@ -44,6 +47,34 @@ public class CommonServiceImpl implements CommonService {
 
 	@Override
 	public List<LecScoreVO> lecScoreList(LecScoreVO lecScoreVO) {
+//		String stdnt_no = lecScoreVO.getStdnt_no();
+//		List<LecScoreVO> list = new ArrayList<>();
+//		if(lecScoreVO.getYear() == null && lecScoreVO.getSemstr() == null) {
+//			int maxYear = 0;
+//			int maxSemstr = 0;
+//			List<LecScoreVO> yearList = lecYear(stdnt_no);
+//			maxYear = yearList.get(0).getYear();
+//			for(int i=0; i<yearList.size(); i++) {
+		
+//				if(maxYear < yearList.get(i).getYear()) {
+//					maxYear = yearList.get(i).getYear();
+//				}
+//			}
+//			lecScoreVO.setYear(maxYear);
+//			List<LecScoreVO> semstrList = selectSemstrList(lecScoreVO);
+//			maxSemstr = semstrList.get(0).getSemstr();
+//			for(int i=0; i<semstrList.size(); i++) {
+//				if(maxSemstr < semstrList.get(i).getSemstr()) {
+//					maxSemstr = semstrList.get(i).getSemstr();
+//				}
+//			}
+//			lecScoreVO.setSemstr(maxSemstr);
+//			list = commonDAO.selectLecScoreList(lecScoreVO);
+//		} else if(lecScoreVO.getYear() == 0 || lecScoreVO.getSemstr() == 0){
+//			LecScoreVO lecScore = new LecScoreVO();
+//			lecScore.setStdnt_no(stdnt_no);
+//			list = commonDAO.selectLecScoreList(lecScore);
+//		}
 		return commonDAO.selectLecScoreList(lecScoreVO);
 	}
 

@@ -228,4 +228,11 @@ public interface LmsCommonService {
 	 * @return
 	 */
 	public List<ConsltDiaryVO> selectConsltReqList(String stdnt_no);
+	
+	/**
+	 * 강의평가 진행된 수강중인 강의 수
+	 * @param stdnt_no
+	 * @return
+	 */
+	public ServiceResult selectLectureEvaluationCheck(String stdnt_no);
 }

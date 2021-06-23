@@ -216,7 +216,7 @@ public interface LmsCommonDAO {
 	 * @param stdnt_no
 	 * @return
 	 */
-	public int selectEvlCheck(LecScoreVO lecScoreVO);
+	public LecScoreVO selectEvlCheck(LecScoreVO lecScoreVO);
 	
 	/**
 	 * 강의평가 등록
@@ -244,4 +244,18 @@ public interface LmsCommonDAO {
 	 * @return
 	 */
 	public List<ConsltDiaryVO> selectConsltReqList(String stdnt_no);
+	
+	/**
+	 * 강의평가 진행된 수강중인 강의 수
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectLectureEvaluationCnt(String stdnt_no);
+	
+	/**
+	 * 진행중인 강의 수
+	 * @param stdnt_no
+	 * @return
+	 */
+	public int selectLectureCnt(String stdnt_no);
 }

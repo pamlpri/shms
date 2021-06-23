@@ -118,8 +118,8 @@
                           <fieldset class="form-group">
                               <select id="seachYear" class="form-select" name="year">
                               	  <option value="">전체 년도</option>
-                                  <c:forEach items="${lecYearList }" var="lecYear">
-                                  	<option value="${lecYear.year }">${lecYear.year }</option>
+                                  <c:forEach items="${lecYearList }" var="lecYear" varStatus="i">
+                                  	<option value="${lecYear.year }" selected="${i.end?'selected':'' }">${lecYear.year }</option>
                                   </c:forEach>
                               </select>
                           </fieldset>
@@ -129,8 +129,8 @@
                           <fieldset class="form-group">
                               <select id="searchSemstr" class="form-select" name="semstr">
                               	  <option value="">전체 학기</option>
-                              	  <c:forEach items="${selectSemstrList }" var="semstr">
-                              	  	<option class="${semstr.year }" value="${semstr.semstr }">${semstr.semstr }학기</option>
+                              	  <c:forEach items="${selectSemstrList }" var="semstr" varStatus="i">
+                              	  	<option class="${semstr.year }" value="${semstr.semstr }" selected="${i.end?'selected':'' }">${semstr.semstr }학기</option>
                               	  </c:forEach>
                               </select>
                           </fieldset>
@@ -142,7 +142,7 @@
                   <tr>
                       <th class="align-middle text-center">학년도 / 학기</th>
                       <td id="ysData" class="align-middle text-center">전체 학년 / 전체 학기</td>
-                      <th class="align-middle text-center">신청학점 / 취득학점</th>
+                      <th class="align-middle text-center">신청학점 / 이수학점</th>
                       <td id="totalCredit" class="align-middle text-center">${totalCredit } / ${totalCredit }</td>
                       <th class="align-middle text-center">평점 / 평균</th>
                       <td id="totalData" class="align-middle text-center">${totalAvg } / ${totalPntVal }</td>
@@ -192,13 +192,49 @@
       </div>
   <!-- contents end -->
   <script type="text/javascript">
+  	let year = $("select[name='year']").val();
+	let semstr = $("select[name='semstr']").val();
+  	$(function() {
+  		$.ajax({
+  			url:"${cPath}/lms/grades.do"
+  	  			, method: "post"
+  	  			, dataType: "json"
+  	  			, data : {"year" : year, "semstr" : semstr}
+  	  			, success: function(res) {
+  	  				let tbodyData;
+  	  				let totalCredit;
+  	  				$.each(res, function(idx, v) {
+  	  					tbodyData += "<tr>";
+  	  					tbodyData += "<td class='text-center'>" + v.scre_no + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.lec_name + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.name + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.lec_cl_nm + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.lec_pnt + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.total + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.pnt_rank_nm + "</td>";
+  		  				tbodyData += "</tr>";
+  	  				});
+  	  				let ysDate = year + "년도 / " + semstr + "학기"
+  	  				$("#ysData").html(ysDate);
+  	  				$("#lecTbody").html(tbodyData);
+  	  			}
+  	  			, error: function(xhr, error, msg) {
+  	  				console.log(xhr);
+  	  				console.log(error);
+  	  				console.log(msg);
+  	  			}
+  		});
+  	})
 	let subjectTag = $("[name='semstr']");
 	$("[name='year']").on("change", function(){
 		let selectedCode = $(this).val();
+		subjectTag.val("");
 		if(selectedCode){
 			subjectTag.find("option").hide();
 			subjectTag.find("option."+selectedCode).show();
-		}else {
+		} else if(selectedCode == null || selectedCode == '') {
+			subjectTag.find("option").hide();
+		} else {
 			subjectTag.find("option").show();
 		}
 		subjectTag.find("option:first").show();
@@ -211,7 +247,7 @@
 	});
 	function ajaxFunction(year, semstr) {
   		$.ajax({
-  			url:"${cPath}/lms/lesScoreList.do"
+  			url:"${cPath}/lms/grades.do"
   			, method: "post"
   			, dataType: "json"
   			, data : {"year" : year, "semstr" : semstr}

@@ -275,10 +275,10 @@
        		, contentType: "application/json; charset=UTF-8"
     		, data: JSON.stringify(evalData)
     		, success : function(resp) {
-    			if(resp == "Ok") {
-    				console.log(resp);
+    			if(resp.res == "OK") {
+    				location.href="${cPath}/lms/evaluation.do"
     			} else {
-    				console.log(resp);
+    				console.log(resp.res);
     			}
     		}
     		, error : function(xhr, error, msg) {
