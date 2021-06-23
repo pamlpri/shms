@@ -70,7 +70,7 @@
 	                              <td class="text-center align-middle">${grade.stdnt_no }</td>
 	                              <td class="text-center align-middle">${grade.sub_name }</td>
 	                              <td class="text-center align-middle">${grade.pnt_rank_nm }</td>
-	                              <td class="text-center" data-idx="mid-scre">${grade.mid_scre }</td>
+	                              <td class="text-center" data-idx="mid_scre">${grade.mid_scre }</td>
 	                              <td class="text-center" data-idx="final_scre">${grade.final_scre}</td>
 	                              <td class="text-center" data-idx="task_scre">${grade.task_scre }</td>
 	                              <td class="text-center" data-idx="attend_scre">${grade.attend_scre }</td>
@@ -141,46 +141,72 @@ $(document).ready(function(){
         $(this).parents("tr").find(".error").first().focus();
         if(!empty){
            	let that = $(this);
+           	let scre_no = $(this).parents("tr").attr("class").split(" ")[0];
+           	console.log(scre_no);
            	let mid_scre = $(this).parents("tr").find("input[name='mid_scre']").val();
-           	$("td[data-idx='final_scre']").on("click", function(){
-           		alert("클릭함");
-           	});
-           	let final_scre = $(this).parents("tr").children("td[idx='final_scre']").children("input[name='final_scre']").val();
-           	console.log(final_scre);
+           	let final_scre = $(this).parents("tr").find("input[name='final_scre']").val();
            	let task_scre = $(this).parents("tr").find("input[name='task_scre']").val();
            	let attend_scre = $(this).parents("tr").find("input[name='attend_scre']").val();
            	let etc_scre = $(this).parents("tr").find("input[name='etc_scre']").val();
-           	let scre_no = $(this).parents("tr").children("input[name='scre_no']").val();
-            input.each(function(){
-            	$.ajax({
-            		url : "${cPath}/lecture/gradeUpdate.do"
-            		,method : "post"
-            		,data : {
-            			mid_scre : mid_scre,
-            			final_scre : final_scre,
-            			task_scre : task_scre,
-            			attend_scre : attend_scre,
-            			etc_scre : etc_scre,
-            			lec_code : "${lec_code}",
-            			scre_no : scre_no
-            		},dataType : "json"
-            		,success : function(resp){
-            			if(resp.result == "OK"){
-            				$(that).parents("tr").find(".add, .edit").toggle();
-			                $(this).parent("td").html($(this).val());
-            				$(".add-new").removeAttr("disabled");
-            			}
-            		}, error : function(xhr, resp, error){
+           	
+           	let frag = false;
+           	input.each(function(){
+           		if($(this).val() > 100){
+	            	frag = false;
+           		}else {
+           			frag = true;
+           		}
+           	});
+           	
+           	if(frag){
+	           	$.ajax({
+	           		url : "${cPath}/lecture/gradeUpdate.do"
+	           		,method : "post"
+	           		,data : {
+	           			mid_scre : mid_scre,
+	           			final_scre : final_scre,
+	           			task_scre : task_scre,
+	           			attend_scre : attend_scre,
+	           			etc_scre : etc_scre,
+	           			lec_code : "${lec_code}",
+	           			scre_no : scre_no
+	           		},dataType : "json"
+	           		,success : function(resp){
+	           			if(resp.result == "OK"){
+	           				$(that).parents("tr").find(".add, .edit").toggle();
+				            input.each(function(){
+				                $(this).parent("td").html($(this).val());
+			            	});
+	           				$(".add-new").removeAttr("disabled");
+	           				$(".modal-title").text("수정완료");
+			            	$(".modal-body").html("수정이 완료되었습니다.");
+			            	$("body").addClass("modal-open").css("padding-right", "17px");
+			            	$(".modal-backdrop").addClass("show").css("display", "block");
+			            	$(".modal").addClass("show").css("display", "block");
+	           			}else{
+	              			$(".modal-title").text("수정실패");
+			            	$(".modal-body").html("수정에 실패했습니다.<br/>잠시후 다시 시도해주세요.");
+			            	$("body").addClass("modal-open").css("padding-right", "17px");
+			            	$(".modal-backdrop").addClass("show").css("display", "block");
+			            	$(".modal").addClass("show").css("display", "block");
+	              		}
+	           		}, error : function(xhr, resp, error){
 	           			console.log(xhr);
 	           		}
-            	});
-            });			
+	            });			
+           	}else {
+           		$(".modal-title").text("수정실패");
+            	$(".modal-body").html("100점을 초과할 수 없습니다.");
+            	$("body").addClass("modal-open").css("padding-right", "17px");
+            	$(".modal-backdrop").addClass("show").css("display", "block");
+            	$(".modal").addClass("show").css("display", "block");
+           	}
+           	
         }		
     });
     // Edit row on edit button click
     $(document).on("click", ".edit", function(){		
     	$(this).parents("tr").find("td:not(:last-child)").each(function(idx, td){
-    		console.log(idx);
         	if(idx != 0 && idx != 1 && idx != 2 && idx != 3){
         		let idxName = $(this).data("idx");
 	            $(this).html('<input type="text" class="form-control" name="'+ idxName +'" value="' + $(this).text() + '">');
@@ -230,9 +256,13 @@ $(document).ready(function(){
     			if(resp.result == "OK"){
     				$(".modal-title").text("성적부반영 성공");
     	 			$(".modal-body").text("성적비율에 따라 학점이 부여되어 성적부에 반영되었습니다.");
-    			}else {
-    				alert("실패");
-    			}
+    			}else{
+          			$(".modal-title").text("성적부반영 실패");
+	            	$(".modal-body").html("성적부 반영에 실패했습니다.<br/>잠시후 다시 시도해주세요.");
+	            	$("body").addClass("modal-open").css("padding-right", "17px");
+	            	$(".modal-backdrop").addClass("show").css("display", "block");
+	            	$(".modal").addClass("show").css("display", "block");
+          		}
     		},error : function(xhr, error, msg){ 
     			console.log(xhr);
     			console.log(error);
@@ -240,11 +270,12 @@ $(document).ready(function(){
     		}
     	});
     	
-    	$(".modal .close, .modal").on("click", function(){
-    	  $("body").removeClass("modal-open").css("padding-right","0px");
-          $(".modal-backdrop").removeClass("show").css("display", "none");
-    	  $(".modal").removeClass("show").css("display", "none");
-        });
+    });
+    
+   	$(".modal .close, .modal").on("click", function(){
+   	  $("body").removeClass("modal-open").css("padding-right","0px");
+      $(".modal-backdrop").removeClass("show").css("display", "none");
+   	  $(".modal").removeClass("show").css("display", "none");
     });
 });
 </script>

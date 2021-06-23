@@ -430,7 +430,7 @@
 	                          <a href="#">학생등록</a>
 	                      </li>
 	                      <li class="submenu-item">
-			                  <a href="${cPath }/lms/academicList.do">학적조회</a>
+			                  <a href="${cPath }/lms/academicDetailList.do">학적조회</a>
 			              </li>
 	                      <li class="submenu-item ">
 	                          <a href="${cPath }/lms/academicChange.do">학적변동</a>

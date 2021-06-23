@@ -201,8 +201,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title"></h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
@@ -211,6 +210,7 @@
 		</div>
 	</div>
 	<div class="modal-backdrop fade"></div>
+	
   <!-- contents end -->
 </div>
 <script>
@@ -262,15 +262,32 @@ $(document).ready(function(){
 	              	},dataType : "json"
 	              	,success: function(resp){
 	              		if(resp.result == "OK"){
-		                $(that).parents("tr").find(".add, .edit").toggle();
-		                $(that).parents("tr").children("input.res_score").val(res_score);
-		                $(that).parent("td").text(res_score + " / 100");
-		                $(".add-new").removeAttr("disabled");
+			                $(that).parents("tr").find(".add, .edit").toggle();
+			                $(that).parents("tr").children("input.res_score").val(res_score);
+			                $(that).parent("td").text(res_score + " / 100");
+			                $(".add-new").removeAttr("disabled");
+			                $(".modal-title").text("수정완료");
+			            	$(".modal-body").html("수정이 완료되었습니다.");
+			            	$("body").addClass("modal-open").css("padding-right", "17px");
+			            	$(".modal-backdrop").addClass("show").css("display", "block");
+			            	$(".modal").addClass("show").css("display", "block");
+	              		}else{
+	              			$(".modal-title").text("수정실패");
+			            	$(".modal-body").html("수정에 실패했습니다.<br/>잠시후 다시 시도해주세요.");
+			            	$("body").addClass("modal-open").css("padding-right", "17px");
+			            	$(".modal-backdrop").addClass("show").css("display", "block");
+			            	$(".modal").addClass("show").css("display", "block");
 	              		}
 	              	}, error : function(xhr, resp, error){
 	           			console.log(xhr);
 	           		}
              	 });
+        		}else {
+        			$(".modal-title").text("수정실패");
+	            	$(".modal-body").html("출제한 시험의 총 점수를 초과할 수 없습니다.");
+	            	$("body").addClass("modal-open").css("padding-right", "17px");
+	            	$(".modal-backdrop").addClass("show").css("display", "block");
+	            	$(".modal").addClass("show").css("display", "block");
         		}
         	});
         }		
@@ -337,11 +354,12 @@ $(document).ready(function(){
     		}
     	});
     	
-    	$(".modal .close, .modal").on("click", function(){
-    	  $("body").removeClass("modal-open").css("padding-right","0px");
-          $(".modal-backdrop").removeClass("show").css("display", "none");
-    	  $(".modal").removeClass("show").css("display", "none");
-        });
+    });
+    
+   	$(".modal .close, .modal").on("click", function(){
+   	  $("body").removeClass("modal-open").css("padding-right","0px");
+      $(".modal-backdrop").removeClass("show").css("display", "none");
+   	  $(".modal").removeClass("show").css("display", "none");
     });
 });
 </script>
