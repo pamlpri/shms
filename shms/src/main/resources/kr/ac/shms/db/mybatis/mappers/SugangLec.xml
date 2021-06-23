@@ -128,42 +128,50 @@
 	
 	<select id="selectTask" parameterType="String" resultType="SetTaskVO">
 		SELECT 
-		    a.p_bo_no,
-		    a.set_task_no,
-		    lec_code,
-		    task_reg_de,
-		    submit_bgnde,
-		    submit_endde,
-		    task_title,
-		    task_cont,
-		    task_allot,
-		    atch_file_no,
-		    DECODE(b.writer, null, 'N', 'Y') submit_at
-		  FROM (
-		SELECT
-		    ROW_NUMBER () OVER (ORDER BY task_reg_de) p_bo_no,
-		    set_task_no,
-		    lec_code,
-		    TO_CHAR(task_reg_de, 'YYYY.MM.DD') task_reg_de,
-		    TO_CHAR(submit_bgnde, 'YYYY.MM.DD') submit_bgnde,
-		    TO_CHAR(submit_endde, 'YYYY.MM.DD') submit_endde,
-		    task_title,
-		    task_cont,
-		    task_allot,
-		    atch_file_no
-		FROM
-		    set_task 
-		   WHERE lec_code IN (
-		  SELECT lec_code
-		  	<include refid="myLecFrag"/>
-		    )) a
-		    LEFT OUTER JOIN(
-		     SELECT writer, set_task_no
-		       FROM task_submit
-		      WHERE writer = (SELECT NAME FROM STUDENT WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
-		    ) b
-		    ON(a.set_task_no = b.set_task_no)
-		ORDER BY p_bo_no desc
+	        a.rn,
+	        a.set_task_no,
+	        lec_code,
+	        task_reg_de,
+	        submit_bgnde,
+	        submit_endde,
+	        task_title,
+	        task_cont,
+	        task_allot,
+	        atch_file_no,
+	        submit_no,
+	        DECODE(b.writer, null, 'N', 'Y') submit_at
+	      FROM (
+	    SELECT
+	        ROW_NUMBER () OVER (ORDER BY submit_endde desc) rn,
+	        set_task_no,
+	        lec_code,
+	        TO_CHAR(task_reg_de, 'YYYY.MM.DD') task_reg_de,
+	        TO_CHAR(submit_bgnde, 'YYYY.MM.DD') submit_bgnde,
+	        TO_CHAR(submit_endde, 'YYYY.MM.DD') submit_endde,
+	        task_title,
+	        task_cont,
+	        task_allot,
+	        atch_file_no
+	    FROM
+	        set_task 
+	       WHERE lec_code IN (
+	      SELECT lec_code
+	        FROM sugang_req
+	   WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+	     AND sugang_at = 'Y'
+	     AND req_year = EXTRACT(YEAR FROM SYSDATE)
+	     AND req_semstr = (SELECT semstr FROM student WHERE STDNT_NO = #{stdnt_no, jdbcType=VARCHAR})
+	     AND SYSDATE BETWEEN submit_bgnde AND submit_endde
+	        )) a
+	        LEFT OUTER JOIN(
+	         SELECT writer, set_task_no, submit_no
+	           FROM task_submit
+	          WHERE writer = #{stdnt_no, jdbcType=VARCHAR}
+	        ) b
+	        ON(a.set_task_no = b.set_task_no)
+	    <![CDATA[
+	    AND a.rn <= 5
+	    ]]>
 	</select>
 	
 	<select id="selectTodayLecList" parameterType="String" resultType="LectureVO">

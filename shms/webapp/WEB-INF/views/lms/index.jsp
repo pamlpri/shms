@@ -112,9 +112,9 @@
 								<thead>
 									<tr>
 										<th scope="col">No.</th>
-										<th scope="co1">제목</th>
-										<th scope="co1">작성자</th>
-										<th scope="co1">작성일</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">작성일</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -161,15 +161,30 @@
 											<c:when test="${not empty taskList }">
 												<c:forEach items="${taskList }" var="task">
 													<tr>
-														<td scope="row"><a class="text-light-black" href="${cPath }/lecture/task.do?bo_no=${task.set_task_no}">${task.task_title }</a></td>
+														<c:choose>
+															<c:when test="${task.submit_at eq 'N' }">
+																<c:url var="taskURL" value="/lecture/taskInsert.do">
+																	<c:param name="set_task_no" value="${task.set_task_no }" />
+																</c:url>
+															</c:when>
+															<c:otherwise>
+																<c:url var="taskURL" value="/lecture/taskUpdate.do">
+																	<c:param name="set_task_no" value="${task.set_task_no }"/>
+																	<c:param name="submit_no" value="${task.submit_no }"/>
+																</c:url>
+															</c:otherwise>
+														</c:choose>
+														<td scope="row">
+															<a class="text-light-black" href="${taskURL }">${task.task_title }</a>
+														</td>
 														<td class="col-5">
 															<p class=" mb-0">
 																<c:choose>
 																	<c:when test="${task.submit_at eq 'N' }">
-																		<a href="#" class="btn btn-primary">제출</a>
+																		<a href="${taskURL}" class="btn btn-primary">제출</a>
 																	</c:when>
 																	<c:otherwise>
-																		<a href="#" class="btn disabled btn-primary">제출완료</a>
+																		<a href="${taskURL}" class="btn btn-primary">제출완료</a>
 																	</c:otherwise>
 																</c:choose>
 															</p>

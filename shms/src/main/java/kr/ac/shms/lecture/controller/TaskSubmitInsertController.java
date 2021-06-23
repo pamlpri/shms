@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -49,6 +50,8 @@ public class TaskSubmitInsertController {
 	private LectureStudentService lectureStudentService;
 	@Inject
 	private CommonAttachService commonAttachService; 
+	@Inject
+	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/taskInsert.do")
 	public String taskForm(
@@ -62,6 +65,7 @@ public class TaskSubmitInsertController {
 		Map<String, Object> search = new HashMap<>();
 		search.put("set_task_no", set_task_no);
 		search.put("stdnt_no", user.getUser_id());
+		getLecCode(set_task_no, model);
 		
 		/** 서비스 호출 */
 		SetTaskVO setTask = lectureStudentService.selectSetTask(search);
@@ -89,6 +93,7 @@ public class TaskSubmitInsertController {
 		taskSubmit.setLec_code(lec_code);
 		taskSubmit.setBo_writer(user.getUser_id());
 		taskSubmit.setBiz_type("GJ");
+		getLecCode(set_task_no, model);
 		
 		/** 검색 조건 */
 		Map<String, Object> search = new HashMap<>();
@@ -110,6 +115,7 @@ public class TaskSubmitInsertController {
 				view = "lecture/taskForm";
 			}
 		}else {
+
 			message = "필수항목 누락";
 			view = "lecture/taskForm";
 		}
@@ -133,4 +139,16 @@ public class TaskSubmitInsertController {
 		return "downloadView";
 	}
 	
+	public String getLecCode(
+			int set_task_no
+			, Model model
+			) {
+			SetTaskVO setTask = lectureService.selectLecCodeForTask(set_task_no);
+			String lec_code = setTask.getLec_code();
+			String lec_name = setTask.getLec_name();
+			
+			model.addAttribute("lec_code", lec_code);
+			model.addAttribute("lec_name", lec_name);
+			return lec_code; 
+		}
 }

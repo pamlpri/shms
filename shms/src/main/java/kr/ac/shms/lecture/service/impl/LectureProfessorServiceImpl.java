@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.ac.shms.common.dao.CommonAttachDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
-import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.dao.LectureProfessorDAO;
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
@@ -77,7 +76,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	
 	@Override
 	public StaffVO staff(String id) {
-		// TODO Auto-generated method stub
 		return lectureProfessorDAO.staff(id);
 	}
 
@@ -376,11 +374,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		}
 		
 		return result;
-	}
-
-	@Override
-	public String selectLecCodeForTask(int set_task_no) {
-		return lectureProfessorDAO.selectLecCodeForTask(set_task_no);
 	}
 
 	@Override

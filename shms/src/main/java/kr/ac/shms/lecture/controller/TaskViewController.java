@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.lecture.service.LectureProfessorService;
+import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -41,6 +43,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
  * </pre>
  */
 @Controller
+@SessionAttributes({"lec_code", "lec_name"})
 public class TaskViewController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskViewController.class);
 	
@@ -48,6 +51,8 @@ public class TaskViewController {
 	private LectureStudentService lectureStudentService;
 	@Inject
 	private LectureProfessorService lectureProfessorService;
+	@Inject
+	private LectureService lectureService;
 	
 	@RequestMapping("/lecture/task.do")
 	public String taskList(
@@ -103,6 +108,7 @@ public class TaskViewController {
 		/** 화면설정 후 반환 */ 
 		return view;
 	}
+	
 	@RequestMapping(value="/lecture/taskScore.do", method=RequestMethod.POST, produces="text/plain;charset=utf8") 
 	@ResponseBody
 	public String taskScoreForAjax(
@@ -134,4 +140,5 @@ public class TaskViewController {
 		
 		return message;
 	}
+		
 }
