@@ -52,8 +52,9 @@
 	                          	</c:if>
 	                          	<c:if test="${schlReqList.process_stat eq '반려' }">
 			                    	<th class="text-center">
+			                    	<input type="hidden" value="${schlReqList.refuse_resn }" name="refuse_resn">
 		                              <button type="button" class="btn badge bg-danger block failBtn"
-		                                  data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+		                                  data-bs-toggle="modal" data-bs-target="#exampleModalCenter" >
 		                              신청반려
 		                              </button>
 		                          	</th>
@@ -97,9 +98,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>
-                    자격증 서류 미제출로 인한 반려
-                </p>
+            	<p id="inputText">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light-secondary"
@@ -113,3 +112,9 @@
 </div>
     <!-- contents end -->
 </div>
+<script>
+	$(".failBtn").on("click", function(){
+		let refuse_resn = $(this).parent().find("[name='refuse_resn']").val();
+		document.getElementById("inputText").innerText=refuse_resn;
+	})
+</script>

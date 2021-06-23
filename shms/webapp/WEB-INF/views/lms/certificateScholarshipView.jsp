@@ -70,19 +70,26 @@
                              </tr>
                              <tr>
                                  <th class="align-middle text-center">처리상태</th>
-                                 <td>대기</td>
+                                 <td>${schl.process_stat }</td>
                                  <th class="align-middle text-center">지급일</th>
-                                 <td></td>
+                                 <td>${schl.proc_date }</td>
                              </tr>
-                             <tr>
-                                 <th class="align-middle text-center">반려사유</th>
-                                 <td colspan="4">
-                                     <textarea class="form-control" rows="3" id="returnResult" name="refuse_resn"></textarea>
-                                     <span id="returnWarning"></span>
-                                 </td>
-                             </tr>
+                             <c:choose>
+                             	<c:when test="${empty process_stat}">
+	                             <tr>
+	                                 <th class="align-middle text-center">반려사유</th>
+	                                 <td colspan="4">
+	                                     <textarea class="form-control" rows="3" id="returnResult" name="refuse_resn"></textarea>
+	                                     <span id="returnWarning"></span>
+	                                 </td>
+	                             </tr>
+                             	</c:when>
+                             	<c:otherwise>
+                             	
+                             	</c:otherwise>
+                             </c:choose>
                          </table>
-                         <c:if test="${process_stat ne 'SI'}">
+                         <c:if test="${empty process_stat}">
 	                         <div class="text-center">
 	                             <button type="button" class="btn btn-light-secondary" id="returnBtn" value="BR" name="stat">반려</button>
 	                             <button type="button" class="btn btn-primary" id="SIBtn" value="SI" name="stat">승인</button>
