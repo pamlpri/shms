@@ -68,7 +68,7 @@ public class AttendVO {
 	private Integer jg_cnt;
 	private Integer jt_cnt;
 	private Integer gs_cnt;
-	private Integer attend_per;
+	private Double attend_per;
 	
 	private String lec_term;
 	private String dayotw_nm;
