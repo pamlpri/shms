@@ -450,10 +450,10 @@
 	                  </a>
 	                  <ul class="submenu ">
 	                      <li class="submenu-item ">
-	                          <a href="#">전공강의</a>
+	                          <a href="${cPath }/lms/major.do">전공강의</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">교양강의</a>
+	                          <a href="${cPath }/lms/elective.do">교양강의</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">수강신청</a>
