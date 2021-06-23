@@ -73,4 +73,9 @@ public class AcademicViewController {
 		
 		return  "lms/academicView";
 	}
+	
+	@RequestMapping("/lms/academicDetailList.do")
+	public String academicDetailList() {
+		return "lms/academicDetailList";
+	}
 }

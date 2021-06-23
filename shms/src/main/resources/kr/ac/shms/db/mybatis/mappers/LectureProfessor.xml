@@ -979,37 +979,12 @@
 	</update>
 	
 	<update id="updateGradeForAjax" parameterType="GradeVO">
-		UPDATE lec_scre a
-			   SET pnt_rank_nm = ( SELECT pnt_rank_nm
-			                         FROM (
-			                         WITH selectTotal as(
-			                              SELECT
-			                                  (NVL((SELECT midterm
-			                                          FROM lec_score_st a
-			                                         WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{mid_scre, jdbcType=NUMERIC} + 
-			                                   NVL((SELECT finals
-			                                      FROM lec_score_st a
-			                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{final_scre, jdbcType=NUMERIC} + 
-			                                   NVL((SELECT attend
-			                                      FROM lec_score_st a
-			                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{attend_scre, jdbcType=NUMERIC} + 
-			                                   NVL((SELECT task
-			                                      FROM lec_score_st a
-			                                     WHERE lec_Code =#{lec_code, jdbcType=VARCHAR}),0) * #{task_scre, jdbcType=NUMERIC} + 
-			                                   NVL((SELECT etc
-			                                      FROM lec_score_st a
-			                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{etc_scre, jdbcType=NUMERIC}) total,
-			                                   scre_no
-			                               FROM lec_scre
-			                               WHERE scre_no = #{scre_no, jdbcType=NUMERIC}
-			                         )
-			                         SELECT scre_no, total, pnt_rank_nm
-			                           FROM selectTotal
-			                           CROSS JOIN pnt_rank
-			                           WHERE total between min_score and max_score
-			                         ) b
-			                          WHERE a.scre_no = b.scre_no
-			                    )
-			WHERE a.scre_no = #{scre_no, jdbcType=NUMERIC}
+		UPDATE lec_scre
+		   SET mid_scre = #{mid_scre, jdbcType=NUMERIC},
+		   	   final_scre = #{final_scre, jdbcType=NUMERIC},
+		   	   attend_scre = #{final_scre, jdbcType=NUMERIC},
+		   	   task_scre = #{final_scre, jdbcType=NUMERIC},
+		   	   etc_scre = #{final_scre, jdbcType=NUMERIC}
+		WHERE scre_no = #{scre_no, jdbcType=NUMERIC}
 	</update>
 </mapper>
