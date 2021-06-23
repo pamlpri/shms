@@ -29,8 +29,8 @@ import kr.ac.shms.lecture.service.LectureStudentService;
  */
 @Controller
 @SessionAttributes("lec_code")
-public class GradeViewController {
-	private static final Logger logger = LoggerFactory.getLogger(GradeViewController.class);
+public class GradeStudentController {
+	private static final Logger logger = LoggerFactory.getLogger(GradeStudentController.class);
 	
 	@Inject
 	private LectureStudentService lectureStudentService;

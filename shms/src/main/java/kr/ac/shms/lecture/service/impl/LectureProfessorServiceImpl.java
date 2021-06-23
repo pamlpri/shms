@@ -20,6 +20,7 @@ import kr.ac.shms.lecture.dao.LectureProfessorDAO;
 import kr.ac.shms.lecture.dao.LectureStudentDAO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.GradeVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -48,6 +49,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
  * 2021. 6. 21.       박초원 		 교수 학생 출석수정,  출석 성적부 반영
  * 2021. 6. 22. 	  박초원			 서술형, 단답형 채점, 성적 수정
+ * 2021. 6. 23.		  박초원			 성적관리
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -364,9 +366,13 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	public ServiceResult insertAttendGrade(AttendVO attend) {
 		ServiceResult result = ServiceResult.FAIL;
 		
-		int cnt = lectureProfessorDAO.insertAttendGrade(attend);
-		if(cnt > 0) {
-			result = ServiceResult.OK;
+		List<AttendVO> attendList = attend.getAttendList();
+		for(AttendVO attnd : attendList) {
+			result = ServiceResult.FAIL;
+			int cnt = lectureProfessorDAO.insertAttendGrade(attnd);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
 		}
 		
 		return result;
@@ -386,11 +392,84 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 	public ServiceResult updateExamGrade(ExamVO exam) {
 		ServiceResult result = ServiceResult.FAIL;
 		
-		int cnt = lectureProfessorDAO.updateExamGrade(exam);
+		int cnt = 0;
+		List<QuesVO> quesList = exam.getQuesList();
+		for(QuesVO ques : quesList) {
+			result = ServiceResult.FAIL;
+			cnt = lectureProfessorDAO.updateExamGrade(ques);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		
+		if(ServiceResult.OK.equals(result)) {
+			result = ServiceResult.FAIL;
+			cnt += lectureProfessorDAO.updateResScore(exam);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public ServiceResult updateAjaxResScore(ExamVO exam) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = lectureProfessorDAO.updateAjaxResScore(exam);
 		if(cnt > 0) {
 			result = ServiceResult.OK;
 		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult insertExamGrade(ExamVO exam) {
+		ServiceResult result = ServiceResult.FAIL;
 		
+		List<ExamVO> examList = exam.getExamList();
+		for(ExamVO examVO : examList) {
+			logger.info("examVO {}",examVO );
+			result = ServiceResult.FAIL;
+			int cnt = lectureProfessorDAO.insertExamGrade(examVO);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<GradeVO> selectGradeList(String lec_code) {
+		return lectureProfessorDAO.selectGradeList(lec_code);
+	}
+
+	@Override
+	public ServiceResult updateGrade(GradeVO grade) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		List<GradeVO> gradeList = grade.getGradeList();
+		for(GradeVO gradeVO : gradeList) {
+			logger.info("gradeVO {}",gradeVO );
+			result = ServiceResult.FAIL;
+			int cnt = lectureProfessorDAO.updateGrade(gradeVO);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public ServiceResult updateGradeForAjax(GradeVO grade) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = lectureProfessorDAO.updateGradeForAjax(grade);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
 		return result;
 	}
 	

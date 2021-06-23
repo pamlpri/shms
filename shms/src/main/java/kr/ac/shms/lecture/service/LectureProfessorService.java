@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lecture.vo.ExamVO;
+import kr.ac.shms.lecture.vo.GradeVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
@@ -35,6 +36,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 06. 17. 	  박초원			 교수 시험,문제 수정
  * 2021. 6. 21.       박초원 		 교수 학생 출석수정,  출석 성적부 반영
  * 2021. 6. 22. 	  박초원			 서술형, 단답형 채점, 성적 수정
+ * 2021. 6. 23.		  박초원			 성적관리
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -263,4 +265,39 @@ public interface LectureProfessorService {
 	 * @return cnt
 	 */
 	public ServiceResult updateExamGrade(ExamVO exam);
+	
+	/**
+	 * 한 학생의 총점 수정
+	 * @param examVO
+	 * @return cnt
+	 */
+	public ServiceResult updateAjaxResScore(ExamVO exam);
+	
+	/**
+	 * 학생들의 시험점수 성적부반영
+	 * @param examVO
+	 * @return cnt
+	 */
+	public ServiceResult insertExamGrade(ExamVO exam);
+	
+	/**
+	 * 강의의 학생들의 성적 조회
+	 * @param gradeVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<GradeVO> selectGradeList(String lec_code);	
+	
+	/**
+	 * 강의의 학생들의 모든 성적을 성적부에 반영하고 학점 부여
+	 * @param gradeVO
+	 * @return cnt
+	 */
+	public ServiceResult updateGrade(GradeVO grade);
+	
+	/**
+	 * 강의의 학생들의 모든 성적을 수정
+	 * @param gradeVO
+	 * @return cnt
+	 */
+	public ServiceResult updateGradeForAjax(GradeVO grade);
 }

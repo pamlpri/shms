@@ -1,21 +1,32 @@
 package kr.ac.shms.lecture.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.ac.shms.common.enumpkg.MimeType;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.AttachVO;
@@ -23,6 +34,7 @@ import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.QuesVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.student.vo.AttendVO;
 
 /**
  * @author 박초원
@@ -260,5 +272,70 @@ public class ExamProfessorController {
 		
 		model.addAttribute("message", message);
 		return view;
+	}
+	
+	@RequestMapping(value="/lecture/examResScore.do", method=RequestMethod.POST)
+	public String examResScore(
+		@ModelAttribute("exam") ExamVO exam
+		, HttpServletResponse resp
+		, Model model
+	) throws IOException {
+		Map<String, Object> resultMap = new HashMap<>();
+		ServiceResult result = lectureProfessorService.updateAjaxResScore(exam);
+		
+		switch(result) {
+		case PKDUPLICATED:
+			resultMap.put("result", ServiceResult.PKDUPLICATED);
+			break;
+		case OK:
+			resultMap.put("result", ServiceResult.OK);
+			break;
+		case FAIL:
+			resultMap.put("result", ServiceResult.FAIL);
+			break;
+		}
+		
+		resp.setContentType(MimeType.JSON.getMime());
+		try(
+			PrintWriter out = resp.getWriter();	
+		){
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(out, resultMap);
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value="/lecture/examGrade.do", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+	public String exam(
+	     @RequestBody ExamVO exam
+		,HttpServletResponse resp
+		,Model model
+	) throws IOException {
+		Map<String, Object> resultMap = new HashMap<>();
+		ServiceResult result = lectureProfessorService.insertExamGrade(exam);
+		
+		switch(result) {
+		case PKDUPLICATED:
+			resultMap.put("result", ServiceResult.PKDUPLICATED);
+			break;
+		case OK:
+			resultMap.put("result", ServiceResult.OK);
+			break;
+		case FAIL:
+			resultMap.put("result", ServiceResult.FAIL);
+			break;
+		}
+		
+		resp.setContentType(MimeType.JSON.getMime());
+		try(
+			PrintWriter out = resp.getWriter();	
+		){
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(out, resultMap);
+		}
+		
+		return null;
 	}
 }

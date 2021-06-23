@@ -618,7 +618,15 @@
 		           AND exam_no = #{exam_no, jdbcType=NUMERIC}
 		           AND ques_type = 'SS'
 		           AND ans_at = 'Y') ss_sum,
-		        c.res_score
+		        NVL(c.res_score, 0) res_score,
+		        a.test_cl,
+		        d.grade,
+		        (SELECT estbl_semstr
+                   FROM lecture
+                  WHERE lec_code = a.lec_code) semstr,
+                (SELECT estbl_year
+                   FROM lecture
+                  WHERE lec_code = a.lec_Code) year
 		  FROM exam a
 		  CROSS JOIN (SELECT stdnt_no
 		                     FROM sugang_req
@@ -748,51 +756,47 @@
 			SELECT lec_scre_seq.nextval scre_no
 			  FROM dual
 		</selectKey>
-		BEGIN
-        <foreach  collection="attendList" item="attend" open="" close="" index="idx">
         MERGE INTO lec_scre A
-			USING(
-			    SELECT COUNT(stdnt_no) cnt
-			    FROM lec_scre
-			     WHERE stdnt_no = #{attend.stdnt_no, jdbcType=VARCHAR}
-			       AND lec_code = #{attend.lec_code, jdbcType=VARCHAR} 
-			) B
-			ON (B.cnt > 0)
-			WHEN MATCHED THEN
-			    UPDATE SET attend_scre = ROUND(#{attend.cs_cnt, jdbcType=NUMERIC} / 15 * 100, 2)
-			    WHERE stdnt_no = #{attend.stdnt_no, jdbcType=VARCHAR}
-			       AND lec_code = #{attend.lec_code, jdbcType=VARCHAR}
-			WHEN NOT MATCHED THEN
-			     INSERT
-			    ( 		
-			            scre_no,
-			                    grade,
-			                    semstr,
-			                    year,
-			                    stdnt_no,
-			                    pnt_rank_nm,
-			                    mid_scre,
-			                    final_scre,
-			                    attend_scre,
-			                    task_scre,
-			                    etc_scre,
-			                    lec_code 
-			    ) VALUES (
-			            #{scre_no} + #{idx},
-					    #{attend.grade, jdbcType=NUMERIC},
-					    #{attend.semstr, jdbcType=NUMERIC},
-					    #{attend.year, jdbcType=NUMERIC},
-					    #{attend.stdnt_no, jdbcType=VARCHAR},
-					    null,
-					    null,
-					    null,
-					    ROUND(#{attend.cs_cnt, jdbcType=NUMERIC} / 15 * 100, 2),
-					    null,
-					    null,
-					    #{attend.lec_code, jdbcType=VARCHAR}
-			    );
-            </foreach>
-        END;
+		USING(
+		    SELECT COUNT(stdnt_no) cnt
+		    FROM lec_scre
+		     WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		       AND lec_code = #{lec_code, jdbcType=VARCHAR} 
+		) B
+		ON (B.cnt > 0)
+		WHEN MATCHED THEN
+		    UPDATE SET attend_scre = ROUND(#{cs_cnt, jdbcType=NUMERIC} / 15 * 100, 2)
+		    WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		       AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		WHEN NOT MATCHED THEN
+		     INSERT
+		    ( 		
+		            scre_no,
+                    grade,
+                    semstr,
+                    year,
+                    stdnt_no,
+                    pnt_rank_nm,
+                    mid_scre,
+                    final_scre,
+                    attend_scre,
+                    task_scre,
+                    etc_scre,
+                    lec_code 
+		    ) VALUES (
+		            #{scre_no},
+				    #{grade, jdbcType=NUMERIC},
+				    #{semstr, jdbcType=NUMERIC},
+				    #{year, jdbcType=NUMERIC},
+				    #{stdnt_no, jdbcType=VARCHAR},
+				    null,
+				    null,
+				    null,
+				    ROUND(#{cs_cnt, jdbcType=NUMERIC} / 15 * 100, 2),
+				    null,
+				    null,
+				    #{lec_code, jdbcType=VARCHAR}
+		    )
 	</insert>
 	
 	<select id="selectLecCodeForTask" parameterType="int" resultType="String">
@@ -823,17 +827,189 @@
 				 WHERE a.lec_code =  #{lec_code, jdbcType=VARCHAR}
 				   AND a.exam_no =  #{exam_no, jdbcType=NUMERIC}
 		           AND b.stdnt_no =  #{stdnt_no, jdbcType=VARCHAR}
-		           AND NOT (f.ques_type = 'GG')
+		           AND f.ques_type = 'SS'
 	</select>
 	
-	<update id="updateExamGrade" parameterType="ExamVO">
-		BEGIN
-		<foreach collection="quesList" item="ques">
-	        UPDATE take_exam_dtls SET ans_at = #{ques.ans_at}
-	        	<where>
-	        		applcn_no = #{ques.applcn_no}  AND ques_no = #{ques.ques_no};
-	        	</where>
-    	</foreach>
-    	END;
+	<update id="updateExamGrade" parameterType="QuesVO">
+        UPDATE take_exam_dtls SET ans_at = #{ans_at, jdbcType=VARCHAR}
+        	<where>
+        		applcn_no = #{applcn_no, jdbcType=NUMERIC}  AND ques_no = #{ques_no, jdbcType=NUMERIC}
+        	</where>
+	</update>
+	
+	<update id="updateResScore" parameterType="ExamVO">
+		UPDATE take_exam
+		   SET res_score = (SELECT SUM(a.ques_allot)
+				          FROM v_selectquesscore a
+				         WHERE stdnt_no = a.stdnt_no
+				           AND exam_no = #{exam_no, jdbcType=NUMERIC}
+				           AND ans_at = 'Y') 
+		 WHERE applcn_no = #{applcn_no, jdbcType=NUMERIC}
+	</update>
+	
+	<update id="updateAjaxResScore" parameterType="ExamVO">
+		UPDATE take_exam
+		   SET res_score = #{res_score, jdbcType=NUMERIC}
+		 WHERE applcn_no = #{applcn_no, jdbcType=NUMERIC}
+	</update>
+	
+	<insert id="insertExamGrade" parameterType="ExamVO">
+		<selectKey order="BEFORE" resultType="int" keyProperty="scre_no">
+			SELECT lec_scre_seq.nextval scre_no
+			  FROM dual
+		</selectKey>
+        MERGE INTO lec_scre A
+		USING(
+		    SELECT COUNT(stdnt_no) cnt
+		    FROM lec_scre
+		     WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		       AND lec_code = #{lec_code, jdbcType=VARCHAR} 
+		) B
+		ON (B.cnt > 0)
+		WHEN MATCHED THEN
+		    UPDATE SET
+				<if test="test_cl != null ">
+					<choose>
+						<when test="test_cl == 'JG'">
+					    	mid_scre = #{res_score, jdbcType=NUMERIC}
+						</when>
+						<otherwise>
+							final_scre = #{res_score, jdbcType=NUMERIC}
+						</otherwise>
+					</choose>
+				</if>
+		    WHERE stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
+		       AND lec_code = #{lec_code, jdbcType=VARCHAR}
+		WHEN NOT MATCHED THEN
+	     INSERT
+	    ( 		
+	            scre_no,
+                 grade,
+                 semstr,
+                 year,
+                 stdnt_no,
+                 pnt_rank_nm,
+                 mid_scre,
+                 final_scre,
+                 attend_scre,
+                 task_scre,
+                 etc_scre,
+                 lec_code 
+	    ) VALUES (
+	            #{scre_no},
+			    #{grade, jdbcType=NUMERIC},
+			    #{semstr, jdbcType=NUMERIC},
+			    #{year, jdbcType=NUMERIC},
+			    #{stdnt_no, jdbcType=VARCHAR},
+			    null,
+			    <choose>
+			    	<when test="test_cl != null and test_cl == 'JG'">
+			    		#{res_score, jdbcType=NUMERIC},
+			    	</when>
+			    	<otherwise>null,</otherwise>
+			    </choose>
+			    <choose>
+			    	<when test="test_cl != null and test_cl == 'GM'">
+			    		#{res_score, jdbcType=NUMERIC},
+			    	</when>
+			    	<otherwise>null,</otherwise>
+			    </choose>
+			    null,
+			    null,
+			    null,
+			    #{lec_code, jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+	<select id="selectGradeList" parameterType="String" resultType="GradeVO">
+		SELECT a.stdnt_no,
+		       b.name,
+		       (SELECT sub_name
+		          FROM subject
+		         WHERE b.sub_code = sub_code) sub_name,
+		       a.pnt_rank_nm,
+		       NVL(a.mid_scre,0) mid_scre,
+		       NVL(a.final_scre,0) final_scre,
+		       NVL(a.attend_scre,0) attend_scre,
+		       NVL(a.task_scre,0) task_scre,
+		       NVL(a.etc_scre,0) etc_scre,
+		       a.scre_no,
+		       a.grade, 
+		       a.semstr,
+		       a.year,
+		       a.lec_code
+		  FROM lec_scre a
+		       INNER JOIN student b ON(a.stdnt_no = b.stdnt_no)
+		 WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updateGrade" parameterType="GradeVO">
+	UPDATE lec_scre a
+		   SET pnt_rank_nm = ( SELECT pnt_rank_nm
+		                         FROM (
+		                         WITH selectTotal as(
+		                              SELECT
+		                                  (NVL((SELECT midterm
+		                                          FROM lec_score_st a
+		                                         WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{mid_scre, jdbcType=NUMERIC} + 
+		                                   NVL((SELECT finals
+		                                      FROM lec_score_st a
+		                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{final_scre, jdbcType=NUMERIC} + 
+		                                   NVL((SELECT attend
+		                                      FROM lec_score_st a
+		                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{attend_scre, jdbcType=NUMERIC} + 
+		                                   NVL((SELECT task
+		                                      FROM lec_score_st a
+		                                     WHERE lec_Code =#{lec_code, jdbcType=VARCHAR}),0) * #{task_scre, jdbcType=NUMERIC} + 
+		                                   NVL((SELECT etc
+		                                      FROM lec_score_st a
+		                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{etc_scre, jdbcType=NUMERIC}) total,
+		                                   scre_no
+		                               FROM lec_scre
+		                               WHERE scre_no = #{scre_no, jdbcType=NUMERIC}
+		                         )
+		                         SELECT scre_no, total, pnt_rank_nm
+		                           FROM selectTotal
+		                           CROSS JOIN pnt_rank
+		                           WHERE total between min_score and max_score
+		                         ) b
+		                          WHERE a.scre_no = b.scre_no
+		                    )
+		WHERE a.scre_no = #{scre_no, jdbcType=NUMERIC}
+	</update>
+	
+	<update id="updateGradeForAjax" parameterType="GradeVO">
+		UPDATE lec_scre a
+			   SET pnt_rank_nm = ( SELECT pnt_rank_nm
+			                         FROM (
+			                         WITH selectTotal as(
+			                              SELECT
+			                                  (NVL((SELECT midterm
+			                                          FROM lec_score_st a
+			                                         WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{mid_scre, jdbcType=NUMERIC} + 
+			                                   NVL((SELECT finals
+			                                      FROM lec_score_st a
+			                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{final_scre, jdbcType=NUMERIC} + 
+			                                   NVL((SELECT attend
+			                                      FROM lec_score_st a
+			                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{attend_scre, jdbcType=NUMERIC} + 
+			                                   NVL((SELECT task
+			                                      FROM lec_score_st a
+			                                     WHERE lec_Code =#{lec_code, jdbcType=VARCHAR}),0) * #{task_scre, jdbcType=NUMERIC} + 
+			                                   NVL((SELECT etc
+			                                      FROM lec_score_st a
+			                                     WHERE lec_code =#{lec_code, jdbcType=VARCHAR}),0) * #{etc_scre, jdbcType=NUMERIC}) total,
+			                                   scre_no
+			                               FROM lec_scre
+			                               WHERE scre_no = #{scre_no, jdbcType=NUMERIC}
+			                         )
+			                         SELECT scre_no, total, pnt_rank_nm
+			                           FROM selectTotal
+			                           CROSS JOIN pnt_rank
+			                           WHERE total between min_score and max_score
+			                         ) b
+			                          WHERE a.scre_no = b.scre_no
+			                    )
+			WHERE a.scre_no = #{scre_no, jdbcType=NUMERIC}
 	</update>
 </mapper>

@@ -70,8 +70,18 @@ public class ExamVO implements Serializable, IAttachVO{
 	private String bo_writer;
 	private String biz_type;
 	
+	private Integer ques_allot; 
+	private String ans_at;
+	
+	private Integer grade;
+	private Integer year;
+	private Integer semstr;
+	private Integer scre_no;
+	
 	private List<QuesVO> quesList;
 	private List<StudentVO> stdntList;	// 시험 응시하는 학생 명단
+	
+	private List<ExamVO> examList;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;
