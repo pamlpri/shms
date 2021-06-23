@@ -18,10 +18,21 @@
       <h1>${lec_name }</h1>
     </div>
   </section>
+  
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/main.do?lec_code=${lec_code }&lec_name=${lec_name}">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lecture/weeks.do">학습활동</a></li>
+          <li class="breadcrumb-item active" aria-current="page">시험관리</li>
+      </ol>
+  </nav>
 
   <div class="card attendance">
       <div class="card-body">
         <form class="table-responsive" action="${cPath }/lecture/examGradeUpdate.do" method="post" id="quesForm">
+          <input type="hidden" name="exam_no" value="${quesList[0].exam_no }" />
+          <input type="hidden" name="stdnt_no" value="${quesList[0].stdnt_no }" />
+          <input type="hidden" name="applcn_no" value="${quesList[0].applcn_no }" />
           <table class="table table-bordered table-md">
           	<colgroup>
           		<col width="10%">
@@ -50,13 +61,13 @@
 	                  </p>
 	                  <div class="float-left">
 		                <div class="form-check form-check-inline">
-		                  <input class="form-check-input" type="radio" value="Y" name="quesList[${idx.index }].ans_at">
-		                  <label class="form-check-label">정답</label>
-		                </div>
-		                <div class="form-check form-check-inline">
-		                  <input class="form-check-input" type="radio" value="N" name="quesList[${idx.index }].ans_at">
-		                  <label class="form-check-label">오답</label>
-		                </div>
+			                  <input class="form-check-input" type="radio" value="Y" name="quesList[${idx.index }].ans_at">
+			                  <label class="form-check-label">정답</label>
+			              </div>
+			              <div class="form-check form-check-inline">
+			                  <input class="form-check-input" type="radio" value="N" name="quesList[${idx.index }].ans_at">
+			                  <label class="form-check-label">오답</label>
+			              </div>
 	               	  </div>
 	                </td>
 	            </tr>
@@ -118,6 +129,7 @@
 		
 		console.log(frag);
 		if(frag == true){
+			console.log($("input[name='quesList[0].ans_at']").val());
 			$(quesForm).submit();
 		}
 	});

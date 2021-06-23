@@ -41,6 +41,7 @@
 	<script>
 	function ReportToExcelConverter() {
 		$('<table>').append(
+		   $("#report-table").children("thead").children("tr").clone(),
            $("#report-table").DataTable().$('tr').clone()
         ).table2excel({
 			exclude: ".noExl"
@@ -55,6 +56,7 @@
 	
 	function ExamStudentToExcelConverter(){
 		$('<table>').append(
+		   $("#report-table").children("thead").children("tr").clone(),
            $("#report-table").DataTable().$('tr').clone()
         ).table2excel({
         	exclude: ".noExl"
@@ -69,11 +71,27 @@
 	
 	function AttendStudentToExcelConverter(){
 		$('<table>').append(
+		   $("#attendance-table").children("thead").children("tr").clone(),
            $("#attendance-table").DataTable().$('tr').clone()
         ).table2excel({
         	exclude: ".noExl"
    			, name: "Excel Document Name",
    			filename: "exam" +'.xls', 
+   			fileext: ".xls", 
+   			exclude_img: true, 
+   			exclude_links: true,
+   			exclude_inputs: true
+        });
+	}
+	
+	function gradeStudentToExcelConverter(){
+		$('<table>').append(
+		   $("#grade-table").children("thead").children("tr").clone(),
+           $("#grade-table").DataTable().$('tr').clone()
+        ).table2excel({
+        	exclude: ".noExl"
+   			, name: "Excel Document Name",
+   			filename: "grade" +'.xls', 
    			fileext: ".xls", 
    			exclude_img: true, 
    			exclude_links: true,

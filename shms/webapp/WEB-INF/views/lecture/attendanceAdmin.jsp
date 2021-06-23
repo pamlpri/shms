@@ -35,7 +35,9 @@
 	                  <form class="card-body table-scroll" id="table-scroll">
 	                    <div class="table-responsive table-wrap">
 	                      <div class="text-right excelWrap">
-	                          <button type="button" class="btn btn-warning" id="gradeBtn">성적부 반영</button>
+	                      	  <c:if test="${not empty attendList }">
+		                          <button type="button" class="btn btn-warning" id="gradeBtn">성적부 반영</button>
+	                      	  </c:if>
 	                          <button class="btn btn-icon btn-primary" type="button" onclick="AttendStudentToExcelConverter()"><i class="far fa-file"></i> Excel 다운로드</button>
 	                      </div>
 	                      <table class="table table-striped main-table" id="attendance-table">
@@ -113,9 +115,29 @@
           </div>
       </div>
   </section>
+  <div class="modal fade" tabindex="-1" role="dialog" id="fire-modal-2" style="display: block; padding-right: 17px;">
+		<div class="modal-dialog modal-md modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" style="padding:35px 25px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-backdrop fade"></div>
   <!-- contents end -->
 </div>
 <script>
+$("body").removeClass("modal-open").css("padding-right","0px");
+$(".modal-backdrop").removeClass("show").css("display", "none");
+$(".modal").removeClass("show").css("display", "none");
+
 $(document).ready(function() {
     $('#attendance-table').DataTable({
     	"columnDefs": [ {
@@ -130,6 +152,14 @@ $("#gradeBtn").on("click", function(){
 	let table = $('<table>').append($("#attendance-table").DataTable().$('tr').clone()).attr("class", "allTable").css("display", "none");
 	$("body").append(table);
 	let len = $(table).find("tr").length;
+	
+	let loadingImg = " <img src='${cPath}/resources/lecture/dist/img/loading.gif' style='display: block; margin: 0px auto;'/>";
+	
+	$(".modal-title").text("성적부반영중..");
+	$(".modal-body").html(loadingImg);
+	$("body").addClass("modal-open").css("padding-right", "17px");
+	$(".modal-backdrop").addClass("show").css("display", "block");
+	$(".modal").addClass("show").css("display", "block");
 	
 	var toData = new Object();
 	var dataList = new Array();
@@ -155,7 +185,8 @@ $("#gradeBtn").on("click", function(){
 		, success : function(resp){
 			console.log(resp)
 			if(resp.result == "OK"){
-				alert("성공");
+				$(".modal-title").text("성적부반영 성공");
+	 			$(".modal-body").text("출석점수가 성적부에 반영되었습니다.");
 			}else {
 				alert("실패");
 			}
@@ -165,5 +196,11 @@ $("#gradeBtn").on("click", function(){
 			console.log(msg);
 		}
 	});
+	
+	$(".modal .close, .modal").on("click", function(){
+	  $("body").removeClass("modal-open").css("padding-right","0px");
+      $(".modal-backdrop").removeClass("show").css("display", "none");
+	  $(".modal").removeClass("show").css("display", "none");
+    });
 });
 </script>
