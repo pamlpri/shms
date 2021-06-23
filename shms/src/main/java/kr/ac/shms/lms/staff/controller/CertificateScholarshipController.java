@@ -51,6 +51,7 @@ public class CertificateScholarshipController {
 	@RequestMapping("/lms/certificateScholarshipView.do")
 	public String certificateScholarshipView(
 		@RequestParam(value="req_no", required=false) int req_no	
+		, @RequestParam(value="proc_stat", required=false) String process_stat
 		, Model model
 		) {
 		ScholarShipVO schl = lmsStaffService.selectGisaSchlReq(req_no);
@@ -58,6 +59,7 @@ public class CertificateScholarshipController {
 		
 		model.addAttribute("schl", schl);
 		model.addAttribute("attList", attList);
+		model.addAttribute("process_stat", process_stat);
 		return "lms/certificateScholarshipView";
 	}
 	

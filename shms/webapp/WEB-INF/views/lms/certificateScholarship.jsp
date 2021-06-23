@@ -66,7 +66,7 @@
 		                          </th>
 	                          </c:if>
 	                          <c:if test="${schl.process_stat eq '승인' }">
-									<td class="text-center"><a href="${cPath }/lms/certificateScholarshipView.do?req_no=${schl.req_no}" class="badge bg-primary white-color">${schl.process_stat }</a></td>
+									<td class="text-center"><a href="${cPath }/lms/certificateScholarshipView.do?req_no=${schl.req_no}&proc_stat=${schl.process_stat }" class="badge bg-primary white-color">${schl.process_stat }</a></td>
 	                          </c:if>
 	                      </tr>
 	              			
@@ -112,7 +112,7 @@
 </div>
 <script type="text/javascript">
 	$(".failBtn").on("click", function(){
-		let refuse_resn = $("[name='refuse_resn']").val();
+		let refuse_resn = $(this).parent().find("[name='refuse_resn']").val();
 		document.getElementById("inputText").innerText=refuse_resn;
 	})
 </script>

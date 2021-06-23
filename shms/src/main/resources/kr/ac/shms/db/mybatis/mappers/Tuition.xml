@@ -189,7 +189,8 @@
 		       (SELECT com_code_nm
 		          FROM tb_com_code
 		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
-		           AND com_code = process_stat) process_stat
+		           AND com_code = process_stat) process_stat,
+		       refuse_resn
 		  FROM schl_req a
 		 INNER JOIN schlship b ON(a.schlship_no=b.schlship_no)
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
