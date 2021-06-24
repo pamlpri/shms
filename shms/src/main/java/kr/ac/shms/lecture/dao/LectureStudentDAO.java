@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.lecture.vo.ExamVO;
 import kr.ac.shms.lecture.vo.GradeVO;
 import kr.ac.shms.lecture.vo.QuesVO;
@@ -232,4 +233,11 @@ public interface LectureStudentDAO {
      * @return 데이터가 없으면 null 반환
      */
     public GradeVO selectTaskScore(GradeVO grade);
+	
+	/**
+	 * 첨부파일 없는 게시글 수정할 때 첨부파일 추가 시, 첨부파일 번호 새로 부여
+	 * @param board  
+	 * @return row count > 0 성공
+	 */
+	public int updateAtchNo(IAttachVO iattachVO);
 }

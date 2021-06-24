@@ -15,7 +15,7 @@
   <section class="section">
     <div class="section-header">
       <!-- 강의명 -->
-      <h1>대학생활의 이해</h1>
+      <h1>${lec_name }</h1>
     </div>
   </section>
 
@@ -76,17 +76,20 @@
               </td>
             </tr>
             <tr>
-                <th class="align-middle">성적</th>
+                <th class="align-middle">성적
+                </th>
                 <td>
-                  <input type="number" class="form-control" style="width:20%;" min="0" 
-                  		max="${taskSubmit.task_allot }" name="task_score" value="${taskSubmit.task_score }" />
+                  <input type="number" class="form-control" style="width:20%;" min="0" id="scoreInput"
+                  		max="${taskSubmit.task_allot }" name="task_score" value="${taskSubmit.task_score }" ${taskSubmit.process_at eq '진행중' ? 'disabled' : '' } />
                    <div class="invalid-feedback"></div>
                 </td>
             </tr>
           </table>
           <div class="text-center">
               <a href="${cPath }/lecture/reportList.do?set_task_no=${taskSubmit.set_task_no}" class="btn btn-secondary">취소</a>
-              <button type="button" class="btn btn-primary" id="submitBtn">저장</button>
+              <c:if test="${taskSubmit.process_at eq '마감'}">
+	              <button type="button" class="btn btn-primary" id="submitBtn">저장</button>
+              </c:if>
           </div>
         </form>
       </div>

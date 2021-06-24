@@ -152,7 +152,7 @@
 			    #{title, jdbcType=VARCHAR},
 			    #{cont, jdbcType=VARCHAR},
 			    #{writer, jdbcType=VARCHAR},
-			    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI'),
+			    TO_DATE(TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'YYYY/MM/DD HH24:MI')
    				<if test="attachList != null">
 			    	,(SELECT MAX(atch_file_no) + 1 FROM attach)
 			    </if>
@@ -212,7 +212,14 @@
 		    a.atch_file_no,
 		    b.atch_file_seq,
 		    b.file_nm,
-        	e.task_allot
+        	e.task_allot,
+        	e.submit_bgnde,
+        	e.submit_endde,
+        	CASE WHEN SYSDATE BETWEEN submit_bgnde AND submit_endde THEN
+		    '진행중'
+		    ELSE
+		    '마감'
+		    END process_at	        	
 		FROM
 		    task_submit a
 		    LEFT OUTER JOIN attach b
@@ -480,4 +487,10 @@
 		   AND lec_code = #{lec_code, jdbcType=VARCHAR}
 		   AND attend_scre IS NOT NULL
 	</select>
+	
+	<update id="updateAtchNo" parameterType="TaskSubmitVO">
+         UPDATE task_submit
+            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
+          WHERE submit_no = #{submit_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

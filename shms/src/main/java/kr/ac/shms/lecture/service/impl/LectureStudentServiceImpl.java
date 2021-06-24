@@ -150,7 +150,7 @@ public class LectureStudentServiceImpl implements LectureStudentService {
 			result = ServiceResult.NOTEXIST;
 		}else {
 			if(savedTask.getAtch_file_no() == null) {
-				commonAttachDAO.updateAtchNo(taskSubmit);
+				lectureStudentDAO.updateAtchNo(taskSubmit);
 			}
 			cnt = lectureStudentDAO.updateTask(taskSubmit);
 			if(cnt > 0) {

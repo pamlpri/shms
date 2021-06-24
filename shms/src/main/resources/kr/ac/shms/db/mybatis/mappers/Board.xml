@@ -182,7 +182,7 @@
 		    univ_inqry_kind,
 		    lec_code,
 		    ans_writer,
-		    ans_de,
+		    TO_CHAR(ans_de, 'YYYY.MM.DD') ans_de,
 		    a.atch_file_no,
 		    b.atch_file_seq,
 		    b.file_nm
@@ -438,7 +438,7 @@
 		UPDATE board
 		    SET bo_ans = #{bo_ans},
 		    	ans_writer = #{ans_writer, jdbcType=VARCHAR},
-		    	ans_de = TO_DATE(SYSDATE, 'YYYY.MM.DD HH24:MI')
+		    	ans_de = TO_DATE(TO_CHAR(SYSDATE, 'YYYY.MM.DD HH24:MI'), 'YYYY.MM.DD HH24:MI')
 		WHERE bo_no = #{bo_no}
 	</update>
 	

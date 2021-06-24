@@ -94,7 +94,7 @@
 				                      	<a href="${cPath}/lecture/reportView.do?submit_no=${taskSubmit.submit_no}" class="btn btn-success">제출완료</a>
 			                      	</c:when>
 			                      	<c:otherwise>
-			                      		<a href="#" class="btn btn-secondary disabled">미제출</a>
+			                      		<a class="btn btn-secondary disabled">미제출</a>
 			                      	</c:otherwise>
 			                      </c:choose>
 		                      </td>

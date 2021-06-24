@@ -43,6 +43,7 @@ public class TaskSubmitVO implements IAttachVO{
 	private String lec_code;
 	private String bo_writer;
 	private String biz_type;
+	private String process_at;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;

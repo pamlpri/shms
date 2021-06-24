@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +24,7 @@ import kr.ac.shms.lecture.service.LectureService;
 import kr.ac.shms.lecture.service.LectureStudentService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lecture.vo.TaskSubmitVO;
+import kr.ac.shms.lms.login.vo.UserLoginVO;
 
 /**
  * @author 박초원
@@ -103,7 +105,8 @@ public class ReportViewController {
 	
 	@RequestMapping("/lecture/reportView.do")
 	public String taskView(
-			@SessionAttribute(name="lec_code", required=false) String lec_code
+			@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+			, @SessionAttribute(name="lec_code", required=false) String lec_code
 			, @SessionAttribute(name="lec_name", required=false) String lec_name
 			, @RequestParam("submit_no") Integer submit_no
 			, Model model
