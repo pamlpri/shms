@@ -174,6 +174,26 @@ public interface LmsStaffDAO {
     public List<ApplicantVO> selectFresherAllList();
     
     /**
+     * 학적과 신입생등록 user 테이블 insert
+     * @param ApplicantVO
+     * @return cnt
+     */
+    public int insertUser(ApplicantVO applicant);
+    
+    /**
+     * 학적과 신입생등록 student 테이블 insert
+     * @param ApplicantVO
+     * @return cnt 
+     */
+    public int insertStudent(ApplicantVO applicant);
+    
+    /** 학적과 신입생 한명 조회
+     * @param applicnt_no
+     * @return ApplicantVO
+     */
+    public ApplicantVO selectFresher(String applicnt_no);
+    
+    /**
      * 변동사항 상세 조회
      * @param cng_req_no
      * @return

@@ -573,4 +573,95 @@
 		   </if>
 		 WHERE cng_req_no=#{cng_req_no, jdbcType=NUMERIC}
 	</update>
+	
+	<insert id="insertUser" parameterType="ApplicantVO">
+		INSERT INTO users
+			(
+			    user_id,
+			    user_password,
+			    user_section
+			) SELECT #{stdnt_no, jdbcType=VARCHAR},	
+			         #{user_password, jdbcType=VARCHAR},
+			         'ST'
+			    FROM applicant
+			   WHERE applicnt_no = #{applicnt_no, jdbcType=VARCHAR}
+	</insert>
+	
+	<insert id="insertStudent" parameterType="ApplicantVO">
+		INSERT INTO student
+			(
+			    stdnt_no,
+			    sub_code,
+			    entsch_de,
+			    grdtn_de,
+			    empmnt_at,
+			    grade,
+			    name,
+			    tel_no,
+			    regno1,
+			    regno2,
+			    gen,
+			    zipcode,
+			    addr1,
+			    addr2,
+			    email,
+			    webmail,
+			    account,
+			    bank_name,
+			    photo_path,
+			    semstr
+			) SELECT 
+			        #{stdnt_no, jdbcType=VARCHAR},
+			        sub_code,
+			        TO_DATE(#{entsch_de, jdbcType=VARCHAR}, 'YYYY-MM-DD'),
+			        NULL,
+			        'N',
+			        1,
+			        name,
+			        telno,
+			        regno1,
+			        regno2,
+			        gen,
+			        zipcode,
+			        addr1,
+			        addr2,
+			        email,
+			        NULL,
+			        account,
+			        bank_name,
+			        photo_path,
+			        1
+			FROM applicant
+			WHERE applicnt_no = #{applicnt_no, jdbcType=VARCHAR}
+	</insert>
+	
+	<select id="selectFresher" parameterType="String" resultType="ApplicantVO">
+		SELECT  applicnt_no,
+			    name,
+			    regno1,
+			    regno2,
+			    addr1,
+			    addr2,
+			    gen,
+			    zipcode,
+			    telno,
+			    email,
+			    hischul_code,
+			    comput_score,
+			    aplc_de,
+			    pass_at,
+			    pre_no,
+			    rcrt_cl,
+			    rcrt_type,
+			    account,
+			    bank_name,
+			    photo_path,
+			    sub_code,
+			    rcrt_year,
+			    reg_pay_at,
+			    virtual_account,
+			    reg_pay_date
+		   FROM applicant
+	      WHERE applicnt_no = #{applicnt_no, jdbcType=VARCHAR}
+	</select>
 </mapper>

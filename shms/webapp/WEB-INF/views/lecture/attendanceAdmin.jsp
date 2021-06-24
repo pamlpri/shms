@@ -188,7 +188,8 @@ $("#gradeBtn").on("click", function(){
 				$(".modal-title").text("성적부반영 성공");
 	 			$(".modal-body").text("출석점수가 성적부에 반영되었습니다.");
 			}else {
-				alert("실패");
+				$(".modal-title").text("성적부반영 실패");
+	 			$(".modal-body").html("출석점수 성적부에 반영에 실패했습니다.<br/>잠시후에 다시 시도해주세요.");
 			}
 		},error : function(xhr, error, msg){ 
 			console.log(xhr);

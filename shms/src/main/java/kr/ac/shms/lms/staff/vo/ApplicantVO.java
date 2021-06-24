@@ -1,5 +1,6 @@
 package kr.ac.shms.lms.staff.vo;
 
+import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of="applicnt_no")
+@EqualsAndHashCode(of= {"applicnt_no", "stdnt_no"})
 public class ApplicantVO {
 	private String photo_path;
 	private String col_code;
@@ -41,4 +42,9 @@ public class ApplicantVO {
 	private String account;
 	private String bank_name;
 	private Map<String, Object> searchMap;
+	
+	private String stdnt_no;
+	private String entsch_de;
+	private String user_password;
+	private List<ApplicantVO> applicantList;
 }
