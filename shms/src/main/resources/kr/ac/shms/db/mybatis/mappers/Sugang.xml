@@ -43,7 +43,7 @@
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_cl_grp)">
 					AND lec_cl_grp = #{searchMap.lec_cl_grp}
 				</if>
-				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.lec_col_code)">
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.col_code)">
 					AND col_code = #{searchMap.col_code} OR col_code IS NULL
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">

@@ -10,6 +10,7 @@
 <!-- ** Plugins Needed for the Project ** -->
   <!-- Bootstrap -->
   <link rel="stylesheet" href="${cPath }/resources/main/plugins/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.css">
   <!-- slick slider -->
   <link rel="stylesheet" href="${cPath }/resources/main/plugins/slick/slick.css">
   <!-- themefy-icon -->
@@ -23,7 +24,7 @@
   <!-- font awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
   crossorigin="anonymous">
-
+  
   <!-- Main Stylesheet -->
   <link href="${cPath }/resources/main/css/style.css" rel="stylesheet">
   <link href="${cPath }/resources/main/css/common.css" rel="stylesheet">
