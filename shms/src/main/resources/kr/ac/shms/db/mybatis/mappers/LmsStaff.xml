@@ -463,7 +463,7 @@
 		 )
 	</select>
 	
-	<select id="selectFresherList" parameterType="ApplicantVO" resultType="ApplicantVO">
+	<select id="selectFresherList" parameterType="PagingVO" resultType="ApplicantVO">
 		SELECT *
 		  FROM (SELECT A.*, ROWNUM rn    
 		          FROM (SELECT  applicnt_no,
@@ -487,5 +487,25 @@
 		         ORDER BY applicnt_no asc
 		 )
 		 WHERE rn BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="selectFresherAllList" resultType="ApplicantVO">
+		 SELECT  applicnt_no,
+                 name,
+                 regno1,
+                 gen,
+                 telno,
+                 email,
+                 b.sub_code,
+                 b.sub_name,
+                 rcrt_year,
+                 (SELECT col_name
+                    FROM college
+                   WHERE col_code = b.col_code) col_name,
+                 b.col_code
+           FROM applicant a
+                INNER JOIN subject b ON(a.sub_code = b.sub_code)
+          WHERE rcrt_year > EXTRACT(YEAR FROM SYSDATE)
+          ORDER BY sub_code asc, name asc
 	</select>
 </mapper>

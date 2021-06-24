@@ -156,9 +156,26 @@
               </form>
           </div>
       </div>
-  </section>                
+  </section> 
+  <div class="modal fade" tabindex="-1" role="dialog" id="fire-modal-2" style="display: block; padding-right: 17px;">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" style="padding:35px 25px;"></div>
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop fade"></div>              
   <!-- contents end -->
 </div>
+<script src="${cPath }/resources/lecture/dist/js/jquery.table2excel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 <script>
 	let subjectTag = $("[name='sub_code']");
@@ -221,6 +238,74 @@
 			searchForm.submit();
 		}
 		return false;
+	});
+	
+	function ReportToExcelConverter() {
+		let loadingImg = " <img src='${cPath}/resources/lms/assets/images/loading.gif' style='display: block; margin: 0px auto;'/>";
+		
+		$(".modal-title").text("Excel 변환작업중..");
+		$(".modal-body").html(loadingImg);
+		$("body").addClass("modal-open").css("padding-right", "17px");
+		$(".modal-backdrop").addClass("show").css("display", "block");
+		$(".modal").addClass("show").css("display", "block");
+		let header = `
+			<tr class="bg-th">
+	            <th class="text-center">수험번호</th>
+	            <th class="text-center">모집년도</th>
+	            <th class="text-center">단과대</th>
+	            <th class="text-center">학과</th>
+	            <th class="text-center">이름</th>
+	            <th class="text-center">성별</th>
+	            <th class="text-center">생년월일</th>
+	            <th class="text-center">전화번호</th>
+	            <th class="text-center">이메일</th>
+            </tr>
+		`;
+		
+		$.ajax({
+			url: "${cPath}/lms/fresherExcel.do"
+			, success: function(resp) {
+				let trTags = [];
+				if(resp){
+					$(resp).each(function(idx, fresher){
+						let tr = $("<tr>").append(
+									$("<td>").text(fresher.applicnt_no).addClass("text-center")
+									,$("<td>").text(fresher.rcrt_year).addClass("text-center")
+									,$("<td>").text(fresher.col_name).addClass("text-center")
+									,$("<td>").text(fresher.sub_name).addClass("text-center")
+									,$("<td>").text(fresher.name).addClass("text-center")
+									,$("<td>").text(fresher.gen).addClass("text-center")
+									,$("<td>").text(fresher.regno1).addClass("text-center")
+									,$("<td>").text(fresher.telno).addClass("text-center")
+									,$("<td>").text(fresher.email).addClass("text-center")
+								);
+						trTags.push(tr);
+					});
+					$('<table>').append(header,trTags).table2excel({
+						exclude: ".noExl"
+						, name: "Excel Document Name",
+						filename: "신입생명단" +'.xls',
+						fileext: ".xls", 
+						exclude_img: true, 
+						exclude_links: true,
+						exclude_inputs: true 
+					}); 
+					$(".modal-title").text("Excel 변환작업 성공");
+		 			$(".modal-body").text("Excel 변환작업에 성공했습니다.");
+				}
+			}
+			, error: function(xhr, error, msg) {
+				console.log(xhr);
+				console.log(error);
+				console.log(msg);
+			}
+		});		
+	} 
+
+	$(".modal .close, .modal").on("click", function(){
+		$("body").removeClass("modal-open").css("padding-right","0px");
+	    $(".modal-backdrop").removeClass("show").css("display", "none");
+		$(".modal").removeClass("show").css("display", "none");
 	});
 		
     function readExcel() {
