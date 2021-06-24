@@ -117,7 +117,7 @@
 							<p class="text-center">
 								<span style='font-size:15.0pt;line-height:160%;'>인 재 대 학 교 총 장</span>
 								<span>
-									<img src="https://storage.cloud.google.com/shms/logo/sig.png" width="180" height="180" vspace="0" hspace="0" border="0">								
+									<img src="${cPath }/resources/lms/assets/images/signature.png" width="180" height="180" vspace="0" hspace="0" border="0">								
 								</span>
 							</p>
 						</td>
