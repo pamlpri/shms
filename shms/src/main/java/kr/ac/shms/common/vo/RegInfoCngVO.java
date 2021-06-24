@@ -41,7 +41,11 @@ public class RegInfoCngVO implements IAttachVO{
 	private String col_name;		// 단과대
 	private String sub_code;
 	private String col_code;
-	
+	private String tel_no;
+	private String webmail;
+	private Integer atch_file_seq;
+    private String file_path;
+    private String file_nm;
 	private Map<String, Object> searchMap;
 	
 	private String bo_writer;

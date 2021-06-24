@@ -60,7 +60,7 @@
 		</table>
 		<div class="btnBox">
 			<a href="${cPath }/subject/subjectQnaList.do?sub=${sub_code}" id="listBtn">목록으로</a>
-			<button type="submit" id="saveBtn">저장</button>
+			<button type="submit" id="saveBtn" class="btn">저장</button>
 		</div>
 	</form:form>
 </div>

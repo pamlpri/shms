@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.dao.OthersDAO;
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
@@ -74,9 +76,14 @@ public class AcademicChangeController {
 	
 	@RequestMapping("/lms/academicChangeView.do")
 	public String academicChangeView(
-//		@RequestParam("cng_req_no") int cng_req_no
+		@RequestParam("cng_req_no") int cng_req_no
+		, @RequestParam(value="process_stat", required=false) String process_stat
+		, Model model
 		) {
+		RegInfoCngVO cngVO = lmsStaffService.selectCngStdnt(cng_req_no);
 		
+		model.addAttribute("cngVO", cngVO);
+		model.addAttribute("process_stat", process_stat);
 		return "lms/academicChangeView";
 	}
 	
@@ -115,4 +122,32 @@ public class AcademicChangeController {
 		
 		return pagingVO;
 	}
+	
+	@RequestMapping(value="/lms/updateReginfoStat.do", method=RequestMethod.POST)
+	public String updateReginfoStat(
+		@ModelAttribute("cngVO") RegInfoCngVO cngVO
+		) {
+		int cng_req_no = cngVO.getCng_req_no();
+		String refuse_resn = cngVO.getRefuse_resn();
+		String process_stat = cngVO.getProcess_stat();
+		
+		RegInfoCngVO cng = new RegInfoCngVO();
+		cng.setCng_req_no(cng_req_no);
+		cng.setRefuse_resn(refuse_resn);
+		cng.setProcess_stat(process_stat);
+		
+		ServiceResult result = lmsStaffService.updateReginfoCng(cng);
+		
+		String view = null;
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/academicChange";
+		}
+		
+		return view;
+	}
 }
+
+
+
+
+
