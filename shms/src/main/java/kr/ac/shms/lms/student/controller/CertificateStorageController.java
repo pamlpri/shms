@@ -84,8 +84,6 @@ public class CertificateStorageController {
 		int no_of_issue = crtf.getNo_of_issue();
 		String str = crtf.getEnd_de();
 		int end_de = Integer.parseInt(str.replaceAll("[^0-9]", ""));
-		System.out.println("*******************");
-		System.out.println("end_de : " + end_de);
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		ServiceResult result = certificafeService.updateIssuedCnt(req_no);

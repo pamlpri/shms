@@ -85,9 +85,9 @@
 	
 	<select id="selectCrtfPrint" resultType="CertificateReqVO" parameterType="CertificateReqVO">
 		SELECT a.name,
-		       CASE WHEN SUBSTR(a.regno1, 1,1) = 0 THEN 20 || a.regno1
-		            ELSE 19 || a.regno1
-		          END AS regno,  
+		       TO_CHAR(TO_DATE(CASE WHEN SUBSTR(a.regno1, 1,1) = 0 THEN 20 || a.regno1
+		                    ELSE 19 || a.regno1
+		                END),'YYYY-MM-DD') regno,  
 		       c.sub_name,
 		       d.col_name,
 		       a.grade,

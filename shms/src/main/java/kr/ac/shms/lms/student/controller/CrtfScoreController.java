@@ -4,16 +4,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.ac.shms.common.dao.CommonDAO;
 import kr.ac.shms.common.service.CommonService;
 import kr.ac.shms.common.vo.LecScoreVO;
+import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.CertificateService;
+import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.CertificateReqVO;
 /**
  * @author 김보미
@@ -30,11 +35,13 @@ import kr.ac.shms.lms.student.vo.CertificateReqVO;
  */
 @Controller
 public class CrtfScoreController {
+	private static final Logger logger =LoggerFactory.getLogger(CrtfScoreController.class);
 	@Inject
 	private CertificateService certificateService;
-	
 	@Inject
 	private CommonService commonService;
+	@Inject
+	private CommonDAO commonDAO;
 	
 	@RequestMapping("/lms/scoreCertificate.do")
 	public String scoreCertificate(
@@ -46,6 +53,7 @@ public class CrtfScoreController {
 		crtf.setReq_no(req_no);
 		crtf.setStdnt_no(user.getUser_id());
 		crtf = certificateService.selectCrtfPrint(crtf);
+		logger.info("crtf1234 {}", crtf);
 		
 		LecScoreVO lecScore = new LecScoreVO();
 		lecScore.setStdnt_no(user.getUser_id());
@@ -58,6 +66,8 @@ public class CrtfScoreController {
 		
 		model.addAttribute("crtf", crtf);
 		
-		return "lms/certificate/score";
+		List<LecScoreVO> selectYearList = commonDAO.selectLecYear(user.getUser_id());
+		model.addAttribute("selectYearList", selectYearList);
+		return "lms/certificate/score2";
 	}
 }
