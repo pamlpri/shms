@@ -113,7 +113,7 @@
 		let req_no = $(this).parents("tr").attr("class");
 		let issued_cnt = parseInt($(this).parents("tr").children(".updateIssue").text());
 		let no_of_issue = parseInt($(this).parents("tr").children(".no_of_issue").text());
-		let end_de = $(this).parents("tr").children(".end_de").text();
+		let end_de = ($(this).parents("tr").children(".end_de").text()).substring(2);
 		let href = $(this).attr('href');
 		if(no_of_issue - issued_cnt == 0){
 			$(this).attr('href', "");
@@ -123,12 +123,13 @@
 		$.ajax({
 			url : "${cPath}/lms/updateIssue.do"
 			, data : { 
-				"req_no" : req_no,
-				"issued_cnt" : issued_cnt,
-				"no_of_issue" : no_of_issue,
-				"end_de" : end_de
+				req_no : req_no,
+				issued_cnt : issued_cnt,
+				no_of_issue : no_of_issue,
+				end_de : end_de
 				}
 			, dataType : "json"
+			, method : "post"
 			, success : function(resp){
 				if(resp.result == "OK"){
 					$("#table1").find("."+req_no).children(".updateIssue").text(issued_cnt+1);
@@ -139,8 +140,6 @@
 					}else {
 						
 					}
-				}else{
-					
 				}
 			}, error : function(xhr, error, msg){
 				console.log(xhr);
