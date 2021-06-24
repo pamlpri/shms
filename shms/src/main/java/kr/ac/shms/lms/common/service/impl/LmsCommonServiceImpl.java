@@ -16,6 +16,7 @@ import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.service.CommonAttachService;
 import kr.ac.shms.common.vo.CurriculumVO;
 import kr.ac.shms.common.vo.LecScoreVO;
+import kr.ac.shms.common.vo.LecrumVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.dao.LmsCommonDAO;
@@ -337,5 +338,10 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	@Override
 	public int selectStaffSchdulChk(Map<String, Object> searchMap) {
 		return lmsCommonDAO.selectStaffSchdulChk(searchMap);
+	}
+
+	@Override
+	public LecrumVO selectLecrumInfo(Map<String, Object> searchMap) {
+		return lmsCommonDAO.selectLecrumInfo(searchMap);
 	}
 }

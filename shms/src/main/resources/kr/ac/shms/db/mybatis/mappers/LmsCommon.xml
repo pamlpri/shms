@@ -774,4 +774,45 @@
 		  ON(a.lec_cl = d.com_code)
 		WHERE cur_code = #{cur_code, jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectStaffSchdulChk" parameterType="hashMap" resultType="int">
+		SELECT COUNT(lec_code) cnt
+		  FROM curriculum a
+		 INNER JOIN lecture b
+		    ON (a.cur_code = b.cur_code)
+		 WHERE staff_no = #{staff_no}
+		   AND b.estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		   AND b.estbl_semstr = (SELECT semstr FROM v_semstr)
+		   AND dayotw = #{dayotw}
+		   AND  
+		   <foreach collection="timeArray" item="time" open="(" close=")" separator="OR">
+			    #{time} BETWEEN lec_time AND lec_time + lec_pnt
+		   </foreach>
+	</select>
+	
+	<select id="selectLecrumInfo" parameterType="hashMap" resultType="LecrumVO">
+		SELECT
+		    DISTINCT
+		    a.lecrum_no,
+		    a.building_no,
+		    b.building_nm,
+		    lecrum_nm,
+		    aceptnc_nmpr,
+		    sub_code
+		FROM
+		    lecrum a
+		INNER JOIN building b
+		  ON(a.building_no = b.building_no)
+		WHERE ACEPTNC_NMPR > 5
+		  AND a.sub_code = 105
+		--  AND a.building_no = SUBSTR(105, 1, 1)
+		--  AND SUBSTR(lecrum_nm, 1, 1) = '1'
+		  AND lecrum_no NOT IN (SELECT lecrum_no
+		                          FROM lecrum_ttable 
+		                         WHERE dayotw = 05 
+		                           AND (tm BETWEEN 9 AND 11)
+		                           AND use_at = 'Y'
+		  )
+		ORDER BY lecrum_no;
+	</select>
 </mapper>

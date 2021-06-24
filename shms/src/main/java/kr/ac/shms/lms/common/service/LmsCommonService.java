@@ -6,6 +6,7 @@ import java.util.Map;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.CurriculumVO;
 import kr.ac.shms.common.vo.LecScoreVO;
+import kr.ac.shms.common.vo.LecrumVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
@@ -290,4 +291,12 @@ public interface LmsCommonService {
 	 * @return 데이터가 없으면 0 반환
 	 */
 	public int selectStaffSchdulChk(Map<String, Object> searchMap);
+	
+	/**
+	 * 조건에 따른 강의실 조회
+	 * @param searchMap
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public LecrumVO selectLecrumInfo(Map<String, Object> searchMap);
+
 }
