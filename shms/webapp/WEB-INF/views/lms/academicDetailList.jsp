@@ -26,7 +26,7 @@
                                  <div class="col-md-8">
                                      <fieldset class="form-group">
                                          <select class="form-select" name="col_code">
-                                             <option>전체</option>
+                                             <option value="">전체</option>
                                              <c:forEach items="${collegeList }" var="college">
 												<option value="${college.col_code}" >
 													${college.col_name }
@@ -43,7 +43,7 @@
                                  <div class="col-md-8">
                                      <fieldset class="form-group">
                                          <select class="form-select" name="sub_code">
-                                             <option>전체</option>
+                                             <option value="">전체</option>
                                              <c:forEach items="${subjectList }" var="subject">
 												<option class="${subject.col_code }" value="${subject.sub_code }" >
 													${subject.sub_name }
@@ -59,13 +59,13 @@
                                  </div>
                                  <div class="col-md-8">
                                      <fieldset class="form-group">
-                                         <select class="form-select">
-                                             <option>전체</option>
-                                             <c:forEach items="${academicStatusList }" var="academicStatus">
-												<option class="${academicStatus.com_code }" value="${academicStatus.com_code }" >
-													${academicStatus.com_code_nm }
-												</option>
-											</c:forEach>
+                                         <select class="form-select" name="reginfo_stat">
+                                             <option value="">전체</option>
+											 <option value="재학">재학</option>
+											 <option value="휴학">휴학</option>	
+											 <option value="전과">전과</option>	
+											 <option value="조기졸업">조기졸업</option>	
+											 <option value="학사학위취득유예">학사학위취득유예</option>	
                                          </select>
                                      </fieldset>
                                  </div>
@@ -135,7 +135,7 @@
                          <i class="far fa-file"></i> Excel 다운로드
                      </a>
                  </div>
-                 <div id="pagingArea" class="d-flex justify-content-center">
+                 <div id="pagingArea" class="d-flex justify-content-center mt-4">
 					${pagingVO.pagingHTMLBS }
 				 </div>
 <!--                  <nav aria-label="Page navigation example" class="pagenationNav"> -->
@@ -197,14 +197,15 @@ $("#searchForm").on("change", ":input[name]", function(){
 		if(resp.dataList){
 			$(resp.dataList).each(function(idx, arList){
 				let tr = $("<tr>").append(
-							$("<td>").text(arList.sub_name).addClass("text-center")
-							,$("<td>").text(arList.col_name).addClass("text-center")
+							$("<td>").text(arList.col_name).addClass("text-center")
+							,$("<td>").text(arList.sub_name).addClass("text-center")
 							,$("<td>").text(arList.stdnt_no).addClass("text-center")
 							,$("<td>").text(arList.name).addClass("text-center")
 							,$("<td>").text(arList.regno1).addClass("text-center")
 							,$("<td>").text(arList.gen).addClass("text-center")
 							,$("<td>").text(arList.grade + "학년" + arList.semstr + "학기").addClass("text-center")
 							,$("<td>").text(arList.reginfo_stat).addClass("text-center")
+							,$("<td>").text("신입학").addClass("text-center")
 							,$("<td>").text(arList.entsch_de).addClass("text-center")
 						);
 				trTags.push(tr);
@@ -215,6 +216,7 @@ $("#searchForm").on("change", ":input[name]", function(){
 			);
 		}
 		listBody.html(trTags);
+		$("#pagingArea").html(resp.pagingHTMLBS);
 	}, error : function(xhr, resp, error){
 		console.log(xhr);
 	}

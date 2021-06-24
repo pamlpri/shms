@@ -102,7 +102,9 @@ public class AcademicViewController {
 		, @RequestParam(value="searchWord", required=false) String searchWord
 		, Model model
 	) {
-		
+		System.out.println("**********************************");
+		logger.info("arvo : {}", arvo);
+		System.out.println("**********************************");
 		model.addAttribute(academicDetailList(user, arvo, currentPage, searchWord, model));
 		return "lms/academicDetailList";
 	}
@@ -117,16 +119,23 @@ public class AcademicViewController {
 		, Model model
 	) {
 		addAttribute(model);
-		
+		System.out.println("**********************************");
+		logger.info("비동기 arvo : {}", arvo);
+		System.out.println("**********************************");
 //		StaffVO staffVO = lmsStaffService.staff(user.getUser_id());		
 		PagingVO<AcademicRegistrationVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
 		
 		Map<String, Object> searchMap = new HashMap<>();
-		searchMap.put("col_name", arvo.getCol_code());
+		searchMap.put("col_code", arvo.getCol_code());
 		searchMap.put("sub_code", arvo.getSub_code());
+		searchMap.put("reginfo_stat", arvo.getReginfo_stat());
 		searchMap.put("searchWord", searchWord);
-		arvo.setSearchMap(searchMap);
+		pagingVO.setSearchMap(searchMap);
+		
+		System.out.println("**********************************");
+		logger.info("searchMap arvo : {}", pagingVO);
+		System.out.println("**********************************");
 		
 		int totalRecord = lmsStaffService.selectAcademicRegistrationCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);

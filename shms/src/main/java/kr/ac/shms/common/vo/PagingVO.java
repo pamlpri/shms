@@ -73,7 +73,7 @@ public class PagingVO<T> implements Serializable{
 		String second = null;
 		String third = null;
 		int fourth = -1;
-		String fifth = "<<";
+		String fifth = "<i class='bi bi-chevron-left' style='font-size : 5px;'></i>";
 		if(startPage >= 1) {
 			first = "";
 			second = "";
@@ -104,7 +104,7 @@ public class PagingVO<T> implements Serializable{
 				String.format(pageItem, first, second, third, fourth, fifth)	
 			);
 		}
-		fifth = ">>";
+		fifth = "<i class='bi bi-chevron-right' style='font-size : 5px;'></i>";
 		if(endPage < totalPage) {
 			first = "";
 			second = "";

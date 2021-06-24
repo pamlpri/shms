@@ -988,3 +988,15 @@
 	color : black;
 }
 
+.cur {
+	z-index: 3;
+    color: #fff;
+    background-color: #435ebe;
+    border-color: #435ebe;
+}
+
+.cur:focus, .cur:hover {
+    color: #fff!important;
+    background-color: #435ebe;
+    border-color: #435ebe;
+}
