@@ -229,7 +229,7 @@ $("#searchForm").on("change", ":input[name]", function(){
 });
 
 function ReportToExcelConverter() {
-	let loadingImg = " <img src='${cPath}/resources/lecture/dist/img/loading.gif' style='display: block; margin: 0px auto;'/>";
+	let loadingImg = " <img src='${cPath}/resources/lms/assets/images/loading.gif' style='display: block; margin: 0px auto;'/>";
 	
 	$(".modal-title").text("학적전체조회 입력중..");
 	$(".modal-body").html(loadingImg);

@@ -152,4 +152,9 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	public List<ApplicantVO> selectFresherList(PagingVO<ApplicantVO> pagingVO) {
 		return lmsStaffDAO.selectFresherList(pagingVO);
 	}
+
+	@Override
+	public List<ApplicantVO> selectFresherAllList() {
+		return lmsStaffDAO.selectFresherAllList();
+	}
 }

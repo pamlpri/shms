@@ -21,6 +21,7 @@ import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
 import kr.ac.shms.lms.staff.vo.ApplicantVO;
@@ -103,5 +104,11 @@ public class StudentRegisterController {
 		pagingVO.setDataList(dataList);
 		
 		return pagingVO;
+	}
+	
+	@RequestMapping("/lms/fresherExcel.do")
+	@ResponseBody
+	public List<ApplicantVO> fresherExcel() {
+		return lmsStaffService.selectFresherAllList();
 	}
 }

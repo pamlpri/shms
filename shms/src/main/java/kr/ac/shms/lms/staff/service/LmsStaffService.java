@@ -160,4 +160,10 @@ public interface LmsStaffService {
      * @return 데이터가 없으면 null 반환
      */
     public List<ApplicantVO> selectFresherList(PagingVO<ApplicantVO> pagingVO);
+    
+    /**
+     * 학적과 신입생 전체 조회(excel 다운로드용)
+     * @return 데이터가 없으면 null 반환
+     */
+    public List<ApplicantVO> selectFresherAllList();
 }
