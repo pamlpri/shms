@@ -981,4 +981,10 @@
 		   	   etc_scre = #{final_scre, jdbcType=NUMERIC}
 		WHERE scre_no = #{scre_no, jdbcType=NUMERIC}
 	</update>
+	
+	<update id="updateAtchNo" parameterType="SetTaskVO">
+         UPDATE set_task
+            SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
+          WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}		
+	</update>
 </mapper>

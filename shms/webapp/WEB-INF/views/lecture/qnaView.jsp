@@ -44,7 +44,6 @@
           </p>
           <c:choose>
           	<c:when test="${not empty board.bo_ans }">
-	          <hr>
 	          <div class="noticeAns">
 	              <p class="userAns">${board.ans_writer }<span>${board.ans_de }</span></p>
 	              <p class="contAns">
@@ -77,7 +76,7 @@
 	            <a id="updateBtn" class="btn btn-icon icon-left btn-primary" href="${cPath }/lecture/qnaUpdate.do?bo_no=${board.bo_no}">수정</a>
 	            <button id="deleteBtn" class="btn btn-danger" data-confirm-yes="deleteBoard();" data-confirm="게시글 삭제|삭제한 게시글은 복원이 불가합니다.<br/>삭제하시겠습니까?">삭제</button>
             </c:if>
-            <c:if test="${'PR' eq user.user[1]}">
+            <c:if test="${'PR' eq user.user[1] and empty board.bo_ans}">
 	            <a id="saveBtn" class="btn btn-icon icon-left btn-primary" href="#">답변등록</a>
             </c:if>
           </div>
@@ -128,4 +127,8 @@
 	$("#saveBtn").on("click", function(){
 		$("#ansForm").submit();
 	})
+	
+ 	$('#report-table').DataTable({
+ 		 "order": [[ 1, "asc" ]]
+    });
 </script>

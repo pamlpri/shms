@@ -70,11 +70,13 @@
                           </tbody>
                       </table>
                       <!-- 교수한테만 보여야 하는 버튼 -->
-                      <div class="text-right" style="margin-top: 3%;">
-                        <a href="${cPath }/lecture/noticeInsert.do" class="btn btn-icon icon-left btn-primary">
-                          <i class="far fa-edit"></i> 글쓰기
-                        </a>
-                      </div>
+                      <c:if test="${'PR' eq user.user[1] }">
+	                      <div class="text-right" style="margin-top: 3%;">
+	                        <a href="${cPath }/lecture/noticeInsert.do" class="btn btn-icon icon-left btn-primary">
+	                          <i class="far fa-edit"></i> 글쓰기
+	                        </a>
+	                      </div>
+                      </c:if>
                       </div>
                   </div>
                   </div>
