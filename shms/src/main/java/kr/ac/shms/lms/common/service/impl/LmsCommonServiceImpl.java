@@ -247,7 +247,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 			lecScore.setStdnt_no(stdnt_no);
 			lecScore.setLec_code(lecScoreVO.getLec_code());
 			
-			if(lmsCommonDAO.selectEvlCheck(lecScore) != 12) {
+			if(lmsCommonDAO.selectEvlCheck(lecScore) != null) {
 				lecScoreVO.setStatus("완료");
 				lecEvlResList.add(lecScoreVO);
 			} else {
@@ -317,5 +317,15 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		if(cnt > 0) result = ServiceResult.OK;
 		
 		return result;
+	}
+
+	@Override
+	public int selectCurrCount(PagingVO<CurriculumVO> pagingVO) {
+		return lmsCommonDAO.selectCurrCount(pagingVO);
+	}
+
+	@Override
+	public List<CurriculumVO> selectCurrList(PagingVO<CurriculumVO> pagingVO) {
+		return lmsCommonDAO.selectCurrList(pagingVO);
 	}
 }

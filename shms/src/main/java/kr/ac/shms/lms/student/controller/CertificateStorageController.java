@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,17 +75,30 @@ public class CertificateStorageController {
 	@ResponseBody
 	public String updateIssue(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
-		, @RequestParam("req_no") int req_no
+		, @ModelAttribute("crtf") CertificateReqVO crtf
 		, HttpServletResponse resp
 		) throws IOException {
+		String stdnt_no = crtf.getStdnt_no();
+		int req_no = crtf.getReq_no();
+		int lssued_cnt = crtf.getIssued_cnt();
+		int no_of_issue = crtf.getNo_of_issue();
+		String str = crtf.getEnd_de();
+		int end_de = Integer.parseInt(str.replaceAll("[^0-9]", ""));
+		System.out.println("*******************");
+		System.out.println("end_de : " + end_de);
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		ServiceResult result = certificafeService.updateIssuedCnt(req_no);
 		
-		if(ServiceResult.OK.equals(result)) {
-			resultMap.put("result", ServiceResult.OK);
-		}else if(ServiceResult.FAIL.equals(result)) {
-			resultMap.put("result", ServiceResult.FAIL);
+		/** 검증*****************************************/
+		if(stdnt_no == user.getUser_id() || (no_of_issue != lssued_cnt) || end_de != 0) {
+			if(ServiceResult.OK.equals(result)) {
+				resultMap.put("result", ServiceResult.OK);
+			}else if(ServiceResult.FAIL.equals(result)) {
+				resultMap.put("result", ServiceResult.FAIL);
+			}
 		}
+		
 		
 		resp.setContentType(MimeType.JSON.getMime());
 		try(

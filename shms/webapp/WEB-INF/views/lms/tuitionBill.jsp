@@ -79,7 +79,7 @@
 	                                   <li>납부장소 : 농협 전국 각 지점, 인터넷 뱅킹</li>
 	                                   <li>&nbsp;</li>
 	                                   <li>※ 등록금 이체용 개인별 가상계좌번호</li>
-	                                   <li><strong>농협중앙회 79003196729478 박초원</strong></li>
+	                                   <li><strong>농협중앙회 79003196729478 ${tuition.name }</strong></li>
 	                                   <li>&nbsp;</li>
 	                                   <li>${tuitionPay.year }년 ${tuitionPay.start_month }월</li>
 	                               </ul>

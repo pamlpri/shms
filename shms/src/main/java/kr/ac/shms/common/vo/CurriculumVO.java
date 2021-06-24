@@ -47,13 +47,18 @@ public class CurriculumVO {
 	private Integer posbl_semstr;
 	@NotBlank(groups= {CurriculumInsertGroup.class})
 	private String sub_code;
+	private String sub_name;
 	private String lec_del_at;
 	@NotBlank(groups= {CurriculumInsertGroup.class})
 	private String staff_no;
 	private String name;	// 강사명
 	private Integer year;
 	private Integer semstr;
+	private Integer min_year;
+	private Integer max_year;
 	private String col_code;
+	private String open_at;
 	
-	Map<String, Object> searchMap;
+	private Map<String, Object> searchMap;
+	private String searchWord;
 }	

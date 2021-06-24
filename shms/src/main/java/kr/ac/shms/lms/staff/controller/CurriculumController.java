@@ -25,6 +25,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.CurriculumVO;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.UserVO;
@@ -67,12 +68,50 @@ public class CurriculumController {
 		@RequestParam("key") String lecCl
 		, Model model
 		, SessionStatus sessionStatus
-		) {
+	) {
+		addAttribute(model);
 		
+		PagingVO<CurriculumVO> pagingVO = curriculumForAjax(lecCl, 1, null, null, null, null, model, sessionStatus);
+		model.addAttribute("pagingVO", pagingVO);
 		
-		model.addAttribute("lecCl", lecCl);
-		sessionStatus.setComplete();
 		return "lms/curriculum";
+	}
+	
+	@RequestMapping(value="/lms/curriculum.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public PagingVO<CurriculumVO> curriculumForAjax(
+		@RequestParam("key") String lecCl
+		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+		, @RequestParam(value="searchWord", required=false) String searchWord
+		, @RequestParam(value="sub_code", required=false) String sub_code
+		, @RequestParam(value="posbl_semstr", required=false) Integer posbl_semstr
+		, @RequestParam(value="open_at", required=false) String open_at
+		, Model model
+		, SessionStatus sessionStatus
+		) {
+		addAttribute(model);
+		
+		PagingVO<CurriculumVO> pagingVO = new PagingVO<>(10, 5);
+		pagingVO.setCurrentPage(currentPage);
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchWord", searchWord);
+		searchMap.put("lecCl", lecCl);
+		searchMap.put("sub_code", sub_code);
+		searchMap.put("posbl_semstr", posbl_semstr);
+		searchMap.put("open_at", open_at);
+		pagingVO.setSearchMap(searchMap);
+		
+		int totalRecord = lmsCommonService.selectCurrCount(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<CurriculumVO> currList = lmsCommonService.selectCurrList(pagingVO);
+		pagingVO.setDataList(currList);
+		model.addAttribute("pagingVO", pagingVO);
+		model.addAttribute("lecCl", lecCl);
+		model.addAttribute("searchWord", searchWord);
+		sessionStatus.setComplete();
+		return pagingVO;
 	}
 	
 	@RequestMapping(value="/lms/lectureSearch.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -175,6 +214,7 @@ public class CurriculumController {
 	
 	@RequestMapping("/lms/curriculumView.do")
 	public String curriculumView() {
+		
 		return "lms/curriculumView";
 	}
 }
