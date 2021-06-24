@@ -575,7 +575,7 @@
 		AND SUGANG_AT = 'Y'
 	</select>
 	
-		<select id="selectCurrInfo" parameterType="kr.ac.shms.common.vo.CurriculumVO" resultType="kr.ac.shms.common.vo.CurriculumVO">
+	<select id="selectCurrInfo" parameterType="kr.ac.shms.common.vo.CurriculumVO" resultType="kr.ac.shms.common.vo.CurriculumVO">
 		SELECT lec_name, cur_code, s.name
 		  FROM curriculum c
 		  LEFT OUTER JOIN staff s
@@ -746,5 +746,32 @@
 		<include refid="currSearchFrag"/>
 		    )
 			WHERE rn BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="selectCurriculum" parameterType="string" resultType="CurriculumVO">
+		SELECT
+		    cur_code,
+		    lec_name,
+		    lec_cl,
+		    lec_pnt,
+		    lec_cpacity,
+		    lec_atnlc,
+		    estbl_year,
+		    posbl_semstr,
+		    a.sub_code,
+		    lec_del_at,
+		    a.staff_no,
+		    name,
+		    c.sub_name,
+		    com_code_nm lec_cl_nm
+		FROM
+		    curriculum a
+		INNER JOIN staff b
+		  ON(a.staff_no = b.staff_no)
+		INNER JOIN subject c
+		  ON(a.sub_code = c.sub_code)
+		INNER JOIN (SELECT code_grp, com_code, com_code_nm  FROM tb_com_code WHERE code_grp = 'G06') d
+		  ON(a.lec_cl = d.com_code)
+		WHERE cur_code = #{cur_code, jdbcType=VARCHAR}
 	</select>
 </mapper>

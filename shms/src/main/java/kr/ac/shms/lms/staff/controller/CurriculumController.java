@@ -1,11 +1,13 @@
 package kr.ac.shms.lms.staff.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -41,7 +43,9 @@ import kr.ac.shms.validator.CurriculumInsertGroup;
  * 수정일                  수정자               수정내용
  * --------     --------    ----------------------
  * 2021. 6. 23.      박초원      	       최초작성
- * 2021. 6. 23.      송수미      	       커리큘럼 등록, 조회 기능 구현
+ * 2021. 6. 23.      송수미      	       커리큘럼 등록 기능 구현
+ * 2021. 6. 24.      송수미      	       커리큘럼  조회 기능 구현
+ * 2021. 6. 24.      송수미      	       
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -216,5 +220,48 @@ public class CurriculumController {
 	public String curriculumView() {
 		
 		return "lms/curriculumView";
+	}
+	
+	@RequestMapping("/lms/lectureRegister.do")
+	public String lectureRegister(
+		@RequestParam("cur_code") String cur_code
+		, Model model	
+		) {
+		List<CurriculumVO> indexInfoList = lmsCommonService.selectCurIndexInfo();
+		CurriculumVO curr = lmsCommonService.selectCurriculum(cur_code);
+		
+		model.addAttribute("indexInfoList", indexInfoList);
+		model.addAttribute("curr", curr);
+		
+		return "lms/lecRegForm";
+	}
+	
+	@RequestMapping(value="/lms/staffSchdulCheck.do", produces="text/plain; charset=utf-8")
+	@ResponseBody
+	public String staffSchdulChk(
+		@RequestParam("lecTime") String lecTime
+		, @RequestParam("lec_pnt") Integer lec_pnt
+		, @RequestParam("staff_no") String staff_no
+		, @RequestParam("dayotw") String dayotw
+		) {
+		String result = "FAIL";
+		Map<String, Object> searchMap = new HashMap<>();
+		if(StringUtils.isNotBlank(lecTime)) {
+			Integer lec_time = Integer.parseInt(lecTime.split(":")[0]);
+			int[] timeArray = new int[lec_pnt];
+			for(int i = 0; i < lec_pnt; i++) {
+				timeArray[i] = lec_time + i;
+			}
+			logger.info("timeArray : {}", Arrays.toString(timeArray));
+			searchMap.put("timeArray", timeArray);
+			searchMap.put("staff_no", staff_no);
+			searchMap.put("dayotw", dayotw);
+			
+			int cnt = lmsCommonService.selectStaffSchdulChk(searchMap);
+			if(cnt > 0) {
+				result = "OK";
+			}
+		}
+		return result;
 	}
 }
