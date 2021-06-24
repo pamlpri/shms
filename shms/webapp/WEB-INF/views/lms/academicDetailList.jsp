@@ -138,24 +138,6 @@
                  <div id="pagingArea" class="d-flex justify-content-center mt-4">
 					${pagingVO.pagingHTMLBS }
 				 </div>
-<!--                  <nav aria-label="Page navigation example" class="pagenationNav"> -->
-<!--                      <ul class="pagination pagination-primary"> -->
-<!--                          <li class="page-item"> -->
-<!--                              <a class="page-link" href="#"> -->
-<!--                                  <span aria-hidden="true"><i class="bi bi-chevron-left"></i></span> -->
-<!--                              </a> -->
-<!--                          </li> -->
-<!--                          <li class="page-item"><a class="page-link" href="#">1</a></li> -->
-<!--                          <li class="page-item active"><a class="page-link" href="#">2</a></li> -->
-<!--                          <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-<!--                          <li class="page-item"> -->
-<!--                              <a class="page-link" href="#"> -->
-<!--                                  <span aria-hidden="true"><i class="bi bi-chevron-right"></i></span> -->
-<!--                              </a> -->
-<!--                          </li> -->
-<!--                      </ul> -->
-<!--                  </nav> -->
-
              </div>
          </div>
      </div>
@@ -213,7 +195,9 @@ $("#searchForm").on("change", ":input[name]", function(){
 	searchForm.submit();
 }).ajaxForm({
 	dataType : "json",
-	success : function(resp){
+	beforeSubmit:function(){
+		searchForm.find("[name='page']").val("");	
+	},success : function(resp){
 		listBody.empty();
 		let trTags = [];
 		if(resp.dataList){
