@@ -216,7 +216,7 @@ public interface LmsCommonDAO {
 	 * @param stdnt_no
 	 * @return
 	 */
-	public int selectEvlCheck(LecScoreVO lecScoreVO);
+	public LecScoreVO selectEvlCheck(LecScoreVO lecScoreVO);
 	
 	/**
 	 * 강의평가 등록

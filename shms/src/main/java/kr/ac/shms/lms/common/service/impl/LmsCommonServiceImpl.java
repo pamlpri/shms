@@ -247,7 +247,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 			lecScore.setStdnt_no(stdnt_no);
 			lecScore.setLec_code(lecScoreVO.getLec_code());
 			
-			if(lmsCommonDAO.selectEvlCheck(lecScore) != 12) {
+			if(lmsCommonDAO.selectEvlCheck(lecScore) != null) {
 				lecScoreVO.setStatus("완료");
 				lecEvlResList.add(lecScoreVO);
 			} else {
