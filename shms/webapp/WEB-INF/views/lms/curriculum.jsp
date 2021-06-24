@@ -108,7 +108,7 @@
                               <th class="text-center">개설연도</th>
                               <th class="text-center">개설가능학기</th>
                               <th class="text-center">정원</th>
-                              <th class="text-center">개설여부</th>
+                              <th class="text-center">등록여부</th>
                           </tr>
                       </thead>
                       <tbody id="listBody">
@@ -117,7 +117,7 @@
                   </table>
                   <div class="float-right mt-3">
                       <a class="btn btn-primary" id="notOpen">
-                          <i class="fas fa-chalkboard"></i>&nbsp; 개설 안 된 강의 조회
+                          <i class="fas fa-chalkboard"></i>&nbsp; 미등록 강의 조회
                       </a>
                   </div>
                   <nav id="pagingArea" aria-label="Page navigation example" class="pagenationNav">
@@ -179,11 +179,11 @@
 					let lecNameTag = "";
 					let posblSemstr = curr.posbl_semstr;
 					if(posblSemstr == null || posblSemstr == thisSemstr){
-						curCodeTag = '<a href="${cPath}/lms/curriculumView.do?cur_code="' + curr.cur_code + ' class="text-color">' + curr.cur_code + '</a>';
-						lecNameTag = '<a href="${cPath}/lms/curriculumView.do?cur_code="' + curr.cur_code + ' class="text-color">' + curr.lec_name + '</a>';
+						curCodeTag = '<a href="${cPath}/lms/curriculumView.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.cur_code + '</a>';
+						lecNameTag = '<a href="${cPath}/lms/curriculumView.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.lec_name + '</a>';
 					}else{
-						curCodeTag = '<a href="${cPath}/lms/electiveFrom.do?cur_code="' + curr.cur_code + ' class="text-color">' + curr.cur_code + '</a>';
-						lecNameTag = '<a href="${cPath}/lms/electiveFrom.do?cur_code="' + curr.cur_code + ' class="text-color">' + curr.lec_name + '</a>';
+						curCodeTag = '<a href="${cPath}/lms/lectureRegister.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.cur_code + '</a>';
+						lecNameTag = '<a href="${cPath}/lms/lectureRegister.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.lec_name + '</a>';
 					}
 					
 					let tr = $("<tr>").append(

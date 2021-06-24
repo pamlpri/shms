@@ -328,4 +328,14 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	public List<CurriculumVO> selectCurrList(PagingVO<CurriculumVO> pagingVO) {
 		return lmsCommonDAO.selectCurrList(pagingVO);
 	}
+
+	@Override
+	public CurriculumVO selectCurriculum(String cur_code) {
+		return lmsCommonDAO.selectCurriculum(cur_code);
+	}
+
+	@Override
+	public int selectStaffSchdulChk(Map<String, Object> searchMap) {
+		return lmsCommonDAO.selectStaffSchdulChk(searchMap);
+	}
 }

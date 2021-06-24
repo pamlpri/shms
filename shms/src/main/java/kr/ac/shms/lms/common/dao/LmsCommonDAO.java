@@ -299,4 +299,18 @@ public interface LmsCommonDAO {
 	 * @return 데이터가 없으면 null 반환
 	 */
 	public List<CurriculumVO> selectCurrList(PagingVO<CurriculumVO> pagingVO);
+	
+	/**
+	 * 커리큘럼 코드에 따른 커리큘럼 정보 조회
+	 * @param cur_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public CurriculumVO selectCurriculum(String cur_code);
+	
+	/**
+	 * 교수 스케줄이 겹치지 않는지 확인
+	 * @param searchMap
+	 * @return 데이터가 없으면 0 반환
+	 */
+	public int selectStaffSchdulChk(Map<String, Object> searchMap);
 }
