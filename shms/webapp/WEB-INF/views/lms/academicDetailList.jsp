@@ -217,9 +217,8 @@ $("#searchForm").on("change", ":input[name]", function(){
 				trTags.push(tr);
 			});
 		}else {
-			trTags.push(
-				$("<tr>").html("<td colspan='10' class='text-center'>일치하는 강의가 없습니다.</td>")
-			);
+			let tr = $("<tr>").html("<td colspan='10' class='text-center'>일치하는 학생이 없습니다.</td>");
+			trTags.push(tr);
 		}
 		listBody.html(trTags);
 		$("#pagingArea").html(resp.pagingHTMLBS);

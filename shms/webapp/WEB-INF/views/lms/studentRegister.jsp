@@ -100,7 +100,6 @@
                               <th class="text-center">성별</th>
                               <th class="text-center">생년월일</th>
                               <th class="text-center">전화번호</th>
-                              <th class="text-center">이메일</th>
                           </tr>
                       </thead>
                       <tbody id="listBody">
@@ -126,18 +125,24 @@
                   <a href="https://storage.cloud.google.com/shms/student/학생등록_양식.xlsx" class="btn btn-outline-primary">
                       Excel 양식 다운로드
                   </a>
-                  <a href="#" class="btn btn-icon btn-primary"><i class="far fa-file"></i> <input id="excelUpload" type="file" onchange="readExcel();" /> Excel 일괄 등록</a>
+                  <a href="#" class="btn btn-icon btn-primary" style="cursor:pointer;">
+                  	<i class="far fa-file"></i> 
+                  	<input id="excelUpload" type="file" onchange="readExcel();" /> Excel 일괄 등록
+                  </a>
               </div>
 
               <form class="table-responsive">
-                  <table class="table table-bordered mb-0 studentExcel">
+                  <table class="table table-bordered mb-0 studentExcel"  id="table">
                       <thead>
                           <tr class="bg-th">
                               <th class="text-center">학번</th>
+                              <th class="text-center">수험번호</th>
+                              <th class="text-center">모집년도</th>
                               <th class="text-center">단과대</th>
                               <th class="text-center">학과</th>
                               <th class="text-center">이름</th>
-                              <th class="text-center">주민번호</th>
+                              <th class="text-center">성별</th>
+                              <th class="text-center">생년월일</th>
                               <th class="text-center">전화번호</th>
                               <th class="text-center">입학일</th>
                           </tr>
@@ -146,10 +151,7 @@
                           
                       </tbody>
                   </table>
-                  <div id="pagingArea2" class="d-flex justify-content-center mt-4">
-<%-- 					${pagingVO.pagingHTMLBS } --%>
-				 </div>
-                  <div class="float-right">
+                  <div class="float-right mt-3">
                       <button type="button" id="resetBtn" class="btn btn-danger">초기화</button>
                       <button type="button" class="btn btn-primary">저장</button>
                   </div>
@@ -177,6 +179,7 @@
 </div>
 <script src="${cPath }/resources/lecture/dist/js/jquery.table2excel.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+<script src="${cPath }/resources/lms/assets/vendors/simple-datatables/simple-datatables.js"></script>
 <script>
 	let subjectTag = $("[name='sub_code']");
 	$("[name='col_code']").on("change", function(){
@@ -212,14 +215,12 @@
 								,$("<td>").text(fresher.gen).addClass("text-center")
 								,$("<td>").text(fresher.regno1).addClass("text-center")
 								,$("<td>").text(fresher.telno).addClass("text-center")
-								,$("<td>").text(fresher.email).addClass("text-center")
 							);
 					trTags.push(tr);
 				});
 			}else {
-				trTags.push(
-					$("<tr>").html("<td colspan='10' class='text-center'>일치하는 신입생이 없습니다.</td>")
-				);
+				let tr = $("<tr>").html("<td colspan='9' class='text-center'>일치하는 신입생이 없습니다.</td>");
+				trTags.push(tr);
 			}
 			listBody.html(trTags);
 			$("#pagingArea").html(resp.pagingHTMLBS);
@@ -258,8 +259,7 @@
 	            <th class="text-center">성별</th>
 	            <th class="text-center">생년월일</th>
 	            <th class="text-center">전화번호</th>
-	            <th class="text-center">이메일</th>
-            </tr>
+	        </tr>
 		`;
 		
 		$.ajax({
@@ -277,7 +277,6 @@
 									,$("<td>").text(fresher.gen).addClass("text-center")
 									,$("<td>").text(fresher.regno1).addClass("text-center")
 									,$("<td>").text(fresher.telno).addClass("text-center")
-									,$("<td>").text(fresher.email).addClass("text-center")
 								);
 						trTags.push(tr);
 					});
@@ -307,7 +306,9 @@
 	    $(".modal-backdrop").removeClass("show").css("display", "none");
 		$(".modal").removeClass("show").css("display", "none");
 	});
-		
+	
+	let table = document.querySelector('#table');
+	
     function readExcel() {
         let input = event.target;
         let reader = new FileReader();
@@ -317,27 +318,31 @@
             let workBook = XLSX.read(data, { type: 'binary' });
             let rows = XLSX.utils.sheet_to_json(workBook.Sheets["학생등록양식"]);
             console.log(JSON.stringify(rows));
+	        
             for(var i = 0; i < rows.length; i++){
                 var obj = rows[i];
                 $(".studentExcel").children("tbody").append(
-                    "<tr>"
+                    "<tr class='"+ obj.수험번호 +"'>"
+                    + "<td class='text-center'>" + obj.학번 + "</td>"
+                    + "<td class='text-center'>" + obj.수험번호 + "</td>"
+                    + "<td class='text-center'>" + obj.모집년도 + "</td>"
                     + "<td class='text-center'>" + obj.단과대 + "</td>"
                     + "<td class='text-center'>" + obj.학과 + "</td>"
-                    + "<td class='text-center'>" + obj.학번 + "</td>"
                     + "<td class='text-center'>" + obj.이름 + "</td>"
-                    + "<td class='text-center'>" + obj.주민번호 + "</td>"
+                    + "<td class='text-center'>" + obj.성별 + "</td>"
+                    + "<td class='text-center'>" + obj.생년월일 + "</td>"
                     + "<td class='text-center'>" + obj.전화번호 + "</td>"
                     + "<td class='text-center'>" + obj.입학일 + "</td>"
                     + "</tr>"
                 );
             }
-            
+	        let dataTable = new simpleDatatables.DataTable(table);
         };
-
         reader.readAsBinaryString(input.files[0]);
     }
 
     $("#resetBtn").on("click", function(){
         $(".studentExcel").children("tbody").empty(); 
+        table.destroy();
     });
 </script>
