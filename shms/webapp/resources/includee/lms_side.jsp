@@ -436,7 +436,7 @@
 	                          <a href="${cPath }/lms/academicChange.do">학적변동</a>
 	                      </li>
 	                      <li class="submenu-item ">
-	                          <a href="#">등록금납부</a>
+	                          <a href="${cPath }/lms/tuitionPayment.do">등록금납부</a>
 	                      </li>
 	                      <li class="submenu-item ">
 	                          <a href="#">등록금환불</a>

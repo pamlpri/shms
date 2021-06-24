@@ -10,6 +10,7 @@ import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
+import kr.ac.shms.lms.staff.vo.ApplicantVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
@@ -145,4 +146,18 @@ public interface LmsStaffService {
      * @return
      */
     public int selectAcademicRegistrationCount(PagingVO<AcademicRegistrationVO> pagingVO);
+
+    /**
+     * 학적과 신입생 총 명수 조회
+     * @param pagingVO
+     * @return int
+     */
+    public int selectFresherCount(PagingVO<ApplicantVO> pagingVO);
+    
+    /**
+     * 학적과 신입생 명단 조회
+     * @param ApplicantVO
+     * @return 데이터가 없으면 null 반환
+     */
+    public List<ApplicantVO> selectFresherList(PagingVO<ApplicantVO> pagingVO);
 }

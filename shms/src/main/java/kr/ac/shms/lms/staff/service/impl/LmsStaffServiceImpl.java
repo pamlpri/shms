@@ -16,6 +16,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
+import kr.ac.shms.lms.staff.vo.ApplicantVO;
 import kr.ac.shms.lms.staff.vo.PMyPageVO;
 import kr.ac.shms.lms.staff.vo.SMyPageVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
@@ -140,5 +141,15 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	@Override
 	public int selectAcademicRegistrationCount(PagingVO<AcademicRegistrationVO> pagingVO) {
 		return lmsStaffDAO.selectAcademicRegistrationCount(pagingVO);
+	}
+
+	@Override
+	public int selectFresherCount(PagingVO<ApplicantVO> pagingVO) {
+		return lmsStaffDAO.selectFresherCount(pagingVO);
+	}
+
+	@Override
+	public List<ApplicantVO> selectFresherList(PagingVO<ApplicantVO> pagingVO) {
+		return lmsStaffDAO.selectFresherList(pagingVO);
 	}
 }
