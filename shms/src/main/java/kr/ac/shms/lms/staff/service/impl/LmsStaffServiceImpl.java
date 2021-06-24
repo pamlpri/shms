@@ -5,6 +5,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.hibernate.validator.constraints.br.TituloEleitoral;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
@@ -12,6 +15,8 @@ import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
+import kr.ac.shms.lecture.dao.LectureStudentDAO;
+import kr.ac.shms.lms.common.controller.NewPasswordUpdateController;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
@@ -25,6 +30,8 @@ import kr.ac.shms.main.commuity.vo.ComCodeVO;
 
 @Service
 public class LmsStaffServiceImpl implements LmsStaffService {
+	private static final Logger logger = LoggerFactory.getLogger(LmsStaffServiceImpl.class);
+	
 	@Inject
 	private LmsStaffDAO lmsStaffDAO;
 	
@@ -157,7 +164,7 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	public List<ApplicantVO> selectFresherAllList() {
 		return lmsStaffDAO.selectFresherAllList();
 	}
-
+	
 	@Override
 	public RegInfoCngVO selectCngStdnt(int cng_req_no) {
 		return lmsStaffDAO.selectCngStdnt(cng_req_no);
@@ -173,5 +180,44 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 			result = ServiceResult.FAIL;
 		}
 		return result;
+	}
+	
+	@TituloEleitoral
+	@Override
+	public ServiceResult insertUser(ApplicantVO applicant) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = 0;
+		List<ApplicantVO> applicantList = applicant.getApplicantList();
+		for(ApplicantVO applicantVO : applicantList) {
+			result = ServiceResult.FAIL;
+			String stdnt_no = applicantVO.getStdnt_no();
+			String entsch_de = applicantVO.getEntsch_de();
+			String user_password = applicantVO.getUser_password();
+			applicantVO = lmsStaffDAO.selectFresher(applicantVO.getApplicnt_no());
+			applicantVO.setStdnt_no(stdnt_no);
+			applicantVO.setEntsch_de(entsch_de);
+			applicantVO.setUser_password(user_password);
+			logger.info("applicantVO {}", applicantVO);
+			cnt = lmsStaffDAO.insertUser(applicantVO);
+			if(cnt > 0) {
+				cnt = insertStudent(applicantVO);
+				if(cnt > 0) {
+					result = ServiceResult.OK;
+				}
+			}
+		}
+		return result;
+	}
+
+	public int insertStudent(ApplicantVO applicant) {
+		int cnt = 0;
+		cnt += lmsStaffDAO.insertStudent(applicant);
+		
+		return cnt;
+	}
+
+	public ApplicantVO selectFresher(String applicnt_no) {
+		return lmsStaffDAO.selectFresher(applicnt_no);
 	}
 }

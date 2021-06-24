@@ -445,7 +445,6 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		
 		List<GradeVO> gradeList = grade.getGradeList();
 		for(GradeVO gradeVO : gradeList) {
-			logger.info("gradeVO {}",gradeVO );
 			result = ServiceResult.FAIL;
 			int cnt = lectureProfessorDAO.updateGrade(gradeVO);
 			if(cnt > 0) {

@@ -463,7 +463,7 @@ P.HStyle13, LI.HStyle13, DIV.HStyle13 {
 						<P CLASS=HStyle0 STYLE='text-align: center;'>
 							<SPAN STYLE='font-size: 30.0pt; line-height: 160%;'>&nbsp;</SPAN>
 						</P> <IMG id='logoimage'
-						src="https://storage.cloud.google.com/shms/logo/sig.png"
+						src="${cPath }/resources/lms/assets/images/signature.png"
 						width="214" height="198" vspace="0" hspace="0" border="0">
 					</P>
 						<P CLASS=HStyle0 STYLE='text-align: center;'>

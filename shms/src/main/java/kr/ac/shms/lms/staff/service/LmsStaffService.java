@@ -168,6 +168,13 @@ public interface LmsStaffService {
     public List<ApplicantVO> selectFresherAllList();
     
     /**
+     * 학적과 신입생등록 user 테이블 insert
+     * @param ApplicantVO
+     * @return cnt
+     */
+    public ServiceResult insertUser(ApplicantVO applicant);
+    
+    /**
      * 변동사항 상세 조회
      * @param cng_req_no
      * @return
