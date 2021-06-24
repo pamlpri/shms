@@ -753,8 +753,8 @@
 	
 	<insert id="insertAttendGrade" parameterType="AttendVO" >
         <selectKey order="BEFORE" resultType="int" keyProperty="scre_no">
-			SELECT lec_scre_seq.nextval scre_no
-			  FROM dual
+			SELECT MAX(scre_no) + 1 scre_no
+			  FROM lec_scre
 		</selectKey>
         MERGE INTO lec_scre A
 		USING(
@@ -798,12 +798,6 @@
 				    #{lec_code, jdbcType=VARCHAR}
 		    )
 	</insert>
-	
-	<select id="selectLecCodeForTask" parameterType="int" resultType="String">
-		SELECT lec_code 
-		  FROM set_task 
-		 WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}
-	</select>
 	
 	<select id="selectStudentOMR" parameterType="ExamVO" resultType="QuesVO">
 		SELECT a.exam_no,

@@ -146,14 +146,23 @@ public class CurriculumController {
 		boolean valid = !errors.hasErrors();
 		
 		if(valid) {
-			ServiceResult result = lmsCommonService.insertCurriculum(curriculum);
-			
-			if(ServiceResult.OK.equals(result)) {
-				view = "redirect:/lms/curriculum.do?key=major";
-			}else {
-				message = "커리큘럼 등록에 실패하였습니다. 잠시 후 다시 시도해주세요";
+			if(curriculum.getLec_cpacity() < 15 || curriculum.getLec_cpacity() > 100) {
+				message = "강의 정원은 15명 이상 100명 이하로 설정 가능합니다.";
 				view = "lms/curriculumForm";
+			}else if(curriculum.getLec_pnt() < 1 || curriculum.getLec_pnt() > 4) {
+				message = "학점은 1학점 이상 4학점 이하로 설정 가능합니다.";
+				view = "lms/curriculumForm";
+			}else {
+				ServiceResult result = lmsCommonService.insertCurriculum(curriculum);
+				
+				if(ServiceResult.OK.equals(result)) {
+					view = "redirect:/lms/curriculum.do?key=major";
+				}else {
+					message = "커리큘럼 등록에 실패하였습니다. 잠시 후 다시 시도해주세요";
+					view = "lms/curriculumForm";
+				}
 			}
+			
 		}else {
 			message = "입력하지 않은 항목이 있는지 확인 후 다시 시도해주세요.";
 			view = "lms/curriculumForm";

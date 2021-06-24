@@ -88,4 +88,15 @@
 		   AND stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 		 ORDER BY lec_week ASC
 	</select>
+		
+	<select id="selectLecCodeForTask" parameterType="int" resultType="SetTaskVO">
+		SELECT DISTINCT a.lec_code,
+		       lec_name
+		  FROM set_task a
+		 INNER JOIN lecture b
+		    ON(a.lec_code = b.lec_code)
+		 INNER JOIN curriculum c
+		    ON(b.cur_code = c.cur_code)
+		 WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}
+	</select>
 </mapper>

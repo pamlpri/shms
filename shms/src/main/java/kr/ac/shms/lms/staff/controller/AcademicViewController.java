@@ -1,22 +1,31 @@
 package kr.ac.shms.lms.staff.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ac.shms.common.dao.OthersDAO;
+import kr.ac.shms.common.vo.BoardVO;
+import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
+import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.MypageVO;
 
@@ -41,6 +50,17 @@ public class AcademicViewController {
 	private LmsStaffService lmsStaffService;
 	@Inject
 	private StudentService studentService;
+	@Inject
+	private OthersDAO othersDAO;
+	
+	private void addAttribute(Model model) {
+		List<Map<String, Object>> collegeList = othersDAO.selectCollegeList();
+		List<SubjectVO> subjectList = othersDAO.selectSubjectList(null);
+		List<Map<String, Object>> academicStatusList = othersDAO.selectAcademicStatusList();
+		model.addAttribute("collegeList", collegeList);
+		model.addAttribute("subjectList", subjectList);
+		model.addAttribute("academicStatus", academicStatusList);
+	}
 	
 	@RequestMapping("/lms/academicList.do")
 	public String academicList(
@@ -49,7 +69,7 @@ public class AcademicViewController {
 	) {
 		String user_id = user.getUser_id();
 		StaffVO staffVO = lmsStaffService.staff(user_id);
-		List<MypageVO> studentList = studentService.studentSubList(staffVO.getSub_code());
+		List<MypageVO> studentList = studentService.studentSubList(staffVO);
 		
 		model.addAttribute("studentList", studentList);
 		return  "lms/academicList";
@@ -73,9 +93,47 @@ public class AcademicViewController {
 		
 		return  "lms/academicView";
 	}
-	
-	@RequestMapping("/lms/academicDetailList.do")
-	public String academicDetailList() {
+
+	@RequestMapping(value="/lms/academicDetailList.do")
+	public String sendForm(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user	
+		, @ModelAttribute("arvo") AcademicRegistrationVO arvo
+		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+		, @RequestParam(value="searchWord", required=false) String searchWord
+		, Model model
+	) {
+		
+		model.addAttribute(academicDetailList(user, arvo, currentPage, searchWord, model));
 		return "lms/academicDetailList";
+	}
+	
+	@RequestMapping(value="/lms/academicDetailList.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public PagingVO<AcademicRegistrationVO> academicDetailList(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user	
+		, @ModelAttribute("arvo") AcademicRegistrationVO arvo
+		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
+		, @RequestParam(value="searchWord", required=false) String searchWord
+		, Model model
+	) {
+		addAttribute(model);
+		
+//		StaffVO staffVO = lmsStaffService.staff(user.getUser_id());		
+		PagingVO<AcademicRegistrationVO> pagingVO = new PagingVO<>(10, 5);
+		pagingVO.setCurrentPage(currentPage);
+		
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("col_name", arvo.getCol_code());
+		searchMap.put("sub_code", arvo.getSub_code());
+		searchMap.put("searchWord", searchWord);
+		arvo.setSearchMap(searchMap);
+		
+		int totalRecord = lmsStaffService.selectAcademicRegistrationCount(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<AcademicRegistrationVO> arList = lmsStaffService.selectAcademicRegistrationList(pagingVO);
+		pagingVO.setDataList(arList);
+		
+		return pagingVO;
 	}
 }
