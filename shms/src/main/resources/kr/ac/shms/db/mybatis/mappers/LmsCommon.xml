@@ -489,6 +489,7 @@
 		ON b.lec_cl = e.com_code
 		WHERE a.stdnt_no = #{stdnt_no}
 		AND year = TO_CHAR(SYSDATE, 'YYYY')
+		AND semstr = (SELECT semstr FROM v_semstr)
 		AND e.code_grp = 'G06'
 	</select>
 	

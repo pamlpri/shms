@@ -101,7 +101,7 @@
 		    b.name,
 		    b.lec_cl_nm,
 		    b.lec_pnt,
-		    (mid_scre * midterm + final_scre * finals + attend_scre * attend + task_scre * task + etc_scre * etc) total,
+		    NVL((mid_scre * midterm + final_scre * finals + attend_scre * attend + task_scre * task + etc_scre * etc), 0) total,
 		    a.pnt_rank_nm,
 		    a.year,
 		    a.semstr
@@ -134,6 +134,7 @@
 		    ON(a.lec_code = b.lec_code)
 		WHERE stdnt_no = #{stdnt_no}
 		<include refid="periodFrag" />
+		ORDER BY year, semstr
 	</select>
 	
 	<select id="selectLecYear" parameterType="String" resultType="LecScoreVO">

@@ -43,7 +43,7 @@
 		                          		<tr class="evaluationBox" idx="${lecEvl.lec_code }">
 		                          	      
 		                                  <td class="text-center">
-		                                  	${lecEvl.scre_no }
+		                                  	${lecEvl.lec_code }
 		                                  	<input type="hidden" name="lec_code" value="${lecEvl.lec_code }" />
 		                                  </td>
 		                                  <td class="text-center">${lecEvl.lec_name }</td>

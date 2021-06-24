@@ -53,13 +53,14 @@ public class CrtfScoreController {
 		crtf.setReq_no(req_no);
 		crtf.setStdnt_no(user.getUser_id());
 		crtf = certificateService.selectCrtfPrint(crtf);
-		logger.info("crtf1234 {}", crtf);
 		
 		LecScoreVO lecScore = new LecScoreVO();
 		lecScore.setStdnt_no(user.getUser_id());
 		
 		List<LecScoreVO> lecScoreList = commonService.lecScoreList(lecScore);
 		model.addAttribute("lecScoreList", lecScoreList);
+		System.out.println("*******************************");
+		logger.info("lecScoreList {}", lecScoreList);
 		
 		List<LecScoreVO> selectSemstrList = commonService.selectSemstrList(lecScore);
 		model.addAttribute("selectSemstrList", selectSemstrList);
@@ -68,6 +69,8 @@ public class CrtfScoreController {
 		
 		List<LecScoreVO> selectYearList = commonDAO.selectLecYear(user.getUser_id());
 		model.addAttribute("selectYearList", selectYearList);
+		
+//		List<LecScoreVO> selectStatisticsList = commonService.selectStatisticsList();
 		return "lms/certificate/score2";
 	}
 }

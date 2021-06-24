@@ -168,7 +168,7 @@
                           		<c:when test="${not empty lecScoreList }">
                           			<c:forEach items="${lecScoreList }" var="lecScore">
 	                          			<tr>
-	                          				<td class="text-center">${lecScore.scre_no }</td>
+	                          				<td class="text-center">${lecScore.lec_code }</td>
 	                          				<td class="text-center">${lecScore.lec_name }</td>
 	                          				<td class="text-center">${lecScore.name }</td>
 	                          				<td class="text-center">${lecScore.lec_cl_nm }</td>
@@ -206,7 +206,7 @@
   	  				let totalCredit;
   	  				$.each(res, function(idx, v) {
   	  					tbodyData += "<tr>";
-  	  					tbodyData += "<td class='text-center'>" + v.scre_no + "</td>";
+  	  					tbodyData += "<td class='text-center'>" + v.lec_code + "</td>";
   	  					tbodyData += "<td class='text-center'>" + v.lec_name + "</td>";
   	  					tbodyData += "<td class='text-center'>" + v.name + "</td>";
   	  					tbodyData += "<td class='text-center'>" + v.lec_cl_nm + "</td>";
@@ -257,7 +257,7 @@
   				let totalCredit;
   				$.each(res, function(idx, v) {
   					tbodyData += "<tr>";
-  					tbodyData += "<td class='text-center'>" + v.scre_no + "</td>";
+  					tbodyData += "<td class='text-center'>" + v.lec_code + "</td>";
   					tbodyData += "<td class='text-center'>" + v.lec_name + "</td>";
   					tbodyData += "<td class='text-center'>" + v.name + "</td>";
   					tbodyData += "<td class='text-center'>" + v.lec_cl_nm + "</td>";
