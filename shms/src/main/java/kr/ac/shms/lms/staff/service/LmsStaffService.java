@@ -166,4 +166,18 @@ public interface LmsStaffService {
      * @return 데이터가 없으면 null 반환
      */
     public List<ApplicantVO> selectFresherAllList();
+    
+    /**
+     * 변동사항 상세 조회
+     * @param cng_req_no
+     * @return
+     */
+    public RegInfoCngVO selectCngStdnt(int cng_req_no);
+    
+    /**
+     * 변동사항 상태 업데이트
+     * @param cng_req_no
+     * @return
+     */
+    public ServiceResult updateReginfoCng(RegInfoCngVO cng);
 }

@@ -212,14 +212,14 @@
                </if>
            </trim>
            <trim prefix="AND (" suffix=")" prefixOverrides="AND">
-               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.col_code)">
+               <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.col_code)">
                    AND col_code = #{searchMap.col_code}
                </if>
-               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
-                   AND sub_code = #{searchMap.sub_code} OR sub_code IS NULL
+               <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
+                   AND sub_code = #{searchMap.sub_code}
                </if>
-               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.req_cl_code)">
-                   AND req_cl_code = #{searchMap.req_cl_code} OR req_cl_code IS NULL
+               <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.req_cl_code)">
+                   AND req_cl_code = #{searchMap.req_cl_code}
                </if>
            </trim>
        </trim>
@@ -235,7 +235,7 @@
 		                a.stdnt_no,
 		                name stdnt_name,
 		                TO_CHAR(a.req_de, 'RRRR.MM.DD') req_de,
-		                TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
+		                NVL(TO_CHAR(proc_date, 'RRRR.MM.DD'), ' ') proc_date, 
 		               (SELECT com_code_nm
 		                  FROM tb_com_code
 		                 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
@@ -531,4 +531,46 @@
           WHERE rcrt_year > EXTRACT(YEAR FROM SYSDATE)
           ORDER BY sub_code asc, name asc
 	</select>
+	
+	<select id="selectCngStdnt" parameterType="int" resultType="RegInfoCngVO">
+		SELECT a.stdnt_no,
+		       name stdnt_name,
+		       a.tel_no,
+		       CASE WHEN webmail IS NOT NULL THEN webmail
+		            WHEN webmail IS NULL THEN email
+		            END AS webmail,
+		       cng_req_no,
+		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+		       (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+		           AND com_code = req_cl_code) req_cl_code,
+		      (SELECT com_code_nm
+		          FROM tb_com_code
+		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
+		           AND com_code = req_resn_code) req_resn_code,
+		       file_nm,
+		      (SELECT com_code_nm
+		         FROM tb_com_code
+		        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+		          AND com_code = process_stat) process_stat,
+		       TO_CHAR(cng_bgnde, 'RRRR.MM.DD') cng_bgnde,
+		       TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date
+		  FROM student a
+		 INNER JOIN reginfo_cng b ON(a.stdnt_no=b.stdnt_no) 
+		 LEFT OUTER JOIN attach c ON(b.atch_file_no=c.atch_file_no)
+		 WHERE cng_req_no=#{cng_req_no, jdbcType=NUMERIC}
+	</select>
+
+	<update id="updateReginfoCng" parameterType="RegInfoCngVO">
+		UPDATE reginfo_cng
+		   SET process_stat=#{process_stat, jdbcType=VARCHAR}
+		   <if test="process_stat eq 'BR'">
+			   ,refuse_resn=#{refuse_resn, jdbcType=VARCHAR}
+		   </if>
+		   <if test="process_stat eq 'SI'">
+		   	   ,proc_date=SYSDATE
+		   </if>
+		 WHERE cng_req_no=#{cng_req_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

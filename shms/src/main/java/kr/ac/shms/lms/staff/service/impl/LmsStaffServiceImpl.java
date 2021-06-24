@@ -157,4 +157,21 @@ public class LmsStaffServiceImpl implements LmsStaffService {
 	public List<ApplicantVO> selectFresherAllList() {
 		return lmsStaffDAO.selectFresherAllList();
 	}
+
+	@Override
+	public RegInfoCngVO selectCngStdnt(int cng_req_no) {
+		return lmsStaffDAO.selectCngStdnt(cng_req_no);
+	}
+
+	@Override
+	public ServiceResult updateReginfoCng(RegInfoCngVO cng) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsStaffDAO.updateReginfoCng(cng);
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
+	}
 }

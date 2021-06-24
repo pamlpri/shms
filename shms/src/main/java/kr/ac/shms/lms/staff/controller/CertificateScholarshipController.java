@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +37,8 @@ import kr.ac.shms.lms.student.vo.ScholarShipVO;
  */
 @Controller
 public class CertificateScholarshipController {
+	private static final Logger logger = LoggerFactory.getLogger(CertificateScholarshipController.class);
+	
 	@Inject
 	private LmsStaffService lmsStaffService;
 	
@@ -80,6 +84,9 @@ public class CertificateScholarshipController {
 		, @RequestParam("refuse_resn") String refuse_resn
 		, @RequestParam("process_stat") String process_stat
 		) {
+		System.out.println("**************************************");
+		logger.info("refuse_resn {}", refuse_resn);
+		
 		ScholarShipVO schl = new ScholarShipVO();
 		schl.setReq_no(req_no);
 		schl.setRefuse_resn(refuse_resn);

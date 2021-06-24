@@ -187,14 +187,15 @@
 			if(resp.dataList){
 				$(resp.dataList).each(function(idx, regList){
 					let tdData;
+					
 					if(regList.process_stat == '완료'){
-						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do?cng_req_no=${regList.cng_req_no}" class="badge bg-success white-color">완료</a>');
+						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do?cng_req_no='+regList.cng_req_no+'&process_stat='+regList.process_stat+'" class="badge bg-success white-color">완료</a>');
 					}else if(regList.process_stat == '반려'){
 						tdData = $("<td>").attr("type", "hidden").attr("name", "refuse_resn").val(regList.refuse_resn).html('<button type="button" class="btn badge bg-danger block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">반려</button>');
 					}else if(regList.process_stat == '승인'){
-						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do" class="badge bg-primary white-color">승인</a>');
+						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do?cng_req_no='+regList.cng_req_no+'&process_stat='+regList.process_stat+'" class="badge bg-primary white-color">승인</a>');
 					}else if(regList.process_stat == '대기'){
-						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do" class="badge bg-info white-color">대기</a>');
+						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do?cng_req_no='+regList.cng_req_no+'&process_stat='+regList.process_stat+'" class="badge bg-info white-color">대기</a>');
 					};
 					let tr = $("<tr>").append(
 								$("<td>").text(regList.cng_req_no).addClass("text-center")
@@ -222,17 +223,6 @@
 	});
 	
 	searchForm.submit();
-	
-// 	$("#pagingArea").on("click", "a", function(event){
-// 		event.preventDefault();
-// 		let page = $(this).data("page");
-// 		if(page){
-// 			searchForm.find("[name='page']").val(page);
-// 			searchForm.submit();
-// 		}
-// 		return false;
-// 	});
-	
 	$("#newBtn").on("click", function(){
 		location.href = $.getContextPath() + "/prod/prodInsert.do";
 	});
