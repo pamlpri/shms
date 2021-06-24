@@ -335,7 +335,29 @@
 		   </if>
 		 WHERE req_no=#{req_no, jdbcType=NUMERIC}
 	</update>
-		
+	
+	<sql id="academicRegistrationInfo">
+		SELECT  
+              B.col_code, 
+              B.sub_code,
+              B.sub_name,
+              B.col_name,
+              stdnt_no, 
+              name,
+              regno1,
+              decode(gen, 'F', '여자','남자') gen,
+              grade,
+              semstr,
+              reginfo_stat,
+              TO_CHAR(entsch_de, 'YYYY.MM.DD') entsch_de
+           FROM v_stdntinfo A
+            LEFT OUTER JOIN (
+              SELECT A.col_code, sub_code, sub_name, B.col_name
+              FROM subject A
+              INNER JOIN college B ON (A.col_code = B.col_code)
+            ) B
+            ON A.sub_code = B.sub_code
+	</sql>
 	<sql id="academicSearchFrag">
 		<trim prefix="WHERE" prefixOverrides="AND" suffixOverrides="OR">
 			<trim prefix="AND (" suffix=")">
@@ -363,26 +385,7 @@
 		    FROM (
 		    SELECT A.*, ROWNUM rn
 		        FROM (
-		            SELECT  
-		               B.col_code, 
-                       B.sub_code,
-	                   B.sub_name,
-	                   B.col_name,
-	                   stdnt_no, 
-	                   name,
-	                   regno1,
-	                   decode(gen, 'F', '여자','남자') gen,
-	                   grade,
-	                   semstr,
-	                   reginfo_stat,
-	                   TO_CHAR(entsch_de, 'YYYY.MM.DD') entsch_de
-		            FROM v_stdntinfo A
-	              LEFT OUTER JOIN (
-	                SELECT A.col_code, sub_code, sub_name, B.col_name
-	                FROM subject A
-	                INNER JOIN college B ON (A.col_code = B.col_code)
-	              ) B
-	              ON A.sub_code = B.sub_code
+		            <include refid="academicRegistrationInfo" />
 		        ) A
 	          <include refid="academicSearchFrag" />
 	          ORDER BY A.sub_name
@@ -399,6 +402,10 @@
 		  INNER JOIN college B ON (A.col_code = B.col_code)
 		) B
 		ON A.sub_code = B.sub_code
+	</select>
+	
+	<select id="selectAcademicRegistrationInfo" resultType="AcademicRegistrationVO">
+		<include refid="academicRegistrationInfo" />			
 	</select>
 	
 </mapper>
