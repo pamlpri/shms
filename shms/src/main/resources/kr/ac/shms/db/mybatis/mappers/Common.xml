@@ -167,6 +167,7 @@
 		WHERE stdnt_no = #{stdnt_no}
 		<include refid="periodFrag" />
 		GROUP BY year, semstr
+		ORDER BY year
 	</select>	
 	
 	<select id="selectSemstrList" parameterType="LecScoreVO" resultType="LecScoreVO">
@@ -176,6 +177,7 @@
 		<if test="year != null and !year.equals('')">
 			AND year = #{year}		
 		</if>
+		order by year
 	</select>
 	
 </mapper>

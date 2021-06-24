@@ -88,7 +88,7 @@
 		                                  <td class="text-center">${statistic.totalCredit }</td>
 		                                  <td class="text-center">${statistic.totalCredit }</td>
 		                                  <fmt:formatNumber var="pntval" value="${statistic.totalPntVal}" pattern="#.#"/>
-                                    <fmt:formatNumber var="avg" value="${statistic.totalAvg}" pattern="#.#"/>
+                                    	  <fmt:formatNumber var="avg" value="${statistic.totalAvg}" pattern="#.#"/>
 		                                  <td class="text-center">${avg }</td>
 		                                  <td class="text-center">${pntval }</td>
 		                              </tr>
@@ -190,6 +190,7 @@
               </div>
           </div>
       </div>
+  </section>
   <!-- contents end -->
   <script type="text/javascript">
   	let year = $("select[name='year']").val();
