@@ -145,4 +145,10 @@ public interface LmsStaffDAO {
      * @return
      */
     public int selectAcademicRegistrationCount(PagingVO<AcademicRegistrationVO> pagingVO);
+    
+    /**
+     * 학적과 학적 전체조회
+     * @return
+     */
+    public List<AcademicRegistrationVO> selectAcademicRegistrationInfo();
 }

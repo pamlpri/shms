@@ -89,7 +89,7 @@
              </form>
 
              <div class="table-responsive">
-                 <table class="table table-bordered mb-0">
+                 <table class="table table-bordered mb-0" id="report-table">
                      <thead>
                          <tr class="bg-th">
                              <th class="text-center">단과대</th>
@@ -131,8 +131,8 @@
                      </tbody>
                  </table>
                  <div class="float-right mt-3">
-                     <a href="#" class="btn btn-primary">
-                         <i class="far fa-file"></i> Excel 다운로드
+                     <a href="#" class="btn btn-primary"  onclick="ReportToExcelConverter()">
+                         <i class="far fa-file" ></i> Excel 다운로드
                      </a>
                  </div>
                  <div id="pagingArea" class="d-flex justify-content-center mt-4">
@@ -155,13 +155,35 @@
 <!--                          </li> -->
 <!--                      </ul> -->
 <!--                  </nav> -->
+
              </div>
          </div>
      </div>
- </section>                
+ </section>  
+ <div class="modal fade" tabindex="-1" role="dialog" id="fire-modal-2" style="display: block; padding-right: 17px;">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" style="padding:35px 25px;"></div>
+		</div>
+	</div>
+</div>
+<div class="modal-backdrop fade"></div>              
  <!-- contents end -->
 </div>
+<script src="${cPath }/resources/lecture/dist/js/jquery.table2excel.min.js"></script>
 <script>
+$("body").removeClass("modal-open").css("padding-right","0px");
+$(".modal-backdrop").removeClass("show").css("display", "none");
+$(".modal").removeClass("show").css("display", "none");
+
 let subjectTag = $("[name='sub_code']");
 $("[name='col_code']").on("change", function(){
 	let selectedCode = $(this).val();
@@ -222,4 +244,74 @@ $("#searchForm").on("change", ":input[name]", function(){
 	}
 });
 
+function ReportToExcelConverter() {
+	let loadingImg = " <img src='${cPath}/resources/lecture/dist/img/loading.gif' style='display: block; margin: 0px auto;'/>";
+	
+	$(".modal-title").text("학적전체조회 입력중..");
+	$(".modal-body").html(loadingImg);
+	$("body").addClass("modal-open").css("padding-right", "17px");
+	$(".modal-backdrop").addClass("show").css("display", "block");
+	$(".modal").addClass("show").css("display", "block");
+	let header = `
+		<tr class="bg-th">
+            <th class="text-center">단과대</th>
+            <th class="text-center">학과</th>
+            <th class="text-center">학번</th>
+            <th class="text-center">이름</th>
+            <th class="text-center">생년월일</th>
+            <th class="text-center">성별</th>
+            <th class="text-center">학년 / 학기</th>
+            <th class="text-center">학적상태</th>
+            <th class="text-center">입학유형</th>
+            <th class="text-center">입학일</th>
+        </tr>
+	`;
+	
+	$.ajax({
+		url: "${cPath}/lms/academicRegistrationExcelDownload.do"
+		, success: function(resp) {
+			let trTags = [];
+			if(resp){
+				$(resp).each(function(idx, arList){
+					let tr = $("<tr>").append(
+								$("<td>").text(arList.col_name).addClass("text-center")
+								,$("<td>").text(arList.sub_name).addClass("text-center")
+								,$("<td>").text(arList.stdnt_no).addClass("text-center")
+								,$("<td>").text(arList.name).addClass("text-center")
+								,$("<td>").text(arList.regno1).addClass("text-center")
+								,$("<td>").text(arList.gen).addClass("text-center")
+								,$("<td>").text(arList.grade + "학년" + arList.semstr + "학기").addClass("text-center")
+								,$("<td>").text(arList.reginfo_stat).addClass("text-center")
+								,$("<td>").text("신입학").addClass("text-center")
+								,$("<td>").text(arList.entsch_de).addClass("text-center")
+							);
+					trTags.push(tr);
+					
+				});
+				$('<table>').append(header,trTags).table2excel({
+					exclude: ".noExl"
+					, name: "Excel Document Name",
+					filename: "학적전체조회" +'.xls',
+					fileext: ".xls", 
+					exclude_img: true, 
+					exclude_links: true,
+					exclude_inputs: true 
+				}); 
+				$(".modal-title").text("학적전체 엑셀");
+	 			$(".modal-body").text("저장 성공");
+			}
+		}
+		, error: function(xhr, error, msg) {
+			console.log(xhr);
+			console.log(error);
+			console.log(msg);
+		}
+	});		
+} 
+
+$(".modal .close, .modal").on("click", function(){
+	  $("body").removeClass("modal-open").css("padding-right","0px");
+    $(".modal-backdrop").removeClass("show").css("display", "none");
+	  $(".modal").removeClass("show").css("display", "none");
+  });
 </script>

@@ -24,6 +24,7 @@ import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.StaffVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
+import kr.ac.shms.lms.staff.dao.LmsStaffDAO;
 import kr.ac.shms.lms.staff.service.LmsStaffService;
 import kr.ac.shms.lms.staff.vo.AcademicRegistrationVO;
 import kr.ac.shms.lms.student.service.StudentService;
@@ -43,6 +44,7 @@ import kr.ac.shms.lms.student.vo.MypageVO;
  * </pre>
  */
 @Controller
+@RequestMapping("/lms")
 public class AcademicViewController {
 	private static final Logger logger = LoggerFactory.getLogger(AcademicViewController.class);
 	
@@ -52,6 +54,8 @@ public class AcademicViewController {
 	private StudentService studentService;
 	@Inject
 	private OthersDAO othersDAO;
+	@Inject
+	private LmsStaffDAO lmsStaffDAO;
 	
 	private void addAttribute(Model model) {
 		List<Map<String, Object>> collegeList = othersDAO.selectCollegeList();
@@ -62,7 +66,7 @@ public class AcademicViewController {
 		model.addAttribute("academicStatus", academicStatusList);
 	}
 	
-	@RequestMapping("/lms/academicList.do")
+	@RequestMapping("/academicList.do")
 	public String academicList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
@@ -75,7 +79,7 @@ public class AcademicViewController {
 		return  "lms/academicList";
 	}
 	
-	@RequestMapping("/lms/academicView.do")
+	@RequestMapping("/academicView.do")
 	public String academicView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, @RequestParam("stdnt_no") String stdnt_no
@@ -94,7 +98,7 @@ public class AcademicViewController {
 		return  "lms/academicView";
 	}
 
-	@RequestMapping(value="/lms/academicDetailList.do")
+	@RequestMapping(value="/academicDetailList.do")
 	public String sendForm(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user	
 		, @ModelAttribute("arvo") AcademicRegistrationVO arvo
@@ -109,7 +113,7 @@ public class AcademicViewController {
 		return "lms/academicDetailList";
 	}
 	
-	@RequestMapping(value="/lms/academicDetailList.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/academicDetailList.do", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public PagingVO<AcademicRegistrationVO> academicDetailList(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user	
@@ -119,10 +123,7 @@ public class AcademicViewController {
 		, Model model
 	) {
 		addAttribute(model);
-		System.out.println("**********************************");
-		logger.info("비동기 arvo : {}", arvo);
-		System.out.println("**********************************");
-//		StaffVO staffVO = lmsStaffService.staff(user.getUser_id());		
+		
 		PagingVO<AcademicRegistrationVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
 		
@@ -133,10 +134,6 @@ public class AcademicViewController {
 		searchMap.put("searchWord", searchWord);
 		pagingVO.setSearchMap(searchMap);
 		
-		System.out.println("**********************************");
-		logger.info("searchMap arvo : {}", pagingVO);
-		System.out.println("**********************************");
-		
 		int totalRecord = lmsStaffService.selectAcademicRegistrationCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
@@ -144,5 +141,11 @@ public class AcademicViewController {
 		pagingVO.setDataList(arList);
 		
 		return pagingVO;
+	}
+	
+	@RequestMapping(value="/academicRegistrationExcelDownload.do")
+	@ResponseBody
+	public List<AcademicRegistrationVO> academicRegistrationExcelDownload() {
+		return lmsStaffDAO.selectAcademicRegistrationInfo();
 	}
 }
