@@ -59,8 +59,6 @@ public class CrtfScoreController {
 		
 		List<LecScoreVO> lecScoreList = commonService.lecScoreList(lecScore);
 		model.addAttribute("lecScoreList", lecScoreList);
-		System.out.println("*******************************");
-		logger.info("lecScoreList {}", lecScoreList);
 		
 		List<LecScoreVO> selectSemstrList = commonService.selectSemstrList(lecScore);
 		model.addAttribute("selectSemstrList", selectSemstrList);
@@ -70,7 +68,8 @@ public class CrtfScoreController {
 		List<LecScoreVO> selectYearList = commonDAO.selectLecYear(user.getUser_id());
 		model.addAttribute("selectYearList", selectYearList);
 		
-//		List<LecScoreVO> selectStatisticsList = commonService.selectStatisticsList();
+		List<LecScoreVO> selectStatisticsList = commonService.selectStatisticsList(lecScore);
+		model.addAttribute("selectStatisticsList", selectStatisticsList);
 		return "lms/certificate/score2";
 	}
 }

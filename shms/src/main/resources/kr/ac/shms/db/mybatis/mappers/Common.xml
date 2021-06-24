@@ -155,7 +155,7 @@
 	</select>
 
 	<select id="selectStatisticsList" parameterType="LecScoreVO" resultType="LecScoreVO">
-		SELECT a.year, a.semstr, SUM(c.lec_pnt) totalCredit, ROUND(AVG(b.PNT_VAL), 2) totalPntVal, AVG(mid_scre * NVL(d.midterm, 0.4) + final_scre * NVL(d.finals, 0.4) + attend_scre * NVL(d.attend, 0.2) + task_scre * NVL(d.task, 0) + etc_scre * NVL(d.etc, 0)) totalAvg
+		SELECT a.year, a.semstr, NVL(SUM(c.lec_pnt),0) totalCredit, NVL(ROUND(AVG(b.PNT_VAL), 2),0) totalPntVal, NVL(AVG(mid_scre * NVL(d.midterm, 0.4) + final_scre * NVL(d.finals, 0.4) + attend_scre * NVL(d.attend, 0.2) + task_scre * NVL(d.task, 0) + etc_scre * NVL(d.etc, 0)), 0) totalAvg
 		FROM lec_scre a
 		LEFT OUTER JOIN PNT_RANK b
 		ON a.PNT_RANK_NM = b.PNT_RANK_NM

@@ -98,7 +98,7 @@
       	 	   EXTRACT(MONTH FROM req_de) req_month,
        		   EXTRACT(DAY FROM req_de) req_day,
                CASE WHEN a.grdtn_de IS NOT NULL THEN TO_CHAR(a.grdtn_de, 'RRRR-MM-DD')
-                    ELSE '해당없음'
+                    ELSE ''
                      END AS grdtn_de,
 		       a.reginfo_stat,
 		       EXTRACT(YEAR FROM SYSDATE) year,
