@@ -52,7 +52,7 @@
 			                           <td class="text-center">${crtf.req_de }</td>
 			                           <c:choose>
 			                           		<c:when test="${crtf.end_de > 0 }">
-					                           <td class="text-center">D-${crtf.end_de }</td>
+					                           <td class="text-center end_de">D-${crtf.end_de }</td>
 			                           		</c:when>
 			                           		<c:otherwise>
 					                           <td class="text-center expired">만료</td>
@@ -113,14 +113,21 @@
 		let req_no = $(this).parents("tr").attr("class");
 		let issued_cnt = parseInt($(this).parents("tr").children(".updateIssue").text());
 		let no_of_issue = parseInt($(this).parents("tr").children(".no_of_issue").text());
+		let end_de = $(this).parents("tr").children(".end_de").text();
 		let href = $(this).attr('href');
 		if(no_of_issue - issued_cnt == 0){
 			$(this).attr('href', "");
 		}
 		console.log(req_no);		
+		console.log("end_de : " + end_de);		
 		$.ajax({
 			url : "${cPath}/lms/updateIssue.do"
-			, data : { "req_no" : req_no }
+			, data : { 
+				"req_no" : req_no,
+				"issued_cnt" : issued_cnt,
+				"no_of_issue" : no_of_issue,
+				"end_de" : end_de
+				}
 			, dataType : "json"
 			, success : function(resp){
 				if(resp.result == "OK"){
