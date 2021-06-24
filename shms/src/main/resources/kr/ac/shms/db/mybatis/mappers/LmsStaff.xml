@@ -193,8 +193,16 @@
 		SET USER_PASSWORD = #{user_password}
 		WHERE USER_ID = #{user_id}
 	</update>
+
 	
-	<select id="selectReginfoCngStudentList" resultType="RegInfoCngVO">
+	<select id="selectReqClCode" resultType="ComCodeVO">
+		SELECT com_code_nm,
+		       com_code
+		  FROM tb_com_code
+		 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+	</select>
+	
+	<select id="selectReginfoCngStudentList" resultType="RegInfoCngVO" parameterType="PagingVO">
 		SELECT *
 		  FROM 
 		(SELECT A.*, ROW_NUMBER () OVER(ORDER BY req_de DESC) rn
@@ -212,46 +220,19 @@
 		              (SELECT com_code_nm
 		                 FROM tb_com_code
 		                WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
-		                  AND com_code = process_stat) process_stat
+		                  AND com_code = process_stat) process_stat,
+		                d.col_code,
+		                c.sub_code,
+		                b.name 
 		          FROM reginfo_cng a
 		         INNER JOIN v_stdntinfo b ON(a.stdnt_no=b.stdnt_no)
 		         INNER JOIN subject c ON(b.sub_code=c.sub_code)
 		         INNER JOIN college d ON(c.col_code=d.col_code)
 		         ORDER BY req_de desc) A
+         <include refid="searchFrag"></include>
 		  )
 		 WHERE rn BETWEEN #{startRow} AND #{endRow}
 	</select>
-	
-	<select id="selectReqClCode" resultType="ComCodeVO">
-		SELECT com_code_nm,
-		       com_code
-		  FROM tb_com_code
-		 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
-	</select>
-	
-	<sql id="searchFrag">
-		<if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
-			<choose>
-				<when test="searchMap.searchType eq 'title'">
-					INSTR(bo_title, #{searchMap.searchWord}) > 0
-				</when>
-				<when test="searchMap.searchType eq 'content'">
-					INSTR(bo_cont, #{searchMap.searchWord}) > 0
-				</when>
-				<when test="searchMap.searchType eq 'writer'">
-					INSTR(bo_writer, #{searchMap.searchWord}) > 0
-				</when>
-				<otherwise>
-					INSTR(bo_title, #{searchMap.searchWord}) > 0
-					OR 
-					INSTR(bo_cont, #{searchMap.searchWord}) > 0
-					<if test="searchMap.bo_kind eq 'DM'">
-						OR INSTR(bo_writer, #{searchMap.searchWord}) > 0 
-					</if>
-				</otherwise>
-			</choose>
-		</if>
-	</sql>
 	
 	<select id="selectReginfoCngCount" parameterType="PagingVO" resultType="int">
 		SELECT COUNT(*)

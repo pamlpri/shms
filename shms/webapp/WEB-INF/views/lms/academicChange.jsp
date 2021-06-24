@@ -23,6 +23,7 @@
      <div class="card">
          <div class="card-body">
              <form id="searchForm"> 
+             <input type="hidden" name="page" />
                  <div class="row">
                      <div class="col-12">
                          <div class="row">
@@ -35,7 +36,7 @@
                                          <select class="form-select" name="col_code">
                                              <option value="">전체</option>
                                              <c:forEach items="${collegeList }" var="college">
-	                                             <option value="college.col_code">
+	                                             <option value="${college.col_code}">
 	                                             	${college.col_name }
 	                                             </option>
                                              </c:forEach>
@@ -52,7 +53,7 @@
                                          <select class="form-select" name="sub_code">
                                              <option value="">전체</option>
                                              <c:forEach items="${subjectList }" var="subject">
-	                                             <option class="${subject_col_code }" value="${subject.sub_code }">
+	                                             <option class="${subject.col_code }" value="${subject.sub_code }">
 	                                             	${subject.sub_name }
 	                                             </option>
                                              </c:forEach>
@@ -67,9 +68,9 @@
                                  <div class="col-md-9">
                                      <fieldset class="form-group">
                                          <select class="form-select" name="req_cl_code">
-                                         	<option>전체</option>
-                                         	<c:forEach items="${comcodeList }" var="comcode">
-                                            	<option value="${comcode.com_code }">${comcode.com_code_nm }</option>
+                                         	<option value="">전체</option>
+                                         	<c:forEach items="${reqClList }" var="comcode">
+                                            	<option value="${comcode.com_code_nm }">${comcode.com_code_nm }</option>
                                          	</c:forEach>
                                          </select>
                                      </fieldset>
@@ -81,7 +82,7 @@
                                  </div>
                                  <div class="col-md-9">
                                      <div class="input-group mb-3">
-                                         <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                         <input type="text" class="form-control" name="searchWord" aria-label="Recipient's username" aria-describedby="button-addon2">
                                          <button class="btn btn-outline-secondary searchInput" type="button">
                                              <i class="bi bi-search"></i>
                                          </button>
@@ -91,7 +92,6 @@
                          </div>
                      </div>
                  </div>
-                 <input type="hidden" name="searchWord" value=""/>
              </form>
 
              <div class="table-responsive">
@@ -109,46 +109,7 @@
                              <th class="text-center">상태</th>
                          </tr>
                      </thead>
-                     <tbody>
-                     <c:choose>
-                     	<c:when test="${not empty cngList}">
-                     		<c:forEach items="${cngList }" var="cngList">
-	                        	<tr>
-		                             <td class="text-center">${cngList.cng_req_no }</td>
-		                             <td class="text-center">${cngList.col_name }</td>
-		                             <td class="text-center">${cngList.sub_name }</td>
-		                             <td class="text-center">${cngList.stdnt_no }</td>
-		                             <td class="text-center">${cngList.stdnt_name }</td>
-		                             <td class="text-center">${cngList.req_de }</td>
-		                             <td class="text-center">${cngList.proc_date }</td>
-		                             <td class="text-center">${cngList.req_cl_code }</td>
-		                             <td class="text-center">
-		                             	<c:if test="${cngList.process_stat eq '완료' }">
-			                                <a href="${cPath }/lms/academicChangeView.do" class="badge bg-success white-color">완료</a>
-		                             	</c:if>
-		                             	<c:if test="${cngList.process_stat eq '반려' }">
-			                             	<button type="button" class="btn badge bg-danger block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-		                                     반려
-		                                 	</button>
-		                             	</c:if>
-		                             	<c:if test="${cngList.process_stat eq '승인' }">
-		                             		<a href="${cPath }/lms/academicChangeView.do" class="badge bg-primary white-color">승인</a>
-		                             	</c:if>
-		                             	<c:if test="${cngList.process_stat eq '대기' }">
-			                             	<a href="${cPath }/lms/academicChangeView.do" class="badge bg-info white-color">
-			                                     대기
-			                                </a>
-		                             	</c:if>
-		                             </td>
-	                          	</tr>
-                     		</c:forEach>
-                     	</c:when>
-                     	<c:otherwise>
-                     		<tr>
-                     			<td colspan="9" class="text-center">신청내역이 존재하지 않습니다.</td>
-                     		</tr>
-                     	</c:otherwise>
-                     </c:choose>
+                     <tbody id="listBody">
                      </tbody>
                  </table>
                  <br>
@@ -176,9 +137,7 @@
              </button>
          </div>
          <div class="modal-body">
-             <p>
-                 서류 미제출로 인한 반려
-             </p>
+            <p id="inputText"></p>
          </div>
          <div class="modal-footer">
              <button type="button" class="btn btn-light-secondary"
@@ -193,7 +152,6 @@
 </div>
 </div>
 <script type="text/javascript">
-
 	let subjectTag = $("[name='sub_code']");
 	$("[name='col_code']").on("change", function(){
 		let selectedCode = $(this).val();
@@ -201,23 +159,87 @@
 		if(selectedCode){
 			subjectTag.find("option").hide();
 			subjectTag.find("option."+selectedCode).show();
-		}else{
+		}else {
 			subjectTag.find("option").show();
 		}
 		subjectTag.find("option:first").show();
 	});
 	
+	let pagingArea = $("#pagingArea").on("click", "a", function(event){
+		event.preventDefault();
+		let page = $(this).data("page");
+		if(page){
+			searchForm.find("[name='page']").val(page);
+			searchForm.submit();
+		}
+		return false;
+	});
+	
 	let listBody = $("#listBody");
+	
 	let searchForm = $("#searchForm").on("change", ":input[name]", function(){
 		searchForm.submit();
 	}).ajaxForm({
-		dataType : "json",
-		success : function(res){
+		dataType:"json"
+		, success:function(resp){
 			listBody.empty();
-			
-		}, error : function(xhr, resp, error){
+			let trTags = [];
+			if(resp.dataList){
+				$(resp.dataList).each(function(idx, regList){
+					let tdData;
+					if(regList.process_stat == '완료'){
+						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do?cng_req_no=${regList.cng_req_no}" class="badge bg-success white-color">완료</a>');
+					}else if(regList.process_stat == '반려'){
+						tdData = $("<td>").attr("type", "hidden").attr("name", "refuse_resn").val(regList.refuse_resn).html('<button type="button" class="btn badge bg-danger block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">반려</button>');
+					}else if(regList.process_stat == '승인'){
+						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do" class="badge bg-primary white-color">승인</a>');
+					}else if(regList.process_stat == '대기'){
+						tdData = $("<td>").html('<a href="${cPath }/lms/academicChangeView.do" class="badge bg-info white-color">대기</a>');
+					};
+					let tr = $("<tr>").append(
+								$("<td>").text(regList.cng_req_no).addClass("text-center")
+								, $("<td>").text(regList.col_name).addClass("text-center")
+								, $("<td>").text(regList.sub_name).addClass("text-center")
+								, $("<td>").text(regList.stdnt_no).addClass("text-center")
+								, $("<td>").text(regList.stdnt_name).addClass("text-center")
+								, $("<td>").text(regList.req_de).addClass("text-center")
+								, $("<td>").text(regList.proc_date).addClass("text-center")
+								, $("<td>").text(regList.req_cl_code).addClass("text-center")
+								, tdData
+						);
+					trTags.push(tr);
+				});
+			}else{
+				trTags.push( 
+					$("<tr>").html("<td colspan='9'> class='text-center'> 일치하는 정보가 없습니다. <td>")
+				);
+			}
+			listBody.html(trTags);
+			$("#pagingArea").html(resp.pagingHTMLBS);;
+		}, error:function(xhr, resp, error){
 			console.log(xhr);
 		}
 	});
+	
 	searchForm.submit();
+	
+// 	$("#pagingArea").on("click", "a", function(event){
+// 		event.preventDefault();
+// 		let page = $(this).data("page");
+// 		if(page){
+// 			searchForm.find("[name='page']").val(page);
+// 			searchForm.submit();
+// 		}
+// 		return false;
+// 	});
+	
+	$("#newBtn").on("click", function(){
+		location.href = $.getContextPath() + "/prod/prodInsert.do";
+	});
+
+	
+	$(".failBtn").on("click", function(){
+		let refuse_resn = $(this).parent().find("[name='refuse_resn']").val();
+		document.getElementById("inputText").innerText=refuse_resn;
+	})
 </script>
