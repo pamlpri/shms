@@ -202,6 +202,29 @@
 		 WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
 	</select>
 	
+<sql id="searchFrag">
+       <trim prefix="WHERE" prefixOverrides="AND" suffixOverrides="OR">
+           <trim prefix="AND (" suffix=")">
+               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+                      INSTR(stdnt_no, #{searchMap.searchWord}) > 0
+                      OR
+                      INSTR(name, #{searchMap.searchWord}) > 0
+               </if>
+           </trim>
+           <trim prefix="AND (" suffix=")" prefixOverrides="AND">
+               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.col_code)">
+                   AND col_code = #{searchMap.col_code}
+               </if>
+               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
+                   AND sub_code = #{searchMap.sub_code} OR sub_code IS NULL
+               </if>
+               <if test="searchMap!=null and @org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.req_cl_code)">
+                   AND req_cl_code = #{searchMap.req_cl_code} OR req_cl_code IS NULL
+               </if>
+           </trim>
+       </trim>
+    </sql>
+	
 	<select id="selectReginfoCngStudentList" resultType="RegInfoCngVO" parameterType="PagingVO">
 		SELECT *
 		  FROM 
