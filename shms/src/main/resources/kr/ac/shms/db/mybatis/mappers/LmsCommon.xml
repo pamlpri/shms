@@ -635,7 +635,10 @@
 	<select id="selectCurIndexInfo" resultType="CurriculumVO">
 		SELECT com_code lec_cl,
 		       com_code_nm lec_cl_nm,
-		       EXTRACT(YEAR FROM SYSDATE) year
+		       EXTRACT(YEAR FROM SYSDATE) year,
+		       (SELECT semstr FROM v_semstr) semstr,
+               (SELECT MIN(estbl_year) FROM curriculum) min_year,
+               (SELECT MAX(estbl_year) FROM curriculum) max_year
 		  FROM tb_com_code 
 		 WHERE code_grp = 'G06'
 	</select>
@@ -671,4 +674,76 @@
 		    #{staff_no, jdbcType=VARCHAR}
 		)
 	</insert>
+	
+	<sql id="currSearchFrag">
+		FROM
+		    curriculum a
+		INNER JOIN staff b
+		  ON(a.staff_no = b.staff_no)
+		INNER JOIN subject c
+		  ON(a.sub_code = c.sub_code)
+		LEFT OUTER JOIN 
+		      (SELECT lec_code, cur_code
+		         FROM lecture
+		        WHERE estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		          AND estbl_semstr = (SELECT semstr FROM v_semstr)) d
+		  ON(a.cur_code = d.cur_code)
+		WHERE lec_del_at = 'N'
+		<choose>
+			<when test="searchMap.lecCl eq 'major'">
+			  AND a.lec_cl IN('01', '02')
+			</when>
+			<otherwise>
+			  AND a.lec_cl IN('03', '04')
+			</otherwise>
+		</choose>
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
+		  AND a.sub_code = #{searchMap.sub_code, jdbcType=VARCHAR}
+		</if>
+		<if test="searchMap.posbl_semstr != null and !searchMap.posbl_semstr.equals('')">
+		  AND a.posbl_semstr = #{searchMap.posbl_semstr, jdbcType=NUMERIC}
+		</if>
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.searchWord)">
+		  AND (
+		      INSTR(a.lec_name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+		      OR
+		      INSTR(a.cur_code, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+		      OR
+		      INSTR(b.name, #{searchMap.searchWord, jdbcType=VARCHAR}) > 0
+		      )
+		</if>
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.open_at)">
+		  AND d.lec_code IS NULL
+		</if>
+	</sql>
+	
+	<select id="selectCurrCount" parameterType="PagingVO" resultType="int">
+		SELECT
+    		COUNT(a.cur_code) cnt
+    	<include refid="currSearchFrag"/>
+	</select>
+	
+	<select id="selectCurrList" parameterType="PagingVO" resultType="CurriculumVO">
+		SELECT *
+		  FROM (
+		    SELECT
+		        ROW_NUMBER () OVER(ORDER BY a.cur_code DESC) rn,
+		        a.cur_code,
+		        lec_name,
+		        a.lec_cl,
+		        lec_pnt,
+		        lec_cpacity,
+		        lec_atnlc,
+		        a.estbl_year,
+		        posbl_semstr,
+		        a.sub_code,
+		        c.sub_name,
+		        lec_del_at,
+		        a.staff_no,
+		        b.name,
+		        DECODE(d.lec_code, NULL, 'N', 'Y') open_at
+		<include refid="currSearchFrag"/>
+		    )
+			WHERE rn BETWEEN #{startRow} AND #{endRow}
+	</select>
 </mapper>
