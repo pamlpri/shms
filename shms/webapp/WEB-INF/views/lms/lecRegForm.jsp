@@ -9,6 +9,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="page-content">
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -91,7 +92,13 @@
                           <td class="text-center">
                               <div class="row">
                                   <div class="col-md-6">
-                                      <input type="time" class="form-control col-md-6" name="lec_time" id="lecTime">
+                                  	  <select name="lec_time" class="form-select col-md-6" id="lecTime">
+                                  	  		<option value="">-- 시간 선택 --</option>
+                                  	  	<c:forEach begin="9" end="15" var="time">
+                                  	  		<option value="${time }">${time }</option>
+                                  	  	</c:forEach>
+                                  	  </select>
+<!--                                       <button type="button" class="btn btn-primary" id="dblChkBtn">강의 시간 중복 확인</button> -->
                                   </div>
                               </div>
                           </td>
@@ -113,7 +120,9 @@
                           </td> 
                           <th class="text-center align-middle">강의실</th>
                           <td class="text-center">
-                          	<input type="text" class="form-control">
+                          	<select class="form-select" name="lecrum">
+                          	
+                          	</select>
                           </td>
                       </tr>
                   </table>
@@ -159,26 +168,44 @@ $(function(){
 	let dayotw = $("#dayotw");
 	let staffNo = $("#staffNo");
 	let lecPnt = $("#lecPnt");
-	$(lecTime).on("click", function(){
+// 	$("#dblChkBtn").on("click", function(){
+	$(lecTime).on("change", function(){
 		if(dayotw.val() == ""){
+			lecTime.val("");
 			$("#default").find(".modal-body p").empty().text("강의 요일을 먼저 선택해주세요.");
 			$("#default").addClass("show").css("display","block");
 		}else{
-			$.ajax({
-				url : "${cPath}/lms/staffSchdulCheck.do",
-				data : {
-					lecTime : lecTime.val(),
-					staff_no : staffNo.val(),
-					lec_pnt : lecPnt.val(),
-					dayotw : dayotw.val()
-				},
-				dataType : "json",
-				success : function(resp){
-					alert(resp);
-				}, error : function(xhr, resp, error){
-					console.log(xhr);
-				}
-			});
+			if(lecTime.val() == null || lecTime.val() == ""){
+				$("#default").find(".modal-body p").empty().text("강의 시간을 선택해주세요.");
+				$("#default").addClass("show").css("display","block");
+			}else{
+				$.ajax({
+					url : "${cPath}/lms/staffSchdulCheck.do",
+					data : {
+						lecTime : lecTime.val(),
+						staff_no : staffNo.val(),
+						lec_pnt : lecPnt.val(),
+						dayotw : dayotw.val()
+					},
+					success : function(resp){
+						let message = "";
+						if(resp == "NULL"){
+							message = "강의 시간을 선택해주세요.";
+							lecTime.val("");
+						}else if(resp == "FAIL"){
+							message = "해당 시간은 강의가 중복됩니다.";
+							lecTime.val("");
+						}else{
+							message = "해당 시간은 선택이 가능합니다.";
+						}
+						
+						$("#default").find(".modal-body p").empty().text(message);
+						$("#default").addClass("show").css("display","block");
+					}, error : function(xhr, resp, error){
+						console.log(xhr);
+					}
+				});
+			}
 		}
 	});
 	

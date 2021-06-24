@@ -236,7 +236,7 @@ public class CurriculumController {
 		return "lms/lecRegForm";
 	}
 	
-	@RequestMapping(value="/lms/staffSchdulCheck.do", produces="text/plain; charset=utf-8")
+	@RequestMapping(value="/lms/staffSchdulCheck.do", produces=MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String staffSchdulChk(
 		@RequestParam("lecTime") String lecTime
@@ -252,7 +252,6 @@ public class CurriculumController {
 			for(int i = 0; i < lec_pnt; i++) {
 				timeArray[i] = lec_time + i;
 			}
-			logger.info("timeArray : {}", Arrays.toString(timeArray));
 			searchMap.put("timeArray", timeArray);
 			searchMap.put("staff_no", staff_no);
 			searchMap.put("dayotw", dayotw);
@@ -261,6 +260,8 @@ public class CurriculumController {
 			if(cnt > 0) {
 				result = "OK";
 			}
+		}else {
+			result = "NULL";
 		}
 		return result;
 	}
