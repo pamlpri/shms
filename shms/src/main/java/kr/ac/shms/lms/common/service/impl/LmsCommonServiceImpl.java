@@ -318,4 +318,14 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		
 		return result;
 	}
+
+	@Override
+	public int selectCurrCount(PagingVO<CurriculumVO> pagingVO) {
+		return lmsCommonDAO.selectCurrCount(pagingVO);
+	}
+
+	@Override
+	public List<CurriculumVO> selectCurrList(PagingVO<CurriculumVO> pagingVO) {
+		return lmsCommonDAO.selectCurrList(pagingVO);
+	}
 }

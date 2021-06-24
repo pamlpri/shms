@@ -286,4 +286,17 @@ public interface LmsCommonDAO {
 	 */
 	public int insertCurriculum(CurriculumVO curriculum);
 	
+	/**
+	 * 검색결과에 따라 조회된 커리큘럼 수 
+	 * @param pagingVO
+	 * @return 데이터가 없으면 0 반환
+	 */
+	public int selectCurrCount(PagingVO<CurriculumVO> pagingVO);
+	
+	/** 
+	 * 검색결과에 따라 조회된 커리큘럼 목록
+	 * @param pagingVO
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public List<CurriculumVO> selectCurrList(PagingVO<CurriculumVO> pagingVO);
 }
