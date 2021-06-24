@@ -52,64 +52,67 @@ public class AcademicChangeController {
 	private void addAttribute(Model model) {
 		List<Map<String, Object>> collegeList = othersDAO.selectCollegeList();
 		List<SubjectVO> subjectList = othersDAO.selectSubjectList(null);
+		List<ComCodeVO> reqClList = lmsStaffService.selectReqClCode();
 		model.addAttribute("collegeList", collegeList);
 		model.addAttribute("subjectList", subjectList);
+		model.addAttribute("reqClList", reqClList);
 	}
 	
 	@RequestMapping("/lms/academicChange.do")
 	public String academicChange(
-		@RequestParam(value="page", required=false, defaultValue="1") int currentPage
-		, @RequestParam(value="searchType", required=false) String searchType
+		@ModelAttribute("cngVO") RegInfoCngVO cngVO
+		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
 		, @RequestParam(value="searchWord", required=false) String searchWord
-		, @ModelAttribute("cngVO") RegInfoCngVO cngVO
 		, Model model
 		) {
-		addAttribute(model);
 
-		List<ComCodeVO>  comcodeList = lmsStaffService.selectReqClCode();
-		RegInfoCngVO cng = regInfoCngForAjax(currentPage, cngVO, searchType, searchWord, null, null, null, model);
-		model.addAttribute("comcodeList", comcodeList);
+		model.addAttribute(regInfoCngForAjax(cngVO, currentPage, searchWord, model));
+		
 		return "lms/academicChange";
 	}
 	
+	
 	@RequestMapping("/lms/academicChangeView.do")
-	public String academicChangeView() {
+	public String academicChangeView(
+//		@RequestParam("cng_req_no") int cng_req_no
+		) {
+		
 		return "lms/academicChangeView";
 	}
 	
 	@RequestMapping(value="/lms/academicChange.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public RegInfoCngVO regInfoCngForAjax(
-		@RequestParam(value="page", required=false, defaultValue="1") int currentPage
-		, @ModelAttribute("regInfo") RegInfoCngVO cngVO
-		, @RequestParam(value="searchType", required=false) String searchType
+	public PagingVO<RegInfoCngVO> regInfoCngForAjax(
+		@ModelAttribute("cngVO") RegInfoCngVO cngVO
+		, @RequestParam(value="page", required=false, defaultValue="1") int currentPage
 		, @RequestParam(value="searchWord", required=false) String searchWord
-		, @RequestParam(value="col_code", required=false) String col_code
-		, @RequestParam(value="sub_code", required=false) String sub_code
-		, @RequestParam(value="req_cl_code", required=false) String req_cl_code
 		, Model model
 		) {
-		
-		/** 파라미터 조회*******************************************************/
-		/** 검색 조건***********************************************************/
+		addAttribute(model);
 		
 		PagingVO<RegInfoCngVO> pagingVO = new PagingVO<>(10, 5);
 		pagingVO.setCurrentPage(currentPage);
 		
 		Map<String, Object> searchMap = new HashMap<>();
-		searchMap.put("searchTyp", searchType);
+		searchMap.put("col_code", cngVO.getCol_code());
+		searchMap.put("sub_code", cngVO.getSub_code());
+		searchMap.put("req_cl_code", cngVO.getReq_cl_code());
 		searchMap.put("searchWord", searchWord);
 		pagingVO.setSearchMap(searchMap);
+		
+		System.out.println("*************************************");
+		logger.info("before pagingVO : {}", pagingVO );
+		System.out.println("*************************************");
 		
 		int totalRecord = lmsStaffService.selectReginfoCngCount(pagingVO);
 		pagingVO.setTotalRecord(totalRecord);
 		
+		System.out.println("*************************************");
+		logger.info("pagingVO : {}", pagingVO );
+		System.out.println("*************************************");
+		List<RegInfoCngVO> regList = lmsStaffService.selectReginfoCngStudentList(pagingVO);
+		pagingVO.setDataList(regList);
 		
-		List<RegInfoCngVO> cngList = lmsStaffService.selectReginfoCngStudentList(pagingVO);
-		pagingVO.setDataList(cngList);
-		model.addAttribute(pagingVO);
-		model.addAttribute("cngList", cngList);
-		
-		return null;
+		return pagingVO;
 	}
 }

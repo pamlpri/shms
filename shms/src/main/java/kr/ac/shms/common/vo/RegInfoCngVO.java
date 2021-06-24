@@ -2,18 +2,17 @@ package kr.ac.shms.common.vo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of="cng_req_no")
 public class RegInfoCngVO implements IAttachVO{
 	private Integer p_bo_no;	// 페이지 출력용 번호 (DB X)
 	private Integer rn;
@@ -40,6 +39,10 @@ public class RegInfoCngVO implements IAttachVO{
 	private String papers_submit_at;	// 파일제출 상태 표시
 	
 	private String col_name;		// 단과대
+	private String sub_code;
+	private String col_code;
+	
+	private Map<String, Object> searchMap;
 	
 	private String bo_writer;
 	private String biz_type;	

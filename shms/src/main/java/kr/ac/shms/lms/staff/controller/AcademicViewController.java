@@ -106,9 +106,6 @@ public class AcademicViewController {
 		, @RequestParam(value="searchWord", required=false) String searchWord
 		, Model model
 	) {
-		System.out.println("**********************************");
-		logger.info("arvo : {}", arvo);
-		System.out.println("**********************************");
 		model.addAttribute(academicDetailList(user, arvo, currentPage, searchWord, model));
 		return "lms/academicDetailList";
 	}
