@@ -24,8 +24,7 @@
 	<div class="card inputTable">
 		<div class="card-body">
 			<c:if test="${isUpdate ne 'update' or empty isUpdate}">
-				<iframe src="https://192.168.0.171:3000" allow='camera *; microphone *' width="100%" height="500"
-					id="videoView">
+				<iframe src="https://192.168.0.137:3000/" allow='camera *; microphone *' width="100%" id="videoView">
 				</iframe>			
 			</c:if>
 			

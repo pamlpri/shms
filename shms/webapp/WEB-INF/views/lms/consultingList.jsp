@@ -82,11 +82,10 @@
 												<fmt:formatDate value="${now }" pattern="yyyy-MM-dd HH:mm" var="nowDate"/>
 												<c:choose>
 													<c:when test="${hopeDate > nowDate }">
-														<button type="button" class="btn badge bg-primary block failBtn"
-															data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button> 
+														<button type="button" class="btn btn-icon badge bg-primary block failBtn" data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button> 
 													</c:when>
 													<c:otherwise>
-														<a href="${cPath }/lms/consulting.do?bo_no=${consulting.req_no }" class="badge bg-primary">승인</a>
+														<a href="${cPath }/lms/consulting.do?bo_no=${consulting.req_no }" class="badge bg-primary"><i class="fas fa-video"></i>&nbsp;&nbsp;&nbsp;상담</a>
 													</c:otherwise>
 												</c:choose>
 												
