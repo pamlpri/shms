@@ -38,7 +38,7 @@
 	</nav>
 
 	<div class="page-heading email-application">
-		<section class="section content-area-wrapper">
+		<section class="section content-area-wrapper"  style="margin-bottom : 20px;">
 			<div class="content-right">
 				<div class="content-wrapper">
 					<div class="content-header row"></div>

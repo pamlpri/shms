@@ -24,7 +24,7 @@
 	</nav>
 	<section class="section">
 		<div class="card">
-			<div class="card-body">
+			<div class="card-body minHBox">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item" role="presentation"><a
 						class="nav-link active" id="profile-tab" data-bs-toggle="tab"
@@ -50,6 +50,12 @@
 									<form class="table-responsive" action="${cPath }/lms/myPage.do" method="post">
 										<table class="table .thead-light mb-0"
 											style="border-top: 2px solid #95a3d6;">
+											<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">학번</th>
@@ -113,6 +119,12 @@
 										</table>
 										<table class="table .thead-light mb-0"
 											style="border-top: 2px solid #95a3d6">
+											<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">졸업상태</th>
@@ -134,17 +146,29 @@
 										</table>
 										<table class="table .thead-light mb-0"
 											style="border-top: 2px solid #95a3d6; border-bottom: 2px solid #95a3d6;">
+											<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">계좌은행</th>
 													<td><input class="form-control" type="text" name="bank_name" value="${mypage.bank_name }"></td>
-													<th class="text-bold-500 text-center align-middle">계좌변호</th>
+													<th class="text-bold-500 text-center align-middle">계좌번호</th>
 													<td><input class="form-control" type="text" name="account"
 														value="${mypage.account }"></td>
 												</tr>
 											</tbody>
 										</table>
 										<table class="table .thead-light mb-0">
+											<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 											<tbody>
 												<tr>
 													<th class="text-bold-500 text-center align-middle">웹메일</th>
@@ -205,9 +229,7 @@
 						</div>
 
 						<!--primary theme Modal -->
-						<div class="modal fade text-left" id="primary" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel160"
-							aria-hidden="true">
+						<div class="modal fade text-left" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
 							<div
 								class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
 								role="document">
@@ -288,7 +310,7 @@
 					<div class="tab-pane fade" id="password" role="tabpanel"
 						aria-labelledby="password-tab">
 						<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center mb-4">
-							<div class="container">
+							<div class="container"  style="margin-top:5rem">
 								<div class="row align-items-center">
 									<div class="col-md-6 pwImg">
 										<img src="${cPath }/resources/lms/assets/images/password.png" alt="">
@@ -406,18 +428,18 @@
 		console.log(user_password);
 		console.log(confirm_password);
 		
-		var regExpPw = /(?=.*\d{1,16})(?=.*[~`!@#$%\^&*()-+=]{1,16})(?=.*[a-zA-Z]{2,50})$/;
+		var regExpPw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/; 
 		
 		if(user_password != confirm_password){
 			$("#default").find(".modal-title").empty().text("비밀번호 오류");
 			$("#default").find(".modal-body p").empty().text("새 비밀번호가 일치하지 않습니다. ");
 			$("#default").addClass("show").css("display","block");
-			$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid");
+			$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid").empty();
 		}else if(!regExpPw.test(user_password)){
 			$("#default").find(".modal-title").empty().text("비밀번호 형식 오류");
-			$("#default").find(".modal-body p").empty().text("비밀번호는 영문 2자리 이상, 숫자, 특수문자 1자리 이상 사용하여 총 8자리 입니다.");
+			$("#default").find(".modal-body p").empty().text("비밀번호는 영문,숫자,특수문자(!@$%^&* 만 허용)를\n조합하여 8~12자로 구성하세요.");
 			$("#default").addClass("show").css("display","block");
-			$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid");
+			$("input[name='confirm_password'], input[name='user_password']").addClass("is-invalid").empty();
 		}else {
 			$("#newForm").submit();
 		}

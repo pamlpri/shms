@@ -38,7 +38,7 @@
 	</nav>
 
 	<div class="page-heading email-application">
-		<section class="section content-area-wrapper">
+		<section class="section content-area-wrapper" style="margin-bottom : 20px;">
 			<div class="content-right">
 				<div class="content-wrapper">
 					<div class="content-header row"></div>
@@ -106,7 +106,7 @@
 
 									<!-- email user list start -->
 									<div class="email-user-list list-group">
-										<ul class="users-list-wrapper media-list" id="listBody">
+										<ul class="users-list-wrapper media-list  mailList" id="listBody">
 										</ul>
 										<!-- email user list end -->
 									</div>

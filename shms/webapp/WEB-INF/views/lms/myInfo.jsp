@@ -21,12 +21,12 @@
 
    <section class="section">
 		<div class="card">
-			<div class="card-body">
+			<div class="card-body minHBox">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item" role="presentation"><a
 						class="nav-link active" id="profile-tab" data-bs-toggle="tab"
 						href="#profile" role="tab" aria-controls="profile"
-						aria-selected="false">학적정보</a></li>
+						aria-selected="false">교직원정보</a></li>
 					<li class="nav-item" role="presentation"><a class="nav-link"
 						id="password-tab" data-bs-toggle="tab" href="#password" role="tab"
 						aria-controls="password" aria-selected="true">비밀번호 변경</a></li>
@@ -46,6 +46,12 @@
 			                           	   <input type="hidden" value="y" name="isStaff" />
 		                           	   </c:if>
 		                               <table class="table .thead-light mb-0" style="border-top:2px solid #95a3d6;">
+		                               		<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 		                                   <tbody>
 		                                       <tr>
 		                                           <th class="text-bold-500 text-center align-middle">사번</th>
@@ -113,6 +119,12 @@
 		                                   </tbody>
 		                               </table>
 		                               <table class="table .thead-light mb-0" style="border-top:2px solid #95a3d6; border-bottom : 2px solid #95a3d6;">
+		                               		<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 		                                   <tbody>
 		                                       <tr>
 		                                           <th class="text-bold-500 text-center align-middle">계좌은행</th>
@@ -123,6 +135,12 @@
 		                                   </tbody>
 		                               </table>
 		                               <table class="table .thead-light mb-0">
+		                               		<colgroup>
+												<col width=20%>
+												<col width=30%>
+												<col width=20%>
+												<col width=30%>
+											</colgroup>
 		                                   <tbody>
 		                                       <tr>
 		                                           <th class="text-bold-500 text-center align-middle">웹메일</th>
@@ -207,7 +225,7 @@
 					<div class="tab-pane fade" id="password" role="tabpanel"
 						aria-labelledby="password-tab">
 						<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center mb-4">
-							<div class="container">
+							<div class="container" style="margin-top:5rem">
 								<div class="row align-items-center">
 									<div class="col-md-6 pwImg">
 										<img src="${cPath }/resources/lms/assets/images/password.png" alt="">
@@ -323,7 +341,7 @@
 			console.log(user_password);
 			console.log(confirm_password);
 			
-			var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/;
+			var regExpPw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/; 
 			
 			if(user_password != confirm_password){
 				$("#default").find(".modal-title").empty().text("비밀번호 오류");
