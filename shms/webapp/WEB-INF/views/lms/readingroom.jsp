@@ -270,6 +270,16 @@
 	src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script>
     $(function(){
+    	let exist = "${exist}";
+    	console.log(exist);
+    	if(exist == "notNull") {
+    		$("#roomQrBlock").css("display", "block");
+    		$("#roomQrNone").css("display", "none");
+    	} else {
+    		$("#roomQrBlock").css("display", "none");
+    		$("#roomQrNone").css("display", "block");
+    	}
+    	
     	$(".roomQr").addClass("hide");
     	$("#roomQrNone").removeClass("hide");
     	var qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -309,38 +319,6 @@
                 	, data: {"facility_no" : facility_no[0]}
                 	, success : function(res) {
                 		if(res == 'OK') {
-//                 			location.href="${cPath}/lms/readingroom.do"
-                			$(".roomQr").removeClass("hide");
-                			$("#roomQrNone").addClass("hide");
-                		} else if(res == "FAIL") {
-                			$("#exampleModalCenter").find(".modal-body p").text("이미 열람실을 예약하셨습니다.");
-                			$(".roomQr").removeClass("hide");
-                			$("#roomQrNone").addClass("hide");
-                		}
-                	}
-                	, error : function(xhr, error, msg) {
-                		console.log(xhr);
-                		console.log(error);
-                		console.log(msg);
-                	}
-                });
-            }
-        });
-        
-        $("#mySeat-tab").on("click", function(){
-            if($(".choiceWrap").find(".seatNum").text() == null || $(".choiceWrap").find(".seatNum").text() == ""){
-                $("#exampleModalCenter").find(".modal-body p").text("선택하신 좌석이 없습니다.");
-                $(".choiceBox").reset();
-            }else {
-                $("#exampleModalCenter").addClass("show");
-                let facility_no = $(".choiceWrap").find(".seatNum").text();
-                facility_no = facility_no.split('번');
-                $.ajax({
-                	url: "${cPath}/lms/readingroomInsert.do"
-                	, method: "post"
-                	, data: {"facility_no" : facility_no[0]}
-                	, success : function(res) {
-                		if(res == 'OK') {
                 			location.href="${cPath}/lms/readingroom.do"
                 			$(".roomQr").removeClass("hide");
                 			$("#roomQrNone").addClass("hide");
@@ -358,6 +336,38 @@
                 });
             }
         });
+        
+//         $("#mySeat-tab").on("click", function(){
+//             if($(".choiceWrap").find(".seatNum").text() == null || $(".choiceWrap").find(".seatNum").text() == ""){
+//                 $("#exampleModalCenter").find(".modal-body p").text("선택하신 좌석이 없습니다.");
+//                 $(".choiceBox").reset();
+//             }else {
+//                 $("#exampleModalCenter").addClass("show");
+//                 let facility_no = $(".choiceWrap").find(".seatNum").text();
+//                 facility_no = facility_no.split('번');
+//                 $.ajax({
+//                 	url: "${cPath}/lms/readingroomInsert.do"
+//                 	, method: "post"
+//                 	, data: {"facility_no" : facility_no[0]}
+//                 	, success : function(res) {
+//                 		if(res == 'OK') {
+//                 			location.href="${cPath}/lms/readingroom.do"
+//                 			$(".roomQr").removeClass("hide");
+//                 			$("#roomQrNone").addClass("hide");
+//                 		} else if(res == "FAIL") {
+//                 			$("#exampleModalCenter").find(".modal-body p").text("이미 열람실을 예약하셨습니다.");
+//                 			$(".roomQr").removeClass("hide");
+//                 			$("#roomQrNone").addClass("hide");
+//                 		}
+//                 	}
+//                 	, error : function(xhr, error, msg) {
+//                 		console.log(xhr);
+//                 		console.log(error);
+//                 		console.log(msg);
+//                 	}
+//                 });
+//             }
+//         });
     });
     
 </script>
