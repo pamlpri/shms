@@ -126,17 +126,17 @@
 					<input type="hidden" name="consultingKind" value="" />
 					<input type="hidden" name="staff_no" value="" />
 					<input type="hidden" name="req_no" value="" />
-					<input type="hidden" name="stdnt_no" value="${user.user[0] }" />
+<%-- 					<input type="hidden" name="stdnt_no" value="${user.user[0] }" /> --%>
 					<div class="modal-body">
 						<div class="form-group">
 							<h6>학번</h6>
 							<input class="form-control form-control-default" type="text" name="stdnt_no"
-								value="${user.user[0] }" disabled>
+								value="${user.user[0] }" readonly>
 						</div>
 						<div class="form-group">
 							<h6>이름</h6>
 							<input class="form-control form-control-default" type="text"
-								value="${userName }" disabled>
+								value="${userName }" readonly>
 						</div>
 						<div class="form-group">
 							<h6>상담분류</h6>
@@ -152,7 +152,7 @@
 						<div class="form-group">
 							<h6>상담사유</h6>
 							<textarea class="form-control cont" placeholder="상담을 신청하는 사유를 적어주세요."
-								id="floatingTextarea" name="req_cont" value=""></textarea>
+								id="floatingTextarea" name="req_cont"></textarea>
 						</div>
 						<div class="form-group">
 							<h6>상담희망일시</h6>
@@ -271,6 +271,7 @@
        			$("#inlineForm").find("input[name="+name+"]").val(this.value);
        			$("#inlineForm").find("input[name='update']").val("update");
        			$("#inlineForm").find("input[name='req_no']").val(curCode);
+       			$("#inlineForm").find("input[name='consultingKind']").val("career");
        		});
        	});
        	
@@ -285,14 +286,8 @@
         	$("#inlineForm").find("input[name]").val("");
         	$("#inlineForm").find("select").val("");
         	$("#inlineForm").find("textArea").empty();
-        	let stdntNo = $(".inputBox").children("input[name='stdnt_no']").val();
-        	let staffName = $(".inputBox").children("input[name='staff_name']").val();
-        	let staffNo = $(".inputBox").children("input[name='staff_no']").val();
-        	$("#inlineForm").find("input[name='stdnt_no']").val(stdntNo);
-        	$("#inlineForm").find("input[name='staff_name']").val(staffName);
-        	$("#inlineForm").find("input[name='staff_no']").val(staffNo);
         	$("#consultingForm").children("input[name='update']").val("insert");
-        	$("#consultingForm").children("input[name='consultingKind']").val("career");
+        	$("input[name='consultingKind']").val("career");
       		$("#deleteBtn").css("display", "none");
         });
           

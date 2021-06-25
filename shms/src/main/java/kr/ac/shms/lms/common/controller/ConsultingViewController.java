@@ -100,7 +100,6 @@ public class ConsultingViewController {
 		ConsultingVO consultingVO = lmsCommonService.consulting(consltDiaryVO.getReq_no());
 		consltDiaryVO.setHope_date(consultingVO.getHope_date());
 		consltDiaryVO.setHope_time(consultingVO.getHope_time());
-		logger.info("consltDiaryVO : {}", consltDiaryVO.getThema());
 		ServiceResult result = null;
 		if("update".equals(isUpdate)) {
 			result = lmsCommonService.consultingDiaryUpdate(consltDiaryVO);
@@ -132,17 +131,19 @@ public class ConsultingViewController {
 			, @RequestParam("update") String update
 			, @RequestParam(value="consultingKind", required=false) String consultingKind
 		) {
+		logger.info("update : {}", update);
 		ServiceResult result = null;
 		if("insert".equals(update)) {
 			result = studentService.consultingInsert(consultingVO);
 		} else if("update".equals(update)) {
+			logger.info("update if");
 			result = studentService.consultingUpdate(consultingVO);
 		}
 		String view = null;
 		if(ServiceResult.OK.equals(result)) {
 			if(consultingKind.equals("career")) {
 				view = "redirect:/lms/careerCounseling.do";
-			} else if(consultingKind.equals("professor")) {
+			} else {
 				view = "redirect:/lms/consultingList.do";
 			}
 		}

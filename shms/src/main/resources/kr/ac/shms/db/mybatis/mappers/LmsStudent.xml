@@ -223,6 +223,7 @@
 		  AND c.code_grp = (SELECT code_grp FROM tb_code_grp WHERE code_grp_nm = 'PROCESS_STAT')
 		  AND stdnt_no = #{stdnt_no}
           AND d.staff_no LIKE 'P%'
+        ORDER BY req_date DESC 
 	</select>
 	
 	<delete id="consultingDelete" parameterType="String">

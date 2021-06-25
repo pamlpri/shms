@@ -43,6 +43,7 @@
 								<tr class="consultingBox" idx="${consulting.req_no }">
 									<td class="text-center inputBox">
 										${state.index+1 }
+										<input type="hidden" name ="req_no" value="${consulting.req_no }" />
 										<input type="hidden" name="hope_date" value="${consulting.hope_date }" />
 										<input type="hidden" name="hope_time" value="${consulting.hope_time }" />
 										<input type="hidden" name="req_cont" value="${consulting.req_cont }" />
@@ -124,8 +125,9 @@
 					</button>
 				</div>
 				<form action="${cPath }/lms/consultingSign.do" id="consultingForm" method="post">
+					<input type="hidden" name="req_no" />
 					<input type="hidden" name="update" value="" />
-					<input type="hidden" name="consultingKind" value="" />
+					<input type="hidden" name="consultingKind" value="dfdf" />
 					<input type="hidden" name="staff_no" value="${staffId }"/>
 					<div class="modal-body">
 						<div class="form-group">
