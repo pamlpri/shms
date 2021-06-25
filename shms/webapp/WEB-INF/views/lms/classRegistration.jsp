@@ -34,7 +34,7 @@
 		<div class="row">
 			<div class="radioBox col-md-4 mb-4">
 				<div class="form-check float-left">
-					<input class="form-check-input" type="radio" name="lec_cl_grp" id="cartBtn" value="">
+					<input class="form-check-input" type="radio" name="lec_cl_grp" id="cartBtn" value="" checked>
 					<label class="form-check-label" for="flexRadioDefault1"> 전체 </label>
 				</div>
 				<div class="form-check float-left">
@@ -149,6 +149,8 @@
 											<thead>
 												<tr>
 													<th class="text-center">강의코드</th>
+													<th class="text-center">단과대</th>
+													<th class="text-center">학과</th>
 													<th class="text-center">이수구분</th>
 													<th class="text-center">교과목명</th>
 													<th class="text-center">담당교수</th>
@@ -176,7 +178,7 @@
 		</section>
 	</div>
 	
-	<div class="page-heading email-application">
+	<div class="page-heading email-application mt-3 mb-3">
 		<section class="section content-area-wrapper">
 			<div class="content-right">
 				<div class="content-wrapper">
@@ -213,9 +215,10 @@
 		</section>
 	</div>
 
-	<div class="page-heading email-application lectureHeader">
+	<div class="page-heading email-application lectureHeader  mt-3 mb-3">
 		<h5>
 			<i class="fas fa-bookmark"></i> 나의 수강신청 현황
+			<button class="btn btn-primary" style="margin-left:5px;" onclick='openChildWindow();'>시간표확인</button>
 		</h5>
 		<section class="section content-area-wrapper">
 			<div class="content-right">
@@ -231,6 +234,8 @@
 										<thead>
 											<tr>
 												<th class="text-center">강의코드</th>
+												<th class="text-center">단과대</th>
+												<th class="text-center">학과</th>
 												<th class="text-center">이수구분</th>
 												<th class="text-center">교과목명</th>
 												<th class="text-center">담당교수</th>
@@ -246,6 +251,8 @@
 											<c:forEach var="sugang" items="${sugangList }">
 												<tr class="${sugang.lec_code }">
 													<td class="text-center">${sugang.lec_code }</td>
+													<td class="text-center">${sugang.col_name }</td>
+													<td class="text-center">${sugang.sub_name }</td>
 													<td class="text-center">${sugang.lec_cl_nm }</td>
 													<td class="text-center">${sugang.lec_name }</td>
 													<td class="text-center">${sugang.name }</td>
@@ -320,6 +327,8 @@
 					}
 					let tr = $("<tr>").append(
 								$("<td>").text(sugang.lec_code).addClass("text-center")
+								,$("<td>").text(sugang.col_name).addClass("text-center")
+								,$("<td>").text(sugang.sub_name).addClass("text-center")
 								,$("<td>").text(sugang.lec_cl_nm).data("lec_cl", sugang.lec_cl).addClass("text-center")
 								,$("<td>").text(sugang.lec_name).addClass("text-center")
 								,$("<td>").text(sugang.name).data("staff_no", sugang.staff_no).addClass("text-center")
@@ -469,6 +478,8 @@
 					$(sugangList).append(
 							$("<tr>").attr("class", resp.sugang.lec_code).append(
 									$("<td>").text(resp.sugang.lec_code).addClass("text-center")
+									,$("<td>").text(resp.sugang.col_name).addClass("text-center")
+									,$("<td>").text(resp.sugang.sub_name).addClass("text-center")
 									,$("<td>").text(resp.sugang.lec_cl_nm).data("lec_cl", resp.sugang.lec_cl).addClass("text-center")
 									,$("<td>").text(resp.sugang.lec_name).addClass("text-center")
 									,$("<td>").text(resp.sugang.name).data("staff_no", resp.sugang.staff_no).addClass("text-center")
@@ -494,6 +505,7 @@
 			            position: "center",
 			            backgroundColor: "#4fbe87",
 			        }).showToast();
+					refreshChildWindow();
 				}else if(resp.result == "PKDUPLICATED"){
 					
 				}
@@ -543,6 +555,7 @@
 							$(this).remove();
 						}
 					});
+					refreshChildWindow();
 				}
 			},error : function(xhr, error, msg){
 				console.log(xhr);
@@ -551,5 +564,19 @@
 			}
 		});
 	});
+	
+	var childWindow;
+	
+	function openChildWindow() {
+        if (!childWindow) {
+            childWindow = window.open("${cPath}/lms/sugangTimeTable.do", "_blank", "width=950,height=950");
+        }
+    }
+
+    function refreshChildWindow() {
+        if (childWindow) {
+            childWindow.location.reload();
+        }
+    }
 </script>
 <script src="${cPath }/resources/lms/assets/vendors/toastify/toastify.js"></script>

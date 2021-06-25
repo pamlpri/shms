@@ -171,6 +171,7 @@
 		
 		let reqForm = $("#reqForm");
 		$(window).bind("beforeunload", function (e){
+			event.preventDefault();
 			let sugang_req = parseInt($("[name='sugang_req']").val());
 			let diary_no = $("[name='diary_no']").val();
 			let stdnt_no = $("[name='stdnt_no']").val();

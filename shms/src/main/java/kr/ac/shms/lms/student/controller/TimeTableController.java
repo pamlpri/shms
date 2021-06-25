@@ -40,7 +40,7 @@ public class TimeTableController {
 	StudentService sutdentService;
 	
 	@RequestMapping("/timeTableView.do")
-	public String sendForm(
+	public String timeTableView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
@@ -56,7 +56,7 @@ public class TimeTableController {
 	
 	@RequestMapping("/tiemTable.do")
 	@ResponseBody
-	public List<TimeTableVO> timeTableList(
+	public List<TimeTableVO> tiemTable(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
 		, Model model
 	) {
