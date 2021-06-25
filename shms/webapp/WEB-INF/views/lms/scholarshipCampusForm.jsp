@@ -195,9 +195,9 @@
 		let schlship_no = $("[name='schlship_no']").val();
 		
 		if (schlship_no == "" && files.length == 0) {
-			alert("둘다 아니야!");
+			alert("첨부파일과 장학금 종류 확인!");
 		} else if(schlship_no == "" && files.length != 0){
-			alert("선택안함");
+			alert("장학금 종류 확인!");
 		} else if(schlship_no != "" && files.length == 0){
 			alert("첨부파일 확인!");
 		} else {
