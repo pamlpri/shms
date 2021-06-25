@@ -395,6 +395,7 @@
 	          ORDER BY A.sub_name
 		    )
 		WHERE rn BETWEEN #{startRow} AND #{endRow}
+		ORDER BY stdnt_no DESC
 	</select>
 	
 	<select id="selectAcademicRegistrationCount" resultType="int">
