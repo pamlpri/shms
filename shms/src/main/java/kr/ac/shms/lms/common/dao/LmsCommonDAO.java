@@ -342,4 +342,11 @@ public interface LmsCommonDAO {
 	 * @return
 	 */
 	public String selectMaxLecCode();
+	
+	/**
+	 * 지도교수 호출
+	 * @param stdnt_no
+	 * @return
+	 */
+	public String selectProfessor(String stdnt_no);
 }

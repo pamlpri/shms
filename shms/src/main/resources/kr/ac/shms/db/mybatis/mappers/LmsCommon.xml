@@ -871,4 +871,10 @@
 		    #{lec_time, jdbcType=NUMERIC}
 		)
 	</insert>
+	
+	<select id="selectProfessor" parameterType="String" resultType="String">
+		SELECT STAFF_NO
+		FROM HOMERUM_PROF
+		WHERE GRADE = (SELECT GRADE FROM STUDENT WHERE STDNT_NO = #{stdnt_no})
+	</select>
 </mapper>

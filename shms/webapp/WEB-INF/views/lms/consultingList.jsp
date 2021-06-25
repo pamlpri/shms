@@ -41,15 +41,8 @@
 						<c:if test="${not empty consultingList }">
 							<c:forEach items="${consultingList }" var="consulting" varStatus="state">
 								<tr class="consultingBox" idx="${consulting.req_no }">
-									<td class="text-center inputBox">
+									<td class="text-center">
 										${state.index+1 }
-										<input type="hidden" name="stdnt_no" value="${consulting.stdnt_no }" />
-										<input type="hidden" name="hope_date" value="${consulting.hope_date }" />
-										<input type="hidden" name="hope_time" value="${consulting.hope_time }" />
-										<input type="hidden" name="req_cont" value="${consulting.req_cont }" />
-										<input type="hidden" name="staff_name" value="${consulting.staff_name }" />
-										<input type="hidden" name="staff_no" value="${consulting.staff_no }" />
-										<input type="hidden" name ="consult_cl" value="${consulting.consult_cl }" />
 									</td>
 									<td class="text-center">${consulting.req_no }</td>
 									<td class="text-center">${consulting.consult_cl_nm }</td>
@@ -130,23 +123,19 @@
 				<form action="${cPath }/lms/consultingSign.do" id="consultingForm" method="post">
 					<input type="hidden" name="update" value="" />
 					<input type="hidden" name="consultingKind" value="" />
-					<input type="hidden" name="staff_no" value="" />
-					<input type="hidden" name="req_no" value="" />
-					<input type="hidden" name="stdnt_no" value="${user.user[0] }" />
+					<input type="hidden" name="staff_no" value="${staffId }"/>
 					<div class="modal-body">
 						<div class="form-group">
 							<h6>학번</h6>
-							<input class="form-control form-control-default" type="text" name="stdnt_no"
-								value="${user.user[0] }" disabled>
+							<input class="form-control form-control-default" name="stdnt_no" type="text" value="${user.user[0] }" readonly>
 						</div>
 						<div class="form-group">
 							<h6>이름</h6>
-							<input class="form-control form-control-default" type="text"
-								value="${userName }" disabled>
+							<input class="form-control form-control-default" type="text" value="${userName }" readonly>
 						</div>
 						<div class="form-group">
 							<h6>지도교수</h6>
-							<input name="staff_name" class="form-control form-control-default" type="text" value="" disabled>
+							<input class="form-control form-control-default" type="text" value="${staffName.name }" readonly>
 						</div>
 						<div class="form-group">
 							<h6>상담분류</h6>
@@ -330,15 +319,9 @@
         });
         
         $("#insertBtn").on("click", function() {
-        	$("#inlineForm").find("input[name]").val("");
+        	$("#inlineForm").find("not:input[name]:readonly").val("");
         	$("#inlineForm").find("select").val("");
         	$("#inlineForm").find("textArea").empty();
-        	let stdntNo = $(".inputBox").children("input[name='stdnt_no']").val();
-        	let staffName = $(".inputBox").children("input[name='staff_name']").val();
-        	let staffNo = $(".inputBox").children("input[name='staff_no']").val();
-        	$("#inlineForm").find("input[name='stdnt_no']").val(stdntNo);
-        	$("#inlineForm").find("input[name='staff_name']").val(staffName);
-        	$("#inlineForm").find("input[name='staff_no']").val(staffNo);
         	$("#consultingForm").children("input[name='update']").val("insert");
         	$("#consultingForm").children("input[name='consultingKind']").val("professor");
       		$("#deleteBtn").css("display", "none");
