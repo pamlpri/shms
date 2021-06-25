@@ -171,7 +171,7 @@
 		let delAttNo = fileSpan.data("attno");
 		console.log("delAttNo : " + delAttNo);
 		let newInput = $("<input>").attr({
-			"type" : "text",
+			"type" : "hidden",
 			"name" : "delAttNos"
 		}).val(delAttNo);
 

@@ -379,6 +379,7 @@
 		ON a.process_stat = b.com_code
 		WHERE stdnt_no = #{stdnt_no}
 		AND b.code_grp = 'G10'
+		ORDER BY req_de DESC
 	</select>
 	
 	<insert id="insertEditReq" parameterType="EditReqVO">
