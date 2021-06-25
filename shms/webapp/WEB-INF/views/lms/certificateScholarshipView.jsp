@@ -26,7 +26,6 @@
                  <div class="card-body">
                      <form class="table-responsive" id="submitForm" action="${cPath}/lms/updateSchlStatus.do" method="post"> 
                      <input type="hidden" value="${schl.req_no }" name="req_no">
-                     <input type="hidden" value="${schl.refuse_resn }" name="refuse_resn">
                      <input id="process_stat" type="hidden" name="process_stat" value="">
                          <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                              <tr>

@@ -334,4 +334,12 @@
 		AND TO_CHAR(SYSDATE, 'YYYY') = pay_year
 		AND (SELECT semstr FROM v_semstr) = pay_semstr
 	</select>
+	
+	<update id="updateEditReq" parameterType="ScholarShipVO">
+		UPDATE schl_req
+		    SET
+		        schlship_no = #{schlship_no}
+		WHERE
+		    req_no = #{req_no}
+	</update>
 </mapper>

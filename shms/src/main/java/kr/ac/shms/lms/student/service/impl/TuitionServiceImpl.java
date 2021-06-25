@@ -253,4 +253,18 @@ public class TuitionServiceImpl implements TuitionService{
 	public int selectTuitionCnt(String stdnt_no) {
 		return tuitionDAO.selectTuitionCnt(stdnt_no);
 	}
+
+	@Override
+	public ServiceResult updateEditReq(ScholarShipVO schl) {
+		ServiceResult result = ServiceResult.FAIL; 
+		int cnt = tuitionDAO.updateEditReq(schl);
+		if(cnt > 0) { 
+			cnt += commonAttachService.processes(schl, "/scholarship");
+			cnt += commonAttachService.deleteFileProcesses(schl, "/scholarship");
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
+	}
 }

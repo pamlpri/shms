@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
 import kr.ac.shms.common.vo.SubjectVO;
@@ -50,6 +52,9 @@ public class AcademicChangeController {
 	
 	@Inject
 	private OthersDAO othersDAO;
+	
+	@Inject
+	private CommonAttachService commonAttachService;
 	
 	private void addAttribute(Model model) {
 		List<Map<String, Object>> collegeList = othersDAO.selectCollegeList();
@@ -140,14 +145,20 @@ public class AcademicChangeController {
 		
 		String view = null;
 		if(ServiceResult.OK.equals(result)) {
-			view = "redirect:/lms/academicChange";
+			view = "redirect:/lms/academicChange.do";
 		}
-		
 		return view;
 	}
+	
+	@RequestMapping(value="/lms/reginfoDownload.do")
+	public String downloader(
+		@ModelAttribute("attach") AttachVO attach
+		, Model model
+	) {
+		AttachVO attvo = commonAttachService.download(attach, null);
+		model.addAttribute("attvo", attvo);		
+		return "downloadView";
+	}
 }
-
-
-
 
 

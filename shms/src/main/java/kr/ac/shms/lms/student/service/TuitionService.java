@@ -183,4 +183,11 @@ public interface TuitionService {
 	 * @return
 	 */
 	public int selectTuitionCnt(String stdnt_no);
+	
+	/**
+	 * 장학금 신청 수정
+	 * @param schl
+	 * @return
+	 */
+	public ServiceResult updateEditReq(ScholarShipVO schl);
 }

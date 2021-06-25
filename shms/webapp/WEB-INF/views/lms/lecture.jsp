@@ -10,7 +10,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+ <!-- contents start -->
+ <nav aria-label="breadcrumb">
+     <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="#">HOME</a></li>
+         <li class="breadcrumb-item"><a href="#">강의관리</a></li>
+         <li class="breadcrumb-item active" aria-current="page">수강중인 강의</li>
+     </ol>
+ </nav>
 <div class="page-content">
 	<section class="section">
 		<div class="card">
