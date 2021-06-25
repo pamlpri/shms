@@ -47,10 +47,14 @@
 				                         <td class="text-center"><a href="${cPath}/lms/dropForm.do?cng_req_no=${dropList.cng_req_no}" class="badge bg-info white-color">대기</a></td>
 		                         	</c:if>
 		                         	<c:if test="${dropList.process_stat eq '완료' }">
-				                         <td class="text-center"><a href="${cPath}/lms/dropView.do" class="badge bg-success white-color">완료</a></td>
+				                         <td class="text-center"><a href="${cPath}/lms/dropView.do?cng_req_no=${dropList.cng_req_no}" class="badge bg-success white-color">완료</a></td>
+		                         	</c:if>
+		                         	<c:if test="${dropList.process_stat eq '승인' }">
+				                         <td class="text-center"><a href="${cPath}/lms/dropView.do?cng_req_no=${dropList.cng_req_no}" class="badge bg-primary white-color">승인</a></td>
 		                         	</c:if>
 		                         	<c:if test="${dropList.process_stat eq '반려' }">
 				                          <th class="text-center">
+				                          <input type="hidden" value="${dropList.refuse_resn }" name="refuse_resn">
 				                             <button type="button" class="btn badge bg-danger block failBtn"
 				                                 data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
 				                                 반려
@@ -93,9 +97,8 @@
 	                </button>
 	            </div>
 	            <div class="modal-body">
-	                <p>
-	                    서류 미제출로 인한 반려
-	                </p>
+    			  <p id="inputText">
+                  </p>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-light-secondary"
@@ -114,4 +117,9 @@
     // Simple Datatable
     let table1 = document.querySelector('#table1');
     let dataTable = new simpleDatatables.DataTable(table1);
+    
+	$(".failBtn").on("click", function(){
+		let refuse_resn = $(this).parent().find("[name='refuse_resn']").val();
+		document.getElementById("inputText").innerText=refuse_resn;
+	})
 </script>
