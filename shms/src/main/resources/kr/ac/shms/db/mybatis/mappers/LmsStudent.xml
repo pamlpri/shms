@@ -519,6 +519,7 @@
 		INNER JOIN facility b
 		ON a.facility_no = b.facility_no
 		WHERE stdnt_no = #{stdnt_no}
+		ORDER BY rsv_dt DESC
 	</select>
 	
 	<select id="selectFacilityRsv" parameterType="String" resultType="FacilityRsvVO">
