@@ -15,7 +15,7 @@
 	<div class="container">
 		<div style="clear: both;"></div>
 		<div class="contents" id="academic">
-			<div class="card board" style="border: none;">
+			<div class="card" style="border: none;">
 				<div class="card-body board-body">
 					<form id="searchForm">
 						<input type="hidden" name="searchType"
@@ -40,7 +40,7 @@
 							<input type="button" value="검색" id="searchBtn">
 						</div>
 					</form>
-					<div class="table-responsive">
+					<div class="table-responsive" style="flex-direction: column;">
 						<table class="table">
 							<thead>
 								<tr>
@@ -93,10 +93,11 @@
 								</c:choose>
 							</tbody>
 						</table>
-						<div id="pagingArea" class="d-flex justify-content-center">
-							${pagingVO.pagingHTMLBS }</div>
-						<a href="${cPath }/subejct/subjectQnaInsert.do"
-							id="writeBtn">글쓰기</a>
+						<div  style="flex-direction : column">
+							<div id="pagingArea" class="d-flex justify-content-center">
+								${pagingVO.pagingHTMLBS }</div>
+							<a href="${cPath }/subejct/subjectQnaInsert.do" id="writeBtn">글쓰기</a>
+						</div>
 					</div>
 				</div>
 			</div>

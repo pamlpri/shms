@@ -10,6 +10,7 @@
 <link rel="icon" href="${cPath }/resources/subject/img/favicon.png" type="image/png" />
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="${cPath }/resources/subject/css/bootstrap.css" />
+<link rel="stylesheet" href="${cPath }/resources/lms/assets/vendors/bootstrap-icons/bootstrap-icons.css">
 <link rel="stylesheet" href="${cPath }/resources/subject/css/flaticon.css" />
 <link rel="stylesheet" href="${cPath }/resources/subject/css/themify-icons.css" />
 <link rel="stylesheet" href="${cPath }/resources/subject/vendors/owl-carousel/owl.carousel.min.css" />

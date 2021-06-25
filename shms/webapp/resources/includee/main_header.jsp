@@ -15,13 +15,13 @@
      <div class="row no-gutters">
        <div class="col-lg-4 text-center text-lg-left">
          <a href="${cPath }/lms/login.do" class="headerBtn" id="lmsBtn"><strong>통합정보시스템</strong></a>
-         <a href="../admission/index.html" class="headerBtn" id="enterBtn"><strong>입학안내</strong></a>
+         <a href="${cPath }/admission/main.do" class="headerBtn" id="enterBtn"><strong>입학안내</strong></a>
        </div>
        <div class="col-lg-8 text-center text-lg-right py-2">
          <ul class="list-inline">
            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="${cPath }/main/community/academicList.do">학사공지</a></li>
            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="${cPath }/main/community/scholarshipList.do">장학공지</a></li>
-           <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="admissionNotice.html">입학공지</a></li>
+           <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="">입학공지</a></li>
          </ul>
        </div>
      </div>
