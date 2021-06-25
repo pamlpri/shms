@@ -803,16 +803,72 @@
 		    lecrum a
 		INNER JOIN building b
 		  ON(a.building_no = b.building_no)
-		WHERE ACEPTNC_NMPR > 5
-		  AND a.sub_code = 105
-		--  AND a.building_no = SUBSTR(105, 1, 1)
-		--  AND SUBSTR(lecrum_nm, 1, 1) = '1'
+		WHERE ACEPTNC_NMPR > #{lec_cpacity, jdbcType=VARCHAR}
+		  <choose>
+		  	<when test="search eq 'first'">
+				  AND a.sub_code = #{sub_code, jdbcType=VARCHAR}
+		  	</when>
+		  	<otherwise>
+			  AND a.building_no = SUBSTR(#{sub_code, jdbcType=VARCHAR}, 1, 1)
+			  AND SUBSTR(lecrum_nm, 1, 1) = '1'
+		  	</otherwise>
+		  </choose>
 		  AND lecrum_no NOT IN (SELECT lecrum_no
 		                          FROM lecrum_ttable 
-		                         WHERE dayotw = 05 
-		                           AND (tm BETWEEN 9 AND 11)
+		                         WHERE dayotw = #{dayotw, jdbcType=VARCHAR}
+		                           AND (tm BETWEEN #{lec_time} AND #{end_time})
 		                           AND use_at = 'Y'
 		  )
-		ORDER BY lecrum_no;
+		ORDER BY lecrum_no
 	</select>
+	
+	<insert id="insertLecture" parameterType="LectureVO" useGeneratedKeys="true" keyColumn="lec_code" keyProperty="lec_code">
+		<selectKey resultType="string" keyProperty="lec_code" order="BEFORE">
+			SELECT #{cur_code}||LPAD(NVL(MAX(SUBSTR(lec_code, 9)), 0) + 1, 2, '0') lec_code
+			  FROM lecture
+			 WHERE cur_code = #{cur_code}
+		</selectKey>
+		INSERT INTO lecture (
+		    lec_code,
+		    cur_code,
+		    lec_cl,
+		    estbl_year,
+		    estbl_semstr,
+		    dayotw,
+		    lec_time
+		) VALUES (
+			#{lec_code},
+		    #{cur_code, jdbcType=VARCHAR},
+		    #{lec_cl, jdbcType=VARCHAR},
+		    #{estbl_year, jdbcType=NUMERIC},
+		    #{estbl_semstr, jdbcType=NUMERIC},
+		    #{dayotw, jdbcType=VARCHAR},
+		    #{lec_time, jdbcType=NUMERIC}
+		)
+	</insert>
+	
+	<select id="selectMaxLecCode" resultType="String">
+		SELECT DISTINCT LAST_VALUE(lec_code) OVER () last_value 
+		  FROM lecture
+	</select>
+	
+	<insert id="insertLecrumTtable" parameterType="LectureVO">
+		<selectKey resultType="int" keyProperty="lecrum_ttble_no" order="BEFORE">
+			SELECT lec_ttable_seq.nextval lecrum_ttble_no 
+			FROM dual
+		</selectKey>
+		INSERT INTO lecrum_ttable (
+		    lecrum_ttble_no,
+		    lecrum_no,
+		    lec_code,
+		    dayotw,
+		    tm
+		) VALUES (
+		    #{lecrum_ttble_no},
+		    #{lecrum_no, jdbcType=NUMERIC},
+		    #{lec_code, jdbcType=VARCHAR},
+		    #{dayotw, jdbcType=VARCHAR},
+		    #{lec_time, jdbcType=NUMERIC}
+		)
+	</insert>
 </mapper>

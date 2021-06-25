@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.validator.LectureInsertGroup;
+import kr.ac.shms.validator.LectureRegisterGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,9 +37,13 @@ import lombok.NoArgsConstructor;
 public class LectureVO implements IAttachVO {
 	private String lec_code;
 	private String lec_name;
+	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String cur_code;
+	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String lec_cl;
+	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer estbl_year;
+	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer estbl_semstr;
 	
 	@NotBlank(groups={LectureInsertGroup.class})
@@ -48,22 +54,24 @@ public class LectureVO implements IAttachVO {
 	private String tchmtr_scope;
 	
 	private String lec_rm;
+	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String dayotw;
+	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer lec_time;
 	private String lec_full_time;
 	private String abolec;
 	private Integer atch_file_no;
-	public Integer midterm;
-	public Integer finals;
-	public Integer attend;
-	public Integer task;
-	public Integer etc;
-	public Integer lec_week;
-	public String diary_title;
-	public String diary_cont;
-	public String week_bgnde;
-	public String week_endde;
-	public String staff_no;
+	private Integer midterm;
+	private Integer finals;
+	private Integer attend;
+	private Integer task;
+	private Integer etc;
+	private Integer lec_week;
+	private String diary_title;
+	private String diary_cont;
+	private String week_bgnde;
+	private String week_endde;
+	private String staff_no;
 	
 	private Integer diary_no;
 	private String week_lec_cl;
@@ -81,6 +89,11 @@ public class LectureVO implements IAttachVO {
 	private String sugang_stat;
 	private String bo_writer;
 	private String biz_type;
+	
+	/** lecrum_ttable */
+	private Integer lecrum_ttble_no;
+	@NotNull(groups= {LectureRegisterGroup.class})
+	private Integer lecrum_no;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;

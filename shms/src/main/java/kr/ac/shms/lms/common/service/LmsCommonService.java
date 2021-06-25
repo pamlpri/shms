@@ -19,6 +19,7 @@ import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -297,6 +298,13 @@ public interface LmsCommonService {
 	 * @param searchMap
 	 * @return 데이터가 없으면 null 반환
 	 */
-	public LecrumVO selectLecrumInfo(Map<String, Object> searchMap);
-
+	public List<LecrumVO> selectLecrumInfo(Map<String, Object> searchMap);
+	
+	/**
+	 * 강의 등록
+	 * @param lecture
+	 * @return 성공, 실패
+	 */
+	public ServiceResult insertLecture(LectureVO lecture);
+	
 }
