@@ -23,6 +23,7 @@ import kr.ac.shms.lms.login.vo.UserLoginVO;
 import kr.ac.shms.lms.student.service.StudentService;
 import kr.ac.shms.lms.student.vo.StudentVO;
 import kr.ac.shms.lms.student.vo.SugangVO;
+import kr.ac.shms.lms.student.vo.TimeTableVO;
 
 /**
  * @author 박초원
@@ -144,5 +145,20 @@ public class ClassRegistrationViewController {
         model.addAttribute("sugangReqIndexInfo", sugangReqIndexInfo);
 		
 		return sugangVO;
+	}
+	
+	@RequestMapping("/lms/sugangTimeTable.do")
+	public String sugangTimeTable(
+		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, Model model
+	) {
+		String stdnt_no = user.getUser_id();
+		StudentVO studentVO = studentService.student(stdnt_no);
+		List<TimeTableVO> timeTableList = studentService.timeTable(stdnt_no);
+		
+		model.addAttribute("student", studentVO);
+		model.addAttribute("timeTableList", timeTableList);
+		
+		return "/lms/sugangTimeTable";
 	}
 }

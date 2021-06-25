@@ -44,10 +44,10 @@
 					AND lec_cl_grp = #{searchMap.lec_cl_grp}
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.col_code)">
-					AND col_code = #{searchMap.col_code} OR col_code IS NULL
+					AND col_code = #{searchMap.col_code}
 				</if>
 				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchMap.sub_code)">
-					AND sub_code = #{searchMap.sub_code} OR sub_code IS NULL
+					AND sub_code = #{searchMap.sub_code}
 				</if>
 			</trim>
 		</trim>
@@ -95,6 +95,7 @@
 		               INNER JOIN staff d ON(b.staff_no = d.staff_no)
 		         WHERE a.estbl_year >= TO_CHAR(SYSDATE, 'YYYY')
 		           AND a.estbl_semstr = (SELECT semstr FROM v_semstr)
+		           AND a.summary IS NOT NULL
 		    )
 		 <include refid="searchFrag" />
 	</select>
@@ -160,11 +161,16 @@
 		       (SELECT SUBSTR(com_code_nm, 1, 1)
 		          FROM tb_com_code
 		         WHERE code_grp = 'G19'
-		           AND b.dayotw = com_code ) dayotw_nm
+		           AND b.dayotw = com_code ) dayotw_nm,
+		       e.sub_name,
+		       (SELECT col_name
+		          FROM college
+		         WHERE e.col_code = col_code) col_name
 		  FROM sugang_req a
 		       INNER JOIN lecture b ON (a.lec_code = b.lec_code)
 		       INNER JOIN curriculum c ON (b.cur_code = c.cur_code)
 		       INNER JOIN staff d ON(d.staff_no = c.staff_no)
+		       INNER JOIN subject e ON(c.sub_code = e.sub_code) 
 		 WHERE a.stdnt_no = #{stdnt_no, jdbcType=VARCHAR}
 		   AND a.req_year >= TO_CHAR(SYSDATE, 'YYYY')
 		   AND a.req_semstr = (SELECT semstr FROM v_semstr)
