@@ -26,8 +26,8 @@
 		<div class="col-lg-2 col-md-6 single-footer-widget">
 			<h4>정보마당</h4>
 			<ul>
-				<li><a href="noticeSubject.html">학과공지</a></li>
-				<li><a href="qnaSubject.html">학과문의</a></li>
+				<li><a href="${cPath }/subject/subjectNoticeList.do">학과공지</a></li>
+				<li><a href="${cPath }/subject/subjectQnaList.do">학과문의</a></li>
 			</ul>
 		</div>
 		<div class="col-lg-2 col-md-6 single-footer-widget">

@@ -117,6 +117,10 @@
     cursor: inherit;
 }
 
+.noticeContent {
+	min-height : 20rem;
+}
+
 @media (min-width: 576px){
     .modal-dialog {
         max-width: 550px;

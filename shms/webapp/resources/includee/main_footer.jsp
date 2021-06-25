@@ -57,7 +57,7 @@
         <h4 class="text-white mb-5">교내사이트</h4>
         <ul class="list-unstyled">
           <li class="mb-3"><a class="text-color" href="${cPath }/lms/login.do">통합정보시스템</a></li>
-          <li class="mb-3"><a class="text-color" href="../admission/index.html">입학안내</a></li>
+          <li class="mb-3"><a class="text-color" href="${cPath }/admission/main.do">입학안내</a></li>
         </ul>
       </div>
     </div>

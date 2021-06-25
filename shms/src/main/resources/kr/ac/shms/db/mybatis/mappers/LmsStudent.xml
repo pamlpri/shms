@@ -163,7 +163,7 @@
 		                      FROM tb_code_grp
 		                     WHERE code_grp_nm = 'REQ_RESN_CODE')
 		  AND stdnt_no = #{stdnt_no}
-		  AND process_stat = 'SI'
+		  AND process_stat = 'WR'
 		  ORDER BY cng_bgnde DESC
 	</select>
 	

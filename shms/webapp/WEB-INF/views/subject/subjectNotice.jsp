@@ -13,7 +13,7 @@
 <section class="feature_area section_gap_top">
 <div class="container">
 	<div class="contents" id="academic">
-		<div class="card board" style="border: none;">
+		<div class="card" style="border: none;">
 			<div class="card-body board-body">
 				<form id="searchForm">
 					<input type="hidden" name="searchType" value="${pagingVO.searchMap.searchType }"/>
@@ -35,7 +35,7 @@
 						<input type="button" value="검색" id="searchBtn">
 					</div>
 				</form>
-				<div class="table-responsive">
+				<div class="table-responsive" style="flex-direction: column;">
 					<table class="table">
 						<thead>
 							<tr>
@@ -65,7 +65,7 @@
 		                    </c:choose>					
 						</tbody>
 					</table>
-					<div id="pagingArea" class="d-flex justify-content-center">
+					<div id="pagingArea" class="d-flex justify-content-center" style="flex-direction : column">
 						${pagingVO.pagingHTMLBS }
 					</div>
 				</div>
