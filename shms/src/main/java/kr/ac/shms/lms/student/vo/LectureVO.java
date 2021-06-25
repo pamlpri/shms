@@ -61,17 +61,17 @@ public class LectureVO implements IAttachVO {
 	private String lec_full_time;
 	private String abolec;
 	private Integer atch_file_no;
-	public Integer midterm;
-	public Integer finals;
-	public Integer attend;
-	public Integer task;
-	public Integer etc;
-	public Integer lec_week;
-	public String diary_title;
-	public String diary_cont;
-	public String week_bgnde;
-	public String week_endde;
-	public String staff_no;
+	private Integer midterm;
+	private Integer finals;
+	private Integer attend;
+	private Integer task;
+	private Integer etc;
+	private Integer lec_week;
+	private String diary_title;
+	private String diary_cont;
+	private String week_bgnde;
+	private String week_endde;
+	private String staff_no;
 	
 	private Integer diary_no;
 	private String week_lec_cl;
@@ -89,6 +89,11 @@ public class LectureVO implements IAttachVO {
 	private String sugang_stat;
 	private String bo_writer;
 	private String biz_type;
+	
+	/** lecrum_ttable */
+	private Integer lecrum_ttble_no;
+	@NotNull(groups= {LectureRegisterGroup.class})
+	private Integer lecrum_no;
 	
 	private int startAttNo;
 	private List<AttachVO> attachList;

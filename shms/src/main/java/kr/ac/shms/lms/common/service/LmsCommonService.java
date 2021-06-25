@@ -306,4 +306,5 @@ public interface LmsCommonService {
 	 * @return 성공, 실패
 	 */
 	public ServiceResult insertLecture(LectureVO lecture);
+	
 }

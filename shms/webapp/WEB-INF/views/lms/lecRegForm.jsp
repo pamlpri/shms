@@ -55,26 +55,27 @@
       <div class="card inputTable">
           <div class="card-body">
               <div class="table-responsive">
-              	<form method="post">
+              	<form method="post" id="regForm">
                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                       <tr>
                           <th class="text-center align-middle">개설연도</th>
                           <td class="text-center">
-                          	<input value="${indexInfoList[0].year }" name="estbl_year" type="number" class="form-control" disabled />
+                          	<input value="${indexInfoList[0].year }" name="estbl_year" type="number" class="form-control" readonly />
                           </td>
                           <th class="text-center align-middle">개설학기</th>
                           <td class="text-center">
-                          	<input value="${indexInfoList[0].semstr }" name="estbl_semstr" type="number" class="form-control" disabled/>
+                          	<input value="${indexInfoList[0].semstr }" name="estbl_semstr" type="number" class="form-control" readonly/>
                           </td> 
                       </tr>
                       <tr>
                           <th class="text-center align-middle">이수구분</th>
                           <td class="text-center">
-                          	<input value="${curr.lec_cl_nm }" name="lec_cl" type="text" class="form-control" disabled/>
+                          	<input value="${curr.lec_cl_nm }" type="text" class="form-control" readonly/>
+                          	<input value="${curr.lec_cl }" name="lec_cl" type="hidden" class="form-control"/>
                           </td> 
                           <th class="text-center align-middle">학점</th>
                           <td class="text-center">
-                          	<input value="${curr.lec_pnt }" id="lecPnt" type="number" class="form-control" disabled />
+                          	<input value="${curr.lec_pnt }" id="lecPnt" type="number" class="form-control" readonly />
                           </td>
                       </tr>
                       <tr>
@@ -82,11 +83,11 @@
                           <td class="text-center">
                           	<select name="dayotw" class="form-select" id="dayotw">
                           		<option value="">-- 요일 선택 --</option>
-                          		<option value="02">월요일</option>
-                          		<option value="03">화요일</option>
-                          		<option value="04">수요일</option>
-                          		<option value="05">목요일</option>
-                          		<option value="06">금요일</option>
+                          		<option value="02" >월요일</option>
+                          		<option value="03" >화요일</option>
+                          		<option value="04" >수요일</option>
+                          		<option value="05" >목요일</option>
+                          		<option value="06" >금요일</option>
                           	</select>
                           </td> 
                           <th class="text-center align-middle">강의시작시간</th>
@@ -107,21 +108,21 @@
                       <tr>
                           <th class="text-center align-middle">대상학과</th>
                           <td class="text-center">
-                          	<input data-sub="${curr.sub_code }" id="subCode" value="${curr.sub_name }" type="text" class="form-control" disabled />
+                          	<input data-sub="${curr.sub_code }" id="subCode" value="${curr.sub_name }" type="text" class="form-control" readonly />
                           </td> 
                           <th class="text-center align-middle">대상학년</th>
                           <td class="text-center">
-                          	<input value="${curr.lec_atnlc }" type="text" class="form-control" disabled />
+                          	<input value="${curr.lec_atnlc }" type="text" class="form-control" readonly />
                           </td>
                       </tr>
                       <tr>
                           <th class="text-center align-middle">강의정원</th>
                           <td class="text-center">
-                          	<input id="lecCpacity" value="${curr.lec_cpacity }" type="number" class="form-control" disabled />
+                          	<input id="lecCpacity" value="${curr.lec_cpacity }" type="number" class="form-control" readonly />
                           </td> 
                           <th class="text-center align-middle">강의실</th>
                           <td class="text-center">
-                          	<select class="form-select" name="lecrum" id="lecrumSelect">
+                          	<select class="form-select" name="lecrum_no" id="lecrumSelect">
                           	
                           	</select>
                           </td>
@@ -133,7 +134,7 @@
       </div>
       <div class="text-center">
           <a href="${cPath }/lms/curriculum.do?key=${lecCl}" class="btn btn-light-secondary">취소</a>
-          <button type="submit" class="btn btn-primary">저장</button>
+          <button id="saveBtn" type="button" class="btn btn-primary">저장</button>
       </div>
     <!--Basic Modal -->
 	<div class="modal fade text-left" id="default" tabindex="-1"
@@ -235,6 +236,10 @@ $(function(){
 				});
 			}
 		}
+	});
+	
+	$("#saveBtn").on("click", function(){
+		$("#regForm").submit();
 	});
 	
     $("#close, .modal").on("click", function(){

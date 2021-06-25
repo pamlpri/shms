@@ -117,7 +117,7 @@
                   </table>
                   <div class="float-right mt-3">
                       <a class="btn btn-primary" id="notOpen">
-                          <i class="fas fa-chalkboard"></i>&nbsp; 미등록 강의 조회
+                          <i class="fas fa-chalkboard"></i>&nbsp; 미등록/전체 강의 조회
                       </a>
                   </div>
                   <nav id="pagingArea" aria-label="Page navigation example" class="pagenationNav">

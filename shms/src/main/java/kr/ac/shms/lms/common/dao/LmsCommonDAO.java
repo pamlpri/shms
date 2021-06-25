@@ -336,4 +336,10 @@ public interface LmsCommonDAO {
 	 * @return row count > 0 성공
 	 */
 	public int insertLecrumTtable(LectureVO lecture);
+	
+	/**
+	 * 가장최근에 추가된 강의의 강의코드 조회
+	 * @return
+	 */
+	public String selectMaxLecCode();
 }

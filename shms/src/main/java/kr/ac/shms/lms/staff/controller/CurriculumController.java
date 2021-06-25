@@ -33,6 +33,7 @@ import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.validator.CurriculumInsertGroup;
+import kr.ac.shms.validator.LectureRegisterGroup;
 
 /**
  * @author 박초원
@@ -46,7 +47,7 @@ import kr.ac.shms.validator.CurriculumInsertGroup;
  * 2021. 6. 23.      박초원      	       최초작성
  * 2021. 6. 23.      송수미      	       커리큘럼 등록 기능 구현
  * 2021. 6. 24.      송수미      	       커리큘럼  조회 기능 구현
- * 2021. 6. 24.      송수미      	       
+ * 2021. 6. 25.      송수미      	      강의 등록   
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -239,22 +240,37 @@ public class CurriculumController {
 	
 	@RequestMapping(value="/lms/lectureRegister.do", method=RequestMethod.POST)
 	public String lectureRegister(
-			@Validated
+			@Validated(LectureRegisterGroup.class)
 			@ModelAttribute("lecture") LectureVO lecture
 			, Errors errors
 			, Model model	
 			) {
+		logger.info("lecture : {}", lecture.toString());
+		List<CurriculumVO> indexInfoList = lmsCommonService.selectCurIndexInfo();
+		CurriculumVO curr = lmsCommonService.selectCurriculum(lecture.getCur_code());
 		boolean valid = !errors.hasErrors();
 		String message = null;
 		String view = null;
 		
 		if(valid) {
+			ServiceResult result = lmsCommonService.insertLecture(lecture);
 			
+			if(ServiceResult.OK.equals(result)) {
+				view = "redirect:/lms/curriculum.do?key=major";
+			}else {
+				message = "강의 등록에 실패했습니다. 잠시 후 다시 시도해주세요.";
+				view = "lms/lecRegForm";
+			}
 		}else {
 			message = "빠뜨린 내용이 있는지 확인해주세요.";
 			view = "lms/lecRegForm";
 		}
 		
+		model.addAttribute("indexInfoList", indexInfoList);
+		model.addAttribute("curr", curr);
+		model.addAttribute("lecture", lecture);
+		model.addAttribute("message", message);
+		logger.info("message :{}", message);
 		return view;
 	}
 	
