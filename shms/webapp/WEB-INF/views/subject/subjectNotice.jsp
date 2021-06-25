@@ -35,8 +35,8 @@
 						<input type="button" value="검색" id="searchBtn">
 					</div>
 				</form>
-				<div class="table-responsive" style="flex-direction: column;">
-					<table class="table">
+				<div class="table-responsive">
+					<table class="table"  style="flex-direction: column;">
 						<thead>
 							<tr>
 								<th class="text-center">No.</th>

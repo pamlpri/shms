@@ -13,6 +13,10 @@
  * Copyright (c) ${year} by DDIT All right reserved
  * </pre>
  */ 
+ 
+.page-heading {
+	margin : 0;
+}
 
 /* 에러 메세지 */
 .error{
@@ -1054,4 +1058,16 @@
 }
 #scoreTbody table td:last-of-type {
 	width : 20%;
+}
+
+.minHBox {
+	min-height : 73vh;
+}
+
+.minHMd {
+	min-height : 20rem;
+}
+
+.email-application .content-area-wrapper .content-right .email-app-list-wrapper .email-app-list .email-user-list {
+	height : 65vh!important;
 }
