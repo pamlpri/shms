@@ -37,6 +37,7 @@ import kr.ac.shms.lms.student.vo.SugangVO;
  * 2021. 6. 21.       박초원 		 교수 학생 출석수정,  출석 성적부 반영
  * 2021. 6. 22. 	  박초원			 서술형, 단답형 채점, 성적 수정
  * 2021. 6. 23.		  박초원			 성적관리
+ * 2021. 6. 26.       박초원			과제 성적부 반영
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */

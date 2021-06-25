@@ -140,7 +140,7 @@ public class AcademicChangeController {
 		
 		String view = null;
 		if(ServiceResult.OK.equals(result)) {
-			view = "redirect:/lms/academicChange";
+			view = "redirect:/lms/academicChange.do";
 		}
 		
 		return view;

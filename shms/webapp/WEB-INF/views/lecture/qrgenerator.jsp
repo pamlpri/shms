@@ -22,7 +22,11 @@
       </div>
   </div>
 </div>
-<form id="submitForm" action="${cPath }/lecture/attendanceResult.do" method="post"></form>
+<form id="submitForm" action="${cPath }/lecture/attendanceResult.do" method="post">
+	<input type="hidden" name="attend_time" value="">
+	<input type="hidden" name="exit_time" value="">
+	<input type="hidden" name="lec_name" value="${lec_name}"/>
+</form>
 
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script type="text/javascript" src="${cPath }/resources/lms/assets/js/jquery-3.6.0.min.js"></script>

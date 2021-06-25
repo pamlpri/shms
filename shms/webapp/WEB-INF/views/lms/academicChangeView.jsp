@@ -110,7 +110,7 @@
                   	<c:when test="${process_stat eq '승인'}">
 		              <div class="text-center">
 		                  <a href="${cPath }/lms/academicChange.do" class="btn btn-primary">목록으로</a>
-		                  <button class="btn btn-danger" type="button" id="completeBtn">학적변동</button>
+		                  <button class="btn btn-danger" type="button" id="completeBtn" value="WR">학적변동</button>
 		              </div>
                   	</c:when>
                   	<c:when test="${process_stat eq '완료' }">
@@ -144,4 +144,10 @@
 	   	$("#process_stat").val(si);
 		$("#submitForm").submit();
 	});
+	
+	$("#completeBtn").on("click", function(){
+	   	let wr =$("#completeBtn").val();
+	   	$("#process_stat").val(wr);
+		$("#submitForm").submit();
+	})
 </script>
