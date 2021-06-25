@@ -178,24 +178,18 @@
                           <div class="card-body">
                               <div class="row">
                                   <div class="col-lg-4">
-                                      <c:choose>
-                                      	<c:when test="${exist eq 'notNull' }">
-	                                      <!-- 예약한 좌석이 있을때 -->
-	                                      <div class="roomQr" id="roomQrBlock">
-	                                      		<!-- QR 자리 -->
-	                                          <img src="${cPath}/resources/lms/assets/images/qr.jpg" />
-	                                      	  <div id="qrcode"></div>
-	                                          <p class="text-center">입구에 비치된 카메라에<br/>QR코드 인식 후 입실해야 합니다.</p>
-	                                      </div>
-                                      	</c:when>
-                                      	<c:otherwise>
-	                                      <!-- 예약한 좌석이 없을때 -->
-	                                       <div class="roomQr text-center" id="roomQrNone">
-	                                           <img src="${cPath}/resources/lms/vendors/images/logo_black.png" />
-	                                           <p class="text-center">예약한 열람실 좌석이 없습니다.</p>
-	                                       </div>
-                                      	</c:otherwise>
-                                      </c:choose>
+                                      <!-- 예약한 좌석이 있을때 -->
+                                      <div class="roomQr" id="roomQrBlock">
+                                      		<!-- QR 자리 -->
+                                          <img src="${cPath}/resources/lms/assets/images/qr.jpg" />
+                                      	  <div id="qrcode"></div>
+                                          <p class="text-center">입구에 비치된 카메라에<br/>QR코드 인식 후 입실해야 합니다.</p>
+                                      </div>
+                                      <!-- 예약한 좌석이 없을때 -->
+                                       <div class="roomQr text-center" id="roomQrNone">
+                                           <img src="${cPath}/resources/lms/vendors/images/logo_black.png" />
+                                           <p class="text-center">예약한 열람실 좌석이 없습니다.</p>
+                                       </div>
                                     </div>
                                     <div class="col-lg-8">
                                         <table class="table table-striped" id="table1">
@@ -282,15 +276,17 @@
 </div>
 <script type="text/javascript" src="${cPath }/resources/lecture/dist/js/qrcode.js"></script>
 <script>
-	var qrcode = new QRCode(document.getElementById("qrcode"), {
-		text : '${user.user[0]},readingroom',
-		width: 128,
-		height: 128,
-		colorDark : "#000000",
-		colorLight : "#ffffff",
-		correctLevel : QRCode.CorrectLevel.H
-	});
     $(function(){
+    	$(".roomQr").addClass("hide");
+    	$("#roomQrNone").removeClass("hide");
+    	var qrcode = new QRCode(document.getElementById("qrcode"), {
+			text : '${user.user[0]},readingroom',
+			width: 128,
+			height: 128,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
+		});
     	
         $(".seat").find("table").on("click", "td", function(){
             $(".seat").find("table td").removeClass("choice");
@@ -320,11 +316,21 @@
                 	, data: {"facility_no" : facility_no[0]}
                 	, success : function(res) {
                 		if(res == 'OK') {
-                			location.href="${cPath}/lms/readingroom.do"
-                			$("#roomQrNone").css("display","none");
-                			$("#roomQrBlock").css("display","block");
+//                 			location.href="${cPath}/lms/readingroom.do"
+                			var qrcode = new QRCode(document.getElementById("seat1"), {
+                				text : '${user.user[0]},readingroom',
+                				width: 128,
+                				height: 128,
+                				colorDark : "#000000",
+                				colorLight : "#ffffff",
+                				correctLevel : QRCode.CorrectLevel.H
+                			});
+                			$(".roomQr").removeClass("hide");
+                			$("#roomQrNone").addClass("hide");
                 		} else if(res == "FAIL") {
                 			$("#exampleModalCenter").find(".modal-body p").text("이미 열람실을 예약하셨습니다.");
+                			$(".roomQr").removeClass("hide");
+                			$("#roomQrNone").addClass("hide");
                 		}
                 	}
                 	, error : function(xhr, error, msg) {
@@ -335,6 +341,46 @@
                 });
             }
         });
+        
+//         $("#mySeat-tab").on("click", function(){
+//             if($(".choiceWrap").find(".seatNum").text() == null || $(".choiceWrap").find(".seatNum").text() == ""){
+//                 $("#exampleModalCenter").find(".modal-body p").text("선택하신 좌석이 없습니다.");
+//                 $(".choiceBox").reset();
+//             }else {
+//                 $("#exampleModalCenter").addClass("show");
+//                 let facility_no = $(".choiceWrap").find(".seatNum").text();
+//                 facility_no = facility_no.split('번');
+//                 $.ajax({
+//                 	url: "${cPath}/lms/readingroomInsert.do"
+//                 	, method: "post"
+//                 	, data: {"facility_no" : facility_no[0]}
+//                 	, success : function(res) {
+//                 		if(res == 'OK') {
+// //                 			location.href="${cPath}/lms/readingroom.do"
+//                 			var qrcode = new QRCode(document.getElementById("seat1"), {
+//                 				text : '${user.user[0]},readingroom',
+//                 				width: 128,
+//                 				height: 128,
+//                 				colorDark : "#000000",
+//                 				colorLight : "#ffffff",
+//                 				correctLevel : QRCode.CorrectLevel.H
+//                 			});
+//                 			$(".roomQr").removeClass("hide");
+//                 			$("#roomQrNone").addClass("hide");
+//                 		} else if(res == "FAIL") {
+//                 			$("#exampleModalCenter").find(".modal-body p").text("이미 열람실을 예약하셨습니다.");
+//                 			$(".roomQr").removeClass("hide");
+//                 			$("#roomQrNone").addClass("hide");
+//                 		}
+//                 	}
+//                 	, error : function(xhr, error, msg) {
+//                 		console.log(xhr);
+//                 		console.log(error);
+//                 		console.log(msg);
+//                 	}
+//                 });
+//             }
+//         });
     });
     
 </script>
