@@ -380,10 +380,10 @@
 	            WHERE bo_kind = #{searchMap.bo_kind, jdbcType=VARCHAR}
 	              AND sub_code = #{searchMap.sub_code, jdbcType=VARCHAR}
 	        ) A
-	    )
 		  <trim prefix="WHERE">
 		  		<include refid="searchFrag"/>
 		  </trim>
+	    )
 	    WHERE rn BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
