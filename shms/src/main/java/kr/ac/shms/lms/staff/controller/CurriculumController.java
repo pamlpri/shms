@@ -1,6 +1,5 @@
 package kr.ac.shms.lms.staff.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.CurriculumVO;
+import kr.ac.shms.common.vo.LecrumVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.UserVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.validator.CurriculumInsertGroup;
 
 /**
@@ -223,7 +224,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping("/lms/lectureRegister.do")
-	public String lectureRegister(
+	public String lectureRegisterForm(
 		@RequestParam("cur_code") String cur_code
 		, Model model	
 		) {
@@ -236,21 +237,41 @@ public class CurriculumController {
 		return "lms/lecRegForm";
 	}
 	
+	@RequestMapping(value="/lms/lectureRegister.do", method=RequestMethod.POST)
+	public String lectureRegister(
+			@Validated
+			@ModelAttribute("lecture") LectureVO lecture
+			, Errors errors
+			, Model model	
+			) {
+		boolean valid = !errors.hasErrors();
+		String message = null;
+		String view = null;
+		
+		if(valid) {
+			
+		}else {
+			message = "빠뜨린 내용이 있는지 확인해주세요.";
+			view = "lms/lecRegForm";
+		}
+		
+		return view;
+	}
+	
 	@RequestMapping(value="/lms/staffSchdulCheck.do", produces=MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String staffSchdulChk(
-		@RequestParam("lecTime") String lecTime
+		@RequestParam("lecTime") Integer lecTime
 		, @RequestParam("lec_pnt") Integer lec_pnt
 		, @RequestParam("staff_no") String staff_no
 		, @RequestParam("dayotw") String dayotw
 		) {
 		String result = "FAIL";
 		Map<String, Object> searchMap = new HashMap<>();
-		if(StringUtils.isNotBlank(lecTime)) {
-			Integer lec_time = Integer.parseInt(lecTime.split(":")[0]);
+		if(lecTime != null) {
 			int[] timeArray = new int[lec_pnt];
 			for(int i = 0; i < lec_pnt; i++) {
-				timeArray[i] = lec_time + i;
+				timeArray[i] = lecTime + i;
 			}
 			searchMap.put("timeArray", timeArray);
 			searchMap.put("staff_no", staff_no);
@@ -264,5 +285,33 @@ public class CurriculumController {
 			result = "NULL";
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/lms/lecRumInfo.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public List<LecrumVO> lecrumInfo(
+			@RequestParam("lecCpacity") Integer lecCpacity
+			, @RequestParam("subCode") String subCode
+			, @RequestParam("dayotw") String dayotw
+			, @RequestParam("lecTime") Integer lecTime
+			, @RequestParam("lecPnt") Integer lecPnt
+		) {
+		String result = "FAIL";
+		Map<String, Object> searchMap = new HashMap<>();
+		int endTime = lecTime + lecPnt - 1;
+		searchMap.put("lec_cpacity", lecCpacity);
+		searchMap.put("sub_code", subCode);
+		searchMap.put("dayotw", dayotw);
+		searchMap.put("lec_time", lecTime);
+		searchMap.put("end_time", endTime);
+		searchMap.put("search", "first");
+		
+		List<LecrumVO> lecrum = lmsCommonService.selectLecrumInfo(searchMap);
+		if(lecrum == null) {
+			searchMap.put("search", "second");
+			lecrum = lmsCommonService.selectLecrumInfo(searchMap);
+		}
+		
+		return lecrum;
 	}
 }

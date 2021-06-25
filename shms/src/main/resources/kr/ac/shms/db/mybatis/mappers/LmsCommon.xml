@@ -803,16 +803,22 @@
 		    lecrum a
 		INNER JOIN building b
 		  ON(a.building_no = b.building_no)
-		WHERE ACEPTNC_NMPR > 5
-		  AND a.sub_code = 105
-		--  AND a.building_no = SUBSTR(105, 1, 1)
-		--  AND SUBSTR(lecrum_nm, 1, 1) = '1'
+		WHERE ACEPTNC_NMPR > #{lec_cpacity, jdbcType=VARCHAR}
+		  <choose>
+		  	<when test="search eq 'first'">
+				  AND a.sub_code = #{sub_code, jdbcType=VARCHAR}
+		  	</when>
+		  	<otherwise>
+			  AND a.building_no = SUBSTR(#{sub_code, jdbcType=VARCHAR}, 1, 1)
+			  AND SUBSTR(lecrum_nm, 1, 1) = '1'
+		  	</otherwise>
+		  </choose>
 		  AND lecrum_no NOT IN (SELECT lecrum_no
 		                          FROM lecrum_ttable 
-		                         WHERE dayotw = 05 
-		                           AND (tm BETWEEN 9 AND 11)
+		                         WHERE dayotw = #{dayotw, jdbcType=VARCHAR}
+		                           AND (tm BETWEEN #{lec_time} AND #{end_time})
 		                           AND use_at = 'Y'
 		  )
-		ORDER BY lecrum_no;
+		ORDER BY lecrum_no
 	</select>
 </mapper>

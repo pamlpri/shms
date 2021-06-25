@@ -32,6 +32,7 @@ import kr.ac.shms.lms.common.vo.UserVO;
 import kr.ac.shms.lms.common.vo.UsersVO;
 import kr.ac.shms.lms.common.vo.WebmailVO;
 import kr.ac.shms.lms.student.vo.ConsultingVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.main.commuity.vo.ScheduleVO;
 
 /**
@@ -341,7 +342,25 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 	}
 
 	@Override
-	public LecrumVO selectLecrumInfo(Map<String, Object> searchMap) {
+	public List<LecrumVO> selectLecrumInfo(Map<String, Object> searchMap) {
 		return lmsCommonDAO.selectLecrumInfo(searchMap);
+	}
+	
+	@Transactional
+	@Override
+	public ServiceResult insertLecture(LectureVO lecture) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		int cnt = 0;
+		
+		cnt = lmsCommonDAO.insertLecture(lecture);
+		if(cnt > 0) {
+			cnt += lmsCommonDAO.insertLecrumTtable(lecture);
+			if(cnt > 1) {
+				result = ServiceResult.OK;
+			}
+		}
+		
+		return result;
 	}
 }

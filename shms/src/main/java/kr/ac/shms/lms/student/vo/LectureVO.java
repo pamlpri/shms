@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.IAttachVO;
 import kr.ac.shms.validator.LectureInsertGroup;
+import kr.ac.shms.validator.LectureRegisterGroup;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,9 +37,13 @@ import lombok.NoArgsConstructor;
 public class LectureVO implements IAttachVO {
 	private String lec_code;
 	private String lec_name;
+	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String cur_code;
+	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String lec_cl;
+	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer estbl_year;
+	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer estbl_semstr;
 	
 	@NotBlank(groups={LectureInsertGroup.class})
@@ -48,7 +54,9 @@ public class LectureVO implements IAttachVO {
 	private String tchmtr_scope;
 	
 	private String lec_rm;
+	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String dayotw;
+	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer lec_time;
 	private String lec_full_time;
 	private String abolec;

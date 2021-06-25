@@ -55,6 +55,7 @@
       <div class="card inputTable">
           <div class="card-body">
               <div class="table-responsive">
+              	<form method="post">
                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                       <tr>
                           <th class="text-center align-middle">개설연도</th>
@@ -106,7 +107,7 @@
                       <tr>
                           <th class="text-center align-middle">대상학과</th>
                           <td class="text-center">
-                          	<input value="${curr.sub_name }" type="text" class="form-control" disabled />
+                          	<input data-sub="${curr.sub_code }" id="subCode" value="${curr.sub_name }" type="text" class="form-control" disabled />
                           </td> 
                           <th class="text-center align-middle">대상학년</th>
                           <td class="text-center">
@@ -116,22 +117,23 @@
                       <tr>
                           <th class="text-center align-middle">강의정원</th>
                           <td class="text-center">
-                          	<input value="${curr.lec_cpacity }" type="number" class="form-control" disabled />
+                          	<input id="lecCpacity" value="${curr.lec_cpacity }" type="number" class="form-control" disabled />
                           </td> 
                           <th class="text-center align-middle">강의실</th>
                           <td class="text-center">
-                          	<select class="form-select" name="lecrum">
+                          	<select class="form-select" name="lecrum" id="lecrumSelect">
                           	
                           	</select>
                           </td>
                       </tr>
                   </table>
+                </form>
               </div>
           </div>  
       </div>
       <div class="text-center">
-          <a href="elective.html" class="btn btn-light-secondary">취소</a>
-          <a href="elective.html" class="btn btn-primary">저장</a>
+          <a href="${cPath }/lms/curriculum.do?key=${lecCl}" class="btn btn-light-secondary">취소</a>
+          <button type="submit" class="btn btn-primary">저장</button>
       </div>
     <!--Basic Modal -->
 	<div class="modal fade text-left" id="default" tabindex="-1"
@@ -163,21 +165,30 @@
   <!-- contents end -->
 </div>
 <script>
+function setModal(message){
+	$("#default").find(".modal-body p").empty().text(message);
+	$("#default").addClass("show").css("display","block");
+} 
+
 $(function(){
 	let lecTime = $("#lecTime");
 	let dayotw = $("#dayotw");
 	let staffNo = $("#staffNo");
 	let lecPnt = $("#lecPnt");
+	let lecCpacity = $("#lecCpacity");
+	let subCode = $("#subCode").data("sub");
 // 	$("#dblChkBtn").on("click", function(){
+	$(dayotw).on("change", function(){
+		$(lecTime).val("");
+	});
+	
 	$(lecTime).on("change", function(){
 		if(dayotw.val() == ""){
 			lecTime.val("");
-			$("#default").find(".modal-body p").empty().text("강의 요일을 먼저 선택해주세요.");
-			$("#default").addClass("show").css("display","block");
+			setModal("강의 요일을 먼저 선택해주세요.");
 		}else{
 			if(lecTime.val() == null || lecTime.val() == ""){
-				$("#default").find(".modal-body p").empty().text("강의 시간을 선택해주세요.");
-				$("#default").addClass("show").css("display","block");
+				setModal("강의 시간을 선택해주세요.");	
 			}else{
 				$.ajax({
 					url : "${cPath}/lms/staffSchdulCheck.do",
@@ -190,17 +201,34 @@ $(function(){
 					success : function(resp){
 						let message = "";
 						if(resp == "NULL"){
-							message = "강의 시간을 선택해주세요.";
+							setModal("강의 시간을 선택해주세요.");
 							lecTime.val("");
 						}else if(resp == "FAIL"){
-							message = "해당 시간은 강의가 중복됩니다.";
+							setModal("해당 시간은 강의가 중복됩니다.");
 							lecTime.val("");
 						}else{
-							message = "해당 시간은 선택이 가능합니다.";
+							setModal("해당 시간은 선택이 가능합니다.");
+							$.ajax({
+								url : "${cPath}/lms/lecRumInfo.do",
+								data : {
+									lecCpacity : lecCpacity.val(),
+									subCode : subCode,
+									dayotw : dayotw.val(),
+									lecTime : lecTime.val(),
+									lecPnt : lecPnt.val()
+								},
+								success : function(resp){
+									let option = "";
+									$(resp).each(function(idx, lecrum){
+										option += "<option value='" + lecrum.lecrum_no + "'>" + lecrum.building_nm + lecrum.lecrum_nm + "</option>";
+									});
+									$("#lecrumSelect").append(option);
+								}, error : function(xhr, resp, error){
+									console.log(xhr);
+								}
+							});
 						}
 						
-						$("#default").find(".modal-body p").empty().text(message);
-						$("#default").addClass("show").css("display","block");
 					}, error : function(xhr, resp, error){
 						console.log(xhr);
 					}
