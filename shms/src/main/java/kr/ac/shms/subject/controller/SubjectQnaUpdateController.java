@@ -49,6 +49,8 @@ public class SubjectQnaUpdateController {
 			, Model model
 			) {
 		BoardVO savedBoard = boardService.selectBoard(bo_no);
+		savedBoard.setBo_cont(savedBoard.getBo_cont().replaceAll("<br/>", "\r\n"));
+		logger.info("board12 : {}",savedBoard);
 		model.addAttribute("savedBoard", savedBoard);
 		model.addAttribute("mode", "update");
 		model.addAttribute("sub_code", sub_code);
@@ -63,7 +65,6 @@ public class SubjectQnaUpdateController {
 			, Errors errors
 			, Model model
 			) {
-		logger.info("board : {}", board.toString());
 		boolean valid = !errors.hasErrors();
 		
 		BoardVO savedBoard = boardService.selectBoard(board.getBo_no());
