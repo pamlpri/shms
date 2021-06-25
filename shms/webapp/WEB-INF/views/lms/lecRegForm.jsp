@@ -83,11 +83,11 @@
                           <td class="text-center">
                           	<select name="dayotw" class="form-select" id="dayotw">
                           		<option value="">-- 요일 선택 --</option>
-                          		<option value="02" >월요일</option>
-                          		<option value="03" >화요일</option>
-                          		<option value="04" >수요일</option>
-                          		<option value="05" >목요일</option>
-                          		<option value="06" >금요일</option>
+                          		<option value="02" ${lecture.dayotw == '02'? 'selected' :'' }>월요일</option>
+                          		<option value="03" ${lecture.dayotw == '03'? 'selected' :'' }>화요일</option>
+                          		<option value="04" ${lecture.dayotw == '04'? 'selected' :'' }>수요일</option>
+                          		<option value="05" ${lecture.dayotw == '05'? 'selected' :'' }>목요일</option>
+                          		<option value="06" ${lecture.dayotw == '06'? 'selected' :'' }>금요일</option>
                           	</select>
                           </td> 
                           <th class="text-center align-middle">강의시작시간</th>
@@ -97,7 +97,7 @@
                                   	  <select name="lec_time" class="form-select col-md-6" id="lecTime">
                                   	  		<option value="">-- 시간 선택 --</option>
                                   	  	<c:forEach begin="9" end="15" var="time">
-                                  	  		<option value="${time }">${time }</option>
+                                  	  		<option value="${time }" ${lecture.lec_time eq time ? 'selected' : '' }>${time }</option>
                                   	  	</c:forEach>
                                   	  </select>
 <!--                                       <button type="button" class="btn btn-primary" id="dblChkBtn">강의 시간 중복 확인</button> -->
@@ -133,9 +133,10 @@
           </div>  
       </div>
       <div class="text-center">
-          <a href="${cPath }/lms/curriculum.do?key=${lecCl}" class="btn btn-light-secondary">취소</a>
+          <a href="${cPath }/lms/curriculum.do?key='major'" class="btn btn-light-secondary">취소</a>
           <button id="saveBtn" type="button" class="btn btn-primary">저장</button>
       </div>
+      
     <!--Basic Modal -->
 	<div class="modal fade text-left" id="default" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -165,6 +166,16 @@
   </section>
   <!-- contents end -->
 </div>
+<c:if test="${not empty message }">
+	<script>
+		let message = "${message}";
+		setModal(message);
+		function setModal(message){
+			$("#default").find(".modal-body p").empty().text(message);
+			$("#default").addClass("show").css("display","block");
+		} 
+	</script>
+</c:if>
 <script>
 function setModal(message){
 	$("#default").find(".modal-body p").empty().text(message);
@@ -184,6 +195,10 @@ $(function(){
 	});
 	
 	$(lecTime).on("change", function(){
+		if(lecTime.val() == ""){
+			$("#lecrumSelect").empty();
+		}
+	
 		if(dayotw.val() == ""){
 			lecTime.val("");
 			setModal("강의 요일을 먼저 선택해주세요.");
@@ -237,6 +252,12 @@ $(function(){
 			}
 		}
 	});
+	
+	$("#lecrumSelect").on("click", function(){
+		if(lecTime.val() == ""){
+			setModal("강의 시간을 먼저 선택해주세요.");
+		}
+	})
 	
 	$("#saveBtn").on("click", function(){
 		$("#regForm").submit();

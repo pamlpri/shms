@@ -2,6 +2,8 @@ package kr.ac.shms.main.commuity.controller;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -31,7 +33,7 @@ import kr.ac.shms.validator.DMBoardInsertGroup;
  */
 @Controller
 public class CollegeQnaInsertController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(CollegeQnaInsertController.class);
 	@Inject
 	private BoardService boardService;
 	
@@ -53,6 +55,8 @@ public class CollegeQnaInsertController {
 		String view = null;
 		String message = null;
 		String bo_kind = boardService.selectBoKind("대학문의");
+		String bo_cont = board.getBo_cont().replaceAll("\r\n", "<br/>");
+		board.setBo_cont(bo_cont);
 		
 		if(valid) {
 			board.setBo_kind(bo_kind);

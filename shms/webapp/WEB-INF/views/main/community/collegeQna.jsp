@@ -65,7 +65,7 @@
 									<c:choose>
 										<c:when test="${board.bo_secret_at eq 'Y' }">
 											<a class="text-black-color" href="${cPath }/main/community/collegeQnaPass.do?bo_no=${board.bo_no}">
-												<span class="dept">[${board.inqry_kind_name }]</span>${board.bo_title }
+												<span class="dept">[${board.inqry_kind_name }]</span>비밀글
 													<i class="fas fa-key"></i>
 											</a>
 										</c:when>
