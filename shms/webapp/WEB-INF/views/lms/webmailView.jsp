@@ -88,8 +88,7 @@
                            </div>
                        </div>
                        <hr>
-                       <p>${webmail.cont }
-                       </p>
+                       <div class="minHMd" style="padding : 5px;">${webmail.cont }</div>
                        <middle class="text-muted">from : ${webmail.sender_name }(${webmail.sender_webmail})</middle>
                        <hr>
                        <c:if test="${not empty webmail.attachList }">

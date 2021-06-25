@@ -18,7 +18,7 @@
 						<div class="footer-tittle">
 							<h4>대학안내</h4>
 							<ul>
-								<li><a href="../main/message.html">인사말</a></li>
+								<li><a href="${cPath }/main/about/message.do">인사말</a></li>
 								<li><a href="../main/education.html">교육이념</a></li>
 								<li><a href="../main/organization.html">조직도</a></li>
 								<li><a href="../main/map.html">오시는길</a></li>
@@ -31,10 +31,10 @@
 						<div class="footer-tittle">
 							<h4>대학광장</h4>
 							<ul>
-								<li><a href="../main/collegeSchedule.html">학사일정</a></li>
-								<li><a href="../main/academic.html">학사공지</a></li>
-								<li><a href="../main/scholarship.html">장학공지</a></li>
-								<li><a href="../main/reference.html">자료실</a></li>
+								<li><a href="${cPath }/main/community/collegeSchedule.do">학사일정</a></li>
+								<li><a href="${cPath }/main/community/academicList.do">학사공지</a></li>
+								<li><a href="${cPath }/main/community/scholarshipList.do">장학공지</a></li>
+								<li><a href="${cPath }/main/community/referenceList.do">자료실</a></li>
 							</ul>
 						</div>
 					</div>
@@ -58,8 +58,8 @@
 						<div class="footer-tittle">
 							<h4>교내사이트</h4>
 							<ul>
-								<li><a href="../main/index.html">인재대학교</a></li>
-								<li><a href="../lms/login.html">통합정보시스템</a></li>
+								<li><a href="${cPath }/">인재대학교</a></li>
+								<li><a href="${cPath }/lms/login.do">통합정보시스템</a></li>
 							</ul>
 						</div>
 					</div>
