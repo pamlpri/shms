@@ -84,9 +84,6 @@ public class CertificateScholarshipController {
 		, @RequestParam("refuse_resn") String refuse_resn
 		, @RequestParam("process_stat") String process_stat
 		) {
-		System.out.println("**************************************");
-		logger.info("refuse_resn {}", refuse_resn);
-		
 		ScholarShipVO schl = new ScholarShipVO();
 		schl.setReq_no(req_no);
 		schl.setRefuse_resn(refuse_resn);
@@ -96,7 +93,6 @@ public class CertificateScholarshipController {
 		if(ServiceResult.OK.equals(result)) {
 			view = "redirect:/lms/certificateScholarship.do";
 		}
-		
 		return view;
 	}
 	

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.dao.OthersDAO;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.RegInfoCngVO;
@@ -145,4 +146,5 @@ public class AcademicViewController {
 	public List<AcademicRegistrationVO> academicRegistrationExcelDownload() {
 		return lmsStaffDAO.selectAcademicRegistrationInfo();
 	}
+	
 }

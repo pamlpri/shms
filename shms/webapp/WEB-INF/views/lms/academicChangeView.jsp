@@ -52,7 +52,30 @@
                       <th class="align-middle text-center">신청종류</th>
                       <td>${cngVO.req_cl_code }</td>
                       <th class="align-middle text-center">제출서류</th>
-                      <td>${cngVO.file_nm }</td>
+                                   <td>
+                                 <ul class="attat">
+                                     <c:choose>
+	                                     <c:when test="${not empty cngVO.attachList }">
+		                                     <c:forEach items="${cngVO.attachList }" var="attList">
+		                                     	<div class="ml-2 fileArea">
+												<c:url value="/lms/reginfoDownload.do" var="downloadURL">
+													<c:param name="atch_file_no" value="${attList.atch_file_no }" />
+													<c:param name="atch_file_seq"
+														value="${attList.atch_file_seq }" />
+												</c:url>
+												<p class="fileBox col-lg-6">
+													<a href="${downloadURL }" class="text-color"
+														data-attno="${attList.atch_file_seq }">${attList.file_nm}</a>
+												</p>
+											</div>
+		                                     </c:forEach>
+	                                     </c:when>
+	                                     <c:otherwise>
+	                                     		<li>파일 없음</li>
+	                                     </c:otherwise>
+                                     </c:choose>
+                                  </ul>
+                                 </td>
                   </tr>
                   <tr>
                   	 <!-- 각 변동 사항에 따라 변해야하는 항목 ex) 휴학은 휴학일과 복학 예정일 -->
