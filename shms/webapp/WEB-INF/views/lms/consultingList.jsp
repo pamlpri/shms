@@ -41,8 +41,12 @@
 						<c:if test="${not empty consultingList }">
 							<c:forEach items="${consultingList }" var="consulting" varStatus="state">
 								<tr class="consultingBox" idx="${consulting.req_no }">
-									<td class="text-center">
+									<td class="text-center inputBox">
 										${state.index+1 }
+										<input type="hidden" name="hope_date" value="${consulting.hope_date }" />
+										<input type="hidden" name="hope_time" value="${consulting.hope_time }" />
+										<input type="hidden" name="req_cont" value="${consulting.req_cont }" />
+										<input type="hidden" name ="consult_cl" value="${consulting.consult_cl }" />
 									</td>
 									<td class="text-center">${consulting.req_no }</td>
 									<td class="text-center">${consulting.consult_cl_nm }</td>
@@ -151,17 +155,17 @@
 						<div class="form-group">
 							<h6>상담사유</h6>
 							<textarea class="form-control cont" placeholder="상담을 신청하는 사유를 적어주세요."
-								id="floatingTextarea" name="req_cont" value=""></textarea>
+								id="floatingTextarea" name="req_cont" value="${consulting.req_cont }"></textarea>
 						</div>
 						<div class="form-group">
 							<h6>상담희망일시</h6>
 							<input class="form-control form-control-default" type="date"
-								name="hope_date" value="">
+								name="hope_date" value="${consulting.hope_date }">
 						</div>
 						<div class="form-group">
 							<h6>상담희망시간</h6>
 							<input class="form-control form-control-default" type="time"
-								name="hope_time" value="">
+								name="hope_time" value="${consulting.hope_time }">
 						</div>
 						<p>지도교수의 일정에 따라 상담신청이 반려될 수 있습니다.</p>
 					</div>
@@ -297,8 +301,8 @@
     		curCode = $(this).parents(".consultingBox").attr("idx");
     		
     		$(this).parents(".consultingBox").children(".inputBox").children(":input[name]").each(function(){
-    			if($(this).attr("name")== "req_cont"){
-	    			$("#inlineForm").find(".cont").text(this.value);
+    			if($(this).attr("name") == "req_cont"){
+	    			$("#inlineForm").find(".cont").html(this.value);
     			}
     			if($(this).attr("name") == "consult_cl"){
     				console.log(this.value);
