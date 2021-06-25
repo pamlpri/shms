@@ -25,40 +25,40 @@
                   <tr>
                       <th rowspan="2" class="align-middle text-center">신청대상</th>
                       <th class="align-middle text-center">학번</th>
-                      <td>S1401001</td>
+                      <td>${cng.stdnt_no }</td>
                       <th class="align-middle text-center">이름</th>
-                      <td>강미나</td>
+                      <td>${cng.stdnt_name }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">전화번호</th>
-                      <td>010-2344-1234</td>
+                      <td>${cng.tel_no }</td>
                       <th class="align-middle text-center">웹메일</th>
-                      <td>asdgasdg@shms.ac</td>
+                      <td>${cng.webmail }</td>
                   </tr>
                   <tr>
                       <th rowspan="4" class="align-middle text-center">신청상세</th>
                       <th class="align-middle text-center">신청번호</th>
-                      <td>12345</td>
+                      <td>${cng.cng_req_no }</td>
                       <th class="align-middle text-center">신청일자</th>
-                      <td>2020.05.01</td>
+                      <td>${cng.req_de }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">신청종류</th>
-                      <td>자퇴</td>
+                      <td>${cng.req_cl_code }</td>
                       <th class="align-middle text-center">제출서류</th>
-                      <td>지도교수확인서.pdf</td>
+                      <td>${cng.file_nm }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">신청사유</th>
-                      <td>건강문제</td>
+                      <td>${cng.req_resn_code }</td>
                       <th class="align-middle text-center">자퇴일</th>
-                      <td>2022.03.02</td>
+                      <td>${cng.cng_bgnde }</td>
                   </tr>
                   <tr>
                       <th class="align-middle text-center">처리상태</th>
-                      <td>완료</td>
+                      <td>${cng.process_stat }</td>
                       <th class="align-middle text-center">처리일</th>
-                      <td>2021.05.02</td>
+                      <td>${cng.proc_date }</td>
                   </tr>
                   <tr>
               </table>

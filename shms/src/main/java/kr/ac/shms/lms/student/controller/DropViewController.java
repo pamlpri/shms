@@ -50,8 +50,15 @@ public class DropViewController {
 	@RequestMapping("/lms/dropView.do")
 	public String dropView(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
+		, @RequestParam("cng_req_no") int cng_req_no
 		, Model model
 	) {
+		String stdnt_no = user.getUser_id();
+		RegInfoCngVO cng = new RegInfoCngVO();
+		cng.setStdnt_no(stdnt_no);
+		cng.setCng_req_no(cng_req_no);
+		cng = studentService.selectReginfoCng(cng);
+		model.addAttribute("cng", cng);
 		return "lms/dropView";
 	}
 	

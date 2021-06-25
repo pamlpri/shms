@@ -66,28 +66,34 @@
 	</resultMap>
 	
 	<select id="selectReginfoCng" parameterType="RegInfoCngVO" resultMap="cng">
-		SELECT a.cng_req_no,
-		       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
-		       (SELECT com_code_nm
-		          FROM tb_com_code
-		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
-		           AND com_code = process_stat) process_stat,
-		        TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
-		        req_resn_code,
-		        a.atch_file_no,
-		        atch_file_seq,
-		        file_path,
-		        file_nm,
-		        file_cont_type,
-		        file_size,
-		        reg_date,
-		        reg_user_id,
-		        biz_type,
-		        save_file_nm
-		  FROM reginfo_cng a
-		  LEFT OUTER JOIN attach b ON(a.atch_file_no=b.atch_file_no) 
-		 WHERE a.stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
-		   AND a.cng_req_no=${cng_req_no}
+			SELECT a.stdnt_no,
+			       a.name stdnt_name,
+			       a.tel_no,
+			       CASE WHEN webmail IS NOT NULL THEN webmail
+			            WHEN webmail IS NULL THEN email
+			             END AS webmail,
+			       b.cng_req_no,
+			       TO_CHAR(req_de, 'RRRR.MM.DD') req_de,
+			      (SELECT com_code_nm
+			         FROM tb_com_code
+			        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
+			          AND com_code = process_stat) process_stat,
+			       file_nm,
+			      (SELECT com_code_nm
+			         FROM tb_com_code
+			        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
+			          AND com_code = req_resn_code) req_resn_code,    
+			      (SELECT com_code_nm
+			         FROM tb_com_code
+			        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_CL_CODE')
+			          AND com_code = req_cl_code) req_cl_code,    
+			      TO_CHAR(cng_bgnde, 'RRRR.MM.DD') cng_bgnde,
+			      TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date
+			  FROM v_stdntinfo a 
+			 INNER JOIN reginfo_cng b ON(a.stdnt_no=b.stdnt_no) 
+		 	  LEFT OUTER JOIN attach c ON(b.atch_file_no=c.atch_file_no)
+		     WHERE b.cng_req_no=#{cng_req_no}
+		       AND a.stdnt_no=#{stdnt_no}
 	</select>
 	
 </mapper>

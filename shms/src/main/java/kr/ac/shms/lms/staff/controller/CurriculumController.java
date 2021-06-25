@@ -1,6 +1,5 @@
 package kr.ac.shms.lms.staff.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +26,14 @@ import org.springframework.web.bind.support.SessionStatus;
 import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.CurriculumVO;
+import kr.ac.shms.common.vo.LecrumVO;
 import kr.ac.shms.common.vo.PagingVO;
 import kr.ac.shms.common.vo.SubjectVO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.UserVO;
+import kr.ac.shms.lms.student.vo.LectureVO;
 import kr.ac.shms.validator.CurriculumInsertGroup;
+import kr.ac.shms.validator.LectureRegisterGroup;
 
 /**
  * @author 박초원
@@ -45,7 +47,7 @@ import kr.ac.shms.validator.CurriculumInsertGroup;
  * 2021. 6. 23.      박초원      	       최초작성
  * 2021. 6. 23.      송수미      	       커리큘럼 등록 기능 구현
  * 2021. 6. 24.      송수미      	       커리큘럼  조회 기능 구현
- * 2021. 6. 24.      송수미      	       
+ * 2021. 6. 25.      송수미      	      강의 등록   
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -223,7 +225,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping("/lms/lectureRegister.do")
-	public String lectureRegister(
+	public String lectureRegisterForm(
 		@RequestParam("cur_code") String cur_code
 		, Model model	
 		) {
@@ -236,21 +238,56 @@ public class CurriculumController {
 		return "lms/lecRegForm";
 	}
 	
+	@RequestMapping(value="/lms/lectureRegister.do", method=RequestMethod.POST)
+	public String lectureRegister(
+			@Validated(LectureRegisterGroup.class)
+			@ModelAttribute("lecture") LectureVO lecture
+			, Errors errors
+			, Model model	
+			) {
+		logger.info("lecture : {}", lecture.toString());
+		List<CurriculumVO> indexInfoList = lmsCommonService.selectCurIndexInfo();
+		CurriculumVO curr = lmsCommonService.selectCurriculum(lecture.getCur_code());
+		boolean valid = !errors.hasErrors();
+		String message = null;
+		String view = null;
+		
+		if(valid) {
+			ServiceResult result = lmsCommonService.insertLecture(lecture);
+			
+			if(ServiceResult.OK.equals(result)) {
+				view = "redirect:/lms/curriculum.do?key=major";
+			}else {
+				message = "강의 등록에 실패했습니다. 잠시 후 다시 시도해주세요.";
+				view = "lms/lecRegForm";
+			}
+		}else {
+			message = "빠뜨린 내용이 있는지 확인해주세요.";
+			view = "lms/lecRegForm";
+		}
+		
+		model.addAttribute("indexInfoList", indexInfoList);
+		model.addAttribute("curr", curr);
+		model.addAttribute("lecture", lecture);
+		model.addAttribute("message", message);
+		logger.info("message :{}", message);
+		return view;
+	}
+	
 	@RequestMapping(value="/lms/staffSchdulCheck.do", produces=MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String staffSchdulChk(
-		@RequestParam("lecTime") String lecTime
+		@RequestParam("lecTime") Integer lecTime
 		, @RequestParam("lec_pnt") Integer lec_pnt
 		, @RequestParam("staff_no") String staff_no
 		, @RequestParam("dayotw") String dayotw
 		) {
 		String result = "FAIL";
 		Map<String, Object> searchMap = new HashMap<>();
-		if(StringUtils.isNotBlank(lecTime)) {
-			Integer lec_time = Integer.parseInt(lecTime.split(":")[0]);
+		if(lecTime != null) {
 			int[] timeArray = new int[lec_pnt];
 			for(int i = 0; i < lec_pnt; i++) {
-				timeArray[i] = lec_time + i;
+				timeArray[i] = lecTime + i;
 			}
 			searchMap.put("timeArray", timeArray);
 			searchMap.put("staff_no", staff_no);
@@ -264,5 +301,33 @@ public class CurriculumController {
 			result = "NULL";
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/lms/lecRumInfo.do", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public List<LecrumVO> lecrumInfo(
+			@RequestParam("lecCpacity") Integer lecCpacity
+			, @RequestParam("subCode") String subCode
+			, @RequestParam("dayotw") String dayotw
+			, @RequestParam("lecTime") Integer lecTime
+			, @RequestParam("lecPnt") Integer lecPnt
+		) {
+		String result = "FAIL";
+		Map<String, Object> searchMap = new HashMap<>();
+		int endTime = lecTime + lecPnt - 1;
+		searchMap.put("lec_cpacity", lecCpacity);
+		searchMap.put("sub_code", subCode);
+		searchMap.put("dayotw", dayotw);
+		searchMap.put("lec_time", lecTime);
+		searchMap.put("end_time", endTime);
+		searchMap.put("search", "first");
+		
+		List<LecrumVO> lecrum = lmsCommonService.selectLecrumInfo(searchMap);
+		if(lecrum == null) {
+			searchMap.put("search", "second");
+			lecrum = lmsCommonService.selectLecrumInfo(searchMap);
+		}
+		
+		return lecrum;
 	}
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.StaffVO;
+import kr.ac.shms.lms.common.dao.LmsCommonDAO;
 import kr.ac.shms.lms.common.service.LmsCommonService;
 import kr.ac.shms.lms.common.vo.ConsltDiaryVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -50,6 +51,10 @@ public class ConsultingViewController {
 	private StudentService studentService;
 	@Inject
 	private LmsCommonService lmsCommonService;
+	@Inject
+	private LmsCommonDAO lmsCommonDAO;
+	@Inject
+	private LmsStaffService LmsStaffService;
 	
 	@RequestMapping("/consultingList.do")
 	public String consultingList(
@@ -61,7 +66,9 @@ public class ConsultingViewController {
 		List<ConsultingVO> consultingList = studentService.advisorConsltReqList(user_id);
 		model.addAttribute("consultingList", consultingList);
 		model.addAttribute("userSection", userSection);
-		
+		String staffId = lmsCommonDAO.selectProfessor(user.getUser_id());
+		model.addAttribute("staffId", staffId);
+		model.addAttribute("staffName", LmsStaffService.staff(staffId));
 		return  "lms/consultingList";
 	}
 	
@@ -125,7 +132,6 @@ public class ConsultingViewController {
 			, @RequestParam("update") String update
 			, @RequestParam(value="consultingKind", required=false) String consultingKind
 		) {
-		logger.info("consultingKind : {}", consultingKind);
 		ServiceResult result = null;
 		if("insert".equals(update)) {
 			result = studentService.consultingInsert(consultingVO);
