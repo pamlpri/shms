@@ -306,5 +306,12 @@ public interface LmsCommonService {
 	 * @return 성공, 실패
 	 */
 	public ServiceResult insertLecture(LectureVO lecture);
+
+	/**
+	 * cur_code를 가진 가장 최근에 개설된 강의 정보 조회
+	 * @param cur_code
+	 * @return 데이터가 없으면 null 반환
+	 */
+	public LectureVO selectLecture(String cur_code);
 	
 }

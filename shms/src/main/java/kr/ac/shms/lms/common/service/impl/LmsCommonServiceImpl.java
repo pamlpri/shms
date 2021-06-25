@@ -366,4 +366,9 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		
 		return result;
 	}
+
+	@Override
+	public LectureVO selectLecture(String cur_code) {
+		return lmsCommonDAO.selectLecture(cur_code);
+	}
 }

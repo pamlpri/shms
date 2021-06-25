@@ -3,16 +3,18 @@
 * 수정일                 수정자      수정내용
 * ----------  ---------  -----------------
 * 2021. 6. 23.      박초원        최초작성
+* 2021. 6. 25.      송수미	  강의 조회
 * Copyright (c) 2021 by DDIT All right reserved
  --%>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="page-content">
   <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">HOME</a></li>
-          <li class="breadcrumb-item"><a href="#">강의관리</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lms/main.do">Home</a></li>
+          <li class="breadcrumb-item"><a href="${cPath }/lms/curriculum.do?key=major">강의관리</a></li>
           <li class="breadcrumb-item active" aria-current="page">전공강의</li>
       </ol>
   </nav>
@@ -26,17 +28,17 @@
                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                       <tr>
                           <th class="align-middle text-center">강의코드</th>
-                          <td colspan="3" class="align-middle">23456</td>
+                          <td colspan="3" class="align-middle">${lecture.lec_code }</td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">강의명</th>
-                          <td colspan="3" class="align-middle">대학생활의 이해란 무엇인가?</td>
+                          <td colspan="3" class="align-middle">${lecture.lec_name }</td>
                       </tr>
                       <tr>
                           <th class="text-center">담당자사번</th>
-                          <td>P2345135</td>
+                          <td>${lecture.staff_no }</td>
                           <th class="text-center">담당자명</th>
-                          <td>하재관</td> 
+                          <td>${lecture.name }</td> 
                       </tr>
                   </table>
               </div>
@@ -50,47 +52,56 @@
                   <table class="table table-bordered table-md" style="border-color: #dfdfdf;">
                       <tr>
                           <th class="text-center">개설연도</th>
-                          <td>2021학년도</td>
+                          <td>${lecture.estbl_year }</td>
                           <th class="text-center">개설학기</th>
-                          <td>1학기</td> 
+                          <td>${lecture.estbl_semstr }</td> 
                       </tr>
                       <tr>
                           <th class="text-center">이수구분</th>
-                          <td>전필</td> 
+                          <td>${lecture.lec_cl_nm }</td> 
                           <th class="text-center">학점</th>
-                          <td>3</td>
+                          <td>${lecture.lec_pnt }</td>
                       </tr>
                       <tr>
                           <th class="text-center">강의요일</th>
-                          <td>월요일</td> 
+                          <td>${lecture.dayotw_nm }</td> 
                           <th class="text-center">강의시간</th>
-                          <td>1-3교시</td>
+                          <td>${lecture.lec_time - 8} - ${lecture.lec_time + lecture.lec_pnt - 9}교시</td>
                       </tr>
                       <tr>
                           <th class="text-center">대상학과</th>
-                          <td>간호학과</td> 
+                          <td>${lecture.sub_name }</td> 
                           <th class="text-center">대상학년</th>
-                          <td>1학년</td>
+                          <td>${lecture.lec_atnlc }학년</td>
                       </tr>
                       <tr>
                           <th class="text-center">강의정원</th>
-                          <td>35명</td> 
+                          <td>${lecture.lec_cpacity } 명</td> 
                           <th class="text-center">강의실</th>
-                          <td>경영관 301호</td>
+                          <td>${lecture.lecrum }</td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">강의계획서</th>
                           <td class="align-middle" colspan="3">
                               <ul class="attat">
-                                  <li><a href="#" class="text-color">토익성적.pdf</a></li>
-                                  <li><a href="#" class="text-color">중국어.pdf</a></li>
+                              	<c:if test="${not empty lecture.attachList }">
+                              		<c:forEach items="${lecture.attachList }" var="attach">
+                       					<c:url value="/lms/curriculumDownload.do" var="downloadURL">
+									      	<c:param name="atch_file_no" value="${attach.atch_file_no }" />
+									      	<c:param name="atch_file_seq" value="${attach.atch_file_seq }" />
+								      	</c:url>
+	                                    <li>
+	                                    	<a href="${downloadURL }" class="text-color">${attach.file_nm }</a>
+	                                    </li>
+                              		</c:forEach>
+                              	</c:if>
                               </ul>
                           </td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">강의개요</th>
                           <td class="align-middle" colspan="3">
-                              강의개요 입니다.
+                              ${lecture.summary }
                           </td>
                       </tr>
                       <tr>
@@ -98,16 +109,24 @@
                           <td class="align-middle" colspan="3">
                               <ul id="gradePar">
                                   <li class="float-left">
-                                      <h6>성적</h6>
-                                      <input class="form-control form-control-sm" type="number" placeholder="단위 %">
+                                      <h6>중간</h6>
+                                      <input class="form-control form-control-sm" type="number" value="${lecture.midterm * 100}%">
+                                  </li>
+                                  <li class="float-left">
+                                      <h6>기말</h6>
+                                      <input class="form-control form-control-sm" type="number" value="${lecture.finals * 100}%">
                                   </li>
                                   <li class="float-left">
                                       <h6>과제</h6>
-                                      <input class="form-control form-control-sm" type="number" placeholder="단위 %">
+                                      <input class="form-control form-control-sm" type="number"  value="${lecture.task* 100}%">
                                   </li>
                                   <li class="float-left">
                                       <h6>출석</h6>
-                                      <input class="form-control form-control-sm" type="number" placeholder="단위 %">
+                                      <input class="form-control form-control-sm" type="number"  value="${lecture.attend * 100}%">
+                                  </li>
+                                  <li class="float-left">
+                                      <h6>중간</h6>
+                                      <input class="form-control form-control-sm" type="number"  value="${lecture.midterm * 100}%">
                                   </li>
                               </ul>
                           </td>
@@ -115,13 +134,13 @@
                       <tr>
                           <th class="align-middle text-center">강의교재</th>
                           <td class="align-middle" colspan="3">
-                              강의교재
+                              ${lecture.tchmtr }
                           </td>
                       </tr>
                       <tr>
                           <th class="align-middle text-center">강의부교재</th>
                           <td class="align-middle" colspan="3">
-                              강의교재
+                              ${lecture.adi_tchmtr }
                           </td>
                       </tr>
                   </table>
@@ -129,7 +148,7 @@
           </div>  
       </div>
       <div class="text-center">
-          <a href="elective.html" class="btn btn-primary">목록으로</a>
+          <a href="${cPath }/lms/curriculum.do?key=major" class="btn btn-primary">목록으로</a>
           <a href="electiveForm.html" class="btn btn-primary">수정</a>
           <button type="button" class="btn btn-danger block" data-bs-toggle="modal"
               data-bs-target="#default">

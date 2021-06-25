@@ -880,4 +880,94 @@
 		FROM HOMERUM_PROF
 		WHERE GRADE = (SELECT GRADE FROM STUDENT WHERE STDNT_NO = #{stdnt_no})
 	</select>
+	
+	<resultMap type="LectureVO" id="lectureMap" autoMapping="true">
+		<id property="lec_code" column="lec_code"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true"> 
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectLecture" parameterType="String" resultMap="lectureMap">
+		SELECT
+		    lec_code, 
+		    lec_name, 
+		    staff_no, 
+		    name,
+		    estbl_year,
+		    estbl_semstr,
+		    lec_cl,
+		    lec_cl_nm,
+		    lec_pnt,
+		    dayotw,
+		    com_code_nm dayotw_nm,
+		    lec_time,
+		    sub_code,
+		    sub_name,
+		    lec_atnlc,
+		    lec_cpacity, 
+		    lecrum,
+		    atch_file_no,
+		    summary,
+		    tchmtr,
+		    adi_tchmtr,
+		    midterm,
+		    finals,
+		    attend,
+		    task,
+		    etc  
+		 FROM(
+		SELECT
+		    a.lec_code, 
+		    lec_name, 
+		    b.staff_no, 
+		    g.name,
+		    a.estbl_year,
+		    a.estbl_semstr,
+		    b.lec_cl,
+		    DECODE(b.lec_cl, '01', '전필', '02', '전선', '03', '교필', '교선') lec_cl_nm,
+		    lec_pnt,
+		    a.dayotw,
+		    a.lec_time,
+		    b.sub_code,
+		    c.sub_name,
+		    lec_atnlc,
+		    lec_cpacity, 
+		    building_nm || ' ' || lecrum_nm lecrum,
+		    a.atch_file_no,
+		    summary,
+		    tchmtr,
+		    adi_tchmtr,
+		    midterm,
+		    finals,
+		    attend,
+		    task,
+		    etc,
+		    i.atch_file_seq,
+		    i.file_nm
+		FROM lecture a
+		INNER JOIN curriculum b
+		 ON (a.cur_code = b.cur_code)
+		INNER JOIN subject c
+		 ON (b.sub_code = c.sub_code)
+		INNER JOIN lecrum_ttable d
+		 ON (a.lec_code = d.lec_code)
+		INNER JOIN lecrum e
+		 ON (d.lecrum_no = e.lecrum_no)
+		INNER JOIN building f
+		 ON (e.building_no = f.building_no)
+		INNER JOIN staff g
+		 ON (b.staff_no = g.staff_no)
+		LEFT OUTER JOIN lec_score_st h
+		 ON (a.lec_code = h.lec_code)
+		LEFT OUTER JOIN attach i
+		  ON(a.atch_file_no = i.atch_file_no)
+		WHERE a.lec_code = (select max(lec_code) from lecture where cur_code =  #{cur_code})
+		) a
+		INNER JOIN 
+		(SELECT com_code, com_code_nm
+		   FROM tb_com_code
+		  WHERE code_grp = 'G19') b
+		ON(a.dayotw = b.com_code)
+ 	</select>
 </mapper>

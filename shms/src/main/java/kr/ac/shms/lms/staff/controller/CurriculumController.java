@@ -219,7 +219,12 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping("/lms/curriculumView.do")
-	public String curriculumView() {
+	public String curriculumView(
+		@RequestParam("cur_code") String cur_code
+		, Model model
+		) {
+		LectureVO lecture = lmsCommonService.selectLecture(cur_code);
+		model.addAttribute("lecture", lecture);
 		
 		return "lms/curriculumView";
 	}
@@ -294,7 +299,7 @@ public class CurriculumController {
 			searchMap.put("dayotw", dayotw);
 			
 			int cnt = lmsCommonService.selectStaffSchdulChk(searchMap);
-			if(cnt > 0) {
+			if(cnt <= 0) {
 				result = "OK";
 			}
 		}else {
