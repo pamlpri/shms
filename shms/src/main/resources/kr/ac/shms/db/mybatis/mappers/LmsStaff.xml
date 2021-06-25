@@ -533,7 +533,14 @@
           ORDER BY sub_code asc, name asc
 	</select>
 	
-	<select id="selectCngStdnt" parameterType="int" resultType="RegInfoCngVO">
+	<resultMap type="RegInfoCngVO" id="cng" autoMapping="true">
+		<id property="cng_req_no" column="cng_req_no"/>
+		<collection property="attachList" ofType="AttachVO" autoMapping="true">
+			<id property="atch_file_no" column="atch_file_no"/>
+			<id property="atch_file_seq" column="atch_file_seq"/>
+		</collection>
+	</resultMap>
+	<select id="selectCngStdnt" parameterType="int" resultMap="cng">
 		SELECT a.stdnt_no,
 		       name stdnt_name,
 		       a.tel_no,
@@ -550,13 +557,22 @@
 		          FROM tb_com_code
 		         WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'REQ_RESN_CODE')
 		           AND com_code = req_resn_code) req_resn_code,
-		       file_nm,
 		      (SELECT com_code_nm
 		         FROM tb_com_code
 		        WHERE CODE_GRP = (SELECT CODE_GRP FROM TB_CODE_GRP WHERE CODE_GRP_NM = 'PROCESS_STAT')
 		          AND com_code = process_stat) process_stat,
 		       TO_CHAR(cng_bgnde, 'RRRR.MM.DD') cng_bgnde,
-		       TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date
+		       TO_CHAR(proc_date, 'RRRR.MM.DD') proc_date,
+		       c.atch_file_no,
+		       atch_file_seq,
+		       file_path,
+		       file_nm,
+		       file_cont_type,
+		       file_size,
+		       reg_date,
+		       reg_user_id,
+		       biz_type,
+		       save_file_nm
 		  FROM student a
 		 INNER JOIN reginfo_cng b ON(a.stdnt_no=b.stdnt_no) 
 		 LEFT OUTER JOIN attach c ON(b.atch_file_no=c.atch_file_no)
