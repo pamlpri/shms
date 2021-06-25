@@ -987,4 +987,13 @@
             SET atch_file_no = (SELECT MAX(atch_file_no) FROM attach) + 1
           WHERE set_task_no = #{set_task_no, jdbcType=NUMERIC}		
 	</update>
+	
+	<select id="updateReportGrade" parameterType="map" statementType="CALLABLE">
+		{
+			CALL p_taskscoreupdate(
+				#{updateCount, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
+				#{p_lec_code, mode=IN, jdbcType=VARCHAR, javaType=String}
+			)
+		}
+	</select>
 </mapper>

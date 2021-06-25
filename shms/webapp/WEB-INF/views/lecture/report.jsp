@@ -30,6 +30,7 @@
   </nav>
 
   <div class="text-left" style="margin-bottom:2%;">
+    <button type="button" class="btn btn-warning" id="gradeBtn">성적부 반영</button>
     <a href="${cPath }/lecture/reportInsert.do" class="btn btn-icon icon-left btn-primary"><i class="fas fa-plus"></i> 과제출제</a>
   </div>
   <div class="card">
@@ -72,6 +73,66 @@
         </tbody>
       </table>
   </div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="fire-modal-2" style="display: block; padding-right: 17px;">
+		<div class="modal-dialog modal-md modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" style="padding:35px 25px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-backdrop fade"></div>
   <!-- contents end -->
   </div>
 </div>
+<script>
+$("body").removeClass("modal-open").css("padding-right","0px");
+$(".modal-backdrop").removeClass("show").css("display", "none");
+$(".modal").removeClass("show").css("display", "none");
+
+$("#gradeBtn").on("click", function(){
+	let loadingImg = "<img src='${cPath}/resources/lecture/dist/img/loading.gif' style='display: block; margin: 0px auto;'/>";
+	
+	$(".modal-title").text("성적부반영중..");
+	$(".modal-body").html(loadingImg);
+	$("body").addClass("modal-open").css("padding-right", "17px");
+	$(".modal-backdrop").addClass("show").css("display", "block");
+	$(".modal").addClass("show").css("display", "block");
+	
+	let lec_code = '${lec_code}';
+	
+	$.ajax({
+		method : "post"
+		, url : "${cPath }/lecture/reportGrade.do"
+		, data : lec_code
+		, dataType : "text"
+		, success : function(resp){
+			console.log(resp)
+			if(resp > 0){
+				$(".modal-title").text("성적부반영 성공");
+	 			$(".modal-body").text("과제점수" + resp + "건이 성적부에 반영되었습니다.");
+			}else {
+				$(".modal-title").text("성적부반영 실패");
+	 			$(".modal-body").html("과제점수 성적부에 반영에 실패했습니다.<br/>잠시후에 다시 시도해주세요.");
+			}
+		},error : function(xhr, error, msg){ 
+			console.log(xhr);
+			console.log(error);
+			console.log(msg);
+		}
+	});
+	
+	$(".modal .close, .modal").on("click", function(){
+	  $("body").removeClass("modal-open").css("padding-right","0px");
+      $(".modal-backdrop").removeClass("show").css("display", "none");
+	  $(".modal").removeClass("show").css("display", "none");
+    });
+});
+</script>

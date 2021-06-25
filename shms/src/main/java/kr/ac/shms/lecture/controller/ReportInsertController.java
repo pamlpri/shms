@@ -1,21 +1,33 @@
 package kr.ac.shms.lecture.controller;
 
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.ac.shms.common.enumpkg.MimeType;
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.lecture.dao.LectureProfessorDAO;
 import kr.ac.shms.lecture.service.LectureProfessorService;
 import kr.ac.shms.lecture.vo.SetTaskVO;
 import kr.ac.shms.lms.login.vo.UserLoginVO;
@@ -32,6 +44,7 @@ import kr.ac.shms.validator.SetTaskInsertGroup;
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
  * 2021. 6. 12.      송수미      	       과제 등록 기능 구현
+ * 2021. 6. 26.      박초원				   과제 성적부 반영
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -40,6 +53,9 @@ public class ReportInsertController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportInsertController.class);
 	@Inject
 	private LectureProfessorService lectureProfessorService;
+	
+	@Inject
+	private LectureProfessorDAO lectureProfessorDAO;
 	
 	@RequestMapping("/lecture/reportInsert.do")
 	public String reportForm(
@@ -110,5 +126,22 @@ public class ReportInsertController {
 		
 		/** 화면설정 후 반환*/
 		return view;
+	}
+	
+	@RequestMapping(value="/lecture/reportGrade.do")
+	@ResponseBody
+	public int reportGrade(
+		@SessionAttribute(name="lec_code", required=false) String lec_code
+		,Model model
+	) {
+		logger.info("lec_code {}, {}", lec_code, "확인");
+		Map<String, Object> pMap = new HashMap<>();
+		pMap.put("p_lec_code", lec_code);
+		lectureProfessorDAO.updateReportGrade(pMap);
+		Integer updateCount = (Integer) pMap.get("updateCount");
+		logger.info("updateCount {}, {}", updateCount, "확인");
+		model.addAttribute("updateCount",updateCount);
+		
+		return updateCount;
 	}
 }
