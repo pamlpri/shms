@@ -48,9 +48,14 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		logger.info("UserLoginVO : {}", vo);
 		
 		String rememberId = request.getParameter("rememberId");
+		Cookie cookie = null;
 		if("on".equals(rememberId)) {
-			Cookie cookie = new Cookie("checkID", vo.getUser_id());
+			cookie = new Cookie("checkID", vo.getUser_id());
 			cookie.setMaxAge(60*60*24);
+			response.addCookie(cookie);
+		} else {
+			cookie = new Cookie("checkID", vo.getUser_id());
+			cookie.setMaxAge(0);
 			response.addCookie(cookie);
 		}
 		String userInfo[] = new String[3];
