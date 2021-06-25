@@ -13,8 +13,10 @@
  <script type="text/javascript" src="${cPath }/resources/lms/assets/js/jspdf.min.js"></script>
 </head>
 <body>
-<button type="button" class="btn btn-primary" id="savePdf" >PDF 저장</button>
-	<div class="card" id="pdfDiv">
+	<div style="max-width : 950px; margin:auto; text-align:right;" class="mt-5 mb-3">
+		<button type="button" class="btn btn-primary" id="savePdf" >PDF 저장</button>
+	</div>
+	<div class="card" id="pdfDiv" style="max-width : 950px; margin:auto;">
 		<div class="card-body">
 		   <caption align="left">
 				<p class=hstyle0>제 ${crtf.year }-${crtf.req_no } 호</p>
@@ -114,10 +116,10 @@
 			       </tr>
 			       <tr>
 						<td colspan="8" width="689" height="212" valign="middle" style='border-left:none;border-right:none;border-top:none;border-bottom:none;padding:1.4pt 5.1pt 1.4pt 5.1pt'>
-							<p class="text-center">
-								<span style='font-size:15.0pt;line-height:160%;'>인 재 대 학 교 총 장</span>
-								<span>
-									<img src="${cPath }/resources/lms/assets/images/signature.png" width="180" height="180" vspace="0" hspace="0" border="0">								
+							<p class="text-center mt-5">
+								<span style='font-size:1.2em;'>
+								인&nbsp; 재&nbsp; 대&nbsp; 학&nbsp; 교&nbsp; 총&nbsp; 장 
+								<img src="${cPath }/resources/lms/assets/images/signature.png" width="130" height="130" vspace="0" hspace="0" border="0">	
 								</span>
 							</p>
 						</td>
