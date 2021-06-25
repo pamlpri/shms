@@ -60,6 +60,8 @@ public class SubjectQnaInsertController {
 		String view = null;
 		String message = null;
 		String bo_kind = boardService.selectBoKind("학과문의");
+		String bo_cont = board.getBo_cont().replaceAll("\r\n", "<br/>");
+		board.setBo_cont(bo_cont);
 		
 		if(valid) {
 			board.setBo_kind(bo_kind);

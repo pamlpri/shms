@@ -270,7 +270,7 @@ public class CurriculumController {
 		model.addAttribute("curr", curr);
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("message", message);
-		logger.info("message :{}", message);
+		
 		return view;
 	}
 	

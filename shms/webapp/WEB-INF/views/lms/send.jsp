@@ -6,6 +6,7 @@
 * 2021. 6. 3.      송수미        보낸 메일 리스트 기능 구현
 * 2021. 6. 4.      송수미        보낸 메일 삭제 기능 구현
 * 2021. 6. 5.      송수미        상세조회 오류 수정
+* 2021. 6. 25.     송수미        보낸 메일 수신자 나오게 수정
 * Copyright (c) ${year} by DDIT All right reserved
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -124,6 +125,7 @@
 			</div>
 		</section>
 	</div>
+</div>
 	
 	<!--Basic Modal -->
 	<div class="modal fade text-left" id="default" tabindex="-1"
