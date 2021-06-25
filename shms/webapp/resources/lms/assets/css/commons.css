@@ -1071,3 +1071,7 @@
 .email-application .content-area-wrapper .content-right .email-app-list-wrapper .email-app-list .email-user-list {
 	height : 65vh!important;
 }
+
+#videoView {
+	min-height: 500px;
+}

@@ -36,7 +36,7 @@
 						aria-labelledby="profile-tab">
 						<div class="row">
 		                   <div class="col-lg-3 profileImg">
-		                       <img src="${cPath }/resources/lms/assets/images/faces/1.jpg" />
+		                       <img src="${cPath }/resources/lms/assets/images/faces/2.jpg" />
 		                   </div>
 		                   <div class="col-12 col-lg-9">
 		                       <div class="card-content">
