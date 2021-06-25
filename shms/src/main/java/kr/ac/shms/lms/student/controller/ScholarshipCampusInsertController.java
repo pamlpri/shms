@@ -104,8 +104,14 @@ public class ScholarshipCampusInsertController {
 		, @RequestPart("common_files") MultipartFile common_files
 		,  @ModelAttribute("schl") ScholarShipVO schl
 		) {
-		
-		return "redirect:/lms/scholarshipCampus.do";
+		logger.info("schl1 : {}", schl);
+		schl.setBiz_type("CS");
+		ServiceResult result = tuitionService.updateEditReq(schl);
+		String view = null;
+		if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lms/scholarshipCampus.do";
+		}
+		return view;
 	}
 	
 	@RequestMapping(value="lms/deleteSchl.do", method=RequestMethod.POST)

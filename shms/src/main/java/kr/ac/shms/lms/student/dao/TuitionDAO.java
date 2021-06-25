@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import kr.ac.shms.common.enumpkg.ServiceResult;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.lms.student.vo.RefundReqVO;
 import kr.ac.shms.lms.student.vo.ScholarShipVO;
@@ -172,4 +173,11 @@ public interface TuitionDAO {
 	 * @return
 	 */
 	public int selectTuitionCnt(String stdnt_no);
+	
+	/**
+	 * 장학금 신청 수정
+	 * @param schl
+	 * @return
+	 */
+	public int updateEditReq(ScholarShipVO schl);
 }
