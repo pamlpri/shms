@@ -163,7 +163,6 @@ public class LectureQnaController {
 			model.addAttribute("board", board);
 			view = "lecture/qnaView";
 		}
-		sessionStatus.setComplete();
 		
 		model.addAttribute("lec_code", lec_code);
 		
@@ -323,13 +322,11 @@ public class LectureQnaController {
 				view = "redirect:/lecture/qna.do";
 			}else {
 				message = "답변 등록에 실패하였습니다. 잠시 후 다시 시도해주세요.";
-//				view = "redirect:/lecture/qna.do";
 				view = "redirect:/lecture/qnaView.do?bo_no=" + board.getBo_no();
 			}
 		}else {
 			message = "내용을 입력해주세요.";
 			view = "redirect:/lecture/qnaView.do?bo_no=" + board.getBo_no();
-//			view = "redirect:/lecture/qna.do";
 		}
 		session.addFlashAttribute("message", message);
 		

@@ -161,7 +161,6 @@
       </div>
       <div class="text-center">
           <a href="${cPath }/lms/curriculum.do?key=major" class="btn btn-primary">목록으로</a>
-          <a href="electiveForm.html" class="btn btn-primary">수정</a>
           <button type="button" class="btn btn-danger block" data-bs-toggle="modal"
               data-bs-target="#default">
               삭제
