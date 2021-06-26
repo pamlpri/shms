@@ -120,7 +120,7 @@
 		    pay_method : 'card',
 		    merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '증명서명:${crtf_kind}',
-		    amount : '100',
+		    amount : '${crtf_price }',
 		    buyer_email : '${student.email}',
 		    buyer_name : '${student.sub_name}',
 		    buyer_tel : '${student.tel_no}',
