@@ -74,7 +74,7 @@
             </c:forEach>
           </table>
           <div class="text-center">
-              <a href="${cPath }/lecture/examAdminList.do" class="btn btn-secondary">취소</a>
+              <a href="${cPath }/lecture/examAdminList.do?what=${quesList[0].exam_no }" class="btn btn-secondary">취소</a>
               <button type="button" class="btn btn-primary" id="saveBtn">저장</button>
           </div>
         </form>

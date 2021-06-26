@@ -151,7 +151,7 @@
 <script>
 $(document).ready(function() {
     $('#notice-table').DataTable({
-    	
+    	"order": [[ 2, "desc" ],[4, "desc"]]
     });
 } );
 </script>
