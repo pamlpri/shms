@@ -54,6 +54,9 @@ import kr.ac.shms.main.commuity.vo.ScheduleVO;
  * 2021. 06. 14		최희수	강의평가 조회
  * 2021. 06. 16		최희수	취업지원 진로교육 조회
  * 2021. 06. 16     최희수         취업상담 리스트
+ * 2021. 06. 23.    송수미	커리큘럼 생성
+ * 2021. 06. 24.    송수미	커리큘럼 목록 조회
+ * 2021. 06. 25.    송수미	강의 등록 및 조회
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -365,5 +368,26 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public LectureVO selectLecture(String cur_code) {
+		return lmsCommonDAO.selectLecture(cur_code);
+	}
+
+	@Override
+	public ServiceResult deleteCurriculum(String cur_code) {
+		ServiceResult result = ServiceResult.FAIL;
+		int cnt = lmsCommonDAO.deleteCurriculum(cur_code);
+		
+		if(cnt > 0) {
+			result = ServiceResult.OK;
+		}
+		return result;
+	}
+
+	@Override
+	public int selectRegisteredLecCnt(String cur_code) {
+		return lmsCommonDAO.selectRegisteredLecCnt(cur_code);
 	}
 }

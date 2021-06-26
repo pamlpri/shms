@@ -41,6 +41,7 @@ public class LectureVO implements IAttachVO {
 	private String cur_code;
 	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String lec_cl;
+	private String lec_cl_nm;
 	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer estbl_year;
 	@NotNull(groups= {LectureRegisterGroup.class})
@@ -52,10 +53,12 @@ public class LectureVO implements IAttachVO {
 	private String tchmtr;
 	private String adi_tchmtr;
 	private String tchmtr_scope;
+	private String name;	// 교수 명
 	
 	private String lec_rm;
 	@NotBlank(groups= {LectureRegisterGroup.class})
 	private String dayotw;
+	private String dayotw_nm;
 	@NotNull(groups= {LectureRegisterGroup.class})
 	private Integer lec_time;
 	private String lec_full_time;
@@ -90,6 +93,12 @@ public class LectureVO implements IAttachVO {
 	private String bo_writer;
 	private String biz_type;
 	
+	private Integer lec_pnt;
+	private String sub_code;
+	private String sub_name;
+	private Integer lec_atnlc;
+	private Integer lec_cpacity; 
+	private String lecrum;
 	/** lecrum_ttable */
 	private Integer lecrum_ttble_no;
 	@NotNull(groups= {LectureRegisterGroup.class})
@@ -112,4 +121,5 @@ public class LectureVO implements IAttachVO {
 		}
 	}
 	private int[] delAttNos;
+	
 }

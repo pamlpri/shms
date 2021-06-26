@@ -180,11 +180,16 @@
 					let lecNameTag = "";
 					let posblSemstr = curr.posbl_semstr;
 					if(posblSemstr == null || posblSemstr == thisSemstr){
+						if(curr.open_at == 'Y'){
+							curCodeTag = '<a href="${cPath}/lms/curriculumView.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.cur_code + '</a>';
+							lecNameTag = '<a href="${cPath}/lms/curriculumView.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.lec_name + '</a>';
+						}else{
+							curCodeTag = '<a href="${cPath}/lms/lectureRegister.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.cur_code + '</a>';
+							lecNameTag = '<a href="${cPath}/lms/lectureRegister.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.lec_name + '</a>';
+						}
+					}else{
 						curCodeTag = '<a href="${cPath}/lms/curriculumView.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.cur_code + '</a>';
 						lecNameTag = '<a href="${cPath}/lms/curriculumView.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.lec_name + '</a>';
-					}else{
-						curCodeTag = '<a href="${cPath}/lms/lectureRegister.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.cur_code + '</a>';
-						lecNameTag = '<a href="${cPath}/lms/lectureRegister.do?cur_code=' + curr.cur_code + '" class="text-color">' + curr.lec_name + '</a>';
 					}
 					
 					let tr = $("<tr>").append(

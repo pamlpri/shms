@@ -135,8 +135,48 @@
       <div class="text-center">
           <a href="${cPath }/lms/curriculum.do?key='major'" class="btn btn-light-secondary">취소</a>
           <button id="saveBtn" type="button" class="btn btn-primary">저장</button>
+          <button type="button" class="btn btn-danger block" data-bs-toggle="modal"
+	         data-bs-target="#deleteModal">
+		          삭제
+	      </button>
       </div>
       
+      <!--Basic Modal -->
+	  <div class="modal fade text-left" id="deleteModal" tabindex="-1" role="dialog"
+	      aria-labelledby="myModalLabel1" aria-hidden="true">
+	      <div class="modal-dialog modal-dialog-scrollable" role="document">
+	          <div class="modal-content">
+	              <div class="modal-header">
+	                  <h5 class="modal-title" id="myModalLabel1">커리큘럼 삭제</h5>
+	                  <button type="button" class="close rounded-pill"
+	                      data-bs-dismiss="modal" aria-label="Close">
+	                      <i data-feather="x"></i>
+	                  </button>
+	              </div>
+	              <div class="modal-body">
+	              <form action="${cPath }/lms/curriculumDelete.do" id="deleteForm">
+	              	<input type="hidden" value="${curr.cur_code}" name="cur_code"/>
+	              </form>
+	                  <p>
+	                      삭제한 강의는 복원이 불가합니다.<br/>
+	                      삭제하시겠습니까?
+	                  </p>
+	              </div>
+	              <div class="modal-footer">
+	                  <button type="button" class="btn  btn-secondary" data-bs-dismiss="modal">
+	                      <i class="bx bx-x d-block d-sm-none"></i>
+	                      <span class="d-none d-sm-block">닫기</span>
+	                  </button>
+	                  <button type="button" class="btn btn-primary ml-1"
+	                      data-bs-dismiss="modal" id="submitBtn">
+	                      <i class="bx bx-check d-block d-sm-none"></i>
+	                      <span class="d-none d-sm-block">삭제</span>
+	                  </button>
+	              </div>
+	          </div>
+	      </div>
+	  </div>  
+	  
     <!--Basic Modal -->
 	<div class="modal fade text-left" id="default" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -177,6 +217,9 @@
 	</script>
 </c:if>
 <script>
+$("#submitBtn").on("click", function(){
+	$("#deleteForm").submit();
+});
 function setModal(message){
 	$("#default").find(".modal-body p").empty().text(message);
 	$("#default").addClass("show").css("display","block");

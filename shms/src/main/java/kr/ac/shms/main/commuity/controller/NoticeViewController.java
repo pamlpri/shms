@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import kr.ac.shms.common.controller.IndexController;
 import kr.ac.shms.common.service.BoardService;
 import kr.ac.shms.common.service.CommonAttachService;
-import kr.ac.shms.common.service.impl.CommonAttachServiceImpl;
 import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.BoardVO;
 import kr.ac.shms.common.vo.PagingVO;
