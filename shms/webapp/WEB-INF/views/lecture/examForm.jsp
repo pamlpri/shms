@@ -41,7 +41,7 @@
   <script type="text/javascript" src="${cPath }/resources/lecture/dist/modules/popper.js"></script>
 </head>
 
-<body styl="overflow-x : hiddent">
+<body style="overflow-x : hidden">
 <!-- Main Content -->
 <div class="main-content" style="padding-left: 0px; padding-top: 0px; padding-right: 0px; ">
   <section class="section">
@@ -79,7 +79,7 @@
              }
            };
 
-           var myPDF = PDFObject.embed("https://localhost${downloadURL}", "#example1", options);
+           var myPDF = PDFObject.embed("https://192.168.0.53${downloadURL}", "#example1", options);
 
            var el = document.querySelector("#results");
            el.setAttribute("class", (myPDF) ? "success" : "fail");
@@ -253,7 +253,7 @@ function PrintTime() {
     let minute = Math.floor((remainTime - (hour * 1000 * 60 * 60)) / 1000 / 60);
     let second = Math.floor((remainTime - (hour * 1000 * 60 * 60) - (minute * 1000 * 60)) / 1000);
     $("#remainTime").html(pad(hour, 2) + " : " + pad(minute, 2) + " : " + pad(second, 2));
-    if(minute == 5 && second == 0){
+    if(hour == 0 && minute == 5 && second == 0){
 		$("#timeOutModal").addClass("show").css("display","block");
     }
     

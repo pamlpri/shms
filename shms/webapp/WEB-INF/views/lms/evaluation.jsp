@@ -107,7 +107,7 @@
                                           교수님은 강의준비를 철저히 하셨으며, 강의시작 시 강의계획과 목표를
                                           명확히 제시하셨다.
                                       </td>
-                                      <td class="text-center align-middle"><input type="radio" name="eval1" class="form-check-input" value="5" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval1" class="form-check-input" value="5" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval1" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval1" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval1" class="form-check-input" value="2" /></td>
@@ -119,7 +119,7 @@
                                           교수님은 수업내용을 명확하고 이해하기 쉽게 강의해 
                                       </td>                                                 
                                       <td class="text-center align-middle"><input type="radio" name="eval2" class="form-check-input" value="5" /></td>
-                                      <td class="text-center align-middle"><input type="radio" name="eval2" class="form-check-input" value="4" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval2" class="form-check-input" value="4" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval2" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval2" class="form-check-input" value="2" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval2" class="form-check-input" value="1" /></td>
@@ -130,7 +130,7 @@
                                           교수님은 정확한 발음, 충분한 음량으로 강의 하셨다.   
                                       </td>                                                    
                                       <td class="text-center align-middle"><input type="radio" name="eval3" class="form-check-input" value="5" /></td>
-                                      <td class="text-center align-middle"><input type="radio" name="eval3" class="form-check-input" value="4" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval3" class="form-check-input" value="4" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval3" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval3" class="form-check-input" value="2" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval3" class="form-check-input" value="1" /></td>
@@ -140,7 +140,7 @@
                                       <td class="align-middle">                                   
                                           수업진행 시 학생들의 관심을 유발하셨고, 질문에 성실하고  답변을 해주셨다.
                                       </td>                                                       
-                                      <td class="text-center align-middle"><input type="radio" name="eval4" class="form-check-input" value="5" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval4" class="form-check-input" value="5" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval4" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval4" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval4" class="form-check-input" value="2" /></td>
@@ -151,7 +151,7 @@
                                       <td class="align-middle">                                   
                                           교재는 수업과 연관되게 적절히 선정되었으며, 수업에 잘 활
                                       </td>                                                       
-                                      <td class="text-center align-middle"><input type="radio" name="eval5" class="form-check-input" value="5" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval5" class="form-check-input" value="5" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval5" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval5" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval5" class="form-check-input" value="2" /></td>
@@ -165,7 +165,7 @@
                                       <td class="text-center align-middle"><input type="radio" name="eval6" class="form-check-input" value="5" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval6" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval6" class="form-check-input" value="3" /></td>
-                                      <td class="text-center align-middle"><input type="radio" name="eval6" class="form-check-input" value="2" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval6" class="form-check-input" value="2" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval6" class="form-check-input" value="1" /></td>
                                   </tr>                                                             
                                   <tr>                                                              
@@ -175,7 +175,7 @@
                                       </td>                                                         
                                       <td class="text-center align-middle"><input type="radio" name="eval7" class="form-check-input" value="5" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval7" class="form-check-input" value="4" /></td>
-                                      <td class="text-center align-middle"><input type="radio" name="eval7" class="form-check-input" value="3" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval7" class="form-check-input" value="3" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval7" class="form-check-input" value="2" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval7" class="form-check-input" value="1" /></td>
                                   </tr>                                                           
@@ -184,7 +184,7 @@
                                       <td class="align-middle">                                   
                                           휴강이 적었으며, 휴강 시 보강을 꼭 하였다.              
                                       </td>                                                       
-                                      <td class="text-center align-middle"><input type="radio" name="eval8" class="form-check-input" value="5" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval8" class="form-check-input" value="5" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval8" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval8" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval8" class="form-check-input" value="2" /></td>
@@ -193,9 +193,9 @@
                                   <tr>                                                               
                                       <th class="text-center align-middle">9</th>                    
                                       <td class="align-middle">                                      
-                                          교수님은 학생들에게 인격적으로 대해주셨으며, 모든 학생들에q셨다.
+                                          교수님은 학생들에게 인격적으로 대해주셨다.
                                       </td>                                                          
-                                      <td class="text-center align-middle"><input type="radio" name="eval9" class="form-check-input" value="5" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval9" class="form-check-input" value="5" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval9" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval9" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval9" class="form-check-input" value="2" /></td>
@@ -206,7 +206,7 @@
                                       <td class="align-middle">                                      
                                           교수님 강의에 대하여 만족한다.                             
                                       </td>                                                          
-                                      <td class="text-center align-middle"><input type="radio" name="eval10" class="form-check-input" value="5" /></td>
+                                      <td class="text-center align-middle"><input type="radio" name="eval10" class="form-check-input" value="5" checked/></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval10" class="form-check-input" value="4" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval10" class="form-check-input" value="3" /></td>
                                       <td class="text-center align-middle"><input type="radio" name="eval10" class="form-check-input" value="2" /></td>
@@ -248,6 +248,10 @@
 </div>
 
 <script>
+	$(function() {
+		$("textarea[name='eval11']").text("전반적인 커리큘럼이 괜찮았다.");
+		$("textarea[name='eval12']").text("없습니다.")
+	})
     $("#lectureList").on("click", ".actionBtn", function(){
         $("#evalTable").find("form").each(function() {  
             this.reset();  

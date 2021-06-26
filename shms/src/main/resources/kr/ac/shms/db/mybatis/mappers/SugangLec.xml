@@ -218,7 +218,7 @@
 	       d.lec_cl,
 	       c.estbl_year,
 	       c.estbl_semstr,
-	       h.building_nm||' '||g.lecrum_nm||'호' lecrum,
+	       h.building_nm||' '||g.lecrum_nm lecrum,
 	       c.lec_code,
 	       d.lec_pnt,
 	       b.req_year

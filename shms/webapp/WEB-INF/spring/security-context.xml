@@ -44,6 +44,7 @@
 		<intercept-url pattern="/lms/password*" access="permitAll"/>
 		<intercept-url pattern="/lms/**" access="isAuthenticated()"/>
 		<intercept-url pattern="/lecture/qrScanner.do" access="permitAll"/>
+		<intercept-url pattern="/lecture/examViewer.do*" access="permitAll"/>			
 		<intercept-url pattern="/lecture/**" access="isAuthenticated()"/>			
 		
 		<headers>
