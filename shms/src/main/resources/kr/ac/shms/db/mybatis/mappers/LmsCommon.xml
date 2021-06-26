@@ -34,7 +34,7 @@
 		  ON(a.send_no = b.send_no)
 		 WHERE receiver = #{user_id, jdbcType=VARCHAR}
 		   AND read_at = 'N'
-		   AND b.send_date = TO_CHAR(SYSDATE)
+		   AND TO_CHAR(b.send_date, 'YYYY.MM.DD') = TO_CHAR(SYSDATE, 'YYYY.MM.DD')
 		)
 	</select>
 	
