@@ -153,7 +153,7 @@ $(".tuitionBtn").on("click", function() {
 	    pay_method : 'vbank',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
 	    name : '등록금',
-	    amount : 14000, //판매 가격
+	    amount : '${tuAmt }', //판매 가격
 	    buyer_email : '${studnet.email}',
 	    buyer_name : '${studnet.name}',
 	    buyer_tel : '${studnet.tel_no}',

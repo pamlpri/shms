@@ -83,7 +83,7 @@ public class TuitionBillController {
 		return "lms/tuitionBill";
 	}
 	
-	@RequestMapping(value="/tuitionPayment.do", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value="/tuitionPayment.do", method=RequestMethod.POST)
 	@ResponseBody
 	public ServiceResult insertTuition(
 		@AuthenticationPrincipal(expression="realUser") UserLoginVO user
