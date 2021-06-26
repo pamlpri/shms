@@ -891,6 +891,7 @@
 	<select id="selectLecture" parameterType="String" resultMap="lectureMap">
 		SELECT
 		    lec_code, 
+		    a.cur_code,
 		    lec_name, 
 		    staff_no, 
 		    name,
@@ -915,11 +916,14 @@
 		    finals,
 		    attend,
 		    task,
-		    etc  
+		    etc,
+		    atch_file_seq,
+		    file_nm  
 		 FROM(
 		SELECT
 		    a.lec_code, 
 		    lec_name, 
+		    a.cur_code,
 		    b.staff_no, 
 		    g.name,
 		    a.estbl_year,
@@ -938,11 +942,11 @@
 		    summary,
 		    tchmtr,
 		    adi_tchmtr,
-		    midterm,
-		    finals,
-		    attend,
-		    task,
-		    etc,
+		    midterm * 100 midterm,
+		    finals * 100 finals,
+		    attend * 100 attend,
+		    task * 100 task,
+		    etc * 100 etc,
 		    i.atch_file_seq,
 		    i.file_nm
 		FROM lecture a
@@ -962,12 +966,29 @@
 		 ON (a.lec_code = h.lec_code)
 		LEFT OUTER JOIN attach i
 		  ON(a.atch_file_no = i.atch_file_no)
-		WHERE a.lec_code = (select max(lec_code) from lecture where cur_code =  #{cur_code})
+		WHERE a.estbl_year||a.estbl_semstr = (select max(estbl_year||estbl_semstr) from lecture where cur_code = #{cur_code})
+          AND a.cur_code = #{cur_code}
 		) a
 		INNER JOIN 
 		(SELECT com_code, com_code_nm
 		   FROM tb_com_code
 		  WHERE code_grp = 'G19') b
 		ON(a.dayotw = b.com_code)
+ 	</select>
+ 	
+ 	<update id="deleteCurriculum" parameterType="String">
+ 		UPDATE curriculum
+		    SET
+		        lec_del_at = 'Y'
+		WHERE
+		    cur_code = #{cur_code, jdbcType=VARCHAR}
+ 	</update>
+ 	
+ 	<select id="selectRegisteredLecCnt" parameterType="String" resultType="int">
+ 		SELECT COUNT(lec_code) cnt
+		  FROM lecture
+		 WHERE estbl_year = EXTRACT(YEAR FROM SYSDATE)
+		   AND estbl_semstr = (SELECT semstr FROM v_semstr)
+		   AND cur_code = #{cur_code, jdbcType=VARCHAR}
  	</select>
 </mapper>

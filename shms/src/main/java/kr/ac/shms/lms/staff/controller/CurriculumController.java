@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -22,9 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.ac.shms.common.dao.OthersDAO;
 import kr.ac.shms.common.enumpkg.ServiceResult;
+import kr.ac.shms.common.service.CommonAttachService;
+import kr.ac.shms.common.vo.AttachVO;
 import kr.ac.shms.common.vo.CurriculumVO;
 import kr.ac.shms.common.vo.LecrumVO;
 import kr.ac.shms.common.vo.PagingVO;
@@ -59,6 +61,8 @@ public class CurriculumController {
 	private LmsCommonService lmsCommonService;
 	@Inject
 	private OthersDAO othersDAO;
+	@Inject
+	private CommonAttachService commonAttachService;
 	
 	private void addAttribute(Model model) {
 		List<Map<String, Object>> collegeList = othersDAO.selectCollegeList();
@@ -191,8 +195,8 @@ public class CurriculumController {
 		boolean valid = !errors.hasErrors();
 		
 		if(valid) {
-			if(curriculum.getLec_cpacity() < 15 || curriculum.getLec_cpacity() > 100) {
-				message = "강의 정원은 15명 이상 100명 이하로 설정 가능합니다.";
+			if(curriculum.getLec_cpacity() < 5 || curriculum.getLec_cpacity() > 100) {
+				message = "강의 정원은 5명 이상 100명 이하로 설정 가능합니다.";
 				view = "lms/curriculumForm";
 			}else if(curriculum.getLec_pnt() < 1 || curriculum.getLec_pnt() > 4) {
 				message = "학점은 1학점 이상 4학점 이하로 설정 가능합니다.";
@@ -224,6 +228,12 @@ public class CurriculumController {
 		, Model model
 		) {
 		LectureVO lecture = lmsCommonService.selectLecture(cur_code);
+
+		if(lecture == null) {
+			model.addAttribute("message", "강의가 개설되었던 이력이 없습니다.");
+			model.addAttribute("cur_code", cur_code);
+		}
+		
 		model.addAttribute("lecture", lecture);
 		
 		return "lms/curriculumView";
@@ -317,7 +327,7 @@ public class CurriculumController {
 			, @RequestParam("lecTime") Integer lecTime
 			, @RequestParam("lecPnt") Integer lecPnt
 		) {
-		String result = "FAIL";
+		
 		Map<String, Object> searchMap = new HashMap<>();
 		int endTime = lecTime + lecPnt - 1;
 		searchMap.put("lec_cpacity", lecCpacity);
@@ -334,5 +344,45 @@ public class CurriculumController {
 		}
 		
 		return lecrum;
+	}
+	
+	@RequestMapping("/lms/curriculumDownload.do")
+	public String downloader(
+		@ModelAttribute("lecture") AttachVO attachVO
+		, Model model
+		) {
+		AttachVO attvo = commonAttachService.download(attachVO, null);
+		model.addAttribute("attvo", attvo);
+		
+		return "downloadView";
+	}
+	
+	@RequestMapping("/lms/curriculumDelete.do")
+	public String curriculumDelete(
+		@RequestParam("cur_code") String cur_code
+		, RedirectAttributes session
+		) {
+		logger.info("cur_code : {}", cur_code);
+		
+		int lecCnt = lmsCommonService.selectRegisteredLecCnt(cur_code);
+		String message = null;
+		String view = null;
+		
+		if(lecCnt > 0) {
+			message = "현재 학기에 등록되어 있는 강의는 삭제가 불가능합니다.";
+			view = "redirect:/lms/curriculumView.do?cur_code=" + cur_code;
+		}else {
+			ServiceResult result = lmsCommonService.deleteCurriculum(cur_code);
+			
+			if(ServiceResult.OK.equals(result)) {
+				view = "redirect:/lms/curriculum.do?key=major";
+			}else {
+				message = "삭제에 실패하였습니다. 잠시 후 다시 시도해주세요";
+				view = "redirect:/lms/curriculumView.do?cur_code=" + cur_code;
+			}
+		}
+		
+		session.addFlashAttribute("message", message);
+		return view;
 	}
 }

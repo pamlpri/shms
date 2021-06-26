@@ -66,17 +66,29 @@
                           <th class="text-center">강의요일</th>
                           <td>${lecture.dayotw_nm }</td> 
                           <th class="text-center">강의시간</th>
-                          <td>${lecture.lec_time - 8} - ${lecture.lec_time + lecture.lec_pnt - 9}교시</td>
+                          <td>
+	                          <c:if test="${not empty lecture}">
+		                          ${lecture.lec_time - 8} - ${lecture.lec_time + lecture.lec_pnt - 9}교시
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr>
                           <th class="text-center">대상학과</th>
                           <td>${lecture.sub_name }</td> 
                           <th class="text-center">대상학년</th>
-                          <td>${lecture.lec_atnlc }학년</td>
+                          <td>
+	                          <c:if test="${not empty lecture}">
+		                          ${lecture.lec_atnlc }학년
+	                          </c:if>
+                          </td>
                       </tr>
                       <tr>
                           <th class="text-center">강의정원</th>
-                          <td>${lecture.lec_cpacity } 명</td> 
+                          <td>
+	                          <c:if test="${not empty lecture}">
+                          		${lecture.lec_cpacity } 명
+	                          </c:if>
+                          </td> 
                           <th class="text-center">강의실</th>
                           <td>${lecture.lecrum }</td>
                       </tr>
@@ -110,23 +122,23 @@
                               <ul id="gradePar">
                                   <li class="float-left">
                                       <h6>중간</h6>
-                                      <input class="form-control form-control-sm" type="number" value="${lecture.midterm * 100}%">
+                                      <input class="form-control form-control-sm" type="text" value="${not empty lecture.midterm? (lecture.midterm += '%') : ''}" disabled>
                                   </li>
                                   <li class="float-left">
                                       <h6>기말</h6>
-                                      <input class="form-control form-control-sm" type="number" value="${lecture.finals * 100}%">
+                                      <input class="form-control form-control-sm" type="text" value="${not empty lecture.finals? (lecture.finals += '%') : ''}" disabled>
                                   </li>
                                   <li class="float-left">
                                       <h6>과제</h6>
-                                      <input class="form-control form-control-sm" type="number"  value="${lecture.task* 100}%">
+                                      <input class="form-control form-control-sm" type="text"  value="${not empty lecture.task? (lecture.task += '%') : ''}" disabled>
                                   </li>
                                   <li class="float-left">
                                       <h6>출석</h6>
-                                      <input class="form-control form-control-sm" type="number"  value="${lecture.attend * 100}%">
+                                      <input class="form-control form-control-sm" type="text"  value="${not empty lecture.attend? (lecture.attend += '%') : ''}" disabled>
                                   </li>
                                   <li class="float-left">
-                                      <h6>중간</h6>
-                                      <input class="form-control form-control-sm" type="number"  value="${lecture.midterm * 100}%">
+                                      <h6>기타</h6>
+                                      <input class="form-control form-control-sm" type="text"  value="${not empty lecture.etc? (lecture.etc += '%') : ''}" disabled>
                                   </li>
                               </ul>
                           </td>
@@ -163,13 +175,16 @@
       <div class="modal-dialog modal-dialog-scrollable" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="myModalLabel1">강의삭제</h5>
+                  <h5 class="modal-title" id="myModalLabel1">커리큘럼 삭제</h5>
                   <button type="button" class="close rounded-pill"
                       data-bs-dismiss="modal" aria-label="Close">
                       <i data-feather="x"></i>
                   </button>
               </div>
               <div class="modal-body">
+              <form action="${cPath }/lms/curriculumDelete.do" id="deleteForm">
+              	<input type="hidden" value="${empty lecture.cur_code ? cur_code : lecture.cur_code}" name="cur_code"/>
+              </form>
                   <p>
                       삭제한 강의는 복원이 불가합니다.<br/>
                       삭제하시겠습니까?
@@ -181,7 +196,7 @@
                       <span class="d-none d-sm-block">닫기</span>
                   </button>
                   <button type="button" class="btn btn-primary ml-1"
-                      data-bs-dismiss="modal">
+                      data-bs-dismiss="modal" id="submitBtn">
                       <i class="bx bx-check d-block d-sm-none"></i>
                       <span class="d-none d-sm-block">삭제</span>
                   </button>
@@ -189,5 +204,45 @@
           </div>
       </div>
   </div>
+  
+  <!--Basic Modal -->
+  <div class="modal fade text-left" id="info" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="myModalLabel1">안내</h5>
+                  <button type="button" class="close rounded-pill"
+                      data-bs-dismiss="modal" aria-label="Close">
+                      <i data-feather="x"></i>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p>
+                  </p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn  btn-secondary" data-bs-dismiss="modal">
+                      <i class="bx bx-x d-block d-sm-none"></i>
+                      <span class="d-none d-sm-block">닫기</span>
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
   <!-- contents end -->
 </div>
+<c:if test="${not empty message }">
+	<script>
+		$("#info").find(".modal-body p").empty().text("${message}");
+		$("#info").addClass("show").css("display","block");
+	    $("#close, .modal").on("click", function(){
+			$("#info").removeClass("show").css("display","none");
+		})		
+	</script>
+</c:if>
+<script>
+$("#submitBtn").on("click", function(){
+	$("#deleteForm").submit();
+});
+</script>
