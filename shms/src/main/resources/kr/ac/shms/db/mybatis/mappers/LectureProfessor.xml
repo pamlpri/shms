@@ -996,4 +996,6 @@
 			)
 		}
 	</select>
+	
+	<select id="selectLiveAttendList"></select>
 </mapper>

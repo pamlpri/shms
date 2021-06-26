@@ -49,7 +49,14 @@
 										<td class="text-center">${lecListST.estbl_semstr }</td>
 										<td class="text-center"><a class="text-color" href="${cPath }/lecture/index.do?lec_code=${lecListST.lec_code}&lec_name=${lecListST.lec_name}">${lecListST.lec_name }</a></td>
 										<td class="text-center">${lecListST.prof_name }</td>
-										<td class="text-center">${lecListST.grade }</td>
+										<c:choose>
+											<c:when test="${not empty lecListST.lec_atnlc}">
+												<td class="text-center">${lecListST.lec_atnlc }</td>
+											</c:when>
+											<c:otherwise>
+												<td class="text-center">전체</td>
+											</c:otherwise>
+										</c:choose>
 										<td class="text-center">${lecListST.lec_pnt }</td>
 										<td class="text-center">${lecListST.lec_cl}</td>
 										<td class="text-center">${lecListST.lecrum }</td>

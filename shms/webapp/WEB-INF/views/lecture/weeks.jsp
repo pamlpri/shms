@@ -57,7 +57,8 @@
       	</c:when>
       	<c:when test="${week.week_lec_cl eq 'SG'}">
     		<div class="card-body">
-		        <a href="${week.rt_lec_link }" target="_blank" class="btn btn-icon icon-left btn-primary"><i class="far fa-user"></i> 실시간 강의</a>
+    			<a href="${week.rt_lec_link }" target="_blank" class="btn btn-icon icon-left btn-primary"><i class="far fa-user"></i> 실시간 강의</a>
+		        <a href="${cPath }/lecture/weeksAttend.do?week=${week.lec_week}" class="btn btn-warning">출결체크</a>
 		    </div>
       	</c:when>
       </c:choose>
