@@ -341,10 +341,11 @@ public interface LmsCommonDAO {
 	public int insertLecrumTtable(LectureVO lecture);
 	
 	/**
-	 * 가장최근에 추가된 강의의 강의코드 조회
+	 * 최근에 추가된 강의의 강의코드 조회
+	 * @param cur_code
 	 * @return
 	 */
-	public String selectMaxLecCode();
+	public String selectMaxLecCode(String cur_code);
 	
 	/**
 	 * 지도교수 호출

@@ -850,9 +850,10 @@
 		)
 	</insert>
 	
-	<select id="selectMaxLecCode" resultType="String">
-		SELECT DISTINCT LAST_VALUE(lec_code) OVER () last_value 
+	<select id="selectMaxLecCode" resultType="String" parameterType="String">
+		SELECT MAX(lec_code) lec_code 
 		  FROM lecture
+		 WHERE cur_code = #{cur_code, jdbcType=VARCHAR}
 	</select>
 	
 	<insert id="insertLecrumTtable" parameterType="LectureVO">
