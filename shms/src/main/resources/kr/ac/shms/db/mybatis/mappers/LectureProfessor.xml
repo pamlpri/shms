@@ -510,7 +510,7 @@
 	<select id="selectExamList" parameterType="String" resultType="ExamVO">
 		SELECT a.exam_no,
 		       test_cl,
-		       (SELECT DISTINCT req_semstr FROM sugang_req WHERE lec_code = 'L160201901')||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
+		       (SELECT DISTINCT req_semstr FROM sugang_req WHERE lec_code = #{lec_code, jdbcType=VARCHAR})||'학기'||DECODE(test_cl, 'JG', ' 중간고사', ' 기말고사') test_nm,
 		       <![CDATA[
 			       (CASE WHEN exam_begin_dt > SYSDATE THEN '진행전'
 			        WHEN exam_begin_dt <= SYSDATE AND SYSDATE <= exam_end_dt THEN '진행중'

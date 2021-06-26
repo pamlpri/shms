@@ -134,7 +134,7 @@ $(document).ready(function() {
 		    }
 		 
 		    // 파일 저장
-		    doc.save("test.pdf");
+		    doc.save("등록금고지서.pdf");
 // 		    doc.output("D:/Test.pdf");
 		    // 파일 출력
 // 		    window.open(doc.output('bloburl'), '_blank')
