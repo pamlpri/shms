@@ -56,6 +56,7 @@ public class LectureNoticeController {
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
+		logger.info("lec_code{}", lec_code);
 		Map<String, String> searchMap = new HashMap<>();
 		searchMap.put("bo_kind", "GG");
 		searchMap.put("lec_code", lec_code);
