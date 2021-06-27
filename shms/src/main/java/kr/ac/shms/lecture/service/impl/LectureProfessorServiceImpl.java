@@ -470,8 +470,22 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 
 	@Override
 	public List<AttendVO> selectLiveAttendList(AttendVO sttend) {
-		// TODO Auto-generated method stub
-		return null;
+		return lectureProfessorDAO.selectLiveAttendList(sttend);
+	}
+
+	@Override
+	public ServiceResult updateLiveAttend(AttendVO attend) {
+		ServiceResult result = ServiceResult.FAIL;
+		
+		List<AttendVO> attendList = attend.getAttendList();
+		for(AttendVO attendVO : attendList) {
+			result = ServiceResult.FAIL;
+			int cnt = lectureProfessorDAO.updateLiveAttend(attendVO);
+			if(cnt > 0) {
+				result = ServiceResult.OK;
+			}
+		}
+		return result;
 	}
 
 }

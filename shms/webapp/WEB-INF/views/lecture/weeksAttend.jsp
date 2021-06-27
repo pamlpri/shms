@@ -39,23 +39,19 @@
          	</colgroup>
            <tr>
              <th>주차</th>
-             <td></td>
+             <td>${attendList[0].lec_week }주차</td>
            </tr>
            <tr>
              <th>주차명</th>
-             <td></td>
+             <td>${attendList[0].diary_title }</td>
            </tr>
            <tr>
              <th>학습기간</th>
-             <td></td>
-           </tr>
-           <tr>
-             <th>학습내역</th>
-             <td></td>
+             <td>${attendList[0].week_bgnde_char } ~ ${attendList[0].week_endde_char }</td>
            </tr>
            <tr>
              <th>수강인원</th>
-             <td></td>
+             <td>${attendList[0].sugang_cnt }</td>
            </tr>
          </table>
        </div>
@@ -64,7 +60,8 @@
 
    <div class="card attendance">
      <div class="card-body">
-       <form class="table-responsive" id="attendForm">
+       <form class="table-responsive" id="attendForm" action="${cPath }/lecture/liveAttend.do" method="post">
+       	 <input type="hidden" name="lec_week" value="${attendList[0].lec_week }" />
        	 <p>※ 저장버튼을 눌러야 주차 출결체크가 완료됩니다.</p>
          <table class="table table-bordered table-md attendance">
            <tr>
@@ -72,125 +69,34 @@
              <th>학번</th>
              <th>학과</th>
              <th>일자</th>
-             <th>출석시간</th>
-             <th>퇴실시간</th>
              <th>출결상태</th>
              <th>출결체크</th>
            </tr>
-           <tr>
-           	<td>홍길동</td>
-           	<td>S19101001</td>
-           	<td>경영학과</td>
-           	<td>2021-05-06</td>
-           	<td>15:00</td>
-           	<td>16:00</td>
-           	<td>출석</td>
-           	<td>
-           		<table class="checkBtnBox">
-	           		<tr>
-	           			<td class="checkBtn" data-stat="CS">출석</td>
-	           			<td class="checkBtn" data-stat="JG">지각</td>
-	           			<td class="checkBtn" data-stat="JT">조퇴</td>
-	           			<td class="checkBtn" data-stat="GS">결석</td>
-	           		</tr>
-           		</table>
-           	</td>
-           </tr>
-           <tr>
-           	<td>홍길동</td>
-           	<td>S19101001</td>
-           	<td>경영학과</td>
-           	<td>2021-05-06</td>
-           	<td>15:00</td>
-           	<td>16:00</td>
-           	<td>출석</td>
-           	<td>
-           		<table class="checkBtnBox">
-	           		<tr>
-	           			<td class="checkBtn" data-stat="CS">출석</td>
-	           			<td class="checkBtn" data-stat="JG">지각</td>
-	           			<td class="checkBtn" data-stat="JT">조퇴</td>
-	           			<td class="checkBtn" data-stat="GS">결석</td>
-	           		</tr>
-           		</table>
-           	</td>
-           </tr>
-           <tr>
-           	<td>홍길동</td>
-           	<td>S19101001</td>
-           	<td>경영학과</td>
-           	<td>2021-05-06</td>
-           	<td>15:00</td>
-           	<td>16:00</td>
-           	<td>출석</td>
-           	<td>
-           		<table class="checkBtnBox">
-	           		<tr>
-	           			<td class="checkBtn" data-stat="CS">출석</td>
-	           			<td class="checkBtn" data-stat="JG">지각</td>
-	           			<td class="checkBtn" data-stat="JT">조퇴</td>
-	           			<td class="checkBtn" data-stat="GS">결석</td>
-	           		</tr>
-           		</table>
-           	</td>
-           </tr>
-           <tr>
-           	<td>홍길동</td>
-           	<td>S19101001</td>
-           	<td>경영학과</td>
-           	<td>2021-05-06</td>
-           	<td>15:00</td>
-           	<td>16:00</td>
-           	<td>출석</td>
-           	<td>
-           		<table class="checkBtnBox">
-	           		<tr>
-	           			<td class="checkBtn" data-stat="CS">출석</td>
-	           			<td class="checkBtn" data-stat="JG">지각</td>
-	           			<td class="checkBtn" data-stat="JT">조퇴</td>
-	           			<td class="checkBtn" data-stat="GS">결석</td>
-	           		</tr>
-           		</table>
-           	</td>
-           </tr>
-           <tr>
-           	<td>홍길동</td>
-           	<td>S19101001</td>
-           	<td>경영학과</td>
-           	<td>2021-05-06</td>
-           	<td>15:00</td>
-           	<td>16:00</td>
-           	<td>출석</td>
-           	<td>
-           		<table class="checkBtnBox">
-	           		<tr>
-	           			<td class="checkBtn" data-stat="CS">출석</td>
-	           			<td class="checkBtn" data-stat="JG">지각</td>
-	           			<td class="checkBtn" data-stat="JT">조퇴</td>
-	           			<td class="checkBtn" data-stat="GS">결석</td>
-	           		</tr>
-           		</table>
-           	</td>
-           </tr>
-           <tr>
-           	<td>홍길동</td>
-           	<td>S19101001</td>
-           	<td>경영학과</td>
-           	<td>2021-05-06</td>
-           	<td>15:00</td>
-           	<td>16:00</td>
-           	<td>출석</td>
-           	<td>
-           		<table class="checkBtnBox">
-	           		<tr>
-	           			<td class="checkBtn" data-stat="CS">출석</td>
-	           			<td class="checkBtn" data-stat="JG">지각</td>
-	           			<td class="checkBtn" data-stat="JT">조퇴</td>
-	           			<td class="checkBtn" data-stat="GS">결석</td>
-	           		</tr>
-           		</table>
-           	</td>
-           </tr>
+           <c:forEach items="${attendList }" var="attend" varStatus="i">
+           	<tr class="bigTr" data-attend="${attend.atndan_no }">
+           		<td>${attend.name }</td>
+	           	<td>${attend.stdnt_no }</td>
+	           	<td>${attend.sub_name }</td>
+	           	<td>${attend.attend_date }</td>
+           		<c:choose>
+	             	<c:when test="${attend.attend_stat eq 'CS'}"><td class="attend_stat">출석</td></c:when>
+	             	<c:when test="${attend.attend_stat eq 'JG'}"><td class="attend_stat">지각</td></c:when>
+	             	<c:when test="${attend.attend_stat eq 'JT'}"><td class="attend_stat">조퇴</td></c:when>
+	             	<c:when test="${attend.attend_stat eq 'GS'}"><td class="attend_stat">결석</td></c:when>
+	             	<c:otherwise><td class="attend_stat">　</td></c:otherwise>
+             	</c:choose>
+	           	<td>
+	           		<table class="checkBtnBox">
+		           		<tr>
+		           			<td class="checkBtn ${attend.attend_stat eq 'CS' ? 'che':'' }" data-stat="CS" >출석</td>
+		           			<td class="checkBtn ${attend.attend_stat eq 'JG' ? 'che':'' }" data-stat="JG">지각</td>
+		           			<td class="checkBtn ${attend.attend_stat eq 'JT' ? 'che':'' }" data-stat="JT">조퇴</td>
+		           			<td class="checkBtn ${attend.attend_stat eq 'GS' ? 'che':'' }" data-stat="GS">결석</td>
+		           		</tr>
+	           		</table>
+	           	</td>
+           	</tr>
+           </c:forEach>
          </table>
          <div class="text-center">
               <button type="button" class="btn btn-secondary" id="resetBtn">취소</button>
@@ -210,5 +116,16 @@
 	$(attendForm).on("click", ".checkBtn", function(){
 		$(this).parent("tr").children("td").removeClass("che");
 		$(this).addClass("che");
+	});
+	
+	let attendList = [];
+	$("#saveBtn").on("click", function(){
+		let che = $(attendForm).find(".che");
+		$(che).each(function(idx, attnd){
+			let stat = $(this).data("stat");
+			let atndan_no = $(this).parents(".bigTr").data("attend");
+			$(this).parents(".bigTr").append($("<input>").attr("name","attendList["+idx+"].attend_stat").val(stat).attr("type", "hidden"), $("<input>").attr("name","attendList["+idx+"].atndan_no").val(atndan_no).attr("type", "hidden"));
+		});
+		$(attendForm).submit();
 	});
 </script>

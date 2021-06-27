@@ -51,9 +51,10 @@
               		<c:when test="${not empty insert}">
 		                <select class="form-control im" name="lec_week">
 		                  <option value="">-- 주차선택 --</option>
-		                  <c:forEach var="i" begin="${max + 1}" end="15">
-		                  	<option value="${i }">${i }주차</option>
-		                  </c:forEach>
+		                  <option value="14">14주차</option>
+<%-- 		                  <c:forEach var="i" begin="${max + 1}" end="15"> --%>
+<%-- 		                  	<option value="${i }">${i }주차</option> --%>
+<%-- 		                  </c:forEach> --%>
 		                </select>
 		                <div class="invalid-feedback">
 	                      필수항목
@@ -119,14 +120,16 @@
                 <div class="row">
                   <div class="col-md-6 text-left">
                     <label for="inputEmail4"><span class="red-color">* </span>시작일</label>
-                    <input type="date" class="form-control im" name="week_bgnde" value="${week.week_bgnde }">
+<%--                     <input type="date" class="form-control im" name="week_bgnde" value="${week.week_bgnde }"> --%>
+                    <input type="date" class="form-control im" name="week_bgnde" value="2021-06-24">
                     <div class="invalid-feedback">
                       필수항목
                     </div>
                   </div>
                   <div class="col-md-6 text-left">
                     <label for="inputEmail4"><span class="red-color">* </span>종료일</label>
-                    <input type="date" class="form-control im" name="week_endde" value="${week.week_endde }">
+<%--                     <input type="date" class="form-control im" name="week_endde" value="${week.week_endde }"> --%>
+                    <input type="date" class="form-control im" name="week_endde" value="2021-06-25">
                     <div class="invalid-feedback">
                       필수항목
                     </div>

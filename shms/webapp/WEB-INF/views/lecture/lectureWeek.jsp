@@ -59,22 +59,22 @@
 			                  <fmt:parseNumber var="curSecond" value="${(week.sugang_req * week.sugang_len / 100) % 60}" integerOnly="true" />
 			                  <p><span>${curMin }분 ${curSecond }초</span> / ${min}분 ${second}초</p>
 			          </div>
-			          <c:choose>
-			          	<c:when test="${week.sugang_stat eq 'Y' }">
+<%-- 			          <c:choose> --%>
+<%-- 			          	<c:when test="${week.sugang_stat eq 'Y' }"> --%>
 				          <div class="col-12 col-md-3">
 			                  <a href="${cPath }/lecture/lectureVideo.do?what=${week.diary_no}" onclick="window.open(this.href, '_blanck', 'width=600, height=400'); return false" class="btn btn-icon icon-left btn-primary video">
 			                      <i class="far fa-edit"></i> 학습하기
 			                  </a>
 				          </div>
-			          	</c:when>
-			          	<c:otherwise>
-			          		<div class="col-12 col-md-3">
-			                  <button href="#" class="btn btn-icon icon-left btn-secondary video" disabled style="color : white;">
-			                      <i class="far fa-edit"></i> 학습불가
-			                  </button>
-				          </div>
-			          	</c:otherwise>
-			          </c:choose>
+<%-- 			          	</c:when> --%>
+<%-- 			          	<c:otherwise> --%>
+<!-- 			          		<div class="col-12 col-md-3"> -->
+<!-- 			                  <button href="#" class="btn btn-icon icon-left btn-secondary video" disabled style="color : white;"> -->
+<!-- 			                      <i class="far fa-edit"></i> 학습불가 -->
+<!-- 			                  </button> -->
+<!-- 				          </div> -->
+<%-- 			          	</c:otherwise> --%>
+<%-- 			          </c:choose> --%>
 			      </div>
 		      </div>
 	      	</c:when>

@@ -347,4 +347,11 @@ public interface LectureProfessorDAO {
 	 * @return AttendVO
 	 */
 	public List<AttendVO> selectLiveAttendList(AttendVO sttend);	
+	
+	/**
+	 * 실시간 강의 출결체크 업데이트
+	 * @param AttendVO
+	 * @return cnt
+	 */
+	public int updateLiveAttend(AttendVO attend);
 }
