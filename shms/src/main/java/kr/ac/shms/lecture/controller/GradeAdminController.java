@@ -65,11 +65,13 @@ public class GradeAdminController {
     @ResponseBody
 	public String exam(
 	     @RequestBody GradeVO grade
+	    , @SessionAttribute(name="lec_code", required=false) String lec_code
 		,HttpServletResponse resp
 		,Model model
 	) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
 		ServiceResult result = lectureProfessorService.updateGrade(grade);
+		List<GradeVO> grades = lectureProfessorService.selectGradeList(lec_code);
 		
 		switch(result) {
 		case PKDUPLICATED:
@@ -77,6 +79,7 @@ public class GradeAdminController {
 			break;
 		case OK:
 			resultMap.put("result", ServiceResult.OK);
+			resultMap.put("gradeList", grades);
 			break;
 		case FAIL:
 			resultMap.put("result", ServiceResult.FAIL);

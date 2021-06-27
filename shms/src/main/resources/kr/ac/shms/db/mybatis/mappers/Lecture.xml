@@ -22,6 +22,7 @@
 		       ((SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE NOT (attend_stat = 'GS')
+		          AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) - TRUNC(((SELECT COUNT(stdnt_no)
 		                                          FROM v_lecweek
 		                                         WHERE attend_stat = 'JG'
@@ -34,6 +35,7 @@
 		       ((SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'GS'
+		           AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) + TRUNC(((SELECT COUNT(stdnt_no)
 		                                          FROM v_lecweek
 		                                         WHERE attend_stat = 'JG'
@@ -46,14 +48,17 @@
 		        (SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'JT'
+		           AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) jt_cnt,
 		        (SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'JG'
+		           AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) jg_cnt,
 		        ROUND(((SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE NOT (attend_stat = 'GS')
+		           AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) - TRUNC(((SELECT COUNT(stdnt_no)
 		                                          FROM v_lecweek
 		                                         WHERE attend_stat = 'JG'
