@@ -139,7 +139,7 @@ public class LectureQnaController {
 		// 확인한 bo_no와 지금 들어온 bo_no 비교
 		BoardVO board = boardService.selectBoard(bo_no);
 		String boSecretAt = board.getBo_secret_at();
-		boolean authChk = false;
+		boolean authChk = true;
 		String view = null;
 		String userSec = user.getUser_section();
 		
@@ -317,6 +317,7 @@ public class LectureQnaController {
 		, RedirectAttributes session
 		) {
 		board.setAns_writer(user.getUser_id());
+		board.setBo_ans(board.getBo_ans().replaceAll("\r\n", "<br/>"));
 		String message = null;
 		String view = null;
 		boolean valid = !errors.hasErrors();
