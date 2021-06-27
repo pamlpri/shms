@@ -88,7 +88,8 @@
 	                             <tr>
 	                                 <th class="align-middle text-center">반려사유</th>
 	                                 <td colspan="4">
-	                                     <textarea class="form-control" rows="3" id="returnResult" name="refuse_resn"></textarea>
+	                                     <textarea class="form-control" rows="3" id="returnResult" name="refuse_resn">기사 장학금은 기사 자격증만 해당됩니다.
+기능사 자격증은 해당 장학금을 지급받을 수 없습니다.</textarea>
 	                                     <span id="returnWarning"></span>
 	                                 </td>
 	                             </tr>
