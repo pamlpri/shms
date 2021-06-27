@@ -3,6 +3,9 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
 	<!-- 상위 컨테이너용 설정 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
