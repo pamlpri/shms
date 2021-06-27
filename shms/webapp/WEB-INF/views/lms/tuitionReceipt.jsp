@@ -120,6 +120,7 @@ $(document).ready(function() {
 		    var margin = 10; // 출력 페이지 여백설정
 		    var doc = new jsPDF('p', 'mm');
 		    var position = 30;
+		    var image = "${cPath }/resources/lms/assets/images/signature.png";
 		       
 		    // 첫 페이지 출력
 		    doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
@@ -129,7 +130,7 @@ $(document).ready(function() {
 		    while (heightLeft >= 20) {
 		        position = heightLeft - imgHeight;
 		        doc.addPage();
-		        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+		        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, image);
 		        heightLeft -= pageHeight;
 		    }
 		 
