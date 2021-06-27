@@ -74,7 +74,8 @@
             <tr>
               <th class="align-middle"><span class="red-color">* </span>주차명</th>
               <td class="text-left">
-              	  <input type="text" class="form-control im" name="diary_title" value="${week.diary_title }">
+<%--               	  <input type="text" class="form-control im" name="diary_title" value="${week.diary_title }"> --%>
+              	  <input type="text" class="form-control im" name="diary_title" value="전사적자원 관리의 중요성">
 	              <div class="invalid-feedback">
 	                필수항목
 	              </div>
@@ -136,7 +137,8 @@
             <tr>
               <th class="align-middle">학습내역</th>
               <td class="textArea">
-                <textarea class="form-control" name="diary_cont">${week.diary_cont }</textarea>
+<%--                 <textarea class="form-control" name="diary_cont">${week.diary_cont }</textarea> --%>
+                <textarea class="form-control" name="diary_cont">전사적자원관리를 효율성있게 관리하는 방법에 대해서 알아보자.</textarea>
               </td>
             </tr>
           </table>

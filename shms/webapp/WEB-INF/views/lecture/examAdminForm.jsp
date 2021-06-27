@@ -101,7 +101,8 @@
 	            <tr>
 	              <th class="align-middle"><span class="red-color">* </span>총 문항수</th>
 	              <td class="text-left">
-	                <input type="number" class="form-control col-md-4 im" name="ques_cnt" value="${exam.ques_cnt }"/>
+<%-- 	                <input type="number" class="form-control col-md-4 im" name="ques_cnt" value="${exam.ques_cnt }"/> --%>
+	                <input type="number" class="form-control col-md-4 im" name="ques_cnt" value="20"/>
 	                <div class="invalid-feedback">
                       필수항목
                     </div>
