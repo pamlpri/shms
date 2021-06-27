@@ -101,7 +101,7 @@
                           <tr>
                               <th class="align-middle text-center">강의개요</th>
                               <td class="align-middle" colspan="3">
-                                  <textarea class="form-control" placeholder="" id="floatingTextarea" name="summary">${lectureVO.summary }</textarea>
+                                  <textarea class="form-control" placeholder="" name="summary" id="summary">${lectureVO.summary }</textarea>
                               </td>
                           </tr>
                           <tr>
@@ -139,7 +139,7 @@
                           <tr>
                               <th class="align-middle text-center">강의교재</th>
                               <td class="align-middle" colspan="3">
-                                  <textarea class="form-control" placeholder="" name="tchmtr" id="floatingTextarea">${lectureVO.tchmtr }</textarea>
+                                  <textarea class="form-control" id="tchmtr" placeholder="" name="tchmtr">${lectureVO.tchmtr }</textarea>
                               </td>
                           </tr>
                           <tr>
@@ -252,7 +252,13 @@
 					$("#lecInfoTb td").eq(7).text(resp.lec_full_time);
 					$("#lec_full_time").val(resp.lec_full_time);
 					$("#staff_no").val(resp.staff_no);
-					
+					$("#summary").text("빅데이터를 이용한 경영 전략에 대해 배울 수 있다.");
+					$("input[name='midterm']").val(30);
+					$("input[name='finals']").val(30);
+					$("input[name='task']").val(20);
+					$("input[name='attend']").val(20);
+					$("input[name='etc']").val(0);
+					$("#tchmtr").text("빅데이터와 경영");
 				}, error : function(xhr, resp, error){
 					console.log(xhr);
 				}
