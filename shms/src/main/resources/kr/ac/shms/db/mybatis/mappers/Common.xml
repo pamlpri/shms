@@ -83,16 +83,7 @@
 		                     WHERE code_grp_nm = 'REQ_CL_CODE')
 	</select>
 	
-	<sql id="periodFrag">
-		<if test="year != null and !year.equals('')">
-			AND a.year = #{year, jdbcType=NUMERIC}
-		</if>
-		<if test="semstr != null and !semstr.equals('')">
-			AND a.semstr = #{semstr, jdbcType=NUMERIC}
-		</if>
-	</sql>
-	
-	<select id="selectLecScoreList" parameterType="LecScoreVO" resultType="LecScoreVO">
+	<!-- <select id="selectLecScoreList" parameterType="LecScoreVO" resultType="LecScoreVO">
 		SELECT
 		    a.scre_no,
 		    a.stdnt_no,
@@ -135,8 +126,49 @@
 		WHERE stdnt_no = #{stdnt_no}
 		<include refid="periodFrag" />
 		ORDER BY year, semstr
-	</select>
+	</select> -->
 	
+	<sql id="periodFrag">
+		<if test="year != null and !year.equals('')">
+			AND year = #{year, jdbcType=NUMERIC}
+		</if>
+		<if test="semstr != null and !semstr.equals('')">
+			AND semstr = #{semstr, jdbcType=NUMERIC}
+		</if>
+	</sql>	
+	<select id="selectLecScoreList" parameterType="LecScoreVO" resultType="LecScoreVO">
+		SELECT  c.lec_name,
+		        d.name,
+		        b.*,
+		        (b.mid_scre + b.final_scre + b.attend_scre + b.task_scre + b.etc_scre) total,
+		        c.lec_pnt,
+		        e.com_code_nm lec_cl_nm
+		FROM lecture a
+		INNER JOIN (
+		              SELECT  NVL((B.MIDTERM * A.MID_SCRE), 0) MID_SCRE,
+		                      NVL((B.FINALS * A.FINAL_SCRE), 0) FINAL_SCRE,
+		                      NVL((B.ATTEND * A.ATTEND_SCRE), 0) ATTEND_SCRE,
+		                      NVL((B.TASK * A.TASK_SCRE), 0) TASK_SCRE,
+		                      NVL((B.ETC * A.ETC_SCRE), 0) ETC_SCRE,
+		                      A.LEC_CODE,
+		                      A.pnt_rank_nm,
+		                      A.stdnt_no,
+		                      A.year,
+		                      A.semstr,
+		                      A.grade,
+		                      A.scre_no
+		              FROM LEC_SCRE A
+		              INNER JOIN LEC_SCORE_ST B ON (A.LEC_CODE = B.LEC_CODE)
+		              WHERE STDNT_NO = #{stdnt_no}
+		              <include refid="periodFrag" />
+		)b ON (a.lec_code = b.lec_code)
+		INNER JOIN curriculum c ON (a.cur_code = c.cur_code)
+		INNER JOIN staff d ON (c.staff_no = d.staff_no)
+		INNER JOIN tb_com_code e ON (a.lec_cl = e.com_code)
+		WHERE e.code_grp = 'G06'
+		ORDER BY b.year, b.semstr
+	</select>
+			
 	<select id="selectLecYear" parameterType="String" resultType="LecScoreVO">
 		SELECT DISTINCT year
 		FROM lec_scre
@@ -151,7 +183,12 @@
 		INNER JOIN curriculum c
 		ON l.cur_code = c.cur_code
 		WHERE stdnt_no = #{stdnt_no}
-		<include refid="periodFrag" />
+		<if test="year != null and !year.equals('')">
+			AND a.year = #{year, jdbcType=NUMERIC}
+		</if>
+		<if test="semstr != null and !semstr.equals('')">
+			AND a.semstr = #{semstr, jdbcType=NUMERIC}
+		</if>
 	</select>
 
 	<select id="selectStatisticsList" parameterType="LecScoreVO" resultType="LecScoreVO">
@@ -166,7 +203,12 @@
 		INNER JOIN curriculum c
 		ON l.cur_code = c.cur_code
 		WHERE stdnt_no = #{stdnt_no}
-		<include refid="periodFrag" />
+		<if test="year != null and !year.equals('')">
+			AND a.year = #{year, jdbcType=NUMERIC}
+		</if>
+		<if test="semstr != null and !semstr.equals('')">
+			AND a.semstr = #{semstr, jdbcType=NUMERIC}
+		</if>
 		GROUP BY year, semstr
 		ORDER BY year
 	</select>	
