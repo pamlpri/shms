@@ -205,7 +205,8 @@
 	    lecrum,
 	    lec_code,
 	    lec_pnt,
-	    req_year
+	    req_year,
+	    lec_atnlc
 	  FROM
 	(
 	SELECT DISTINCT
@@ -221,7 +222,8 @@
 	       h.building_nm||' '||g.lecrum_nm lecrum,
 	       c.lec_code,
 	       d.lec_pnt,
-	       b.req_year
+	       b.req_year,
+	       d.lec_atnlc
 	  FROM STUDENT A
 	  INNER JOIN SUGANG_REQ B
 	  ON (A.STDNT_NO = B.STDNT_NO)

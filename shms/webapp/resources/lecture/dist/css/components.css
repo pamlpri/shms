@@ -2429,3 +2429,30 @@ margin-right: -1px;
     max-height: 600px!important;
     overflow: auto;
 }
+
+.checkBtnBox {
+	margin : auto;
+}
+.checkBtn {
+	border-top: 1px solid #dee2e6!important;
+	cursor: pointer;
+}
+
+td[data-stat='CS'].che {
+	box-shadow: 0 2px 6px #acb5f6;
+    background-color: #6777ef;
+    border-color: #6777ef!important;
+    color : #fff;
+}
+td[data-stat='JG'].che, td[data-stat='JT'].che {
+    box-shadow: 0 2px 6px #ffc473;
+    background-color: #ffa426;
+    border-color: #ffa426!important;
+    color: #fff;
+}
+td[data-stat='GS'].che {
+    box-shadow: 0 2px 6px #fd9b96;
+    background-color: #fc544b;
+    border-color: #fc544b!important;
+    color: #fff;
+}

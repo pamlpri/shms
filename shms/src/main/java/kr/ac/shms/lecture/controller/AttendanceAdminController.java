@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -39,6 +40,7 @@ import kr.ac.shms.lms.student.vo.AttendVO;
  * --------     --------    ----------------------
  * 2021. 6. 11.      박초원      	       최초작성
  * 2021. 6. 21.      박초원				 교수 학생 출석수정,  출석 성적부 반영
+ * 2021. 6. 26.      박초원				 실시간강의 출석체크
  * Copyright (c) 2021 by DDIT All right reserved
  * </pre>
  */
@@ -122,4 +124,12 @@ public class AttendanceAdminController {
 		
 		return null;
 	}
+    
+    @RequestMapping(value="/lecture/weeksAttend.do")
+    public String weeksAttend(
+    	@RequestParam("week") Integer lec_week
+    	, Model model
+    ) {
+    	return null;
+    }
 }

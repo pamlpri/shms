@@ -41,7 +41,7 @@ public class SugangLecSTVO {
 	private Integer req_semstr;
 	private String sugang_at;
 	private Integer req_year;
-
+	private Integer lec_atnlc;
 }
 
 
