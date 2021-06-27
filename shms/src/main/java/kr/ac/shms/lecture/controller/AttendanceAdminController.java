@@ -128,8 +128,34 @@ public class AttendanceAdminController {
     @RequestMapping(value="/lecture/weeksAttend.do")
     public String weeksAttend(
     	@RequestParam("week") Integer lec_week
+    	,@SessionAttribute(name="lec_code", required=false) String lec_code
     	, Model model
     ) {
-    	return null;
+    	AttendVO attend = new AttendVO();
+    	attend.setLec_week(lec_week);
+    	attend.setLec_code(lec_code);
+    	List<AttendVO> attendList = lectureProfessorService.selectLiveAttendList(attend);
+		model.addAttribute("attendList", attendList);
+		return "lecture/weeksAttend";
+    }
+    
+    @RequestMapping(value="/lecture/liveAttend.do", method=RequestMethod.POST)
+    public String liveAttend(
+    	@ModelAttribute("attend") AttendVO attend
+    	, Model model
+    ) {
+    	String view = null;
+    	String message = null;
+    	
+    	ServiceResult result = lectureProfessorService.updateLiveAttend(attend);
+    	if(ServiceResult.OK.equals(result)) {
+			view = "redirect:/lecture/weeksAttend.do?week=" + attend.getLec_week();
+		}else {
+			message = "서버 오류입니다.";
+			view = "redirect:/lecture/weeksAttend.do?week=" + attend.getLec_week();
+		}
+    	
+    	model.addAttribute("message",message);
+    	return view;
     }
 }

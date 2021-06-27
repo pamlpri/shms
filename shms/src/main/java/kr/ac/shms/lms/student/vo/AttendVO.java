@@ -85,6 +85,13 @@ public class AttendVO {
 	
 	private Integer scre_no;
 	
+	private Integer sugang_cnt;
+	private String diary_title;
+	private String week_bgnde;
+	private String week_endde;
+	private String week_bgnde_char;
+	private String week_endde_char;
+	
 	private List<AttendVO> attendList;
 }
 

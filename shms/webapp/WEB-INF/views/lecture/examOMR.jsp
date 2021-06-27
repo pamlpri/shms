@@ -61,7 +61,7 @@
 	                  </p>
 	                  <div class="float-left">
 		                <div class="form-check form-check-inline">
-			                  <input class="form-check-input" type="radio" value="Y" name="quesList[${idx.index }].ans_at">
+			                  <input class="form-check-input" type="radio" value="Y" name="quesList[${idx.index }].ans_at" checked>
 			                  <label class="form-check-label">정답</label>
 			              </div>
 			              <div class="form-check form-check-inline">

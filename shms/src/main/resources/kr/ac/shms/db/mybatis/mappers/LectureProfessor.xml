@@ -725,10 +725,12 @@
 		        (SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'JT'
+		           AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) jt_cnt,
 		        (SELECT COUNT(stdnt_no)
 		          FROM v_lecweek
 		         WHERE attend_stat = 'JG'
+		           AND lec_code = a.lec_code
 		           AND stdnt_no = a.stdnt_no) jg_cnt,
 		        (SELECT grade
                    FROM student
@@ -835,9 +837,9 @@
 	
 	<update id="updateResScore" parameterType="ExamVO">
 		UPDATE take_exam
-		   SET res_score = (SELECT SUM(a.ques_allot)
+		   SET res_score = (SELECT DISTINCT SUM(a.ques_allot)
 				          FROM v_selectquesscore a
-				         WHERE stdnt_no = a.stdnt_no
+				         WHERE applcn_no = a.applcn_no
 				           AND exam_no = #{exam_no, jdbcType=NUMERIC}
 				           AND ans_at = 'Y') 
 		 WHERE applcn_no = #{applcn_no, jdbcType=NUMERIC}
@@ -999,6 +1001,44 @@
 		}
 	</select>
 	
-	<select id="selectLiveAttendList">
+	<select id="selectLiveAttendList" parameterType="AttendVO" resultType="AttendVO">
+		SELECT DISTINCT a.stdnt_no,
+		       b.name,
+		       (SELECT sub_name
+		          FROM subject
+		         WHERE sub_code = b.sub_code) sub_name,
+		       c.lec_week,
+		       c.diary_title,
+		       c.week_bgnde,
+		       c.week_endde,
+		       TO_CHAR(c.week_bgnde, 'YYYY-MM-DD') week_bgnde_char,
+		       TO_CHAR(c.week_endde, 'YYYY-MM-DD') week_endde_char,
+		       (SELECT DISTINCT COUNT(stdnt_no)
+		          FROM sugang_req
+		         WHERE lec_code = #{lec_code, jdbcType=VARCHAR}) sugang_cnt,
+		       TO_CHAR(attend_date, 'YYYY-MM-DD') attend_date,
+		       TO_CHAR(attend_date, 'YYYY-MM-DD') attend_date_char,
+		       TO_CHAR(attend_time, 'HH24:MI') attend_time_char,
+		       TO_CHAR(exit_time, 'HH24:MI') exit_time_char,
+		       attend_time,
+		       exit_time,
+		       attend_stat,
+		       a.lec_code,
+		       a.atndan_no
+		  FROM attendance a
+		       RIGHT OUTER JOIN student b ON(a.stdnt_no = b.stdnt_no)
+		       RIGHT OUTER JOIN lec_week_diary c ON(a.lec_code = c.lec_code)
+		 WHERE c.lec_week = #{lec_week, jdbcType=NUMERIC}
+		   AND a.lec_code = #{lec_code, jdbcType=VARCHAR}
+		   AND attend_date BETWEEN c.week_bgnde AND week_endde
+		 ORDER BY a.stdnt_no
 	</select>
+	
+	<update id="updateLiveAttend" parameterType="AttendVO">
+		UPDATE attendance
+		    SET
+		        attend_stat = #{attend_stat, jdbcType=VARCHAR}
+		WHERE
+		    atndan_no = #{atndan_no, jdbcType=NUMERIC}
+	</update>
 </mapper>

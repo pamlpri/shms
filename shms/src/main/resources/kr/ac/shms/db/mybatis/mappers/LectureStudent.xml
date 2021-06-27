@@ -90,7 +90,7 @@
 		    stdnt_no
 		) VALUES (
 		    attend_seq.nextval,
-		    SYSDATE,
+		    TO_DATE('2020/06/26', 'YYYY-MM-DD'),
 		    null,
 		    null,
 		    'Y',
