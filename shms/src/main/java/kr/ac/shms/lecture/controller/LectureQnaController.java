@@ -174,11 +174,12 @@ public class LectureQnaController {
 		@SessionAttribute(name="lec_code", required=false) String lec_code
 		, Model model
 	) {
+		/** 시연용 데이터 넣어두기 */
 		BoardVO board = new BoardVO();
 		board.setBo_title("성적 이의신청");
 		board.setBo_secret_at("Y");
 		board.setBo_password("java");
-		board.setBo_cont("교수님 성적이 이상한 것 같습니다. 확인부탁드립니다.");
+		board.setBo_cont("교수님 과제 점수가 너무 생각과 다르게 나온 것 같습니다. 확인부탁드립니다.");
 		model.addAttribute("board", board);
 		
 		return "lecture/qnaForm";
