@@ -162,7 +162,7 @@
                                   <div class="card">
                                       <div class="card-content">
                                           <!-- File uploader with validation -->
-                                          <input type="file" class="form-control" name="lecture_files">
+                                          <input type="file" class="form-control" name="common_files">
                                       </div>
                                   </div>
                               </div>

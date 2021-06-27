@@ -357,7 +357,7 @@ public class LmsCommonServiceImpl implements LmsCommonService {
 		int cnt = 0;
 		
 		cnt = lmsCommonDAO.insertLecture(lecture);
-		String lec_code = lmsCommonDAO.selectMaxLecCode();
+		String lec_code = lmsCommonDAO.selectMaxLecCode(lecture.getCur_code());
 		lecture.setLec_code(lec_code);
 		
 		if(cnt > 0) {
