@@ -178,6 +178,21 @@ public class CurriculumController {
 		) {
 		addAttribute(model);
 		
+		/** 시연용 데이터 넣기 */
+		CurriculumVO curriculum = new CurriculumVO();
+		curriculum.setLec_name("빅데이터와경영");
+		curriculum.setStaff_no("P19101001");
+		curriculum.setName("강숙자");
+		curriculum.setPosbl_semstr(2);
+		curriculum.setLec_cl("01");
+		curriculum.setLec_cpacity(5);
+		curriculum.setLec_pnt(3);
+		curriculum.setCol_code("1");
+		curriculum.setSub_code("101");
+		model.addAttribute("curriculum", curriculum);
+		/** 끝 */
+		
+		
 		/** 반환 */
 		return "lms/curriculumForm";
 	}
