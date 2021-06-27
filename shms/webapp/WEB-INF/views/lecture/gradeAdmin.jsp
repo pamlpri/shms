@@ -56,7 +56,7 @@
                               <th class="text-center noExl">비고</th>
                           </tr>
                           </thead>
-                          <tbody>        
+                          <tbody id="listBody">        
                           	<c:forEach items="${gradeList }" var="grade" varStatus="i">
                           		<tr class="${grade.scre_no }">
                        	  	  	  <input type="hidden" name="gradeList[${i.index }].lec_code" value="${lec_code}"/>
@@ -114,7 +114,7 @@ $(".modal-backdrop").removeClass("show").css("display", "none");
 $(".modal").removeClass("show").css("display", "none");
 
 $(document).ready(function(){
-	$('#grade-table').DataTable({
+	let dataTable = $('#grade-table').DataTable({
     	"columnDefs": [ {
 	   		"targets": [9],
 	   		"orderable": false
@@ -254,6 +254,34 @@ $(document).ready(function(){
     		, success : function(resp){
     			console.log(resp)
     			if(resp.result == "OK"){
+    				$("#listBody").empty();
+	    			if(resp.gradeList){
+                      $(resp.gradeList).each(function(idx, grade){
+                    	let trTags = $("<tr>").append(
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].lec_code").val(grade.lec_code),
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].scre_no").val(grade.scre_no),
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].mid_scre").val(grade.mid_scre),
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].final_scre").val(grade.final_scre),
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].task_scre").val(grade.task_scre),
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].attend_scre").val(grade.attend_scre),
+                    					$("<input>").attr("type", "hidden").attr("name", "gradeList["+idx+"].etc_scre").val(grade.etc_scre),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.name),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.stdnt_no),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.sub_name),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.pnt_rank_nm),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.mid_scre),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.final_scre),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.task_scre),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.attend_scre),
+                    					$("<td>").attr("class", "text-center align-middle").text(grade.etc_scre),
+                    					$("<td>").attr("class", "text-center align-middle noExl").append(
+                    								$("<a>").attr("class", "add").attr("title", "Add").data("toggle", "tooltip").append($("<i>").attr("class", "fas fa-save").html("&#xE03B;").css("display", "none")),
+                    								$("<a>").attr("class", "edit").attr("title", "Edit").data("toggle", "tooltip").append($("<i>").attr("class", "fas fa-pen").html("&#xE254;"))
+                    					)
+                    				 );
+    					$("#listBody").append(trTags);	
+                      });
+    				}
     				$(".modal-title").text("성적부반영 성공");
     	 			$(".modal-body").text("성적비율에 따라 학점이 부여되어 성적부에 반영되었습니다.");
     			}else{
