@@ -64,17 +64,17 @@
 							<h2 class="text-center text-primary">Login To LMS</h2>
 						</div>
 						<form action="${cPath }/lms/loginProcess.do" method="post" id="loginForm">
-							<select	id="uId" onchange="Login()">
-								<option>--로그인 선택--</option>
-								<option value="S19101001">학생</option>
-								<option value="P19101001">교수</option>
-								<option value="E15002001">학적과</option>
-								<option value="E15001002">학생지원과</option>
-								<option value="E15004001">입학과</option>
-								<option value="E15003001">취업장학과</option>
-								<option value="M15101001">학과관리자</option>
-							</select>
-							<a href="${cPath }/lms/passwordUpdate.do">비밀번호 encode</a>
+<!-- 							<select	id="uId" onchange="Login()"> -->
+<!-- 								<option>--로그인 선택--</option> -->
+<!-- 								<option value="S19101001">학생</option> -->
+<!-- 								<option value="P19101001">교수</option> -->
+<!-- 								<option value="E15002001">학적과</option> -->
+<!-- 								<option value="E15001002">학생지원과</option> -->
+<!-- 								<option value="E15004001">입학과</option> -->
+<!-- 								<option value="E15003001">취업장학과</option> -->
+<!-- 								<option value="M15101001">학과관리자</option> -->
+<!-- 							</select> -->
+<%-- 							<a href="${cPath }/lms/passwordUpdate.do">비밀번호 encode</a> --%>
 							<c:choose>
 								<c:when test="${not empty errorMsg }">
 								<div class="input-group custom">
