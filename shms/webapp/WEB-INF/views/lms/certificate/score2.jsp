@@ -144,7 +144,7 @@ $(document).ready(function() {
 		    var margin = 10; // 출력 페이지 여백설정
 		    var doc = new jsPDF('p', 'mm');
 		    var position = 30;
-		    var image = "https://storage.cloud.google.com/shms/logo/sig.png";
+		    var image = "${cPath }/resources/lms/assets/images/signature.png";
 		    
 		       
 		    // 첫 페이지 출력
