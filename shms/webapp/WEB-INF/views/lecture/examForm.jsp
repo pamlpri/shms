@@ -115,7 +115,7 @@
 				                <h6>${idx.count } </h6>
 				              </div>
 				              <div class="form-check form-check-inline">
-				                  <input class="form-check-input" type="radio" value="1" name="dtlsList[${idx.index }].submit_ans">
+				                  <input class="form-check-input" type="radio" value="1" name="dtlsList[${idx.index }].submit_ans" checked>
 				                  <label class="form-check-label">1</label>
 				              </div>
 				              <div class="form-check form-check-inline">
@@ -138,7 +138,7 @@
 				                <h6>${idx.count }</h6>
 				              </div>
 				              <div class="form-group">
-				                <input type="text" class="form-control" name="dtlsList[${idx.index }].submit_ans" />
+				                <input type="text" class="form-control" name="dtlsList[${idx.index }].submit_ans" value="단답정답임"/>
 				              </div>
 				            </div>
 	           			</c:when>
@@ -148,7 +148,7 @@
 				                <h6>${idx.count }</h6>
 				              </div>
 				              <div class="form-group">
-				                <textarea class="form-textarea" name="dtlsList[${idx.index }].submit_ans"></textarea>
+				                <textarea class="form-textarea" name="dtlsList[${idx.index }].submit_ans">서버에 만들어진 서블릿이 스스로 작동하는 것이 아니라, 서블릿을 관리 해주는 것이 필요한데, 이러한 역할을 하는 것이 바로 서블릿 컨테이너 입니다.</textarea>
 				              </div>
 				            </div>
 	           			</c:otherwise>

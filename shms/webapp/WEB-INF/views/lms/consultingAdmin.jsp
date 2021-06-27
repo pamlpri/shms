@@ -71,22 +71,22 @@
 										<button type="button" class="btn badge bg-danger block failBtn"
 											data-bs-toggle="modal" data-bs-target="#exampleModalCenter">반려</button>
 									</c:when>
-									<c:when test="${consulting.process_stat_nm eq '승인'}">
-										<c:set var="now" value="<%=new java.util.Date() %>" />
-										<c:set value="${consulting.hope_date } ${consulting.hope_time }" var="hopeDate" />
-										<fmt:formatDate value="${now }" pattern="yyyy-MM-dd hh:mm" var="nowDate"/>
-										<c:choose>
-											<c:when test="${hopeDate > nowDate }">
-												<button type="button" class="btn badge bg-primary block failBtn"
-													data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button> 
-											</c:when>
-											<c:otherwise>
+<%-- 									<c:when test="${consulting.process_stat_nm eq '승인'}"> --%>
+<%-- 										<c:set var="now" value="<%=new java.util.Date() %>" /> --%>
+<%-- 										<c:set value="${consulting.hope_date } ${consulting.hope_time }" var="hopeDate" /> --%>
+<%-- 										<fmt:formatDate value="${now }" pattern="yyyy-MM-dd hh:mm" var="nowDate"/> --%>
+<%-- 										<c:choose> --%>
+<%-- 											<c:when test="${hopeDate > nowDate }"> --%>
+<!-- 												<button type="button" class="btn badge bg-primary block failBtn" -->
+<!-- 													data-bs-toggle="modal" data-bs-target="#exampleModalCenter2">승인</button>  -->
+<%-- 											</c:when> --%>
+<%-- 											<c:otherwise> --%>
 												<a href="${cPath }/lms/consulting.do?bo_no=${consulting.req_no }" class="badge bg-primary">승인</a>
-											</c:otherwise>
-										</c:choose>
+<%-- 											</c:otherwise> --%>
+<%-- 										</c:choose> --%>
 										
-									</c:when>
-                   				</c:choose>
+<%-- 									</c:when> --%>
+<%--                    				</c:choose> --%>
                    			</td>
                    		</tr>
                    	</c:forEach>
