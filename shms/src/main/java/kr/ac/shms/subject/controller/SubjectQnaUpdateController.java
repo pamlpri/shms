@@ -49,7 +49,7 @@ public class SubjectQnaUpdateController {
 			, Model model
 			) {
 		BoardVO savedBoard = boardService.selectBoard(bo_no);
-		savedBoard.setBo_cont(savedBoard.getBo_cont().replaceAll("<br/>", "\r\n"));
+		savedBoard.setBo_cont(savedBoard.getBo_cont().replaceAll("\r\n", "<br/>"));
 		logger.info("board12 : {}",savedBoard);
 		model.addAttribute("savedBoard", savedBoard);
 		model.addAttribute("mode", "update");
