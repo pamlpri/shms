@@ -173,6 +173,7 @@
 												<img src="${cPath}/resources/lms/assets/images/qr.jpg" />
 												<div id="qrcode"></div>
 												<p class="text-center">
+													<br/>
 													입구에 비치된 카메라에<br />QR코드 인식 후 입실해야 합니다.
 												</p>
 											</div>

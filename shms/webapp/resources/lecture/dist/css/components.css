@@ -2456,3 +2456,7 @@ td[data-stat='GS'].che {
     border-color: #fc544b!important;
     color: #fff;
 }
+
+.contBody {
+	min-height : 20rem;
+}

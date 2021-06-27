@@ -24,7 +24,7 @@
 		        ]]>
 		  FROM  lec_week_diary a
 		  WHERE a.lec_code = #{lec_code, jdbcType=VARCHAR}
-		  ORDER BY diary_no DESC
+		  ORDER BY lec_week DESC
 	</select>
 	
 	<select id="selectStudentWeekDetail" parameterType="LectureVO" resultType="LectureVO">
