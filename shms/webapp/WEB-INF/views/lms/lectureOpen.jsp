@@ -252,6 +252,7 @@
 					$("#lecInfoTb td").eq(7).text(resp.lec_full_time);
 					$("#lec_full_time").val(resp.lec_full_time);
 					$("#staff_no").val(resp.staff_no);
+					/* 시연용 데이터 미리 넣어놓기 */
 					$("#summary").text("빅데이터를 이용한 경영 전략에 대해 배울 수 있다.");
 					$("input[name='midterm']").val(30);
 					$("input[name='finals']").val(30);
@@ -259,6 +260,7 @@
 					$("input[name='attend']").val(20);
 					$("input[name='etc']").val(0);
 					$("#tchmtr").text("빅데이터와 경영");
+					/* 시연용 데이터 미리 넣어놓기 */
 				}, error : function(xhr, resp, error){
 					console.log(xhr);
 				}
