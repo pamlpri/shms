@@ -164,7 +164,7 @@
 	                    <div class="input-group mb-3">
 	                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
 	                        <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력하세요." 
-	                        	aria-label="Recipient's username">
+	                        	aria-label="Recipient's username" value="강숙자">
 	                        <button id="searchBtn" class="btn btn-outline-secondary" type="button"style="border: 1px solid #dce7f1;">검색</button>
 	                    </div>
                 	</div>

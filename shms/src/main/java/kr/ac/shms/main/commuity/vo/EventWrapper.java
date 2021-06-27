@@ -16,7 +16,7 @@ public class EventWrapper {
 	public EventWrapper(ScheduleVO adaptee) {
 		super();
 		this.adaptee = adaptee;
-		this.title = adaptee.getCont();
+		this.title = adaptee.getTitle();
 		this.id = adaptee.getSchdul_no();
 		this.start = adaptee.getBegin_dt();
 		this.end = adaptee.getEnd_dt();
