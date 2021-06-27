@@ -468,4 +468,10 @@ public class LectureProfessorServiceImpl implements LectureProfessorService {
 		return result;
 	}
 
+	@Override
+	public List<AttendVO> selectLiveAttendList(AttendVO sttend) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
