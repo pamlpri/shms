@@ -15,7 +15,14 @@
      <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="#">HOME</a></li>
          <li class="breadcrumb-item"><a href="#">강의관리</a></li>
-         <li class="breadcrumb-item active" aria-current="page">수강중인 강의</li>
+         <c:choose>
+         	<c:when test="${user.user[1] == 'ST' }">
+	        	<li class="breadcrumb-item active" aria-current="page">수강중인 강의</li>
+         	</c:when>
+         	<c:otherwise>
+         		<li class="breadcrumb-item active" aria-current="page">진행중인 강의</li>
+         	</c:otherwise>
+         </c:choose>
      </ol>
  </nav>
 <div class="page-content">

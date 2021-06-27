@@ -15,7 +15,7 @@
       <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="${cPath }/lms/index.do">HOME</a></li>
           <li class="breadcrumb-item"><a href="${cPath }/lms/grades.do">성적관리</a></li>
-          <li class="breadcrumb-item active" aria-current="page">성적조회</li>
+          <li class="breadcrumb-item active" aria-current="page">강의평가</li>
       </ol>
   </nav>
   

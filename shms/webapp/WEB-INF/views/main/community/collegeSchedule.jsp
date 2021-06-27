@@ -73,7 +73,6 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'prevYear,prev,today',
@@ -89,12 +88,12 @@
       , events: "<c:url value='/main/community/scheduleprocess.do'/>"
    	  , eventDidMount :function(event){
             let el = event.el;
-            console.log(arguments);
-            console.log(el);
-            console.log(event);
+//             console.log(arguments);
+//             console.log(el);
+//             console.log(event);
             let parentDIV = $(el).parents(".fc-daygrid-day-events");
-            let numDIV = $(parentDIV).siblings(".fc-daygrid-day-top:first");
-            $(numDIV).find("a").css("color", "red");
+//             let numDIV = $(parentDIV).siblings(".fc-daygrid-day-top:first");
+//             $(numDIV).find("a").css("color", 'red');
          }
    	  
     });
