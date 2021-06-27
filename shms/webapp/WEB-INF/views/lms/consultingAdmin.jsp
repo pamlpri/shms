@@ -71,7 +71,7 @@
 										<button type="button" class="btn badge bg-danger block failBtn"
 											data-bs-toggle="modal" data-bs-target="#exampleModalCenter">반려</button>
 									</c:when>
-<%-- 									<c:when test="${consulting.process_stat_nm eq '승인'}"> --%>
+									<c:when test="${consulting.process_stat_nm eq '승인'}">
 <%-- 										<c:set var="now" value="<%=new java.util.Date() %>" /> --%>
 <%-- 										<c:set value="${consulting.hope_date } ${consulting.hope_time }" var="hopeDate" /> --%>
 <%-- 										<fmt:formatDate value="${now }" pattern="yyyy-MM-dd hh:mm" var="nowDate"/> --%>
@@ -85,8 +85,8 @@
 <%-- 											</c:otherwise> --%>
 <%-- 										</c:choose> --%>
 										
-<%-- 									</c:when> --%>
-<%--                    				</c:choose> --%>
+									</c:when>
+                   				</c:choose>
                    			</td>
                    		</tr>
                    	</c:forEach>

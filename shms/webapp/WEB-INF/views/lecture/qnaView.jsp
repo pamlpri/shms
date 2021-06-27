@@ -39,9 +39,9 @@
           <h4 class="nontice-title">${board.bo_title }<span class="notice-date">${board.bo_write_de }</span></h4>
         </div>
         <div class="card-body">
-          <p>
+          <div class="contBody">
             ${board.bo_cont }
-          </p>
+          </div>
           <c:choose>
           	<c:when test="${not empty board.bo_ans }">
 	          <div class="noticeAns">

@@ -302,7 +302,7 @@
 		       rt_lec_link
 		  FROM lec_week_diary
 		 WHERE lec_code = #{lec_code, jdbcType=VARCHAR}
-		 ORDER BY diary_no DESC
+		 ORDER BY lec_week DESC
 	</select>
 	
 	<select id="selectWeekDetail" parameterType="int" resultType="LectureVO">
