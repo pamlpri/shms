@@ -93,7 +93,7 @@
 		    TO_DATE('2020/06/26', 'YYYY-MM-DD'),
 		    null,
 		    null,
-		    'Y',
+		    'CS',
 		    #{lec_code, jdbcType=VARCHAR},
 		    #{stdnt_no, jdbcType=VARCHAR}
 		)
