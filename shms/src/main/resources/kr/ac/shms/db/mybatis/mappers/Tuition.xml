@@ -195,6 +195,7 @@
 		 INNER JOIN schlship b ON(a.schlship_no=b.schlship_no)
 		 WHERE stdnt_no=#{stdnt_no, jdbcType=VARCHAR}
 		   AND staff_no IS NULL
+		 ORDER BY req_no desc
 	</select>
 	
 	<select id="selectStudent" parameterType="String" resultType="StudentVO">
