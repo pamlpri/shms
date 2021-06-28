@@ -7,7 +7,11 @@
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+  <!-- Site favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="${cPath }/resources/lms/vendors/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="${cPath }/resources/lms/vendors/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="${cPath }/resources/lms/vendors/images/favicon-16x16.png">	
+	
   <!-- General CSS Files -->
   <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="${cPath }/resources/lecture/dist/modules/fontawesome/css/all.min.css">
