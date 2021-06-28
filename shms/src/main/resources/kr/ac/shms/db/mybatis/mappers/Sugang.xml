@@ -79,7 +79,8 @@
 		               TO_NUMBER(a.lec_time + b.lec_pnt - 1) lec_end,
 		               (SELECT COUNT(lec_code)
 		                  FROM sugang_req
-		                 WHERE a.lec_code = lec_code) lec_sugang,
+		                 WHERE a.lec_code = lec_code
+		                   AND sugang_at = 'Y') lec_sugang,
 		               b.lec_cpacity,
 		               a.dayotw,
 		               (SELECT SUBSTR(com_code_nm, 1, 1)
@@ -155,7 +156,8 @@
 		       TO_NUMBER(b.lec_time + c.lec_pnt - 1) lec_end,
 		       (SELECT COUNT(lec_code)
 		          FROM sugang_req
-		         WHERE b.lec_code = lec_code) lec_sugang,
+		         WHERE b.lec_code = lec_code
+		           AND sugang_at = 'Y') lec_sugang,
 		       c.lec_cpacity,
 		       b.dayotw,
 		       (SELECT SUBSTR(com_code_nm, 1, 1)

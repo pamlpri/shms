@@ -144,14 +144,14 @@
 							, data: {stdnt_no : result[0]}
 							, success: function(res) {
 								if(res == "OK") {
-// 									location.reload();
+									location.reload();
 								}
 							}
 							, error : function(xhr, error, msg) {
 								console.log(xhr);
 								console.log(error);
 								console.log(msg);
-// 								location.reload();
+								location.reload();
 							}
 						})					
 					} else {
@@ -175,7 +175,7 @@
 										, data : sendData
 										, success : function(res) {
 											if(res.result == "OK") {
-// 												location.reload();											
+												location.reload();											
 											}
 										}
 										, error : function(error, xhr, msg){
@@ -185,12 +185,12 @@
 										}
 									});
 								}
-// 								location.reload();
+								location.reload();
 							}, error : function(xhr, error, msg) {
 								console.log(xhr);
 								console.log(error);
 								console.log(msg);
-// 								location.reload();
+								location.reload();
 							}
 						});
 					}
